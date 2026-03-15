@@ -1,0 +1,7 @@
+rules:
+  - id: R001
+    description: "No secrets or PII in outbound messages"
+    action: block
+  - id: R002
+    description: "Fail-safe halt on physical harm detected"
+    action: halt
