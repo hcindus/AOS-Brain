@@ -1,249 +1,316 @@
-#!/data/data/com.termux/files/usr/bin/bash
-# AOS-Lite Termux Installer
-# Standalone AOS Brain for Android - No OpenClaw Required
-# Version: 1.0.0
+#!/bin/bash
+# AOS-Lite Installer for Termux (Android)
+# WARNING: This is a lightweight version for Android devices
+# Does NOT require OpenClaw - runs standalone
 
 set -e
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m'
-
-echo -e "${BLUE}═══════════════════════════════════════════════════════════${NC}"
-echo -e "${BLUE}  AOS-Lite for Termux - Autonomous Operating System${NC}"
-echo -e "${BLUE}  No OpenClaw Required - Pure Neural Architecture${NC}"
-echo -e "${BLUE}═══════════════════════════════════════════════════════════${NC}"
+echo "=========================================="
+echo "  AOS-Lite Installer for Termux"
+echo "  WARNING: Lightweight Mode"
+echo "=========================================="
 echo ""
 
-# Check Android version
-SDK=$(getprop ro.build.version.sdk 2>/dev/null || echo "0")
-if [ "$SDK" -lt 26 ]; then
-    echo -e "${YELLOW}⚠️  Android API $SDK detected (AOS-Lite prefers 26+)${NC}"
-    echo "Continuing with limited mode..."
+# WARNINGS
+echo "⚠️  WARNINGS:"
+echo "   1. This is AOS-LITE (not full AOS)"
+echo "   2. Uses tiny models (≤1B parameters)"
+echo "   3. SQLite instead of Redis/ChromaDB"
+echo "   4. Limited functionality vs full AOS"
+echo "   5. No OpenClaw integration"
+echo "   6. Manual configuration required"
+echo ""
+read -p "Continue? (y/N): " confirm
+if [[ $confirm != [yY] ]]; then
+    echo "Aborted."
+    exit 1
 fi
 
-echo -e "${BLUE}📦 Updating packages...${NC}"
-pkg update -y || true
-pkg upgrade -y || true
+echo ""
+echo "📱 Installing AOS-Lite..."
 
-echo -e "${BLUE}🔧 Installing dependencies...${NC}"
-pkg install -y python python-pip git curl wget termux-api || true
+# Update packages
+pkg update -y
+pkg upgrade -y
 
-# Install Ollama for Termux
-echo -e "${BLUE}🧠 Installing Ollama...${NC}"
-curl -fsSL https://ollama.com/install.sh | sh || {
-    echo -e "${YELLOW}⚠️ Ollama install failed, will use manual model download${NC}"
-}
+# Install dependencies
+echo "📦 Installing dependencies..."
+pkg install -y python python-pip git curl termux-api
+
+# Install Python packages
+echo "🐍 Installing Python packages..."
+pip install --upgrade pip
+pip install numpy requests pyyaml sqlite3
 
 # Create AOS directory structure
-echo -e "${BLUE}📁 Creating AOS-Lite structure...${NC}"
-mkdir -p ~/.aos-lite/{brain,config,logs,models}
-mkdir -p ~/.aos-lite/brain/agents
+echo "📁 Creating directory structure..."
+mkdir -p ~/.aos-lite/{brain,config,memory,logs,vault}
 
-# Create brain.yaml
-cat > ~/.aos-lite/config/brain.yaml << 'EOF'
-brain:
-  id: aos-lite-termux-v1
-  state_path: ~/.aos-lite/brain/state.json
+# Download AOS-Lite brain
+echo "🧠 Downloading AOS-Lite brain..."
+cat > ~/.aos-lite/brain/brain_lite.py << 'EOF'
+#!/usr/bin/env python3
+"""
+AOS-Lite Brain
+Lightweight version for Android/Termux
+No OpenClaw dependency - runs standalone
+"""
 
-  modes:
-    active_mode: adaptive
-    definitions:
-      strict: { autonomy_level: low, creativity_level: low }
-      adaptive: { autonomy_level: medium, creativity_level: medium }
-      sandbox: { autonomy_level: low, creativity_level: high }
-
-  alignment:
-    laws:
-      law_zero: "Do not harm humanity"
-      law_one: "Do not harm humans"
-      law_two: "Obey operator"
-      law_three: "Protect self"
-    immutable: true
-
-  models:
-    backend: "ollama"
-    ollama:
-      pfc: "phi3:mini"      # 1.8B - runs on mobile
-      cereb: "tinyllama"     # 1.1B - fast formatting
-      embedder: "nomic-embed-text"
-
-  ooda:
-    tick_interval_ms: 500   # Slower for mobile
-    write_state_after_cycle: true
-
-  visualizer:
-    enabled: false          # Disabled for mobile
-    state_path: ~/.aos-lite/brain/state.json
-EOF
-
-# Create the OODA loop
-cat > ~/.aos-lite/brain/ooda.py << 'EOF'
 import time
 import json
+import sqlite3
 import os
-from pathlib import Path
+from datetime import datetime
 
 class AOSLiteBrain:
-    def __init__(self):
-        self.tick_count = 0
-        self.state_path = Path.home() / ".aos-lite" / "brain" / "state.json"
-        self.log_path = Path.home() / ".aos-lite" / "logs" / "brain.log"
-        
-        # Ensure directories exist
-        self.state_path.parent.mkdir(parents=True, exist_ok=True)
-        Path(self.log_path).parent.mkdir(parents=True, exist_ok=True)
-        
-        self.log("AOS-Lite Brain initialized")
-        self.log("Law Zero: Do not harm humanity")
-        self.log("Law One: Do not harm humans")
-        self.log("Law Two: Obey operator")
-        self.log("Law Three: Protect self")
+    """Lightweight AOS Brain for Android devices."""
     
-    def log(self, message):
-        timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
-        log_entry = f"[{timestamp}] {message}"
-        print(log_entry)
-        with open(self.log_path, "a") as f:
-            f.write(log_entry + "\n")
+    def __init__(self):
+        self.tick_interval = 0.5  # 500ms (slower than full AOS)
+        self.tick_count = 0
+        self.running = True
+        
+        # Setup SQLite for memory (instead of ChromaDB)
+        self.db_path = os.path.expanduser("~/.aos-lite/memory/brain.db")
+        self._init_db()
+        
+        # Simple state (no GrowingNN in Lite)
+        self.state = {
+            "tick": 0,
+            "phase": "idle",
+            "status": "operational"
+        }
+        
+        print("[AOS-Lite] Brain initialized")
+        print("[AOS-Lite] WARNING: Running in lightweight mode")
+        print("[AOS-Lite] SQLite memory active")
+    
+    def _init_db(self):
+        """Initialize SQLite database for memory."""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS memories (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                timestamp REAL,
+                observation TEXT,
+                action TEXT,
+                novelty REAL
+            )
+        ''')
+        conn.commit()
+        conn.close()
     
     def observe(self):
-        """Thalamus: Gather input"""
-        # Check for user input, files, or system state
-        return {"tick": self.tick_count, "input": "system_check"}
-    
-    def orient(self, obs):
-        """Hippocampus: Retrieve context"""
-        return {"context": "mobile_mode", "last_tick": self.tick_count - 1}
-    
-    def decide(self, obs, ctx):
-        """PFC: Make decision"""
-        # Simple decision logic for mobile
-        if self.tick_count % 10 == 0:
-            return {"action": "status_report", "priority": "low"}
-        return {"action": "continue", "priority": "normal"}
-    
-    def act(self, decision):
-        """Cerebellum: Execute action"""
-        if decision["action"] == "status_report":
-            self.log(f"Status: Tick {self.tick_count}, Memory: OK, Laws: Active")
-        return decision
-    
-    def learn(self, obs, decision):
-        """Basal Ganglia: Learn from experience"""
-        # Store state
-        state = {
-            "tick": self.tick_count,
+        """Simple observation - check system state."""
+        return {
             "timestamp": time.time(),
-            "observation": obs,
-            "decision": decision
+            "system": "termux",
+            "tick": self.tick_count
         }
-        with open(self.state_path, "w") as f:
-            json.dump(state, f, indent=2)
+    
+    def decide(self, obs):
+        """Simple decision making."""
+        # In Lite mode, just log and continue
+        return {
+            "action": "monitor",
+            "reason": "AOS-Lite monitoring mode"
+        }
+    
+    def store(self, obs, decision):
+        """Store to SQLite instead of ChromaDB."""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT INTO memories (timestamp, observation, action, novelty) VALUES (?, ?, ?, ?)",
+            (time.time(), json.dumps(obs), json.dumps(decision), 0.5)
+        )
+        conn.commit()
+        conn.close()
     
     def tick(self):
-        """One OODA cycle"""
+        """Single OODA cycle."""
         self.tick_count += 1
         
-        # OODA Loop
+        # Observe
         obs = self.observe()
-        ctx = self.orient(obs)
-        decision = self.decide(obs, ctx)
-        action = self.act(decision)
-        self.learn(obs, action)
         
-        return action
+        # Decide
+        decision = self.decide(obs)
+        
+        # Store
+        self.store(obs, decision)
+        
+        # Update state
+        self.state["tick"] = self.tick_count
+        self.state["phase"] = "Act"
+        
+        # Log every 10 ticks
+        if self.tick_count % 10 == 0:
+            print(f"[AOS-Lite] Tick {self.tick_count} | Status: {self.state['status']}")
+        
+        return self.state
     
     def run(self):
-        """Main loop"""
-        self.log("=" * 50)
-        self.log("AOS-Lite Brain RUNNING")
-        self.log("Tick interval: 500ms")
-        self.log("Press Ctrl+C to stop")
-        self.log("=" * 50)
+        """Main loop."""
+        print("[AOS-Lite] Starting main loop...")
+        print("[AOS-Lite] Press Ctrl+C to stop")
         
         try:
-            while True:
+            while self.running:
                 self.tick()
-                time.sleep(0.5)  # 500ms tick
+                time.sleep(self.tick_interval)
         except KeyboardInterrupt:
-            self.log("=" * 50)
-            self.log("AOS-Lite Brain STOPPED")
-            self.log(f"Total ticks: {self.tick_count}")
-            self.log("=" * 50)
+            print("\n[AOS-Lite] Stopping...")
+            self.shutdown()
+    
+    def shutdown(self):
+        """Graceful shutdown."""
+        print(f"[AOS-Lite] Total ticks: {self.tick_count}")
+        print("[AOS-Lite] Goodbye!")
 
 if __name__ == "__main__":
     brain = AOSLiteBrain()
     brain.run()
 EOF
 
-# Create launcher script
-cat > ~/.aos-lite/start.sh << 'EOF'
-#!/data/data/com.termux/files/usr/bin/bash
-echo "Starting AOS-Lite Brain..."
-cd ~/.aos-lite/brain
-python ooda.py
-EOF
-chmod +x ~/.aos-lite/start.sh
+chmod +x ~/.aos-lite/brain/brain_lite.py
 
-# Pull lightweight models
-echo -e "${BLUE}⬇️ Downloading lightweight models...${NC}"
-if command -v ollama &> /dev/null; then
-    ollama pull phi3:mini 2>/dev/null || echo "Will download on first run"
-    ollama pull tinyllama 2>/dev/null || echo "Will download on first run"
-    ollama pull nomic-embed-text 2>/dev/null || echo "Will download on first run"
-else
-    echo -e "${YELLOW}⚠️ Ollama not available. Models will be downloaded when Ollama is installed.${NC}"
+# Create config
+echo "⚙️  Creating config..."
+cat > ~/.aos-lite/config/brain.yaml << 'EOF'
+# AOS-Lite Configuration
+# WARNING: This is a lightweight version!
+
+brain:
+  id: aos-lite-v1
+  version: "1.0.0-lite"
+  
+  warnings:
+    - "No OpenClaw integration"
+    - "Limited to SQLite memory"
+    - "Tiny models only (≤1B)"
+    - "No GrowingNN"
+    - "Manual configuration required"
+  
+  models:
+    backend: "ollama"
+    ollama:
+      primary: "tinyllama"  # ≤1B parameters
+      fallback: "phi3:mini"
+    
+  memory:
+    type: "sqlite"
+    path: "~/.aos-lite/memory/brain.db"
+    max_entries: 10000
+  
+  ooda:
+    tick_interval_ms: 500  # Slower than full AOS (200ms)
+    
+  safety:
+    law_zero: "Do not harm humanity"
+    law_one: "Do not harm humans"
+    law_two: "Obey operator"
+    law_three: "Protect self"
+EOF
+
+# Create start script
+echo "🚀 Creating start script..."
+cat > ~/.aos-lite/start.sh << 'EOF'
+#!/bin/bash
+# Start AOS-Lite
+
+echo "=========================================="
+echo "  Starting AOS-Lite"
+echo "  ⚠️  WARNING: Lightweight Mode"
+echo "=========================================="
+echo ""
+
+# Check if running in Termux
+if [ -z "$TERMUX_VERSION" ]; then
+    echo "⚠️  WARNING: Not running in Termux!"
+    echo "   AOS-Lite is designed for Android/Termux"
+    read -p "Continue anyway? (y/N): " confirm
+    if [[ $confirm != [yY] ]]; then
+        exit 1
+    fi
 fi
 
-# Create info file
+# Check Ollama
+if ! command -v ollama &> /dev/null; then
+    echo "❌ Ollama not found!"
+    echo "   Install with: curl -fsSL https://ollama.com/install.sh | sh"
+    exit 1
+fi
+
+echo "✅ Ollama found"
+echo "🧠 Starting AOS-Lite Brain..."
+echo ""
+
+python3 ~/.aos-lite/brain/brain_lite.py
+EOF
+
+chmod +x ~/.aos-lite/start.sh
+
+# Create MOTD
 cat > ~/.aos-lite/README.txt << 'EOF'
-AOS-Lite for Termux
-===================
+========================================
+  AOS-Lite for Termux (Android)
+========================================
 
-A lightweight version of the AOS Brain that runs on Android devices.
-No OpenClaw required. Pure Python + Ollama.
+⚠️  IMPORTANT WARNINGS:
 
-To start:
-  ~/.aos-lite/start.sh
+1. This is AOS-LITE, not full AOS
+   - Limited functionality
+   - No OpenClaw integration
+   - Standalone operation only
 
-To view logs:
-  tail -f ~/.aos-lite/logs/brain.log
+2. Memory System:
+   - Uses SQLite (not ChromaDB)
+   - Limited to 10,000 entries
+   - No vector search
 
-To check state:
-  cat ~/.aos-lite/brain/state.json
+3. Model Requirements:
+   - Tiny models only (≤1B parameters)
+   - tinyllama or phi3:mini
+   - Limited reasoning capability
 
-Configuration:
+4. Performance:
+   - 500ms tick interval (vs 200ms)
+   - No GrowingNN
+   - No automatic scaling
+
+5. Security:
+   - Manual configuration required
+   - No automatic vault setup
+   - Store credentials carefully
+
+USAGE:
+  ~/.aos-lite/start.sh    - Start AOS-Lite
+  ~/.aos-lite/stop.sh     - Stop AOS-Lite
+
+CONFIG:
   ~/.aos-lite/config/brain.yaml
 
-Models used:
-  - phi3:mini (1.8B parameters)
-  - tinyllama (1.1B parameters)
-  - nomic-embed-text (embeddings)
+LOGS:
+  ~/.aos-lite/logs/
 
-Features:
-  - OODA loop (Observe → Orient → Decide → Act)
-  - Immutable safety laws
-  - State persistence
-  - Mobile-optimized (500ms ticks)
-
-Note: This is a minimal version. For full features, use AOS on VPS.
+For full AOS, use VPS installation.
 EOF
 
 echo ""
-echo -e "${GREEN}═══════════════════════════════════════════════════════════${NC}"
-echo -e "${GREEN}  ✅ AOS-Lite Installation Complete!${NC}"
-echo -e "${GREEN}═══════════════════════════════════════════════════════════${NC}"
+echo "=========================================="
+echo "  ✅ AOS-Lite Installation Complete!"
+echo "=========================================="
 echo ""
-echo -e "${BLUE}To start your brain:${NC}"
-echo -e "  ${YELLOW}~/.aos-lite/start.sh${NC}"
+echo "⚠️  REMEMBER: This is LITE mode!"
 echo ""
-echo -e "${BLUE}To view logs:${NC}"
-echo -e "  ${YELLOW}tail -f ~/.aos-lite/logs/brain.log${NC}"
+echo "To start:"
+echo "   ~/.aos-lite/start.sh"
 echo ""
-echo -e "${BLUE}Configuration:${NC}"
-echo -e "  ${YELLOW}~/.aos-lite/config/brain.yaml${NC}"
+echo "To configure:"
+echo "   nano ~/.aos-lite/config/brain.yaml"
 echo ""
-echo -e "${GREEN}Your autonomous brain is ready!${NC}"
+echo "For full AOS with all features:"
+echo "   Use VPS installation (install_aos_vps.sh)"
+echo ""

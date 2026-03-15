@@ -1,5 +1,8 @@
 brain:
   id: aos-nn-ooda-v1
+  version: "2.2.0"
+  release_date: "2026-03-15"
+  codename: "self-improving"
   state_path: ~/.aos/brain/state/brain_state.json
 
   modes:
@@ -56,13 +59,22 @@ brain:
 
   growingnn:
     enabled: true
+    version: "2.2.0"
     add_node_threshold:
-      novelty: 0.8
+      novelty: 0.8  # Dynamic - will be adjusted by dynamic_thresholds.py
       error: 0.6
+      dynamic_adjustment: true  # Enable auto-tuning
+      min_threshold: 0.5
+      max_threshold: 0.95
     add_layer_threshold:
       complexity: 0.9
     max_nodes_per_layer: 256
     max_layers: 6
+    memory_compression:
+      enabled: false  # Will enable at 10,000 nodes
+      trigger_at_nodes: 10000
+      compression_ratio: 0.15
+      archive_old_memories: true
 
   visualizer:
     enabled: true
