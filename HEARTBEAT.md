@@ -23,6 +23,8 @@ cat ~/.aos/brain/state/brain_state.json
 ```
 
 ## Current Status
-- Brain: RUNNING (local models: qwen2.5:3b, phi3:3.8b, phi3:latest, nomic-embed-text)
+- Brain: RUNNING (PID 250382)
+- Memory Bridge: ACTIVE (8 chunks indexed, semantic retrieval working)
+- Models: qwen2.5:3b, phi3:3.8b, phi3:latest, nomic-embed-text, Mortimer:latest
 - Cost: $0/month
-- Last Updated: 2026-03-15
+- Last Updated: 2026-03-16 04:32 UTC

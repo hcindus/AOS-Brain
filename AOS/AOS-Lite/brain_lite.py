@@ -20,7 +20,10 @@ CONFIG = {
     "port": 8765,
     "db_path": os.path.expanduser("~/.aos-lite/memory/brain.db"),
     "tick_interval": 0.5,  # 500ms
-    "max_history": 100
+    "max_history": 100,
+    "novelty_threshold": 0.8,
+    "max_novelty_rate": 0.3,  # Max 30% growth rate
+    "novelty_decay": 0.95     # Decay factor
 }
 
 class AOSLiteBrain:
@@ -75,8 +78,8 @@ class AOSLiteBrain:
         timestamp = datetime.now().strftime("%H:%M:%S")
         print(f"[{timestamp}] [{level}] {message}")
     
-    async def handle_client(self, websocket, path):
-        """Handle WebSocket client connection."""
+    async def handle_client(self, websocket):
+        """Handle WebSocket client connection - FIXED for websockets 16.0"""
         self.clients.add(websocket)
         self.log("INFO", f"Client connected. Total: {len(self.clients)}")
         
@@ -169,14 +172,55 @@ class AOSLiteBrain:
             import random
             return random.choice(responses)
     
+    def __init__(self):
+        self.tick_count = 0
+        self.running = True
+        self.clients = set()
+        self.conversation_history = []
+        self.recent_novelty_scores = []  # Track for rate limiting
+        
+        # Setup database
+        self._init_db()
+        
+        print("[AOS-Lite] Brain initialized")
+        print(f"[AOS-Lite] Database: {CONFIG['db_path']}")
+        print(f"[AOS-Lite] WebSocket: ws://{CONFIG['host']}:{CONFIG['port']}")
+    
+    def calculate_novelty(self, observation):
+        """Calculate novelty with rate limiting - FIXED from main brain."""
+        import random
+        
+        # Base novelty calculation
+        base_novelty = 0.8 if len(self.recent_novelty_scores) < 10 else 0.5
+        
+        # Apply decay based on recent scores
+        if len(self.recent_novelty_scores) > 0:
+            recent_avg = sum(self.recent_novelty_scores[-10:]) / len(self.recent_novelty_scores[-10:])
+            base_novelty = min(base_novelty, recent_avg * CONFIG['novelty_decay'])
+        
+        # Rate limiting - reduce if growing too fast
+        if len(self.recent_novelty_scores) >= 10:
+            recent_growth_rate = sum(1 for s in self.recent_novelty_scores[-10:] if s > CONFIG['novelty_threshold']) / 10
+            if recent_growth_rate > CONFIG['max_novelty_rate']:
+                base_novelty = base_novelty * 0.7
+        
+        novelty = max(base_novelty, 0.3)  # Minimum 0.3
+        self.recent_novelty_scores.append(novelty)
+        
+        # Keep only last 100 scores
+        if len(self.recent_novelty_scores) > 100:
+            self.recent_novelty_scores = self.recent_novelty_scores[-100:]
+        
+        return novelty
+
     def store_memory(self, observation, action, response):
-        """Store to SQLite."""
+        """Store to SQLite with proper novelty calculation."""
         try:
             conn = sqlite3.connect(CONFIG['db_path'])
             cursor = conn.cursor()
             
-            # Calculate simple novelty (random for now)
-            novelty = 0.5
+            # Calculate novelty with rate limiting
+            novelty = self.calculate_novelty(observation)
             
             cursor.execute(
                 "INSERT INTO memories (timestamp, observation, action, response, novelty) VALUES (?, ?, ?, ?, ?)",
@@ -185,6 +229,8 @@ class AOSLiteBrain:
             
             conn.commit()
             conn.close()
+            
+            self.log("DEBUG", f"Stored memory with novelty: {novelty:.2f}")
         except Exception as e:
             self.log("ERROR", f"Failed to store memory: {e}")
     

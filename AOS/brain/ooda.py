@@ -10,6 +10,7 @@ from state_writer import StateWriter
 from conscious import ConsciousLayer
 from subconscious import SubconsciousLayer
 from unconscious import UnconsciousLayer
+from memory_bridge import MemoryBridge
 
 class OODA:
     def __init__(self, cfg):
@@ -29,6 +30,10 @@ class OODA:
         self.subconscious = SubconsciousLayer(self.hippo)
         self.unconscious = UnconsciousLayer(self.hippo, self.basal, self.limbic)
         
+        # 3. Initialize Memory Bridge for workspace file integration
+        self.memory_bridge = MemoryBridge()
+        self.memory_bridge.index_memory_files()  # Initial index
+        
         self.state_writer = StateWriter(self.cfg["state_path"])
         
         # Tracking for error calculation
@@ -44,6 +49,25 @@ class OODA:
         # O: Orient (Subconscious Context)
         ctx = self.subconscious.context(obs)
         affect = self.unconscious.evaluate_affect(obs, ctx)
+        
+        # MEMORY BRIDGE: Query workspace memory on high novelty
+        workspace_memory = None
+        try:
+            novelty = affect.get("novelty", 0.0)
+            novelty_avg = affect.get("novelty_avg", 0.0)
+            if self.memory_bridge.should_query_memory(novelty, novelty_avg):
+                query_text = str(obs.get("input", obs))
+                workspace_memory = self.memory_bridge.query(
+                    query_text=query_text,
+                    n_results=2,
+                    novelty=novelty
+                )
+                # Inject memory into context for conscious layer
+                if workspace_memory and workspace_memory.get("source_count", 0) > 0:
+                    ctx["workspace_memory"] = workspace_memory
+        except Exception as e:
+            # Don't let memory bridge errors crash the brain
+            print(f"[MemoryBridge] Query error: {e}")
         
         # Calculate complexity for GrowingNN
         complexity = self.basal.calculate_complexity(obs, ctx)
@@ -87,7 +111,7 @@ class OODA:
         nn_state = basal_stats["nn_state"]
         
         # Write state for Visualizer
-        self.state_writer.write({
+        state = {
             "phase": "Act",
             "tick": self.tick_count,
             "obs": obs,
@@ -113,4 +137,17 @@ class OODA:
                 "novelty": novelty,
                 "growth_triggered": self.basal.should_add_node(novelty, error) or self.basal.should_add_layer(complexity)
             }
-        })
+        }
+        
+        # Include workspace memory if retrieved
+        if workspace_memory:
+            state["workspace_memory"] = {
+                "queried": True,
+                "source_count": workspace_memory.get("source_count", 0),
+                "results": [
+                    {"source": r["source"], "relevance": r["relevance"], "text": r["text"][:200]}
+                    for r in workspace_memory.get("results", [])
+                ]
+            }
+        
+        self.state_writer.write(state)

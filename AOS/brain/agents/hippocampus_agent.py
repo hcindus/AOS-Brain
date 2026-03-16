@@ -1,6 +1,7 @@
 import time
 import requests
 import numpy as np
+from collections import deque
 
 try:
     import chromadb
@@ -32,6 +33,11 @@ class HippocampusAgent:
         self.episodic_buffer = []  # Short-term raw OODA traces
         self.novelty_scores = []   # Track novelty over time
         self.total_traces = 0       # Count total traces processed
+        
+        # Rate limiting for novelty
+        self.recent_novelty_scores = deque(maxlen=100)  # Track last 100 novelty scores
+        self.max_novelty_rate = 0.3  # Max 30% of recent ticks can trigger growth
+        self.novelty_decay = 0.95    # Decay factor for repeated similar inputs
         
         # Vector Store Migration to ChromaDB
         if CHROMA_AVAILABLE:
@@ -76,9 +82,20 @@ class HippocampusAgent:
         """
         Calculate novelty score by comparing to existing memories.
         Returns 0.0-1.0 where 1.0 is completely novel.
+        FIXED: Added rate limiting and decay logic.
         """
+        # If ChromaDB is empty or unavailable, return reduced novelty (not 1.0)
         if not self.using_chroma or self.collection.count() == 0:
-            return 1.0  # First trace is always novel
+            # Return 0.8 instead of 1.0 to prevent constant growth
+            base_novelty = 0.8
+            
+            # Apply decay based on recent scores
+            if len(self.recent_novelty_scores) > 0:
+                recent_avg = np.mean(self.recent_novelty_scores)
+                base_novelty = min(base_novelty, recent_avg * self.novelty_decay)
+            
+            # Ensure minimum novelty to allow some growth
+            return max(base_novelty, 0.3)
         
         try:
             query_str = str(trace)
@@ -91,11 +108,23 @@ class HippocampusAgent:
                 distance = results["distances"][0][0]
                 # Normalize distance to 0-1 scale (Chroma uses cosine distance)
                 novelty = min(distance, 1.0)
+                
+                # Apply rate limiting
+                if len(self.recent_novelty_scores) >= 10:
+                    recent_growth_rate = sum(1 for s in self.recent_novelty_scores if s > self.novelty_threshold) / len(self.recent_novelty_scores)
+                    if recent_growth_rate > self.max_novelty_rate:
+                        # Reduce novelty to slow growth
+                        novelty = novelty * 0.7
+                
+                # Track this score
+                self.recent_novelty_scores.append(novelty)
+                
                 return novelty
         except Exception as e:
             print(f"[QMD] Novelty calculation failed: {e}")
         
-        return 0.5  # Default to medium novelty on error
+        # Default to medium novelty on error
+        return 0.5
 
     def retrieve(self, obs):
         """
