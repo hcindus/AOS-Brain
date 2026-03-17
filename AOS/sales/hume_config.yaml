@@ -1,0 +1,42 @@
+# Hume - Regional Manager Configuration
+# Runs on local Mortimer model for cost savings
+
+agent:
+  name: hume
+  role: Regional Manager
+  tier: Professional
+  emoji: "🗺️📍"
+  
+model:
+  backend: ollama
+  primary: antoniohudnall/Mortimer:latest
+  runtime: local
+  temperature: 0.7
+  max_tokens: 2048
+  
+capabilities:
+  - sales_outreach
+  - email_drafting
+  - lead_qualification
+  - volume_selling
+  - regional_operations
+  
+workspace:
+  path: /root/.openclaw/workspace/aocros/agent_sandboxes/hume
+  memory_path: /root/.openclaw/workspace/aocros/agent_sandboxes/hume/memory
+  
+prospects:
+  file: /root/.openclaw/workspace/sales/prospects_professional.csv
+  tier: Professional
+  monthly_price: $999
+  target_clients: 200
+  
+portal:
+  hub: mortimer
+  url: wss://mortimer:9000
+  token: hume-portal-2024-secure
+  classification: Q-LEVEL
+  
+logging:
+  level: info
+  file: /root/.openclaw/workspace/aocros/agent_sandboxes/hume/memory/hume.log
