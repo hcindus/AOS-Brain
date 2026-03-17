@@ -1,6 +1,8 @@
 # CORPORATE TIER - DRAFT EMAILS
 ## Target: 50 Companies | Price: $3,999/month
-**Sales Rep:** Pulp | **Status:** DRAFT - PENDING APPROVAL
+**Sales Rep:** Pulp | **Status:** ✅ **APPROVED - READY TO SEND**
+**Approved By:** Captain
+**Approved At:** 2026-03-16 07:23 UTC
 
 ---
 

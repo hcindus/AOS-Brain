@@ -23,8 +23,12 @@ cat ~/.aos/brain/state/brain_state.json
 ```
 
 ## Current Status
-- Brain: RUNNING (PID 250382)
+- Brain: 🔴 **DOWN/STALLED** (Tick 462, no change since 17:44 UTC - 2.5+ hours ago)
+- Tmux Session: NOT FOUND
 - Memory Bridge: ACTIVE (8 chunks indexed, semantic retrieval working)
 - Models: qwen2.5:3b, phi3:3.8b, phi3:latest, nomic-embed-text, Mortimer:latest
 - Cost: $0/month
-- Last Updated: 2026-03-16 04:32 UTC
+- Last Updated: 2026-03-16 20:16 UTC
+
+## ⚠️ CRITICAL ALERT
+Brain process stalled at 17:44 UTC. Tick count frozen at 462. Tmux session 'aos-brain' not found. OODA loop not cycling. **RESTART REQUIRED** to restore brain function.
