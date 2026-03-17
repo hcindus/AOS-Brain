@@ -23,12 +23,13 @@ cat ~/.aos/brain/state/brain_state.json
 ```
 
 ## Current Status
-- Brain: 🔴 **DOWN/STALLED** (Tick 462, no change since 17:44 UTC - 2.5+ hours ago)
+- Brain: 🔴 **DOWN** (Tick 998 frozen, no tmux sessions)
+- Ollama: 🟢 **STABLE** (6 consecutive keepalives succeeded since 07:34 UTC)
 - Tmux Session: NOT FOUND
 - Memory Bridge: ACTIVE (8 chunks indexed, semantic retrieval working)
-- Models: qwen2.5:3b, phi3:3.8b, phi3:latest, nomic-embed-text, Mortimer:latest
+- Models: Loaded but inference broken
 - Cost: $0/month
-- Last Updated: 2026-03-16 20:16 UTC
+- Last Updated: 2026-03-17 06:19 UTC
 
 ## ⚠️ CRITICAL ALERT
-Brain process stalled at 17:44 UTC. Tick count frozen at 462. Tmux session 'aos-brain' not found. OODA loop not cycling. **RESTART REQUIRED** to restore brain function.
+**OLLAMA SERVICE RECOVERED**: /api/generate endpoint responding at 06:59 UTC after multiple failures. AOS brain restart is now possible. Brain has been down since tick 998 (~13+ hours ago).
