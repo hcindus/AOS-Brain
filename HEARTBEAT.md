@@ -74,17 +74,17 @@ cat ~/.aos/brain/state/brain_state.json
 ```
 
 ## Current Status
-- Brain: 🔴 **DOWN** (Tmux session lost, last tick 1112)
-- Ollama: 🟡 **DEGRADED** (Service running, inference TIMEOUT)
-- Tmux Session: 🔴 **DOWN** (aos-brain: not found)
-- Memory Bridge: 🔴 **DOWN** (Cannot reach Ollama)
+- Brain: 🟡 **DEGRADED** (Tick 941, cycling but inference failing)
+- Ollama: 🔴 **DEGRADED** (API responsive, inference TIMEOUT)
+- Tmux Session: 🟢 **UP** (aos-brain: active)
+- Memory Bridge: 🔴 **DOWN** (Ollama inference hanging)
 - Models: 🔴 **TIMEOUT** (All generation requests hang)
-- Load Average: 5.17 (elevated)
+- Load Average: 3.89 (improved)
 - Cost: $0/month
-- Last Updated: 2026-03-18 04:38 UTC
+- Last Updated: 2026-03-18 12:13 UTC
 
 ## 🔴 ACTIVE INCIDENT
-**Ollama Inference Failure** — Service responds to API calls but all model generation requests timeout after 30-60s. Brain cannot restart until inference restored. Investigating root cause.
+**Ollama Inference Failure (Recurring)** — Service began timing out at 12:07 UTC. Runner process stuck at 193% CPU. Same pattern as 04:38 UTC incident. All models (Mortimer, phi3) hanging on inference. API responsive but generation deadlocked. Manual intervention required.
 
 ## GrowingNN Metrics
 - **Nodes**: 1115 (up from 1092 - 23 nodes added since last check)
