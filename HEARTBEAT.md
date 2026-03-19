@@ -74,17 +74,42 @@ cat ~/.aos/brain/state/brain_state.json
 ```
 
 ## Current Status
-- Brain: 🟡 **DEGRADED** (Tick 941, cycling but inference failing)
-- Ollama: 🔴 **DEGRADED** (API responsive, inference TIMEOUT)
+- Brain: 🟢 **OPERATIONAL** (Tick 892, cycling, executing actions)
+- Ollama: 🟡 **DEGRADED** (Limping - keepalive works but runners stuck at 356%)
 - Tmux Session: 🟢 **UP** (aos-brain: active)
-- Memory Bridge: 🔴 **DOWN** (Ollama inference hanging)
-- Models: 🔴 **TIMEOUT** (All generation requests hang)
-- Load Average: 3.89 (improved)
+- Memory Bridge: 🟡 **DEGRADED** (Functional but resource leak)
+- Models: 🟡 **DEGRADED** (Runner recycling, new ones spawn stuck)
+- Load Average: **ELEVATED**
 - Cost: $0/month
-- Last Updated: 2026-03-18 12:13 UTC
+- Last Updated: 2026-03-18 23:50 UTC
 
-## 🔴 ACTIVE INCIDENT
-**Ollama Inference Failure (Recurring)** — Service began timing out at 12:07 UTC. Runner process stuck at 193% CPU. Same pattern as 04:38 UTC incident. All models (Mortimer, phi3) hanging on inference. API responsive but generation deadlocked. Manual intervention required.
+## 🟡 DEGRADED STATE - LIMPING ALONG
+**Ollama Degraded - System Limping** — **Functional but unstable**:
+
+**Complete Timeline (75+ minutes of instability)**:
+- **22:35 UTC**: Mortimer runner stuck at 350% CPU
+- **22:45 UTC**: Mortimer runner stuck at 304% CPU  
+- **22:50 UTC**: Mortimer runner stuck at 333% CPU
+- **22:55 UTC**: Mortimer runner stuck at 283% CPU
+- **22:56 UTC**: phi3 runner elevated CPU
+- **23:00 UTC**: Mortimer runner stuck at 314% CPU
+- **23:03 UTC**: Mortimer runner stuck at 372% CPU
+- **23:09 UTC**: Mortimer runner stuck at 376% CPU
+- **23:14 UTC**: Multiple runners stuck (357%, 118%)
+- **23:20 UTC**: ✅ Keepalive succeeded (4.85s)
+- **23:29 UTC**: ❌ Timed out, runners at 125%, 100%
+- **23:34 UTC**: ✅ Keepalive succeeded (0.82s) but new runner at 309%
+- **23:39 UTC**: ✅ Keepalive succeeded (1.21s) but runner at 383%
+- **23:44 UTC**: ✅ Keepalive succeeded (1.21s) runner at 373%
+- **23:49 UTC**: ✅ Keepalive succeeded (13.9s) runner at 356%
+- **23:55 UTC**: ✅ Keepalive succeeded (5.06s) runner at 369%
+- **23:59 UTC**: ❌ **TIMEOUT** — System reverted to failure state
+
+**Pattern**: **INTERMITTENT FAILURE** — System **oscillating** between functional (keepalive works) and failed (timeouts). Runners spawn stuck (326%+ CPU). Brain operational (tick 932, nodes 968) and thriving despite Ollama instability.
+
+**Status**: System **NOT STABLE** but **FUNCTIONAL**. Ollama serving requests despite stuck runners. Resource leak ongoing.
+
+**Action Required**: System reboot **RECOMMENDED** to clean up stuck processes and restore stability, but system is currently functional.
 
 ## GrowingNN Metrics
 - **Nodes**: 1115 (up from 1092 - 23 nodes added since last check)
