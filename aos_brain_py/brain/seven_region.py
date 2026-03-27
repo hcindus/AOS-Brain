@@ -28,6 +28,14 @@ from collections import deque
 sys.path.insert(0, str(Path(__file__).parent))
 sys.path.insert(0, str(Path(__file__).parent.parent / 'AOS' / 'brain'))
 
+# Import Tracray for spatial concept mapping
+try:
+    from core.tracray_lexicon import TracrayLexicon
+    TRACRAY_AVAILABLE = True
+except ImportError:
+    TRACRAY_AVAILABLE = False
+    print("[Warning] Tracray not available, using fallback mode")
+
 class SevenRegionBrain:
     """
     Complete 7-region brain architecture.
