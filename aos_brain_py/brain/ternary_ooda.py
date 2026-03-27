@@ -14,12 +14,20 @@ import time
 import json
 import threading
 from typing import Dict, List, Optional, Any, Tuple
-import numpy as np
 from dataclasses import dataclass, field
 
-from core.cortical_sheet import CorticalSheet
-from core.tracray_lexicon import TracrayLexicon
+# Lazy imports - only load when needed to avoid startup hangs
+def get_numpy():
+    import numpy as np
+    return np
+
+def get_cortical_sheet():
+    from core.cortical_sheet import CorticalSheet
+    return CorticalSheet
+
 from substrate.graph_store import GraphStore, Node
+
+# Import only what we need immediately
 from brain.cortex import QMDAwareCortex
 
 
