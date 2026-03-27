@@ -265,12 +265,18 @@ class SevenRegionBrain:
 # =========================
 
 class ThalamusRegion:
-    """Sensory relay - gateway to cortex."""
+    """Sensory relay - gateway to cortex with Tracray spatial mapping."""
     
     def __init__(self, cfg):
         self.cfg = cfg
         self.input_queue = deque(maxlen=100)
         self.last_check = 0
+        
+        # Initialize Tracray for spatial concept mapping
+        if TRACRAY_AVAILABLE:
+            self.tracray = TracrayLexicon()
+        else:
+            self.tracray = None
     
     def observe(self) -> Dict:
         """Check for input, fallback to system tick."""
@@ -291,12 +297,29 @@ class ThalamusRegion:
         return {"input": "system_tick", "source": "internal"}
     
     def process_external(self, data: Dict) -> Dict:
-        """Process external input."""
-        return {
-            "input": data.get("text", ""),
+        """Process external input with Tracray spatial mapping."""
+        text = data.get("text", "")
+        
+        # Extract Tracray concepts from input
+        tracray_concepts = []
+        if self.tracray:
+            concepts = self.tracray.match_text(text)
+            for concept in concepts:
+                tracray_concepts.append({
+                    "word": concept["word"],
+                    "concept": concept["concept"],
+                    "route": concept["route"],
+                    "coord": concept["coord"]
+                })
+        
+        result = {
+            "input": text,
             "source": data.get("source", "external"),
             "timestamp": time.time(),
+            "tracray_concepts": tracray_concepts,
         }
+        
+        return result
 
 
 class HippocampusRegion:
