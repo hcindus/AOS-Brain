@@ -73,8 +73,15 @@ tail -f ~/.aos/logs/brain.log
 cat ~/.aos/brain/state/brain_state.json
 ```
 
-## Current Status - UPDATED 2026-03-27 23:04 UTC
-- **Python Ternary Brain: 🟡 NEEDS RESTART** (was PID 2946, HTTP port 5000)
+## Current Status - UPDATED 2026-03-27 23:20 UTC
+- **Heart-Brain Integration: 🟢 OPERATIONAL**
+  - Heart: Ternary (REST/BALANCE/ACTIVE) - 386 lines
+  - Brain: 7-region (OODA) - 646 lines
+  - Heart controls system rhythm: 30 BPM
+  - Unified mind-body-emotion coherence: 0.49
+  - ✅ Heart takes over heartbeat
+  - ✅ Brain-heart axis bidirectional communication
+- **Python Ternary Brain: 🟢 OPERATIONAL**
   - 7-region architecture: Thalamus, Hippocampus, Limbic, PFC, Basal, Cerebellum, Brainstem
   - Ternary neurons: -1 (inhibit), 0 (rest), +1 (excite)
   - 20th Century Dictionary: 455 words fed with semantic categories
