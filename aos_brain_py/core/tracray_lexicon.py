@@ -48,174 +48,213 @@ TRACRAY_LEXICON = {
             "words": ["afraid", "scared", "fear", "terror", "anxiety"],
             "route": "limbic",
             "coord": (8, 2, 1),
-            "relations": {"is_a": ["emotion"], "valence": "negative"},
+            "relations": {"is_a": ["emotion"], "triggers": ["amygdala"]},
         },
         "joy": {
-            "words": ["happy", "joy", "glad", "pleased", "delighted"],
+            "words": ["happy", "joy", "delight", "pleasure", "glad"],
             "route": "limbic",
             "coord": (8, 4, 1),
-            "relations": {"is_a": ["emotion"], "valence": "positive"},
+            "relations": {"is_a": ["emotion"]},
         },
         
-        # Executive function
-        "plan": {
-            "words": ["plan", "decide", "choose", "goal", "strategy"],
-            "route": "pfc",
-            "coord": (9, 9, 3),
-            "relations": {"is_a": ["cognition"], "requires": ["memory"]},
+        # Motor/action
+        "move": {
+            "words": ["move", "go", "walk", "run", "travel"],
+            "route": "motor_cortex",
+            "coord": (4, 4, 2),
+            "relations": {"is_a": ["action"]},
         },
-        "analyze": {
-            "words": ["analyze", "think", "reason", "consider", "evaluate"],
-            "route": "pfc",
-            "coord": (9, 8, 3),
+        "act": {
+            "words": ["act", "do", "perform", "execute"],
+            "route": "motor_cortex",
+            "coord": (4, 5, 2),
+            "relations": {"is_a": ["action"]},
+        },
+        
+        # Cognitive/higher functions
+        "think": {
+            "words": ["think", "consider", "ponder", "reflect"],
+            "route": "prefrontal",
+            "coord": (6, 6, 3),
+            "relations": {"is_a": ["cognition"]},
+        },
+        "decide": {
+            "words": ["decide", "choose", "select", "determine"],
+            "route": "prefrontal",
+            "coord": (7, 7, 3),
+            "relations": {"is_a": ["cognition"], "requires": ["think"]},
+        },
+        "plan": {
+            "words": ["plan", "design", "arrange", "prepare"],
+            "route": "prefrontal",
+            "coord": (7, 6, 3),
             "relations": {"is_a": ["cognition"]},
         },
         
-        # Language
-        "speech": {
-            "words": ["say", "speak", "tell", "explain", "describe"],
-            "route": "broca",
-            "coord": (7, 8, 2),
-            "relations": {"is_a": ["language"]},
+        # Social concepts
+        "communicate": {
+            "words": ["speak", "talk", "say", "tell", "communicate"],
+            "route": "language_areas",
+            "coord": (3, 6, 2),
+            "relations": {"is_a": ["social"]},
         },
-        "comprehend": {
-            "words": ["understand", "comprehend", "grasp", "parse"],
-            "route": "wernicke",
-            "coord": (7, 7, 2),
-            "relations": {"is_a": ["language"]},
-        },
-        
-        # Spatial relations
-        "left": {
-            "words": ["left", "west", "to the left of"],
-            "route": "parietal",
-            "coord": (1, 6, 2),
-            "relations": {"type": "spatial_relation", "direction": (-1, 0, 0)},
-        },
-        "right": {
-            "words": ["right", "east", "to the right of"],
-            "route": "parietal",
-            "coord": (11, 6, 2),
-            "relations": {"type": "spatial_relation", "direction": (1, 0, 0)},
-        },
-        "up": {
-            "words": ["up", "above", "over", "north"],
-            "route": "parietal",
-            "coord": (6, 11, 3),
-            "relations": {"type": "spatial_relation", "direction": (0, 1, 1)},
-        },
-        "down": {
-            "words": ["down", "below", "under", "south"],
-            "route": "parietal",
-            "coord": (6, 1, 1),
-            "relations": {"type": "spatial_relation", "direction": (0, -1, -1)},
+        "social": {
+            "words": ["people", "person", "human", "society", "community"],
+            "route": "social_cognition",
+            "coord": (6, 3, 2),
+            "relations": {"is_a": ["concept"]},
         },
         
-        # Distance/scale
-        "near": {
-            "words": ["close", "near", "adjacent", "beside"],
-            "route": "parietal",
-            "coord": (4, 4, 1),
-            "relations": {"type": "distance", "scale": "small"},
+        # Abstract
+        "time": {
+            "words": ["time", "moment", "second", "minute", "hour"],
+            "route": "abstract",
+            "coord": (5, 7, 3),
+            "relations": {"is_a": ["abstract"]},
         },
-        "far": {
-            "words": ["far", "distant", "remote", "away"],
-            "route": "parietal",
-            "coord": (8, 8, 1),
-            "relations": {"type": "distance", "scale": "large"},
+        "space": {
+            "words": ["space", "place", "location", "position"],
+            "route": "spatial",
+            "coord": (4, 7, 2),
+            "relations": {"is_a": ["abstract"]},
         },
-        
-        # Entities
-        "agent": {
-            "words": ["i", "me", "you", "they", "person", "human"],
-            "route": "wernicke",
-            "coord": (5, 7, 2),
-            "relations": {"type": "entity", "is_a": ["animate"]},
+        "self": {
+            "words": ["I", "me", "myself", "self", "identity"],
+            "route": "default_mode",
+            "coord": (5, 4, 3),
+            "relations": {"is_a": ["concept"]},
         },
-        "object": {
-            "words": ["thing", "object", "item", "stuff"],
-            "route": "parietal",
-            "coord": (5, 6, 2),
-            "relations": {"type": "entity", "is_a": ["inanimate"]},
+        "world": {
+            "words": ["world", "universe", "reality", "existence"],
+            "route": "abstract",
+            "coord": (5, 5, 4),
+            "relations": {"is_a": ["abstract"]},
         },
         
-        # Actions
-        "move": {
-            "words": ["move", "go", "walk", "run", "travel"],
-            "route": "pfc",
-            "coord": (7, 9, 3),
-            "relations": {"type": "action", "requires": ["agent"]},
+        # Sensory processing
+        "touch": {
+            "words": ["touch", "feel", "tactile", "physical"],
+            "route": "somatosensory",
+            "coord": (2, 3, 1),
+            "relations": {"is_a": ["perception"]},
         },
-        "create": {
-            "words": ["create", "make", "build", "construct"],
-            "route": "pfc",
-            "coord": (9, 10, 3),
-            "relations": {"type": "action", "requires": ["agent"]},
+        "smell": {
+            "words": ["smell", "odor", "scent", "aroma"],
+            "route": "olfactory",
+            "coord": (2, 4, 1),
+            "relations": {"is_a": ["perception"]},
         },
-        "destroy": {
-            "words": ["destroy", "break", "remove", "delete"],
-            "route": "limbic",
-            "coord": (8, 10, 2),
-            "relations": {"type": "action", "valence": "negative"},
+        "taste": {
+            "words": ["taste", "flavor", "savor"],
+            "route": "gustatory",
+            "coord": (2, 5, 1),
+            "relations": {"is_a": ["perception"]},
         },
-    },
-    
-    # Simple grammar for parsing
-    "grammar": {
-        "S": ["NP VP"],
-        "NP": ["Det N", "N", "Det Adj N"],
-        "VP": ["V", "V NP", "V PP"],
-        "PP": ["P NP"],
-        "Det": ["the", "a", "an", "this", "that"],
-        "Adj": ["big", "small", "happy", "sad", "red", "blue"],
-        "N": ["agent", "object", "memory", "plan", "emotion"],
-        "V": ["move", "create", "see", "hear", "remember", "plan"],
-        "P": ["to", "from", "with", "above", "below", "left", "right"],
-    },
+    }
 }
 
 
-def tracray_lookup(text: str) -> List[Dict[str, Any]]:
+class TracrayLexicon:
     """
-    Look up concepts in Tracray lexicon.
+    Wrapper class for Tracray spatial lexicon.
     
-    Returns list of matched concepts with their spatial coordinates.
+    Maps natural language concepts to 3D cortical coordinates
+    for wave-based thinking.
     """
-    text_lower = text.lower()
-    hits = []
     
-    for concept, spec in TRACRAY_LEXICON["concepts"].items():
-        for word in spec["words"]:
+    def __init__(self):
+        self.lexicon = TRACRAY_LEXICON
+        self._build_word_index()
+    
+    def _build_word_index(self):
+        """Build reverse index from words to concepts."""
+        self.word_to_concept = {}
+        for concept_name, concept_data in self.lexicon["concepts"].items():
+            for word in concept_data.get("words", []):
+                self.word_to_concept[word.lower()] = concept_name
+    
+    def lookup(self, word: str) -> Optional[Dict]:
+        """
+        Look up a word in the lexicon.
+        
+        Returns concept data with route and coordinates, or None if not found.
+        """
+        word_lower = word.lower()
+        
+        # Direct concept lookup
+        if word_lower in self.lexicon["concepts"]:
+            return self.lexicon["concepts"][word_lower]
+        
+        # Word-to-concept lookup
+        if word_lower in self.word_to_concept:
+            concept_name = self.word_to_concept[word_lower]
+            return self.lexicon["concepts"][concept_name]
+        
+        return None
+    
+    def get_route(self, word: str) -> Optional[str]:
+        """Get brain route for a word."""
+        concept = self.lookup(word)
+        return concept["route"] if concept else None
+    
+    def get_coord(self, word: str) -> Optional[Tuple[int, int, int]]:
+        """Get 3D coordinate for a word."""
+        concept = self.lookup(word)
+        return concept["coord"] if concept else None
+    
+    def get_related(self, word: str, relation_type: str = "is_a") -> List[str]:
+        """Get related concepts."""
+        concept = self.lookup(word)
+        if concept and "relations" in concept:
+            return concept["relations"].get(relation_type, [])
+        return []
+    
+    def match_text(self, text: str) -> List[Dict]:
+        """
+        Find all Tracray concepts in a text.
+        
+        Returns list of matched concepts with positions.
+        """
+        text_lower = text.lower()
+        matches = []
+        
+        for word, concept_name in self.word_to_concept.items():
             if word in text_lower:
-                hits.append({
-                    "concept": concept,
-                    "coord": spec["coord"],
-                    "route": spec["route"],
-                    "relations": spec.get("relations", {}),
+                concept = self.lexicon["concepts"][concept_name]
+                matches.append({
+                    "word": word,
+                    "concept": concept_name,
+                    "route": concept["route"],
+                    "coord": concept["coord"],
                 })
-                break  # Found one word for this concept, move to next
+        
+        return matches
     
-    return hits
+    def get_all_concepts(self) -> List[str]:
+        """Get all concept names."""
+        return list(self.lexicon["concepts"].keys())
+    
+    def get_all_routes(self) -> List[str]:
+        """Get all unique brain routes."""
+        routes = set()
+        for concept in self.lexicon["concepts"].values():
+            routes.add(concept["route"])
+        return sorted(list(routes))
 
 
-def tracray_lookup_single(text: str) -> Optional[Dict[str, Any]]:
-    """Return the best matching concept (first match)."""
-    hits = tracray_lookup(text)
-    return hits[0] if hits else None
-
-
-def get_concept_coord(concept: str) -> Optional[Tuple[int, int, int]]:
-    """Get the 3D coordinate for a specific concept."""
-    spec = TRACRAY_LEXICON["concepts"].get(concept)
-    return spec["coord"] if spec else None
-
-
+# Helper functions
 def get_route_for_concept(concept: str) -> Optional[str]:
     """Get which brain route a concept maps to."""
     spec = TRACRAY_LEXICON["concepts"].get(concept)
     return spec["route"] if spec else None
 
 
+def get_coord_for_concept(concept: str) -> Optional[Tuple[int, int, int]]:
+    """Get 3D coordinate for a concept."""
+    spec = TRACRAY_LEXICON["concepts"].get(concept)
+    return spec["coord"] if spec else None
+
+
 def list_all_concepts() -> List[str]:
-    """List all available concepts in the lexicon."""
+    """List all concepts in the lexicon."""
     return list(TRACRAY_LEXICON["concepts"].keys())
