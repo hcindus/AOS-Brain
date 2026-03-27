@@ -210,7 +210,7 @@ def get_concept_coord(concept: str) -> Optional[Tuple[int, int, int]]:
     return spec["coord"] if spec else None
 
 
-def get_route_for_concept(concept: str) -> Optional[str]]:
+def get_route_for_concept(concept: str) -> Optional[str]:
     """Get which brain route a concept maps to."""
     spec = TRACRAY_LEXICON["concepts"].get(concept)
     return spec["route"] if spec else None
