@@ -229,7 +229,7 @@ class TernaryOodaBrain:
         - gating decisions
         """
         context = {
-            "sensory": sensory_pattern,
+            "sensory": sensory_pattern.tolist() if hasattr(sensory_pattern, 'tolist') else sensory_pattern,
             "memories": [],
             "ternary": [0, 0, 0, 0, 0],
             "value": {"importance": 0.5, "valence": 0.0, "urgency": 0.5},
