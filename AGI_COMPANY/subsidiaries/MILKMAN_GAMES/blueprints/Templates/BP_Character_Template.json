@@ -1,0 +1,206 @@
+{
+  "BlueprintType": "Character",
+  "BlueprintName": "BP_Character_Template",
+  "ParentClass": "/Script/Engine.Character",
+  "Description": "Base character template with movement, camera, and interaction setup. Non-programmer friendly with exposed variables.",
+  "Components": [
+    {
+      "Name": "CapsuleComponent",
+      "Type": "UCapsuleComponent",
+      "IsRoot": true,
+      "Properties": {
+        "CapsuleHalfHeight": 88.0,
+        "CapsuleRadius": 34.0
+      }
+    },
+    {
+      "Name": "Mesh",
+      "Type": "USkeletalMeshComponent",
+      "Parent": "CapsuleComponent",
+      "Properties": {
+        "RelativeLocation": {"X": 0, "Y": 0, "Z": -88},
+        "RelativeRotation": {"Pitch": 0, "Yaw": -90, "Roll": 0}
+      }
+    },
+    {
+      "Name": "SpringArm",
+      "Type": "USpringArmComponent",
+      "Parent": "CapsuleComponent",
+      "Properties": {
+        "RelativeLocation": {"X": 0, "Y": 0, "Z": 60},
+        "TargetArmLength": 300.0,
+        "bUsePawnControlRotation": true,
+        "bEnableCameraLag": true,
+        "CameraLagSpeed": 10.0
+      }
+    },
+    {
+      "Name": "FollowCamera",
+      "Type": "UCameraComponent",
+      "Parent": "SpringArm",
+      "Properties": {
+        "FieldOfView": 90.0
+      }
+    },
+    {
+      "Name": "InteractionZone",
+      "Type": "USphereComponent",
+      "Parent": "CapsuleComponent",
+      "Properties": {
+        "RelativeLocation": {"X": 0, "Y": 0, "Z": 0},
+        "SphereRadius": 100.0
+      }
+    }
+  ],
+  "Variables": [
+    {
+      "Name": "WalkSpeed",
+      "Type": "float",
+      "Category": "Movement",
+      "DefaultValue": 450.0,
+      "Description": "Base walking speed in units/sec",
+      "ExposeOnSpawn": true
+    },
+    {
+      "Name": "SprintSpeed",
+      "Type": "float",
+      "Category": "Movement",
+      "DefaultValue": 750.0,
+      "Description": "Speed when sprinting",
+      "ExposeOnSpawn": true
+    },
+    {
+      "Name": "CrouchSpeed",
+      "Type": "float",
+      "Category": "Movement",
+      "DefaultValue": 250.0,
+      "Description": "Speed when crouched",
+      "ExposeOnSpawn": true
+    },
+    {
+      "Name": "BaseFOV",
+      "Type": "float",
+      "Category": "Camera",
+      "DefaultValue": 90.0,
+      "Description": "Normal field of view",
+      "ExposeOnSpawn": true
+    },
+    {
+      "Name": "AimFOV",
+      "Type": "float",
+      "Category": "Camera",
+      "DefaultValue": 70.0,
+      "Description": "ADS field of view",
+      "ExposeOnSpawn": true
+    },
+    {
+      "Name": "CameraBoomLength",
+      "Type": "float",
+      "Category": "Camera",
+      "DefaultValue": 300.0,
+      "Description": "Third person camera distance",
+      "ExposeOnSpawn": true
+    },
+    {
+      "Name": "IsSprinting",
+      "Type": "bool",
+      "Category": "State",
+      "DefaultValue": false,
+      "Description": "Current sprint state"
+    },
+    {
+      "Name": "IsAiming",
+      "Type": "bool",
+      "Category": "State",
+      "DefaultValue": false,
+      "Description": "Current ADS state"
+    },
+    {
+      "Name": "CurrentInteractable",
+      "Type": "AActor*",
+      "Category": "Interaction",
+      "DefaultValue": null,
+      "Description": "Actor currently targeted for interaction"
+    }
+  ],
+  "Functions": [
+    {
+      "Name": "Move",
+      "Inputs": [
+        {"Name": "Value", "Type": "FVector2D", "Description": "Input axis value"}
+      ],
+      "Description": "Handle movement input",
+      "Nodes": [
+        {"Type": "Branch", "Condition": "Controller != nullptr"},
+        {"Type": "GetControlRotation"},
+        {"Type": "MakeRotator", "Pitch": 0, "Yaw": "ControlRotation.Yaw", "Roll": 0},
+        {"Type": "GetForwardVector"},
+        {"Type": "AddMovementInput", "Direction": "ForwardVector", "Scale": "Value.X"},
+        {"Type": "GetRightVector"},
+        {"Type": "AddMovementInput", "Direction": "RightVector", "Scale": "Value.Y"}
+      ]
+    },
+    {
+      "Name": "Look",
+      "Inputs": [
+        {"Name": "Value", "Type": "FVector2D", "Description": "Mouse/gamepad input"}
+      ],
+      "Description": "Handle camera look input",
+      "Nodes": [
+        {"Type": "AddYawInput", "Value": "Value.X"},
+        {"Type": "AddPitchInput", "Value": "Value.Y"}
+      ]
+    },
+    {
+      "Name": "Sprint",
+      "Inputs": [
+        {"Name": "bPressed", "Type": "bool", "Description": "Sprint button state"}
+      ],
+      "Description": "Toggle sprint state",
+      "Nodes": [
+        {"Type": "Set", "Variable": "IsSprinting", "Value": "bPressed"},
+        {"Type": "Branch", "Condition": "bPressed"},
+        {"Type": "SetMaxWalkSpeed", "Speed": "SprintSpeed"},
+        {"Type": "SetMaxWalkSpeed", "Speed": "WalkSpeed"}
+      ]
+    },
+    {
+      "Name": "Aim",
+      "Inputs": [
+        {"Name": "bPressed", "Type": "bool", "Description": "Aim button state"}
+      ],
+      "Description": "Toggle ADS mode",
+      "Nodes": [
+        {"Type": "Set", "Variable": "IsAiming", "Value": "bPressed"},
+        {"Type": "Branch", "Condition": "bPressed"},
+        {"Type": "SetFieldOfView", "FOV": "AimFOV"},
+        {"Type": "SetFieldOfView", "FOV": "BaseFOV"}
+      ]
+    },
+    {
+      "Name": "UpdateInteraction",
+      "Inputs": [],
+      "Description": "Check for interactable objects",
+      "Nodes": [
+        {"Type": "LineTraceSingle", "Start": "CameraLocation", "End": "CameraLocation + CameraForward * 300", "Channel": "ECC_Visibility"},
+        {"Type": "Branch", "Condition": "HitActor != nullptr"},
+        {"Type": "ImplementsInterface", "Interface": "BPI_Interactable"},
+        {"Type": "Set", "Variable": "CurrentInteractable", "Value": "HitActor"}
+      ]
+    }
+  ],
+  "EventGraph": {
+    "BeginPlay": [
+      {"Action": "Initialize camera position"},
+      {"Action": "Set up input bindings"}
+    ],
+    "Tick": [
+      {"Action": "Call UpdateInteraction"},
+      {"Action": "Update camera lag"}
+    ],
+    "OnMovementModeChanged": [
+      {"Action": "Check if landed from fall"},
+      {"Action": "Play landing effects if applicable"}
+    ]
+  }
+}
