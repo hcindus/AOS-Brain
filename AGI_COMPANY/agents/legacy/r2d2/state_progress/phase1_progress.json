@@ -1,0 +1,95 @@
+{
+  "phase": "1",
+  "states": [
+    "TX",
+    "AZ",
+    "NV",
+    "NM"
+  ],
+  "current_state": "TX",
+  "cities": {
+    "Houston": {
+      "leads": 300,
+      "status": "complete",
+      "updated": "2026-02-28T17:23:46.615750"
+    },
+    "Dallas": {
+      "leads": 250,
+      "status": "complete",
+      "updated": "2026-02-28T17:23:47.129770"
+    },
+    "San Antonio": {
+      "leads": 200,
+      "status": "complete",
+      "updated": "2026-02-28T17:23:47.632377"
+    },
+    "Austin": {
+      "leads": 150,
+      "status": "complete",
+      "updated": "2026-02-28T17:23:48.137194"
+    },
+    "Fort Worth": {
+      "leads": 150,
+      "status": "complete",
+      "updated": "2026-02-28T17:23:48.639658"
+    },
+    "El Paso": {
+      "leads": 100,
+      "status": "complete",
+      "updated": "2026-02-28T17:23:49.141854"
+    },
+    "Arlington": {
+      "leads": 75,
+      "status": "complete",
+      "updated": "2026-02-28T17:23:49.643868"
+    },
+    "Corpus Christi": {
+      "leads": 75,
+      "status": "complete",
+      "updated": "2026-02-28T17:23:50.145384"
+    },
+    "Phoenix": {
+      "leads": 250,
+      "status": "complete",
+      "updated": "2026-02-28T17:27:39.030000"
+    },
+    "Tucson": {
+      "leads": 150,
+      "status": "complete",
+      "updated": "2026-02-28T17:27:39.332460"
+    },
+    "Mesa": {
+      "leads": 100,
+      "status": "complete",
+      "updated": "2026-02-28T17:27:39.634466"
+    },
+    "Scottsdale": {
+      "leads": 75,
+      "status": "complete",
+      "updated": "2026-02-28T17:27:39.936744"
+    },
+    "Glendale": {
+      "leads": 75,
+      "status": "complete",
+      "updated": "2026-02-28T17:27:40.238885"
+    },
+    "Chandler": {
+      "leads": 75,
+      "status": "complete",
+      "updated": "2026-02-28T17:27:40.540505"
+    },
+    "Gilbert": {
+      "leads": 50,
+      "status": "complete",
+      "updated": "2026-02-28T17:27:40.842104"
+    },
+    "Tempe": {
+      "leads": 50,
+      "status": "complete",
+      "updated": "2026-02-28T17:27:41.143865"
+    }
+  },
+  "total_leads": 3425,
+  "started_at": "2026-02-28T17:23:46.615731",
+  "updated_at": "2026-02-28T17:27:41.143877"
+}

@@ -1,0 +1,826 @@
+id,business_name,business_type,owner_name,address,city,state,zip,county,phone,email,website,priority,source,scraped_at
+AZ_TEM_00001,Emma's Southwest Grill,restaurant,Emma (Owner),4342 Central Ave,Tempe,AZ,85281,Maricopa,(480) 509-7992,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142624
+AZ_TEM_00002,Lisa's Breakfast Spot,breakfast,Lisa (Owner),5297 1st Ave,Tempe,AZ,85281,Maricopa,(480) 926-7395,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142653
+AZ_TEM_00003,Mike Restaurant,restaurant,Mike (Owner),3030 Oak St,Tempe,AZ,85281,Maricopa,(480) 414-5650,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142665
+AZ_TEM_00004,Luis Burger Joint,burger,Luis (Owner),4121 Broadway,Tempe,AZ,85281,Maricopa,(480) 585-6069,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142674
+AZ_TEM_00005,John Taqueria,taqueria,John (Owner),5616 1st Ave,Tempe,AZ,85281,Maricopa,(480) 556-2594,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142683
+AZ_TEM_00006,The Pedro Kitchen,restaurant,Pedro (Owner),149 Scottsdale Rd,Tempe,AZ,85281,Maricopa,(480) 584-8152,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142692
+AZ_TEM_00007,Rosa Diner,diner,Rosa (Owner),1241 Central Ave,Tempe,AZ,85281,Maricopa,(480) 675-4726,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142704
+AZ_TEM_00008,Santiago's Southwest Grill,restaurant,Santiago (Owner),7990 Central Ave,Tempe,AZ,85281,Maricopa,(480) 595-8150,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142712
+AZ_TEM_00009,Isabella Burger Joint,burger,Isabella (Owner),3297 Main St,Tempe,AZ,85281,Maricopa,(480) 931-4181,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142720
+AZ_TEM_00010,The Santiago Kitchen,restaurant,Santiago (Owner),4406 Broadway,Tempe,AZ,85281,Maricopa,(480) 708-8055,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142730
+AZ_TEM_00011,Luis Restaurant,restaurant,Luis (Owner),4558 Apache Blvd,Tempe,AZ,85281,Maricopa,(480) 863-9343,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142739
+AZ_TEM_00012,Maria Burger Joint,burger,Maria (Owner),752 Apache Blvd,Tempe,AZ,85281,Maricopa,(480) 256-3287,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142749
+AZ_TEM_00013,David's Cafe,cafe,David (Owner),7424 1st Ave,Tempe,AZ,85281,Maricopa,(480) 784-4527,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142757
+AZ_TEM_00014,Pedro Taqueria,taqueria,Pedro (Owner),1001 Broadway,Tempe,AZ,85281,Maricopa,(480) 801-3014,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142765
+AZ_TEM_00015,Pedro's Cafe,cafe,Pedro (Owner),7309 Broadway,Tempe,AZ,85281,Maricopa,(480) 308-7727,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142774
+AZ_TEM_00016,Maria's Breakfast Spot,breakfast,Maria (Owner),8146 Apache Blvd,Tempe,AZ,85281,Maricopa,(480) 675-1577,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142782
+AZ_TEM_00017,Rosa's Cafe,cafe,Rosa (Owner),2858 Scottsdale Rd,Tempe,AZ,85281,Maricopa,(480) 511-2124,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142789
+AZ_TEM_00018,Isabella Burger Joint,burger,Isabella (Owner),1393 Broadway,Tempe,AZ,85281,Maricopa,(480) 802-6729,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142798
+AZ_TEM_00019,Miguel Diner,diner,Miguel (Owner),1490 Central Ave,Tempe,AZ,85281,Maricopa,(480) 753-9987,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142805
+AZ_TEM_00020,The Luis Kitchen,restaurant,Luis (Owner),1551 Oak St,Tempe,AZ,85281,Maricopa,(480) 805-8556,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142813
+AZ_TEM_00021,Ana Taqueria,taqueria,Ana (Owner),8774 Pine St,Tempe,AZ,85281,Maricopa,(480) 958-3591,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142820
+AZ_TEM_00022,Isabella's Southwest Grill,restaurant,Isabella (Owner),8388 1st Ave,Tempe,AZ,85281,Maricopa,(480) 775-6525,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142828
+AZ_TEM_00023,The John Kitchen,restaurant,John (Owner),810 Jefferson St,Tempe,AZ,85281,Maricopa,(480) 503-1561,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142836
+AZ_TEM_00024,Roberto Diner,diner,Roberto (Owner),607 Main St,Tempe,AZ,85281,Maricopa,(480) 526-5363,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142843
+AZ_TEM_00025,Santiago Restaurant,restaurant,Santiago (Owner),6223 Broadway,Tempe,AZ,85281,Maricopa,(480) 307-7956,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142851
+AZ_TEM_00026,Rosa Taqueria,taqueria,Rosa (Owner),9907 Apache Blvd,Tempe,AZ,85281,Maricopa,(480) 824-8798,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142860
+AZ_TEM_00027,Sofia's Breakfast Spot,breakfast,Sofia (Owner),7687 Jefferson St,Tempe,AZ,85281,Maricopa,(480) 998-2727,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142868
+AZ_TEM_00028,Pedro Restaurant,restaurant,Pedro (Owner),2418 Oak St,Tempe,AZ,85281,Maricopa,(480) 532-9290,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142876
+AZ_TEM_00029,The Sarah Kitchen,restaurant,Sarah (Owner),1417 Van Buren,Tempe,AZ,85281,Maricopa,(480) 286-7992,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142883
+AZ_TEM_00030,Elena Restaurant,restaurant,Elena (Owner),344 Van Buren,Tempe,AZ,85281,Maricopa,(480) 991-8914,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142891
+AZ_TEM_00031,Sarah Taqueria,taqueria,Sarah (Owner),1794 Pine St,Tempe,AZ,85281,Maricopa,(480) 790-3071,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142898
+AZ_TEM_00032,Miguel Burger Joint,burger,Miguel (Owner),8958 Main St,Tempe,AZ,85281,Maricopa,(480) 340-2277,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142905
+AZ_TEM_00033,David Burger Joint,burger,David (Owner),2392 Oak St,Tempe,AZ,85281,Maricopa,(480) 588-4383,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142913
+AZ_TEM_00034,Miguel Restaurant,restaurant,Miguel (Owner),9403 Pine St,Tempe,AZ,85281,Maricopa,(480) 472-5181,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142922
+AZ_TEM_00035,Emma's Breakfast Spot,breakfast,Emma (Owner),3839 Main St,Tempe,AZ,85281,Maricopa,(480) 694-4116,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142930
+AZ_TEM_00036,Lisa Diner,diner,Lisa (Owner),4990 Pine St,Tempe,AZ,85281,Maricopa,(480) 935-6190,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142938
+AZ_TEM_00037,Diego Restaurant,restaurant,Diego (Owner),7939 1st Ave,Tempe,AZ,85281,Maricopa,(480) 369-1279,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142946
+AZ_TEM_00038,Eduardo Burger Joint,burger,Eduardo (Owner),3290 Jefferson St,Tempe,AZ,85281,Maricopa,(480) 856-8783,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142953
+AZ_TEM_00039,Carlos Restaurant,restaurant,Carlos (Owner),7021 Broadway,Tempe,AZ,85281,Maricopa,(480) 332-9452,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142961
+AZ_TEM_00040,Diego's Cafe,cafe,Diego (Owner),5819 Oak St,Tempe,AZ,85281,Maricopa,(480) 837-5746,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142969
+AZ_TEM_00041,Francisco Taqueria,taqueria,Francisco (Owner),7104 Scottsdale Rd,Tempe,AZ,85281,Maricopa,(480) 342-3222,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142976
+AZ_TEM_00042,Elena Restaurant,restaurant,Elena (Owner),8307 1st Ave,Tempe,AZ,85281,Maricopa,(480) 553-9565,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142984
+AZ_TEM_00043,The Rosa Kitchen,restaurant,Rosa (Owner),2979 Broadway,Tempe,AZ,85281,Maricopa,(480) 560-7380,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.142991
+AZ_TEM_00044,Jose Burger Joint,burger,Jose (Owner),3636 Scottsdale Rd,Tempe,AZ,85281,Maricopa,(480) 429-1976,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.143000
+AZ_TEM_00045,Pedro Taqueria,taqueria,Pedro (Owner),7659 Broadway,Tempe,AZ,85281,Maricopa,(480) 753-5526,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.143007
+AZ_TEM_00046,The Pedro Kitchen,restaurant,Pedro (Owner),2889 1st Ave,Tempe,AZ,85281,Maricopa,(480) 852-8787,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.143015
+AZ_TEM_00047,Emma Burger Joint,burger,Emma (Owner),9005 Scottsdale Rd,Tempe,AZ,85281,Maricopa,(480) 630-5054,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.143023
+AZ_TEM_00048,Francisco Diner,diner,Francisco (Owner),7741 Main St,Tempe,AZ,85281,Maricopa,(480) 559-5466,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.143031
+AZ_TEM_00049,Tony's Cafe,cafe,Tony (Owner),2433 Broadway,Tempe,AZ,85281,Maricopa,(480) 829-5615,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.143039
+AZ_TEM_00050,Francisco Burger Joint,burger,Francisco (Owner),3222 Van Buren,Tempe,AZ,85281,Maricopa,(480) 933-6418,,,B,R2-D2 AZ scrape Tempe,2026-02-28T17:27:41.143046
+AZ_CHA_00001,Miguel Restaurant,restaurant,Miguel (Owner),6586 Main St,Chandler,AZ,85224,Maricopa,(480) 265-8433,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539419
+AZ_CHA_00002,Isabella Burger Joint,burger,Isabella (Owner),3642 Main St,Chandler,AZ,85224,Maricopa,(480) 678-9469,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539441
+AZ_CHA_00003,The Maria Kitchen,restaurant,Maria (Owner),3253 Pine St,Chandler,AZ,85224,Maricopa,(480) 802-4511,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539448
+AZ_CHA_00004,Jose Burger Joint,burger,Jose (Owner),2765 Pine St,Chandler,AZ,85224,Maricopa,(480) 667-5669,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539454
+AZ_CHA_00005,Miguel Diner,diner,Miguel (Owner),392 1st Ave,Chandler,AZ,85224,Maricopa,(480) 879-9977,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539460
+AZ_CHA_00006,Elena Burger Joint,burger,Elena (Owner),118 Van Buren,Chandler,AZ,85224,Maricopa,(480) 512-4824,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539465
+AZ_CHA_00007,Isabella Burger Joint,burger,Isabella (Owner),103 Van Buren,Chandler,AZ,85224,Maricopa,(480) 413-8882,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539471
+AZ_CHA_00008,Tony's Breakfast Spot,breakfast,Tony (Owner),5712 Jefferson St,Chandler,AZ,85224,Maricopa,(480) 867-7547,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539476
+AZ_CHA_00009,Pedro Taqueria,taqueria,Pedro (Owner),3304 Apache Blvd,Chandler,AZ,85224,Maricopa,(480) 346-8708,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539481
+AZ_CHA_00010,Eduardo Restaurant,restaurant,Eduardo (Owner),234 Main St,Chandler,AZ,85224,Maricopa,(480) 588-7718,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539486
+AZ_CHA_00011,Juan's Cafe,cafe,Juan (Owner),7810 Scottsdale Rd,Chandler,AZ,85224,Maricopa,(480) 781-9399,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539492
+AZ_CHA_00012,Roberto Restaurant,restaurant,Roberto (Owner),8287 Broadway,Chandler,AZ,85224,Maricopa,(480) 943-5766,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539498
+AZ_CHA_00013,The Jose Kitchen,restaurant,Jose (Owner),1621 Van Buren,Chandler,AZ,85224,Maricopa,(480) 797-4252,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539503
+AZ_CHA_00014,Carlos's Southwest Grill,restaurant,Carlos (Owner),3805 Pine St,Chandler,AZ,85224,Maricopa,(480) 726-4088,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539508
+AZ_CHA_00015,Carmen's Breakfast Spot,breakfast,Carmen (Owner),1099 Van Buren,Chandler,AZ,85224,Maricopa,(480) 310-3092,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539514
+AZ_CHA_00016,The John Kitchen,restaurant,John (Owner),4882 Oak St,Chandler,AZ,85224,Maricopa,(480) 874-8737,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539519
+AZ_CHA_00017,Javier's Southwest Grill,restaurant,Javier (Owner),3218 Apache Blvd,Chandler,AZ,85224,Maricopa,(480) 266-3877,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539524
+AZ_CHA_00018,Hector Diner,diner,Hector (Owner),5361 Van Buren,Chandler,AZ,85224,Maricopa,(480) 336-4284,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539530
+AZ_CHA_00019,Javier Restaurant,restaurant,Javier (Owner),414 1st Ave,Chandler,AZ,85224,Maricopa,(480) 563-2694,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539536
+AZ_CHA_00020,Hector's Cafe,cafe,Hector (Owner),6490 Main St,Chandler,AZ,85224,Maricopa,(480) 482-5886,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539541
+AZ_CHA_00021,Tony's Breakfast Spot,breakfast,Tony (Owner),2887 Apache Blvd,Chandler,AZ,85224,Maricopa,(480) 302-9054,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539547
+AZ_CHA_00022,Maria's Cafe,cafe,Maria (Owner),3537 Jefferson St,Chandler,AZ,85224,Maricopa,(480) 805-9507,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539552
+AZ_CHA_00023,Roberto's Cafe,cafe,Roberto (Owner),3153 Oak St,Chandler,AZ,85224,Maricopa,(480) 713-1719,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539587
+AZ_CHA_00024,Sarah Burger Joint,burger,Sarah (Owner),9907 Oak St,Chandler,AZ,85224,Maricopa,(480) 228-6924,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539592
+AZ_CHA_00025,Sofia's Southwest Grill,restaurant,Sofia (Owner),3430 Scottsdale Rd,Chandler,AZ,85224,Maricopa,(480) 673-6209,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539597
+AZ_CHA_00026,The Francisco Kitchen,restaurant,Francisco (Owner),4750 Scottsdale Rd,Chandler,AZ,85224,Maricopa,(480) 975-9785,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539604
+AZ_CHA_00027,Ana Burger Joint,burger,Ana (Owner),2488 Van Buren,Chandler,AZ,85224,Maricopa,(480) 560-7675,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539611
+AZ_CHA_00028,Maria's Southwest Grill,restaurant,Maria (Owner),8524 Pine St,Chandler,AZ,85224,Maricopa,(480) 422-3303,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539624
+AZ_CHA_00029,Lisa Burger Joint,burger,Lisa (Owner),8633 1st Ave,Chandler,AZ,85224,Maricopa,(480) 977-6848,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539637
+AZ_CHA_00030,Lisa Taqueria,taqueria,Lisa (Owner),7345 Van Buren,Chandler,AZ,85224,Maricopa,(480) 558-5044,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539643
+AZ_CHA_00031,Elena Diner,diner,Elena (Owner),6574 Van Buren,Chandler,AZ,85224,Maricopa,(480) 775-8124,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539650
+AZ_CHA_00032,Lisa Diner,diner,Lisa (Owner),7411 Oak St,Chandler,AZ,85224,Maricopa,(480) 410-2497,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539656
+AZ_CHA_00033,Lisa Burger Joint,burger,Lisa (Owner),9198 1st Ave,Chandler,AZ,85224,Maricopa,(480) 287-5280,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539661
+AZ_CHA_00034,The Roberto Kitchen,restaurant,Roberto (Owner),6201 Pine St,Chandler,AZ,85224,Maricopa,(480) 700-8886,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539667
+AZ_CHA_00035,Maria Restaurant,restaurant,Maria (Owner),2347 Van Buren,Chandler,AZ,85224,Maricopa,(480) 848-2052,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539674
+AZ_CHA_00036,Sofia Burger Joint,burger,Sofia (Owner),8782 Oak St,Chandler,AZ,85224,Maricopa,(480) 626-5470,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539682
+AZ_CHA_00037,The Tony Kitchen,restaurant,Tony (Owner),4853 Van Buren,Chandler,AZ,85224,Maricopa,(480) 491-7091,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539689
+AZ_CHA_00038,Sofia's Cafe,cafe,Sofia (Owner),1308 Apache Blvd,Chandler,AZ,85224,Maricopa,(480) 601-2431,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539696
+AZ_CHA_00039,The Ana Kitchen,restaurant,Ana (Owner),6252 Jefferson St,Chandler,AZ,85224,Maricopa,(480) 358-8250,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539703
+AZ_CHA_00040,David's Breakfast Spot,breakfast,David (Owner),1571 Apache Blvd,Chandler,AZ,85224,Maricopa,(480) 863-9477,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539708
+AZ_CHA_00041,Mike Burger Joint,burger,Mike (Owner),3502 Jefferson St,Chandler,AZ,85224,Maricopa,(480) 813-1718,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539713
+AZ_CHA_00042,Santiago Burger Joint,burger,Santiago (Owner),8534 Central Ave,Chandler,AZ,85224,Maricopa,(480) 588-6062,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539719
+AZ_CHA_00043,Sofia Burger Joint,burger,Sofia (Owner),3028 Oak St,Chandler,AZ,85224,Maricopa,(480) 830-5018,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539723
+AZ_CHA_00044,Carmen's Cafe,cafe,Carmen (Owner),5735 Oak St,Chandler,AZ,85224,Maricopa,(480) 884-1529,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539728
+AZ_CHA_00045,Diego Taqueria,taqueria,Diego (Owner),6016 Apache Blvd,Chandler,AZ,85224,Maricopa,(480) 340-8520,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539733
+AZ_CHA_00046,The Roberto Kitchen,restaurant,Roberto (Owner),7256 Central Ave,Chandler,AZ,85224,Maricopa,(480) 745-1073,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539739
+AZ_CHA_00047,Isabella Taqueria,taqueria,Isabella (Owner),1409 Broadway,Chandler,AZ,85224,Maricopa,(480) 426-9178,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539744
+AZ_CHA_00048,The Isabella Kitchen,restaurant,Isabella (Owner),1557 Main St,Chandler,AZ,85224,Maricopa,(480) 912-5419,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539749
+AZ_CHA_00049,Sarah Diner,diner,Sarah (Owner),4177 1st Ave,Chandler,AZ,85224,Maricopa,(480) 298-1648,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539754
+AZ_CHA_00050,Diego's Breakfast Spot,breakfast,Diego (Owner),2737 Central Ave,Chandler,AZ,85224,Maricopa,(480) 824-9838,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539759
+AZ_CHA_00051,Roberto Restaurant,restaurant,Roberto (Owner),7813 Apache Blvd,Chandler,AZ,85224,Maricopa,(480) 399-4456,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539763
+AZ_CHA_00052,Luis Diner,diner,Luis (Owner),4680 1st Ave,Chandler,AZ,85224,Maricopa,(480) 294-3937,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539767
+AZ_CHA_00053,Lisa Restaurant,restaurant,Lisa (Owner),2960 Jefferson St,Chandler,AZ,85224,Maricopa,(480) 762-8658,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539772
+AZ_CHA_00054,Sarah Taqueria,taqueria,Sarah (Owner),6691 Pine St,Chandler,AZ,85224,Maricopa,(480) 306-3718,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539777
+AZ_CHA_00055,Rosa's Breakfast Spot,breakfast,Rosa (Owner),8753 Broadway,Chandler,AZ,85224,Maricopa,(480) 306-1330,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539782
+AZ_CHA_00056,Ana Taqueria,taqueria,Ana (Owner),5297 Scottsdale Rd,Chandler,AZ,85224,Maricopa,(480) 280-9346,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539787
+AZ_CHA_00057,Javier Diner,diner,Javier (Owner),1755 1st Ave,Chandler,AZ,85224,Maricopa,(480) 592-8389,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539791
+AZ_CHA_00058,Maria's Breakfast Spot,breakfast,Maria (Owner),8286 Main St,Chandler,AZ,85224,Maricopa,(480) 875-8395,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539796
+AZ_CHA_00059,Elena's Southwest Grill,restaurant,Elena (Owner),5944 Scottsdale Rd,Chandler,AZ,85224,Maricopa,(480) 316-3062,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539800
+AZ_CHA_00060,The Carlos Kitchen,restaurant,Carlos (Owner),7994 Main St,Chandler,AZ,85224,Maricopa,(480) 782-9945,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539805
+AZ_CHA_00061,David's Cafe,cafe,David (Owner),5077 Central Ave,Chandler,AZ,85224,Maricopa,(480) 221-9044,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539809
+AZ_CHA_00062,Tony's Breakfast Spot,breakfast,Tony (Owner),1087 Pine St,Chandler,AZ,85224,Maricopa,(480) 225-1004,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539814
+AZ_CHA_00063,Carlos's Breakfast Spot,breakfast,Carlos (Owner),2740 Scottsdale Rd,Chandler,AZ,85224,Maricopa,(480) 447-9884,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539819
+AZ_CHA_00064,Tony Diner,diner,Tony (Owner),1833 Central Ave,Chandler,AZ,85224,Maricopa,(480) 344-3741,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539823
+AZ_CHA_00065,Tony's Southwest Grill,restaurant,Tony (Owner),1020 Broadway,Chandler,AZ,85224,Maricopa,(480) 957-3954,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539828
+AZ_CHA_00066,John Taqueria,taqueria,John (Owner),6771 Main St,Chandler,AZ,85224,Maricopa,(480) 378-3871,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539834
+AZ_CHA_00067,Diego's Cafe,cafe,Diego (Owner),8895 Broadway,Chandler,AZ,85224,Maricopa,(480) 629-6968,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539840
+AZ_CHA_00068,Hector's Cafe,cafe,Hector (Owner),6068 Jefferson St,Chandler,AZ,85224,Maricopa,(480) 762-1360,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539845
+AZ_CHA_00069,Rosa Restaurant,restaurant,Rosa (Owner),7093 Apache Blvd,Chandler,AZ,85224,Maricopa,(480) 755-6339,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539850
+AZ_CHA_00070,John's Breakfast Spot,breakfast,John (Owner),9359 Central Ave,Chandler,AZ,85224,Maricopa,(480) 529-1496,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539855
+AZ_CHA_00071,David Diner,diner,David (Owner),8030 Central Ave,Chandler,AZ,85224,Maricopa,(480) 432-4533,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539859
+AZ_CHA_00072,Jose Restaurant,restaurant,Jose (Owner),5792 Main St,Chandler,AZ,85224,Maricopa,(480) 649-7750,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539864
+AZ_CHA_00073,Ana Restaurant,restaurant,Ana (Owner),7714 Van Buren,Chandler,AZ,85224,Maricopa,(480) 352-8198,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539869
+AZ_CHA_00074,Elena's Breakfast Spot,breakfast,Elena (Owner),998 Broadway,Chandler,AZ,85224,Maricopa,(480) 694-4828,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539873
+AZ_CHA_00075,Hector Restaurant,restaurant,Hector (Owner),2750 Van Buren,Chandler,AZ,85224,Maricopa,(480) 272-3006,,,B,R2-D2 AZ scrape Chandler,2026-02-28T17:27:40.539878
+AZ_TUC_00001,David's Breakfast Spot,breakfast,David (Owner),9404 Jefferson St,Tucson,AZ,85701,Pima,(520) 502-5939,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330547
+AZ_TUC_00002,Maria Diner,diner,Maria (Owner),8732 Oak St,Tucson,AZ,85701,Pima,(520) 351-4940,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330604
+AZ_TUC_00003,Elena Diner,diner,Elena (Owner),8113 Main St,Tucson,AZ,85701,Pima,(520) 228-9759,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330611
+AZ_TUC_00004,Sarah's Cafe,cafe,Sarah (Owner),991 Broadway,Tucson,AZ,85701,Pima,(520) 852-9872,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330617
+AZ_TUC_00005,Sofia's Cafe,cafe,Sofia (Owner),1177 1st Ave,Tucson,AZ,85701,Pima,(520) 569-5054,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330622
+AZ_TUC_00006,Elena Diner,diner,Elena (Owner),1409 Van Buren,Tucson,AZ,85701,Pima,(520) 923-8387,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330628
+AZ_TUC_00007,Javier's Southwest Grill,restaurant,Javier (Owner),5950 Scottsdale Rd,Tucson,AZ,85701,Pima,(520) 208-2149,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330633
+AZ_TUC_00008,Emma Burger Joint,burger,Emma (Owner),5469 Pine St,Tucson,AZ,85701,Pima,(520) 345-4722,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330638
+AZ_TUC_00009,Sofia Taqueria,taqueria,Sofia (Owner),9662 Van Buren,Tucson,AZ,85701,Pima,(520) 276-6107,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330643
+AZ_TUC_00010,Carlos Burger Joint,burger,Carlos (Owner),4737 Pine St,Tucson,AZ,85701,Pima,(520) 649-3993,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330648
+AZ_TUC_00011,Ana Burger Joint,burger,Ana (Owner),6352 Main St,Tucson,AZ,85701,Pima,(520) 810-5013,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330656
+AZ_TUC_00012,Maria Taqueria,taqueria,Maria (Owner),5507 Pine St,Tucson,AZ,85701,Pima,(520) 612-3693,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330681
+AZ_TUC_00013,Sofia Restaurant,restaurant,Sofia (Owner),7388 Van Buren,Tucson,AZ,85701,Pima,(520) 947-5191,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330686
+AZ_TUC_00014,The Sarah Kitchen,restaurant,Sarah (Owner),6623 Oak St,Tucson,AZ,85701,Pima,(520) 940-1160,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330691
+AZ_TUC_00015,The Isabella Kitchen,restaurant,Isabella (Owner),3485 1st Ave,Tucson,AZ,85701,Pima,(520) 940-4548,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330696
+AZ_TUC_00016,Javier's Cafe,cafe,Javier (Owner),5045 Pine St,Tucson,AZ,85701,Pima,(520) 521-6720,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330701
+AZ_TUC_00017,Rosa's Breakfast Spot,breakfast,Rosa (Owner),4822 Jefferson St,Tucson,AZ,85701,Pima,(520) 213-5178,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330709
+AZ_TUC_00018,John's Southwest Grill,restaurant,John (Owner),1178 Jefferson St,Tucson,AZ,85701,Pima,(520) 431-4497,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330715
+AZ_TUC_00019,Carmen Restaurant,restaurant,Carmen (Owner),2649 Main St,Tucson,AZ,85701,Pima,(520) 576-7502,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330719
+AZ_TUC_00020,Juan Diner,diner,Juan (Owner),7682 Scottsdale Rd,Tucson,AZ,85701,Pima,(520) 966-6766,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330724
+AZ_TUC_00021,Tony Burger Joint,burger,Tony (Owner),6980 Pine St,Tucson,AZ,85701,Pima,(520) 877-3471,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330728
+AZ_TUC_00022,Mike Restaurant,restaurant,Mike (Owner),9569 Main St,Tucson,AZ,85701,Pima,(520) 309-7288,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330736
+AZ_TUC_00023,Jose Restaurant,restaurant,Jose (Owner),8097 Main St,Tucson,AZ,85701,Pima,(520) 589-5347,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330741
+AZ_TUC_00024,Isabella's Southwest Grill,restaurant,Isabella (Owner),5940 Pine St,Tucson,AZ,85701,Pima,(520) 294-7468,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330745
+AZ_TUC_00025,Lisa Burger Joint,burger,Lisa (Owner),3220 1st Ave,Tucson,AZ,85701,Pima,(520) 980-7912,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330750
+AZ_TUC_00026,The Rosa Kitchen,restaurant,Rosa (Owner),4430 Scottsdale Rd,Tucson,AZ,85701,Pima,(520) 401-5239,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330758
+AZ_TUC_00027,Hector Burger Joint,burger,Hector (Owner),7977 Van Buren,Tucson,AZ,85701,Pima,(520) 931-5534,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330763
+AZ_TUC_00028,Rosa Burger Joint,burger,Rosa (Owner),9941 1st Ave,Tucson,AZ,85701,Pima,(520) 611-2954,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330767
+AZ_TUC_00029,Rosa's Cafe,cafe,Rosa (Owner),7305 Broadway,Tucson,AZ,85701,Pima,(520) 776-2299,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330772
+AZ_TUC_00030,Isabella's Breakfast Spot,breakfast,Isabella (Owner),9232 Jefferson St,Tucson,AZ,85701,Pima,(520) 779-6905,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330777
+AZ_TUC_00031,Ana Burger Joint,burger,Ana (Owner),7403 1st Ave,Tucson,AZ,85701,Pima,(520) 639-9971,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330781
+AZ_TUC_00032,Tony Diner,diner,Tony (Owner),2519 Broadway,Tucson,AZ,85701,Pima,(520) 398-5484,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330789
+AZ_TUC_00033,Diego's Breakfast Spot,breakfast,Diego (Owner),1035 Main St,Tucson,AZ,85701,Pima,(520) 482-5458,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330793
+AZ_TUC_00034,Hector's Cafe,cafe,Hector (Owner),6702 Jefferson St,Tucson,AZ,85701,Pima,(520) 774-7870,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330799
+AZ_TUC_00035,Lisa's Breakfast Spot,breakfast,Lisa (Owner),4172 Jefferson St,Tucson,AZ,85701,Pima,(520) 980-4459,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330806
+AZ_TUC_00036,Ana's Cafe,cafe,Ana (Owner),3105 Van Buren,Tucson,AZ,85701,Pima,(520) 359-1883,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330814
+AZ_TUC_00037,Santiago's Southwest Grill,restaurant,Santiago (Owner),6305 Jefferson St,Tucson,AZ,85701,Pima,(520) 818-1668,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330818
+AZ_TUC_00038,John's Breakfast Spot,breakfast,John (Owner),2468 Pine St,Tucson,AZ,85701,Pima,(520) 945-9727,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330823
+AZ_TUC_00039,John Burger Joint,burger,John (Owner),1904 Oak St,Tucson,AZ,85701,Pima,(520) 711-4892,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330827
+AZ_TUC_00040,John's Cafe,cafe,John (Owner),7156 Pine St,Tucson,AZ,85701,Pima,(520) 203-3713,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330832
+AZ_TUC_00041,The Isabella Kitchen,restaurant,Isabella (Owner),4781 Apache Blvd,Tucson,AZ,85701,Pima,(520) 752-3350,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330836
+AZ_TUC_00042,Luis's Southwest Grill,restaurant,Luis (Owner),7012 Oak St,Tucson,AZ,85701,Pima,(520) 287-3490,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330845
+AZ_TUC_00043,The Lisa Kitchen,restaurant,Lisa (Owner),7103 Central Ave,Tucson,AZ,85701,Pima,(520) 833-9365,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330850
+AZ_TUC_00044,Juan Restaurant,restaurant,Juan (Owner),612 1st Ave,Tucson,AZ,85701,Pima,(520) 960-1317,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330857
+AZ_TUC_00045,Carmen Taqueria,taqueria,Carmen (Owner),7043 Apache Blvd,Tucson,AZ,85701,Pima,(520) 979-9968,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330862
+AZ_TUC_00046,Ana Taqueria,taqueria,Ana (Owner),7321 Broadway,Tucson,AZ,85701,Pima,(520) 418-8059,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330866
+AZ_TUC_00047,Roberto's Breakfast Spot,breakfast,Roberto (Owner),4041 Central Ave,Tucson,AZ,85701,Pima,(520) 232-6650,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330871
+AZ_TUC_00048,The Tony Kitchen,restaurant,Tony (Owner),5068 Broadway,Tucson,AZ,85701,Pima,(520) 730-2795,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330875
+AZ_TUC_00049,Ana Restaurant,restaurant,Ana (Owner),3912 Central Ave,Tucson,AZ,85701,Pima,(520) 225-8856,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330880
+AZ_TUC_00050,Santiago's Southwest Grill,restaurant,Santiago (Owner),8415 Main St,Tucson,AZ,85701,Pima,(520) 456-5521,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330884
+AZ_TUC_00051,Jose Burger Joint,burger,Jose (Owner),6816 Apache Blvd,Tucson,AZ,85701,Pima,(520) 267-3336,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330889
+AZ_TUC_00052,Sarah Diner,diner,Sarah (Owner),9314 Oak St,Tucson,AZ,85701,Pima,(520) 607-6516,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330896
+AZ_TUC_00053,Sarah's Breakfast Spot,breakfast,Sarah (Owner),1263 Broadway,Tucson,AZ,85701,Pima,(520) 961-6664,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330901
+AZ_TUC_00054,Santiago Restaurant,restaurant,Santiago (Owner),9294 Apache Blvd,Tucson,AZ,85701,Pima,(520) 214-8678,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330910
+AZ_TUC_00055,Javier's Breakfast Spot,breakfast,Javier (Owner),4123 1st Ave,Tucson,AZ,85701,Pima,(520) 343-5970,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330914
+AZ_TUC_00056,Rosa Taqueria,taqueria,Rosa (Owner),3241 Apache Blvd,Tucson,AZ,85701,Pima,(520) 394-7910,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330919
+AZ_TUC_00057,Javier Taqueria,taqueria,Javier (Owner),7517 Van Buren,Tucson,AZ,85701,Pima,(520) 399-9425,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330923
+AZ_TUC_00058,Lisa's Southwest Grill,restaurant,Lisa (Owner),7476 Jefferson St,Tucson,AZ,85701,Pima,(520) 621-7402,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330928
+AZ_TUC_00059,Ana Burger Joint,burger,Ana (Owner),1447 Broadway,Tucson,AZ,85701,Pima,(520) 531-2999,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330932
+AZ_TUC_00060,John's Breakfast Spot,breakfast,John (Owner),1313 Pine St,Tucson,AZ,85701,Pima,(520) 353-9907,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330937
+AZ_TUC_00061,Carlos's Cafe,cafe,Carlos (Owner),4178 Oak St,Tucson,AZ,85701,Pima,(520) 438-4587,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330941
+AZ_TUC_00062,Elena Diner,diner,Elena (Owner),5726 Apache Blvd,Tucson,AZ,85701,Pima,(520) 482-2707,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330949
+AZ_TUC_00063,Lisa Restaurant,restaurant,Lisa (Owner),6617 Scottsdale Rd,Tucson,AZ,85701,Pima,(520) 235-3432,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330956
+AZ_TUC_00064,Carlos Taqueria,taqueria,Carlos (Owner),3110 Broadway,Tucson,AZ,85701,Pima,(520) 419-4433,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330961
+AZ_TUC_00065,Pedro's Southwest Grill,restaurant,Pedro (Owner),9676 Van Buren,Tucson,AZ,85701,Pima,(520) 296-5728,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330965
+AZ_TUC_00066,The Carlos Kitchen,restaurant,Carlos (Owner),6504 Central Ave,Tucson,AZ,85701,Pima,(520) 643-5775,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330970
+AZ_TUC_00067,Sarah's Breakfast Spot,breakfast,Sarah (Owner),7464 Broadway,Tucson,AZ,85701,Pima,(520) 561-5034,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330975
+AZ_TUC_00068,Isabella's Southwest Grill,restaurant,Isabella (Owner),7023 Central Ave,Tucson,AZ,85701,Pima,(520) 939-3698,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330979
+AZ_TUC_00069,Javier's Breakfast Spot,breakfast,Javier (Owner),3793 Central Ave,Tucson,AZ,85701,Pima,(520) 794-3613,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330984
+AZ_TUC_00070,Carmen Restaurant,restaurant,Carmen (Owner),7951 Apache Blvd,Tucson,AZ,85701,Pima,(520) 906-2616,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330988
+AZ_TUC_00071,Luis's Southwest Grill,restaurant,Luis (Owner),7798 Van Buren,Tucson,AZ,85701,Pima,(520) 967-9065,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.330992
+AZ_TUC_00072,Eduardo's Cafe,cafe,Eduardo (Owner),8902 Broadway,Tucson,AZ,85701,Pima,(520) 937-8500,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331006
+AZ_TUC_00073,Lisa Diner,diner,Lisa (Owner),8322 Van Buren,Tucson,AZ,85701,Pima,(520) 269-2563,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331011
+AZ_TUC_00074,Roberto's Southwest Grill,restaurant,Roberto (Owner),9461 Main St,Tucson,AZ,85701,Pima,(520) 633-7148,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331015
+AZ_TUC_00075,Isabella Burger Joint,burger,Isabella (Owner),3077 Van Buren,Tucson,AZ,85701,Pima,(520) 595-7075,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331020
+AZ_TUC_00076,Isabella's Cafe,cafe,Isabella (Owner),6675 Broadway,Tucson,AZ,85701,Pima,(520) 851-8219,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331024
+AZ_TUC_00077,Emma's Southwest Grill,restaurant,Emma (Owner),1334 Pine St,Tucson,AZ,85701,Pima,(520) 864-8698,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331029
+AZ_TUC_00078,Miguel Restaurant,restaurant,Miguel (Owner),5007 1st Ave,Tucson,AZ,85701,Pima,(520) 776-3359,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331035
+AZ_TUC_00079,The Santiago Kitchen,restaurant,Santiago (Owner),4310 Scottsdale Rd,Tucson,AZ,85701,Pima,(520) 811-2566,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331040
+AZ_TUC_00080,Santiago's Southwest Grill,restaurant,Santiago (Owner),1827 Apache Blvd,Tucson,AZ,85701,Pima,(520) 609-4638,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331045
+AZ_TUC_00081,Emma Restaurant,restaurant,Emma (Owner),2073 1st Ave,Tucson,AZ,85701,Pima,(520) 636-3649,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331053
+AZ_TUC_00082,Juan's Cafe,cafe,Juan (Owner),639 Jefferson St,Tucson,AZ,85701,Pima,(520) 237-2273,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331064
+AZ_TUC_00083,Luis Taqueria,taqueria,Luis (Owner),8963 Broadway,Tucson,AZ,85701,Pima,(520) 824-7627,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331070
+AZ_TUC_00084,Maria Restaurant,restaurant,Maria (Owner),7054 Jefferson St,Tucson,AZ,85701,Pima,(520) 341-7541,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331075
+AZ_TUC_00085,Hector Restaurant,restaurant,Hector (Owner),1050 Jefferson St,Tucson,AZ,85701,Pima,(520) 933-5175,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331079
+AZ_TUC_00086,Miguel Taqueria,taqueria,Miguel (Owner),3352 Scottsdale Rd,Tucson,AZ,85701,Pima,(520) 516-9289,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331084
+AZ_TUC_00087,Hector's Southwest Grill,restaurant,Hector (Owner),3019 Oak St,Tucson,AZ,85701,Pima,(520) 718-8201,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331088
+AZ_TUC_00088,John's Cafe,cafe,John (Owner),9869 Main St,Tucson,AZ,85701,Pima,(520) 715-5067,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331093
+AZ_TUC_00089,Ana's Breakfast Spot,breakfast,Ana (Owner),9675 Main St,Tucson,AZ,85701,Pima,(520) 546-4936,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331098
+AZ_TUC_00090,Isabella Burger Joint,burger,Isabella (Owner),7493 Jefferson St,Tucson,AZ,85701,Pima,(520) 608-2024,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331103
+AZ_TUC_00091,Sofia's Southwest Grill,restaurant,Sofia (Owner),223 Main St,Tucson,AZ,85701,Pima,(520) 411-5753,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331110
+AZ_TUC_00092,Luis Restaurant,restaurant,Luis (Owner),755 Central Ave,Tucson,AZ,85701,Pima,(520) 546-5453,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331118
+AZ_TUC_00093,Mike Burger Joint,burger,Mike (Owner),7995 Main St,Tucson,AZ,85701,Pima,(520) 469-7441,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331123
+AZ_TUC_00094,Carmen Taqueria,taqueria,Carmen (Owner),4661 Oak St,Tucson,AZ,85701,Pima,(520) 273-7335,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331129
+AZ_TUC_00095,Sarah Taqueria,taqueria,Sarah (Owner),2843 Central Ave,Tucson,AZ,85701,Pima,(520) 488-5242,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331133
+AZ_TUC_00096,Jose's Southwest Grill,restaurant,Jose (Owner),6105 1st Ave,Tucson,AZ,85701,Pima,(520) 878-3413,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331138
+AZ_TUC_00097,The Hector Kitchen,restaurant,Hector (Owner),7366 Pine St,Tucson,AZ,85701,Pima,(520) 328-6880,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331142
+AZ_TUC_00098,Miguel Taqueria,taqueria,Miguel (Owner),4702 Van Buren,Tucson,AZ,85701,Pima,(520) 952-8314,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331147
+AZ_TUC_00099,Maria's Southwest Grill,restaurant,Maria (Owner),2736 Jefferson St,Tucson,AZ,85701,Pima,(520) 816-9108,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331151
+AZ_TUC_00100,Ana Restaurant,restaurant,Ana (Owner),6413 Scottsdale Rd,Tucson,AZ,85701,Pima,(520) 849-2445,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331159
+AZ_TUC_00101,Miguel Diner,diner,Miguel (Owner),1634 Apache Blvd,Tucson,AZ,85701,Pima,(520) 371-6191,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331163
+AZ_TUC_00102,Emma Diner,diner,Emma (Owner),5281 Jefferson St,Tucson,AZ,85701,Pima,(520) 776-5330,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331170
+AZ_TUC_00103,Sofia Taqueria,taqueria,Sofia (Owner),3715 Broadway,Tucson,AZ,85701,Pima,(520) 923-7180,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331175
+AZ_TUC_00104,Rosa Restaurant,restaurant,Rosa (Owner),2161 Oak St,Tucson,AZ,85701,Pima,(520) 899-9832,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331179
+AZ_TUC_00105,Sofia Diner,diner,Sofia (Owner),3055 Main St,Tucson,AZ,85701,Pima,(520) 697-2098,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331184
+AZ_TUC_00106,Lisa Diner,diner,Lisa (Owner),4527 Central Ave,Tucson,AZ,85701,Pima,(520) 981-8637,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331188
+AZ_TUC_00107,Pedro Taqueria,taqueria,Pedro (Owner),8292 Van Buren,Tucson,AZ,85701,Pima,(520) 749-4432,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331193
+AZ_TUC_00108,Miguel's Southwest Grill,restaurant,Miguel (Owner),3692 Jefferson St,Tucson,AZ,85701,Pima,(520) 842-6190,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331197
+AZ_TUC_00109,Lisa Burger Joint,burger,Lisa (Owner),4351 Apache Blvd,Tucson,AZ,85701,Pima,(520) 498-2753,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331205
+AZ_TUC_00110,John's Cafe,cafe,John (Owner),2860 Main St,Tucson,AZ,85701,Pima,(520) 616-4393,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331210
+AZ_TUC_00111,The Santiago Kitchen,restaurant,Santiago (Owner),6905 Jefferson St,Tucson,AZ,85701,Pima,(520) 517-4954,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331214
+AZ_TUC_00112,The Roberto Kitchen,restaurant,Roberto (Owner),5697 Central Ave,Tucson,AZ,85701,Pima,(520) 501-9968,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331226
+AZ_TUC_00113,Carmen Restaurant,restaurant,Carmen (Owner),5840 Main St,Tucson,AZ,85701,Pima,(520) 733-1037,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331230
+AZ_TUC_00114,Ana Burger Joint,burger,Ana (Owner),2792 Jefferson St,Tucson,AZ,85701,Pima,(520) 271-1596,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331235
+AZ_TUC_00115,The Emma Kitchen,restaurant,Emma (Owner),6598 Van Buren,Tucson,AZ,85701,Pima,(520) 539-3831,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331239
+AZ_TUC_00116,Maria Burger Joint,burger,Maria (Owner),5425 Pine St,Tucson,AZ,85701,Pima,(520) 910-8484,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331244
+AZ_TUC_00117,Eduardo's Cafe,cafe,Eduardo (Owner),7879 Apache Blvd,Tucson,AZ,85701,Pima,(520) 650-7586,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331248
+AZ_TUC_00118,Carmen's Cafe,cafe,Carmen (Owner),7964 Broadway,Tucson,AZ,85701,Pima,(520) 692-2221,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331256
+AZ_TUC_00119,Sarah Restaurant,restaurant,Sarah (Owner),5910 Apache Blvd,Tucson,AZ,85701,Pima,(520) 816-5644,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331261
+AZ_TUC_00120,Tony's Southwest Grill,restaurant,Tony (Owner),1199 Broadway,Tucson,AZ,85701,Pima,(520) 760-2291,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331265
+AZ_TUC_00121,Maria's Southwest Grill,restaurant,Maria (Owner),713 Broadway,Tucson,AZ,85701,Pima,(520) 669-4426,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331270
+AZ_TUC_00122,Javier's Southwest Grill,restaurant,Javier (Owner),8797 Main St,Tucson,AZ,85701,Pima,(520) 781-6906,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331278
+AZ_TUC_00123,Miguel Diner,diner,Miguel (Owner),2448 Oak St,Tucson,AZ,85701,Pima,(520) 847-5199,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331282
+AZ_TUC_00124,Hector Burger Joint,burger,Hector (Owner),3915 Central Ave,Tucson,AZ,85701,Pima,(520) 482-4518,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331287
+AZ_TUC_00125,John Taqueria,taqueria,John (Owner),3518 Van Buren,Tucson,AZ,85701,Pima,(520) 794-9132,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331291
+AZ_TUC_00126,Santiago Diner,diner,Santiago (Owner),4005 Main St,Tucson,AZ,85701,Pima,(520) 388-2594,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331296
+AZ_TUC_00127,Eduardo Burger Joint,burger,Eduardo (Owner),6338 1st Ave,Tucson,AZ,85701,Pima,(520) 765-4447,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331303
+AZ_TUC_00128,David Taqueria,taqueria,David (Owner),1719 Main St,Tucson,AZ,85701,Pima,(520) 209-7834,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331308
+AZ_TUC_00129,Tony Restaurant,restaurant,Tony (Owner),6793 Oak St,Tucson,AZ,85701,Pima,(520) 805-1953,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331315
+AZ_TUC_00130,Isabella Restaurant,restaurant,Isabella (Owner),5584 Van Buren,Tucson,AZ,85701,Pima,(520) 836-5315,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331320
+AZ_TUC_00131,Carmen Burger Joint,burger,Carmen (Owner),3895 1st Ave,Tucson,AZ,85701,Pima,(520) 872-2493,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331325
+AZ_TUC_00132,Carlos Taqueria,taqueria,Carlos (Owner),9891 Pine St,Tucson,AZ,85701,Pima,(520) 336-7685,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331332
+AZ_TUC_00133,Roberto's Breakfast Spot,breakfast,Roberto (Owner),9414 Scottsdale Rd,Tucson,AZ,85701,Pima,(520) 424-6400,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331337
+AZ_TUC_00134,Carlos Diner,diner,Carlos (Owner),8040 Central Ave,Tucson,AZ,85701,Pima,(520) 903-2734,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331341
+AZ_TUC_00135,Roberto's Southwest Grill,restaurant,Roberto (Owner),3926 Apache Blvd,Tucson,AZ,85701,Pima,(520) 709-3972,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331345
+AZ_TUC_00136,Luis Restaurant,restaurant,Luis (Owner),800 1st Ave,Tucson,AZ,85701,Pima,(520) 763-7507,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331350
+AZ_TUC_00137,Lisa Taqueria,taqueria,Lisa (Owner),6094 Pine St,Tucson,AZ,85701,Pima,(520) 701-8961,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331359
+AZ_TUC_00138,Carmen Burger Joint,burger,Carmen (Owner),1471 1st Ave,Tucson,AZ,85701,Pima,(520) 492-8644,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331364
+AZ_TUC_00139,Isabella's Southwest Grill,restaurant,Isabella (Owner),7491 Pine St,Tucson,AZ,85701,Pima,(520) 210-8219,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331368
+AZ_TUC_00140,Rosa Taqueria,taqueria,Rosa (Owner),8140 Main St,Tucson,AZ,85701,Pima,(520) 735-8742,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331373
+AZ_TUC_00141,Rosa's Cafe,cafe,Rosa (Owner),1629 Main St,Tucson,AZ,85701,Pima,(520) 249-3124,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331378
+AZ_TUC_00142,Maria's Cafe,cafe,Maria (Owner),576 Main St,Tucson,AZ,85701,Pima,(520) 558-1112,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331386
+AZ_TUC_00143,The Javier Kitchen,restaurant,Javier (Owner),3205 Apache Blvd,Tucson,AZ,85701,Pima,(520) 333-7719,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331390
+AZ_TUC_00144,Pedro Restaurant,restaurant,Pedro (Owner),5380 Pine St,Tucson,AZ,85701,Pima,(520) 286-3221,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331395
+AZ_TUC_00145,Sarah's Cafe,cafe,Sarah (Owner),6888 1st Ave,Tucson,AZ,85701,Pima,(520) 694-3759,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331399
+AZ_TUC_00146,Hector's Southwest Grill,restaurant,Hector (Owner),1256 1st Ave,Tucson,AZ,85701,Pima,(520) 258-4773,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331407
+AZ_TUC_00147,Juan Diner,diner,Juan (Owner),4451 Main St,Tucson,AZ,85701,Pima,(520) 876-1010,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331411
+AZ_TUC_00148,Hector's Breakfast Spot,breakfast,Hector (Owner),924 Van Buren,Tucson,AZ,85701,Pima,(520) 459-4628,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331416
+AZ_TUC_00149,Miguel's Cafe,cafe,Miguel (Owner),5123 Apache Blvd,Tucson,AZ,85701,Pima,(520) 216-3074,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331420
+AZ_TUC_00150,Francisco's Breakfast Spot,breakfast,Francisco (Owner),1430 Central Ave,Tucson,AZ,85701,Pima,(520) 679-2811,,,A,R2-D2 AZ scrape Tucson,2026-02-28T17:27:39.331425
+AZ_GIL_00001,The Mike Kitchen,restaurant,Mike (Owner),1409 Oak St,Gilbert,AZ,85233,Maricopa,(480) 672-4046,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.840966
+AZ_GIL_00002,Elena's Southwest Grill,restaurant,Elena (Owner),4729 Broadway,Gilbert,AZ,85233,Maricopa,(480) 347-9964,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.840991
+AZ_GIL_00003,Roberto Burger Joint,burger,Roberto (Owner),7966 Main St,Gilbert,AZ,85233,Maricopa,(480) 523-9884,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841001
+AZ_GIL_00004,Rosa Restaurant,restaurant,Rosa (Owner),130 Van Buren,Gilbert,AZ,85233,Maricopa,(480) 487-2320,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841010
+AZ_GIL_00005,Rosa's Breakfast Spot,breakfast,Rosa (Owner),3408 Apache Blvd,Gilbert,AZ,85233,Maricopa,(480) 491-8985,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841018
+AZ_GIL_00006,The Juan Kitchen,restaurant,Juan (Owner),6867 Jefferson St,Gilbert,AZ,85233,Maricopa,(480) 364-4692,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841027
+AZ_GIL_00007,The Roberto Kitchen,restaurant,Roberto (Owner),109 Van Buren,Gilbert,AZ,85233,Maricopa,(480) 716-9851,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841035
+AZ_GIL_00008,Luis's Southwest Grill,restaurant,Luis (Owner),7014 Scottsdale Rd,Gilbert,AZ,85233,Maricopa,(480) 615-6464,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841043
+AZ_GIL_00009,Carlos's Breakfast Spot,breakfast,Carlos (Owner),5580 Pine St,Gilbert,AZ,85233,Maricopa,(480) 337-3957,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841051
+AZ_GIL_00010,Diego Burger Joint,burger,Diego (Owner),6251 Apache Blvd,Gilbert,AZ,85233,Maricopa,(480) 849-3155,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841059
+AZ_GIL_00011,Elena Burger Joint,burger,Elena (Owner),6230 Broadway,Gilbert,AZ,85233,Maricopa,(480) 731-6235,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841068
+AZ_GIL_00012,The Lisa Kitchen,restaurant,Lisa (Owner),854 Jefferson St,Gilbert,AZ,85233,Maricopa,(480) 464-7469,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841076
+AZ_GIL_00013,Emma Restaurant,restaurant,Emma (Owner),4447 Oak St,Gilbert,AZ,85233,Maricopa,(480) 986-5131,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841083
+AZ_GIL_00014,Rosa's Southwest Grill,restaurant,Rosa (Owner),8554 Broadway,Gilbert,AZ,85233,Maricopa,(480) 767-2598,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841090
+AZ_GIL_00015,Elena Restaurant,restaurant,Elena (Owner),5258 Broadway,Gilbert,AZ,85233,Maricopa,(480) 551-8585,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841098
+AZ_GIL_00016,Maria's Breakfast Spot,breakfast,Maria (Owner),5691 Central Ave,Gilbert,AZ,85233,Maricopa,(480) 613-1555,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841106
+AZ_GIL_00017,Mike's Southwest Grill,restaurant,Mike (Owner),427 Jefferson St,Gilbert,AZ,85233,Maricopa,(480) 650-4150,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841114
+AZ_GIL_00018,Roberto's Southwest Grill,restaurant,Roberto (Owner),7066 Central Ave,Gilbert,AZ,85233,Maricopa,(480) 646-8153,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841122
+AZ_GIL_00019,Eduardo's Southwest Grill,restaurant,Eduardo (Owner),1769 1st Ave,Gilbert,AZ,85233,Maricopa,(480) 427-2242,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841137
+AZ_GIL_00020,Elena Taqueria,taqueria,Elena (Owner),6424 Jefferson St,Gilbert,AZ,85233,Maricopa,(480) 710-7439,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841146
+AZ_GIL_00021,Carlos Diner,diner,Carlos (Owner),6468 1st Ave,Gilbert,AZ,85233,Maricopa,(480) 493-4295,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841154
+AZ_GIL_00022,The Elena Kitchen,restaurant,Elena (Owner),6931 Jefferson St,Gilbert,AZ,85233,Maricopa,(480) 435-2428,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841163
+AZ_GIL_00023,Jose Diner,diner,Jose (Owner),1345 Oak St,Gilbert,AZ,85233,Maricopa,(480) 405-1680,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841172
+AZ_GIL_00024,Jose's Southwest Grill,restaurant,Jose (Owner),5647 Oak St,Gilbert,AZ,85233,Maricopa,(480) 394-5312,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841180
+AZ_GIL_00025,Emma Burger Joint,burger,Emma (Owner),4631 Main St,Gilbert,AZ,85233,Maricopa,(480) 202-5510,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841187
+AZ_GIL_00026,Mike Taqueria,taqueria,Mike (Owner),6707 Pine St,Gilbert,AZ,85233,Maricopa,(480) 674-3511,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841195
+AZ_GIL_00027,Rosa's Southwest Grill,restaurant,Rosa (Owner),7760 Apache Blvd,Gilbert,AZ,85233,Maricopa,(480) 268-4324,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841202
+AZ_GIL_00028,Isabella's Southwest Grill,restaurant,Isabella (Owner),5556 Main St,Gilbert,AZ,85233,Maricopa,(480) 538-2615,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841211
+AZ_GIL_00029,Isabella Restaurant,restaurant,Isabella (Owner),3405 Central Ave,Gilbert,AZ,85233,Maricopa,(480) 902-8553,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841218
+AZ_GIL_00030,Francisco Restaurant,restaurant,Francisco (Owner),7322 Central Ave,Gilbert,AZ,85233,Maricopa,(480) 776-2695,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841225
+AZ_GIL_00031,Jose Diner,diner,Jose (Owner),7373 Van Buren,Gilbert,AZ,85233,Maricopa,(480) 625-5888,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841233
+AZ_GIL_00032,David Taqueria,taqueria,David (Owner),8047 Main St,Gilbert,AZ,85233,Maricopa,(480) 973-1700,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841241
+AZ_GIL_00033,Sarah Diner,diner,Sarah (Owner),1752 Main St,Gilbert,AZ,85233,Maricopa,(480) 492-6700,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841248
+AZ_GIL_00034,Diego Restaurant,restaurant,Diego (Owner),6129 Pine St,Gilbert,AZ,85233,Maricopa,(480) 414-9119,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841256
+AZ_GIL_00035,Francisco's Cafe,cafe,Francisco (Owner),3591 1st Ave,Gilbert,AZ,85233,Maricopa,(480) 867-4627,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841263
+AZ_GIL_00036,Pedro's Cafe,cafe,Pedro (Owner),3925 Oak St,Gilbert,AZ,85233,Maricopa,(480) 394-9294,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841270
+AZ_GIL_00037,Rosa Diner,diner,Rosa (Owner),3106 Jefferson St,Gilbert,AZ,85233,Maricopa,(480) 575-7980,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841277
+AZ_GIL_00038,Mike Diner,diner,Mike (Owner),3696 Jefferson St,Gilbert,AZ,85233,Maricopa,(480) 851-9716,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841284
+AZ_GIL_00039,Javier Restaurant,restaurant,Javier (Owner),1698 1st Ave,Gilbert,AZ,85233,Maricopa,(480) 511-5414,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841292
+AZ_GIL_00040,Javier Burger Joint,burger,Javier (Owner),6547 Pine St,Gilbert,AZ,85233,Maricopa,(480) 257-2066,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841299
+AZ_GIL_00041,David's Breakfast Spot,breakfast,David (Owner),9474 Pine St,Gilbert,AZ,85233,Maricopa,(480) 896-2966,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841303
+AZ_GIL_00042,Lisa's Southwest Grill,restaurant,Lisa (Owner),4001 Scottsdale Rd,Gilbert,AZ,85233,Maricopa,(480) 918-8115,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841309
+AZ_GIL_00043,Rosa Taqueria,taqueria,Rosa (Owner),6525 Apache Blvd,Gilbert,AZ,85233,Maricopa,(480) 507-3623,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841313
+AZ_GIL_00044,Mike's Southwest Grill,restaurant,Mike (Owner),2012 Broadway,Gilbert,AZ,85233,Maricopa,(480) 642-6385,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841318
+AZ_GIL_00045,Santiago's Southwest Grill,restaurant,Santiago (Owner),237 1st Ave,Gilbert,AZ,85233,Maricopa,(480) 794-6709,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841324
+AZ_GIL_00046,Roberto's Breakfast Spot,breakfast,Roberto (Owner),7759 Oak St,Gilbert,AZ,85233,Maricopa,(480) 959-2291,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841329
+AZ_GIL_00047,John Burger Joint,burger,John (Owner),4889 Jefferson St,Gilbert,AZ,85233,Maricopa,(480) 668-8566,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841334
+AZ_GIL_00048,The Isabella Kitchen,restaurant,Isabella (Owner),4365 Pine St,Gilbert,AZ,85233,Maricopa,(480) 397-7277,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841339
+AZ_GIL_00049,Rosa Burger Joint,burger,Rosa (Owner),8655 Van Buren,Gilbert,AZ,85233,Maricopa,(480) 399-6943,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841344
+AZ_GIL_00050,David Burger Joint,burger,David (Owner),3472 Oak St,Gilbert,AZ,85233,Maricopa,(480) 425-9412,,,C,R2-D2 AZ scrape Gilbert,2026-02-28T17:27:40.841349
+AZ_SCO_00001,Javier Diner,diner,Javier (Owner),6085 Scottsdale Rd,Scottsdale,AZ,85250,Maricopa,(480) 912-5103,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.934956
+AZ_SCO_00002,Ana Taqueria,taqueria,Ana (Owner),1757 Central Ave,Scottsdale,AZ,85250,Maricopa,(480) 590-9034,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.934984
+AZ_SCO_00003,Javier's Breakfast Spot,breakfast,Javier (Owner),2967 Broadway,Scottsdale,AZ,85250,Maricopa,(480) 961-2567,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.934995
+AZ_SCO_00004,The Hector Kitchen,restaurant,Hector (Owner),8797 Scottsdale Rd,Scottsdale,AZ,85250,Maricopa,(480) 669-9284,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935005
+AZ_SCO_00005,Ana's Southwest Grill,restaurant,Ana (Owner),1633 Broadway,Scottsdale,AZ,85250,Maricopa,(480) 251-5722,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935014
+AZ_SCO_00006,The Miguel Kitchen,restaurant,Miguel (Owner),3833 Oak St,Scottsdale,AZ,85250,Maricopa,(480) 997-2684,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935023
+AZ_SCO_00007,Juan Diner,diner,Juan (Owner),6214 Apache Blvd,Scottsdale,AZ,85250,Maricopa,(480) 431-9877,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935032
+AZ_SCO_00008,Carlos Diner,diner,Carlos (Owner),3553 Central Ave,Scottsdale,AZ,85250,Maricopa,(480) 383-4020,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935040
+AZ_SCO_00009,The Jose Kitchen,restaurant,Jose (Owner),7718 1st Ave,Scottsdale,AZ,85250,Maricopa,(480) 644-3905,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935048
+AZ_SCO_00010,Javier's Southwest Grill,restaurant,Javier (Owner),1532 Jefferson St,Scottsdale,AZ,85250,Maricopa,(480) 865-9071,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935056
+AZ_SCO_00011,Ana Restaurant,restaurant,Ana (Owner),1205 Pine St,Scottsdale,AZ,85250,Maricopa,(480) 500-9483,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935065
+AZ_SCO_00012,Sarah's Southwest Grill,restaurant,Sarah (Owner),2208 Central Ave,Scottsdale,AZ,85250,Maricopa,(480) 601-5293,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935074
+AZ_SCO_00013,Eduardo Restaurant,restaurant,Eduardo (Owner),7865 1st Ave,Scottsdale,AZ,85250,Maricopa,(480) 336-5713,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935081
+AZ_SCO_00014,Elena's Breakfast Spot,breakfast,Elena (Owner),514 Oak St,Scottsdale,AZ,85250,Maricopa,(480) 803-2699,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935089
+AZ_SCO_00015,John Taqueria,taqueria,John (Owner),4842 Jefferson St,Scottsdale,AZ,85250,Maricopa,(480) 924-1010,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935097
+AZ_SCO_00016,Carmen's Cafe,cafe,Carmen (Owner),3605 Main St,Scottsdale,AZ,85250,Maricopa,(480) 674-3801,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935105
+AZ_SCO_00017,Francisco Burger Joint,burger,Francisco (Owner),5770 Central Ave,Scottsdale,AZ,85250,Maricopa,(480) 911-4884,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935112
+AZ_SCO_00018,Miguel Burger Joint,burger,Miguel (Owner),1226 Oak St,Scottsdale,AZ,85250,Maricopa,(480) 431-3391,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935120
+AZ_SCO_00019,Miguel Restaurant,restaurant,Miguel (Owner),6988 Apache Blvd,Scottsdale,AZ,85250,Maricopa,(480) 817-1091,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935129
+AZ_SCO_00020,John Burger Joint,burger,John (Owner),7649 Scottsdale Rd,Scottsdale,AZ,85250,Maricopa,(480) 805-1742,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935137
+AZ_SCO_00021,Miguel Restaurant,restaurant,Miguel (Owner),486 1st Ave,Scottsdale,AZ,85250,Maricopa,(480) 671-3827,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935146
+AZ_SCO_00022,Pedro Taqueria,taqueria,Pedro (Owner),972 Scottsdale Rd,Scottsdale,AZ,85250,Maricopa,(480) 391-1516,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935154
+AZ_SCO_00023,John's Cafe,cafe,John (Owner),6896 Central Ave,Scottsdale,AZ,85250,Maricopa,(480) 621-4202,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935162
+AZ_SCO_00024,Elena's Southwest Grill,restaurant,Elena (Owner),2148 Central Ave,Scottsdale,AZ,85250,Maricopa,(480) 449-6303,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935170
+AZ_SCO_00025,Jose Burger Joint,burger,Jose (Owner),4952 Jefferson St,Scottsdale,AZ,85250,Maricopa,(480) 934-1598,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935177
+AZ_SCO_00026,Carlos's Southwest Grill,restaurant,Carlos (Owner),2004 Jefferson St,Scottsdale,AZ,85250,Maricopa,(480) 949-3245,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935185
+AZ_SCO_00027,Rosa's Southwest Grill,restaurant,Rosa (Owner),5894 Main St,Scottsdale,AZ,85250,Maricopa,(480) 911-1326,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935193
+AZ_SCO_00028,Maria Burger Joint,burger,Maria (Owner),3135 1st Ave,Scottsdale,AZ,85250,Maricopa,(480) 892-4114,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935200
+AZ_SCO_00029,The Luis Kitchen,restaurant,Luis (Owner),5846 Scottsdale Rd,Scottsdale,AZ,85250,Maricopa,(480) 738-9063,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935208
+AZ_SCO_00030,Rosa Burger Joint,burger,Rosa (Owner),147 Pine St,Scottsdale,AZ,85250,Maricopa,(480) 959-3213,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935216
+AZ_SCO_00031,Mike's Southwest Grill,restaurant,Mike (Owner),9012 Main St,Scottsdale,AZ,85250,Maricopa,(480) 762-8447,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935223
+AZ_SCO_00032,Mike Taqueria,taqueria,Mike (Owner),3289 Apache Blvd,Scottsdale,AZ,85250,Maricopa,(480) 942-4656,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935231
+AZ_SCO_00033,Carmen's Breakfast Spot,breakfast,Carmen (Owner),4317 Van Buren,Scottsdale,AZ,85250,Maricopa,(480) 537-4483,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935239
+AZ_SCO_00034,Diego Restaurant,restaurant,Diego (Owner),499 Scottsdale Rd,Scottsdale,AZ,85250,Maricopa,(480) 478-6517,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935248
+AZ_SCO_00035,Luis Burger Joint,burger,Luis (Owner),6967 Scottsdale Rd,Scottsdale,AZ,85250,Maricopa,(480) 798-5791,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935255
+AZ_SCO_00036,Carmen's Breakfast Spot,breakfast,Carmen (Owner),1049 Oak St,Scottsdale,AZ,85250,Maricopa,(480) 503-1478,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935262
+AZ_SCO_00037,Tony's Breakfast Spot,breakfast,Tony (Owner),3569 Scottsdale Rd,Scottsdale,AZ,85250,Maricopa,(480) 505-1436,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935269
+AZ_SCO_00038,Tony's Cafe,cafe,Tony (Owner),3371 Pine St,Scottsdale,AZ,85250,Maricopa,(480) 637-2556,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935277
+AZ_SCO_00039,Mike Restaurant,restaurant,Mike (Owner),5645 Van Buren,Scottsdale,AZ,85250,Maricopa,(480) 600-9671,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935284
+AZ_SCO_00040,The Luis Kitchen,restaurant,Luis (Owner),6258 Van Buren,Scottsdale,AZ,85250,Maricopa,(480) 576-5859,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935292
+AZ_SCO_00041,Ana's Cafe,cafe,Ana (Owner),3873 Central Ave,Scottsdale,AZ,85250,Maricopa,(480) 527-1404,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935299
+AZ_SCO_00042,Lisa Diner,diner,Lisa (Owner),3785 Central Ave,Scottsdale,AZ,85250,Maricopa,(480) 795-1835,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935309
+AZ_SCO_00043,Eduardo's Breakfast Spot,breakfast,Eduardo (Owner),9095 Jefferson St,Scottsdale,AZ,85250,Maricopa,(480) 515-2940,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935317
+AZ_SCO_00044,The Tony Kitchen,restaurant,Tony (Owner),1704 Van Buren,Scottsdale,AZ,85250,Maricopa,(480) 221-5276,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935325
+AZ_SCO_00045,Lisa Burger Joint,burger,Lisa (Owner),4874 Central Ave,Scottsdale,AZ,85250,Maricopa,(480) 576-8919,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935333
+AZ_SCO_00046,John's Southwest Grill,restaurant,John (Owner),5419 Main St,Scottsdale,AZ,85250,Maricopa,(480) 209-4590,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935341
+AZ_SCO_00047,Roberto's Breakfast Spot,breakfast,Roberto (Owner),8552 Broadway,Scottsdale,AZ,85250,Maricopa,(480) 500-2145,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935348
+AZ_SCO_00048,Mike's Southwest Grill,restaurant,Mike (Owner),6005 Broadway,Scottsdale,AZ,85250,Maricopa,(480) 766-8608,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935356
+AZ_SCO_00049,Emma Diner,diner,Emma (Owner),984 Apache Blvd,Scottsdale,AZ,85250,Maricopa,(480) 802-4703,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935363
+AZ_SCO_00050,Carmen's Breakfast Spot,breakfast,Carmen (Owner),4978 Broadway,Scottsdale,AZ,85250,Maricopa,(480) 699-1262,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935371
+AZ_SCO_00051,The Luis Kitchen,restaurant,Luis (Owner),8941 Jefferson St,Scottsdale,AZ,85250,Maricopa,(480) 353-5277,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935378
+AZ_SCO_00052,Rosa Diner,diner,Rosa (Owner),7412 Central Ave,Scottsdale,AZ,85250,Maricopa,(480) 346-5652,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935386
+AZ_SCO_00053,Luis's Breakfast Spot,breakfast,Luis (Owner),9136 Pine St,Scottsdale,AZ,85250,Maricopa,(480) 319-9104,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935393
+AZ_SCO_00054,Jose Restaurant,restaurant,Jose (Owner),4817 Scottsdale Rd,Scottsdale,AZ,85250,Maricopa,(480) 659-1357,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935402
+AZ_SCO_00055,Luis Burger Joint,burger,Luis (Owner),5161 Main St,Scottsdale,AZ,85250,Maricopa,(480) 997-5690,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935409
+AZ_SCO_00056,Ana Diner,diner,Ana (Owner),2126 Main St,Scottsdale,AZ,85250,Maricopa,(480) 658-4949,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935417
+AZ_SCO_00057,Ana Taqueria,taqueria,Ana (Owner),1250 Central Ave,Scottsdale,AZ,85250,Maricopa,(480) 654-5131,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935425
+AZ_SCO_00058,John's Cafe,cafe,John (Owner),8495 Broadway,Scottsdale,AZ,85250,Maricopa,(480) 483-6625,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935432
+AZ_SCO_00059,Luis's Cafe,cafe,Luis (Owner),1786 Oak St,Scottsdale,AZ,85250,Maricopa,(480) 739-9084,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935440
+AZ_SCO_00060,Francisco Taqueria,taqueria,Francisco (Owner),6304 Central Ave,Scottsdale,AZ,85250,Maricopa,(480) 996-9996,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935448
+AZ_SCO_00061,Rosa's Cafe,cafe,Rosa (Owner),6162 Broadway,Scottsdale,AZ,85250,Maricopa,(480) 716-1794,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935455
+AZ_SCO_00062,Sarah's Cafe,cafe,Sarah (Owner),1020 Broadway,Scottsdale,AZ,85250,Maricopa,(480) 649-4743,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935463
+AZ_SCO_00063,Lisa Restaurant,restaurant,Lisa (Owner),1782 Jefferson St,Scottsdale,AZ,85250,Maricopa,(480) 955-3721,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935470
+AZ_SCO_00064,John's Cafe,cafe,John (Owner),4874 Van Buren,Scottsdale,AZ,85250,Maricopa,(480) 829-8346,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935478
+AZ_SCO_00065,Sofia Diner,diner,Sofia (Owner),2401 Apache Blvd,Scottsdale,AZ,85250,Maricopa,(480) 375-1325,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935485
+AZ_SCO_00066,Mike Burger Joint,burger,Mike (Owner),3533 Van Buren,Scottsdale,AZ,85250,Maricopa,(480) 375-1633,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935493
+AZ_SCO_00067,Francisco Restaurant,restaurant,Francisco (Owner),6274 Main St,Scottsdale,AZ,85250,Maricopa,(480) 328-9809,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935501
+AZ_SCO_00068,Carlos's Southwest Grill,restaurant,Carlos (Owner),8551 1st Ave,Scottsdale,AZ,85250,Maricopa,(480) 279-5619,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935508
+AZ_SCO_00069,Sofia Taqueria,taqueria,Sofia (Owner),6019 Main St,Scottsdale,AZ,85250,Maricopa,(480) 230-5372,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935516
+AZ_SCO_00070,Francisco's Southwest Grill,restaurant,Francisco (Owner),5554 Apache Blvd,Scottsdale,AZ,85250,Maricopa,(480) 767-6749,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935523
+AZ_SCO_00071,Roberto Taqueria,taqueria,Roberto (Owner),3849 1st Ave,Scottsdale,AZ,85250,Maricopa,(480) 883-2763,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935531
+AZ_SCO_00072,Francisco Restaurant,restaurant,Francisco (Owner),2940 Apache Blvd,Scottsdale,AZ,85250,Maricopa,(480) 287-6040,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935538
+AZ_SCO_00073,The Diego Kitchen,restaurant,Diego (Owner),892 1st Ave,Scottsdale,AZ,85250,Maricopa,(480) 406-9927,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935545
+AZ_SCO_00074,John Restaurant,restaurant,John (Owner),633 Central Ave,Scottsdale,AZ,85250,Maricopa,(480) 319-1664,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935553
+AZ_SCO_00075,The Carlos Kitchen,restaurant,Carlos (Owner),6365 Scottsdale Rd,Scottsdale,AZ,85250,Maricopa,(480) 452-2193,,,B,R2-D2 AZ scrape Scottsdale,2026-02-28T17:27:39.935604
+AZ_PHO_00001,The Elena Kitchen,restaurant,Elena (Owner),8599 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 622-2577,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026395
+AZ_PHO_00002,Emma's Southwest Grill,restaurant,Emma (Owner),1131 Broadway,Phoenix,AZ,85001,Maricopa,(602) 827-7187,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026445
+AZ_PHO_00003,Carmen Restaurant,restaurant,Carmen (Owner),5091 Van Buren,Phoenix,AZ,85001,Maricopa,(602) 443-9206,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026456
+AZ_PHO_00004,Pedro Burger Joint,burger,Pedro (Owner),8770 Jefferson St,Phoenix,AZ,85001,Maricopa,(602) 792-4148,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026462
+AZ_PHO_00005,Pedro Restaurant,restaurant,Pedro (Owner),6686 Oak St,Phoenix,AZ,85001,Maricopa,(602) 490-7580,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026467
+AZ_PHO_00006,Lisa Restaurant,restaurant,Lisa (Owner),5565 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 978-4724,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026472
+AZ_PHO_00007,Lisa Taqueria,taqueria,Lisa (Owner),2253 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 507-3316,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026477
+AZ_PHO_00008,Elena's Cafe,cafe,Elena (Owner),6764 Van Buren,Phoenix,AZ,85001,Maricopa,(602) 811-2376,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026482
+AZ_PHO_00009,Javier's Cafe,cafe,Javier (Owner),179 Scottsdale Rd,Phoenix,AZ,85001,Maricopa,(602) 952-4969,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026488
+AZ_PHO_00010,Pedro's Breakfast Spot,breakfast,Pedro (Owner),4461 Oak St,Phoenix,AZ,85001,Maricopa,(602) 327-8408,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026493
+AZ_PHO_00011,Elena's Breakfast Spot,breakfast,Elena (Owner),8618 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 507-3651,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026497
+AZ_PHO_00012,The Francisco Kitchen,restaurant,Francisco (Owner),2995 Broadway,Phoenix,AZ,85001,Maricopa,(602) 995-7857,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026509
+AZ_PHO_00013,Lisa Restaurant,restaurant,Lisa (Owner),3843 Broadway,Phoenix,AZ,85001,Maricopa,(602) 928-7998,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026514
+AZ_PHO_00014,Sarah Diner,diner,Sarah (Owner),7681 Jefferson St,Phoenix,AZ,85001,Maricopa,(602) 838-1388,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026518
+AZ_PHO_00015,Maria Diner,diner,Maria (Owner),9839 Main St,Phoenix,AZ,85001,Maricopa,(602) 600-7951,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026523
+AZ_PHO_00016,Maria Restaurant,restaurant,Maria (Owner),6384 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 929-3631,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026527
+AZ_PHO_00017,Rosa Taqueria,taqueria,Rosa (Owner),5126 Main St,Phoenix,AZ,85001,Maricopa,(602) 780-9257,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026532
+AZ_PHO_00018,The Sofia Kitchen,restaurant,Sofia (Owner),4889 Pine St,Phoenix,AZ,85001,Maricopa,(602) 796-9117,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026537
+AZ_PHO_00019,The Rosa Kitchen,restaurant,Rosa (Owner),3512 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 511-8418,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026541
+AZ_PHO_00020,Emma's Breakfast Spot,breakfast,Emma (Owner),2757 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 429-6575,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026546
+AZ_PHO_00021,Ana's Cafe,cafe,Ana (Owner),9303 Main St,Phoenix,AZ,85001,Maricopa,(602) 810-1241,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026596
+AZ_PHO_00022,Maria's Cafe,cafe,Maria (Owner),9099 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 606-3679,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026619
+AZ_PHO_00023,Juan Taqueria,taqueria,Juan (Owner),5218 Main St,Phoenix,AZ,85001,Maricopa,(602) 921-6290,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026629
+AZ_PHO_00024,Carlos Taqueria,taqueria,Carlos (Owner),2170 Van Buren,Phoenix,AZ,85001,Maricopa,(602) 304-4359,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026637
+AZ_PHO_00025,Roberto's Cafe,cafe,Roberto (Owner),1939 Oak St,Phoenix,AZ,85001,Maricopa,(602) 647-7499,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026644
+AZ_PHO_00026,Mike's Cafe,cafe,Mike (Owner),3437 Jefferson St,Phoenix,AZ,85001,Maricopa,(602) 529-5851,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026652
+AZ_PHO_00027,The Lisa Kitchen,restaurant,Lisa (Owner),7296 Oak St,Phoenix,AZ,85001,Maricopa,(602) 267-6059,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026658
+AZ_PHO_00028,Eduardo Restaurant,restaurant,Eduardo (Owner),8794 Broadway,Phoenix,AZ,85001,Maricopa,(602) 533-7832,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026665
+AZ_PHO_00029,Luis Burger Joint,burger,Luis (Owner),6610 Scottsdale Rd,Phoenix,AZ,85001,Maricopa,(602) 382-6954,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026671
+AZ_PHO_00030,Mike Burger Joint,burger,Mike (Owner),9170 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 735-3296,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026681
+AZ_PHO_00031,Rosa's Breakfast Spot,breakfast,Rosa (Owner),6629 Oak St,Phoenix,AZ,85001,Maricopa,(602) 491-1698,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026688
+AZ_PHO_00032,Pedro's Southwest Grill,restaurant,Pedro (Owner),6458 Jefferson St,Phoenix,AZ,85001,Maricopa,(602) 398-4788,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026697
+AZ_PHO_00033,Hector Restaurant,restaurant,Hector (Owner),2759 Broadway,Phoenix,AZ,85001,Maricopa,(602) 737-6734,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026704
+AZ_PHO_00034,Elena Burger Joint,burger,Elena (Owner),1144 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 859-8095,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026710
+AZ_PHO_00035,Francisco Taqueria,taqueria,Francisco (Owner),1760 Oak St,Phoenix,AZ,85001,Maricopa,(602) 766-9565,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026716
+AZ_PHO_00036,Tony's Cafe,cafe,Tony (Owner),1902 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 943-1914,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026723
+AZ_PHO_00037,Diego Burger Joint,burger,Diego (Owner),4472 Main St,Phoenix,AZ,85001,Maricopa,(602) 800-1512,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026922
+AZ_PHO_00038,Maria Burger Joint,burger,Maria (Owner),9737 Scottsdale Rd,Phoenix,AZ,85001,Maricopa,(602) 483-9674,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026930
+AZ_PHO_00039,Juan's Cafe,cafe,Juan (Owner),6308 Oak St,Phoenix,AZ,85001,Maricopa,(602) 983-2402,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026946
+AZ_PHO_00040,Eduardo Restaurant,restaurant,Eduardo (Owner),4313 Broadway,Phoenix,AZ,85001,Maricopa,(602) 280-8803,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026951
+AZ_PHO_00041,Roberto Burger Joint,burger,Roberto (Owner),8762 Broadway,Phoenix,AZ,85001,Maricopa,(602) 468-3571,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026956
+AZ_PHO_00042,Lisa Diner,diner,Lisa (Owner),8404 Main St,Phoenix,AZ,85001,Maricopa,(602) 997-7470,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026965
+AZ_PHO_00043,The Ana Kitchen,restaurant,Ana (Owner),7454 Pine St,Phoenix,AZ,85001,Maricopa,(602) 407-7228,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026970
+AZ_PHO_00044,Carmen Restaurant,restaurant,Carmen (Owner),9474 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 803-5631,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026974
+AZ_PHO_00045,Maria Taqueria,taqueria,Maria (Owner),1108 Jefferson St,Phoenix,AZ,85001,Maricopa,(602) 440-3140,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026979
+AZ_PHO_00046,Rosa Restaurant,restaurant,Rosa (Owner),1087 Main St,Phoenix,AZ,85001,Maricopa,(602) 336-1481,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026984
+AZ_PHO_00047,The Sarah Kitchen,restaurant,Sarah (Owner),665 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 845-4041,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026988
+AZ_PHO_00048,Isabella's Cafe,cafe,Isabella (Owner),9876 Main St,Phoenix,AZ,85001,Maricopa,(602) 923-2037,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.026996
+AZ_PHO_00049,Luis's Cafe,cafe,Luis (Owner),8942 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 634-2747,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027000
+AZ_PHO_00050,Sofia's Cafe,cafe,Sofia (Owner),212 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 407-1288,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027008
+AZ_PHO_00051,Carlos's Breakfast Spot,breakfast,Carlos (Owner),9371 Van Buren,Phoenix,AZ,85001,Maricopa,(602) 673-4791,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027012
+AZ_PHO_00052,Luis Burger Joint,burger,Luis (Owner),4085 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 977-5054,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027020
+AZ_PHO_00053,Roberto's Cafe,cafe,Roberto (Owner),7285 Main St,Phoenix,AZ,85001,Maricopa,(602) 776-2737,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027024
+AZ_PHO_00054,Luis Diner,diner,Luis (Owner),8759 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 990-5743,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027029
+AZ_PHO_00055,John's Breakfast Spot,breakfast,John (Owner),1296 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 748-9456,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027034
+AZ_PHO_00056,Luis Taqueria,taqueria,Luis (Owner),1329 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 323-3563,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027039
+AZ_PHO_00057,Luis Restaurant,restaurant,Luis (Owner),4408 Broadway,Phoenix,AZ,85001,Maricopa,(602) 531-4522,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027046
+AZ_PHO_00058,Roberto's Breakfast Spot,breakfast,Roberto (Owner),8386 Main St,Phoenix,AZ,85001,Maricopa,(602) 898-6328,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027052
+AZ_PHO_00059,David's Breakfast Spot,breakfast,David (Owner),2380 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 628-1344,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027056
+AZ_PHO_00060,Carmen's Breakfast Spot,breakfast,Carmen (Owner),7111 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 943-6062,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027061
+AZ_PHO_00061,Pedro Taqueria,taqueria,Pedro (Owner),7190 Scottsdale Rd,Phoenix,AZ,85001,Maricopa,(602) 766-1060,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027065
+AZ_PHO_00062,Mike Restaurant,restaurant,Mike (Owner),8982 Van Buren,Phoenix,AZ,85001,Maricopa,(602) 386-9019,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027073
+AZ_PHO_00063,Miguel's Breakfast Spot,breakfast,Miguel (Owner),9184 Main St,Phoenix,AZ,85001,Maricopa,(602) 778-5245,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027077
+AZ_PHO_00064,Santiago's Cafe,cafe,Santiago (Owner),9033 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 981-5526,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027081
+AZ_PHO_00065,Emma's Breakfast Spot,breakfast,Emma (Owner),1366 Main St,Phoenix,AZ,85001,Maricopa,(602) 236-9586,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027086
+AZ_PHO_00066,Lisa Burger Joint,burger,Lisa (Owner),2208 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 858-3164,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027095
+AZ_PHO_00067,Rosa Diner,diner,Rosa (Owner),7495 Jefferson St,Phoenix,AZ,85001,Maricopa,(602) 952-8985,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027099
+AZ_PHO_00068,Luis Burger Joint,burger,Luis (Owner),291 Main St,Phoenix,AZ,85001,Maricopa,(602) 830-2116,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027104
+AZ_PHO_00069,Sarah Taqueria,taqueria,Sarah (Owner),6106 Main St,Phoenix,AZ,85001,Maricopa,(602) 277-4321,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027112
+AZ_PHO_00070,Carmen Burger Joint,burger,Carmen (Owner),2997 Pine St,Phoenix,AZ,85001,Maricopa,(602) 722-7956,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027127
+AZ_PHO_00071,Carlos's Southwest Grill,restaurant,Carlos (Owner),5260 Jefferson St,Phoenix,AZ,85001,Maricopa,(602) 899-6430,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027138
+AZ_PHO_00072,John Taqueria,taqueria,John (Owner),4230 Broadway,Phoenix,AZ,85001,Maricopa,(602) 213-1714,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027152
+AZ_PHO_00073,Miguel Diner,diner,Miguel (Owner),7570 Scottsdale Rd,Phoenix,AZ,85001,Maricopa,(602) 982-9279,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027159
+AZ_PHO_00074,Ana's Southwest Grill,restaurant,Ana (Owner),3977 Oak St,Phoenix,AZ,85001,Maricopa,(602) 436-8465,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027166
+AZ_PHO_00075,Roberto Taqueria,taqueria,Roberto (Owner),9034 Pine St,Phoenix,AZ,85001,Maricopa,(602) 588-1463,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027173
+AZ_PHO_00076,Javier Burger Joint,burger,Javier (Owner),2229 Pine St,Phoenix,AZ,85001,Maricopa,(602) 397-3299,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027184
+AZ_PHO_00077,Carlos Burger Joint,burger,Carlos (Owner),2427 Broadway,Phoenix,AZ,85001,Maricopa,(602) 360-2137,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027189
+AZ_PHO_00078,Pedro's Breakfast Spot,breakfast,Pedro (Owner),8075 Main St,Phoenix,AZ,85001,Maricopa,(602) 751-3056,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027195
+AZ_PHO_00079,Javier Restaurant,restaurant,Javier (Owner),7907 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 471-1357,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027200
+AZ_PHO_00080,Sofia's Southwest Grill,restaurant,Sofia (Owner),756 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 659-2337,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027205
+AZ_PHO_00081,Rosa Restaurant,restaurant,Rosa (Owner),1438 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 258-5563,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027209
+AZ_PHO_00082,Elena's Breakfast Spot,breakfast,Elena (Owner),9054 Oak St,Phoenix,AZ,85001,Maricopa,(602) 669-4474,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027217
+AZ_PHO_00083,Diego's Cafe,cafe,Diego (Owner),1833 Pine St,Phoenix,AZ,85001,Maricopa,(602) 232-8552,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027222
+AZ_PHO_00084,Carlos Diner,diner,Carlos (Owner),8184 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 827-1388,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027227
+AZ_PHO_00085,Emma's Cafe,cafe,Emma (Owner),6259 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 362-7094,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027235
+AZ_PHO_00086,Sofia Taqueria,taqueria,Sofia (Owner),7696 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 996-3543,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027240
+AZ_PHO_00087,Maria's Southwest Grill,restaurant,Maria (Owner),2435 Main St,Phoenix,AZ,85001,Maricopa,(602) 331-9011,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027244
+AZ_PHO_00088,Juan's Southwest Grill,restaurant,Juan (Owner),7037 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 327-5736,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027248
+AZ_PHO_00089,Luis Diner,diner,Luis (Owner),3942 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 712-5973,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027253
+AZ_PHO_00090,Lisa's Southwest Grill,restaurant,Lisa (Owner),6478 Oak St,Phoenix,AZ,85001,Maricopa,(602) 598-2329,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027257
+AZ_PHO_00091,Rosa's Breakfast Spot,breakfast,Rosa (Owner),9401 Oak St,Phoenix,AZ,85001,Maricopa,(602) 705-7481,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027262
+AZ_PHO_00092,Diego Taqueria,taqueria,Diego (Owner),4435 Broadway,Phoenix,AZ,85001,Maricopa,(602) 952-8370,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027269
+AZ_PHO_00093,David's Cafe,cafe,David (Owner),2073 Broadway,Phoenix,AZ,85001,Maricopa,(602) 850-4291,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027274
+AZ_PHO_00094,The Hector Kitchen,restaurant,Hector (Owner),3819 Scottsdale Rd,Phoenix,AZ,85001,Maricopa,(602) 806-4045,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027283
+AZ_PHO_00095,Hector's Breakfast Spot,breakfast,Hector (Owner),5540 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 476-7889,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027288
+AZ_PHO_00096,Ana's Cafe,cafe,Ana (Owner),2936 Oak St,Phoenix,AZ,85001,Maricopa,(602) 399-1059,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027292
+AZ_PHO_00097,Pedro's Breakfast Spot,breakfast,Pedro (Owner),5331 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 504-1609,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027297
+AZ_PHO_00098,Jose's Cafe,cafe,Jose (Owner),1977 Oak St,Phoenix,AZ,85001,Maricopa,(602) 413-9525,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027302
+AZ_PHO_00099,Santiago's Cafe,cafe,Santiago (Owner),7705 Scottsdale Rd,Phoenix,AZ,85001,Maricopa,(602) 370-7784,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027309
+AZ_PHO_00100,Rosa's Cafe,cafe,Rosa (Owner),5118 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 758-9529,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027314
+AZ_PHO_00101,Eduardo Diner,diner,Eduardo (Owner),3952 Main St,Phoenix,AZ,85001,Maricopa,(602) 456-3333,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027318
+AZ_PHO_00102,The Eduardo Kitchen,restaurant,Eduardo (Owner),1018 Van Buren,Phoenix,AZ,85001,Maricopa,(602) 751-1582,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027328
+AZ_PHO_00103,Lisa's Southwest Grill,restaurant,Lisa (Owner),8464 Broadway,Phoenix,AZ,85001,Maricopa,(602) 389-4742,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027335
+AZ_PHO_00104,Isabella Burger Joint,burger,Isabella (Owner),3299 Broadway,Phoenix,AZ,85001,Maricopa,(602) 459-4666,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027340
+AZ_PHO_00105,The David Kitchen,restaurant,David (Owner),5520 Oak St,Phoenix,AZ,85001,Maricopa,(602) 242-6538,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027344
+AZ_PHO_00106,Francisco Diner,diner,Francisco (Owner),2702 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 794-2816,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027349
+AZ_PHO_00107,Luis Diner,diner,Luis (Owner),8280 Van Buren,Phoenix,AZ,85001,Maricopa,(602) 595-2934,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027353
+AZ_PHO_00108,Roberto Restaurant,restaurant,Roberto (Owner),1814 Jefferson St,Phoenix,AZ,85001,Maricopa,(602) 922-6569,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027358
+AZ_PHO_00109,Isabella's Breakfast Spot,breakfast,Isabella (Owner),7628 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 638-3237,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027363
+AZ_PHO_00110,Sarah's Breakfast Spot,breakfast,Sarah (Owner),509 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 935-6958,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027367
+AZ_PHO_00111,The Javier Kitchen,restaurant,Javier (Owner),9031 Main St,Phoenix,AZ,85001,Maricopa,(602) 691-9024,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027371
+AZ_PHO_00112,Miguel's Cafe,cafe,Miguel (Owner),7100 Broadway,Phoenix,AZ,85001,Maricopa,(602) 207-7859,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027382
+AZ_PHO_00113,Ana Restaurant,restaurant,Ana (Owner),2360 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 864-6215,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027387
+AZ_PHO_00114,The David Kitchen,restaurant,David (Owner),8917 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 316-1062,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027391
+AZ_PHO_00115,Isabella Burger Joint,burger,Isabella (Owner),1762 Scottsdale Rd,Phoenix,AZ,85001,Maricopa,(602) 654-6439,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027396
+AZ_PHO_00116,Sofia Diner,diner,Sofia (Owner),6088 Scottsdale Rd,Phoenix,AZ,85001,Maricopa,(602) 523-3431,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027400
+AZ_PHO_00117,Ana Burger Joint,burger,Ana (Owner),8638 Broadway,Phoenix,AZ,85001,Maricopa,(602) 910-4039,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027404
+AZ_PHO_00118,Sarah Diner,diner,Sarah (Owner),5296 Oak St,Phoenix,AZ,85001,Maricopa,(602) 726-7963,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027409
+AZ_PHO_00119,Roberto's Breakfast Spot,breakfast,Roberto (Owner),8283 Oak St,Phoenix,AZ,85001,Maricopa,(602) 822-5568,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027413
+AZ_PHO_00120,The Maria Kitchen,restaurant,Maria (Owner),1080 Broadway,Phoenix,AZ,85001,Maricopa,(602) 440-4236,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027417
+AZ_PHO_00121,Luis Restaurant,restaurant,Luis (Owner),7900 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 500-3924,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027425
+AZ_PHO_00122,Carmen Burger Joint,burger,Carmen (Owner),2114 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 272-5495,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027432
+AZ_PHO_00123,Santiago Burger Joint,burger,Santiago (Owner),1272 Main St,Phoenix,AZ,85001,Maricopa,(602) 647-6728,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027437
+AZ_PHO_00124,Jose Taqueria,taqueria,Jose (Owner),1294 Jefferson St,Phoenix,AZ,85001,Maricopa,(602) 818-4243,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027441
+AZ_PHO_00125,Francisco Diner,diner,Francisco (Owner),2523 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 462-5266,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027445
+AZ_PHO_00126,Isabella Burger Joint,burger,Isabella (Owner),9585 Oak St,Phoenix,AZ,85001,Maricopa,(602) 456-9066,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027450
+AZ_PHO_00127,Rosa Burger Joint,burger,Rosa (Owner),6885 Oak St,Phoenix,AZ,85001,Maricopa,(602) 469-5110,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027454
+AZ_PHO_00128,Mike's Breakfast Spot,breakfast,Mike (Owner),2413 Oak St,Phoenix,AZ,85001,Maricopa,(602) 864-5061,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027459
+AZ_PHO_00129,Sofia Diner,diner,Sofia (Owner),6018 Oak St,Phoenix,AZ,85001,Maricopa,(602) 903-4835,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027463
+AZ_PHO_00130,Miguel Taqueria,taqueria,Miguel (Owner),638 Van Buren,Phoenix,AZ,85001,Maricopa,(602) 558-2057,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027468
+AZ_PHO_00131,Rosa Taqueria,taqueria,Rosa (Owner),6958 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 852-4822,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027476
+AZ_PHO_00132,John's Southwest Grill,restaurant,John (Owner),1444 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 643-9533,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027484
+AZ_PHO_00133,Pedro Restaurant,restaurant,Pedro (Owner),3145 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 392-7427,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027493
+AZ_PHO_00134,Carlos Burger Joint,burger,Carlos (Owner),8355 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 704-7362,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027508
+AZ_PHO_00135,Rosa's Cafe,cafe,Rosa (Owner),3305 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 993-6283,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027516
+AZ_PHO_00136,The Juan Kitchen,restaurant,Juan (Owner),9061 Van Buren,Phoenix,AZ,85001,Maricopa,(602) 648-5609,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027524
+AZ_PHO_00137,Elena Restaurant,restaurant,Elena (Owner),6705 Broadway,Phoenix,AZ,85001,Maricopa,(602) 308-1685,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027531
+AZ_PHO_00138,Jose Restaurant,restaurant,Jose (Owner),5242 Pine St,Phoenix,AZ,85001,Maricopa,(602) 329-7049,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027537
+AZ_PHO_00139,Ana's Southwest Grill,restaurant,Ana (Owner),7542 Oak St,Phoenix,AZ,85001,Maricopa,(602) 980-7157,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027543
+AZ_PHO_00140,The Luis Kitchen,restaurant,Luis (Owner),5424 Jefferson St,Phoenix,AZ,85001,Maricopa,(602) 386-4167,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027555
+AZ_PHO_00141,Elena Diner,diner,Elena (Owner),6633 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 948-9799,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027589
+AZ_PHO_00142,Eduardo Restaurant,restaurant,Eduardo (Owner),9668 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 828-7648,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027600
+AZ_PHO_00143,David Taqueria,taqueria,David (Owner),7000 Oak St,Phoenix,AZ,85001,Maricopa,(602) 216-6227,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027607
+AZ_PHO_00144,Pedro Restaurant,restaurant,Pedro (Owner),8618 Broadway,Phoenix,AZ,85001,Maricopa,(602) 924-7614,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027615
+AZ_PHO_00145,Mike Diner,diner,Mike (Owner),8170 Main St,Phoenix,AZ,85001,Maricopa,(602) 957-9661,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027621
+AZ_PHO_00146,Diego's Southwest Grill,restaurant,Diego (Owner),9174 Pine St,Phoenix,AZ,85001,Maricopa,(602) 572-1178,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027625
+AZ_PHO_00147,Lisa Diner,diner,Lisa (Owner),8834 Pine St,Phoenix,AZ,85001,Maricopa,(602) 495-8126,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027630
+AZ_PHO_00148,Rosa Burger Joint,burger,Rosa (Owner),5272 Broadway,Phoenix,AZ,85001,Maricopa,(602) 377-2182,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027635
+AZ_PHO_00149,Jose's Cafe,cafe,Jose (Owner),3446 Oak St,Phoenix,AZ,85001,Maricopa,(602) 426-3499,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027646
+AZ_PHO_00150,Tony's Cafe,cafe,Tony (Owner),1185 Pine St,Phoenix,AZ,85001,Maricopa,(602) 296-5716,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027652
+AZ_PHO_00151,Rosa's Southwest Grill,restaurant,Rosa (Owner),4211 Oak St,Phoenix,AZ,85001,Maricopa,(602) 727-9554,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027657
+AZ_PHO_00152,Sarah Taqueria,taqueria,Sarah (Owner),1534 Scottsdale Rd,Phoenix,AZ,85001,Maricopa,(602) 771-9477,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027665
+AZ_PHO_00153,Roberto's Breakfast Spot,breakfast,Roberto (Owner),5825 Oak St,Phoenix,AZ,85001,Maricopa,(602) 469-7718,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027669
+AZ_PHO_00154,Sarah Burger Joint,burger,Sarah (Owner),2252 Pine St,Phoenix,AZ,85001,Maricopa,(602) 571-2070,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027674
+AZ_PHO_00155,The Carlos Kitchen,restaurant,Carlos (Owner),9397 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 919-7200,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027678
+AZ_PHO_00156,Lisa Burger Joint,burger,Lisa (Owner),4410 Scottsdale Rd,Phoenix,AZ,85001,Maricopa,(602) 308-1061,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027683
+AZ_PHO_00157,Luis Taqueria,taqueria,Luis (Owner),6025 Jefferson St,Phoenix,AZ,85001,Maricopa,(602) 571-9717,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027687
+AZ_PHO_00158,Elena Burger Joint,burger,Elena (Owner),5501 Main St,Phoenix,AZ,85001,Maricopa,(602) 368-4496,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027695
+AZ_PHO_00159,Ana's Cafe,cafe,Ana (Owner),1845 Van Buren,Phoenix,AZ,85001,Maricopa,(602) 717-1932,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027699
+AZ_PHO_00160,Sofia's Southwest Grill,restaurant,Sofia (Owner),1482 Broadway,Phoenix,AZ,85001,Maricopa,(602) 392-3637,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027703
+AZ_PHO_00161,Eduardo Taqueria,taqueria,Eduardo (Owner),6634 Pine St,Phoenix,AZ,85001,Maricopa,(602) 939-3206,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027709
+AZ_PHO_00162,The Ana Kitchen,restaurant,Ana (Owner),9084 Van Buren,Phoenix,AZ,85001,Maricopa,(602) 369-7816,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027716
+AZ_PHO_00163,Hector Taqueria,taqueria,Hector (Owner),9774 Oak St,Phoenix,AZ,85001,Maricopa,(602) 486-5702,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027721
+AZ_PHO_00164,Sofia's Cafe,cafe,Sofia (Owner),8960 Pine St,Phoenix,AZ,85001,Maricopa,(602) 508-4213,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027726
+AZ_PHO_00165,Hector Restaurant,restaurant,Hector (Owner),5114 Main St,Phoenix,AZ,85001,Maricopa,(602) 287-6119,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027730
+AZ_PHO_00166,David's Southwest Grill,restaurant,David (Owner),811 Broadway,Phoenix,AZ,85001,Maricopa,(602) 453-3271,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027734
+AZ_PHO_00167,Luis Burger Joint,burger,Luis (Owner),6877 Pine St,Phoenix,AZ,85001,Maricopa,(602) 260-1639,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027744
+AZ_PHO_00168,Santiago's Southwest Grill,restaurant,Santiago (Owner),4922 Pine St,Phoenix,AZ,85001,Maricopa,(602) 374-8570,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027749
+AZ_PHO_00169,Lisa's Cafe,cafe,Lisa (Owner),6627 Broadway,Phoenix,AZ,85001,Maricopa,(602) 752-4216,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027754
+AZ_PHO_00170,Elena Diner,diner,Elena (Owner),6390 Scottsdale Rd,Phoenix,AZ,85001,Maricopa,(602) 286-7806,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027758
+AZ_PHO_00171,Francisco's Cafe,cafe,Francisco (Owner),6448 Main St,Phoenix,AZ,85001,Maricopa,(602) 980-3306,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027763
+AZ_PHO_00172,The Mike Kitchen,restaurant,Mike (Owner),6975 Jefferson St,Phoenix,AZ,85001,Maricopa,(602) 227-2588,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027770
+AZ_PHO_00173,Hector Burger Joint,burger,Hector (Owner),2389 Jefferson St,Phoenix,AZ,85001,Maricopa,(602) 647-6131,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027775
+AZ_PHO_00174,Juan Burger Joint,burger,Juan (Owner),9462 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 821-5252,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027779
+AZ_PHO_00175,Rosa Restaurant,restaurant,Rosa (Owner),8765 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 224-4462,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027784
+AZ_PHO_00176,David Taqueria,taqueria,David (Owner),6088 Broadway,Phoenix,AZ,85001,Maricopa,(602) 766-1266,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027791
+AZ_PHO_00177,Santiago Taqueria,taqueria,Santiago (Owner),4112 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 840-2666,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027795
+AZ_PHO_00178,The Santiago Kitchen,restaurant,Santiago (Owner),9220 Oak St,Phoenix,AZ,85001,Maricopa,(602) 924-9613,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027800
+AZ_PHO_00179,Pedro Restaurant,restaurant,Pedro (Owner),4916 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 911-2367,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027804
+AZ_PHO_00180,Hector Restaurant,restaurant,Hector (Owner),4609 Jefferson St,Phoenix,AZ,85001,Maricopa,(602) 919-5012,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027809
+AZ_PHO_00181,The Sofia Kitchen,restaurant,Sofia (Owner),9505 Main St,Phoenix,AZ,85001,Maricopa,(602) 753-7069,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027813
+AZ_PHO_00182,The Carmen Kitchen,restaurant,Carmen (Owner),9956 Broadway,Phoenix,AZ,85001,Maricopa,(602) 679-1760,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027821
+AZ_PHO_00183,The Maria Kitchen,restaurant,Maria (Owner),4677 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 736-9950,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027825
+AZ_PHO_00184,Javier Restaurant,restaurant,Javier (Owner),3146 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 616-4202,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027830
+AZ_PHO_00185,Miguel Restaurant,restaurant,Miguel (Owner),5101 Scottsdale Rd,Phoenix,AZ,85001,Maricopa,(602) 319-9055,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027837
+AZ_PHO_00186,Carmen's Breakfast Spot,breakfast,Carmen (Owner),4684 Van Buren,Phoenix,AZ,85001,Maricopa,(602) 762-3406,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027842
+AZ_PHO_00187,Rosa Diner,diner,Rosa (Owner),2179 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 673-4536,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027846
+AZ_PHO_00188,Lisa Taqueria,taqueria,Lisa (Owner),4828 Van Buren,Phoenix,AZ,85001,Maricopa,(602) 553-5564,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027851
+AZ_PHO_00189,David Diner,diner,David (Owner),232 Broadway,Phoenix,AZ,85001,Maricopa,(602) 729-6056,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027855
+AZ_PHO_00190,Santiago's Southwest Grill,restaurant,Santiago (Owner),3852 Van Buren,Phoenix,AZ,85001,Maricopa,(602) 779-9174,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027859
+AZ_PHO_00191,Santiago's Southwest Grill,restaurant,Santiago (Owner),1744 Oak St,Phoenix,AZ,85001,Maricopa,(602) 893-1918,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027864
+AZ_PHO_00192,Pedro's Southwest Grill,restaurant,Pedro (Owner),7764 Pine St,Phoenix,AZ,85001,Maricopa,(602) 215-6703,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027871
+AZ_PHO_00193,The Rosa Kitchen,restaurant,Rosa (Owner),8787 Scottsdale Rd,Phoenix,AZ,85001,Maricopa,(602) 248-5905,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027876
+AZ_PHO_00194,Tony Taqueria,taqueria,Tony (Owner),8276 Jefferson St,Phoenix,AZ,85001,Maricopa,(602) 659-4832,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027883
+AZ_PHO_00195,The Jose Kitchen,restaurant,Jose (Owner),6434 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 548-1132,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027928
+AZ_PHO_00196,Miguel Burger Joint,burger,Miguel (Owner),2076 Jefferson St,Phoenix,AZ,85001,Maricopa,(602) 687-9274,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027938
+AZ_PHO_00197,The Carmen Kitchen,restaurant,Carmen (Owner),1347 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 747-8691,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027946
+AZ_PHO_00198,Francisco Burger Joint,burger,Francisco (Owner),4358 Broadway,Phoenix,AZ,85001,Maricopa,(602) 675-3841,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027955
+AZ_PHO_00199,Sofia's Cafe,cafe,Sofia (Owner),2046 Main St,Phoenix,AZ,85001,Maricopa,(602) 917-4362,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027969
+AZ_PHO_00200,Hector's Breakfast Spot,breakfast,Hector (Owner),3787 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 303-5611,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027979
+AZ_PHO_00201,Miguel Restaurant,restaurant,Miguel (Owner),8527 Pine St,Phoenix,AZ,85001,Maricopa,(602) 563-9063,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027985
+AZ_PHO_00202,Hector's Cafe,cafe,Hector (Owner),3967 Van Buren,Phoenix,AZ,85001,Maricopa,(602) 914-9769,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.027998
+AZ_PHO_00203,Javier's Cafe,cafe,Javier (Owner),2335 Pine St,Phoenix,AZ,85001,Maricopa,(602) 817-6862,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028005
+AZ_PHO_00204,Hector Burger Joint,burger,Hector (Owner),6812 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 513-7203,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028017
+AZ_PHO_00205,Elena's Cafe,cafe,Elena (Owner),6174 Van Buren,Phoenix,AZ,85001,Maricopa,(602) 762-1093,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028024
+AZ_PHO_00206,Rosa's Cafe,cafe,Rosa (Owner),9698 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 507-1207,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028028
+AZ_PHO_00207,Juan Burger Joint,burger,Juan (Owner),6910 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 352-8139,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028033
+AZ_PHO_00208,Carmen Restaurant,restaurant,Carmen (Owner),2437 Van Buren,Phoenix,AZ,85001,Maricopa,(602) 459-7363,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028037
+AZ_PHO_00209,Elena Taqueria,taqueria,Elena (Owner),4038 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 969-5663,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028042
+AZ_PHO_00210,Carmen Diner,diner,Carmen (Owner),9932 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 757-1227,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028046
+AZ_PHO_00211,The Tony Kitchen,restaurant,Tony (Owner),9376 Scottsdale Rd,Phoenix,AZ,85001,Maricopa,(602) 416-8404,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028051
+AZ_PHO_00212,Javier Burger Joint,burger,Javier (Owner),5084 Pine St,Phoenix,AZ,85001,Maricopa,(602) 937-3244,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028059
+AZ_PHO_00213,Hector's Breakfast Spot,breakfast,Hector (Owner),5599 Pine St,Phoenix,AZ,85001,Maricopa,(602) 629-3487,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028066
+AZ_PHO_00214,Ana Burger Joint,burger,Ana (Owner),9425 Broadway,Phoenix,AZ,85001,Maricopa,(602) 527-4065,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028071
+AZ_PHO_00215,Luis Taqueria,taqueria,Luis (Owner),8672 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 271-9062,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028075
+AZ_PHO_00216,Eduardo Taqueria,taqueria,Eduardo (Owner),127 Broadway,Phoenix,AZ,85001,Maricopa,(602) 859-6847,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028080
+AZ_PHO_00217,The Ana Kitchen,restaurant,Ana (Owner),1219 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 771-2834,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028085
+AZ_PHO_00218,Javier's Southwest Grill,restaurant,Javier (Owner),9922 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 751-2124,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028089
+AZ_PHO_00219,Santiago Burger Joint,burger,Santiago (Owner),3742 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 399-4388,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028094
+AZ_PHO_00220,The Lisa Kitchen,restaurant,Lisa (Owner),6932 Oak St,Phoenix,AZ,85001,Maricopa,(602) 642-5086,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028098
+AZ_PHO_00221,Sarah Diner,diner,Sarah (Owner),6988 Oak St,Phoenix,AZ,85001,Maricopa,(602) 776-1716,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028103
+AZ_PHO_00222,Sofia's Breakfast Spot,breakfast,Sofia (Owner),2846 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 722-3108,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028130
+AZ_PHO_00223,The Rosa Kitchen,restaurant,Rosa (Owner),8773 Pine St,Phoenix,AZ,85001,Maricopa,(602) 900-9551,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028134
+AZ_PHO_00224,Francisco Burger Joint,burger,Francisco (Owner),2739 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 241-4017,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028139
+AZ_PHO_00225,John Burger Joint,burger,John (Owner),5221 Scottsdale Rd,Phoenix,AZ,85001,Maricopa,(602) 638-2080,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028143
+AZ_PHO_00226,The Ana Kitchen,restaurant,Ana (Owner),1358 Jefferson St,Phoenix,AZ,85001,Maricopa,(602) 246-3824,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028147
+AZ_PHO_00227,Elena's Breakfast Spot,breakfast,Elena (Owner),6867 Pine St,Phoenix,AZ,85001,Maricopa,(602) 348-8526,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028152
+AZ_PHO_00228,The Sofia Kitchen,restaurant,Sofia (Owner),4181 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 579-9886,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028157
+AZ_PHO_00229,Lisa Restaurant,restaurant,Lisa (Owner),308 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 253-8911,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028161
+AZ_PHO_00230,Jose Burger Joint,burger,Jose (Owner),641 Oak St,Phoenix,AZ,85001,Maricopa,(602) 697-6138,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028166
+AZ_PHO_00231,The Isabella Kitchen,restaurant,Isabella (Owner),1874 Oak St,Phoenix,AZ,85001,Maricopa,(602) 770-7699,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028174
+AZ_PHO_00232,Sofia's Cafe,cafe,Sofia (Owner),9789 Van Buren,Phoenix,AZ,85001,Maricopa,(602) 925-8737,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028183
+AZ_PHO_00233,Eduardo Diner,diner,Eduardo (Owner),4720 Main St,Phoenix,AZ,85001,Maricopa,(602) 616-8556,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028188
+AZ_PHO_00234,Francisco Diner,diner,Francisco (Owner),558 Oak St,Phoenix,AZ,85001,Maricopa,(602) 832-9657,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028194
+AZ_PHO_00235,Maria Burger Joint,burger,Maria (Owner),2526 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 913-6956,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028204
+AZ_PHO_00236,Jose Burger Joint,burger,Jose (Owner),9609 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 284-4896,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028217
+AZ_PHO_00237,Carmen Restaurant,restaurant,Carmen (Owner),6731 Jefferson St,Phoenix,AZ,85001,Maricopa,(602) 454-5526,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028224
+AZ_PHO_00238,Isabella Taqueria,taqueria,Isabella (Owner),4600 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 325-4944,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028232
+AZ_PHO_00239,Sarah's Breakfast Spot,breakfast,Sarah (Owner),337 Scottsdale Rd,Phoenix,AZ,85001,Maricopa,(602) 286-6599,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028239
+AZ_PHO_00240,Juan Restaurant,restaurant,Juan (Owner),4849 Broadway,Phoenix,AZ,85001,Maricopa,(602) 298-6926,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028246
+AZ_PHO_00241,Francisco Diner,diner,Francisco (Owner),5055 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 553-6911,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028258
+AZ_PHO_00242,Elena Restaurant,restaurant,Elena (Owner),8200 Main St,Phoenix,AZ,85001,Maricopa,(602) 330-1469,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028267
+AZ_PHO_00243,Eduardo's Cafe,cafe,Eduardo (Owner),6681 Central Ave,Phoenix,AZ,85001,Maricopa,(602) 787-1393,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028271
+AZ_PHO_00244,Hector Diner,diner,Hector (Owner),1860 Pine St,Phoenix,AZ,85001,Maricopa,(602) 973-1418,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028276
+AZ_PHO_00245,Isabella's Southwest Grill,restaurant,Isabella (Owner),575 Main St,Phoenix,AZ,85001,Maricopa,(602) 503-5040,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028285
+AZ_PHO_00246,Rosa's Cafe,cafe,Rosa (Owner),1949 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 640-3960,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028289
+AZ_PHO_00247,Carmen Taqueria,taqueria,Carmen (Owner),8026 Main St,Phoenix,AZ,85001,Maricopa,(602) 709-2013,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028294
+AZ_PHO_00248,Santiago Taqueria,taqueria,Santiago (Owner),9952 Apache Blvd,Phoenix,AZ,85001,Maricopa,(602) 705-4039,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028299
+AZ_PHO_00249,The Rosa Kitchen,restaurant,Rosa (Owner),4151 1st Ave,Phoenix,AZ,85001,Maricopa,(602) 364-8301,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028303
+AZ_PHO_00250,Miguel's Southwest Grill,restaurant,Miguel (Owner),6053 Oak St,Phoenix,AZ,85001,Maricopa,(602) 615-8089,,,A,R2-D2 AZ scrape Phoenix,2026-02-28T17:27:39.028311
+AZ_GLE_00001,John's Cafe,cafe,John (Owner),7768 1st Ave,Glendale,AZ,85301,Maricopa,(623) 577-3937,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237293
+AZ_GLE_00002,Lisa's Breakfast Spot,breakfast,Lisa (Owner),5716 Broadway,Glendale,AZ,85301,Maricopa,(623) 696-8135,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237319
+AZ_GLE_00003,Miguel's Cafe,cafe,Miguel (Owner),8005 Central Ave,Glendale,AZ,85301,Maricopa,(623) 411-8507,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237331
+AZ_GLE_00004,Hector's Southwest Grill,restaurant,Hector (Owner),6943 Van Buren,Glendale,AZ,85301,Maricopa,(623) 844-3170,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237341
+AZ_GLE_00005,Eduardo's Cafe,cafe,Eduardo (Owner),8664 Pine St,Glendale,AZ,85301,Maricopa,(623) 832-1767,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237350
+AZ_GLE_00006,Francisco's Cafe,cafe,Francisco (Owner),6966 Central Ave,Glendale,AZ,85301,Maricopa,(623) 318-5411,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237358
+AZ_GLE_00007,Sofia Restaurant,restaurant,Sofia (Owner),1330 Central Ave,Glendale,AZ,85301,Maricopa,(623) 440-6607,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237371
+AZ_GLE_00008,Mike's Cafe,cafe,Mike (Owner),9265 Central Ave,Glendale,AZ,85301,Maricopa,(623) 766-8365,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237379
+AZ_GLE_00009,Tony Restaurant,restaurant,Tony (Owner),7236 Jefferson St,Glendale,AZ,85301,Maricopa,(623) 390-7305,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237387
+AZ_GLE_00010,Lisa's Breakfast Spot,breakfast,Lisa (Owner),4308 Apache Blvd,Glendale,AZ,85301,Maricopa,(623) 719-6388,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237395
+AZ_GLE_00011,Jose Taqueria,taqueria,Jose (Owner),1932 Broadway,Glendale,AZ,85301,Maricopa,(623) 953-6017,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237404
+AZ_GLE_00012,John Burger Joint,burger,John (Owner),8706 Jefferson St,Glendale,AZ,85301,Maricopa,(623) 850-8204,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237413
+AZ_GLE_00013,The Miguel Kitchen,restaurant,Miguel (Owner),9743 Oak St,Glendale,AZ,85301,Maricopa,(623) 828-1067,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237421
+AZ_GLE_00014,Eduardo Burger Joint,burger,Eduardo (Owner),4156 Central Ave,Glendale,AZ,85301,Maricopa,(623) 295-8235,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237428
+AZ_GLE_00015,David Taqueria,taqueria,David (Owner),5126 Van Buren,Glendale,AZ,85301,Maricopa,(623) 785-5747,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237436
+AZ_GLE_00016,Juan Diner,diner,Juan (Owner),8875 Pine St,Glendale,AZ,85301,Maricopa,(623) 837-6360,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237444
+AZ_GLE_00017,Rosa Restaurant,restaurant,Rosa (Owner),1371 Oak St,Glendale,AZ,85301,Maricopa,(623) 406-7269,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237452
+AZ_GLE_00018,Ana's Cafe,cafe,Ana (Owner),6714 Broadway,Glendale,AZ,85301,Maricopa,(623) 897-3641,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237460
+AZ_GLE_00019,Jose Diner,diner,Jose (Owner),3976 Pine St,Glendale,AZ,85301,Maricopa,(623) 227-2292,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237468
+AZ_GLE_00020,Jose Taqueria,taqueria,Jose (Owner),7712 Broadway,Glendale,AZ,85301,Maricopa,(623) 329-1087,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237476
+AZ_GLE_00021,Miguel's Southwest Grill,restaurant,Miguel (Owner),6507 Scottsdale Rd,Glendale,AZ,85301,Maricopa,(623) 501-1614,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237485
+AZ_GLE_00022,Diego Taqueria,taqueria,Diego (Owner),9031 Van Buren,Glendale,AZ,85301,Maricopa,(623) 842-9649,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237492
+AZ_GLE_00023,Roberto Diner,diner,Roberto (Owner),1585 1st Ave,Glendale,AZ,85301,Maricopa,(623) 340-7783,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237500
+AZ_GLE_00024,Javier Taqueria,taqueria,Javier (Owner),7367 Scottsdale Rd,Glendale,AZ,85301,Maricopa,(623) 247-4201,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237507
+AZ_GLE_00025,Roberto Restaurant,restaurant,Roberto (Owner),1952 Van Buren,Glendale,AZ,85301,Maricopa,(623) 653-2503,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237514
+AZ_GLE_00026,Eduardo's Southwest Grill,restaurant,Eduardo (Owner),3574 Jefferson St,Glendale,AZ,85301,Maricopa,(623) 852-8664,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237522
+AZ_GLE_00027,Lisa Taqueria,taqueria,Lisa (Owner),1401 Central Ave,Glendale,AZ,85301,Maricopa,(623) 693-9639,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237530
+AZ_GLE_00028,Pedro's Cafe,cafe,Pedro (Owner),8488 Oak St,Glendale,AZ,85301,Maricopa,(623) 547-6490,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237537
+AZ_GLE_00029,Santiago Taqueria,taqueria,Santiago (Owner),6546 Apache Blvd,Glendale,AZ,85301,Maricopa,(623) 833-9610,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237544
+AZ_GLE_00030,Roberto's Breakfast Spot,breakfast,Roberto (Owner),4716 Jefferson St,Glendale,AZ,85301,Maricopa,(623) 544-1399,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237551
+AZ_GLE_00031,Francisco's Southwest Grill,restaurant,Francisco (Owner),3619 Jefferson St,Glendale,AZ,85301,Maricopa,(623) 670-7728,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237624
+AZ_GLE_00032,Mike's Cafe,cafe,Mike (Owner),6462 Central Ave,Glendale,AZ,85301,Maricopa,(623) 625-3095,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237632
+AZ_GLE_00033,Carmen's Cafe,cafe,Carmen (Owner),5506 Main St,Glendale,AZ,85301,Maricopa,(623) 941-1757,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237639
+AZ_GLE_00034,Maria's Breakfast Spot,breakfast,Maria (Owner),4263 Apache Blvd,Glendale,AZ,85301,Maricopa,(623) 911-7765,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237648
+AZ_GLE_00035,Carlos's Cafe,cafe,Carlos (Owner),3170 Oak St,Glendale,AZ,85301,Maricopa,(623) 567-5690,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237655
+AZ_GLE_00036,Luis Diner,diner,Luis (Owner),7083 Central Ave,Glendale,AZ,85301,Maricopa,(623) 605-7536,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237662
+AZ_GLE_00037,Juan Diner,diner,Juan (Owner),9371 1st Ave,Glendale,AZ,85301,Maricopa,(623) 870-9092,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237670
+AZ_GLE_00038,Luis's Southwest Grill,restaurant,Luis (Owner),587 Van Buren,Glendale,AZ,85301,Maricopa,(623) 575-3362,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237678
+AZ_GLE_00039,Juan Restaurant,restaurant,Juan (Owner),8240 Apache Blvd,Glendale,AZ,85301,Maricopa,(623) 862-9332,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237686
+AZ_GLE_00040,Francisco's Cafe,cafe,Francisco (Owner),4022 Main St,Glendale,AZ,85301,Maricopa,(623) 680-3562,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237693
+AZ_GLE_00041,Santiago Taqueria,taqueria,Santiago (Owner),5887 Main St,Glendale,AZ,85301,Maricopa,(623) 546-5309,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237701
+AZ_GLE_00042,Maria's Breakfast Spot,breakfast,Maria (Owner),4361 Broadway,Glendale,AZ,85301,Maricopa,(623) 841-5944,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237709
+AZ_GLE_00043,Santiago Restaurant,restaurant,Santiago (Owner),8925 Jefferson St,Glendale,AZ,85301,Maricopa,(623) 496-1634,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237716
+AZ_GLE_00044,Diego's Cafe,cafe,Diego (Owner),521 Scottsdale Rd,Glendale,AZ,85301,Maricopa,(623) 382-1024,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237724
+AZ_GLE_00045,The John Kitchen,restaurant,John (Owner),4322 Central Ave,Glendale,AZ,85301,Maricopa,(623) 741-1824,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237731
+AZ_GLE_00046,Javier's Southwest Grill,restaurant,Javier (Owner),1428 Van Buren,Glendale,AZ,85301,Maricopa,(623) 833-7825,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237738
+AZ_GLE_00047,John Burger Joint,burger,John (Owner),2251 Jefferson St,Glendale,AZ,85301,Maricopa,(623) 709-6231,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237745
+AZ_GLE_00048,Santiago's Southwest Grill,restaurant,Santiago (Owner),9847 1st Ave,Glendale,AZ,85301,Maricopa,(623) 475-1951,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237753
+AZ_GLE_00049,Maria Burger Joint,burger,Maria (Owner),6502 Pine St,Glendale,AZ,85301,Maricopa,(623) 767-2106,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237761
+AZ_GLE_00050,The Ana Kitchen,restaurant,Ana (Owner),8324 1st Ave,Glendale,AZ,85301,Maricopa,(623) 966-7213,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237768
+AZ_GLE_00051,The Rosa Kitchen,restaurant,Rosa (Owner),1538 Oak St,Glendale,AZ,85301,Maricopa,(623) 895-3766,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237776
+AZ_GLE_00052,Javier Restaurant,restaurant,Javier (Owner),3103 Oak St,Glendale,AZ,85301,Maricopa,(623) 984-3963,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237784
+AZ_GLE_00053,The Maria Kitchen,restaurant,Maria (Owner),5099 1st Ave,Glendale,AZ,85301,Maricopa,(623) 920-9777,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237792
+AZ_GLE_00054,Elena's Southwest Grill,restaurant,Elena (Owner),9309 Oak St,Glendale,AZ,85301,Maricopa,(623) 562-3507,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237800
+AZ_GLE_00055,Hector's Breakfast Spot,breakfast,Hector (Owner),3033 Pine St,Glendale,AZ,85301,Maricopa,(623) 300-5121,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237807
+AZ_GLE_00056,John Taqueria,taqueria,John (Owner),3316 Broadway,Glendale,AZ,85301,Maricopa,(623) 581-3478,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237814
+AZ_GLE_00057,Emma Taqueria,taqueria,Emma (Owner),5857 1st Ave,Glendale,AZ,85301,Maricopa,(623) 743-6988,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237822
+AZ_GLE_00058,Lisa Diner,diner,Lisa (Owner),510 Jefferson St,Glendale,AZ,85301,Maricopa,(623) 957-8790,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237830
+AZ_GLE_00059,Lisa's Breakfast Spot,breakfast,Lisa (Owner),3192 1st Ave,Glendale,AZ,85301,Maricopa,(623) 963-4491,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237837
+AZ_GLE_00060,David Diner,diner,David (Owner),3216 Scottsdale Rd,Glendale,AZ,85301,Maricopa,(623) 471-8928,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237845
+AZ_GLE_00061,Ana Burger Joint,burger,Ana (Owner),7091 Van Buren,Glendale,AZ,85301,Maricopa,(623) 714-4777,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237853
+AZ_GLE_00062,Jose's Southwest Grill,restaurant,Jose (Owner),3717 Scottsdale Rd,Glendale,AZ,85301,Maricopa,(623) 879-2188,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237860
+AZ_GLE_00063,Ana Burger Joint,burger,Ana (Owner),4095 Scottsdale Rd,Glendale,AZ,85301,Maricopa,(623) 662-4518,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237868
+AZ_GLE_00064,Ana Burger Joint,burger,Ana (Owner),9155 Van Buren,Glendale,AZ,85301,Maricopa,(623) 260-3238,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237875
+AZ_GLE_00065,Francisco's Southwest Grill,restaurant,Francisco (Owner),9521 1st Ave,Glendale,AZ,85301,Maricopa,(623) 568-5766,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237882
+AZ_GLE_00066,Maria Burger Joint,burger,Maria (Owner),9278 1st Ave,Glendale,AZ,85301,Maricopa,(623) 913-9915,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237892
+AZ_GLE_00067,Jose Burger Joint,burger,Jose (Owner),3461 1st Ave,Glendale,AZ,85301,Maricopa,(623) 572-3164,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237899
+AZ_GLE_00068,Eduardo Diner,diner,Eduardo (Owner),1757 Van Buren,Glendale,AZ,85301,Maricopa,(623) 403-2011,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237907
+AZ_GLE_00069,Eduardo's Cafe,cafe,Eduardo (Owner),9327 1st Ave,Glendale,AZ,85301,Maricopa,(623) 514-2098,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237914
+AZ_GLE_00070,David's Southwest Grill,restaurant,David (Owner),5202 Oak St,Glendale,AZ,85301,Maricopa,(623) 617-9605,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237922
+AZ_GLE_00071,Lisa Restaurant,restaurant,Lisa (Owner),6637 Main St,Glendale,AZ,85301,Maricopa,(623) 214-7038,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237929
+AZ_GLE_00072,Diego's Breakfast Spot,breakfast,Diego (Owner),4286 Van Buren,Glendale,AZ,85301,Maricopa,(623) 737-5160,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237937
+AZ_GLE_00073,Francisco Diner,diner,Francisco (Owner),3864 Central Ave,Glendale,AZ,85301,Maricopa,(623) 437-6759,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237944
+AZ_GLE_00074,The Isabella Kitchen,restaurant,Isabella (Owner),9517 Main St,Glendale,AZ,85301,Maricopa,(623) 738-9746,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237952
+AZ_GLE_00075,Elena Diner,diner,Elena (Owner),978 Broadway,Glendale,AZ,85301,Maricopa,(623) 419-9138,,,B,R2-D2 AZ scrape Glendale,2026-02-28T17:27:40.237959
+AZ_MES_00001,Jose Taqueria,taqueria,Jose (Owner),6716 Pine St,Mesa,AZ,85201,Maricopa,(480) 742-6844,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.632975
+AZ_MES_00002,Emma Burger Joint,burger,Emma (Owner),395 Jefferson St,Mesa,AZ,85201,Maricopa,(480) 938-7361,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633003
+AZ_MES_00003,Maria Restaurant,restaurant,Maria (Owner),8963 Broadway,Mesa,AZ,85201,Maricopa,(480) 441-6899,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633012
+AZ_MES_00004,Isabella Burger Joint,burger,Isabella (Owner),387 Pine St,Mesa,AZ,85201,Maricopa,(480) 551-2940,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633017
+AZ_MES_00005,Roberto Restaurant,restaurant,Roberto (Owner),2349 Scottsdale Rd,Mesa,AZ,85201,Maricopa,(480) 267-6987,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633023
+AZ_MES_00006,Rosa Restaurant,restaurant,Rosa (Owner),2858 Scottsdale Rd,Mesa,AZ,85201,Maricopa,(480) 711-5640,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633031
+AZ_MES_00007,Ana Burger Joint,burger,Ana (Owner),9851 Apache Blvd,Mesa,AZ,85201,Maricopa,(480) 450-5969,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633035
+AZ_MES_00008,Rosa Diner,diner,Rosa (Owner),3317 Van Buren,Mesa,AZ,85201,Maricopa,(480) 465-2431,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633040
+AZ_MES_00009,Ana's Southwest Grill,restaurant,Ana (Owner),3399 1st Ave,Mesa,AZ,85201,Maricopa,(480) 755-2012,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633046
+AZ_MES_00010,John's Breakfast Spot,breakfast,John (Owner),3181 Broadway,Mesa,AZ,85201,Maricopa,(480) 384-5960,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633052
+AZ_MES_00011,Maria Taqueria,taqueria,Maria (Owner),2847 Central Ave,Mesa,AZ,85201,Maricopa,(480) 746-5981,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633061
+AZ_MES_00012,John Burger Joint,burger,John (Owner),8199 Scottsdale Rd,Mesa,AZ,85201,Maricopa,(480) 538-8556,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633065
+AZ_MES_00013,Rosa's Breakfast Spot,breakfast,Rosa (Owner),7467 Oak St,Mesa,AZ,85201,Maricopa,(480) 266-9517,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633071
+AZ_MES_00014,The Emma Kitchen,restaurant,Emma (Owner),3049 Apache Blvd,Mesa,AZ,85201,Maricopa,(480) 742-8612,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633076
+AZ_MES_00015,David Restaurant,restaurant,David (Owner),6754 Main St,Mesa,AZ,85201,Maricopa,(480) 924-9462,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633080
+AZ_MES_00016,Pedro's Southwest Grill,restaurant,Pedro (Owner),1934 Pine St,Mesa,AZ,85201,Maricopa,(480) 408-4084,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633085
+AZ_MES_00017,Miguel's Southwest Grill,restaurant,Miguel (Owner),1511 Main St,Mesa,AZ,85201,Maricopa,(480) 419-9765,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633089
+AZ_MES_00018,Jose Restaurant,restaurant,Jose (Owner),1746 Jefferson St,Mesa,AZ,85201,Maricopa,(480) 512-2195,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633094
+AZ_MES_00019,Rosa Restaurant,restaurant,Rosa (Owner),3573 Jefferson St,Mesa,AZ,85201,Maricopa,(480) 573-4017,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633098
+AZ_MES_00020,Jose's Southwest Grill,restaurant,Jose (Owner),1851 Van Buren,Mesa,AZ,85201,Maricopa,(480) 479-5463,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633104
+AZ_MES_00021,Tony Diner,diner,Tony (Owner),9858 Oak St,Mesa,AZ,85201,Maricopa,(480) 365-7074,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633117
+AZ_MES_00022,Pedro's Cafe,cafe,Pedro (Owner),3083 Broadway,Mesa,AZ,85201,Maricopa,(480) 853-5368,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633130
+AZ_MES_00023,Sofia's Cafe,cafe,Sofia (Owner),1528 Van Buren,Mesa,AZ,85201,Maricopa,(480) 742-6777,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633139
+AZ_MES_00024,Javier Burger Joint,burger,Javier (Owner),1141 Pine St,Mesa,AZ,85201,Maricopa,(480) 202-2015,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633147
+AZ_MES_00025,The Rosa Kitchen,restaurant,Rosa (Owner),669 Central Ave,Mesa,AZ,85201,Maricopa,(480) 929-5109,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633154
+AZ_MES_00026,The Tony Kitchen,restaurant,Tony (Owner),838 Main St,Mesa,AZ,85201,Maricopa,(480) 968-7205,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633162
+AZ_MES_00027,Eduardo Burger Joint,burger,Eduardo (Owner),1857 Broadway,Mesa,AZ,85201,Maricopa,(480) 499-3967,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633170
+AZ_MES_00028,Santiago's Southwest Grill,restaurant,Santiago (Owner),8013 Main St,Mesa,AZ,85201,Maricopa,(480) 572-8366,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633178
+AZ_MES_00029,The Sofia Kitchen,restaurant,Sofia (Owner),7825 Jefferson St,Mesa,AZ,85201,Maricopa,(480) 923-8024,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633182
+AZ_MES_00030,Jose's Southwest Grill,restaurant,Jose (Owner),7283 Van Buren,Mesa,AZ,85201,Maricopa,(480) 859-6147,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633187
+AZ_MES_00031,Santiago Restaurant,restaurant,Santiago (Owner),4169 Pine St,Mesa,AZ,85201,Maricopa,(480) 678-9557,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633191
+AZ_MES_00032,Pedro's Southwest Grill,restaurant,Pedro (Owner),7417 Main St,Mesa,AZ,85201,Maricopa,(480) 510-9279,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633196
+AZ_MES_00033,Elena's Breakfast Spot,breakfast,Elena (Owner),5886 Scottsdale Rd,Mesa,AZ,85201,Maricopa,(480) 247-5358,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633201
+AZ_MES_00034,Juan Burger Joint,burger,Juan (Owner),3930 Apache Blvd,Mesa,AZ,85201,Maricopa,(480) 735-8748,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633206
+AZ_MES_00035,The Ana Kitchen,restaurant,Ana (Owner),438 Apache Blvd,Mesa,AZ,85201,Maricopa,(480) 659-2675,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633211
+AZ_MES_00036,Diego's Southwest Grill,restaurant,Diego (Owner),8002 Jefferson St,Mesa,AZ,85201,Maricopa,(480) 430-3276,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633216
+AZ_MES_00037,Francisco's Breakfast Spot,breakfast,Francisco (Owner),5685 Apache Blvd,Mesa,AZ,85201,Maricopa,(480) 541-5967,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633221
+AZ_MES_00038,Diego Restaurant,restaurant,Diego (Owner),1746 Central Ave,Mesa,AZ,85201,Maricopa,(480) 538-1991,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633226
+AZ_MES_00039,Roberto Restaurant,restaurant,Roberto (Owner),6388 Van Buren,Mesa,AZ,85201,Maricopa,(480) 745-3144,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633230
+AZ_MES_00040,Carlos's Cafe,cafe,Carlos (Owner),8543 Jefferson St,Mesa,AZ,85201,Maricopa,(480) 930-3260,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633235
+AZ_MES_00041,David Diner,diner,David (Owner),9010 Central Ave,Mesa,AZ,85201,Maricopa,(480) 363-7065,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633240
+AZ_MES_00042,Javier's Cafe,cafe,Javier (Owner),7070 Jefferson St,Mesa,AZ,85201,Maricopa,(480) 845-7238,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633245
+AZ_MES_00043,Sarah Burger Joint,burger,Sarah (Owner),4661 Main St,Mesa,AZ,85201,Maricopa,(480) 767-4323,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633250
+AZ_MES_00044,David Diner,diner,David (Owner),4378 Main St,Mesa,AZ,85201,Maricopa,(480) 621-5664,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633255
+AZ_MES_00045,Sarah Burger Joint,burger,Sarah (Owner),2874 Oak St,Mesa,AZ,85201,Maricopa,(480) 473-2470,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633259
+AZ_MES_00046,David's Cafe,cafe,David (Owner),6572 Scottsdale Rd,Mesa,AZ,85201,Maricopa,(480) 693-2434,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633264
+AZ_MES_00047,Sofia Diner,diner,Sofia (Owner),6503 Pine St,Mesa,AZ,85201,Maricopa,(480) 250-3142,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633269
+AZ_MES_00048,Mike's Breakfast Spot,breakfast,Mike (Owner),138 Oak St,Mesa,AZ,85201,Maricopa,(480) 732-8735,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633274
+AZ_MES_00049,Lisa Restaurant,restaurant,Lisa (Owner),8560 Central Ave,Mesa,AZ,85201,Maricopa,(480) 281-1288,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633279
+AZ_MES_00050,Jose Restaurant,restaurant,Jose (Owner),8697 Oak St,Mesa,AZ,85201,Maricopa,(480) 701-1464,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633284
+AZ_MES_00051,Pedro's Southwest Grill,restaurant,Pedro (Owner),3763 Scottsdale Rd,Mesa,AZ,85201,Maricopa,(480) 966-4363,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633288
+AZ_MES_00052,Tony's Breakfast Spot,breakfast,Tony (Owner),9827 Van Buren,Mesa,AZ,85201,Maricopa,(480) 273-3134,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633313
+AZ_MES_00053,Luis's Cafe,cafe,Luis (Owner),4568 Apache Blvd,Mesa,AZ,85201,Maricopa,(480) 604-4427,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633317
+AZ_MES_00054,Carlos Diner,diner,Carlos (Owner),5087 Main St,Mesa,AZ,85201,Maricopa,(480) 920-6854,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633323
+AZ_MES_00055,Santiago Burger Joint,burger,Santiago (Owner),2881 Scottsdale Rd,Mesa,AZ,85201,Maricopa,(480) 575-7495,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633328
+AZ_MES_00056,Francisco's Southwest Grill,restaurant,Francisco (Owner),4527 Central Ave,Mesa,AZ,85201,Maricopa,(480) 808-2837,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633333
+AZ_MES_00057,Eduardo Restaurant,restaurant,Eduardo (Owner),6287 Oak St,Mesa,AZ,85201,Maricopa,(480) 257-3934,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633337
+AZ_MES_00058,Emma's Breakfast Spot,breakfast,Emma (Owner),771 Jefferson St,Mesa,AZ,85201,Maricopa,(480) 826-1664,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633343
+AZ_MES_00059,David Burger Joint,burger,David (Owner),2278 Jefferson St,Mesa,AZ,85201,Maricopa,(480) 243-7892,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633348
+AZ_MES_00060,Eduardo Restaurant,restaurant,Eduardo (Owner),943 Central Ave,Mesa,AZ,85201,Maricopa,(480) 661-7477,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633352
+AZ_MES_00061,Juan's Breakfast Spot,breakfast,Juan (Owner),8505 Jefferson St,Mesa,AZ,85201,Maricopa,(480) 784-2534,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633357
+AZ_MES_00062,The Elena Kitchen,restaurant,Elena (Owner),8481 Main St,Mesa,AZ,85201,Maricopa,(480) 616-2012,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633366
+AZ_MES_00063,Javier Burger Joint,burger,Javier (Owner),8151 Oak St,Mesa,AZ,85201,Maricopa,(480) 875-9806,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633370
+AZ_MES_00064,Emma Diner,diner,Emma (Owner),2192 Broadway,Mesa,AZ,85201,Maricopa,(480) 431-2943,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633375
+AZ_MES_00065,The Javier Kitchen,restaurant,Javier (Owner),5021 Broadway,Mesa,AZ,85201,Maricopa,(480) 202-5574,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633380
+AZ_MES_00066,John's Cafe,cafe,John (Owner),4854 Main St,Mesa,AZ,85201,Maricopa,(480) 259-8435,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633385
+AZ_MES_00067,Eduardo's Southwest Grill,restaurant,Eduardo (Owner),1965 Apache Blvd,Mesa,AZ,85201,Maricopa,(480) 310-6130,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633390
+AZ_MES_00068,Carmen's Cafe,cafe,Carmen (Owner),2326 Main St,Mesa,AZ,85201,Maricopa,(480) 972-7180,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633394
+AZ_MES_00069,Sarah Taqueria,taqueria,Sarah (Owner),1729 Jefferson St,Mesa,AZ,85201,Maricopa,(480) 541-9097,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633399
+AZ_MES_00070,Sarah Diner,diner,Sarah (Owner),2502 Apache Blvd,Mesa,AZ,85201,Maricopa,(480) 930-9860,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633404
+AZ_MES_00071,Hector's Breakfast Spot,breakfast,Hector (Owner),7781 Apache Blvd,Mesa,AZ,85201,Maricopa,(480) 226-2223,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633409
+AZ_MES_00072,Jose Restaurant,restaurant,Jose (Owner),4750 Jefferson St,Mesa,AZ,85201,Maricopa,(480) 571-6734,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633415
+AZ_MES_00073,Rosa Burger Joint,burger,Rosa (Owner),2170 1st Ave,Mesa,AZ,85201,Maricopa,(480) 340-1889,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633420
+AZ_MES_00074,The Pedro Kitchen,restaurant,Pedro (Owner),9680 Jefferson St,Mesa,AZ,85201,Maricopa,(480) 568-9013,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633425
+AZ_MES_00075,The Isabella Kitchen,restaurant,Isabella (Owner),4386 Apache Blvd,Mesa,AZ,85201,Maricopa,(480) 404-6892,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633430
+AZ_MES_00076,Maria's Cafe,cafe,Maria (Owner),1872 Oak St,Mesa,AZ,85201,Maricopa,(480) 954-7184,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633435
+AZ_MES_00077,Carmen Burger Joint,burger,Carmen (Owner),1673 Apache Blvd,Mesa,AZ,85201,Maricopa,(480) 441-3880,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633439
+AZ_MES_00078,The Francisco Kitchen,restaurant,Francisco (Owner),4204 1st Ave,Mesa,AZ,85201,Maricopa,(480) 640-3466,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633445
+AZ_MES_00079,The Sarah Kitchen,restaurant,Sarah (Owner),5873 Van Buren,Mesa,AZ,85201,Maricopa,(480) 525-5671,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633449
+AZ_MES_00080,Lisa Taqueria,taqueria,Lisa (Owner),6708 Scottsdale Rd,Mesa,AZ,85201,Maricopa,(480) 412-7979,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633454
+AZ_MES_00081,Carlos's Breakfast Spot,breakfast,Carlos (Owner),2734 Broadway,Mesa,AZ,85201,Maricopa,(480) 743-3630,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633459
+AZ_MES_00082,Lisa's Cafe,cafe,Lisa (Owner),9328 Oak St,Mesa,AZ,85201,Maricopa,(480) 909-1214,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633464
+AZ_MES_00083,Lisa Diner,diner,Lisa (Owner),2225 Oak St,Mesa,AZ,85201,Maricopa,(480) 610-9792,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633469
+AZ_MES_00084,Diego's Breakfast Spot,breakfast,Diego (Owner),5639 Oak St,Mesa,AZ,85201,Maricopa,(480) 604-2237,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633474
+AZ_MES_00085,Eduardo Taqueria,taqueria,Eduardo (Owner),4034 1st Ave,Mesa,AZ,85201,Maricopa,(480) 420-5262,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633478
+AZ_MES_00086,Luis Restaurant,restaurant,Luis (Owner),9197 Apache Blvd,Mesa,AZ,85201,Maricopa,(480) 645-2106,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633483
+AZ_MES_00087,Luis's Cafe,cafe,Luis (Owner),8373 Scottsdale Rd,Mesa,AZ,85201,Maricopa,(480) 342-1001,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633488
+AZ_MES_00088,Jose Restaurant,restaurant,Jose (Owner),2756 Central Ave,Mesa,AZ,85201,Maricopa,(480) 420-5115,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633492
+AZ_MES_00089,Tony's Breakfast Spot,breakfast,Tony (Owner),5376 Pine St,Mesa,AZ,85201,Maricopa,(480) 759-1948,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633497
+AZ_MES_00090,Hector Restaurant,restaurant,Hector (Owner),997 Pine St,Mesa,AZ,85201,Maricopa,(480) 457-2270,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633501
+AZ_MES_00091,Mike Diner,diner,Mike (Owner),6793 Oak St,Mesa,AZ,85201,Maricopa,(480) 970-1543,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633506
+AZ_MES_00092,The Roberto Kitchen,restaurant,Roberto (Owner),2260 Jefferson St,Mesa,AZ,85201,Maricopa,(480) 697-1321,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633510
+AZ_MES_00093,Rosa Diner,diner,Rosa (Owner),941 Van Buren,Mesa,AZ,85201,Maricopa,(480) 810-5864,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633515
+AZ_MES_00094,Luis's Breakfast Spot,breakfast,Luis (Owner),8754 1st Ave,Mesa,AZ,85201,Maricopa,(480) 521-6028,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633521
+AZ_MES_00095,The Emma Kitchen,restaurant,Emma (Owner),2300 Apache Blvd,Mesa,AZ,85201,Maricopa,(480) 495-6503,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633525
+AZ_MES_00096,Diego's Cafe,cafe,Diego (Owner),705 Apache Blvd,Mesa,AZ,85201,Maricopa,(480) 771-2274,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633529
+AZ_MES_00097,Juan's Southwest Grill,restaurant,Juan (Owner),113 Main St,Mesa,AZ,85201,Maricopa,(480) 955-9026,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633534
+AZ_MES_00098,John's Breakfast Spot,breakfast,John (Owner),2969 Jefferson St,Mesa,AZ,85201,Maricopa,(480) 665-6838,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633539
+AZ_MES_00099,The Roberto Kitchen,restaurant,Roberto (Owner),5629 1st Ave,Mesa,AZ,85201,Maricopa,(480) 237-3949,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633543
+AZ_MES_00100,Miguel's Cafe,cafe,Miguel (Owner),7280 1st Ave,Mesa,AZ,85201,Maricopa,(480) 736-1112,,,A,R2-D2 AZ scrape Mesa,2026-02-28T17:27:39.633548
