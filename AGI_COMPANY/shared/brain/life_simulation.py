@@ -55,11 +55,13 @@ class LifeSimulator:
         # Initialize brain components
         self.sheet = TernaryCorticalSheet3D(nx=32, ny=32, nz=8)
         self.TRACRAY = {"concepts": {}}
-        self.memory_store = type('obj', (object,), {
-            'traces': [],
-            'cluster_count': 0,
-            'add_trace': lambda **kwargs: self.memory_store.traces.append(kwargs),
-        })()
+        class MemoryStore:
+            def __init__(self):
+                self.traces = []
+                self.cluster_count = 0
+            def add_trace(self, **kwargs):
+                self.traces.append(kwargs)
+        self.memory_store = MemoryStore()
         
         # Initialize learning systems
         self.curriculum = LifeCurriculum()
