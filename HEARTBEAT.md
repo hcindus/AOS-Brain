@@ -40,7 +40,7 @@ Implemented: 2026-03-17
 | Lead Scraper | 03:00 daily | ✅ Yes - queues if busy |
 | Price Sync | 04:00 daily | ✅ Yes - queues if busy |
 | SFX Generation | 05:00 daily | ✅ Yes - queues if busy |
-| Housekeeping | 06:00 daily | ✅ Yes - queues if busy |
+| Housekeeping | 06:00 Sunday | ✅ Yes - queues if busy |
 | Git Push | 00:00, 08:00, 16:00 | ✅ Yes - queues if busy |
 | Health Check A | :00, :30 | ✅ Yes - skips if load >8 |
 | Health Check B | :15, :45 | ✅ Yes - skips if load >8 |
