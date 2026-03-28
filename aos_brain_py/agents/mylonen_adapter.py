@@ -59,18 +59,27 @@ class MylonenAdapter:
         
     def process(self, text: str, context: str = ""):
         """Process input through brain and return response."""
+        
+        # Dynamic mode selection based on task
+        detected_mode = self._detect_mode(text, context)
+        
         obs = Observation(source="user", content=text, metadata={
             "agent": self.name,
-            "context": context
+            "context": context,
+            "mode": detected_mode
         })
         
         # Convert to dict for brain
         obs_dict = {
             "text": text,
-            "source": "user"
+            "source": "user",
+            "mode": detected_mode
         }
         
         thought = self.brain.tick(obs_dict)
+        
+        # Override mode in thought with detected mode
+        thought["mode"] = detected_mode
         
         # Mylonen-specific response formatting
         response = self._format_response(thought)
@@ -78,8 +87,36 @@ class MylonenAdapter:
         return {
             "response": response,
             "thought": thought,
-            "mode": thought.get("mode", "Unknown"),
+            "mode": detected_mode,
         }
+    
+    def _detect_mode(self, text: str, context: str) -> str:
+        """Detect appropriate mode based on task type."""
+        text_lower = text.lower()
+        context_lower = context.lower()
+        
+        # Creative keywords
+        creative_keywords = ["create", "design", "imagine", "brainstorm", "invent", "art", "story", "poem"]
+        if any(kw in text_lower or kw in context_lower for kw in creative_keywords):
+            return "Creative"
+        
+        # Exploratory keywords
+        exploratory_keywords = ["explore", "discover", "scout", "reconnaissance", "investigate", "find", "search", "where", "what is"]
+        if any(kw in text_lower or kw in context_lower for kw in exploratory_keywords):
+            return "Exploratory"
+        
+        # Reflective keywords
+        reflective_keywords = ["remember", "experience", "learned", "lesson", "wisdom", "advice", "should", "recommend"]
+        if any(kw in text_lower or kw in context_lower for kw in reflective_keywords):
+            return "Reflective"
+        
+        # Analytical (default) - problem solving, logic, analysis
+        analytical_keywords = ["solve", "analyze", "calculate", "why", "how", "problem", "logic", "reason"]
+        if any(kw in text_lower or kw in context_lower for kw in analytical_keywords):
+            return "Analytical"
+        
+        # Default to Analytical for general queries
+        return "Analytical"
     
     def _format_response(self, thought: dict) -> str:
         """Format response with Mylonen personality."""
