@@ -1,0 +1,59 @@
+# MINIMAX API CONFIGURATION
+# Anthropic-compatible endpoint
+# Status: ✅ ACTIVE
+
+api_provider: "minimax"
+anthropic_compatible: true
+
+# Endpoint
+base_url: "https://api.minimax.io/anthropic"
+api_key: "${ANTHROPIC_API_KEY}"
+
+# Models (MiniMax via Anthropic interface)
+models:
+  coding:
+    name: "MiniMax-M2.5"
+    max_tokens: 4000
+    temperature: 0.3
+  fast:
+    name: "MiniMax-M2.5-highspeed"
+    max_tokens: 2000
+    temperature: 0.5
+  reasoning:
+    name: "MiniMax-M2.7"
+    max_tokens: 8000
+    temperature: 0.2
+
+# Agent Routing
+agents:
+  r2_droid:
+    model: "MiniMax-M2.5"
+    role: "technical_diagnostics"
+    
+  taptap:
+    model: "MiniMax-M2.5"
+    role: "code_review"
+    
+  bugcatcher:
+    model: "MiniMax-M2.5"
+    role: "debugging"
+    
+  pipeline:
+    model: "MiniMax-M2.5-highspeed"
+    role: "ci_cd"
+    
+  fiber:
+    model: "MiniMax-M2.5"
+    role: "infrastructure"
+    
+  stacktrace:
+    model: "MiniMax-M2.7"
+    role: "error_analysis"
+
+# Rationing
+daily_call_limit: 100
+cost_per_1k_tokens: 0.002
+
+# Fallback
+fallback_to_local_brain: true
+local_brain_threshold: 50  # Use local if API fails
