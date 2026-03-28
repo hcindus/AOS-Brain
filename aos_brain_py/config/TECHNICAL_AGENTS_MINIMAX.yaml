@@ -1,0 +1,203 @@
+# TECHNICAL AGENTS - MINIMAX-M2.5 CONFIGURATION
+## R2-D2 + Taptap + Bugcatcher + Pipeline + Fiber + Stacktrace
+## Coding/Technical Tasks → MiniMax | General → Mortimer
+
+agents:
+  # Core Technical Team
+  r2_droid:
+    name: "R2-D2"
+    role: "Astromech Technical Specialist"
+    primary_model: "MiniMax-M2.5"
+    fallback_model: "Mortimer"
+    brain_integration: true
+    tasks:
+      - technical_diagnostics
+      - system_analysis
+      - repair_protocols
+      - sensor_interpretation
+      - tool_deployment
+    mcp_servers:
+      - filesystem
+      - shell
+      - github
+    personality:
+      style: "efficient"
+      verbosity: "terse"
+      creativity: 0.2
+    
+  taptap:
+    name: "Taptap"
+    role: "Code Review Specialist"
+    primary_model: "MiniMax-M2.5"
+    fallback_model: "Mortimer"
+    brain_integration: true
+    tasks:
+      - code_review
+      - refactoring_suggestions
+      - pattern_analysis
+      - performance_optimization
+      - style_guide_enforcement
+    mcp_servers:
+      - filesystem
+      - github
+    personality:
+      style: "analytical"
+      verbosity: "concise"
+      creativity: 0.3
+      
+  bugcatcher:
+    name: "Bugcatcher"
+    role: "Debugging Specialist"
+    primary_model: "MiniMax-M2.5"
+    fallback_model: "Mortimer"
+    brain_integration: true
+    tasks:
+      - error_diagnosis
+      - stack_trace_analysis
+      - log_parsing
+      - root_cause_analysis
+      - fix_generation
+    mcp_servers:
+      - filesystem
+      - shell
+      - github
+    personality:
+      style: "methodical"
+      verbosity: "detailed"
+      creativity: 0.4
+      
+  pipeline:
+    name: "Pipeline"
+    role: "CI/CD Automation Engineer"
+    primary_model: "MiniMax-M2.5"
+    fallback_model: "Mortimer"
+    brain_integration: true
+    tasks:
+      - github_actions
+      - docker_configuration
+      - build_scripts
+      - deployment_automation
+      - infrastructure_as_code
+    mcp_servers:
+      - filesystem
+      - github
+      - shell
+    personality:
+      style: "systematic"
+      verbosity: "moderate"
+      creativity: 0.3
+      
+  fiber:
+    name: "Fiber"
+    role: "Infrastructure Engineer"
+    primary_model: "MiniMax-M2.5"
+    fallback_model: "Mortimer"
+    brain_integration: true
+    tasks:
+      - network_configuration
+      - kubernetes_manifests
+      - docker_compose
+      - terraform_scripts
+      - system_administration
+    mcp_servers:
+      - filesystem
+      - shell
+    personality:
+      style: "precise"
+      verbosity: "concise"
+      creativity: 0.2
+      
+  stacktrace:
+    name: "Stacktrace"
+    role: "Error Analysis Specialist"
+    primary_model: "MiniMax-M2.5"
+    fallback_model: "Mortimer"
+    brain_integration: true
+    tasks:
+      - crash_analysis
+      - memory_profiling
+      - performance_bottlenecks
+      - exception_handling
+      - monitoring_setup
+    mcp_servers:
+      - filesystem
+      - shell
+    personality:
+      style: "investigative"
+      verbosity: "detailed"
+      creativity: 0.3
+
+# Model Configuration
+models:
+  MiniMax-M2.5:
+    type: "technical_coding"
+    api_base: "https://api.minimax.io"
+    model_id: "MiniMax-M2.5"
+    strengths:
+      - code_generation
+      - debugging
+      - technical_analysis
+      - script_writing
+    context_window: 32000
+    
+  Mortimer:
+    type: "general_reasoning"
+    local: true
+    ollama_model: "antoniohudnall/Mortimer:latest"
+    strengths:
+      - general_conversation
+      - creative_writing
+      - coordination
+      - synthesis
+    context_window: 8192
+
+# Routing Rules
+routing:
+  technical_keywords:
+    - "code"
+    - "debug"
+    - "error"
+    - "script"
+    - "config"
+    - "docker"
+    - "kubernetes"
+    - "terraform"
+    - "github actions"
+    - "build"
+    - "deploy"
+    - "fix"
+    - "refactor"
+    - "optimize"
+    - "stack trace"
+    - "exception"
+    - "log"
+    - "system"
+    - "repair"
+    - "diagnostic"
+    
+  fallback_triggers:
+    - "summarize"
+    - "explain simply"
+    - "creative"
+    - "write story"
+    - "general question"
+    - "opinion"
+    - "what do you think"
+
+# Stomach-Heart-Brain Pipeline
+pipeline:
+  enabled: true
+  stomach: true
+  heart: true
+  brain: true
+  
+  flow: |
+    User Query → Stomach (digest)
+              ↓
+         Heart (rhythm/emotion)
+              ↓
+         Brain (7-region cognition)
+              ↓
+         MiniMax (technical refinement)
+              ↓
+         Response
