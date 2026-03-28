@@ -36,6 +36,14 @@ except ImportError:
     TRACRAY_AVAILABLE = False
     print("[Warning] Tracray not available, using fallback mode")
 
+# Import UnconsciousProcessor for 3-tier consciousness
+try:
+    from unconscious import UnconsciousProcessor
+    UNCONSCIOUS_AVAILABLE = True
+except ImportError:
+    UNCONSCIOUS_AVAILABLE = False
+    print("[Warning] Unconscious processor not available")
+
 class SevenRegionBrain:
     """
     Complete 7-region brain architecture.
@@ -125,7 +133,22 @@ class SevenRegionBrain:
         # Region 7: Brainstem - Safety/life support
         self.regions["brainstem"] = BrainstemRegion(cfg)
         
-        print(f"[7RegionBrain] Initialized {len(self.regions)} regions")
+        # 3-Tier Consciousness System
+        # Conscious: Active processing (7-region OODA)
+        # Subconscious: Pattern matching, habit formation
+        # Unconscious: Sleep, dreams, memory consolidation
+        if UNCONSCIOUS_AVAILABLE:
+            self.unconscious = UnconsciousProcessor(self)
+            print(f"[7RegionBrain] Unconscious processor initialized")
+        else:
+            self.unconscious = None
+        
+        # Memory tiers
+        self.short_term = deque(maxlen=10)  # Working memory
+        self.mid_term = deque(maxlen=100)   # Episodic buffer
+        self.long_term = {}                  # Semantic/graph memory
+        
+        print(f"[7RegionBrain] Initialized {len(self.regions)} regions + 3-tier consciousness")
     
     def tick(self, external_input: Optional[Dict] = None) -> Dict:
         """
@@ -170,14 +193,31 @@ class SevenRegionBrain:
         # Execute if safe
         result = self._execute(safe_action)
         
-        # Store to memory
-        self.regions["hippocampus"].store({
+        # 3-TIER CONSCIOUSNESS PROCESSING
+        
+        # 1. CONSCIOUS: Store in working memory (short-term)
+        conscious_trace = {
             "tick": self.tick_count,
             "sensory": sensory,
             "affect": affect,
+            "plan": plan,
             "action": safe_action,
             "result": result,
-        })
+        }
+        self.short_term.append(conscious_trace)
+        
+        # 2. SUBCONSCIOUS: Transfer to episodic buffer (mid-term)
+        # Pattern recognition and habit formation
+        if len(self.short_term) >= 5:
+            self._consolidate_to_mid_term()
+        
+        # 3. UNCONSCIOUS: Periodic sleep cycles for consolidation
+        if self.unconscious and self.tick_count % 100 == 0:
+            sleep_report = self.unconscious.enter_sleep(duration=30.0)
+            self._consolidate_long_term(sleep_report)
+        
+        # Store to hippocampus (episodic memory)
+        self.regions["hippocampus"].store(conscious_trace)
         
         # Build state
         state = self._build_state(sensory, memory_ctx, affect, plan, safe_action, result)
@@ -246,6 +286,37 @@ class SevenRegionBrain:
                 json.dump(state, f, indent=2)
         except:
             pass
+    
+    def _consolidate_to_mid_term(self):
+        """Consolidate short-term to mid-term memory (subconscious)."""
+        # Pattern: Move from short-term working memory to episodic buffer
+        while len(self.short_term) > 0:
+            trace = self.short_term.popleft()
+            self.mid_term.append(trace)
+            
+            # Also add to long-term if important
+            if trace.get("affect", {}).get("reward", 0) > 0.5:
+                key = f"tick_{trace['tick']}"
+                self.long_term[key] = trace
+    
+    def _consolidate_long_term(self, sleep_report: Dict):
+        """Consolidate memories after unconscious processing (unconscious)."""
+        # Extract dreams and insights from sleep
+        dreams = sleep_report.get("dreams", [])
+        consolidations = sleep_report.get("consolidations", 0)
+        
+        # Store dreams in long-term memory
+        for i, dream in enumerate(dreams):
+            key = f"dream_{self.tick_count}_{i}"
+            self.long_term[key] = {
+                "type": "dream",
+                "content": dream.get("content", ""),
+                "vividness": dream.get("vividness", 0),
+                "source": dream.get("source", "unknown"),
+                "timestamp": time.time(),
+            }
+        
+        return consolidations
     
     def run(self):
         """Run brain loop."""
