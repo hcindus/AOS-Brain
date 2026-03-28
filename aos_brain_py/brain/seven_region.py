@@ -44,6 +44,14 @@ except ImportError:
     UNCONSCIOUS_AVAILABLE = False
     print("[Warning] Unconscious processor not available")
 
+# Import VisionProcessor for visual sensory input
+try:
+    from vision import VisionProcessor, VisionBrainIntegration
+    VISION_AVAILABLE = True
+except ImportError:
+    VISION_AVAILABLE = False
+    print("[Warning] Vision processor not available")
+
 class SevenRegionBrain:
     """
     Complete 7-region brain architecture.
@@ -143,12 +151,20 @@ class SevenRegionBrain:
         else:
             self.unconscious = None
         
+        # VISION: Visual sensory processing
+        # Camera input, motion detection, object recognition
+        if VISION_AVAILABLE:
+            self.vision = VisionProcessor(self)
+            print(f"[7RegionBrain] Vision processor initialized")
+        else:
+            self.vision = None
+        
         # Memory tiers
         self.short_term = deque(maxlen=10)  # Working memory
         self.mid_term = deque(maxlen=100)   # Episodic buffer
         self.long_term = {}                  # Semantic/graph memory
         
-        print(f"[7RegionBrain] Initialized {len(self.regions)} regions + 3-tier consciousness")
+        print(f"[7RegionBrain] Initialized {len(self.regions)} regions + 3-tier consciousness + vision")
     
     def tick(self, external_input: Optional[Dict] = None) -> Dict:
         """
@@ -189,6 +205,17 @@ class SevenRegionBrain:
         safe_action = self.regions["brainstem"].enforce(
             coordinated, sensory, memory_ctx, affect
         )
+        
+        # VISION PROCESSING: Check for visual input
+        visual_obs = None
+        if self.vision and VISION_AVAILABLE:
+            try:
+                visual_obs = self.vision.process_visual_input()
+                if visual_obs and not visual_obs.get("error"):
+                    # Add visual context to sensory
+                    sensory["visual"] = visual_obs
+            except:
+                pass
         
         # Execute if safe
         result = self._execute(safe_action)
