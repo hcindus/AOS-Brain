@@ -305,16 +305,27 @@ class SevenRegionBrain:
         dreams = sleep_report.get("dreams", [])
         consolidations = sleep_report.get("consolidations", 0)
         
-        # Store dreams in long-term memory
+        # Store dreams in long-term memory (DreamSequence is dataclass, not dict)
+        dream_count = 0
         for i, dream in enumerate(dreams):
             key = f"dream_{self.tick_count}_{i}"
             self.long_term[key] = {
                 "type": "dream",
-                "content": dream.get("content", ""),
-                "vividness": dream.get("vividness", 0),
-                "source": dream.get("source", "unknown"),
+                "content": dream.content if hasattr(dream, 'content') else str(dream),
+                "vividness": dream.vividness if hasattr(dream, 'vividness') else 0.5,
+                "source": dream.source if hasattr(dream, 'source') else "unknown",
                 "timestamp": time.time(),
             }
+            dream_count += 1
+        
+        # Log dream sequence
+        if dream_count > 0:
+            dream_contents = []
+            for d in dreams[:3]:
+                content = d.content if hasattr(d, 'content') else str(d)
+                dream_contents.append(content[:30] + "...")
+            dream_summary = f"Dream sequence ({dream_count} dreams): " + " | ".join(dream_contents)
+            print(f"[DreamSequence] {dream_summary}")
         
         return consolidations
     
