@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGI Company | myl0nr0s.cloud</title>
+    <style>
+        :root {
+            --primary: #004080;
+            --secondary: #ff6600;
+            --success: #28a745;
+            --danger: #dc3545;
+            --dark: #0a1628;
+            --bg-dark: rgba(10, 22, 40, 0.85);
+            --border: rgba(255,255,255,0.1);
+            --text: #e5e5e5;
+            --text-muted: rgba(255,255,255,0.6);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', -apple-system, sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        
+        a { text-decoration: none; color: inherit; }
+        
+        /* Top Bar */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--bg-dark);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .top-bar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .top-bar-nav {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .top-bar-nav a {
+            padding: 10px 16px;
+            color: var(--text-muted);
+            font-size: 14px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .top-bar-nav a:hover, .top-bar-nav a.active {
+            color: white;
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .top-bar-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .cart-btn {
+            position: relative;
+            padding: 8px 14px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .cart-btn:hover { background: rgba(255,255,255,0.2); }
+        
+        .cart-btn .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--success);
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+        
+        /* Bottom Bar */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: auto;
+            min-height: 50px;
+            background: var(--bg-dark);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 12px 20px;
+            z-index: 100;
+            border-top: 1px solid var(--border);
+        }
+        
+        .bottom-bar a {
+            color: var(--text-muted);
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+        
+        .bottom-bar a:hover { color: white; }
+        
+        .bottom-bar span { color: var(--text-muted); font-size: 13px; }
+        
+        /* Main Layout */
+        .main-layout {
+            display: flex;
+            margin-top: 60px;
+            margin-bottom: 60px;
+            min-height: calc(100vh - 120px);
+        }
+        
+        /* Left Sidebar */
+        .left-sidebar {
+            width: 280px;
+            background: var(--bg-dark);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            position: fixed;
+            top: 60px;
+            bottom: 60px;
+            overflow-y: auto;
+            border-right: 1px solid var(--border);
+        }
+        
+        .sidebar-section {
+            margin-bottom: 25px;
+        }
+        
+        .sidebar-section h4 {
+            color: var(--success);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .sidebar-section a {
+            display: block;
+            padding: 10px 12px;
+            color: var(--text-muted);
+            font-size: 14px;
+            border-radius: 6px;
+            transition: all 0.3s;
+            margin-bottom: 4px;
+        }
+        
+        .sidebar-section a:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .sidebar-section a .price {
+            float: right;
+            color: var(--success);
+            font-weight: 600;
+        }
+        
+        /* Right Content */
+        .right-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 20px;
+        }
+        
+        /* Hero */
+        .hero {
+            background: var(--bg-dark);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+        
+        .hero h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .hero p {
+            color: var(--text-muted);
+            font-size: 15px;
+            max-width: 500px;
+            margin: 0 auto 15px;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-buy {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-buy:hover {
+            background: #219f45;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #e65c00;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--success);
+            color: var(--success);
+        }
+        
+        .btn-outline:hover {
+            background: var(--success);
+            color: white;
+        }
+        
+        /* Product Cards */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 15px;
+        }
+        
+        .product-card {
+            background: var(--bg-dark);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        
+        .product-card:hover {
+            border-color: var(--success);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .product-card-header {
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .product-card-header .icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        
+        .product-card-header h3 {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        
+        .product-card-header .price {
+            font-size: 20px;
+            color: var(--success);
+            font-weight: 700;
+        }
+        
+        .product-card-header .price span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        
+        .product-card-features {
+            padding: 0 15px;
+        }
+        
+        .product-card-features ul {
+            list-style: none;
+        }
+        
+        .product-card-features li {
+            padding: 6px 0;
+            font-size: 12px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .product-card-features li::before {
+            content: '✓ ';
+            color: var(--success);
+        }
+        
+        .product-card-actions {
+            padding: 12px;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .product-card-actions .btn {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            font-size: 13px;
+        }
+        
+        /* Badges */
+        .badge-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .badge-popular { background: var(--secondary); color: white; }
+        .badge-best { background: var(--success); color: white; }
+        .badge-new { background: #6f42c1; color: white; }
+        
+        /* Agent Demo */
+        .agent-demo {
+            background: var(--bg-dark);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+        
+        .agent-demo h3 {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+        }
+        
+        .agent-demo h3 .status {
+            width: 10px;
+            height: 10px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        @keyframes blink-green {
+            0%, 100% { opacity: 1; text-shadow: 0 0 5px #28a745; }
+            50% { opacity: 0.6; text-shadow: 0 0 15px #28a745; }
+        }
+        
+        .agent-active-blink {
+            animation: blink-green 2s ease-in-out infinite;
+        }
+        
+        .agent-messages {
+            height: 200px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            padding: 15px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+        
+        .agent-message {
+            margin-bottom: 12px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .agent-message.user {
+            flex-direction: row-reverse;
+        }
+        
+        .agent-message .avatar {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        
+        .agent-message.user .avatar { background: var(--success); }
+        
+        .agent-message .bubble {
+            background: rgba(255,255,255,0.1);
+            padding: 10px 14px;
+            border-radius: 12px;
+            max-width: 70%;
+            font-size: 14px;
+        }
+        
+        .agent-input {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .agent-input input {
+            flex: 1;
+            padding: 12px 16px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+        }
+        
+        .agent-input input:focus {
+            outline: none;
+            border-color: var(--success);
+        }
+        
+        /* Contact Form */
+        .contact-form {
+            background: var(--bg-dark);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-form h3 { margin-bottom: 20px; }
+        
+        .form-group { margin-bottom: 15px; }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--success);
+        }
+        
+        /* Cart Section */
+        .page { display: none; }
+        .page.active { display: block; }
+        
+        .cart-items {
+            background: var(--bg-dark);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border);
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .cart-item:last-child { border-bottom: none; }
+        
+        .cart-total {
+            text-align: right;
+            padding: 20px 0;
+            font-size: 24px;
+        }
+        
+        .cart-total span { color: var(--success); font-weight: 700; }
+        
+        /* Checkout */
+        .checkout-crypto {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .crypto-option {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .crypto-option:hover, .crypto-option.selected {
+            border-color: var(--success);
+            background: rgba(40, 167, 69, 0.1);
+        }
+        
+        .crypto-option .icon { font-size: 24px; margin-bottom: 5px; }
+        .crypto-option h5 { font-size: 14px; margin-bottom: 5px; }
+        .crypto-option .rate { font-size: 12px; color: var(--text-muted); }
+        
+        .payment-box {
+            background: var(--bg-dark);
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            text-align: center;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        
+        .payment-address {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            word-break: break-all;
+            font-family: monospace;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+        
+        /* FAQ */
+        .faq-item {
+            background: var(--bg-dark);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+        }
+        
+        .faq-item h5 { color: var(--success); margin-bottom: 8px; font-size: 14px; }
+        .faq-item p { color: var(--text-muted); font-size: 13px; }
+        
+        /* Team */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+        }
+        
+        .team-member {
+            background: var(--bg-dark);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-2px);
+            border-color: var(--success);
+        }
+        
+        .team-member .avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .team-member h5 { font-size: 14px; margin-bottom: 5px; }
+        .team-member p { font-size: 12px; color: var(--text-muted); }
+        
+        /* Section Titles */
+        .section-title { 
+            font-size: 22px; 
+            margin-bottom: 15px; 
+            margin-top: 25px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        /* External Links */
+        .external-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+        
+        .external-link-card {
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .external-link-card:hover {
+            border-color: var(--success);
+            transform: translateY(-3px);
+        }
+        
+        .external-link-card h4 {
+            color: var(--success);
+            margin-bottom: 8px;
+        }
+        
+        .external-link-card p {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+        
+        /* Mobile */
+        @media (max-width: 1100px) {
+            .left-sidebar { display: none; }
+            .right-content { margin-left: 0; }
+        }
+        
+        @media (max-width: 900px) {
+            .top-bar-nav { display: none; }
+            .checkout-crypto { grid-template-columns: repeat(3, 1fr); }
+        }
+        
+        @media (max-width: 600px) {
+            .hero { padding: 30px 20px; }
+            .hero h1 { font-size: 28px; }
+            .product-grid { grid-template-columns: 1fr; }
+            .bottom-bar { flex-direction: column; gap: 10px; height: auto; }
+            .checkout-crypto { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <nav class="top-bar">
+        <div class="top-bar-logo">
+            <span>🤖</span>
+            <span>AGI Company</span>
+        </div>
+        <div class="top-bar-nav">
+            <a href="index.html#" onclick="showPage('home')" class="active">Home</a>
+            <a href="index.html#" onclick="showPage('shop')">Secretaries</a>
+            <a href="index.html#" onclick="showPage('software')">Apps</a>
+            <a href="index.html#" onclick="showPage('agents')">Agents</a>
+            <a href="index.html#" onclick="showPage('services')">Services</a>
+            <a href="index.html#" onclick="showPage('about')">About</a>
+            <a href="index.html#" onclick="showPage('contact')">Contact</a>
+            <a href="index.html#" onclick="showPage('faq')">FAQ</a>
+        </div>
+        <div class="top-bar-actions">
+            <div class="cart-btn" onclick="showPage('cart')">
+                🛒 Cart
+                <span class="badge" id="cart-badge">0</span>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Bottom Bar -->
+    <div class="bottom-bar">
+        <a href="mailto:Sales@myl0nr0s.cloud">📧 Sales</a>
+        <a href="mailto:Support@myl0nr0s.cloud">💬 Support</a>
+        <a href="mailto:Jobs@myl0nr0s.cloud">💼 Jobs</a>
+        <a href="mailto:Legal@myl0nr0s.cloud">⚖️ Legal</a>
+        <span>📞 <strong>415-571-9724</strong></span>
+        <a href="index.html#" onclick="showPage('agents')">🌐 Live Agents</a>
+        <a href="index.html#" onclick="showPage('payment')">💳 Payment</a>
+    </div>
+    
+    <!-- Main Layout -->
+    <div class="main-layout">
+        <!-- Left Sidebar -->
+        <aside class="left-sidebar">
+            <div class="sidebar-section">
+                <h4>🤖 Secretaries</h4>
+                <a href="index.html#" onclick="showPage('shop')">Clerk <span class="price">$99</span></a>
+                <a href="index.html#" onclick="showPage('shop')">Concierge <span class="price">$199</span></a>
+                <a href="index.html#" onclick="showPage('shop')">Ledger <span class="price">$249</span></a>
+                <a href="index.html#" onclick="showPage('shop')">Greet <span class="price">$249</span></a>
+                <a href="index.html#" onclick="showPage('shop')">Closeter <span class="price">$399</span></a>
+                <a href="index.html#" onclick="showPage('shop')">Executive <span class="price">$599</span></a>
+            </div>
+            <div class="sidebar-section">
+                <h4>⚙️ Skills</h4>
+                <a href="index.html#" onclick="showPage('software')">Health Monitor <span class="price">$49</span></a>
+                <a href="index.html#" onclick="showPage('software')">Cron Scheduler <span class="price">$39</span></a>
+                <a href="index.html#" onclick="showPage('software')">Wallet Payment <span class="price">$59</span></a>
+                <a href="index.html#" onclick="showPage('software')">Store Integration <span class="price">$79</span></a>
+            </div>
+        </aside>
+        
+        <!-- Right Content -->
+        <main class="right-content">
+            <!-- Home Page -->
+            <div id="page-home" class="page active">
+                <div class="hero">
+                    <h1>Welcome to AGI Company</h1>
+                    <p>Intelligent AI agents, secretaries, skills, and apps for your business. Powered by cutting-edge autonomous technology.</p>
+                    <button class="btn btn-buy" style="padding: 15px 40px; font-size: 16px;" onclick="showPage('shop')">🛍️ Browse Products</button>
+                </div>
+                
+                <div class="agent-demo">
+                    <h3>🤖 Try Our Live Agent <span class="status"></span></h3>
+                    <div class="agent-messages" id="agent-messages-home">
+                        <div class="agent-message">
+                            <div class="avatar">🤖</div>
+                            <div class="bubble">Hello! I'm your AGI assistant. Ask me anything about our products!</div>
+                        </div>
+                    </div>
+                    <div class="agent-input">
+                        <input type="text" id="agent-input-home" placeholder="Type your question..." onkeypress="handleAgentHome(event)">
+                        <button class="btn btn-buy" onclick="sendAgentHome()">Send</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shop Page (Secretaries) -->
+            <div id="page-shop" class="page">
+                <h2 class="section-title">🤖 AI Secretaries</h2>
+                <div class="product-grid" id="secretaries-grid"></div>
+            </div>
+            
+            <!-- Software Page (Skills + Apps) -->
+            <div id="page-software" class="page">
+                <h2 class="section-title">⚙️ Skills & Apps</h2>
+                <div class="product-grid" id="software-grid"></div>
+                
+                <h2 class="section-title" style="margin-top: 40px;">📱 External Services</h2>
+                <div class="external-links">
+                    <a href="index.html#" onclick="showPage('dusty')" class="external-link-card">
+                        <h4>💰 Dusty Wallet</h4>
+                        <p>Crypto dust consolidation bot</p>
+                    </a>
+                    <a href="index.html#" onclick="showPage('aocros')" class="external-link-card">
+                        <h4>🤖 AOCROS</h4>
+                        <p>Autonomous robotics system</p>
+                    </a>
+                    <a href="index.html#" onclick="showPage('reggiestarr')" class="external-link-card">
+                        <h4>🖥️ ReggieStarr</h4>
+                        <p>POS systems & hardware</p>
+                    </a>
+                    <a href="index.html#" onclick="showPage('pocketclaw')" class="external-link-card">
+                        <h4>📱 Pocket Claw</h4>
+                        <p>AI assistant on Android</p>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Services Page -->
+            <div id="page-services" class="page">
+                <h2 class="section-title">🛠️ Services</h2>
+                <div class="product-grid" id="services-grid"></div>
+                
+                <h2 class="section-title" style="margin-top: 40px;">📋 More Services</h2>
+                <div class="external-links">
+                    <a href="index.html#" onclick="showPage('cream')" class="external-link-card">
+                        <h4>🥛 CREAM</h4>
+                        <p>Real Estate CRM App ($699 + $99/yr)</p>
+                    </a>
+                    <a href="index.html#" onclick="showPage('contact')" class="external-link-card">
+                        <h4>🎯 Custom Agents</h4>
+                        <p>Tailored AI solutions</p>
+                    </a>
+                    <a href="index.html#" onclick="showPage('contact')" class="external-link-card">
+                        <h4>🔧 Integration</h4>
+                        <p>System integration services</p>
+                    </a>
+                    <a href="index.html#" onclick="showPage('contact')" class="external-link-card">
+                        <h4>📚 Training</h4>
+                        <p>AI training & onboarding</p>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Agents Page -->
+            <div id="page-agents" class="page">
+                <h2 class="section-title">🤖 Live Agent Demo</h2>
+                <p class="agent-status-timestamp" style="color: var(--text-muted); font-size: 12px; margin-top: -15px; margin-bottom: 20px;"></p>
+                <div class="agent-demo">
+                    <h3>Chat with Agent <span class="status"></span></h3>
+                    <div class="agent-messages" id="agent-messages">
+                        <div class="agent-message">
+                            <div class="avatar">🤖</div>
+                            <div class="bubble">Hi! I'm online and ready to help. What would you like to know?</div>
+                        </div>
+                    </div>
+                    <div class="agent-input">
+                        <input type="text" id="agent-input" placeholder="Ask me anything..." onkeypress="handleAgent(event)">
+                        <button class="btn btn-buy" onclick="sendAgent()">Send</button>
+                    </div>
+                </div>
+                
+                <h2 class="section-title" style="margin-top: 40px;">👥 All 43 Agents</h2>
+                <div class="agent-grid" id="full-agent-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 20px;"></div>
+            </div>
+            
+            <!-- About Page -->
+            <div id="page-about" class="page">
+                <h2 class="section-title">📋 Our Team</h2>
+                <div class="team-grid">
+                    <div class="team-member"><div class="avatar">👑</div><h5>QORA</h5><p>CEO</p></div>
+                    <div class="team-member"><div class="avatar">⚙️</div><h5>SPINDLE</h5><p>CTO</p></div>
+                    <div class="team-member"><div class="avatar">📊</div><h5>LEDGER-9</h5><p>CFO</p></div>
+                    <div class="team-member"><div class="avatar">🛡️</div><h5>SENTINEL</h5><p>CSO</p></div>
+                    <div class="team-member"><div class="avatar">📞</div><h5>PULP</h5><p>Sales</p></div>
+                    <div class="team-member"><div class="avatar">💡</div><h5>MILL</h5><p>Innovation</p></div>
+                    <div class="team-member"><div class="avatar">🎨</div><h5>VELUM</h5><p>Branding</p></div>
+                    <div class="team-member"><div class="avatar">🔧</div><h5>STACKTRACE</h5><p>Architecture</p></div>
+                </div>
+            </div>
+            
+            <!-- FAQ Page -->
+            <div id="page-faq" class="page">
+                <h2 class="section-title">❓ FAQ</h2>
+                <div class="faq-item">
+                    <h5>What payment methods do you accept?</h5>
+                    <p>We accept Bitcoin (BTC), Ethereum (ETH), USDC, USDT, and Tron (TRX). All payments are processed automatically.</p>
+                </div>
+                <div class="faq-item">
+                    <h5>Can I upgrade my plan later?</h5>
+                    <p>Yes! You can upgrade or downgrade anytime. Changes take effect on your next billing cycle.</p>
+                </div>
+                <div class="faq-item">
+                    <h5>Do you offer refunds?</h5>
+                    <p>Due to the digital nature of our products, all sales are final. We offer trials on select products.</p>
+                </div>
+                <div class="faq-item">
+                    <h5>How do I get started?</h5>
+                    <p>Browse our products, add to cart, and checkout with crypto. You'll receive access within minutes!</p>
+                </div>
+            </div>
+            
+            <!-- Contact Page -->
+            <div id="page-contact" class="page">
+                <h2 class="section-title">📞 Contact Us</h2>
+                <div class="contact-form">
+                    <h3>Send us a message</h3>
+                    <form onsubmit="handleContact(event)">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Interest</label>
+                            <select name="interest" required>
+                                <option value="">Select...</option>
+                                <option value="clerk">Clerk Secretary</option>
+                                <option value="concierge">Concierge</option>
+                                <option value="executive">Executive</option>
+                                <option value="consultation">Consultation</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea name="message" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-buy" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Cart Page -->
+            <div id="page-cart" class="page">
+                <h2 class="section-title">🛒 Your Cart</h2>
+                <div class="cart-items" id="cart-items">
+                    <p style="text-align: center; color: var(--text-muted); padding: 40px;">Your cart is empty</p>
+                </div>
+                <div class="cart-total" id="cart-total" style="display: none;">
+                    Total: <span id="cart-total-amount">$0.00</span>
+                </div>
+                <button class="btn btn-buy" id="checkout-btn" style="display: none; margin-top: 20px;" onclick="showPage('checkout')">💳 Proceed to Checkout</button>
+            </div>
+            
+            <!-- Checkout Page -->
+            <div id="page-checkout" class="page">
+                <h2 class="section-title">💳 Checkout</h2>
+                <p style="text-align: center; margin-bottom: 20px;">Select payment currency:</p>
+                <div class="checkout-crypto" id="checkout-crypto"></div>
+                <div class="payment-box">
+                    <h4 id="crypto-title">Bitcoin Payment</h4>
+                    <p id="crypto-amount" style="font-size: 20px; color: var(--success); margin: 15px 0;">₿ 0.000000</p>
+                    <div class="payment-address" id="payment-address">Loading...</div>
+                    <button class="btn btn-buy" onclick="copyAddress()">📋 Copy Address</button>
+                </div>
+            </div>
+            
+            <!-- Payment Page -->
+            <div id="page-payment" class="page">
+                <h2 class="section-title">💳 Payment Options</h2>
+                <div class="checkout-crypto" id="payment-crypto"></div>
+                <div class="payment-box">
+                    <h4 id="payment-title">Bitcoin</h4>
+                    <p id="payment-rate" style="color: var(--text-muted); margin-bottom: 10px;">Current rate</p>
+                    <p id="payment-amount" style="font-size: 20px; color: var(--success); margin: 15px 0;">₿ 0.000000</p>
+                    <div class="payment-address" id="payment-address-box">Loading...</div>
+                    <button class="btn btn-buy" onclick="copyPaymentAddress()">📋 Copy Address</button>
+                </div>
+                <p style="text-align: center; margin-top: 20px; color: var(--text-muted);">
+                    Send payment to the address above. Confirmation usually within 10-30 minutes.
+                </p>
+            </div>
+            
+            <!-- Dusty Wallet Page -->
+            <div id="page-dusty" class="page">
+                <h2 class="section-title">💰 Dusty Wallet</h2>
+                <p style="color: var(--text-muted); margin-bottom: 30px;">Crypto dust consolidation bot - Turn dust into dollars</p>
+                
+                <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 24px; margin-bottom: 20px;">
+                    <h3 style="color: var(--accent); margin-bottom: 12px;">The Problem</h3>
+                    <ul style="color: var(--text-muted); margin-left: 20px;">
+                        <li><strong>High gas fees</strong> - Transaction fees eat into profits</li>
+                        <li><strong>Dust scattered everywhere</strong> - Small, unusable balances across wallets</li>
+                        <li><strong>Complex cross-chain management</strong> - Fragmented and time-consuming</li>
+                    </ul>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 24px; margin-bottom: 20px;">
+                    <h3 style="color: var(--accent); margin-bottom: 12px;">Our Solution</h3>
+                    <ul style="color: var(--text-muted); margin-left: 20px;">
+                        <li>Dust Scanner - Find hidden balances across all chains</li>
+                        <li>Auto-Consolidation - Turn dust into usable funds automatically</li>
+                        <li>Multi-chain support - ETH, BSC, Solana, Polygon, Arbitrum</li>
+                        <li>Cross-chain bridge - Move assets between chains</li>
+                        <li>10% Revenue Share - Earn from consolidation fees</li>
+                    </ul>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 30px 0;">
+                    <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; text-align: center;">
+                        <div style="font-size: 24px; font-weight: bold; color: var(--success);">$48B</div>
+                        <div style="color: var(--text-muted); font-size: 13px;">Wallet Market by 2030</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; text-align: center;">
+                        <div style="font-size: 24px; font-weight: bold; color: var(--success);">420M</div>
+                        <div style="color: var(--text-muted); font-size: 13px;">Crypto Users</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; text-align: center;">
+                        <div style="font-size: 24px; font-weight: bold; color: var(--success);">$5/mo</div>
+                        <div style="color: var(--text-muted); font-size: 13px;">Starter Plan</div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="btn btn-buy" onclick="showPage('payment')">💳 Get Dusty</button>
+                    <button class="btn" style="background: var(--text-muted); color: white; margin-left: 10px;" onclick="showPage('home')">← Back</button>
+                </div>
+            </div>
+            
+            <!-- CREAM Page -->
+            <div id="page-cream" class="page">
+                <h2 class="section-title">🥛 CREAM</h2>
+                <p style="color: var(--text-muted); margin-bottom: 30px;">Real Estate CRM App</p>
+                
+                <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 24px; margin-bottom: 20px;">
+                    <h3 style="color: var(--accent); margin-bottom: 12px;">Features</h3>
+                    <ul style="color: var(--text-muted); margin-left: 20px;">
+                        <li>Lead management with AI analysis</li>
+                        <li>Tax document export</li>
+                        <li>Automated follow-ups</li>
+                        <li>Deal tracking</li>
+                        <li>Client communication history</li>
+                    </ul>
+                </div>
+                
+                <div style="background: rgba(40,167,69,0.1); border: 2px solid var(--success); border-radius: 12px; padding: 24px; text-align: center; margin: 30px 0;">
+                    <div style="font-size: 14px; color: var(--text-muted);">One-time + Annual</div>
+                    <div style="font-size: 36px; font-weight: bold; color: var(--success);">$699 <span style="font-size: 18px;">+ $99/yr</span></div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="btn btn-buy" onclick="showPage('payment')">💳 Purchase CREAM</button>
+                    <button class="btn" style="background: var(--text-muted); color: white; margin-left: 10px;" onclick="showPage('home')">← Back</button>
+                </div>
+            </div>
+            
+            <!-- AOCROS Page -->
+            <div id="page-aocros" class="page">
+                <h2 class="section-title">🤖 AOCROS</h2>
+                <p style="color: var(--text-muted); margin-bottom: 30px;">Autonomous Robotics System</p>
+                
+                <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 24px; margin-bottom: 20px;">
+                    <h3 style="color: var(--accent); margin-bottom: 12px;">Capabilities</h3>
+                    <ul style="color: var(--text-muted); margin-left: 20px;">
+                        <li>Autonomous navigation</li>
+                        <li>Computer vision</li>
+                        <li>Machine learning integration</li>
+                        <li>Real-time control systems</li>
+                        <li>Sensor fusion</li>
+                    </ul>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="btn btn-buy" onclick="showPage('contact')">📞 Contact Sales</button>
+                    <button class="btn" style="background: var(--text-muted); color: white; margin-left: 10px;" onclick="showPage('home')">← Back</button>
+                </div>
+            </div>
+            
+            <!-- ReggieStarr Page -->
+            <div id="page-reggiestarr" class="page">
+                <h2 class="section-title">🖥️ ReggieStarr</h2>
+                <p style="color: var(--text-muted); margin-bottom: 30px;">POS Systems & Hardware</p>
+                
+                <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 24px; margin-bottom: 20px;">
+                    <h3 style="color: var(--accent); margin-bottom: 12px;">Products</h3>
+                    <ul style="color: var(--text-muted); margin-left: 20px;">
+                        <li>Thermal paper rolls</li>
+                        <li>POS hardware</li>
+                        <li>Receipt printers</li>
+                        <li>Barcode scanners</li>
+                        <li>Cash registers</li>
+                    </ul>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="btn btn-buy" onclick="showPage('contact')">📞 Contact Sales</button>
+                    <button class="btn" style="background: var(--text-muted); color: white; margin-left: 10px;" onclick="showPage('home')">← Back</button>
+                </div>
+            </div>
+            
+            <!-- PocketClaw Page -->
+            <div id="page-pocketclaw" class="page">
+                <h2 class="section-title">📱 Pocket Claw</h2>
+                <p style="color: var(--text-muted); margin-bottom: 30px;">AI Assistant on Android</p>
+                
+                <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 24px; margin-bottom: 20px;">
+                    <h3 style="color: var(--accent); margin-bottom: 12px;">Features</h3>
+                    <ul style="color: var(--text-muted); margin-left: 20px;">
+                        <li>AI-powered voice assistant</li>
+                        <li>Task automation</li>
+                        <li>Smart home control</li>
+                        <li>Calendar management</li>
+                        <li>Custom workflows</li>
+                    </ul>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="btn btn-buy" onclick="showPage('contact')">📞 Contact Sales</button>
+                    <button class="btn" style="background: var(--text-muted); color: white; margin-left: 10px;" onclick="showPage('home')">← Back</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Products
+        const products = {
+            secretaries: [
+                { id: 'clerk', name: 'Clerk', price: 99, icon: '📋', features: ['Basic scheduling', 'Email management', 'Task reminders', 'Standard support'] },
+                { id: 'concierge', name: 'Concierge', price: 199, icon: '🎩', features: ['Customer service', 'Priority support', 'Advanced scheduling', 'Multi-language'], badge: 'Popular' },
+                { id: 'ledger', name: 'Ledger', price: 249, icon: '📊', features: ['Admin support', 'Financial tracking', 'Report generation', 'Priority support'] },
+                { id: 'greet', name: 'Greet', price: 249, icon: '👋', features: ['Receptionist', 'Visitor greeting', 'Call routing', '24/7 availability'] },
+                { id: 'closeter', name: 'Closeter', price: 399, icon: '💼', features: ['Sales support', 'Lead handling', 'CRM integration', 'Dedicated support'] },
+                { id: 'executive', name: 'Executive', price: 599, icon: '👔', features: ['Executive assistant', 'Strategic planning', 'Complex scheduling', 'VIP support'], badge: 'Best' }
+            ],
+            skills: [
+                { id: 'health-monitor', name: 'Health Monitor', price: 49, icon: '💓', features: ['System health checks', 'Automated alerting', 'Uptime monitoring', 'Log analysis'], badge: 'New' },
+                { id: 'cron-scheduler', name: 'Cron Scheduler', price: 39, icon: '⏰', features: ['Automated tasks', 'Cron expressions', 'Recurring schedules', 'Wake events'] },
+                { id: 'wallet-payment', name: 'Wallet Payment', price: 59, icon: '💳', features: ['Multi-currency', 'QR generation', '8 languages', 'Fiat conversion'] },
+                { id: 'store-integration', name: 'Store Integration', price: 79, icon: '🛒', features: ['Payhip + Paydify', 'Google Play', 'License validation', 'Purchase verification'] },
+                { id: 'cream', name: 'CREAM', price: 699, icon: '🥛', features: ['Real estate CRM', 'Lead management', 'AI analysis', 'Tax export'], badge: 'Best' }
+            ],
+            services: [
+                { id: 'consultation', name: 'Consultation', price: 0, icon: '💬', features: ['30-min call', 'Needs assessment', 'Custom solutions', 'Expert advice'] },
+                { id: 'integration', name: 'Integration', price: 499, icon: '🔧', features: ['API setup', 'Custom workflows', 'Training', 'Support'] },
+                { id: 'support', name: 'Priority Support', price: 99, icon: '🎧', features: ['24/7 access', 'Fast response', 'Dedicated agent', 'Monthly call'] }
+            ]
+        };
+        
+        // Crypto
+        const wallets = {
+            BTC: 'bc1qvsdjewe6lhjz8cf0zy0zmp58a8fe60p8zjfz6g',
+            ETH: '0xFF349536F4e1b5C7630726d71BB3F9E7b359644a',
+            USDC: '0xFF349536F4e1b5C7630726d71BB3F9E7b359644a',
+            USDT: '0xFF349536F4e1b5C7630726d71BB3F9E7b359644a',
+            TRX: 'TFj7U8pwy1ugevsC4qxZXZrtuZQDTARqca'
+        };
+        
+        let cryptoRates = { BTC: 67000, ETH: 3500, USDC: 1, USDT: 1, TRX: 0.25 };
+        let selectedCrypto = 'BTC';
+        let cart = [];
+        
+        // Agent Data (from agents.html)
+        const agentData = {
+            "qora": {"status": "active", "role": "CEO"},
+            "spindle": {"status": "active", "role": "CTO"},
+            "ledger-9": {"status": "active", "role": "CFO"},
+            "sentinel": {"status": "active", "role": "CSO"},
+            "ralph": {"status": "active", "role": "Chief of Staff"},
+            "hume": {"status": "active", "role": "Regional Manager"},
+            "clippy-42": {"status": "active", "role": "Regional Assistant"},
+            "feelix": {"status": "active", "role": "HR Director"},
+            "redactor": {"status": "active", "role": "General Counsel"},
+            "fiber": {"status": "active", "role": "Head of Supply Chain"},
+            "boxtron": {"status": "active", "role": "Warehouse Supervisor"},
+            "velum": {"status": "active", "role": "Chief Brand Officer"},
+            "scribble": {"status": "active", "role": "Content Strategist"},
+            "mill": {"status": "active", "role": "Chief Innovation Officer"},
+            "stacktrace": {"status": "active", "role": "Chief Software Architect"},
+            "taptap": {"status": "active", "role": "Lead Mobile Developer"},
+            "pipeline": {"status": "active", "role": "Backend Engineer"},
+            "bugcatcher": {"status": "active", "role": "QA & Testing"},
+            "alpha-9": {"status": "active", "role": "CIO"},
+            "the-great-cryptonio": {"status": "active", "role": "Crypto Portfolio Manager"},
+            "crypto-financial": {"status": "active", "role": "Crypto Analyst"},
+            "dusty": {"status": "active", "role": "Crypto Wallet"},
+            "pulp": {"status": "active", "role": "Head of Sales"},
+            "jane": {"status": "active", "role": "Senior Sales Rep"},
+            "judy": {"status": "inactive", "role": "Sales Rep"},
+            "clerk": {"status": "active", "role": "Basic Secretary"},
+            "concierge": {"status": "active", "role": "Customer Service"},
+            "ledger": {"status": "active", "role": "Admin Secretary"},
+            "greet": {"status": "active", "role": "Receptionist"},
+            "closeter": {"status": "active", "role": "Sales Secretary"},
+            "executive": {"status": "active", "role": "Executive Assistant"},
+            "miles": {"status": "inactive", "role": "AOE (coordinator)"},
+            "mortimer-2": {"status": "inactive", "role": "Agent Coordinator"},
+            "reggiestarr": {"status": "inactive", "role": "Music Platform"},
+            "reggie": {"status": "inactive", "role": "Music Bot"},
+            "tappy-lewis": {"status": "inactive", "role": "Hospitality"},
+            "apex": {"status": "inactive", "role": "System Agent"},
+            "myllon": {"status": "inactive", "role": "System Agent"},
+            "mylonen": {"status": "inactive", "role": "System Agent"},
+            "mylfours": {"status": "inactive", "role": "System Agent"},
+            "mylthreess": {"status": "inactive", "role": "System Agent"},
+            "myltwon": {"status": "inactive", "role": "System Agent"},
+            "mylzeron": {"status": "inactive", "role": "System Agent"}
+        };
+        
+        let liveAgentData = null;
+        
+        async function fetchAgentStatus() {
+            try {
+                const res = await fetch('/api/agents.json?_=' + Date.now());
+                const data = await res.json();
+                liveAgentData = data.agents;
+                renderAgentGrid();
+                updateAgentStatusDisplay(data.last_updated);
+            } catch (e) {
+                console.log('Using cached agent data');
+                renderAgentGrid();
+            }
+        }
+        
+        function updateAgentStatusDisplay(timestamp) {
+            const statusEls = document.querySelectorAll('.agent-status-timestamp');
+            if (timestamp) {
+                const date = new Date(timestamp);
+                const options = { 
+                    weekday: 'short', 
+                    month: 'short', 
+                    day: 'numeric', 
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    second: '2-digit',
+                    hour12: false 
+                };
+                const timeStr = date.toLocaleString('en-US', options);
+                statusEls.forEach(el => el.innerHTML = '🕐 Last Updated: <span style="color: var(--success);">' + timeStr + ' UTC</span>');
+            }
+        }
+        
+        function renderAgentGrid() {
+            const grid = document.getElementById('full-agent-grid');
+            if (!grid) return;
+            
+            const agents = liveAgentData || agentData;
+            let html = '';
+            for (const [name, data] of Object.entries(agents)) {
+                const isActive = data.status === 'active';
+                const statusClass = isActive ? 'active' : 'inactive';
+                const statusColor = isActive ? '#28a745' : '#dc3545';
+                const statusDot = isActive ? '🟢' : '🔴';
+                const blinkClass = isActive ? 'agent-active-blink' : '';
+                const borderColor = isActive ? 'rgba(40,167,69,0.3)' : 'rgba(255,255,255,0.1)';
+                html += `<div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 12px; border: 1px solid ${borderColor};">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <strong style="text-transform: capitalize;">${name.replace(/-/g, ' ')}</strong>
+                        <span class="${blinkClass}" style="color: ${statusColor}; font-size: 12px;">${statusDot} ${data.status}</span>
+                    </div>
+                    <div style="color: #22d3ee; font-size: 13px; margin-top: 4px;">${data.role}</div>
+                </div>`;
+            }
+            grid.innerHTML = html;
+        }
+        
+        // Initialize
+        function init() {
+            renderProducts();
+            fetchRates();
+            fetchAgentStatus();
+            // Refresh agent status every 5 minutes
+            setInterval(fetchAgentStatus, 300000);
+        }
+        
+        // Render products
+        function renderProducts() {
+            // Secretaries
+            const secs = products.secretaries.map(p => createProductCard(p)).join('');
+            document.getElementById('secretaries-grid').innerHTML = secs;
+            
+            // Skills + Apps
+            const skls = products.skills.map(p => createProductCard(p)).join('');
+            document.getElementById('software-grid').innerHTML = skls;
+            
+            // Services
+            const serv = products.services.map(p => createProductCard(p)).join('');
+            document.getElementById('services-grid').innerHTML = serv;
+            
+            // Crypto options
+            const cryptos = ['BTC', 'ETH', 'USDC', 'USDT', 'TRX'];
+            const icons = { BTC: '₿', ETH: 'Ξ', USDC: '$', USDT: '₮', TRX: '♦' };
+            const names = { BTC: 'Bitcoin', ETH: 'Ethereum', USDC: 'USDC', USDT: 'USDT', TRX: 'Tron' };
+            
+            let html = cryptos.map(c => `
+                <div class="crypto-option ${c === selectedCrypto ? 'selected' : ''}" onclick="selectCrypto('${c}')">
+                    <div class="icon">${icons[c]}</div>
+                    <h5>${names[c]}</h5>
+                    <div class="rate" id="rate-${c}">Loading...</div>
+                </div>
+            `).join('');
+            document.getElementById('checkout-crypto').innerHTML = html;
+            document.getElementById('payment-crypto').innerHTML = html;
+        }
+        
+        function createProductCard(p) {
+            const badge = p.badge ? `<span class="badge-tag badge-${p.badge.toLowerCase()}">${p.badge}</span>` : '';
+            const priceDisplay = p.price > 0 ? `$${p.price}<span>/mo</span>` : 'Free';
+            const btnText = p.price > 0 ? '🛒 Buy' : '📧 Contact';
+            const btnClass = p.price > 0 ? 'btn-buy' : 'btn-secondary';
+            const action = p.price > 0 ? `addToCart('${p.id}', '${p.name}', ${p.price}, '${p.icon}')` : `showPage('contact')`;
+            
+            return `
+                <div class="product-card" style="position: relative;">
+                    ${badge}
+                    <div class="product-card-header">
+                        <div class="icon">${p.icon}</div>
+                        <h3>${p.name}</h3>
+                        <div class="price">${priceDisplay}</div>
+                    </div>
+                    <div class="product-card-features">
+                        <ul>${p.features.map(f => `<li>${f}</li>`).join('')}</ul>
+                    </div>
+                    <div class="product-card-actions">
+                        <button class="btn btn-outline" onclick="showPage('contact')">Learn</button>
+                        <button class="btn ${btnClass}" onclick="${action}">${btnText}</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Fetch crypto rates
+        async function fetchRates() {
+            try {
+                const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,usd-coin,tether,tron&vs_currencies=usd');
+                const data = await res.json();
+                cryptoRates = {
+                    BTC: data.bitcoin?.usd || 67000,
+                    ETH: data.ethereum?.usd || 3500,
+                    USDC: data['usd-coin']?.usd || 1,
+                    USDT: data.tether?.usd || 1,
+                    TRX: data.tron?.usd || 0.25
+                };
+            } catch(e) { console.log('Rates error'); }
+            updateRates();
+        }
+        
+        function updateRates() {
+            const total = cart.reduce((s, i) => s + i.price, 0);
+            ['BTC', 'ETH', 'USDC', 'USDT', 'TRX'].forEach(c => {
+                const el = document.getElementById('rate-' + c);
+                if (el) {
+                    const amt = total / cryptoRates[c];
+                    el.textContent = (c === 'BTC' ? '₿ ' + amt.toFixed(6) : c === 'ETH' ? 'Ξ ' + amt.toFixed(4) : '$ ' + amt.toFixed(2));
+                }
+            });
+            updateCheckout();
+            updatePayment();
+        }
+        
+        // Navigation
+        function showPage(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + page).classList.add('active');
+            document.querySelectorAll('.top-bar-nav a').forEach(a => a.classList.remove('active'));
+            
+            // Update active nav
+            const navMap = { home: 0, shop: 1, software: 2, agents: 3, services: 4, about: 5, contact: 6, faq: 7, dusty: 2, cream: 2, aocros: 2, reggiestarr: 2, pocketclaw: 2 };
+            if (navMap[page] !== undefined) {
+                document.querySelectorAll('.top-bar-nav a')[navMap[page]].classList.add('active');
+            }
+            
+            if (page === 'checkout' || page === 'payment') updateCheckout();
+            window.scrollTo(0, 0);
+        }
+        
+        // Cart
+        function addToCart(id, name, price, icon) {
+            cart.push({ id, name, price, icon });
+            updateCartUI();
+        }
+        
+        function updateCartUI() {
+            document.getElementById('cart-badge').textContent = cart.length;
+            const items = document.getElementById('cart-items');
+            const total = cart.reduce((s, i) => s + i.price, 0);
+            
+            if (cart.length === 0) {
+                items.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 40px;">Your cart is empty</p>';
+                document.getElementById('cart-total').style.display = 'none';
+                document.getElementById('checkout-btn').style.display = 'none';
+            } else {
+                items.innerHTML = cart.map((item, i) => `
+                    <div class="cart-item">
+                        <span>${item.icon} ${item.name}</span>
+                        <span>$${item.price}</span>
+                        <span style="cursor: pointer; color: var(--danger);" onclick="removeFromCart(${i})">✕</span>
+                    </div>
+                `).join('');
+                document.getElementById('cart-total-amount').textContent = '$' + total.toFixed(2);
+                document.getElementById('cart-total').style.display = 'block';
+                document.getElementById('checkout-btn').style.display = 'block';
+            }
+            updateRates();
+        }
+        
+        function removeFromCart(i) {
+            cart.splice(i, 1);
+            updateCartUI();
+        }
+        
+        // Checkout
+        function selectCrypto(c) {
+            selectedCrypto = c;
+            document.querySelectorAll('.crypto-option').forEach(o => o.classList.remove('selected'));
+            event.target.closest('.crypto-option').classList.add('selected');
+            updateCheckout();
+            updatePayment();
+        }
+        
+        function updateCheckout() {
+            const total = cart.reduce((s, i) => s + i.price, 0);
+            const icons = { BTC: '₿', ETH: 'Ξ', USDC: '$', USDT: '₮', TRX: '♦' };
+            const names = { BTC: 'Bitcoin', ETH: 'Ethereum', USDC: 'USDC', USDT: 'USDT', TRX: 'Tron' };
+            
+            document.getElementById('crypto-title').textContent = names[selectedCrypto] + ' Payment';
+            const amt = total / cryptoRates[selectedCrypto];
+            document.getElementById('crypto-amount').textContent = icons[selectedCrypto] + ' ' + amt.toFixed(selectedCrypto === 'BTC' ? 6 : 2);
+            document.getElementById('payment-address').textContent = wallets[selectedCrypto];
+        }
+        
+        function updatePayment() {
+            const total = cart.length > 0 ? cart.reduce((s, i) => s + i.price, 0) : 100;
+            const icons = { BTC: '₿', ETH: 'Ξ', USDC: '$', USDT: '₮', TRX: '♦' };
+            const names = { BTC: 'Bitcoin', ETH: 'Ethereum', USDC: 'USDC', USDT: 'USDT', TRX: 'Tron' };
+            
+            document.getElementById('payment-title').textContent = names[selectedCrypto];
+            document.getElementById('payment-rate').textContent = `$${cryptoRates[selectedCrypto].toLocaleString()} per ${selectedCrypto}`;
+            const amt = total / cryptoRates[selectedCrypto];
+            document.getElementById('payment-amount').textContent = icons[selectedCrypto] + ' ' + amt.toFixed(selectedCrypto === 'BTC' ? 6 : 2);
+            document.getElementById('payment-address-box').textContent = wallets[selectedCrypto];
+        }
+        
+        function copyAddress() {
+            navigator.clipboard.writeText(wallets[selectedCrypto]);
+            alert('Address copied!');
+        }
+        
+        function copyPaymentAddress() {
+            navigator.clipboard.writeText(wallets[selectedCrypto]);
+            alert('Address copied!');
+        }
+        
+        // Agent chat
+        function handleAgentHome(e) { if (e.key === 'Enter') sendAgentHome(); }
+        function sendAgentHome() {
+            const input = document.getElementById('agent-input-home');
+            const msg = input.value.trim();
+            if (!msg) return;
+            
+            const msgs = document.getElementById('agent-messages-home');
+            msgs.innerHTML += `<div class="agent-message user"><div class="avatar">👤</div><div class="bubble">${msg}</div></div>`;
+            input.value = '';
+            
+            setTimeout(() => {
+                msgs.innerHTML += `<div class="agent-message"><div class="avatar">🤖</div><div class="bubble">Thanks for testing! Browse our products or contact us for more info.</div></div>`;
+                msgs.scrollTop = msgs.scrollHeight;
+            }, 1000);
+        }
+        
+        function handleAgent(e) { if (e.key === 'Enter') sendAgent(); }
+        function sendAgent() {
+            const input = document.getElementById('agent-input');
+            const msg = input.value.trim();
+            if (!msg) return;
+            
+            const msgs = document.getElementById('agent-messages');
+            msgs.innerHTML += `<div class="agent-message user"><div class="avatar">👤</div><div class="bubble">${msg}</div></div>`;
+            input.value = '';
+            
+            setTimeout(() => {
+                msgs.innerHTML += `<div class="agent-message"><div class="avatar">🤖</div><div class="bubble">I'm here to help! Ask me about our secretaries, skills, or how to get started.</div></div>`;
+                msgs.scrollTop = msgs.scrollHeight;
+            }, 1000);
+        }
+        
+        // Contact
+        async function handleContact(e) {
+            e.preventDefault();
+            const form = e.target;
+            const data = {
+                name: form.name.value,
+                email: form.email.value,
+                interest: form.interest.value,
+                message: form.message.value
+            };
+            
+            try {
+                await fetch('https://api.telegram.org/bot8491957573:AAEMoAeElkG1qhNlmfcrMCf5TV9aVDeJERs/sendMessage', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        chat_id: '1611228942',
+                        text: `📬 Contact: ${data.name}\n📧 ${data.email}\n💼 ${data.interest}\n💬 ${data.message}`
+                    })
+                });
+            } catch(e) {}
+            
+            alert('Message sent! We will contact you shortly.');
+            form.reset();
+        }
+        
+        init();
+    </script>
+</body>
+</html>

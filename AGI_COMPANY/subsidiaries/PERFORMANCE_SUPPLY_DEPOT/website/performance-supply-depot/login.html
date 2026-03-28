@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGI Company - Login</title>
+    <style>
+        :root {
+            --bg-dark: #0a0a1a;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --header-bg: rgba(26, 54, 93, 0.95);
+            --text: #e5e5e5;
+            --text-muted: #a0a0a0;
+            --accent: #ed8936;
+            --accent-hover: #dd6b20;
+            --border: rgba(237, 137, 54, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--accent); }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .header-nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .header-nav a:hover, .header-nav a.active { color: var(--accent); }
+
+        /* Layout */
+        .layout {
+            display: flex;
+            min-height: 100vh;
+            padding-top: 70px;
+            padding-bottom: 60px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: rgba(26, 54, 93, 0.9);
+            border-right: 1px solid var(--border);
+            padding: 30px 20px;
+            position: fixed;
+            left: 0;
+            top: 70px;
+            bottom: 60px;
+            overflow-y: auto;
+        }
+
+        .sidebar-section { margin-bottom: 35px; }
+
+        .sidebar-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+        }
+
+        .sidebar-menu { list-style: none; }
+        .sidebar-menu li { margin-bottom: 8px; }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: rgba(237, 137, 54, 0.15);
+            color: var(--accent);
+        }
+
+        .sidebar-menu .icon {
+            margin-right: 12px;
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 40px;
+            background: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Login Container */
+        .login-container {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 50px;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .login-header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .login-header p {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .login-footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .divider span {
+            padding: 0 15px;
+        }
+
+        .social-login {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .social-btn {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .social-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 1000;
+        }
+
+        .footer-left { color: var(--text-muted); font-size: 14px; }
+
+        .footer-right {
+            display: flex;
+            gap: 25px;
+        }
+
+        .footer-right a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-right a:hover { color: var(--accent); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; padding: 20px; }
+            .login-container { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="logo">AGI<span>Company</span></a>
+        <nav class="header-nav">
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="cart.html">Cart</a>
+            <a href="login.html" class="active">Login</a>
+        </nav>
+    </header>
+
+    <!-- Layout -->
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Main Menu</div>
+                <ul class="sidebar-menu">
+                    <li><a href="index.html"><span class="icon">🏠</span> Home</a></li>
+                    <li><a href="products.html"><span class="icon">🛍️</span> Products</a></li>
+                    <li><a href="cart.html"><span class="icon">🛒</span> Cart</a></li>
+                    <li><a href="orders.html"><span class="icon">📦</span> Orders</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Account</div>
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html"><span class="icon">📊</span> Dashboard</a></li>
+                    <li><a href="profile.html"><span class="icon">👤</span> Profile</a></li>
+                    <li><a href="settings.html"><span class="icon">⚙️</span> Settings</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Support</div>
+                <ul class="sidebar-menu">
+                    <li><a href="help.html"><span class="icon">❓</span> Help Center</a></li>
+                    <li><a href="contact.html"><span class="icon">✉️</span> Contact</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="login-container">
+                <div class="login-header">
+                    <h1>Welcome Back</h1>
+                    <p>Sign in to access your AGI agents</p>
+                </div>
+
+                <form id="login-form">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-input" placeholder="you@company.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-input" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="btn">Sign In</button>
+                </form>
+
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+
+                <div class="social-login">
+                    <button class="social-btn">🔐 Phone Login</button>
+                    <button class="social-btn">🔗 Wallet Connect</button>
+                </div>
+
+                <div class="login-footer">
+                    <p>Don't have an account? <a href="register.html">Create one</a></p>
+                    <p style="margin-top: 15px;"><a href="forgot-password.html">Forgot password?</a></p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-left">
+            © 2026 AGI Company. All rights reserved.
+        </div>
+        <div class="footer-right">
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+            <a href="support.html">Support</a>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>

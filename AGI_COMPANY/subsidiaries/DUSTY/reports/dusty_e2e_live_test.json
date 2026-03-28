@@ -1,0 +1,95 @@
+{
+  "test_type": "Dusty MVP End-to-End",
+  "timestamp": "2026-02-28T23:24:00Z",
+  "cron_job_id": "fdc63bd5-b2c2-481c-9a5f-d3e001eff52f",
+  "status": "PASSED",
+  "test_results": [
+    {
+      "name": "Bridge Health",
+      "endpoint": "http://localhost:3001/health",
+      "status": "PASSED",
+      "http_code": 200,
+      "duration_ms": 3,
+      "details": {
+        "service": "telegram-bridge-mock-v2",
+        "version": "2.0.0",
+        "uptime_sec": 109779,
+        "circuit_breaker": "CLOSED",
+        "core_agent": "connected"
+      }
+    },
+    {
+      "name": "Core-Agent Health",
+      "endpoint": "http://localhost:3000/health",
+      "status": "PASSED",
+      "http_code": 200,
+      "duration_ms": 1,
+      "details": {
+        "service": "dusty-core-agent",
+        "uptime_sec": 108765
+      }
+    },
+    {
+      "name": "OpenClaw Mock Health",
+      "endpoint": "http://localhost:4000/health",
+      "status": "PASSED",
+      "http_code": 200,
+      "duration_ms": 1,
+      "details": {
+        "service": "openclaw-mock",
+        "uptime_sec": 108767,
+        "total_interactions": 1092
+      }
+    },
+    {
+      "name": "Core-Agent Task Creation",
+      "endpoint": "http://localhost:3000/tasks",
+      "status": "PASSED",
+      "http_code": 201,
+      "duration_ms": 1,
+      "details": {
+        "task_id": "c89b9e25-8baf-4914-8d4f-dffe6fd35f37",
+        "status": "pending"
+      }
+    },
+    {
+      "name": "Direct OpenClaw Message",
+      "endpoint": "http://localhost:4000/receive_message",
+      "status": "PASSED",
+      "http_code": 200,
+      "duration_ms": 4,
+      "message_sent": "What is my dust balance?",
+      "response": {
+        "bot": "dusty",
+        "action": "balance_report",
+        "data": {
+          "eth": 0.5234,
+          "usdc": 150,
+          "dust_tokens": 2847.32,
+          "dust_value_usd": 15.65
+        }
+      }
+    },
+    {
+      "name": "Bridge Metrics",
+      "endpoint": "http://localhost:3001/metrics",
+      "status": "PASSED",
+      "http_code": 200,
+      "duration_ms": 1,
+      "details": {
+        "total_requests": 425,
+        "success": 420,
+        "errors": 5,
+        "forwarded_total": 422,
+        "circuit_breaker_state": "closed"
+      }
+    }
+  ],
+  "performance": {
+    "total_tests": 6,
+    "passed": 6,
+    "failed": 0,
+    "avg_response_ms": 1.8,
+    "total_duration_ms": 11
+  }
+}
