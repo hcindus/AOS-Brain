@@ -71,7 +71,7 @@ Analyze:
                 system="You are an expert debugger. Analyze thoroughly."
             )
             
-            self.ration.record_call("Bugcatcher", result['usage']['output_tokens'])
+            self.ration.record_call("Bugcatcher", result.get('usage', {}).get('output_tokens', 100))
             
             # Update Hermes
             self.hermes.write_hermes_state("bug_history", {
@@ -95,7 +95,8 @@ Analyze:
         result = self.debug_error(error, stack)
         
         print(f"\nAnalysis received")
-        print(f"Tokens: {result['usage']['output_tokens']}")
+        tokens = result.get('usage', {}).get('output_tokens', 100)
+        print(f"Tokens: {tokens}")
         
         print("\n" + "=" * 70)
         print("✅ BUGCATCHER v2.0 ACTIVATION COMPLETE")
