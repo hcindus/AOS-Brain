@@ -42,6 +42,7 @@ Implemented: 2026-03-17
 | SFX Generation | 05:00 daily | ✅ Yes - queues if busy |
 | Housekeeping | 06:00 Sunday | ✅ Yes - queues if busy |
 | Git Push | 00:00, 08:00, 16:00 | ✅ Yes - queues if busy |
+| CryptoBot Trading | Every 30 min | ✅ Yes - reports profits |
 | Health Check A | :00, :30 | ✅ Yes - skips if load >8 |
 | Health Check B | :15, :45 | ✅ Yes - skips if load >8 |
 | Keepalive | Every 5 min | ✅ Yes - lightweight |
