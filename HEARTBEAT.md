@@ -74,7 +74,7 @@ tail -f ~/.aos/logs/brain.log
 cat ~/.aos/brain/state/brain_state.json
 ```
 
-## Current Status - UPDATED 2026-03-27 23:20 UTC
+## Current Status - UPDATED 2026-03-29 02:23 UTC
 - **Heart-Brain Integration: 🟢 OPERATIONAL**
   - Heart: Ternary (REST/BALANCE/ACTIVE) - 386 lines
   - Brain: 7-region (OODA) - 646 lines
@@ -102,10 +102,13 @@ cat ~/.aos/brain/state/brain_state.json
 - **Ollama: 🟢 STABLE** (PID 741, ~0.1% CPU, standby mode)
 - **Tmux Session: 🔴 DOWN** (replaced by Python daemon)
 - **Load Average: 🟢 NORMAL** (0.0, optimal)
-- **GitHub: 🟢 SYNCED** (29 commits to hcindus/AOS-Brain, v1.0.0-tagged)
+- **GitHub: 🟢 SYNCED** (49 commits to hcindus/AOS-Brain, v2.0.0-tagged)
 - **Active Personality: Miles** (vibrant sales consultant)
 - **Cost: $0/month**
-- **Last Updated: 2026-03-27 23:04 UTC**
+- **Minecraft Server: 🟢 PERSISTENT** (systemd service, auto-restart)
+- **Roblox Bridge: 🟢 PERSISTENT** (systemd service, auto-restart)
+- **Tappy's Nightclub: 🟢 LIVE** (66 agents dancing, Three.js)
+- **Last Updated: 2026-03-29 02:23 UTC**
 
 ## Python Brain Components (NEW)
 - `brain_daemon.py` - HTTP server + Unix socket on port 5000
