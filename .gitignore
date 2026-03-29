@@ -1,25 +1,6 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-
-# Node
-node_modules/
-npm-debug.log*
-package-lock.json
-
-# OpenClaw
-.openclaw/
-
-# Backups
-*_backup.py
-*_FIXED.py
-
-# Test artifacts
-test-bench/environments/*/brain/agents/__pycache__/
-
-# Large directories (managed separately)
-EOF
-Myl0n.R0s/
+# Vault - Never commit credentials
+.aos/vault/
+*.pem
+*.key
+.env
+secrets.json
