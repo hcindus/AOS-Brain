@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COBRA Robot - Assembly Guide</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 3px solid #00d4aa;
+        }
+        .header h1 { color: #00d4aa; font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { color: #888; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .progress-bar {
+            background: #1a1a2e;
+            height: 8px;
+            border-radius: 4px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #00d4aa, #00a884);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        .step-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .step-info {
+            background: #151520;
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid #2a2a3e;
+        }
+        .step-number {
+            display: inline-block;
+            background: #00d4aa;
+            color: #0a0a0f;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .step-title { font-size: 1.5rem; color: #fff; margin-bottom: 1rem; }
+        .step-description { color: #aaa; margin-bottom: 1.5rem; }
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .meta-item {
+            background: #0f0f1a;
+            padding: 0.75rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .meta-label { font-size: 0.75rem; color: #666; text-transform: uppercase; }
+        .meta-value { font-size: 1.1rem; color: #00d4aa; font-weight: bold; }
+        .parts-list, .tools-list, .warnings-list {
+            margin-top: 1rem;
+        }
+        .list-title {
+            font-size: 0.875rem;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .part-tag, .tool-tag {
+            display: inline-block;
+            background: #1e3a5f;
+            color: #64b5f6;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin: 0.25rem;
+        }
+        .warning-item {
+            background: #3a1f1f;
+            border-left: 3px solid #ff6b6b;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .viewer-3d {
+            background: #0d0d15;
+            border-radius: 12px;
+            border: 1px solid #2a2a3e;
+            min-height: 500px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .viewer-placeholder {
+            text-align: center;
+            color: #444;
+        }
+        .viewer-placeholder .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .btn {
+            background: #1a1a2e;
+            border: 2px solid #00d4aa;
+            color: #00d4aa;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: #00d4aa;
+            color: #0a0a0f;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .difficulty-easy { color: #4ade80; }
+        .difficulty-medium { color: #fbbf24; }
+        .difficulty-hard { color: #f87171; }
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            padding: 0 1rem;
+        }
+        .timeline-item {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            background: #333;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .timeline-item.active .timeline-dot { background: #00d4aa; }
+        .timeline-item.completed .timeline-dot { background: #00a884; }
+        .timeline-label { font-size: 0.75rem; color: #666; }
+        @media (max-width: 768px) {
+            .step-container { grid-template-columns: 1fr; }
+            .meta-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🐍 COBRA Robot Assembly</h1>
+        <p>Step-by-step animated build guide • 20 steps • ~8 hours</p>
+    </div>
+    
+    <div class="container">
+        <div class="timeline">
+            <div class="timeline-item completed"><div class="timeline-dot"></div><div class="timeline-label">Prep</div></div>
+            <div class="timeline-item active"><div class="timeline-dot"></div><div class="timeline-label">Spine</div></div>
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Electronics</div></div>
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Power</div></div>
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Final</div></div>
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Test</div></div>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+        
+        <div class="step-container" id="step-content">
+
+        <div class="step-section" data-step="1" style="display: grid;">
+            <div class="step-info">
+                <span class="step-number">1</span>
+                <h2 class="step-title">Prepare Workspace</h2>
+                <p class="step-description">Clear workspace, organize tools, verify all parts from BOM</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">15m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-easy">Easy</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Prepare</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (3)</div>
+                    <span class="part-tag">TLS-001</span><span class="part-tag">TLS-002</span><span class="part-tag">TLS-003</span>
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Work mat</span><span class="tool-tag">Tweezers</span><span class="tool-tag">Magnifying glass</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">Work on ESD mat</div><div class="warning-item">Keep screws sorted by size</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: workspace_setup</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (0, 10, 10)</p>
+                    <p style="font-size: 0.85rem;">Highlight: Full assembly</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="2" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">2</span>
+                <h2 class="step-title">Print Verification</h2>
+                <p class="step-description">Inspect all 3D printed parts for defects. Check layer adhesion and dimensions</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">20m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-easy">Easy</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Prepare</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (6)</div>
+                    <span class="part-tag">STR-001</span><span class="part-tag">STR-002</span><span class="part-tag">STR-003</span><span class="part-tag">STR-004</span><span class="part-tag">STR-006</span><span class="part-tag">STR-007</span>
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span style="color: #666;">None</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">Reject parts with layer separation</div><div class="warning-item">Smooth rough edges with sandpaper</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: parts_explode</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (5, 5, 5)</p>
+                    <p style="font-size: 0.85rem;">Highlight: STR-001, STR-002, STR-003, STR-004, STR-006, STR-007</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="3" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">3</span>
+                <h2 class="step-title">Prepare Servo Mounts</h2>
+                <p class="step-description">Install servo horns into each vertebra. Ensure 90° center position</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">30m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-medium">Medium</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Prepare</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (4)</div>
+                    <span class="part-tag">ACT-001</span><span class="part-tag">ACT-002</span><span class="part-tag">FAS-005</span><span class="part-tag">FAS-006</span>
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Screwdriver</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">Do NOT power servos yet</div><div class="warning-item">Horns should rotate freely</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: servo_insert</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (2, 2, 3)</p>
+                    <p style="font-size: 0.85rem;">Highlight: STR-001</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="4" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">4</span>
+                <h2 class="step-title">Assemble Cervical Spine (V1-V7)</h2>
+                <p class="step-description">Connect first 7 vertebrae. Install pitch servos and intervertebral discs</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">45m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-medium">Medium</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Attach</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (5)</div>
+                    <span class="part-tag">STR-001</span><span class="part-tag">ACT-001</span><span class="part-tag">STR-005</span><span class="part-tag">FAS-001</span><span class="part-tag">FAS-003</span>
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Screwdriver</span><span class="tool-tag">Tweezers</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">Keep servo wires organized</div><div class="warning-item">Test each joint manually</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: vertebra_stack</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (0, 0, 2)</p>
+                    <p style="font-size: 0.85rem;">Highlight: STR-001</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="5" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">5</span>
+                <h2 class="step-title">Add Roll Joints to Cervical</h2>
+                <p class="step-description">Install roll servos perpendicular to pitch axis for lateral movement</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">30m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-hard">Hard</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Attach</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (3)</div>
+                    <span class="part-tag">ACT-002</span><span class="part-tag">FAS-001</span><span class="part-tag">FAS-003</span>
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Screwdriver</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">Orientation is critical - check diagram</div><div class="warning-item">Roll axis must be truly perpendicular</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: roll_servo_install</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (1, 1, 2)</p>
+                    <p style="font-size: 0.85rem;">Highlight: STR-001</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="6" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">6</span>
+                <h2 class="step-title">Assemble Thoracic Spine (V8-V19)</h2>
+                <p class="step-description">Build middle section with rib attachments. Less flexible but more stable</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">60m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-medium">Medium</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Attach</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (5)</div>
+                    <span class="part-tag">STR-002</span><span class="part-tag">STR-006</span><span class="part-tag">ACT-001</span><span class="part-tag">ACT-002</span><span class="part-tag">FAS-001</span>
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Screwdriver</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">Ribs attach to thoracic only</div><div class="warning-item">Maintain natural kyphosis curve</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: thoracic_build</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (0, 0, 1.5)</p>
+                    <p style="font-size: 0.85rem;">Highlight: STR-001, STR-002</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="7" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">7</span>
+                <h2 class="step-title">Assemble Lumbar Spine (V20-V24)</h2>
+                <p class="step-description">Build lower back section with increased flexibility for balance</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">35m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-medium">Medium</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Attach</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (4)</div>
+                    <span class="part-tag">STR-003</span><span class="part-tag">ACT-001</span><span class="part-tag">ACT-002</span><span class="part-tag">STR-005</span>
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Screwdriver</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">More flexible than thoracic</div><div class="warning-item">Prepare for sacrum attachment</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: lumbar_build</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (0, 0, 1)</p>
+                    <p style="font-size: 0.85rem;">Highlight: STR-001, STR-002, STR-003</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="8" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">8</span>
+                <h2 class="step-title">Attach Sacrum Base</h2>
+                <p class="step-description">Install rigid base plate with high-torque servos for hip joints</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">25m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-medium">Medium</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Attach</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (4)</div>
+                    <span class="part-tag">STR-004</span><span class="part-tag">ACT-003</span><span class="part-tag">FAS-001</span><span class="part-tag">FAS-002</span>
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Screwdriver</span><span class="tool-tag">Threadlocker</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">Use threadlocker on base screws</div><div class="warning-item">Verify 0.5mm clearance</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: sacrum_attach</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (0, 0, 0.5)</p>
+                    <p style="font-size: 0.85rem;">Highlight: STR-001, STR-002, STR-003, STR-004</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="9" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">9</span>
+                <h2 class="step-title">Install Brain (Raspberry Pi)</h2>
+                <p class="step-description">Mount Pi 5 in skull housing with AI HAT and cooling</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">20m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-medium">Medium</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Attach</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (4)</div>
+                    <span class="part-tag">ELE-001</span><span class="part-tag">ELE-002</span><span class="part-tag">ELE-006</span><span class="part-tag">ELE-007</span>
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Thermal paste</span><span class="tool-tag">Screwdriver</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">Apply thermal paste sparingly</div><div class="warning-item">Fan must clear housing by 2mm</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: brain_install</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (2, 2, 4)</p>
+                    <p style="font-size: 0.85rem;">Highlight: STR-007, ELE-001</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="10" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">10</span>
+                <h2 class="step-title">Wire Servo Controllers</h2>
+                <p class="step-description">Install PCA9685 boards and route all servo cables</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">60m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-hard">Hard</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Connect</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (4)</div>
+                    <span class="part-tag">ELE-003</span><span class="part-tag">CBL-001</span><span class="part-tag">CBL-002</span><span class="part-tag">FAS-001</span>
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Wire stripper</span><span class="tool-tag">Crimping tool</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">Label EVERY wire</div><div class="warning-item">Route in spiral pattern down spine</div><div class="warning-item">Keep high-current away from signal</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: servo_wiring</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (1, 1, 3)</p>
+                    <p style="font-size: 0.85rem;">Highlight: STR-001, ELE-003</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="11" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">11</span>
+                <h2 class="step-title">Install IMU Sensors</h2>
+                <p class="step-description">Mount MPU6050 units at skull and sacrum for balance feedback</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">15m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-medium">Medium</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Attach</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (3)</div>
+                    <span class="part-tag">SEN-001</span><span class="part-tag">CBL-003</span><span class="part-tag">FAS-001</span>
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Hot glue gun</span><span class="tool-tag">Screwdriver</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">Align IMU Z-axis with spine</div><div class="warning-item">Secure cables with zip ties</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: imu_mount</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (2, 0, 3)</p>
+                    <p style="font-size: 0.85rem;">Highlight: STR-007, STR-004, SEN-001</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="12" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">12</span>
+                <h2 class="step-title">Install Distance Sensors</h2>
+                <p class="step-description">Add ToF and IR sensors to skull for obstacle detection</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">20m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-medium">Medium</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Attach</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (3)</div>
+                    <span class="part-tag">SEN-002</span><span class="part-tag">SEN-004</span><span class="part-tag">FAS-001</span>
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Drill</span><span class="tool-tag">File</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">ToF sensor faces forward</div><div class="warning-item">IR sensors at 45° angles</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: sensor_mount</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (2.5, 0, 4)</p>
+                    <p style="font-size: 0.85rem;">Highlight: STR-007, SEN-002</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="13" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">13</span>
+                <h2 class="step-title">Assemble Battery Pack</h2>
+                <p class="step-description">Build 3S2P 18650 pack with BMS protection</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">45m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-hard">Hard</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Prepare</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (3)</div>
+                    <span class="part-tag">PWR-001</span><span class="part-tag">PWR-002</span><span class="part-tag">PWR-006</span>
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Spot welder</span><span class="tool-tag">Multimeter</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">VERIFY POLARITY</div><div class="warning-item">Test each cell voltage</div><div class="warning-item">BMS must connect last</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: battery_build</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (3, 3, 0)</p>
+                    <p style="font-size: 0.85rem;">Highlight: PWR-006</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="14" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">14</span>
+                <h2 class="step-title">Install Power Distribution</h2>
+                <p class="step-description">Mount buck converter, switches, and current sensors</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">40m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-hard">Hard</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Connect</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (4)</div>
+                    <span class="part-tag">PWR-003</span><span class="part-tag">PWR-004</span><span class="part-tag">PWR-005</span><span class="part-tag">SEN-005</span>
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Soldering iron</span><span class="tool-tag">Heat shrink</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">Fuse servo power separately</div><div class="warning-item">Add power switch accessible from outside</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: power_install</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (2, 2, 0.5)</p>
+                    <p style="font-size: 0.85rem;">Highlight: STR-004, PWR-003</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="15" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">15</span>
+                <h2 class="step-title">Connect All Wiring</h2>
+                <p class="step-description">Final wiring harness connection to brain and controllers</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">30m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-medium">Medium</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Connect</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (4)</div>
+                    <span class="part-tag">CBL-002</span><span class="part-tag">CBL-004</span><span class="part-tag">CBL-005</span><span class="part-tag">CBL-006</span>
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Cable ties</span><span class="tool-tag">Heat gun</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">Double-check all connections</div><div class="warning-item">No pinching when spine bends</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: final_wiring</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (1, 1, 2)</p>
+                    <p style="font-size: 0.85rem;">Highlight: Full assembly</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="16" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">16</span>
+                <h2 class="step-title">Install Phone Mount</h2>
+                <p class="step-description">Attach adjustable phone holder to skull</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">10m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-easy">Easy</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Attach</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (2)</div>
+                    <span class="part-tag">STR-008</span><span class="part-tag">FAS-001</span>
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Screwdriver</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">Verify phone fits before finalizing</div><div class="warning-item">Leave access to Pi ports</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: phone_mount</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (2, 0, 4)</p>
+                    <p style="font-size: 0.85rem;">Highlight: STR-007, STR-008</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="17" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">17</span>
+                <h2 class="step-title">Power-On Test</h2>
+                <p class="step-description">First power-up: check voltages, verify no smoke</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">10m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-medium">Medium</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Test</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (0)</div>
+                    
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Multimeter</span><span class="tool-tag">Smoke detector</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">Have fire extinguisher ready</div><div class="warning-item">Check 5V rail first</div><div class="warning-item">Feel for hot spots</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: power_test</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (3, 3, 2)</p>
+                    <p style="font-size: 0.85rem;">Highlight: Full assembly</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="18" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">18</span>
+                <h2 class="step-title">Servo Calibration</h2>
+                <p class="step-description">Set all servos to 90° neutral, verify range of motion</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">30m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-medium">Medium</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Calibrate</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (0)</div>
+                    
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Laptop</span><span class="tool-tag">USB cable</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">Move ONE servo at a time</div><div class="warning-item">Check for mechanical binding</div><div class="warning-item">Record offset values</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: servo_calibrate</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (1, 1, 3)</p>
+                    <p style="font-size: 0.85rem;">Highlight: Full assembly</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="19" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">19</span>
+                <h2 class="step-title">Balance System Test</h2>
+                <p class="step-description">Verify IMU readings and balance control loop</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">20m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-hard">Hard</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Test</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (0)</div>
+                    
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Laptop</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">Robot must be on stable surface</div><div class="warning-item">Test pitch then roll separately</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: balance_test</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (2, 0, 2)</p>
+                    <p style="font-size: 0.85rem;">Highlight: Full assembly</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section" data-step="20" style="display: none;">
+            <div class="step-info">
+                <span class="step-number">20</span>
+                <h2 class="step-title">Full System Integration</h2>
+                <p class="step-description">Run complete diagnostic, test all functions</p>
+                
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">45m</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value difficulty-hard">Hard</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Type</div>
+                        <div class="meta-value">Test</div>
+                    </div>
+                </div>
+                
+                <div class="parts-list">
+                    <div class="list-title">Parts Needed (0)</div>
+                    
+                    
+                </div>
+                
+                <div class="tools-list">
+                    <div class="list-title">Tools</div>
+                    <span class="tool-tag">Laptop</span><span class="tool-tag">Test stand</span>
+                </div>
+                
+                <div class="warnings-list">
+                    <div class="list-title">⚠️ Important</div>
+                    <div class="warning-item">Secure to test stand first</div><div class="warning-item">Test walking in place</div><div class="warning-item">Verify emergency stop works</div>
+                </div>
+            </div>
+            
+            <div class="viewer-3d">
+                <div class="viewer-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>3D Animation: full_test</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Camera: (0, 0, 2)</p>
+                    <p style="font-size: 0.85rem;">Highlight: Full assembly</p>
+                </div>
+            </div>
+        </div>
+
+        </div>
+        
+        <div class="controls">
+            <button class="btn" id="prevBtn" onclick="prevStep()" disabled>← Previous</button>
+            <button class="btn" id="nextBtn" onclick="nextStep()">Next →</button>
+        </div>
+    </div>
+    
+    <script>
+        let currentStep = 1;
+        const totalSteps = 20;
+        
+        function updateStep() {
+            // Hide all steps
+            document.querySelectorAll('.step-section').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Show current step
+            const currentEl = document.querySelector(`[data-step="${currentStep}"]`);
+            if (currentEl) currentEl.style.display = 'grid';
+            
+            // Update progress
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+            
+            // Update buttons
+            document.getElementById('prevBtn').disabled = currentStep === 1;
+            document.getElementById('nextBtn').disabled = currentStep === totalSteps;
+            document.getElementById('nextBtn').textContent = currentStep === totalSteps ? 'Complete ✓' : 'Next →';
+            
+            // Update timeline
+            document.querySelectorAll('.timeline-item').forEach((el, idx) => {
+                el.classList.remove('active', 'completed');
+                if (idx < Math.floor((currentStep - 1) / 4)) {
+                    el.classList.add('completed');
+                } else if (idx === Math.floor((currentStep - 1) / 4)) {
+                    el.classList.add('active');
+                }
+            });
+            
+            // Save progress
+            localStorage.setItem('cobraAssemblyStep', currentStep);
+        }
+        
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateStep();
+            }
+        }
+        
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStep();
+            }
+        }
+        
+        // Load saved progress
+        const saved = localStorage.getItem('cobraAssemblyStep');
+        if (saved) {
+            currentStep = parseInt(saved);
+        }
+        
+        updateStep();
+    </script>
+</body>
+</html>

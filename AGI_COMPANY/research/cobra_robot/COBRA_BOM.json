@@ -1,0 +1,614 @@
+{
+  "model": "COBRA-Standard",
+  "parts": [
+    {
+      "part_number": "STR-001",
+      "name": "Cervical Vertebra (V1-V7)",
+      "category": "Structural",
+      "quantity": 7,
+      "unit_cost": 3.5,
+      "supplier": "JLC3D",
+      "supplier_sku": "PLA-F-GW",
+      "url": "https://jlc3d.com",
+      "specs": "PLA, 20% infill, 0.2mm layer",
+      "alternatives": [
+        "PETG alternative"
+      ]
+    },
+    {
+      "part_number": "STR-002",
+      "name": "Thoracic Vertebra (V8-V19)",
+      "category": "Structural",
+      "quantity": 12,
+      "unit_cost": 3.5,
+      "supplier": "JLC3D",
+      "supplier_sku": "PLA-F-GW",
+      "url": "https://jlc3d.com",
+      "specs": "PLA, 20% infill, 0.2mm layer",
+      "alternatives": [
+        "PETG alternative"
+      ]
+    },
+    {
+      "part_number": "STR-003",
+      "name": "Lumbar Vertebra (V20-V24)",
+      "category": "Structural",
+      "quantity": 5,
+      "unit_cost": 3.5,
+      "supplier": "JLC3D",
+      "supplier_sku": "PLA-F-GW",
+      "url": "https://jlc3d.com",
+      "specs": "PLA, 20% infill, 0.2mm layer",
+      "alternatives": []
+    },
+    {
+      "part_number": "STR-004",
+      "name": "Sacrum Base (V25)",
+      "category": "Structural",
+      "quantity": 1,
+      "unit_cost": 5.0,
+      "supplier": "JLC3D",
+      "supplier_sku": "PLA-F-GW",
+      "url": "https://jlc3d.com",
+      "specs": "PLA, 40% infill for rigidity",
+      "alternatives": []
+    },
+    {
+      "part_number": "STR-005",
+      "name": "Intervertebral Discs",
+      "category": "Structural",
+      "quantity": 25,
+      "unit_cost": 1.2,
+      "supplier": "McMaster",
+      "supplier_sku": "9379K11",
+      "url": "https://mcmaster.com",
+      "specs": "Silicone rubber, 40A durometer",
+      "alternatives": [
+        "TPE 3D print"
+      ]
+    },
+    {
+      "part_number": "STR-006",
+      "name": "Rib Segments (Thoracic)",
+      "category": "Structural",
+      "quantity": 24,
+      "unit_cost": 1.0,
+      "supplier": "JLC3D",
+      "supplier_sku": "PLA-F-GW",
+      "url": "https://jlc3d.com",
+      "specs": "PLA, 15% infill, hollow",
+      "alternatives": []
+    },
+    {
+      "part_number": "STR-007",
+      "name": "Skull Housing",
+      "category": "Structural",
+      "quantity": 1,
+      "unit_cost": 8.0,
+      "supplier": "JLC3D",
+      "supplier_sku": "PLA-F-GW",
+      "url": "https://jlc3d.com",
+      "specs": "PLA, 25% infill, glossy finish",
+      "alternatives": []
+    },
+    {
+      "part_number": "STR-008",
+      "name": "Phone Mount Bracket",
+      "category": "Structural",
+      "quantity": 1,
+      "unit_cost": 3.0,
+      "supplier": "JLC3D",
+      "supplier_sku": "PLA-F-GW",
+      "url": "https://jlc3d.com",
+      "specs": "Universal phone clamp, adjustable",
+      "alternatives": []
+    },
+    {
+      "part_number": "ACT-001",
+      "name": "MG90S Micro Servo (Pitch)",
+      "category": "Actuators",
+      "quantity": 25,
+      "unit_cost": 2.85,
+      "supplier": "Amazon",
+      "supplier_sku": "B07MFK266B",
+      "url": "https://amazon.com",
+      "specs": "180\u00b0, 2.2kg/cm, metal gears",
+      "alternatives": [
+        "TowerPro SG90 ($1.50)"
+      ]
+    },
+    {
+      "part_number": "ACT-002",
+      "name": "MG90S Micro Servo (Roll)",
+      "category": "Actuators",
+      "quantity": 25,
+      "unit_cost": 2.85,
+      "supplier": "Amazon",
+      "supplier_sku": "B07MFK266B",
+      "url": "https://amazon.com",
+      "specs": "180\u00b0, 2.2kg/cm, metal gears",
+      "alternatives": []
+    },
+    {
+      "part_number": "ACT-003",
+      "name": "DS3218 Digital Servo (Base)",
+      "category": "Actuators",
+      "quantity": 2,
+      "unit_cost": 12.99,
+      "supplier": "Amazon",
+      "supplier_sku": "B076MQ22PM",
+      "url": "https://amazon.com",
+      "specs": "20kg/cm, 270\u00b0, high torque",
+      "alternatives": [
+        "DS3235 for heavier loads"
+      ]
+    },
+    {
+      "part_number": "ELE-001",
+      "name": "Raspberry Pi 5 (8GB)",
+      "category": "Electronics",
+      "quantity": 1,
+      "unit_cost": 80.0,
+      "supplier": "PiShop",
+      "supplier_sku": "PI5-8GB",
+      "url": "https://pishop.us",
+      "specs": "8GB RAM, AI-ready",
+      "alternatives": [
+        "Pi 4 8GB ($75)"
+      ]
+    },
+    {
+      "part_number": "ELE-002",
+      "name": "Raspberry Pi AI HAT+",
+      "category": "Electronics",
+      "quantity": 1,
+      "unit_cost": 70.0,
+      "supplier": "PiShop",
+      "supplier_sku": "AI-HAT-PLUS",
+      "url": "https://pishop.us",
+      "specs": "13 TOPS NPU",
+      "alternatives": [
+        "Coral USB ($60)"
+      ]
+    },
+    {
+      "part_number": "ELE-003",
+      "name": "PCA9685 Servo Driver",
+      "category": "Electronics",
+      "quantity": 2,
+      "unit_cost": 12.99,
+      "supplier": "Adafruit",
+      "supplier_sku": "815",
+      "url": "https://adafruit.com",
+      "specs": "16-channel, 12-bit PWM, I2C",
+      "alternatives": [
+        "SparkFun version"
+      ]
+    },
+    {
+      "part_number": "ELE-004",
+      "name": "MCP2515 CAN Controller",
+      "category": "Electronics",
+      "quantity": 1,
+      "unit_cost": 8.99,
+      "supplier": "Amazon",
+      "supplier_sku": "B01D1D0D5K",
+      "url": "https://amazon.com",
+      "specs": "SPI interface, servo bus compatible",
+      "alternatives": []
+    },
+    {
+      "part_number": "ELE-005",
+      "name": "Arduino Nano",
+      "category": "Electronics",
+      "quantity": 1,
+      "unit_cost": 4.5,
+      "supplier": "Arduino",
+      "supplier_sku": "A000005",
+      "url": "https://store.arduino.cc",
+      "specs": "Low-level real-time control",
+      "alternatives": [
+        "Arduino Pro Mini $3"
+      ]
+    },
+    {
+      "part_number": "ELE-006",
+      "name": "Active Cooling Fan",
+      "category": "Electronics",
+      "quantity": 1,
+      "unit_cost": 5.99,
+      "supplier": "Amazon",
+      "supplier_sku": "B07WGCFZ4C",
+      "url": "https://amazon.com",
+      "specs": "40x40x10mm, 5V, quiet",
+      "alternatives": []
+    },
+    {
+      "part_number": "ELE-007",
+      "name": "Heat Sinks (Set)",
+      "category": "Electronics",
+      "quantity": 1,
+      "unit_cost": 3.99,
+      "supplier": "Amazon",
+      "supplier_sku": "B08CDMF2RS",
+      "url": "https://amazon.com",
+      "specs": "Aluminum, self-adhesive",
+      "alternatives": []
+    },
+    {
+      "part_number": "SEN-001",
+      "name": "MPU6050 IMU",
+      "category": "Sensors",
+      "quantity": 2,
+      "unit_cost": 4.5,
+      "supplier": "Amazon",
+      "supplier_sku": "B07R7YXL1F",
+      "url": "https://amazon.com",
+      "specs": "6-axis, I2C, accelerometer + gyro",
+      "alternatives": [
+        "MPU9250 with magnetometer"
+      ]
+    },
+    {
+      "part_number": "SEN-002",
+      "name": "VL53L0X ToF Distance",
+      "category": "Sensors",
+      "quantity": 1,
+      "unit_cost": 7.99,
+      "supplier": "Adafruit",
+      "supplier_sku": "3317",
+      "url": "https://adafruit.com",
+      "specs": "2m range, obstacle detection",
+      "alternatives": []
+    },
+    {
+      "part_number": "SEN-003",
+      "name": "TCS34725 Color Sensor",
+      "category": "Sensors",
+      "quantity": 1,
+      "unit_cost": 7.95,
+      "supplier": "Adafruit",
+      "supplier_sku": "1334",
+      "url": "https://adafruit.com",
+      "specs": "RGB color detection",
+      "alternatives": []
+    },
+    {
+      "part_number": "SEN-004",
+      "name": "IR Proximity Sensors",
+      "category": "Sensors",
+      "quantity": 4,
+      "unit_cost": 1.5,
+      "supplier": "Adafruit",
+      "supplier_sku": "1568",
+      "url": "https://adafruit.com",
+      "specs": "Short range, 10cm",
+      "alternatives": []
+    },
+    {
+      "part_number": "SEN-005",
+      "name": "Current Sensors (INA219)",
+      "category": "Sensors",
+      "quantity": 2,
+      "unit_cost": 3.5,
+      "supplier": "Adafruit",
+      "supplier_sku": "904",
+      "url": "https://adafruit.com",
+      "specs": "Power monitoring per bus",
+      "alternatives": []
+    },
+    {
+      "part_number": "PWR-001",
+      "name": "18650 Battery (3500mAh)",
+      "category": "Power",
+      "quantity": 6,
+      "unit_cost": 8.99,
+      "supplier": "BatterySpace",
+      "supplier_sku": "18650-3500",
+      "url": "https://batteryspace.com",
+      "specs": "LG MJ1, protected cells",
+      "alternatives": [
+        "Samsung 35E"
+      ]
+    },
+    {
+      "part_number": "PWR-002",
+      "name": "BMS 3S 12V 20A",
+      "category": "Power",
+      "quantity": 1,
+      "unit_cost": 12.99,
+      "supplier": "Amazon",
+      "supplier_sku": "B08X2WBQN2",
+      "url": "https://amazon.com",
+      "specs": "Balance, overcharge, short protection",
+      "alternatives": []
+    },
+    {
+      "part_number": "PWR-003",
+      "name": "Step-Down Converter",
+      "category": "Power",
+      "quantity": 1,
+      "unit_cost": 6.99,
+      "supplier": "Amazon",
+      "supplier_sku": "B07R4D7R8P",
+      "url": "https://amazon.com",
+      "specs": "LM2596, 12V to 5V",
+      "alternatives": [
+        "Buck converter module"
+      ]
+    },
+    {
+      "part_number": "PWR-004",
+      "name": "Power Switch",
+      "category": "Power",
+      "quantity": 1,
+      "unit_cost": 2.99,
+      "supplier": "Amazon",
+      "supplier_sku": "B07K2K4W1Y",
+      "url": "https://amazon.com",
+      "specs": "Rocker, 10A rated",
+      "alternatives": []
+    },
+    {
+      "part_number": "PWR-005",
+      "name": "XT60 Connector Pair",
+      "category": "Power",
+      "quantity": 2,
+      "unit_cost": 1.5,
+      "supplier": "Amazon",
+      "supplier_sku": "B07WPHK4R9",
+      "url": "https://amazon.com",
+      "specs": "Gold plated, 60A rated",
+      "alternatives": []
+    },
+    {
+      "part_number": "PWR-006",
+      "name": "18650 Battery Holder",
+      "category": "Power",
+      "quantity": 1,
+      "unit_cost": 4.99,
+      "supplier": "Amazon",
+      "supplier_sku": "B07K8QWJ6J",
+      "url": "https://amazon.com",
+      "specs": "3S1P configuration, PCB mount",
+      "alternatives": []
+    },
+    {
+      "part_number": "PWR-007",
+      "name": "Charger 12.6V 2A",
+      "category": "Power",
+      "quantity": 1,
+      "unit_cost": 8.99,
+      "supplier": "Amazon",
+      "supplier_sku": "B07MFK266B",
+      "url": "https://amazon.com",
+      "specs": "Li-ion 3S charger, CC/CV",
+      "alternatives": []
+    },
+    {
+      "part_number": "FAS-001",
+      "name": "M2x8 Machine Screws",
+      "category": "Fasteners",
+      "quantity": 100,
+      "unit_cost": 0.05,
+      "supplier": "McMaster",
+      "supplier_sku": "91292A005",
+      "url": "https://mcmaster.com",
+      "specs": "Stainless steel, Phillips",
+      "alternatives": []
+    },
+    {
+      "part_number": "FAS-002",
+      "name": "M2x10 Machine Screws",
+      "category": "Fasteners",
+      "quantity": 100,
+      "unit_cost": 0.05,
+      "supplier": "McMaster",
+      "supplier_sku": "91292A006",
+      "url": "https://mcmaster.com",
+      "specs": "Stainless steel, Phillips",
+      "alternatives": []
+    },
+    {
+      "part_number": "FAS-003",
+      "name": "M2 Nuts",
+      "category": "Fasteners",
+      "quantity": 200,
+      "unit_cost": 0.03,
+      "supplier": "McMaster",
+      "supplier_sku": "90480A002",
+      "url": "https://mcmaster.com",
+      "specs": "Stainless steel, hex",
+      "alternatives": []
+    },
+    {
+      "part_number": "FAS-004",
+      "name": "M2 Washers",
+      "category": "Fasteners",
+      "quantity": 200,
+      "unit_cost": 0.02,
+      "supplier": "McMaster",
+      "supplier_sku": "98689A101",
+      "url": "https://mcmaster.com",
+      "specs": "Stainless steel, flat",
+      "alternatives": []
+    },
+    {
+      "part_number": "FAS-005",
+      "name": "Servo Horns",
+      "category": "Fasteners",
+      "quantity": 50,
+      "unit_cost": 0.25,
+      "supplier": "Amazon",
+      "supplier_sku": "Servo-Horn-Set",
+      "url": "https://amazon.com",
+      "specs": "Various sizes, metal + plastic",
+      "alternatives": []
+    },
+    {
+      "part_number": "FAS-006",
+      "name": "Servo Screws",
+      "category": "Fasteners",
+      "quantity": 50,
+      "unit_cost": 0.1,
+      "supplier": "Amazon",
+      "supplier_sku": "Servo-Screw-Set",
+      "url": "https://amazon.com",
+      "specs": "M2x6, M2x8, included with servos",
+      "alternatives": []
+    },
+    {
+      "part_number": "CBL-001",
+      "name": "Servo Extension Cables",
+      "category": "Cables",
+      "quantity": 25,
+      "unit_cost": 0.75,
+      "supplier": "Amazon",
+      "supplier_sku": "Servo-Ext-30cm",
+      "url": "https://amazon.com",
+      "specs": "30cm, JR style, male-female",
+      "alternatives": [
+        "Make custom: wire + connectors"
+      ]
+    },
+    {
+      "part_number": "CBL-002",
+      "name": "Dupont Wire Kit",
+      "category": "Cables",
+      "quantity": 1,
+      "unit_cost": 9.99,
+      "supplier": "Amazon",
+      "supplier_sku": "B07WV4WN6Q",
+      "url": "https://amazon.com",
+      "specs": "120pcs, M-M, M-F, F-F, 10cm-30cm",
+      "alternatives": []
+    },
+    {
+      "part_number": "CBL-003",
+      "name": "I2C Cable (Qwiic/Stemma)",
+      "category": "Cables",
+      "quantity": 5,
+      "unit_cost": 1.95,
+      "supplier": "SparkFun",
+      "supplier_sku": "15081",
+      "url": "https://sparkfun.com",
+      "specs": "4-pin JST, 50cm",
+      "alternatives": []
+    },
+    {
+      "part_number": "CBL-004",
+      "name": "USB-C Cable",
+      "category": "Cables",
+      "quantity": 2,
+      "unit_cost": 5.99,
+      "supplier": "Amazon",
+      "supplier_sku": "USB-C-3ft",
+      "url": "https://amazon.com",
+      "specs": "Power + data, braided",
+      "alternatives": []
+    },
+    {
+      "part_number": "CBL-005",
+      "name": "Power Wire 18AWG",
+      "category": "Cables",
+      "quantity": 5,
+      "unit_cost": 0.5,
+      "supplier": "Amazon",
+      "supplier_sku": "Silicone-18AWG",
+      "url": "https://amazon.com",
+      "specs": "Silicone insulated, flexible, per meter",
+      "alternatives": []
+    },
+    {
+      "part_number": "CBL-006",
+      "name": "Heat Shrink Tubing",
+      "category": "Cables",
+      "quantity": 1,
+      "unit_cost": 6.99,
+      "supplier": "Amazon",
+      "supplier_sku": "Heat-Shrink-Set",
+      "url": "https://amazon.com",
+      "specs": "Assorted sizes, black",
+      "alternatives": []
+    },
+    {
+      "part_number": "TLS-001",
+      "name": "Precision Screwdriver Set",
+      "category": "Tools",
+      "quantity": 1,
+      "unit_cost": 12.99,
+      "supplier": "Amazon",
+      "supplier_sku": "Screwdriver-Set",
+      "url": "https://amazon.com",
+      "specs": "Phillips, flat, hex, Torx",
+      "alternatives": [
+        "iFixit kit ($25)"
+      ]
+    },
+    {
+      "part_number": "TLS-002",
+      "name": "Wire Strippers",
+      "category": "Tools",
+      "quantity": 1,
+      "unit_cost": 8.99,
+      "supplier": "Amazon",
+      "supplier_sku": "Wire-Stripper",
+      "url": "https://amazon.com",
+      "specs": "Automatic, 10-24 AWG",
+      "alternatives": []
+    },
+    {
+      "part_number": "TLS-003",
+      "name": "Multimeter",
+      "category": "Tools",
+      "quantity": 1,
+      "unit_cost": 15.99,
+      "supplier": "Amazon",
+      "supplier_sku": "Multimeter-Basic",
+      "url": "https://amazon.com",
+      "specs": "Voltage, current, continuity",
+      "alternatives": [
+        "Fluke ($100+)"
+      ]
+    },
+    {
+      "part_number": "TLS-004",
+      "name": "Soldering Iron",
+      "category": "Tools",
+      "quantity": 1,
+      "unit_cost": 19.99,
+      "supplier": "Amazon",
+      "supplier_sku": "Solder-Iron-Kit",
+      "url": "https://amazon.com",
+      "specs": "60W, temperature controlled",
+      "alternatives": []
+    }
+  ],
+  "totals": {
+    "model": "COBRA-Standard",
+    "material_cost": 809.18,
+    "labor_hours": 8.0,
+    "labor_rate": 35.0,
+    "labor_cost": 280.0,
+    "total_unit_cost": 1089.18,
+    "category_breakdown": {
+      "Structural": 154.0,
+      "Actuators": 168.48,
+      "Electronics": 199.45,
+      "Sensors": 37.94,
+      "Power": 93.89,
+      "Fasteners": 37.5,
+      "Cables": 59.96,
+      "Tools": 57.96
+    },
+    "part_count": 46,
+    "total_components": 902,
+    "volume_pricing": {
+      "1_units": 1089.18,
+      "10_units": 10347.21,
+      "100_units": 92580.3,
+      "1000_units": 816885.0
+    }
+  },
+  "export_date": "2026-03-29"
+}

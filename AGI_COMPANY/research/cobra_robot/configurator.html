@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COBRA Robot Configurator</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+        .header {
+            background: rgba(0,0,0,0.3);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0,212,170,0.3);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00d4aa, #00a884);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .logo-text h1 {
+            color: #00d4aa;
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+        .logo-text p {
+            color: #888;
+            font-size: 0.85rem;
+        }
+        .total-price {
+            text-align: right;
+        }
+        .total-price .label {
+            color: #888;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+        .total-price .price {
+            color: #00d4aa;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 350px 1fr 300px;
+            gap: 1rem;
+            padding: 1rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        .panel {
+            background: rgba(20, 20, 35, 0.8);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+        }
+        .panel-header {
+            background: rgba(0,0,0,0.2);
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .panel-content {
+            padding: 1rem;
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+        
+        /* Config Panel */
+        .config-section {
+            margin-bottom: 1.5rem;
+        }
+        .config-section:last-child {
+            margin-bottom: 0;
+        }
+        .section-title {
+            font-size: 0.875rem;
+            color: #00d4aa;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .option-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .option-card {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .option-card:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        .option-card.selected {
+            border-color: #00d4aa;
+            background: rgba(0,212,170,0.1);
+        }
+        .option-card input[type="radio"], .option-card input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #00d4aa;
+        }
+        .option-info {
+            flex: 1;
+        }
+        .option-name {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        .option-desc {
+            font-size: 0.75rem;
+            color: #888;
+        }
+        .option-price {
+            color: #00d4aa;
+            font-weight: bold;
+        }
+        
+        /* Viewer Panel */
+        .viewer-container {
+            position: relative;
+            height: calc(100vh - 120px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .robot-preview {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .robot-svg {
+            max-width: 100%;
+            max-height: 80%;
+            filter: drop-shadow(0 10px 40px rgba(0,212,170,0.3));
+        }
+        .view-controls {
+            position: absolute;
+            bottom: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(0,0,0,0.5);
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+        .view-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .view-btn:hover, .view-btn.active {
+            background: #00d4aa;
+            color: #0a0a0f;
+        }
+        
+        /* Summary Panel */
+        .summary-list {
+            margin-bottom: 1rem;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem;
+        }
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+        .summary-label {
+            color: #aaa;
+        }
+        .summary-value {
+            color: #fff;
+            font-weight: 500;
+        }
+        .summary-total {
+            background: rgba(0,212,170,0.1);
+            border: 1px solid rgba(0,212,170,0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        .summary-row.total {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #00d4aa;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid rgba(0,212,170,0.3);
+        }
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .btn {
+            padding: 0.875rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4aa, #00a884);
+            color: #0a0a0f;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,212,170,0.4);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .animating {
+            animation: pulse 1s ease-in-out infinite;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 300px 1fr;
+            }
+            .summary-panel {
+                grid-column: span 2;
+            }
+        }
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .summary-panel {
+                grid-column: span 1;
+            }
+        }
+        
+        /* Color picker */
+        .color-picker {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+        .color-option.selected {
+            border-color: #fff;
+            box-shadow: 0 0 0 2px #00d4aa;
+        }
+        
+        /* Slider */
+        .slider-container {
+            margin-top: 0.5rem;
+        }
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255,255,255,0.1);
+            outline: none;
+            -webkit-appearance: none;
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #00d4aa;
+            cursor: pointer;
+        }
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🐍</div>
+            <div class="logo-text">
+                <h1>COBRA Configurator</h1>
+                <p>Build Your Snake Robot</p>
+            </div>
+        </div>
+        <div class="total-price">
+            <div class="label">Total Price</div>
+            <div class="price" id="headerPrice">$599</div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Configuration Panel -->
+        <div class="panel config-panel">
+            <div class="panel-header">
+                ⚙️ Configuration
+            </div>
+            <div class="panel-content">
+                <!-- Model Selection -->
+                <div class="config-section">
+                    <div class="section-title">📦 Model</div>
+                    <div class="option-group">
+                        <label class="option-card selected" data-model="explorer">
+                            <input type="radio" name="model" value="explorer" checked>
+                            <div class="option-info">
+                                <div class="option-name">Explorer Kit</div>
+                                <div class="option-desc">Basic 25-vertebra snake with phone brain</div>
+                            </div>
+                            <div class="option-price">$299</div>
+                        </label>
+                        <label class="option-card" data-model="standard">
+                            <input type="radio" name="model" value="standard">
+                            <div class="option-info">
+                                <div class="option-name">Standard</div>
+                                <div class="option-desc">Pi 5 brain, AI HAT, full sensors</div>
+                            </div>
+                            <div class="option-price">$599</div>
+                        </label>
+                        <label class="option-card" data-model="pro">
+                            <input type="radio" name="model" value="pro">
+                            <div class="option-info">
+                                <div class="option-name">Professional</div>
+                                <div class="option-desc">Full autonomy, lidar, stereo vision</div>
+                            </div>
+                            <div class="option-price">$999</div>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Materials -->
+                <div class="config-section">
+                    <div class="section-title">🎨 Materials</div>
+                    <div class="option-group">
+                        <label class="option-card selected" data-material="pla">
+                            <input type="radio" name="material" value="pla" checked>
+                            <div class="option-info">
+                                <div class="option-name">PLA (Standard)</div>
+                                <div class="option-desc">Good strength, easy print</div>
+                            </div>
+                            <div class="option-price">$0</div>
+                        </label>
+                        <label class="option-card" data-material="petg">
+                            <input type="radio" name="material" value="petg">
+                            <div class="option-info">
+                                <div class="option-name">PETG (Durable)</div>
+                                <div class="option-desc">Higher impact resistance</div>
+                            </div>
+                            <div class="option-price">+$25</div>
+                        </label>
+                        <label class="option-card" data-material="abs">
+                            <input type="radio" name="material" value="abs">
+                            <div class="option-info">
+                                <div class="option-name">ABS (Industrial)</div>
+                                <div class="option-desc">High temp, chemical resistant</div>
+                            </div>
+                            <div class="option-price">+$40</div>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Color -->
+                <div class="config-section">
+                    <div class="section-title">🎨 Color Theme</div>
+                    <div class="color-picker">
+                        <div class="color-option selected" style="background: #00d4aa;" data-color="teal" title="Tech Teal"></div>
+                        <div class="color-option" style="background: #ff6b6b;" data-color="red" title="Alert Red"></div>
+                        <div class="color-option" style="background: #4ecdc4;" data-color="cyan" title="Cyan Sky"></div>
+                        <div class="color-option" style="background: #95e1d3;" data-color="mint" title="Mint Fresh"></div>
+                        <div class="color-option" style="background: #f38181;" data-color="pink" title="Coral Pink"></div>
+                        <div class="color-option" style="background: #aa96da;" data-color="purple" title="Royal Purple"></div>
+                        <div class="color-option" style="background: #333;" data-color="black" title="Stealth Black"></div>
+                        <div class="color-option" style="background: #fff;" data-color="white" title="Arctic White"></div>
+                    </div>
+                </div>
+                
+                <!-- Options -->
+                <div class="config-section">
+                    <div class="section-title">➕ Add-ons</div>
+                    <div class="option-group">
+                        <label class="option-card" data-addon="battery">
+                            <input type="checkbox" name="addon" value="battery">
+                            <div class="option-info">
+                                <div class="option-name">Extended Battery</div>
+                                <div class="option-desc">6-cell 7.8Ah (vs 3-cell 3.5Ah)</div>
+                            </div>
+                            <div class="option-price">+$45</div>
+                        </label>
+                        <label class="option-card" data-addon="wifi">
+                            <input type="checkbox" name="addon" value="wifi" checked>
+                            <div class="option-info">
+                                <div class="option-name">WiFi 6 Module</div>
+                                <div class="option-desc">High-speed wireless connectivity</div>
+                            </div>
+                            <div class="option-price">+$25</div>
+                        </label>
+                        <label class="option-card" data-addon="lidar">
+                            <input type="checkbox" name="addon" value="lidar">
+                            <div class="option-info">
+                                <div class="option-name">2D LiDAR</div>
+                                <div class="option-desc">360° scanning, SLAM mapping</div>
+                            </div>
+                            <div class="option-price">+$120</div>
+                        </label>
+                        <label class="option-card" data-addon="camera">
+                            <input type="checkbox" name="addon" value="camera">
+                            <div class="option-info">
+                                <div class="option-name">Stereo Camera</div>
+                                <div class="option-desc">Depth perception, object detection</div>
+                            </div>
+                            <div class="option-price">+$80</div>
+                        </label>
+                        <label class="option-card" data-addon="gripper">
+                            <input type="checkbox" name="addon" value="gripper">
+                            <div class="option-info">
+                                <div class="option-name">Tail Gripper</div>
+                                <div class="option-desc">Pick and place attachment</div>
+                            </div>
+                            <div class="option-price">+$55</div>
+                        </label>
+                        <label class="option-card" data-addon="led">
+                            <input type="checkbox" name="addon" value="led">
+                            <div class="option-info">
+                                <div class="option-name">LED Accent Kit</div>
+                                <div class="option-desc">RGB strip, animated patterns</div>
+                            </div>
+                            <div class="option-price">+$20</div>
+                        </label>
+                        
+                        <label class="option-card" data-addon="gentle_touch">
+                            <input type="checkbox" name="addon" value="gentle_touch">
+                            <div class="option-info">
+                                <div class="option-name">🥚 Gentle Touch Package</div>
+                                <div class="option-desc">Force-sensitive grip for delicate objects</div>
+                            </div>
+                            <div class="option-price">+$52</div>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Assembly -->
+                <div class="config-section">
+                    <div class="section-title">🔧 Assembly</div>
+                    <div class="option-group">
+                        <label class="option-card selected" data-assembly="diy">
+                            <input type="radio" name="assembly" value="diy" checked>
+                            <div class="option-info">
+                                <div class="option-name">DIY Kit</div>
+                                <div class="option-desc">You assemble (~8 hours)</div>
+                            </div>
+                            <div class="option-price">$0</div>
+                        </label>
+                        <label class="option-card" data-assembly="partial">
+                            <input type="radio" name="assembly" value="partial">
+                            <div class="option-info">
+                                <div class="option-name">Pre-Assembled Core</div>
+                                <div class="option-desc">Spine assembled, you add electronics</div>
+                            </div>
+                            <div class="option-price">+$75</div>
+                        </label>
+                        <label class="option-card" data-assembly="full">
+                            <input type="radio" name="assembly" value="full">
+                            <div class="option-info">
+                                <div class="option-name">Fully Assembled</div>
+                                <div class="option-desc">Ready to use, tested & calibrated</div>
+                            </div>
+                            <div class="option-price">+$150</div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Viewer Panel -->
+        <div class="panel viewer-panel">
+            <div class="panel-header">
+                👁️ Live Preview
+            </div>
+            <div class="panel-content">
+                <div class="viewer-container">
+                    <div class="robot-preview">
+                        <svg class="robot-svg" id="robotPreview" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Robot Body -->
+                            <defs>
+                                <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#00d4aa;stop-opacity:0.8" />
+                                    <stop offset="100%" style="stop-color:#00a884;stop-opacity:0.9" />
+                                </linearGradient>
+                                <filter id="glow">
+                                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            
+                            <!-- Spine segments -->
+                            <g id="spine">
+                                <!-- Lumbar -->
+                                <ellipse cx="200" cy="480" rx="35" ry="25" fill="url(#bodyGrad)" stroke="#00d4aa" stroke-width="2"/>
+                                <ellipse cx="200" cy="440" rx="38" ry="26" fill="url(#bodyGrad)" stroke="#00d4aa" stroke-width="2"/>
+                                <ellipse cx="200" cy="400" rx="40" ry="27" fill="url(#bodyGrad)" stroke="#00d4aa" stroke-width="2"/>
+                                <ellipse cx="200" cy="360" rx="42" ry="28" fill="url(#bodyGrad)" stroke="#00d4aa" stroke-width="2"/>
+                                <ellipse cx="200" cy="320" rx="44" ry="29" fill="url(#bodyGrad)" stroke="#00d4aa" stroke-width="2"/>
+                                
+                                <!-- Thoracic with ribs -->
+                                <ellipse cx="200" cy="280" rx="45" ry="30" fill="url(#bodyGrad)" stroke="#00d4aa" stroke-width="2"/>
+                                <path d="M155,280 Q140,260 145,240" stroke="#00d4aa" stroke-width="2" fill="none" opacity="0.6"/>
+                                <path d="M245,280 Q260,260 255,240" stroke="#00d4aa" stroke-width="2" fill="none" opacity="0.6"/>
+                                
+                                <ellipse cx="200" cy="240" rx="44" ry="29" fill="url(#bodyGrad)" stroke="#00d4aa" stroke-width="2"/>
+                                <path d="M156,240 Q142,220 147,200" stroke="#00d4aa" stroke-width="2" fill="none" opacity="0.6"/>
+                                <path d="M244,240 Q258,220 253,200" stroke="#00d4aa" stroke-width="2" fill="none" opacity="0.6"/>
+                                
+                                <ellipse cx="200" cy="200" rx="42" ry="28" fill="url(#bodyGrad)" stroke="#00d4aa" stroke-width="2"/>
+                                <path d="M158,200 Q145,180 150,160" stroke="#00d4aa" stroke-width="2" fill="none" opacity="0.6"/>
+                                <path d="M242,200 Q255,180 250,160" stroke="#00d4aa" stroke-width="2" fill="none" opacity="0.6"/>
+                                
+                                <ellipse cx="200" cy="160" rx="40" ry="27" fill="url(#bodyGrad)" stroke="#00d4aa" stroke-width="2"/>
+                                <ellipse cx="200" cy="120" rx="38" ry="26" fill="url(#bodyGrad)" stroke="#00d4aa" stroke-width="2"/>
+                                
+                                <!-- Cervical -->
+                                <ellipse cx="200" cy="85" rx="35" ry="24" fill="url(#bodyGrad)" stroke="#00d4aa" stroke-width="2"/>
+                                <ellipse cx="200" cy="55" rx="32" ry="22" fill="url(#bodyGrad)" stroke="#00d4aa" stroke-width="2"/>
+                                
+                                <!-- Skull -->
+                                <ellipse cx="200" cy="25" rx="45" ry="30" fill="#1a1a2e" stroke="#00d4aa" stroke-width="3"/>
+                                
+                                <!-- Eyes (Phone screen representation) -->
+                                <rect x="175" y="10" width="50" height="30" rx="5" fill="#0a0a0f" stroke="#00d4aa" stroke-width="2"/>
+                                <circle cx="190" cy="25" r="8" fill="#00d4aa" filter="url(#glow)" id="eyeLeft">
+                                    <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite"/>
+                                </circle>
+                                <circle cx="210" cy="25" r="8" fill="#00d4aa" filter="url(#glow)" id="eyeRight">
+                                    <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite"/>
+                                </circle>
+                                
+                                <!-- Phone mount (if selected) -->
+                                <g id="phoneMount" style="display: block;">
+                                    <rect x="225" y="5" width="3" height="40" fill="#666" rx="1"/>
+                                    <rect x="222" y="3" width="9" height="3" fill="#888" rx="1"/>
+                                </g>
+                            </g>
+                            
+                            <!-- Servo indicators -->
+                            <circle cx="165" cy="55" r="4" fill="#ff6b6b" opacity="0.7"/>
+                            <circle cx="235" cy="85" r="4" fill="#ff6b6b" opacity="0.7"/>
+                            <circle cx="165" cy="120" r="4" fill="#ff6b6b" opacity="0.7"/>
+                            <circle cx="235" cy="160" r="4" fill="#ff6b6b" opacity="0.7"/>
+                            <circle cx="165" cy="200" r="4" fill="#ff6b6b" opacity="0.7"/>
+                            <circle cx="235" cy="240" r="4" fill="#ff6b6b" opacity="0.7"/>
+                            <circle cx="165" cy="280" r="4" fill="#ff6b6b" opacity="0.7"/>
+                            <circle cx="235" cy="320" r="4" fill="#ff6b6b" opacity="0.7"/>
+                            <circle cx="165" cy="360" r="4" fill="#ff6b6b" opacity="0.7"/>
+                            <circle cx="235" cy="400" r="4" fill="#ff6b6b" opacity="0.7"/>
+                            <circle cx="165" cy="440" r="4" fill="#ff6b6b" opacity="0.7"/>
+                            <circle cx="235" cy="480" r="4" fill="#ff6b6b" opacity="0.7"/>
+                            
+                            <!-- Addons visualization -->
+                            <g id="addonLidar" style="display: none;">
+                                <rect x="240" y="15" width="20" height="20" fill="#333" stroke="#00d4aa" stroke-width="1" rx="2"/>
+                                <line x1="250" y1="25" x2="280" y2="15" stroke="#00d4aa" stroke-width="1" opacity="0.5"/>
+                                <line x1="250" y1="25" x2="280" y2="25" stroke="#00d4aa" stroke-width="1" opacity="0.5"/>
+                                <line x1="250" y1="25" x2="280" y2="35" stroke="#00d4aa" stroke-width="1" opacity="0.5"/>
+                            </g>
+                            
+                            <g id="addonGripper" style="display: none;">
+                                <path d="M180,520 L160,540 M220,520 L240,540" stroke="#666" stroke-width="4" stroke-linecap="round"/>
+                                <circle cx="150" cy="545" r="8" fill="#444"/>
+                                <circle cx="250" cy="545" r="8" fill="#444"/>
+                            </g>
+                            
+                            <g id="addonLED" style="display: none;">
+                                <circle cx="180" cy="25" r="3" fill="#f0f" filter="url(#glow)"/>
+                                <circle cx="220" cy="25" r="3" fill="#f0f" filter="url(#glow)"/>
+                            </g>
+                        </svg>
+                        
+                        <div class="view-controls">
+                            <button class="view-btn active" data-view="front">Front</button>
+                            <button class="view-btn" data-view="side">Side</button>
+                            <button class="view-btn" data-view="top">Top</button>
+                            <button class="view-btn" data-view="explode">Explode</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Summary Panel -->
+        <div class="panel summary-panel">
+            <div class="panel-header">
+                🧾 Order Summary
+            </div>
+            <div class="panel-content">
+                <div class="summary-list">
+                    <div class="summary-item">
+                        <span class="summary-label">Base Model</span>
+                        <span class="summary-value" id="summaryModel">Standard</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Material</span>
+                        <span class="summary-value" id="summaryMaterial">PLA</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Color</span>
+                        <span class="summary-value" id="summaryColor">Tech Teal</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Assembly</span>
+                        <span class="summary-value" id="summaryAssembly">DIY Kit</span>
+                    </div>
+                </div>
+                
+                <div class="summary-list" id="addonSummary">
+                    <div class="summary-item">
+                        <span class="summary-label">WiFi 6 Module</span>
+                        <span class="summary-value">+$25</span>
+                    </div>
+                </div>
+                
+                <div class="summary-total">
+                    <div class="summary-row">
+                        <span>Base Price</span>
+                        <span id="basePrice">$599</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Add-ons</span>
+                        <span id="addonPrice">+$25</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Assembly</span>
+                        <span id="assemblyPrice">$0</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span id="totalPrice">$624</span>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="addToCart()">
+                        🛒 Add to Cart
+                    </button>
+                    <button class="btn btn-secondary" onclick="saveConfig()">
+                        💾 Save Config
+                    </button>
+                    <button class="btn btn-secondary" onclick="exportBOM()">
+                        📋 Export BOM
+                    </button>
+                    <button class="btn btn-secondary" onclick="shareConfig()">
+                        🔗 Share
+                    </button>
+                </div>
+                
+                <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <div style="font-size: 0.75rem; color: #666; margin-bottom: 0.5rem;">
+                        📦 Shipping Estimate
+                    </div>
+                    <div style="font-size: 0.9rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                            <span style="color: #888;">Assembly Time:</span>
+                            <span id="shipTime">8 hours (DIY)</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #888;">Weight:</span>
+                            <span id="weight">2.4 kg</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Configuration state
+        const config = {
+            model: 'standard',
+            material: 'pla',
+            color: 'teal',
+            addons: ['wifi'],
+            assembly: 'diy'
+        };
+        
+        // Pricing data
+        const prices = {
+            models: {
+                explorer: 299,
+                standard: 599,
+                pro: 999
+            },
+            materials: {
+                pla: 0,
+                petg: 25,
+                abs: 40
+            },
+            addons: {
+                battery: 45,
+                wifi: 25,
+                lidar: 120,
+                camera: 80,
+                gripper: 55,
+                led: 20,
+                gentle_touch: 52
+            },
+            assembly: {
+                diy: 0,
+                partial: 75,
+                full: 150
+            }
+        };
+        
+        const colorNames = {
+            teal: 'Tech Teal',
+            red: 'Alert Red',
+            cyan: 'Cyan Sky',
+            mint: 'Mint Fresh',
+            pink: 'Coral Pink',
+            purple: 'Royal Purple',
+            black: 'Stealth Black',
+            white: 'Arctic White'
+        };
+        
+        const colorValues = {
+            teal: '#00d4aa',
+            red: '#ff6b6b',
+            cyan: '#4ecdc4',
+            mint: '#95e1d3',
+            pink: '#f38181',
+            purple: '#aa96da',
+            black: '#333',
+            white: '#fff'
+        };
+        
+        // Update UI based on config
+        function updateUI() {
+            // Update prices
+            const basePrice = prices.models[config.model];
+            const materialPrice = prices.materials[config.material];
+            const addonPrice = config.addons.reduce((sum, addon) => sum + prices.addons[addon], 0);
+            const assemblyPrice = prices.assembly[config.assembly];
+            const total = basePrice + materialPrice + addonPrice + assemblyPrice;
+            
+            // Update header
+            document.getElementById('headerPrice').textContent = `$${total}`;
+            
+            // Update summary
+            document.getElementById('basePrice').textContent = `$${basePrice + materialPrice}`;
+            document.getElementById('addonPrice').textContent = `+$${addonPrice}`;
+            document.getElementById('assemblyPrice').textContent = `$${assemblyPrice}`;
+            document.getElementById('totalPrice').textContent = `$${total}`;
+            
+            // Update summary text
+            const modelNames = { explorer: 'Explorer', standard: 'Standard', pro: 'Professional' };
+            document.getElementById('summaryModel').textContent = modelNames[config.model];
+            document.getElementById('summaryMaterial').textContent = config.material.toUpperCase();
+            document.getElementById('summaryColor').textContent = colorNames[config.color];
+            
+            const assemblyNames = { diy: 'DIY Kit', partial: 'Pre-Assembled', full: 'Fully Assembled' };
+            document.getElementById('summaryAssembly').textContent = assemblyNames[config.assembly];
+            
+            // Update addon summary
+            const addonSummary = document.getElementById('addonSummary');
+            addonSummary.innerHTML = '';
+            config.addons.forEach(addon => {
+                const addonNames = {
+                    battery: 'Extended Battery',
+                    wifi: 'WiFi 6 Module',
+                    lidar: '2D LiDAR',
+                    camera: 'Stereo Camera',
+                    gripper: 'Tail Gripper',
+                    led: 'LED Accent Kit',
+                    gentle_touch: '🥚 Gentle Touch Package'
+                };
+                addonSummary.innerHTML += `
+                    <div class="summary-item">
+                        <span class="summary-label">${addonNames[addon]}</span>
+                        <span class="summary-value">+$${prices.addons[addon]}</span>
+                    </div>
+                `;
+            });
+            
+            // Update shipping estimate
+            const assemblyTimes = { diy: '8 hours (DIY)', partial: '4 hours', full: 'Ready to use' };
+            document.getElementById('shipTime').textContent = assemblyTimes[config.assembly];
+            
+            const weights = { explorer: 1.8, standard: 2.4, pro: 3.2 };
+            document.getElementById('weight').textContent = `${weights[config.model]} kg`;
+            
+            // Update SVG colors
+            updateRobotPreview();
+        }
+        
+        function updateRobotPreview() {
+            const color = colorValues[config.color];
+            const grad = document.getElementById('bodyGrad');
+            grad.innerHTML = `
+                <stop offset="0%" style="stop-color:${color};stop-opacity:0.8" />
+                <stop offset="100%" style="stop-color:${color};stop-opacity:0.9" />
+            `;
+            
+            // Update stroke colors
+            const spine = document.getElementById('spine');
+            spine.querySelectorAll('ellipse, path, rect').forEach(el => {
+                el.style.stroke = color;
+            });
+            
+            // Toggle addons
+            document.getElementById('addonLidar').style.display = 
+                config.addons.includes('lidar') ? 'block' : 'none';
+            document.getElementById('addonGripper').style.display = 
+                config.addons.includes('gripper') ? 'block' : 'none';
+            document.getElementById('addonLED').style.display = 
+                config.addons.includes('led') ? 'block' : 'none';
+        }
+        
+        // Event listeners
+        document.querySelectorAll('input[name="model"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                config.model = e.target.value;
+                document.querySelectorAll('[data-model]').forEach(el => el.classList.remove('selected'));
+                e.target.closest('.option-card').classList.add('selected');
+                updateUI();
+            });
+        });
+        
+        document.querySelectorAll('input[name="material"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                config.material = e.target.value;
+                document.querySelectorAll('[data-material]').forEach(el => el.classList.remove('selected'));
+                e.target.closest('.option-card').classList.add('selected');
+                updateUI();
+            });
+        });
+        
+        document.querySelectorAll('.color-option').forEach(color => {
+            color.addEventListener('click', (e) => {
+                config.color = e.target.dataset.color;
+                document.querySelectorAll('.color-option').forEach(el => el.classList.remove('selected'));
+                e.target.classList.add('selected');
+                updateUI();
+            });
+        });
+        
+        document.querySelectorAll('input[name="addon"]').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                const addon = e.target.value;
+                if (e.target.checked) {
+                    config.addons.push(addon);
+                } else {
+                    config.addons = config.addons.filter(a => a !== addon);
+                }
+                e.target.closest('.option-card').classList.toggle('selected', e.target.checked);
+                updateUI();
+            });
+        });
+        
+        document.querySelectorAll('input[name="assembly"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                config.assembly = e.target.value;
+                document.querySelectorAll('[data-assembly]').forEach(el => el.classList.remove('selected'));
+                e.target.closest('.option-card').classList.add('selected');
+                updateUI();
+            });
+        });
+        
+        // View buttons
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+            });
+        });
+        
+        // Action functions
+        function addToCart() {
+            alert(`Added COBRA ${config.model} to cart!\nTotal: ${document.getElementById('totalPrice').textContent}`);
+        }
+        
+        function saveConfig() {
+            const configData = JSON.stringify(config, null, 2);
+            const blob = new Blob([configData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `COBRA-config-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        function exportBOM() {
+            alert('BOM export feature would generate a CSV/Excel file with all parts.');
+        }
+        
+        function shareConfig() {
+            const url = new URL(window.location.href);
+            url.searchParams.set('config', btoa(JSON.stringify(config)));
+            navigator.clipboard.writeText(url.toString());
+            alert('Configuration URL copied to clipboard!');
+        }
+        
+        // Load config from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const savedConfig = urlParams.get('config');
+        if (savedConfig) {
+            try {
+                Object.assign(config, JSON.parse(atob(savedConfig)));
+            } catch (e) {
+                console.error('Invalid config URL');
+            }
+        }
+        
+        // Initialize
+        updateUI();
+    </script>
+</body>
+</html>
