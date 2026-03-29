@@ -1,0 +1,13 @@
+[Unit]
+Description=Roblox Bridge for AGI Agents
+After=network.target
+
+[Service]
+WorkingDirectory=/root/.openclaw/workspace/AGI_COMPANY/shared/brain/roblox_bridge
+ExecStart=/usr/bin/python3 -c "from roblox_bridge import RobloxBridge; rb = RobloxBridge(); print('Roblox Bridge active'); import time; time.sleep(999999)"
+Restart=always
+RestartSec=10
+User=root
+
+[Install]
+WantedBy=multi-user.target
