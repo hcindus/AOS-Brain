@@ -315,7 +315,7 @@ class SkillLayer(ControlLayerBase):
         }
     
     def process(self):
-        """Skill execution loop""""
+        """Skill execution loop"""
         # Check commands
         with self._lock:
             commands = self._commands.copy()
