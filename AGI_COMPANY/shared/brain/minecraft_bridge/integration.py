@@ -9,6 +9,12 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+import sys
+from pathlib import Path
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent))
+
 from observer import MinecraftObserver
 from actor import MinecraftActor
 from growth_laws import GrowingBrain
