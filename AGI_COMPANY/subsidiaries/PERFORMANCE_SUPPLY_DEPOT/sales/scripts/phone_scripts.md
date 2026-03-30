@@ -162,7 +162,7 @@ My number is [number]. Talk soon!"
 
 This is my third try — I'll be honest, I'm not sure if now's the right time or if I should close the loop on this. 
 
-If you're interested, give me a shout at [number]. If not, no hard feelings. Either way, wishing you the best!"
+If you're interested, give me a shout at 1-800-581-2274 or 415-571-9724. If not, no hard feelings. Either way, wishing you the best!"
 ```
 
 ---
@@ -228,3 +228,4 @@ After every call, document:
 
 *Last Updated: [Date]*  
 *Owner: Sales Team | AGI Company*
+mpany*
