@@ -1,0 +1,84 @@
+{
+  "San Francisco": {
+    "state": "CA",
+    "business_license": {
+      "name": "SF Business Portal",
+      "url": "https://businessportal.sfgov.org/"
+    },
+    "open_data": {
+      "name": "SF Open Data",
+      "url": "https://data.sfgov.org/"
+    },
+    "health": {
+      "name": "SF Food Facility Inspections",
+      "url": "https://data.sfgov.org/Health-and-Social-Services/Food-Facility-Inspections/pyih-qa8i"
+    }
+  },
+  "Los Angeles": {
+    "state": "CA",
+    "business_license": {
+      "name": "LA Business License",
+      "url": "https://business.lacity.org/"
+    }
+  },
+  "New York City": {
+    "state": "NY",
+    "business_license": {
+      "name": "NYC Business Express",
+      "url": "https://www.nyc.gov/site/dca/businesses/business-types.page"
+    },
+    "open_data": {
+      "name": "NYC Open Data",
+      "url": "https://opendata.cityofnewyork.us/"
+    }
+  },
+  "Chicago": {
+    "state": "IL",
+    "business_license": {
+      "name": "Chicago Business Affairs",
+      "url": "https://www.chicago.gov/city/en/depts/bacp.html"
+    }
+  },
+  "Houston": {
+    "state": "TX",
+    "business_license": {
+      "name": "Houston Business License",
+      "url": "https://www.houstontx.gov/obo/"
+    }
+  },
+  "Phoenix": {
+    "state": "AZ",
+    "business_license": {
+      "name": "Phoenix Business License",
+      "url": "https://www.phoenix.gov/pios/business"
+    }
+  },
+  "Philadelphia": {
+    "state": "PA",
+    "business_license": {
+      "name": "Philadelphia Licenses",
+      "url": "https://www.phila.gov/departments/department-of-licenses-and-inspections/"
+    }
+  },
+  "San Antonio": {
+    "state": "TX",
+    "business_license": {
+      "name": "San Antonio Business",
+      "url": "https://www.sanantonio.gov/dsd"
+    }
+  },
+  "San Diego": {
+    "state": "CA",
+    "business_license": {
+      "name": "San Diego Business",
+      "url": "https://www.sandiego.gov/treasurer/business-tax"
+    }
+  },
+  "Dallas": {
+    "state": "TX",
+    "business_license": {
+      "name": "Dallas Business License",
+      "url": "https://dallascityhall.com/departments/sustainabledevelopment/business_license"
+    }
+  }
+}

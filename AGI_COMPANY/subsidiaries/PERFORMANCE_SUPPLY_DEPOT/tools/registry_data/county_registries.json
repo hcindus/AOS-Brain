@@ -1,0 +1,96 @@
+{
+  "CA": {
+    "Los Angeles County": {
+      "clerk_recorder": {
+        "name": "LA County Clerk",
+        "url": "https://lavote.gov/home/records/business-records"
+      },
+      "business_license": {
+        "name": "LA Business License",
+        "url": "https://business.lacity.org/"
+      },
+      "tax_assessor": {
+        "name": "LA County Assessor",
+        "url": "https://assessor.lacounty.gov/"
+      },
+      "open_data": {
+        "name": "LA Open Data",
+        "url": "https://data.lacity.org/"
+      }
+    },
+    "San Diego County": {
+      "clerk_recorder": {
+        "name": "SD County Clerk",
+        "url": "https://www.sdcounty.ca.gov/"
+      },
+      "business_license": {
+        "name": "SD Business License",
+        "url": "https://www.sandiego.gov/treasurer/business-tax"
+      }
+    },
+    "Orange County": {
+      "clerk_recorder": {
+        "name": "OC Clerk-Recorder",
+        "url": "https://cr.ococlc.com/"
+      }
+    },
+    "San Francisco County": {
+      "clerk_recorder": {
+        "name": "SF County Clerk",
+        "url": "https://sfassessor.org/"
+      },
+      "business_license": {
+        "name": "SF Business Portal",
+        "url": "https://businessportal.sfgov.org/"
+      }
+    }
+  },
+  "TX": {
+    "Harris County": {
+      "clerk_recorder": {
+        "name": "Harris County Clerk",
+        "url": "https://www.cclerk.hctx.net/"
+      }
+    },
+    "Dallas County": {
+      "clerk_recorder": {
+        "name": "Dallas County Clerk",
+        "url": "https://dallascounty.org/"
+      }
+    },
+    "Travis County": {
+      "clerk_recorder": {
+        "name": "Travis County Clerk",
+        "url": "https://www.traviscountytx.gov/"
+      }
+    }
+  },
+  "NY": {
+    "New York County": {
+      "clerk_recorder": {
+        "name": "NYC County Clerk",
+        "url": "https://www.nycourts.gov/courts/county.shtml"
+      }
+    },
+    "Kings County": {
+      "clerk_recorder": {
+        "name": "Brooklyn County Clerk",
+        "url": "https://www.nycourts.gov/courts/county.shtml"
+      }
+    }
+  },
+  "FL": {
+    "Miami-Dade County": {
+      "clerk_recorder": {
+        "name": "Miami-Dade Clerk",
+        "url": "https://www.miami-dadeclerk.com/"
+      }
+    },
+    "Broward County": {
+      "clerk_recorder": {
+        "name": "Broward County Clerk",
+        "url": "https://www.browardclerk.org/"
+      }
+    }
+  }
+}
