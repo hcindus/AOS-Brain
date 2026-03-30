@@ -58,7 +58,7 @@ class AgentProgress:
     awakening_date: str = field(default_factory=lambda: datetime.now().isoformat())
     
     def to_dict(self) -> Dict:
-        return {
+        result = {
             "agent_id": self.agent_id,
             "current_stage": self.current_stage,
             "physics": {
@@ -78,6 +78,10 @@ class AgentProgress:
             },
             "awakening_date": str(self.awakening_date)
         }
+        # Include gender if set
+        if hasattr(self, 'gender'):
+            result["gender"] = self.gender
+        return result
 
 
 class MYLProgressionGate:
@@ -97,9 +101,20 @@ class MYLProgressionGate:
         self.minecraft_bridge = MYLMinecraftBridge()
         
         # Initialize MYL agents
-        for name in ["mylzeron", "mylonen", "myltwon", "mylthreen",
-                     "mylforon", "mylfivon", "mylsixon"]:
+        # Gender: mylfivon (fives) and mylsixon (sixes) are female per memory/2026-03-16.md
+        agent_configs = {
+            "mylzeron": {"gender": "male"},
+            "mylonen": {"gender": "male"},
+            "myltwon": {"gender": "male"},
+            "mylthreen": {"gender": "female"},  # Per user memory
+            "mylforon": {"gender": "male"},
+            "mylfivon": {"gender": "female"},   # Female copy per memory
+            "mylsixon": {"gender": "female"},   # CLONE Female per memory
+        }
+        
+        for name, config in agent_configs.items():
             self.agents[name] = AgentProgress(agent_id=name)
+            self.agents[name].gender = config["gender"]
         
         logger.info(f"Progression Gate initialized for {len(self.agents)} agents")
     
