@@ -122,9 +122,12 @@ class RealScraper:
         matches = re.findall(pattern, text)
         
         for email in matches:
+            # Clean email - remove trailing non-alphanumeric chars
+            email = re.sub(r'[^a-zA-Z0-9._%+-@]$', '', email)
+            
             # Filter out templates and common fakes
             skip = ['example.com', 'domain.com', 'email.com', 'test.com', 'yourdomain',
-                   'info@example', 'contact@example', 'admin@example']
+                   'info@example', 'contact@example', 'admin@example', 'email@email']
             if not any(s in email.lower() for s in skip):
                 if len(email) < 50 and '.' in email.split('@')[1]:
                     return email
