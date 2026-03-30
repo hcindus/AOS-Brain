@@ -1,0 +1,116 @@
+solid CervicalVertebra07
+  facet normal 0 0 1
+    outer loop
+      vertex -15.0 -12.5 10.0
+      vertex 15.0 -12.5 10.0
+      vertex 15.0 12.5 10.0
+    endloop
+  endfacet
+  facet normal 0 0 1
+    outer loop
+      vertex -15.0 -12.5 10.0
+      vertex 15.0 12.5 10.0
+      vertex -15.0 12.5 10.0
+    endloop
+  endfacet
+  facet normal 0 0 -1
+    outer loop
+      vertex -15.0 -12.5 -10.0
+      vertex 15.0 12.5 -10.0
+      vertex 15.0 -12.5 -10.0
+    endloop
+  endfacet
+  facet normal 0 0 -1
+    outer loop
+      vertex -15.0 -12.5 -10.0
+      vertex -15.0 12.5 -10.0
+      vertex 15.0 12.5 -10.0
+    endloop
+  endfacet
+  facet normal 1 0 0
+    outer loop
+      vertex 15.0 -12.5 -10.0
+      vertex 15.0 12.5 10.0
+      vertex 15.0 -12.5 10.0
+    endloop
+  endfacet
+  facet normal 1 0 0
+    outer loop
+      vertex 15.0 -12.5 -10.0
+      vertex 15.0 12.5 -10.0
+      vertex 15.0 12.5 10.0
+    endloop
+  endfacet
+  facet normal -1 0 0
+    outer loop
+      vertex -15.0 -12.5 -10.0
+      vertex -15.0 -12.5 10.0
+      vertex -15.0 12.5 10.0
+    endloop
+  endfacet
+  facet normal -1 0 0
+    outer loop
+      vertex -15.0 -12.5 -10.0
+      vertex -15.0 12.5 10.0
+      vertex -15.0 12.5 -10.0
+    endloop
+  endfacet
+  facet normal 0 1 0
+    outer loop
+      vertex -15.0 12.5 -10.0
+      vertex 15.0 12.5 10.0
+      vertex 15.0 12.5 -10.0
+    endloop
+  endfacet
+  facet normal 0 1 0
+    outer loop
+      vertex -15.0 12.5 -10.0
+      vertex -15.0 12.5 10.0
+      vertex 15.0 12.5 10.0
+    endloop
+  endfacet
+  facet normal 0 -1 0
+    outer loop
+      vertex -15.0 -12.5 -10.0
+      vertex 15.0 -12.5 -10.0
+      vertex 15.0 -12.5 10.0
+    endloop
+  endfacet
+  facet normal 0 -1 0
+    outer loop
+      vertex -15.0 -12.5 -10.0
+      vertex 15.0 -12.5 10.0
+      vertex -15.0 -12.5 10.0
+    endloop
+  endfacet
+  // Connector hole (top)
+  facet normal 0 0 1
+    outer loop
+      vertex -4.0 -4.0 10.0
+      vertex 4.0 -4.0 10.0
+      vertex 4.0 4.0 10.0
+    endloop
+  endfacet
+  facet normal 0 0 1
+    outer loop
+      vertex -4.0 -4.0 10.0
+      vertex 4.0 4.0 10.0
+      vertex -4.0 4.0 10.0
+    endloop
+  endfacet
+  // Connector hole (bottom)
+  facet normal 0 0 -1
+    outer loop
+      vertex -4.0 -4.0 -10.0
+      vertex 4.0 4.0 -10.0
+      vertex 4.0 -4.0 -10.0
+    endloop
+  endfacet
+  facet normal 0 0 -1
+    outer loop
+      vertex -4.0 -4.0 -10.0
+      vertex -4.0 4.0 -10.0
+      vertex 4.0 4.0 -10.0
+    endloop
+  endfacet
+endsolid CervicalVertebra07
