@@ -37,3 +37,49 @@ a8037e9 Add MilkMan Games production tracking
 
 ### File Sizes
 ```
+    217 ./aos_brain_py/VERSION.md
+    183 ./aos_brain_py/GITHUB_INSTALL.md
+    297 ./aos_brain_py/ARCHITECTURE.md
+    151 ./aos_brain_py/docs/INTEGRATION_HUB.md
+    134 ./aos_brain_py/docs/HERMES_INTEGRATION.md
+    245 ./aos_brain_py/docs/MINIMAX_INTEGRATION.md
+    193 ./aos_brain_py/config/MINIMAX_TECHNICAL_SETUP.md
+    156 ./aos_brain_py/README.md
+    192 ./INTEGRATION_PLAN.md
+ 126624 total
+```
+
+## VPS Audit
+
+### System Resources
+```
+Load:  16.26, 13.46, 12.60
+Memory: 10Gi/15Gi used
+Disk: 67G/193G (35%)
+```
+
+### Running Services
+```
+  minecraft.service           loaded active running Minecraft Server for AGI Agents
+  ollama.service              loaded active running Ollama Service
+  roblox-bridge.service       loaded active running Roblox Bridge for AGI Agents
+```
+
+### Docker/Ollama Status
+```
+"name":"tinyllama:latest"
+"name":"antoniohudnall/Mortimer:latest"
+"name":"nomic-embed-text:latest"
+"name":"phi3:latest"
+"name":"phi3:3.8b"
+```
+
+## Recommendations
+
+- [ ] Review large files for optimization
+- [ ] Check for unused dependencies
+- [ ] Verify backup integrity
+- [ ] Review memory usage trends
+
+---
+*Audit completed at 2026-03-31T03:01:51+00:00*
