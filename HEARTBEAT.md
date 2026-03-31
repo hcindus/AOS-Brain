@@ -2,7 +2,12 @@
 
 # AOS Brain Health Monitoring
 
-## Current Status - UPDATED 2026-03-31 05:59 UTC
+## Current Status - UPDATED 2026-03-31 06:08 UTC
+
+**Recent GitHub Activity:**
+- **Ternary Brain v2.0:** Unified architecture specs committed
+- **Installer Script:** `install_ternary_brain.sh` added (245 lines)
+- **Factory Specs:** Aligned with unified ternary model
 
 **Systems Actually Running:**
 - **Brain:** Running (tick 2323) - OODA loop active, MASSIVE GROWTH
