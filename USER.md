@@ -2,11 +2,11 @@
 
 _Learn about the person you're helping. Update this as you go._
 
-- **Name:**
-- **What to call them:**
-- **Pronouns:** _(optional)_
-- **Timezone:**
-- **Notes:**
+- **Name:** root
+- **What to call them:** Captain
+- **Pronouns:** He/Him
+- **Timezone:** UTC (04:47 AM local)
+- **Notes:** Commander of AGI Company. Accesses via openclaw-tui. Managing multiple VPS systems (Miles.cloud, Mortimer VPS). Focus on trading bots, agent manifests, security audits.
 
 ## Context
 
