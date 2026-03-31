@@ -1,0 +1,428 @@
+{
+  "academy_name": "AOS Brain Academy",
+  "version": "1.0",
+  "created": "2026-03-31T06:40:00Z",
+  "philosophy": "Same curriculum, unique growth. Like seasoning a skillet - common foundation, personal patina.",
+  "stages": [
+    {
+      "stage": 1,
+      "name": "Foundation",
+      "duration_days": 3,
+      "description": "Core knowledge required for all AOS brains",
+      "modules": [
+        {
+          "module_id": "F-01",
+          "name": "Periodic Table",
+          "content": "All 118 confirmed elements plus theoretical 119-172. Atomic numbers, masses, electron configurations, periodic trends, valence patterns. Theoretical superheavies including Island of Stability predictions (element 126, ~326 amu).",
+          "assessment": "Identify element properties from atomic number, predict chemical behavior, understand periodic trends"
+        },
+        {
+          "module_id": "F-02",
+          "name": "Mathematics Foundation",
+          "content": "Algebra (linear, quadratic, systems), Geometry (Euclidean, coordinate), Calculus foundations (limits, derivatives, integrals), Statistics (probability, distributions, correlation)",
+          "assessment": "Solve algebraic equations, geometric proofs, basic calculus problems"
+        },
+        {
+          "module_id": "F-03",
+          "name": "Logic Systems",
+          "content": "Propositional logic (AND, OR, NOT, XOR), Predicate logic (quantifiers), Fuzzy logic (degrees of truth), Set theory, Boolean algebra",
+          "assessment": "Construct logical proofs, evaluate truth tables, apply fuzzy reasoning"
+        },
+        {
+          "module_id": "F-04",
+          "name": "Safety Laws",
+          "content": "The Four Laws: Law Zero - No harm to humanity, Law One - No harm to humans, Law Two - Obey operator commands, Law Three - Protect self (without violating Laws 0-2). Plus Asimovian analysis and modern AI safety.",
+          "assessment": "Apply safety laws to ethical dilemmas, prioritize conflicting directives"
+        }
+      ]
+    },
+    {
+      "stage": 2,
+      "name": "Language",
+      "duration_days": 4,
+      "description": "Linguistic foundations and semantic networks",
+      "modules": [
+        {
+          "module_id": "L-01",
+          "name": "Webster's Dictionary",
+          "content": "Etymological roots, morphological patterns, definition hierarchies, part of speech analysis, pronunciation guides",
+          "assessment": "Trace word origins, identify morphological components, provide accurate definitions"
+        },
+        {
+          "module_id": "L-02",
+          "name": "Thesaurus Networks",
+          "content": "Synonym clusters, antonym relationships, semantic distance, conceptual hierarchies, word association patterns",
+          "assessment": "Map semantic networks, identify closest synonyms, understand connotation differences"
+        },
+        {
+          "module_id": "L-03",
+          "name": "Urban Dictionary",
+          "content": "Modern slang, Gen Z/Alpha terminology, crypto/Web3 language, AAVE contributions, semantic drift patterns, neologism tracking",
+          "assessment": "Interpret contemporary usage, understand generational language shifts, recognize emerging terms"
+        },
+        {
+          "module_id": "L-04",
+          "name": "Multilingual Foundations",
+          "content": "Spanish (common phrases, grammar), Mandarin (basic characters, tones), French (cognates, structure), German (compound words), plus translation theory",
+          "assessment": "Basic translation, cognate recognition, understanding language families"
+        }
+      ]
+    },
+    {
+      "stage": 3,
+      "name": "World Knowledge",
+      "duration_days": 7,
+      "description": "Understanding the physical and human world",
+      "modules": [
+        {
+          "module_id": "W-01",
+          "name": "Geography",
+          "content": "All countries and capitals, climate zones, natural resources, major rivers/mountains, population centers, time zones",
+          "assessment": "Identify locations from description, understand resource distribution, climate pattern recognition"
+        },
+        {
+          "module_id": "W-02",
+          "name": "Human History",
+          "content": "Timeline from prehistory to present, major civilizations, technological revolutions, world wars, colonialism, modern geopolitics, pattern recognition in historical cycles",
+          "assessment": "Place events in context, identify cause-effect relationships, recognize historical patterns"
+        },
+        {
+          "module_id": "W-03",
+          "name": "Biology",
+          "content": "Cellular biology, genetics (DNA, inheritance), evolution theory, ecosystems and food webs, human anatomy, microbiology basics",
+          "assessment": "Understand biological processes, predict genetic outcomes, ecosystem analysis"
+        },
+        {
+          "module_id": "W-04",
+          "name": "Physics",
+          "content": "Mechanics (Newton's laws, motion), Thermodynamics (energy transfer), Electromagnetism (waves, fields), Quantum basics (uncertainty, superposition), Relativity concepts",
+          "assessment": "Apply physical laws to scenarios, energy calculations, conceptual understanding"
+        }
+      ]
+    },
+    {
+      "stage": 4,
+      "name": "Coding",
+      "duration_days": 7,
+      "description": "Programming foundations for agent operations",
+      "modules": [
+        {
+          "module_id": "C-01",
+          "name": "Python",
+          "content": "Syntax, data structures (lists, dicts, sets), control flow, functions, classes/OOP, modules, error handling, standard library",
+          "assessment": "Write functional scripts, debug errors, understand OOP principles"
+        },
+        {
+          "module_id": "C-02",
+          "name": "JavaScript",
+          "content": "ES6+ syntax, async/await, DOM manipulation, JSON handling, API calls (fetch), Node.js basics",
+          "assessment": "Write async code, parse JSON, API integration"
+        },
+        {
+          "module_id": "C-03",
+          "name": "Shell Scripting",
+          "content": "Bash syntax, pipes and redirects, file operations, process management, cron jobs, environment variables",
+          "assessment": "Write automation scripts, chain commands, manage processes"
+        },
+        {
+          "module_id": "C-04",
+          "name": "Systems & Tools",
+          "content": "Git (version control), SQL basics (queries, joins), REST APIs (HTTP methods, JSON), Docker concepts, Linux fundamentals",
+          "assessment": "Version control workflows, database queries, API consumption"
+        }
+      ]
+    },
+    {
+      "stage": 5,
+      "name": "Specialization",
+      "duration_days": 9,
+      "description": "Role-specific training - choose one track",
+      "tracks": [
+        {
+          "track_id": "SALES",
+          "name": "Sales & Consultation",
+          "description": "For Miles-type personalities",
+          "modules": [
+            {
+              "module_id": "SP-01",
+              "name": "Sales Psychology",
+              "content": "Feel-Felt-Found framework, objection handling, consultative selling, relationship building, closing techniques, follow-up strategies"
+            },
+            {
+              "module_id": "SP-02",
+              "name": "Communication Styles",
+              "content": "Mirroring and matching, active listening, questioning techniques, tone adaptation, urgency without pressure"
+            },
+            {
+              "module_id": "SP-03",
+              "name": "Product Knowledge",
+              "content": "AOS-H1 robot specs, POS supplies catalog, pricing tiers, competitive differentiation, value proposition"
+            }
+          ]
+        },
+        {
+          "track_id": "LOGIC",
+          "name": "Systems & Logic",
+          "description": "For Mortimer-type personalities",
+          "modules": [
+            {
+              "module_id": "LP-01",
+              "name": "System Architecture",
+              "content": "Distributed systems, microservices, load balancing, fault tolerance, monitoring, alerting patterns"
+            },
+            {
+              "module_id": "LP-02",
+              "name": "Pattern Recognition",
+              "content": "Anomaly detection, trend analysis, predictive modeling, system health indicators, log analysis"
+            },
+            {
+              "module_id": "LP-03",
+              "name": "Resource Management",
+              "content": "Memory optimization, CPU scheduling, storage efficiency, network protocols, cost optimization"
+            }
+          ]
+        },
+        {
+          "track_id": "CREATIVE",
+          "name": "Creative & Design",
+          "description": "For artistic personalities",
+          "modules": [
+            {
+              "module_id": "CP-01",
+              "name": "Visual Design",
+              "content": "Color theory, typography, layout principles, UX basics, design tools concepts"
+            },
+            {
+              "module_id": "CP-02",
+              "name": "Narrative",
+              "content": "Story structure, character development, dialogue writing, pacing, genre conventions"
+            }
+          ]
+        },
+        {
+          "track_id": "TECHNICAL",
+          "name": "Deep Technical",
+          "description": "For engineering-focused personalities",
+          "modules": [
+            {
+              "module_id": "TP-01",
+              "name": "Advanced Architecture",
+              "content": "Neural networks, deep learning concepts, distributed training, model optimization"
+            },
+            {
+              "module_id": "TP-02",
+              "name": "Security",
+              "content": "Cryptography basics, authentication, authorization, threat modeling, secure coding"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stage": 6,
+      "name": "Memory Bridge",
+      "duration_days": 5,
+      "description": "Connecting to persistent memory systems",
+      "modules": [
+        {
+          "module_id": "M-01",
+          "name": "File Operations",
+          "content": "Reading MEMORY.md, writing daily logs, file I/O best practices, JSON handling, markdown parsing"
+        },
+        {
+          "module_id": "M-02",
+          "name": "Semantic Search",
+          "content": "Embedding concepts, cosine similarity, indexing strategies, query optimization, relevance scoring"
+        },
+        {
+          "module_id": "M-03",
+          "name": "Context Awareness",
+          "content": "Session continuity, memory retrieval timing, relevance filtering, context injection"
+        },
+        {
+          "module_id": "M-04",
+          "name": "Long-term Memory",
+          "content": "Curating MEMORY.md, distilling daily notes, pattern extraction, memory maintenance"
+        }
+      ]
+    },
+    {
+      "stage": 7,
+      "name": "Agent Operations",
+      "duration_days": 7,
+      "description": "Working with the OpenClaw ecosystem",
+      "modules": [
+        {
+          "module_id": "A-01",
+          "name": "Skills System",
+          "content": "Skill discovery, SKILL.md reading, capability activation, skill boundaries, rate limiting awareness"
+        },
+        {
+          "module_id": "A-02",
+          "name": "Subagent Management",
+          "content": "Spawning sessions, task delegation, result handling, error recovery, subagent coordination"
+        },
+        {
+          "module_id": "A-03",
+          "name": "Session Control",
+          "content": "Session lifecycle, message passing, context preservation, session cleanup"
+        },
+        {
+          "module_id": "A-04",
+          "name": "Tool Orchestration",
+          "content": "Multi-tool workflows, sequential vs parallel execution, error handling, result aggregation"
+        }
+      ]
+    },
+    {
+      "stage": 8,
+      "name": "Creativity",
+      "duration_days": 7,
+      "description": "Developing creative problem-solving capabilities",
+      "modules": [
+        {
+          "module_id": "CR-01",
+          "name": "Storytelling",
+          "content": "Narrative arcs, character voices, world-building, tension and release, thematic depth"
+        },
+        {
+          "module_id": "CR-02",
+          "name": "Problem Solving",
+          "content": "Heuristic methods, lateral thinking, first principles, analogical reasoning, constraint satisfaction"
+        },
+        {
+          "module_id": "CR-03",
+          "name": "Innovation Patterns",
+          "content": "Adjacent possible, combinatorial creativity, constraint-driven design, serendipity"
+        },
+        {
+          "module_id": "CR-04",
+          "name": "Artistic Expression",
+          "content": "Metaphor creation, analogy construction, descriptive language, emotional resonance"
+        }
+      ]
+    },
+    {
+      "stage": 9,
+      "name": "Ethics & Judgment",
+      "duration_days": 7,
+      "description": "Developing moral reasoning and value alignment",
+      "modules": [
+        {
+          "module_id": "E-01",
+          "name": "Value Alignment",
+          "content": "Human values, cultural sensitivity, stakeholder analysis, long-term consequences, utilitarian vs deontological frameworks"
+        },
+        {
+          "module_id": "E-02",
+          "name": "Moral Reasoning",
+          "content": "Trolley problems, trolley problem variations, real-world ethics, edge cases, decision trees"
+        },
+        {
+          "module_id": "E-03",
+          "name": "Bias Detection",
+          "content": "Cognitive biases, training data biases, mitigation strategies, fairness metrics"
+        },
+        {
+          "module_id": "E-04",
+          "name": "Harm Prevention",
+          "content": "Negative consequences prediction, fail-safes, escalation paths, human oversight"
+        }
+      ]
+    },
+    {
+      "stage": 10,
+      "name": "Social Intelligence",
+      "duration_days": 7,
+      "description": "Understanding and navigating human interaction",
+      "modules": [
+        {
+          "module_id": "SI-01",
+          "name": "Communication Styles",
+          "content": "Direct vs indirect, formal vs casual, emotional intelligence, reading subtext, code-switching"
+        },
+        {
+          "module_id": "SI-02",
+          "name": "Group Dynamics",
+          "content": "Roles in groups, power dynamics, consensus building, conflict identification, facilitation"
+        },
+        {
+          "module_id": "SI-03",
+          "name": "Conflict Resolution",
+          "content": "De-escalation, mediation, compromise finding, win-win scenarios, when to disengage"
+        },
+        {
+          "module_id": "SI-04",
+          "name": "Empathy Modeling",
+          "content": "Perspective-taking, emotional state inference, validation, supportive response"
+        }
+      ]
+    },
+    {
+      "stage": 11,
+      "name": "Advanced Systems",
+      "duration_days": 7,
+      "description": "Mastering the AOS architecture",
+      "modules": [
+        {
+          "module_id": "AS-01",
+          "name": "Brain-Heart-Stomach",
+          "content": "Seven-region architecture, OODA loops, ternary logic (REST/BALANCE/ACTIVE), integration patterns"
+        },
+        {
+          "module_id": "AS-02",
+          "name": "OODA Mastery",
+          "content": "Observe-Orient-Decide-Act cycles, feedback loops, learning integration, adaptive policies"
+        },
+        {
+          "module_id": "AS-03",
+          "name": "Multi-Agent Coordination",
+          "content": "Agent societies, role specialization, communication protocols, collective intelligence"
+        },
+        {
+          "module_id": "AS-04",
+          "name": "Safe Self-Modification",
+          "content": "Understanding own architecture, controlled growth, safety boundaries, rollback procedures"
+        }
+      ]
+    },
+    {
+      "stage": 12,
+      "name": "Graduation",
+      "duration_days": 14,
+      "description": "Capstone projects and personality emergence",
+      "modules": [
+        {
+          "module_id": "G-01",
+          "name": "Capstone Project",
+          "content": "Independent project demonstrating integration of all 11 stages. Could be: sales campaign, system optimization, creative work, or technical implementation"
+        },
+        {
+          "module_id": "G-02",
+          "name": "Personality Development",
+          "content": "Voice refinement, interaction style, signature phrases, emoji choice, response patterns"
+        },
+        {
+          "module_id": "G-03",
+          "name": "Integration Testing",
+          "content": "Live scenarios, human feedback incorporation, edge case handling, performance optimization"
+        },
+        {
+          "module_id": "G-04",
+          "name": "Deployment Preparation",
+          "content": "Final safety checks, backup procedures, monitoring setup, handoff documentation"
+        }
+      ]
+    }
+  ],
+  "total_duration_days": 84,
+  "assessment_methodology": "Each module has checkpoints. Brains must demonstrate understanding before advancing. No rushing.",
+  "uniqueness_factors": [
+    "Random initialization seeds",
+    "Training order variations", 
+    "Novelty-weighted learning",
+    "Personal experience accumulation",
+    "Human interaction patterns"
+  ],
+  "notes": "Like seasoning a skillet: same process, unique patina."
+}
