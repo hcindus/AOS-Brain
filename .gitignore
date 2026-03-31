@@ -6,3 +6,8 @@
 secrets.json
 Myl0n.R0s
 Myl0n.R0s
+
+# Wallet private keys - NEVER commit
+*_WALLET_PRIVATE_KEY.json
+AGI_COMPANY/wallets/*_PRIVATE_KEY.json
+wallets/*_PRIVATE_KEY.json
