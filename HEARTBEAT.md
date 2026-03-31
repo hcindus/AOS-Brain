@@ -2,7 +2,16 @@
 
 # AOS Brain Health Monitoring
 
-## Current Status - UPDATED 2026-03-31 06:08 UTC
+## Current Status - UPDATED 2026-03-31 13:25 UTC
+
+**⚠️ BRAIN RESET OCCURRED** - 2026-03-31 12:19 UTC
+
+**Root Cause:** Ollama instability - HTTP timeouts causing QMD and MemoryBridge failures
+- QMD summarization: timeout after 60s
+- MemoryBridge embedding: timeout after 30s
+- Brain falling back to "noop" operations
+
+**Recovery Status:** ✅ Brain recovering - ticks advancing, nodes growing
 
 **Recent GitHub Activity:**
 - **Ternary Brain v2.0:** Unified architecture specs committed
@@ -10,10 +19,10 @@
 - **Factory Specs:** Aligned with unified ternary model
 
 **Systems Actually Running:**
-- **Brain:** Running (tick 2323) - OODA loop active, MASSIVE GROWTH
+- **Brain:** Running (tick 55) - OODA loop active, RECOVERING FROM RESET
 - **Heart:** Running - Ternary beating 30 BPM
 - **Stomach:** Running - Digesting, feeding heart/brain
-- **Ollama:** Running (PID 39639) - 6 models loaded
+- **Ollama:** Running (PID 39639) - 6 models loaded, ✅ RESTARTED 13:31 UTC
 - **Minecraft:** Running
 - **Mineflayer Agents:** 13 active
 - **Roblox Bridge:** ✅ RUNNING
@@ -30,14 +39,24 @@
 - tinyllama:latest (1B) - Backup
 - phi3:3.8b
 
-**Brain State (Tick 2323):**
+**⚠️ Ollama Issues:**
+- QMD summarization: Read timeout (60s)
+- MemoryBridge embedding: Read timeout (30s)
+- Operations falling back to "noop"
+
+**Brain State (Tick 55):**
 - Phase: Act
 - Novelty: 0.8 (HIGH)
 - Reward: 0.3
-- Policy NN: 2,359 nodes, 3 layers (8→12→2339)
-- Memory Clusters: 4,646
+- Policy NN: 91 nodes, 3 layers (8→12→83)
+- Memory Clusters: 110
 - GrowingNN: Error rate 0.0, Growth triggered
-- Status: 99x GROWTH since 2026-03-30
+- Status: **RECOVERING FROM RESET**
+
+**Pre-Reset State (Lost):**
+- Tick: 2411
+- Nodes: 2447
+- Clusters: 4822
 
 **Skills Activated:**
 - **Hermes:** 16 agents (Slack/Discord/Email)
@@ -57,16 +76,16 @@
 - Roblox bridge fix pushed
 - Production orders updated
 
-**Last Updated: 2026-03-30 07:46 UTC**
+**Last Updated: 2026-03-31 13:25 UTC**
 
 ## Active Processes
 
 | System | PID | Status | Details |
 |--------|-----|--------|---------|
-| Brain | - | RUNNING | Tick 89, OODA active |
+| Brain | 1171863 | RUNNING | Tick 55, RECOVERING |
 | Heart | - | RUNNING | 72 BPM, Ternary |
 | Stomach | - | RUNNING | Digesting |
-| Ollama | 741 | RUNNING | 6 models |
+| Ollama | 39639 | ✅ RESTARTED | Service restarted 13:31 UTC |
 | Minecraft | 87745 | RUNNING | Port 25565 |
 | Roblox Bridge | 586653 | RUNNING | Fixed |
 
@@ -74,12 +93,12 @@
 
 | Metric | Value | Status |
 |--------|-------|--------|
-| Nodes | 125 | Growing |
-| Layers | 3 | (8→12→105) |
+| Nodes | 91 | Growing (+11 since reset) |
+| Layers | 3 | (8→12→83) |
 | Novelty | 0.8 | High |
-| Error Rate | 0.83 | Stable |
-| Memory Clusters | 178 | Active |
-| Growth Events | 89 | Continuous |
+| Error Rate | 0.0 | Stable |
+| Memory Clusters | 110 | Active |
+| Growth Events | Continuous | ✅ |
 
 ## Dark Factory Orders
 
@@ -125,9 +144,18 @@ ls -la AOS-H1/
 ```
 
 ## Next Actions
-1. Order AOS-H1 parts from BOM
-2. Begin 3D printing (280 hours)
-3. Continue tracking production orders
-4. Monitor agent society growth
+1. **PRIORITY:** Fix Ollama timeout issues
+2. Restore QMD and MemoryBridge functionality
+3. Monitor brain recovery from reset
+4. Order AOS-H1 parts from BOM
+5. Begin 3D printing (280 hours)
+6. Continue tracking production orders
+7. Monitor agent society growth
 
-**Status: SYSTEMS ACTUALLY RUNNING - ALL CRITICAL FIXES COMPLETE**
+## Recent Issues
+**2026-03-31 12:19 UTC:** Brain reset due to Ollama instability
+- QMD and MemoryBridge timeout failures
+- Brain automatically restarted
+- Recovery in progress
+
+**Status: SYSTEMS RECOVERING - OLLAMA TIMEOUTS NEED ATTENTION**
