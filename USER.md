@@ -6,6 +6,7 @@ _Learn about the person you're helping. Update this as you go._
 - **What to call them:** Captain
 - **Pronouns:** He/Him
 - **Timezone:** UTC (04:47 AM local)
+- **Email:** Antonio.hudnall@gmail.com
 - **Notes:** Commander of AGI Company. Accesses via openclaw-tui. Managing multiple VPS systems (Miles.cloud, Mortimer VPS). Focus on trading bots, agent manifests, security audits.
 
 ## Context
