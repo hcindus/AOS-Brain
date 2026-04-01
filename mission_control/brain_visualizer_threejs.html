@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AOS Brain Mission Control - Real-Time 3D Visualizer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+        
+        #container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        /* Mission Control UI Overlay */
+        #ui-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .panel {
+            background: rgba(10, 15, 30, 0.85);
+            border: 1px solid rgba(100, 150, 255, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            pointer-events: auto;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0, 100, 255, 0.2);
+        }
+        
+        .panel-header {
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            color: #00d4ff;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+            padding-bottom: 8px;
+        }
+        
+        /* Top Left - Brain Stats */
+        #brain-stats {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 280px;
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            font-size: 13px;
+        }
+        
+        .stat-label {
+            color: #888;
+        }
+        
+        .stat-value {
+            color: #fff;
+            font-weight: bold;
+            font-family: monospace;
+        }
+        
+        .phase-indicator {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .phase-observe { background: #0066cc; }
+        .phase-orient { background: #00cc66; }
+        .phase-decide { background: #cc6600; }
+        .phase-act { background: #cc0000; }
+        
+        /* Top Right - Region Activity */
+        #region-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 250px;
+        }
+        
+        .region-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+        
+        .region-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+            box-shadow: 0 0 10px currentColor;
+            transition: all 0.3s ease;
+        }
+        
+        .region-bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-left: 10px;
+        }
+        
+        .region-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        
+        /* Bottom Left - Memory Graph */
+        #memory-panel {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 350px;
+            height: 180px;
+        }
+        
+        #memory-canvas {
+            width: 100%;
+            height: 130px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        
+        /* Bottom Right - Activity Log */
+        #activity-panel {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            height: 200px;
+        }
+        
+        #activity-log {
+            height: 150px;
+            overflow-y: auto;
+            font-size: 11px;
+            font-family: monospace;
+            line-height: 1.6;
+        }
+        
+        .log-entry {
+            margin: 3px 0;
+            padding: 2px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .log-time {
+            color: #666;
+            margin-right: 8px;
+        }
+        
+        /* Center Bottom - Controls */
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .control-btn {
+            background: rgba(0, 100, 200, 0.3);
+            border: 1px solid rgba(0, 150, 255, 0.5);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .control-btn:hover {
+            background: rgba(0, 150, 255, 0.5);
+            box-shadow: 0 0 15px rgba(0, 150, 255, 0.5);
+        }
+        
+        /* Loading Screen */
+        #loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 1s ease;
+        }
+        
+        #loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loader {
+            width: 100px;
+            height: 100px;
+            border: 3px solid transparent;
+            border-top-color: #00d4ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loader-text {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #00d4ff;
+            letter-spacing: 2px;
+        }
+        
+        /* Title Overlay */
+        #title-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 2s ease;
+        }
+        
+        #title-overlay.visible {
+            opacity: 1;
+        }
+        
+        .main-title {
+            font-size: 48px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00d4ff, #00ff88, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+        
+        .sub-title {
+            font-size: 14px;
+            color: #888;
+            letter-spacing: 8px;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading">
+        <div class="loader"></div>
+        <div class="loader-text">INITIALIZING BRAIN VISUALIZER...</div>
+    </div>
+    
+    <div id="title-overlay">
+        <div class="main-title">AOS Brain v4.0</div>
+        <div class="sub-title">Real-Time Neural Activity Monitor</div>
+    </div>
+    
+    <div id="container">
+        <div id="canvas-container"></div>
+        
+        <div id="ui-overlay">
+            <!-- Brain Stats Panel -->
+            <div id="brain-stats" class="panel">
+                <div class="panel-header">Brain Statistics</div>
+                <div class="stat-row">
+                    <span class="stat-label">Tick Count:</span>
+                    <span class="stat-value" id="tick-count">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Phase:</span>
+                    <span class="phase-indicator phase-observe" id="phase">Observe</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Mode:</span>
+                    <span class="stat-value" id="mode">AOSv3-7Region</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Novelty:</span>
+                    <span class="stat-value" id="novelty">1.000</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Reward:</span>
+                    <span class="stat-value" id="reward">1.000</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Arousal:</span>
+                    <span class="stat-value" id="arousal">0.967</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Memories:</span>
+                    <span class="stat-value" id="memories">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Uptime:</span>
+                    <span class="stat-value" id="uptime">00:00:00</span>
+                </div>
+            </div>
+            
+            <!-- Region Activity Panel -->
+            <div id="region-panel" class="panel">
+                <div class="panel-header">Region Activity</div>
+                <div class="region-item">
+                    <div class="region-dot" style="background: #ff6b6b;" id="dot-pfc"></div>
+                    <span>Prefrontal Cortex</span>
+                    <div class="region-bar">
+                        <div class="region-fill" style="background: #ff6b6b; width: 0%;" id="bar-pfc"></div>
+                    </div>
+                </div>
+                <div class="region-item">
+                    <div class="region-dot" style="background: #4ecdc4;" id="dot-hippo"></div>
+                    <span>Hippocampus</span>
+                    <div class="region-bar">
+                        <div class="region-fill" style="background: #4ecdc4; width: 0%;" id="bar-hippo"></div>
+                    </div>
+                </div>
+                <div class="region-item">
+                    <div class="region-dot" style="background: #ffe66d;" id="dot-limbic"></div>
+                    <span>Limbic System</span>
+                    <div class="region-bar">
+                        <div class="region-fill" style="background: #ffe66d; width: 0%;" id="bar-limbic"></div>
+                    </div>
+                </div>
+                <div class="region-item">
+                    <div class="region-dot" style="background: #a8e6cf;" id="dot-basal"></div>
+                    <span>Basal Ganglia</span>
+                    <div class="region-bar">
+                        <div class="region-fill" style="background: #a8e6cf; width: 0%;" id="bar-basal"></div>
+                    </div>
+                </div>
+                <div class="region-item">
+                    <div class="region-dot" style="background: #ff8b94;" id="dot-cerebellum"></div>
+                    <span>Cerebellum</span>
+                    <div class="region-bar">
+                        <div class="region-fill" style="background: #ff8b94; width: 0%;" id="bar-cerebellum"></div>
+                    </div>
+                </div>
+                <div class="region-item">
+                    <div class="region-dot" style="background: #c7ceea;" id="dot-brainstem"></div>
+                    <span>Brainstem</span>
+                    <div class="region-bar">
+                        <div class="region-fill" style="background: #c7ceea; width: 0%;" id="bar-brainstem"></div>
+                    </div>
+                </div>
+                <div class="region-item">
+                    <div class="region-dot" style="background: #ffd3b6;" id="dot-sensory"></div>
+                    <span>Sensory Cortex</span>
+                    <div class="region-bar">
+                        <div class="region-fill" style="background: #ffd3b6; width: 0%;" id="bar-sensory"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Memory Graph Panel -->
+            <div id="memory-panel" class="panel">
+                <div class="panel-header">Memory Formation Rate</div>
+                <canvas id="memory-canvas"></canvas>
+            </div>
+            
+            <!-- Activity Log Panel -->
+            <div id="activity-panel" class="panel">
+                <div class="panel-header">Activity Log</div>
+                <div id="activity-log"></div>
+            </div>
+            
+            <!-- Controls -->
+            <div id="controls">
+                <button class="control-btn" onclick="toggleRotation()">Toggle Rotation</button>
+                <button class="control-btn" onclick="toggleBloom()">Toggle Bloom</button>
+                <button class="control-btn" onclick="resetView()">Reset View</button>
+                <button class="control-btn" onclick="toggleAutoUpdate()">Auto Update</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Brain Visualizer Application
+        class BrainVisualizer {
+            constructor() {
+                this.scene = null;
+                this.camera = null;
+                this.renderer = null;
+                this.composer = null;
+                this.brainGroup = null;
+                this.neurons = [];
+                this.regions = {};
+                this.connections = [];
+                this.clock = new THREE.Clock();
+                this.isRotating = true;
+                this.autoUpdate = true;
+                this.data = {
+                    tick: 0,
+                    phase: 'Observe',
+                    novelty: 1.0,
+                    reward: 1.0,
+                    arousal: 0.967,
+                    memories: 0,
+                    regions: {}
+                };
+                this.memoryHistory = [];
+                this.maxHistory = 100;
+                
+                // Bob Ross color palette for phases
+                this.phaseColors = {
+                    'Observe': 0x000F89,  // Phthalo Blue
+                    'Orient': 0x507D2A,  // Sap Green
+                    'Decide': 0xFF6347,  // Bright Red
+                    'Act': 0xFFD700       // Cadmium Yellow
+                };
+                
+                // Region colors
+                this.regionColors = {
+                    pfc: 0xff6b6b,
+                    hippo: 0x4ecdc4,
+                    limbic: 0xffe66d,
+                    basal: 0xa8e6cf,
+                    cerebellum: 0xff8b94,
+                    brainstem: 0xc7ceea,
+                    sensory: 0xffd3b6
+                };
+                
+                this.init();
+            }
+            
+            init() {
+                this.setupScene();
+                this.setupLighting();
+                this.createBrain();
+                this.setupPostProcessing();
+                this.setupControls();
+                this.startAnimationLoop();
+                this.fetchBrainData();
+                
+                // Show title then fade
+                setTimeout(() => {
+                    document.getElementById('title-overlay').classList.add('visible');
+                    setTimeout(() => {
+                        document.getElementById('title-overlay').classList.remove('visible');
+                    }, 3000);
+                }, 1000);
+                
+                // Hide loading screen
+                setTimeout(() => {
+                    document.getElementById('loading').classList.add('hidden');
+                }, 2000);
+            }
+            
+            setupScene() {
+                const container = document.getElementById('canvas-container');
+                
+                // Scene
+                this.scene = new THREE.Scene();
+                this.scene.background = new THREE.Color(0x0a0a0a);
+                this.scene.fog = new THREE.FogExp2(0x0a0a0a, 0.02);
+                
+                // Camera
+                this.camera = new THREE.PerspectiveCamera(
+                    60,
+                    window.innerWidth / window.innerHeight,
+                    0.1,
+                    1000
+                );
+                this.camera.position.set(0, 0, 50);
+                
+                // Renderer
+                this.renderer = new THREE.WebGLRenderer({
+                    antialias: true,
+                    alpha: true
+                });
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.renderer.setPixelRatio(window.devicePixelRatio);
+                this.renderer.toneMapping = THREE.ReinhardToneMapping;
+                container.appendChild(this.renderer.domElement);
+                
+                // Resize handler
+                window.addEventListener('resize', () => this.onWindowResize(), false);
+            }
+            
+            setupLighting() {
+                // Ambient
+                const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+                this.scene.add(ambientLight);
+                
+                // Main directional light
+                const mainLight = new THREE.DirectionalLight(0xffffff, 1);
+                mainLight.position.set(10, 10, 10);
+                this.scene.add(mainLight);
+                
+                // Rim light for glow effect
+                const rimLight = new THREE.PointLight(0x00d4ff, 2, 100);
+                rimLight.position.set(-10, 10, -10);
+                this.scene.add(rimLight);
+                
+                // Bottom glow
+                const bottomLight = new THREE.PointLight(0xff00ff, 1, 100);
+                bottomLight.position.set(0, -20, 0);
+                this.scene.add(bottomLight);
+            }
+            
+            createBrain() {
+                this.brainGroup = new THREE.Group();
+                this.scene.add(this.brainGroup);
+                
+                // Create 7 brain regions as spheres
+                const regionConfigs = [
+                    { name: 'pfc', pos: [0, 15, 10], size: 4, color: this.regionColors.pfc },
+                    { name: 'hippo', pos: [-8, 5, 0], size: 3, color: this.regionColors.hippo },
+                    { name: 'limbic', pos: [8, 5, 0], size: 3, color: this.regionColors.limbic },
+                    { name: 'basal', pos: [-5, -5, 5], size: 2.5, color: this.regionColors.basal },
+                    { name: 'cerebellum', pos: [5, -8, -5], size: 3.5, color: this.regionColors.cerebellum },
+                    { name: 'brainstem', pos: [0, -15, 0], size: 2, color: this.regionColors.brainstem },
+                    { name: 'sensory', pos: [0, 0, -15], size: 3, color: this.regionColors.sensory }
+                ];
+                
+                regionConfigs.forEach(config => {
+                    const geometry = new THREE.SphereGeometry(config.size, 32, 32);
+                    const material = new THREE.MeshPhysicalMaterial({
+                        color: config.color,
+                        metalness: 0.7,
+                        roughness: 0.2,
+                        emissive: config.color,
+                        emissiveIntensity: 0.2,
+                        transparent: true,
+                        opacity: 0.9
+                    });
+                    
+                    const mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.set(...config.pos);
+                    mesh.userData = { region: config.name, baseColor: config.color };
+                    
+                    // Add wireframe overlay
+                    const wireframe = new THREE.WireframeGeometry(geometry);
+                    const wireframeMaterial = new THREE.LineBasicMaterial({
+                        color: 0xffffff,
+                        transparent: true,
+                        opacity: 0.1
+                    });
+                    const wireframeMesh = new THREE.LineSegments(wireframe, wireframeMaterial);
+                    mesh.add(wireframeMesh);
+                    
+                    this.brainGroup.add(mesh);
+                    this.regions[config.name] = mesh;
+                    
+                    // Create neurons around this region
+                    this.createNeuronsForRegion(config);
+                });
+                
+                // Create connections between regions
+                this.createConnections();
+                
+                // Add particle field for ambient activity
+                this.createParticleField();
+            }
+            
+            createNeuronsForRegion(config) {
+                const neuronCount = 20 + Math.random() * 30;
+                
+                for (let i = 0; i < neuronCount; i++) {
+                    const geometry = new THREE.SphereGeometry(0.1 + Math.random() * 0.2, 8, 8);
+                    const material = new THREE.MeshBasicMaterial({
+                        color: config.color,
+                        transparent: true,
+                        opacity: 0.6
+                    });
+                    
+                    const neuron = new THREE.Mesh(geometry, material);
+                    
+                    // Random position around region center
+                    const theta = Math.random() * Math.PI * 2;
+                    const phi = Math.random() * Math.PI;
+                    const r = config.size * (1 + Math.random() * 2);
+                    
+                    neuron.position.x = config.pos[0] + r * Math.sin(phi) * Math.cos(theta);
+                    neuron.position.y = config.pos[1] + r * Math.sin(phi) * Math.sin(theta);
+                    neuron.position.z = config.pos[2] + r * Math.cos(phi);
+                    
+                    neuron.userData = {
+                        region: config.name,
+                        active: false,
+                        pulsePhase: Math.random() * Math.PI * 2,
+                        baseOpacity: 0.3 + Math.random() * 0.4
+                    };
+                    
+                    this.brainGroup.add(neuron);
+                    this.neurons.push(neuron);
+                }
+            }
+            
+            createConnections() {
+                const regionNames = Object.keys(this.regions);
+                
+                for (let i = 0; i < regionNames.length; i++) {
+                    for (let j = i + 1; j < regionNames.length; j++) {
+                        if (Math.random() > 0.3) { // 70% chance of connection
+                            const start = this.regions[regionNames[i]].position;
+                            const end = this.regions[regionNames[j]].position;
+                            
+                            const geometry = new THREE.BufferGeometry().setFromPoints([start, end]);
+                            const material = new THREE.LineBasicMaterial({
+                                color: 0x444444,
+                                transparent: true,
+                                opacity: 0.2
+                            });
+                            
+                            const line = new THREE.Line(geometry, material);
+                            this.brainGroup.add(line);
+                            this.connections.push(line);
+                        }
+                    }
+                }
+            }
+            
+            createParticleField() {
+                const particleCount = 1000;
+                const geometry = new THREE.BufferGeometry();
+                const positions = new Float32Array(particleCount * 3);
+                const colors = new Float32Array(particleCount * 3);
+                
+                for (let i = 0; i < particleCount; i++) {
+                    positions[i * 3] = (Math.random() - 0.5) * 100;
+                    positions[i * 3 + 1] = (Math.random() - 0.5) * 100;
+                    positions[i * 3 + 2] = (Math.random() - 0.5) * 100;
+                    
+                    const color = new THREE.Color();
+                    color.setHSL(Math.random(), 0.5, 0.5);
+                    colors[i * 3] = color.r;
+                    colors[i * 3 + 1] = color.g;
+                    colors[i * 3 + 2] = color.b;
+                }
+                
+                geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+                
+                const material = new THREE.PointsMaterial({
+                    size: 0.5,
+                    vertexColors: true,
+                    transparent: true,
+                    opacity: 0.6,
+                    blending: THREE.AdditiveBlending
+                });
+                
+                this.particles = new THREE.Points(geometry, material);
+                this.scene.add(this.particles);
+            }
+            
+            setupPostProcessing() {
+                // Bloom effect for glow
+                const renderScene = new THREE.RenderPass(this.scene, this.camera);
+                
+                const bloomPass = new THREE.UnrealBloomPass(
+                    new THREE.Vector2(window.innerWidth, window.innerHeight),
+                    1.5, // strength
+                    0.4, // radius
+                    0.85 // threshold
+                );
+                
+                this.composer = new THREE.EffectComposer(this.renderer);
+                this.composer.addPass(renderScene);
+                this.composer.addPass(bloomPass);
+            }
+            
+            setupControls() {
+                this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+                this.controls.enableDamping = true;
+                this.controls.dampingFactor = 0.05;
+                this.controls.autoRotate = true;
+                this.controls.autoRotateSpeed = 1.0;
+            }
+            
+            startAnimationLoop() {
+                const animate = () => {
+                    requestAnimationFrame(animate);
+                    
+                    const delta = this.clock.getDelta();
+                    const time = this.clock.getElapsedTime();
+                    
+                    // Rotate brain group
+                    if (this.isRotating) {
+                        this.brainGroup.rotation.y += 0.005;
+                        this.brainGroup.rotation.x = Math.sin(time * 0.5) * 0.1;
+                    }
+                    
+                    // Animate neurons
+                    this.animateNeurons(time);
+                    
+                    // Animate particles
+                    if (this.particles) {
+                        this.particles.rotation.y += 0.001;
+                    }
+                    
+                    // Update region colors based on activity
+                    this.updateRegionActivity();
+                    
+                    // Update controls
+                    this.controls.update();
+                    
+                    // Render
+                    this.composer.render();
+                };
+                
+                animate();
+            }
+            
+            animateNeurons(time) {
+                this.neurons.forEach((neuron, index) => {
+                    const data = neuron.userData;
+                    
+                    // Pulsing effect
+                    const pulse = Math.sin(time * 3 + data.pulsePhase) * 0.5 + 0.5;
+                    
+                    // Check if this neuron should fire (based on region activity)
+                    const regionActivity = this.data.regions[data.region] || 0;
+                    const shouldFire = regionActivity > 0.5 && Math.random() > 0.95;
+                    
+                    if (shouldFire || data.active) {
+                        // Neuron firing
+                        neuron.material.emissive = new THREE.Color(0xffffff);
+                        neuron.material.emissiveIntensity = 1.0;
+                        neuron.scale.setScalar(2.0);
+                        data.active = false;
+                    } else {
+                        // Normal state
+                        const baseColor = new THREE.Color(this.regionColors[data.region]);
+                        neuron.material.emissive = baseColor;
+                        neuron.material.emissiveIntensity = 0.3 + pulse * 0.3;
+                        neuron.scale.setScalar(1.0 + pulse * 0.5);
+                    }
+                    
+                    neuron.material.opacity = data.baseOpacity + pulse * 0.2;
+                });
+            }
+            
+            updateRegionActivity() {
+                // Update region colors based on current phase
+                const phaseColor = this.phaseColors[this.data.phase] || 0x000F89;
+                
+                Object.keys(this.regions).forEach(regionName => {
+                    const region = this.regions[regionName];
+                    const activity = this.data.regions[regionName] || Math.random();
+                    
+                    // Blend base color with phase color based on activity
+                    const baseColor = new THREE.Color(this.regionColors[regionName]);
+                    const activeColor = new THREE.Color(phaseColor);
+                    
+                    region.material.emissive.lerpColors(
+                        baseColor,
+                        activeColor,
+                        activity * 0.5
+                    );
+                    
+                    region.material.emissiveIntensity = 0.2 + activity * 0.5;
+                });
+                
+                // Update UI
+                this.updateUI();
+            }
+            
+            updateUI() {
+                // Update stats
+                document.getElementById('tick-count').textContent = this.data.tick.toLocaleString();
+                document.getElementById('novelty').textContent = this.data.novelty.toFixed(3);
+                document.getElementById('reward').textContent = this.data.reward.toFixed(3);
+                document.getElementById('arousal').textContent = this.data.arousal.toFixed(3);
+                document.getElementById('memories').textContent = this.data.memories.toLocaleString();
+                
+                // Update phase indicator
+                const phaseEl = document.getElementById('phase');
+                phaseEl.textContent = this.data.phase;
+                phaseEl.className = `phase-indicator phase-${this.data.phase.toLowerCase()}`;
+                
+                // Update region bars
+                Object.keys(this.regionColors).forEach(region => {
+                    const activity = this.data.regions[region] || Math.random();
+                    const bar = document.getElementById(`bar-${region}`);
+                    const dot = document.getElementById(`dot-${region}`);
+                    
+                    if (bar) bar.style.width = `${activity * 100}%`;
+                    if (dot) dot.style.opacity = 0.3 + activity * 0.7;
+                });
+                
+                // Draw memory graph
+                this.drawMemoryGraph();
+            }
+            
+            drawMemoryGraph() {
+                const canvas = document.getElementById('memory-canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Resize canvas
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+                
+                // Add current value
+                this.memoryHistory.push(this.data.tick);
+                if (this.memoryHistory.length > this.maxHistory) {
+                    this.memoryHistory.shift();
+                }
+                
+                // Clear
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw grid
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.lineWidth = 1;
+                for (let i = 0; i < 5; i++) {
+                    const y = (canvas.height / 4) * i;
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(canvas.width, y);
+                    ctx.stroke();
+                }
+                
+                // Draw line
+                if (this.memoryHistory.length > 1) {
+                    ctx.strokeStyle = '#00d4ff';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    
+                    const maxVal = Math.max(...this.memoryHistory);
+                    const minVal = Math.min(...this.memoryHistory);
+                    const range = maxVal - minVal || 1;
+                    
+                    this.memoryHistory.forEach((val, i) => {
+                        const x = (i / (this.maxHistory - 1)) * canvas.width;
+                        const y = canvas.height - ((val - minVal) / range) * canvas.height * 0.8 - canvas.height * 0.1;
+                        
+                        if (i === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    });
+                    
+                    ctx.stroke();
+                    
+                    // Glow effect
+                    ctx.shadowColor = '#00d4ff';
+                    ctx.shadowBlur = 10;
+                    ctx.stroke();
+                    ctx.shadowBlur = 0;
+                }
+            }
+            
+            fetchBrainData() {
+                if (!this.autoUpdate) return;
+                
+                // Simulate fetching from brain service
+                // In real implementation, this would fetch from ~/.aos/brain/state/brain_v31_state.json
+                // or connect to the service API
+                
+                this.data.tick += Math.floor(Math.random() * 10);
+                this.data.memories = this.data.tick;
+                
+                // Cycle phases
+                const phases = ['Observe', 'Orient', 'Decide', 'Act'];
+                const currentIndex = phases.indexOf(this.data.phase);
+                if (Math.random() > 0.95) {
+                    this.data.phase = phases[(currentIndex + 1) % phases.length];
+                }
+                
+                // Update region activity
+                Object.keys(this.regionColors).forEach(region => {
+                    this.data.regions[region] = Math.random();
+                });
+                
+                // Update uptime
+                const uptime = Math.floor(this.clock.getElapsedTime());
+                const hours = Math.floor(uptime / 3600).toString().padStart(2, '0');
+                const minutes = Math.floor((uptime % 3600) / 60).toString().padStart(2, '0');
+                const seconds = (uptime % 60).toString().padStart(2, '0');
+                document.getElementById('uptime').textContent = `${hours}:${minutes}:${seconds}`;
+                
+                // Add log entry
+                this.addLogEntry(`Phase transition: ${this.data.phase} | Tick: ${this.data.tick}`);
+                
+                // Schedule next update
+                setTimeout(() => this.fetchBrainData(), 1000);
+            }
+            
+            addLogEntry(message) {
+                const log = document.getElementById('activity-log');
+                const entry = document.createElement('div');
+                entry.className = 'log-entry';
+                
+                const time = new Date().toLocaleTimeString();
+                entry.innerHTML = `<span class="log-time">[${time}]</span>${message}`;
+                
+                log.insertBefore(entry, log.firstChild);
+                
+                // Keep only last 50 entries
+                while (log.children.length > 50) {
+                    log.removeChild(log.lastChild);
+                }
+            }
+            
+            onWindowResize() {
+                this.camera.aspect = window.innerWidth / window.innerHeight;
+                this.camera.updateProjectionMatrix();
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.composer.setSize(window.innerWidth, window.innerHeight);
+            }
+            
+            toggleRotation() {
+                this.isRotating = !this.isRotating;
+                this.controls.autoRotate = this.isRotating;
+            }
+            
+            toggleBloom() {
+                // Toggle bloom pass
+                const bloomPass = this.composer.passes.find(p => p instanceof THREE.UnrealBloomPass);
+                if (bloomPass) {
+                    bloomPass.enabled = !bloomPass.enabled;
+                }
+            }
+            
+            resetView() {
+                this.camera.position.set(0, 0, 50);
+                this.camera.lookAt(0, 0, 0);
+                this.brainGroup.rotation.set(0, 0, 0);
+            }
+            
+            toggleAutoUpdate() {
+                this.autoUpdate = !this.autoUpdate;
+                if (this.autoUpdate) {
+                    this.fetchBrainData();
+                }
+            }
+        }
+        
+        // Initialize visualizer
+        const visualizer = new BrainVisualizer();
+        
+        // Global functions for UI buttons
+        function toggleRotation() { visualizer.toggleRotation(); }
+        function toggleBloom() { visualizer.toggleBloom(); }
+        function resetView() { visualizer.resetView(); }
+        function toggleAutoUpdate() { visualizer.toggleAutoUpdate(); }
+    </script>
+</body>
+</html>
