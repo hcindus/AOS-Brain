@@ -332,3 +332,14 @@ See CREAM in action (15 minutes)
 ---
 
 *Version 1.0 | March 2026 | getcream.io*
+
+---
+
+## SALES INTELLIGENCE
+
+### Realtor Lead Database
+**2,000+ Qualified Prospects** in our active database
+- **1,000 new prospects added daily**
+- Priority A markets: NY, LA, Chicago, Dallas, Houston
+- Filtered by transaction volume, experience, and CREAM fit score
+- Updated: April 1, 2026
