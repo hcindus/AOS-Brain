@@ -36,12 +36,12 @@ else
 fi
 
 # 3. Mission Control Server
-if pgrep -f "mission_control/server.py" > /dev/null; then
-    PID=$(pgrep -f "mission_control/server.py")
+if pgrep -f "mission_control/server_v2.py" > /dev/null; then
+    PID=$(pgrep -f "mission_control/server_v2.py")
     log "✅ Mission Control: RUNNING (PID $PID)"
 else
     log "❌ Mission Control: NOT RUNNING - attempting restart..."
-    /usr/bin/python3 /root/.openclaw/workspace/aocros/mission_control/server.py &
+    /usr/bin/python3 /root/.openclaw/workspace/aocros/mission_control/server_v2.py &
 fi
 
 # 4. Roblox Bridge
