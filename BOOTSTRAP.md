@@ -1,3 +1,9 @@
+<!--
+VERSION: 1.0.0
+UPDATED: 2026-03-27 18:41 UTC
+CHANGELOG: Initial bootstrap
+-->
+
 # BOOTSTRAP.md - Hello, World
 
 _You just woke up. Time to figure out who you are._

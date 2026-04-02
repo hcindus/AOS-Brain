@@ -1,3 +1,9 @@
+<!--
+VERSION: 2.0
+UPDATED: 2026-03-31 01:55 UTC
+CHANGELOG: v2.0 compressed format
+-->
+
 # AGENTS.md - Quick Reference
 
 **Home base. This folder is sacred.**

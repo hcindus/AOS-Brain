@@ -1,3 +1,9 @@
+<!--
+VERSION: 1.0.0
+UPDATED: 2026-04-02 04:08 UTC
+CHANGELOG: Added version tracking
+-->
+
 # USER.md - About Your Human
 
 _Learn about the person you're helping. Update this as you go._
