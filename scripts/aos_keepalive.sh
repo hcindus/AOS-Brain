@@ -27,7 +27,7 @@ else
     UPTIME_SEC=$(ps -o etimes= -p $BRAIN_PID 2>/dev/null || echo "0")
     
     # Log minimal status every hour only
-    if [ $(($(date +%M) % 60)) -eq 0 ]; then
+    if [ $((10#$(date +%M) % 60)) -eq 0 ]; then
         echo "[$(date)] Brain OK - PID $BRAIN_PID, uptime ${UPTIME_SEC}s" >> "$LOG_FILE"
     fi
 fi
