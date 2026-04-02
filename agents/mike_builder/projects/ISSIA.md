@@ -30,9 +30,23 @@ This project file serves as the central repository for all Issia-related:
 - Budget and cost management
 - Client preferences and requirements
 
+## Project Definition (Filled 2026-04-02 17:21 UTC)
+
+| Category | Response |
+|----------|----------|
+| **Project Type** | Residential getaway |
+| **Site** | 1 acre |
+| **Program** | Watershed-focused, no well, solar, seed PDFs |
+| **Scale** | To be determined |
+| **Budget** | Unknown (flexible) |
+| **Timeline** | "Time is what we have" (flexible) |
+| **Aesthetic** | High Desert Compound |
+| **Sustainability** | Net Zero target |
+| **Decision Maker** | Captain (single stakeholder) |
+
 ## Current Phase
 
-🟡 **INITIATION** - Project named, awaiting detailed brief
+🟢 **SCOPING** - Brief received, beginning conceptual design
 
 ## Next Steps
 
