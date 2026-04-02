@@ -8,12 +8,12 @@
 
 ## 🔍 EXECUTIVE SUMMARY
 
-**Multi-vertical leads requiring architectural review:**
-- **Property Development** (California Pines, Cal PINES, Water Shed)
-- **Alternative Housing** (Yurt/Cabin building - multiple inquiries)
-- **Renewable Energy** (Soluxio solar products)
-- **Infrastructure** (Water Tanks)
-- **Financial/Development** (Property Value & CA Real Estate Law)
+**Multi-parcel off-grid development project:**
+- **Property Development** (California Pines, Cal PINES, Water Shed, Seed one Issia)
+- **Alternative Housing** (Yurt, A-Frame Cabin, Traditional Cabin)
+- **Renewable Energy** (Soluxio solar products - off-grid power)
+- **Infrastructure** (Water Tanks, Septic systems)
+- **Utilities** (Lighting, electrical layouts)
 
 ---
 
@@ -27,7 +27,7 @@
 | 2 | **Fwd: California Pines** | Land development | 🔴 High |
 | 3 | **Fwd: Water Shed** | Infrastructure | 🟡 Medium |
 | 4 | **Fwd: Property Value & CA Real Estate Law** | Legal/Finance | 🔴 High |
-| 5 | **Fwd: Seed one Issia** (×2) | Unknown | ⚪ Needs Clarification |
+| 5 | **Fwd: Seed one Issia** (×2) | **Land parcel** (naming convention like England) | 🔴 High |
 
 ### 🏕️ ALTERNATIVE HOUSING (3 emails)
 
@@ -76,7 +76,18 @@
 
 ## 📎 ATTACHMENT PROTOCOL
 
-**Note:** Attachments not yet extracted due to IMAP connectivity.  
+**Document Types Expected:**
+- 📍 **Lot location maps** — Site planning for Seed one Issia, California Pines
+- 📋 **Vendor product specs** — Soluxio solar, Pacific Yurts, Water Tanks
+- 💰 **Cost sheets** — Budget analysis for Architect review
+- ❄️ **Snow load calculations** — Structural requirements for Yurts/Cabins
+- 🏠 **Cabin plans** — Traditional + A-Frame cabin designs
+- 💡 **Lighting layouts** — Interior/exterior electrical plans
+- 🚽 **Septic system plans** — Waste management infrastructure
+- 🗺️ **Topography maps** — Elevation, grading, drainage planning
+
+**Status:** Attachments pending extraction (IMAP connectivity issue)
+
 **PDF Reader Ready:** `/root/.openclaw/workspace/AGI_COMPANY/shared/tools/pdf_reader.py`
 
 ### To Process Attachments:
