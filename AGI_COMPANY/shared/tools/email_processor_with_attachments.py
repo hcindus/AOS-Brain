@@ -19,7 +19,7 @@ from pathlib import Path
 EMAIL_CONFIG = {
     'address': 'miles@myl0nr0s.cloud',
     'password': 'Myl0n.R0s',
-    'server': 'mail.myl0nr0s.cloud'
+    'server': 'imap.hostinger.com'
 }
 
 OUTPUT_DIR = Path('/root/.openclaw/workspace/data/email_attachments')

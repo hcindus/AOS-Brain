@@ -16,13 +16,13 @@ EMAIL_ACCOUNTS = [
         'name': 'Miles',
         'address': 'miles@myl0nr0s.cloud',
         'password': 'Myl0n.R0s',
-        'server': 'mail.myl0nr0s.cloud'
+        'server': 'imap.hostinger.com'
     },
     {
         'name': 'Mortimer',
         'address': 'mortimer@myl0nr0s.cloud',
         'password': 'Myl0n.r0s',
-        'server': 'mail.myl0nr0s.cloud'
+        'server': 'imap.hostinger.com'
     }
 ]
 
