@@ -11,3 +11,32 @@ Myl0n.R0s
 *_WALLET_PRIVATE_KEY.json
 AGI_COMPANY/wallets/*_PRIVATE_KEY.json
 wallets/*_PRIVATE_KEY.json
+
+# System files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.openclaw/
+node_modules/
+package-lock.json
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+
+# Large archives
+archive/backups/
+*.mp4
+*.mov
+*.avi
+
+# Data files that should be generated
+logs/*.log
+*.pid
+*.sock
+
+# Duplicate folder (previously committed)
+AOS/
