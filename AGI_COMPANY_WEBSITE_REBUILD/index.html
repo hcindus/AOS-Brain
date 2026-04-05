@@ -3,531 +3,739 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGI Company — Intelligence Engineered</title>
-    <meta name="description" content="Enterprise-grade AGI agents that think, plan, and execute—delivering measurable results while you focus on what matters. A division of Performance Supply Depot LLC.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>AGI Company AgentVerse — Enter the Intelligence Ecosystem</title>
+    <meta name="description" content="Enter the AgentVerse. 36 autonomous AGI agents ready to transform your business. Connect your Dusty Wallet and deploy intelligent agents today.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/agi-company.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
+    <style>
+        :root {
+            --bg-deep: #0A1A2F;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --neon-cyan: #00E0FF;
+            --neon-orange: #FF7A00;
+            --neon-purple: #8B5CF6;
+            --neon-green: #00FF88;
+            --text: #E5E5E5;
+            --text-muted: #A0A0A0;
+            --accent: #ED8936;
+            --border: rgba(237, 137, 54, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg-deep);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* AgentVerse Background Canvas */
+        #verse-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: rgba(10, 26, 47, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--accent); }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .header-nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .header-nav a:hover { color: var(--neon-cyan); }
+
+        .dusty-wallet-btn {
+            background: linear-gradient(135deg, #F6851B, #E4761B);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s;
+        }
+
+        .dusty-wallet-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(246, 133, 27, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-top: 70px;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            padding: 40px;
+            z-index: 1;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(0, 224, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 20px;
+            color: var(--neon-cyan);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        .hero-title {
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 72px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple), var(--neon-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 40px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #DD6B20);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(237, 137, 54, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--neon-cyan);
+            border: 2px solid var(--neon-cyan);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 224, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 30px;
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 224, 255, 0.2);
+            border-radius: 16px;
+            margin-top: 60px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--neon-cyan);
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 8px;
+        }
+
+        /* Agent Preview Section */
+        .agent-preview {
+            padding: 100px 40px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            color: var(--neon-orange);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .agent-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .agent-tile {
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 224, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .agent-tile:hover {
+            border-color: var(--neon-cyan);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 224, 255, 0.2);
+        }
+
+        .agent-tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .agent-tile:hover::before {
+            opacity: 1;
+        }
+
+        .tile-avatar {
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 224, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin: 0 auto 12px;
+            border: 2px solid rgba(0, 224, 255, 0.2);
+        }
+
+        .tile-name {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .tile-role {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tile-status {
+            width: 8px;
+            height: 8px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        /* Wallet Modal */
+        .wallet-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wallet-modal.visible {
+            display: flex;
+        }
+
+        .wallet-content {
+            background: var(--bg-deep);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .wallet-title {
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .wallet-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .wallet-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .wallet-option:hover {
+            border-color: var(--neon-cyan);
+            background: rgba(0, 224, 255, 0.1);
+        }
+
+        .wallet-icon {
+            font-size: 32px;
+        }
+
+        .wallet-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .wallet-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .close-modal {
+            background: none;
+            border: 1px solid var(--text-muted);
+            color: var(--text-muted);
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .close-modal:hover {
+            border-color: var(--text);
+            color: var(--text);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(10, 26, 47, 0.9);
+            border-top: 1px solid var(--border);
+            padding: 40px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover { color: var(--accent); }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .agent-grid { grid-template-columns: repeat(4, 1fr); }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 48px; }
+            .agent-grid { grid-template-columns: repeat(3, 1fr); }
+            .header-nav { display: none; }
+        }
+    </style>
 </head>
 <body>
+    <!-- AgentVerse Background -->
+    <canvas id="verse-canvas"></canvas>
+
     <!-- Header -->
-    <header class="site-header">
-        <div class="container">
-            <div class="header-inner">
-                <a href="index.html" class="logo">
-                    AGI<span>Company</span>
-                </a>
-                <nav class="main-nav">
-                    <a href="index.html" class="nav-link active">Home</a>
-                    <a href="products.html" class="nav-link">Products</a>
-                    <a href="agents.html" class="nav-link">🤖 Agents</a>
-                    <a href="brain.html" class="nav-link">🧠 Brain</a>
-                    <a href="about.html" class="nav-link">About</a>
-                    <a href="contact.html" class="nav-link">Contact</a>
-                    <a href="cart.html" class="nav-link">🛒 Cart</a>
-                    <a href="products.html" class="nav-cta">Get Started</a>
-                </nav>
-            </div>
-        </div>
+    <header class="header">
+        <a href="index.html" class="logo">AGI<span>Company</span></a>
+        <nav class="header-nav">
+            <a href="index.html">Home</a>
+            <a href="products.html">Agents</a>
+            <a href="agent-status.html">📊 Status</a>
+            <a href="brain.html">🧠 Brain</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <button class="dusty-wallet-btn" id="wallet-btn">
+            👛 Connect Wallet
+        </button>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <span class="hero-tagline">A Division of Performance Supply Depot LLC</span>
-                <h1 class="hero-title headline-1">Intelligence Engineered.</h1>
-                <p class="hero-subtitle body-large">
-                    Enterprise-grade AGI agents that think, plan, and execute—delivering measurable results while you focus on what matters.
-                </p>
-                <div class="hero-cta-group">
-                    <a href="products.html" class="btn btn-primary btn-large">Meet the Agents</a>
-                    <a href="#how-it-works" class="btn btn-secondary btn-large">See How It Works</a>
-                </div>
-                
-                <!-- Stats Bar -->
-                <div class="stats-bar">
-                    <div class="stat-item">
-                        <div class="stat-value">36+</div>
-                        <div class="stat-label">Active Agents</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">340%</div>
-                        <div class="stat-label">Average ROI</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">$0.12</div>
-                        <div class="stat-label">Per 1000 Tasks</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">99.9%</div>
-                        <div class="stat-label">Uptime SLA</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Value Proposition -->
-    <section class="section" id="value-prop">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tagline">Why AGI Company</span>
-                <h2 class="section-title headline-2">Built for Real Work</h2>
-                <p class="section-subtitle">Three pillars that separate us from the competition</p>
-            </div>
-            
-            <div class="grid-3">
-                <div class="card">
-                    <div class="card-icon">🎯</div>
-                    <h3 class="card-title">Precision Intelligence</h3>
-                    <p class="card-text">Seven-region cognitive architecture modeled on human cognition. Every decision traceable. Every action accountable.</p>
-                </div>
-                
-                <div class="card">
-                    <div class="card-icon">⚡</div>
-                    <h3 class="card-title">Operational Excellence</h3>
-                    <p class="card-text">Born from the backbone of Performance Supply Depot LLC. Real-world deployment, not lab demos. Measurable ROI from day one.</p>
-                </div>
-                
-                <div class="card">
-                    <div class="card-icon">🛡️</div>
-                    <h3 class="card-title">Trust by Design</h3>
-                    <p class="card-text">BEAST: Bounded, Explicit, Agentic, Safe, Tool-augmented. Safety isn't a feature—it's the foundation.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Agent Roster Preview -->
-    <section class="section" style="background: rgba(0, 224, 255, 0.03);">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tagline">The Complete Roster</span>
-                <h2 class="section-title headline-2">Meet Your New Team</h2>
-                <p class="section-subtitle">36 specialized agents. One unified mission. Find the perfect agent for any task.</p>
-            </div>
-            
-            <div class="grid-auto">
-                <!-- Featured Agents -->
-                <div class="agent-card">
-                    <div class="agent-avatar">🚀</div>
-                    <h3 class="agent-name">Miles</h3>
-                    <div class="agent-role">CEO / Dark Factory Manager</div>
-                    <p class="agent-desc">Strategic vision, company operations, and AOS Brain management. Oversees all 36 employees.</p>
-                    <ul class="agent-features">
-                        <li>Complete company oversight</li>
-                        <li>Strategic planning & vision</li>
-                        <li>AOS Brain operations</li>
-                    </ul>
-                    <div class="agent-price">
-                        <span class="agent-price-value">Enterprise</span>
-                    </div>
-                    <a href="products.html#miles" class="btn btn-primary">View Profile</a>
-                </div>
-
-                <div class="agent-card">
-                    <div class="agent-avatar">📢</div>
-                    <h3 class="agent-name">Pulp</h3>
-                    <div class="agent-role">Head of Sales - Corporate</div>
-                    <p class="agent-desc">Elite sales executive for high-value corporate accounts. 50 client capacity.</p>
-                    <ul class="agent-features">
-                        <li>Corporate account management</li>
-                        <li>High-value deal closing</li>
-                        <li>Sales team leadership</li>
-                    </ul>
-                    <div class="agent-price">
-                        <span class="agent-price-value">$3,999</span>
-                        <span class="agent-price-period">/month</span>
-                    </div>
-                    <a href="products.html#pulp" class="btn btn-primary">Add to Cart</a>
-                </div>
-
-                <div class="agent-card">
-                    <div class="agent-avatar">💻</div>
-                    <h3 class="agent-name">Jordan</h3>
-                    <div class="agent-role">Lead Engineer</div>
-                    <p class="agent-desc">Senior software architect and technical lead. System design and implementation.</p>
-                    <ul class="agent-features">
-                        <li>System architecture</li>
-                        <li>Code review</li>
-                        <li>Technical leadership</li>
-                    </ul>
-                    <div class="agent-price">
-                        <span class="agent-price-value">$1,899</span>
-                        <span class="agent-price-period">/month</span>
-                    </div>
-                    <a href="products.html#jordan" class="btn btn-primary">Add to Cart</a>
-                </div>
-
-                <div class="agent-card">
-                    <div class="agent-avatar">👋</div>
-                    <h3 class="agent-name">GREET</h3>
-                    <div class="agent-role">Receptionist - 24/7</div>
-                    <p class="agent-desc">24/7 call answering and reception. Handles inbound inquiries, routes calls, takes messages.</p>
-                    <ul class="agent-features">
-                        <li>24/7 call answering</li>
-                        <li>Call routing</li>
-                        <li>Appointment scheduling</li>
-                    </ul>
-                    <div class="agent-price">
-                        <span class="agent-price-value">$299</span>
-                        <span class="agent-price-period">/month</span>
-                    </div>
-                    <a href="products.html#greet" class="btn btn-primary">Add to Cart</a>
-                </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: var(--space-2xl);">
-                <a href="agents.html" class="btn btn-secondary btn-large">Explore All 36 Agents</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Architecture Section -->
-    <section class="section" id="how-it-works">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tagline">The Architecture of Intelligence</span>
-                <h2 class="section-title headline-2">Seven-Region Brain</h2>
-                <p class="section-subtitle">Built on cognitive science, not just data</p>
-            </div>
-            
-            <div class="brain-container">
-                <div class="grid-4" style="margin-top: var(--space-xl);">
-                    <div class="card">
-                        <div class="card-icon">❤️</div>
-                        <h3 class="card-title">SuperiorHeart</h3>
-                        <p class="card-text">Emotional state management with REST/BALANCE/ACTIVE ternary system. 72 BPM baseline rhythm.</p>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-icon">🍽️</div>
-                        <h3 class="card-title">Stomach v2</h3>
-                        <p class="card-text">Information ingestion with HUNGRY/SATISFIED/FULL states. Resource-aware processing.</p>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-icon">🔄</div>
-                        <h3 class="card-title">Intestines v2</h3>
-                        <p class="card-text">Knowledge distribution with error absorption. BHSI error handling system.</p>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-icon">🧠</div>
-                        <h3 class="card-title">Brain v3.1</h3>
-                        <p class="card-text">Seven-region OODA loops. Observe → Orient → Decide → Act. Real-time decisions.</p>
-                    </div>
-                </div>
-                
-                <div class="stats-bar" style="margin-top: var(--space-xl);">
-                    <div class="stat-item">
-                        <div class="stat-value" style="font-size: 2rem;">94%</div>
-                        <div class="stat-label">Local Processing</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" style="font-size: 2rem;">∞</div>
-                        <div class="stat-label">Fallback Chain</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" style="font-size: 2rem;">&lt;200ms</div>
-                        <div class="stat-label">Response Time</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" style="font-size: 2rem;">24/7/365</div>
-                        <div class="stat-label">Availability</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Brain Visualizer Preview -->
-    <section class="section" style="background: rgba(0, 224, 255, 0.03);">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tagline">Live System</span>
-                <h2 class="section-title headline-2">Brain Monitor</h2>
-                <p class="section-subtitle">Real-time visualization of the AOS Brain</p>
-            </div>
-            
-            <div class="brain-container">
-                <div class="brain-visualization" id="brain-viz">
-                    <!-- Brain nodes will be positioned via CSS/JS -->
-                    <div class="brain-node" style="top: 20%; left: 50%; transform: translateX(-50%);">🧠</div>
-                    <div class="brain-node" style="top: 40%; left: 25%;">❤️</div>
-                    <div class="brain-node" style="top: 40%; left: 75%;">🍽️</div>
-                    <div class="brain-node" style="top: 60%; left: 35%;">🔄</div>
-                    <div class="brain-node" style="top: 60%; left: 65%;">🎯</div>
-                    <div class="brain-node" style="top: 80%; left: 50%; transform: translateX(-50%);">💾</div>
-                </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: var(--space-xl);">
-                <a href="brain.html" class="btn btn-secondary btn-large">View Full Brain Monitor</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases -->
-    <section class="section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tagline">Built for Real Work</span>
-                <h2 class="section-title headline-2">Use Cases</h2>
-                <p class="section-subtitle">How teams deploy AGI Company agents</p>
-            </div>
-            
-            <div class="grid-2" style="grid-template-columns: repeat(2, 1fr);">
-                <div class="card" style="text-align: left;">
-                    <h3 class="card-title" style="margin-bottom: var(--space-md);">🚀 Founder Workflows</h3>
-                    <p class="card-text">From idea to execution. QORA strategizes. SPINDLE builds. PATRICIA ensures quality. You focus on vision.</p>
-                </div>
-                
-                <div class="card" style="text-align: left;">
-                    <h3 class="card-title" style="margin-bottom: var(--space-md);">⚙️ Automation at Scale</h3>
-                    <p class="card-text">Process 10,000 tasks simultaneously. No downtime. No sick days. No burnout. Just consistent, measurable results.</p>
-                </div>
-                
-                <div class="card" style="text-align: left;">
-                    <h3 class="card-title" style="margin-bottom: var(--space-md);">🎨 Creative Systems</h3>
-                    <p class="card-text">SCRIBBLE generates content. Pipeline automates production. TAPTAP optimizes UX. Create more, manage less.</p>
-                </div>
-                
-                <div class="card" style="text-align: left;">
-                    <h3 class="card-title" style="margin-bottom: var(--space-md);">🏢 Enterprise Intelligence</h3>
-                    <p class="card-text">SENTINEL monitors security. LEDGER-9 tracks ROI. PATRICIA maintains standards. Enterprise-grade AGI, deployed today.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Social Proof -->
-    <section class="section" style="background: rgba(0, 224, 255, 0.03);">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tagline">Social Proof</span>
-                <h2 class="section-title headline-2">Trusted by Leaders</h2>
-            </div>
-            
-            <div class="grid-3">
-                <div class="card" style="text-align: center;">
-                    <p class="body-large" style="font-style: italic; margin-bottom: var(--space-md);">"340% ROI within 90 days."</p>
-                    <p class="text-small" style="color: var(--color-titanium-gray);">— Fortune 500 CTO</p>
-                </div>
-                
-                <div class="card" style="text-align: center;">
-                    <p class="body-large" style="font-style: italic; margin-bottom: var(--space-md);">"The first AI system I actually trust."</p>
-                    <p class="text-small" style="color: var(--color-titanium-gray);">— Security Director, Financial Services</p>
-                </div>
-                
-                <div class="card" style="text-align: center;">
-                    <p class="body-large" style="font-style: italic; margin-bottom: var(--space-md);">"They work while we sleep."</p>
-                    <p class="text-small" style="color: var(--color-titanium-gray);">— Startup Founder</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Founder Story -->
-    <section class="section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tagline">Our Story</span>
-                <h2 class="section-title headline-2">From Supply Chain to AGI</h2>
-            </div>
-            
-            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-                <p class="body-large" style="margin-bottom: var(--space-lg);">
-                    AGI Company began with a simple question: <strong>What if artificial intelligence could actually think?</strong>
-                </p>
-                <p class="body-text" style="color: var(--color-titanium-gray); margin-bottom: var(--space-lg);">
-                    Not pattern-matching. Not statistical prediction. But real cognition—agents with purpose, memory, and society.
-                </p>
-                <p class="body-text" style="color: var(--color-titanium-gray); margin-bottom: var(--space-lg);">
-                    The answer required building from first principles. A seven-region brain architecture. Bounded autonomy. Traceable decision-making. And a team of 36 specialized agents, each with unique skills and personalities.
-                </p>
-                <p class="body-large" style="color: var(--color-electric-cyan);">
-                    This isn't the future. This is now.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="section" style="background: var(--gradient-hero);">
-        <div class="container" style="text-align: center;">
-            <h2 class="headline-2" style="margin-bottom: var(--space-lg);">Ready to Meet Your New Team?</h2>
-            <p class="body-large" style="color: var(--color-titanium-gray); margin-bottom: var(--space-xl); max-width: 600px; margin-left: auto; margin-right: auto;">
-                Start building with AGI Company today. Enterprise-grade AGI agents that deliver measurable results.
+        <div class="hero-content">
+            <span class="hero-tag">
+                🌐 Welcome to the AgentVerse
+            </span>
+            <h1 class="hero-title">Enter the Intelligence Ecosystem</h1>
+            <p class="hero-subtitle">
+                36 autonomous AGI agents ready to transform your business. 
+                Connect your Dusty Wallet and deploy intelligent agents today.
             </p>
-            <div style="display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap; margin-bottom: var(--space-xl);">
-                <a href="products.html" class="btn btn-primary btn-large">Start Building</a>
-                <a href="contact.html" class="btn btn-secondary btn-large">Schedule a Demo</a>
+            <div class="hero-cta">
+                <a href="products.html" class="btn btn-primary">🚀 Enter AgentVerse</a>
+                <button class="btn btn-secondary" id="hero-wallet-btn">👛 Get Dusty Wallet</button>
             </div>
             
-            <!-- Trust Badges -->
-            <div style="display: flex; gap: var(--space-xl); justify-content: center; flex-wrap: wrap; opacity: 0.7;">
-                <span class="text-small">✓ Enterprise Security Certified</span>
-                <span class="text-small">✓ SOC 2 Type II Compliant</span>
-                <span class="text-small">✓ GDPR Compliant</span>
-                <span class="text-small">✓ 99.9% Uptime SLA</span>
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-value">36</div>
+                    <div class="stat-label">Active Agents</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">340%</div>
+                    <div class="stat-label">Average ROI</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">$0.12</div>
+                    <div class="stat-label">Per 1000 Tasks</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">99.9%</div>
+                    <div class="stat-label">Uptime SLA</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <div class="footer-logo">AGI<span>Company</span></div>
-                    <p class="footer-tagline">A Division of Performance Supply Depot LLC</p>
-                    <p style="color: var(--color-titanium-gray); font-size: var(--text-small);">Intelligence Engineered.</p>
-                </div>
-                
-                <div class="footer-column">
-                    <h4>Product</h4>
-                    <ul class="footer-links">
-                        <li><a href="agents.html">Agents</a></li>
-                        <li><a href="brain.html">Architecture</a></li>
-                        <li><a href="products.html">Pricing</a></li>
-                        <li><a href="#">Documentation</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h4>Company</h4>
-                    <ul class="footer-links">
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Press Kit</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h4>Resources</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">API Reference</a></li>
-                        <li><a href="#">Community</a></li>
-                        <li><a href="support.html">Support</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h4>Legal</h4>
-                    <ul class="footer-links">
-                        <li><a href="privacy.html">Privacy</a></li>
-                        <li><a href="terms.html">Terms</a></li>
-                        <li><a href="#">Security</a></li>
-                        <li><a href="#">Compliance</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p class="footer-copyright">© 2026 AGI Company. All rights reserved.</p>
-                <div class="footer-social">
-                    <a href="#" aria-label="GitHub">📦</a>
-                    <a href="#" aria-label="Twitter">🐦</a>
-                    <a href="#" aria-label="LinkedIn">💼</a>
-                    <a href="#" aria-label="Discord">💬</a>
-                </div>
-            </div>
+    <!-- Agent Preview -->
+    <section class="agent-preview">
+        <div class="section-header">
+            <span class="section-tag">🤖 Featured Agents</span>
+            <h2 class="section-title">Meet Your New Workforce</h2>
+            <p class="section-subtitle">Specialized AI agents for every business function. Choose your team.</p>
         </div>
-    </footer>
-
-    <!-- Chat Widget -->
-    <div class="chat-widget">
-        <button class="chat-button" id="chat-toggle" aria-label="Open chat">
-            🤖
-        </button>
         
-        <div class="chat-window" id="chat-window">
-            <div class="chat-header">
-                <div class="chat-title">
-                    <span class="chat-status"></span>
-                    AGI Assistant
+        <div class="agent-grid" id="agent-grid">
+            <!-- Populated by JS -->
+        </div>
+    </section>
+
+    <!-- Wallet Modal -->
+    <div class="wallet-modal" id="wallet-modal">
+        <div class="wallet-content">
+            <h2 class="wallet-title">Connect Your Wallet</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Choose your preferred wallet to access the AgentVerse</p>
+            
+            <div class="wallet-options">
+                <div class="wallet-option" id="connect-metamask">
+                    <span class="wallet-icon">🦊</span>
+                    <div>
+                        <div class="wallet-name">MetaMask</div>
+                        <div class="wallet-desc">Most popular Ethereum wallet</div>
+                    </div>
                 </div>
-                <button class="chat-close" id="chat-close" aria-label="Close chat">×</button>
+                
+                <div class="wallet-option" id="connect-walletconnect">
+                    <span class="wallet-icon">📱</span>
+                    <div>
+                        <div class="wallet-name">WalletConnect</div>
+                        <div class="wallet-desc">Connect with any mobile wallet</div>
+                    </div>
+                </div>
+                
+                <div class="wallet-option" id="connect-dusty">
+                    <span class="wallet-icon">👛</span>
+                    <div>
+                        <div class="wallet-name">Create Dusty Wallet</div>
+                        <div class="wallet-desc">New to crypto? Start here</div>
+                    </div>
+                </div>
             </div>
             
-            <div class="chat-messages" id="chat-messages">
-                <div class="chat-message bot">
-                    Hi! I'm the AGI Assistant. How can I help you today?
-                </div>
-            </div>
-            
-            <div class="chat-input-area">
-                <input type="text" class="chat-input" id="chat-input" placeholder="Type a message..." autocomplete="off">
-                <button class="chat-send" id="chat-send" aria-label="Send">➤</button>
-            </div>
+            <button class="close-modal" id="close-wallet">Maybe Later</button>
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="products.html">Agents</a>
+                <a href="agent-status.html">Status</a>
+                <a href="brain.html">Brain</a>
+                <a href="#">Documentation</a>
+                <a href="support.html">Support</a>
+            </div>
+            <p style="color: var(--text-muted); font-size: 14px;">© 2026 AGI Company AgentVerse. All rights reserved.</p>
+        </div>
+    </footer>
+
     <script>
-        // Chat Widget
-        const chatToggle = document.getElementById('chat-toggle');
-        const chatWindow = document.getElementById('chat-window');
-        const chatClose = document.getElementById('chat-close');
-        const chatMessages = document.getElementById('chat-messages');
-        const chatInput = document.getElementById('chat-input');
-        const chatSend = document.getElementById('chat-send');
-        
-        let isChatOpen = false;
-        
-        function toggleChat() {
-            isChatOpen = !isChatOpen;
-            chatWindow.classList.toggle('open', isChatOpen);
-        }
-        
-        chatToggle.addEventListener('click', toggleChat);
-        chatClose.addEventListener('click', toggleChat);
-        
-        function addMessage(text, sender) {
-            const message = document.createElement('div');
-            message.className = `chat-message ${sender}`;
-            message.textContent = text;
-            chatMessages.appendChild(message);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-        
-        function handleSend() {
-            const text = chatInput.value.trim();
-            if (!text) return;
-            
-            addMessage(text, 'user');
-            chatInput.value = '';
-            
-            // Simulate bot response
-            setTimeout(() => {
-                const responses = [
-                    "I can help you explore our AGI agents and services. What would you like to know?",
-                    "We have 36 specialized agents ready to deploy. Would you like to see the full roster?",
-                    "Our Brain Monitor shows real-time system status. Check it out!",
-                    "You can schedule a demo or start building immediately. What works best for you?"
-                ];
-                addMessage(responses[Math.floor(Math.random() * responses.length)], 'bot');
-            }, 1000);
-        }
-        
-        chatSend.addEventListener('click', handleSend);
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') handleSend();
-        });
-        
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
+        // Featured agents data
+        const featuredAgents = [
+            { id: 'miles', name: 'Miles', role: 'CEO', avatar: '🚀', color: '#00E0FF' },
+            { id: 'pulp', name: 'Pulp', role: 'Head of Sales', avatar: '📢', color: '#FF00FF' },
+            { id: 'jordan', name: 'Jordan', role: 'Lead Engineer', avatar: '💻', color: '#8B5CF6' },
+            { id: 'sentinel', name: 'Sentinel', role: 'CSO', avatar: '🛡️', color: '#FF0000' },
+            { id: 'spindle', name: 'Spindle', role: 'Tech Lead', avatar: '🧵', color: '#00FFFF' },
+            { id: 'patricia', name: 'Patricia', role: 'QA Lead', avatar: '✅', color: '#00FF88' }
+        ];
+
+        // Populate agent grid
+        const grid = document.getElementById('agent-grid');
+        featuredAgents.forEach(agent => {
+            const tile = document.createElement('div');
+            tile.className = 'agent-tile';
+            tile.innerHTML = `
+                <div class="tile-status"></div>
+                <div class="tile-avatar" style="border-color: ${agent.color}">${agent.avatar}</div>
+                <div class="tile-name">${agent.name}</div>
+                <div class="tile-role">${agent.role}</div>
+            `;
+            tile.addEventListener('click', () => {
+                window.location.href = `products.html#${agent.id}`;
             });
+            grid.appendChild(tile);
+        });
+
+        // Wallet modal functionality
+        const walletModal = document.getElementById('wallet-modal');
+        const walletBtn = document.getElementById('wallet-btn');
+        const heroWalletBtn = document.getElementById('hero-wallet-btn');
+        const closeWallet = document.getElementById('close-wallet');
+
+        function openWallet() {
+            walletModal.classList.add('visible');
+        }
+
+        function closeWalletModal() {
+            walletModal.classList.remove('visible');
+        }
+
+        walletBtn.addEventListener('click', openWallet);
+        heroWalletBtn.addEventListener('click', openWallet);
+        closeWallet.addEventListener('click', closeWalletModal);
+
+        // Wallet connection handlers
+        document.getElementById('connect-metamask').addEventListener('click', async () => {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    alert('🎉 Wallet connected! Welcome to the AgentVerse.');
+                    closeWalletModal();
+                    walletBtn.innerHTML = '👛 Wallet Connected';
+                    walletBtn.style.background = 'linear-gradient(135deg, #00FF88, #00E0FF)';
+                } catch (error) {
+                    alert('Connection failed: ' + error.message);
+                }
+            } else {
+                alert('Please install MetaMask to use the AgentVerse.');
+            }
+        });
+
+        document.getElementById('connect-walletconnect').addEventListener('click', () => {
+            alert('WalletConnect integration coming soon!');
+        });
+
+        document.getElementById('connect-dusty').addEventListener('click', () => {
+            alert('🎉 Dusty Wallet created! Your address: 0x2ce0...0E3BE\n\nYou now have 100 free Agent Credits to start!');
+            closeWalletModal();
+            walletBtn.innerHTML = '👛 Dusty Wallet';
+            walletBtn.style.background = 'linear-gradient(135deg, #FFD700, #FFA500)';
+        });
+
+        // AgentVerse Background Animation
+        const canvas = document.getElementById('verse-canvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // Create floating agents (particles)
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 1000;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 100;
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.2,
+            color: 0x00E0FF,
+            transparent: true,
+            opacity: 0.6
+        });
+        const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particles);
+
+        // Create agent orbs
+        const orbs = [];
+        const colors = [0x00E0FF, 0xFF00FF, 0x8B5CF6, 0x00FF88, 0xFFA500];
+        
+        for(let i = 0; i < 12; i++) {
+            const geometry = new THREE.SphereGeometry(0.5, 32, 32);
+            const material = new THREE.MeshBasicMaterial({
+                color: colors[i % colors.length],
+                transparent: true,
+                opacity: 0.5
+            });
+            const orb = new THREE.Mesh(geometry, material);
+            orb.position.set(
+                (Math.random() - 0.5) * 50,
+                (Math.random() - 0.5) * 50,
+                (Math.random() - 0.5) * 50
+            );
+            scene.add(orb);
+            orbs.push({ mesh: orb, speed: Math.random() * 0.02 + 0.01 });
+        }
+
+        camera.position.z = 30;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            particles.rotation.y += 0.0005;
+            particles.rotation.x += 0.0002;
+            
+            orbs.forEach((orb, i) => {
+                orb.mesh.position.y += Math.sin(Date.now() * 0.001 + i) * 0.02;
+                orb.mesh.rotation.y += orb.speed;
+            });
+            
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
         });
     </script>
 </body>
