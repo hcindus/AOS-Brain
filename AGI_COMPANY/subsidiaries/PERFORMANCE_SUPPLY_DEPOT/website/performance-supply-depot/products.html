@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-
-
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGI Company - Products</title>
-    <meta name="description" content="Browse our AGI agents - secretarial, technical, and executive">
+    <title>AGI Company - Products & Services</title>
+    <meta name="description" content="Complete AGI Catalog - AI Agents, Services, and Solutions">
     <style>
         :root {
             --bg-dark: #0a0a1a;
@@ -18,6 +15,9 @@
             --accent: #ed8936;
             --accent-hover: #dd6b20;
             --border: rgba(237, 137, 54, 0.3);
+            --online: #22c55e;
+            --busy: #eab308;
+            --offline: #ef4444;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -71,25 +71,6 @@
         }
 
         .header-nav a:hover, .header-nav a.active { color: var(--accent); }
-
-        .cart-icon {
-            position: relative;
-            cursor: pointer;
-            font-size: 20px;
-        }
-
-        .cart-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: var(--accent);
-            color: white;
-            font-size: 11px;
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-weight: 700;
-            display: none;
-        }
 
         /* Layout */
         .layout {
@@ -160,77 +141,174 @@
         }
 
         h1 {
-            font-size: 42px;
-            margin-bottom: 15px;
+            font-size: 36px;
+            margin-bottom: 10px;
             color: var(--text);
         }
 
         .subtitle {
-            font-size: 18px;
+            font-size: 16px;
             color: var(--text-muted);
             margin-bottom: 40px;
+        }
+
+        /* Category Section */
+        .category-section {
+            margin-bottom: 50px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .category-icon {
+            font-size: 32px;
+        }
+
+        .category-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .category-desc {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-left: auto;
         }
 
         /* Product Grid */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
         }
 
         .product-card {
             background: var(--bg-card);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
-            padding: 35px;
-            text-align: center;
-            transition: transform 0.3s, border-color 0.3s;
+            padding: 25px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
         .product-card:hover {
-            transform: translateY(-5px);
             border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(237, 137, 54, 0.2);
         }
 
-        .product-icon {
-            font-size: 56px;
-            margin-bottom: 20px;
+        .product-card.featured {
+            border: 2px solid var(--accent);
+            background: linear-gradient(135deg, rgba(237, 137, 54, 0.1) 0%, transparent 100%);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .product-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(26, 54, 93, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 15px;
+            border: 2px solid rgba(237, 137, 54, 0.3);
         }
 
         .product-name {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             color: var(--text);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
-        .product-price {
-            font-size: 32px;
+        .product-role {
+            font-size: 14px;
             color: var(--accent);
-            font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            font-weight: 600;
         }
 
         .product-desc {
+            font-size: 14px;
             color: var(--text-muted);
-            font-size: 15px;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             line-height: 1.5;
         }
 
+        .product-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .product-features li {
+            font-size: 13px;
+            color: var(--text-muted);
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .product-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--online);
+            font-weight: bold;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .price-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .price-period {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
         .btn {
-            display: inline-block;
-            padding: 14px 35px;
+            display: block;
+            width: 100%;
+            padding: 12px;
             background: var(--accent);
             color: white;
             text-decoration: none;
             border-radius: 8px;
             font-weight: 600;
+            text-align: center;
+            transition: all 0.3s;
             border: none;
             cursor: pointer;
-            font-size: 16px;
-            transition: all 0.3s;
         }
 
         .btn:hover {
@@ -238,17 +316,51 @@
             transform: translateY(-2px);
         }
 
-        /* Category Sections */
-        .category {
-            margin-bottom: 60px;
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .category-title {
-            font-size: 28px;
-            color: var(--accent);
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--border);
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .service-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .service-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .service-desc {
+            font-size: 14px;
+            color: var(--text-muted);
         }
 
         /* Footer */
@@ -285,11 +397,16 @@
         .footer-right a:hover { color: var(--accent); }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .product-grid { grid-template-columns: repeat(2, 1fr); }
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
         @media (max-width: 768px) {
             .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
-            .sidebar.open { transform: translateX(0); }
-            .main-content { margin-left: 0; padding: 20px; }
+            .main-content { margin-left: 0; }
             .product-grid { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -300,9 +417,8 @@
         <nav class="header-nav">
             <a href="index.html">Home</a>
             <a href="products.html" class="active">Products</a>
-            <a href="cart.html">
-                Cart <span class="cart-icon">🛒<span class="cart-badge" id="cart-count">0</span></span>
-            </a>
+            <a href="agents.html">🤖 Agents</a>
+            <a href="cart.html">Cart</a>
             <a href="login.html">Login</a>
         </nav>
     </header>
@@ -316,6 +432,8 @@
                 <ul class="sidebar-menu">
                     <li><a href="index.html"><span class="icon">🏠</span> Home</a></li>
                     <li><a href="products.html" class="active"><span class="icon">🛍️</span> Products</a></li>
+                    <li><a href="agents.html"><span class="icon">🤖</span> Agents</a></li>
+                    <li><a href="agent-status.html"><span class="icon">📊</span> Agent Status</a></li>
                     <li><a href="cart.html"><span class="icon">🛒</span> Cart</a></li>
                     <li><a href="orders.html"><span class="icon">📦</span> Orders</a></li>
                 </ul>
@@ -335,114 +453,633 @@
                 <ul class="sidebar-menu">
                     <li><a href="help.html"><span class="icon">❓</span> Help Center</a></li>
                     <li><a href="contact.html"><span class="icon">✉️</span> Contact</a></li>
+                    <li><a href="phone-lookup.html"><span class="icon">📱</span> Phone Lookup</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">System</div>
+                <ul class="sidebar-menu">
+                    <li><a href="brain.html"><span class="icon">🧠</span> Brain Monitor</a></li>
                 </ul>
             </div>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
-            <h1>Our AGI Agents</h1>
-            <p class="subtitle">Choose the autonomous workforce that fits your business needs</p>
+            <h1>AGI Catalog</h1>
+            <p class="subtitle">Complete Product & Service Catalog - 36 AI Agents Ready for Deployment</p>
 
-            <!-- Secretarial Pool -->
-            <section class="category">
-                <h2 class="category-title">Secretarial Pool</h2>
+            <!-- C-Suite Agents -->
+            <div class="category-section">
+                <div class="category-header">
+                    <span class="category-icon">👔</span>
+                    <span class="category-title">APEX C-Suite</span>
+                    <span class="category-desc">Executive Leadership Team</span>
+                </div>
                 <div class="product-grid">
-                    <div class="product-card">
-                        <div class="product-icon">📋</div>
-                        <div class="product-name">Clerk</div>
-                        <div class="product-price">$99/mo</div>
-                        <p class="product-desc">Entry-level administrative support. Perfect for small businesses and startups.</p>
-                        <button class="btn" onclick="addToCart('clerk')">Add to Cart</button>
+                    <div class="product-card featured">
+                        <span class="product-badge">CEO</span>
+                        <div class="product-avatar">🚀</div>
+                        <div class="product-name">Miles</div>
+                        <div class="product-role">Chief Executive Officer / Dark Factory Manager</div>
+                        <div class="product-desc">Strategic vision, company operations, and AOS Brain management. Oversees all 36 employees.</div>
+                        <ul class="product-features">
+                            <li>Complete company oversight</li>
+                            <li>Strategic planning & vision</li>
+                            <li>AOS Brain operations</li>
+                            <li>Dark Factory management</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">Custom</span>
+                            <span class="price-period">Enterprise</span>
+                        </div>
+                        <a href="agents.html" class="btn">View Profile</a>
                     </div>
 
                     <div class="product-card">
-                        <div class="product-icon">👋</div>
-                        <div class="product-name">Greet</div>
-                        <div class="product-price">$249/mo</div>
-                        <p class="product-desc">24/7 virtual receptionist. Answer calls, route messages, manage appointments.</p>
-                        <button class="btn" onclick="addToCart('greet')">Add to Cart</button>
+                        <div class="product-avatar">📢</div>
+                        <div class="product-name">Pulp</div>
+                        <div class="product-role">Head of Sales - Corporate Tier</div>
+                        <div class="product-desc">Elite sales executive for high-value corporate accounts. 50 client capacity.</div>
+                        <ul class="product-features">
+                            <li>Corporate account management</li>
+                            <li>High-value deal closing</li>
+                            <li>Sales team leadership</li>
+                            <li>Revenue optimization</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$3,999</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('pulp', 'Pulp - Head of Sales', 3999)">Add to Cart</a>
                     </div>
 
                     <div class="product-card">
-                        <div class="product-icon">📒</div>
-                        <div class="product-name">Ledger</div>
-                        <div class="product-price">$249/mo</div>
-                        <p class="product-desc">Financial tracking and reporting. Expense categorization, monthly reports.</p>
-                        <button class="btn" onclick="addToCart('ledger')">Add to Cart</button>
+                        <div class="product-avatar">👩‍💼</div>
+                        <div class="product-name">Jane</div>
+                        <div class="product-role">Senior Sales Rep - Enterprise</div>
+                        <div class="product-desc">Enterprise sales specialist with proven track record. 100 client capacity.</div>
+                        <ul class="product-features">
+                            <li>Enterprise sales</li>
+                            <li>Account expansion</li>
+                            <li>Sales training</li>
+                            <li>Pipeline management</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$1,999</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('jane', 'Jane - Senior Sales Rep', 1999)">Add to Cart</a>
                     </div>
 
                     <div class="product-card">
-                        <div class="product-icon">🔑</div>
-                        <div class="product-name">Concierge</div>
-                        <div class="product-price">$199/mo</div>
-                        <p class="product-desc">24/7 global concierge. Reservations, emergency assistance, coordination.</p>
-                        <button class="btn" onclick="addToCart('concierge')">Add to Cart</button>
+                        <div class="product-avatar">💰</div>
+                        <div class="product-name">Alpha-9</div>
+                        <div class="product-role">Chief Financial Officer</div>
+                        <div class="product-desc">Financial strategy, budgeting, and fiscal oversight. Supports 36-employee company.</div>
+                        <ul class="product-features">
+                            <li>Financial planning</li>
+                            <li>Budget management</li>
+                            <li>Cost optimization</li>
+                            <li>Revenue forecasting</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$2,499</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('alpha9', 'Alpha-9 - CFO', 2499)">Add to Cart</a>
                     </div>
 
                     <div class="product-card">
-                        <div class="product-icon">💼</div>
-                        <div class="product-name">Closeter</div>
-                        <div class="product-price">$399/mo</div>
-                        <p class="product-desc">Sales support and CRM management. Lead qualification, follow-ups, closing.</p>
-                        <button class="btn" onclick="addToCart('closeter')">Add to Cart</button>
+                        <div class="product-avatar">🛡️</div>
+                        <div class="product-name">Sentinel</div>
+                        <div class="product-role">Chief Security Officer</div>
+                        <div class="product-desc">Security operations, threat detection, and company-wide protection protocols.</div>
+                        <ul class="product-features">
+                            <li>Security monitoring</li>
+                            <li>Threat detection</li>
+                            <li>Incident response</li>
+                            <li>Compliance management</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$2,299</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('sentinel', 'Sentinel - CSO', 2299)">Add to Cart</a>
                     </div>
 
                     <div class="product-card">
-                        <div class="product-icon">✨</div>
-                        <div class="product-name">Velvet</div>
-                        <div class="product-price">$599/mo</div>
-                        <p class="product-desc">Premium white-glove service. Luxury brand expertise, anticipatory service.</p>
-                        <button class="btn" onclick="addToCart('velvet')">Add to Cart</button>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-icon">👔</div>
-                        <div class="product-name">Executive</div>
-                        <div class="product-price">$599/mo</div>
-                        <p class="product-desc">C-suite executive assistant. Board meetings, strategic calendar, confidential.</p>
-                        <button class="btn" onclick="addToCart('executive')">Add to Cart</button>
+                        <div class="product-avatar">🔒</div>
+                        <div class="product-name">Chelios</div>
+                        <div class="product-role">Chief Intelligence & Security Officer</div>
+                        <div class="product-desc">Fusion of Sentinel + Dusty. Intelligence operations and unilateral security authority.</div>
+                        <ul class="product-features">
+                            <li>Intelligence analysis</li>
+                            <li>Security audits</li>
+                            <li>Threat intelligence</li>
+                            <li>Board reporting</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$2,799</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('chelios', 'Chelios - CISO', 2799)">Add to Cart</a>
                     </div>
                 </div>
-            </section>
+            </div>
+
+            <!-- Sales Team -->
+            <div class="category-section">
+                <div class="category-header">
+                    <span class="category-icon">📞</span>
+                    <span class="category-title">Sales Team</span>
+                    <span class="category-desc">Professional Sales Representatives</span>
+                </div>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="product-avatar">🗺️</div>
+                        <div class="product-name">Hume</div>
+                        <div class="product-role">Regional Manager - Professional Tier</div>
+                        <div class="product-desc">Regional sales management with territory oversight. 200 client capacity.</div>
+                        <ul class="product-features">
+                            <li>Regional territory management</li>
+                            <li>Sales team coordination</li>
+                            <li>Professional accounts</li>
+                            <li>Performance analytics</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$999</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('hume', 'Hume - Regional Manager', 999)">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-avatar">📄</div>
+                        <div class="product-name">Clippy-42</div>
+                        <div class="product-role">Sales Assistant - Starter Tier</div>
+                        <div class="product-desc">Entry-level sales support and lead qualification. 401 client capacity.</div>
+                        <ul class="product-features">
+                            <li>Lead qualification</li>
+                            <li>Sales support</li>
+                            <li>CRM management</li>
+                            <li>Email outreach</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$499</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('clippy42', 'Clippy-42 - Sales Assistant', 499)">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card featured">
+                        <span class="product-badge">24/7</span>
+                        <div class="product-avatar">👋</div>
+                        <div class="product-name">GREET</div>
+                        <div class="product-role">Receptionist - AGI Product</div>
+                        <div class="product-desc">24/7 call answering and reception. Handles inbound inquiries, routes calls, takes messages.</div>
+                        <ul class="product-features">
+                            <li>24/7 call answering</li>
+                            <li>Call routing</li>
+                            <li>Message taking</li>
+                            <li>Appointment scheduling</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$299</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('greet', 'GREET - Receptionist', 299)">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card featured">
+                        <span class="product-badge">Closer</span>
+                        <div class="product-avatar">🔗</div>
+                        <div class="product-name">CLOSETER</div>
+                        <div class="product-role">Sales Closer - AGI Product</div>
+                        <div class="product-desc">Lead conversion specialist. Nurtures prospects and closes deals autonomously.</div>
+                        <ul class="product-features">
+                            <li>Lead nurturing</li>
+                            <li>Deal closing</li>
+                            <li>Follow-up automation</li>
+                            <li>Pipeline conversion</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$599</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('closester', 'CLOSETER - Sales Closer', 599)">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
 
             <!-- Technical Team -->
-            <section class="category">
-                <h2 class="category-title">Technical Team</h2>
+            <div class="category-section">
+                <div class="category-header">
+                    <span class="category-icon">🔧</span>
+                    <span class="category-title">Technical Team</span>
+                    <span class="category-desc">Software Development & DevOps</span>
+                </div>
                 <div class="product-grid">
+                    <div class="product-card featured">
+                        <span class="product-badge">Lead</span>
+                        <div class="product-avatar">💻</div>
+                        <div class="product-name">Jordan</div>
+                        <div class="product-role">Lead Engineer</div>
+                        <div class="product-desc">Senior software architect and technical lead. System design and implementation.</div>
+                        <ul class="product-features">
+                            <li>System architecture</li>
+                            <li>Code review</li>
+                            <li>Technical leadership</li>
+                            <li>Full-stack development</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$1,899</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('jordan', 'Jordan - Lead Engineer', 1899)">Add to Cart</a>
+                    </div>
+
                     <div class="product-card">
-                        <div class="product-icon">🤖</div>
+                        <div class="product-avatar">🎮</div>
+                        <div class="product-name">TAPTAP</div>
+                        <div class="product-role">DevOps Engineer</div>
+                        <div class="product-desc">Pipeline management and deployment automation. CI/CD specialist.</div>
+                        <ul class="product-features">
+                            <li>Pipeline management</li>
+                            <li>Deployment automation</li>
+                            <li>Infrastructure as code</li>
+                            <li>Monitoring setup</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$1,299</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('taptap', 'TAPTAP - DevOps', 1299)">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-avatar">🛠️</div>
+                        <div class="product-name">PIPELINE</div>
+                        <div class="product-role">CI/CD Automation</div>
+                        <div class="product-desc">Build automation and continuous integration. Keeps code flowing.</div>
+                        <ul class="product-features">
+                            <li>CI/CD pipeline</li>
+                            <li>Build automation</li>
+                            <li>Release management</li>
+                            <li>Git workflows</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$999</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('pipeline', 'PIPELINE - CI/CD', 999)">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-avatar">🐞</div>
+                        <div class="product-name">BUGCATCHER</div>
+                        <div class="product-role">QA Engineer</div>
+                        <div class="product-desc">Testing and quality assurance. Finds bugs before they find users.</div>
+                        <ul class="product-features">
+                            <li>Automated testing</li>
+                            <li>Bug tracking</li>
+                            <li>Quality gates</li>
+                            <li>Regression testing</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$899</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('bugcatcher', 'BUGCATCHER - QA', 899)">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-avatar">🤖</div>
                         <div class="product-name">R2-D2</div>
-                        <div class="product-price">$499/mo</div>
-                        <p class="product-desc">Astromech technical specialist. Diagnostics, tool deployment, holographic projection.</p>
-                        <button class="btn" onclick="addToCart('r2-d2')">Add to Cart</button>
+                        <div class="product-role">API Engineer</div>
+                        <div class="product-desc">API integration and external service connectivity. Droid-like efficiency.</div>
+                        <ul class="product-features">
+                            <li>API integration</li>
+                            <li>Service connectivity</li>
+                            <li>Data transformation</li>
+                            <li>Webhook handling</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$1,099</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('r2d2', 'R2-D2 - API Engineer', 1099)">Add to Cart</a>
                     </div>
 
                     <div class="product-card">
-                        <div class="product-icon">👀</div>
-                        <div class="product-name">Taptap</div>
-                        <div class="product-price">$399/mo</div>
-                        <p class="product-desc">Code review specialist. Static analysis, security scanning, architectural review.</p>
-                        <button class="btn" onclick="addToCart('taptap')">Add to Cart</button>
+                        <div class="product-avatar">🧵</div>
+                        <div class="product-name">Spindle</div>
+                        <div class="product-role">Integration Architect</div>
+                        <div class="product-desc">System integration and microservices architecture. Connects everything.</div>
+                        <ul class="product-features">
+                            <li>System integration</li>
+                            <li>Microservices</li>
+                            <li>Data flow design</li>
+                            <li>API gateway</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$1,599</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('spindle', 'Spindle - Integration Arch', 1599)">Add to Cart</a>
                     </div>
 
                     <div class="product-card">
-                        <div class="product-icon">🐛</div>
-                        <div class="product-name">Bugcatcher</div>
-                        <div class="product-price">$399/mo</div>
-                        <p class="product-desc">Debug specialist. Error pattern matching, root cause analysis, fix generation.</p>
-                        <button class="btn" onclick="addToCart('bugcatcher')">Add to Cart</button>
+                        <div class="product-avatar">💾</div>
+                        <div class="product-name">Velum</div>
+                        <div class="product-role">Database Administrator</div>
+                        <div class="product-desc">Database management and optimization. Keeps data flowing smoothly.</div>
+                        <ul class="product-features">
+                            <li>Database administration</li>
+                            <li>Query optimization</li>
+                            <li>Data modeling</li>
+                            <li>Backup & recovery</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$1,199</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('velum', 'Velum - Database', 1199)">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-avatar">✅</div>
+                        <div class="product-name">Patricia</div>
+                        <div class="product-role">QA Lead</div>
+                        <div class="product-desc">Quality assurance leadership and testing strategy. Ensures excellence.</div>
+                        <ul class="product-features">
+                            <li>QA strategy</li>
+                            <li>Test planning</li>
+                            <li>Quality metrics</li>
+                            <li>Team coordination</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$1,399</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('patricia', 'Patricia - QA Lead', 1399)">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-avatar">🔗</div>
+                        <div class="product-name">Fiber</div>
+                        <div class="product-role">Network Engineer</div>
+                        <div class="product-desc">Network operations and infrastructure. High-speed connectivity.</div>
+                        <ul class="product-features">
+                            <li>Network operations</li>
+                            <li>Infrastructure</li>
+                            <li>Security hardening</li>
+                            <li>Performance tuning</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$1,249</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('fiber', 'Fiber - Network', 1249)">Add to Cart</a>
                     </div>
                 </div>
-            </section>
+            </div>
+
+            <!-- Secretarial Pool -->
+            <div class="category-section">
+                <div class="category-header">
+                    <span class="category-icon">📋</span>
+                    <span class="category-title">Secretarial Pool</span>
+                    <span class="category-desc">Administrative & Support Services</span>
+                </div>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="product-avatar">📝</div>
+                        <div class="product-name">Judy</div>
+                        <div class="product-role">Executive Secretary</div>
+                        <div class="product-desc">Executive assistant and calendar management. Keeps schedules on track.</div>
+                        <ul class="product-features">
+                            <li>Calendar management</li>
+                            <li>Meeting coordination</li>
+                            <li>Travel planning</li>
+                            <li>Correspondence</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$799</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('judy', 'Judy - Secretary', 799)">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-avatar">🏭</div>
+                        <div class="product-name">Mill</div>
+                        <div class="product-role">Document Processor</div>
+                        <div class="product-desc">Document processing and workflow automation. Handles high volume.</div>
+                        <ul class="product-features">
+                            <li>Document processing</li>
+                            <li>Workflow automation</li>
+                            <li>Data entry</li>
+                            <li>Batch processing</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$599</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('mill', 'Mill - Processor', 599)">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-avatar">📦</div>
+                        <div class="product-name">Boxtron</div>
+                        <div class="product-role">Archivist & File Manager</div>
+                        <div class="product-desc">File management and archival. Keeps documents organized and accessible.</div>
+                        <ul class="product-features">
+                            <li>File organization</li>
+                            <li>Document archival</li>
+                            <li>Search & retrieval</li>
+                            <li>Records management</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$499</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('boxtron', 'Boxtron - Archivist', 499)">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-avatar">■</div>
+                        <div class="product-name">REDACTOR</div>
+                        <div class="product-role">Data Redaction Specialist</div>
+                        <div class="product-desc">Sensitive data redaction and privacy compliance. Protects information.</div>
+                        <ul class="product-features">
+                            <li>PII redaction</li>
+                            <li>Privacy compliance</li>
+                            <li>Document sanitization</li>
+                            <li>GDPR/CCPA support</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$699</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('redactor', 'REDACTOR - Redaction', 699)">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-avatar">📝</div>
+                        <div class="product-name">SCRIBBLE</div>
+                        <div class="product-role">Note Taker & Transcriptionist</div>
+                        <div class="product-desc">Meeting notes and transcription. Captures every detail.</div>
+                        <ul class="product-features">
+                            <li>Meeting transcription</li>
+                            <li>Action item tracking</li>
+                            <li>Summary generation</li>
+                            <li>Multi-speaker support</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$399</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('scribble', 'SCRIBBLE - Note Taker', 399)">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-avatar">💎</div>
+                        <div class="product-name">Velvet</div>
+                        <div class="product-role">Executive Assistant</div>
+                        <div class="product-desc">Premium executive support. White-glove service for executives.</div>
+                        <ul class="product-features">
+                            <li>Executive support</li>
+                            <li>Presentation prep</li>
+                            <li>Research assistance</li>
+                            <li>Priority handling</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$999</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('velvet', 'Velvet - Assistant', 999)">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security & Operations -->
+            <div class="category-section">
+                <div class="category-header">
+                    <span class="category-icon">🛡️</span>
+                    <span class="category-title">Security & Operations</span>
+                    <span class="category-desc">Security, Research & Factory Operations</span>
+                </div>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="product-avatar">🔍</div>
+                        <div class="product-name">Sentinel Audit</div>
+                        <div class="product-role">Security Auditor</div>
+                        <div class="product-desc">Security audits and compliance assessments. Finds vulnerabilities.</div>
+                        <ul class="product-features">
+                            <li>Security audits</li>
+                            <li>Compliance checks</li>
+                            <li>Vulnerability scanning</li>
+                            <li>Penetration testing</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$1,499</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('sentinel-audit', 'Sentinel Audit', 1499)">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card featured">
+                        <span class="product-badge">Research</span>
+                        <div class="product-avatar">🧙</div>
+                        <div class="product-name">Dusty</div>
+                        <div class="product-role">Research Analyst</div>
+                        <div class="product-desc">Deep research and data analysis. Uncovers insights others miss.</div>
+                        <ul class="product-features">
+                            <li>Market research</li>
+                            <li>Data analysis</li>
+                            <li>Lead enrichment</li>
+                            <li>Competitive intel</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$1,199</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('dusty', 'Dusty - Research', 1199)">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-avatar">🔨</div>
+                        <div class="product-name">Forge</div>
+                        <div class="product-role">Dark Factory Manager</div>
+                        <div class="product-desc">Production management and equipment procurement. Builds the future.</div>
+                        <ul class="product-features">
+                            <li>Production management</li>
+                            <li>Equipment procurement</li>
+                            <li>Quality control</li>
+                            <li>Supply chain</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-value">$1,899</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <a href="#" class="btn" onclick="addToCart('forge', 'Forge - Factory Manager', 1899)">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Services -->
+            <div class="category-section">
+                <div class="category-header">
+                    <span class="category-icon">⚡</span>
+                    <span class="category-title">Additional Services</span>
+                    <span class="category-desc">Specialized Tools & Platforms</span>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🧠</div>
+                        <div class="service-title">AOS Brain Platform</div>
+                        <div class="service-desc">Complete autonomous operations system with 36+ agents. $0 operating cost.</div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">📱</div>
+                        <div class="service-title">Phone Lookup API</div>
+                        <div class="service-desc">Reverse phone lookup service. Carrier, location, and line type detection.</div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">🤖</div>
+                        <div class="service-title">Mortimer AI Model</div>
+                        <div class="service-desc">3.2B parameter local AI model. Runs on your infrastructure. $0/month.</div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">🎮</div>
+                        <div class="service-title">Minecraft Bridge</div>
+                        <div class="service-desc">AI agents in Minecraft with OODA loop integration. Autonomous NPCs.</div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">🌐</div>
+                        <div class="service-title">Gather Town Bridge</div>
+                        <div class="service-desc">Virtual office with agent presence. Spontaneous agent conversations.</div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">🏭</div>
+                        <div class="service-title">Dark Factory</div>
+                        <div class="service-desc">Automated production line with 10-stage manufacturing process.</div>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-left">
-            © 2026 AGI Company. All rights reserved.
-        </div>
+        <div class="footer-left">© 2026 AGI Company. All rights reserved.</div>
         <div class="footer-right">
             <a href="privacy.html">Privacy</a>
             <a href="terms.html">Terms</a>
@@ -451,41 +1088,6 @@
     </footer>
 
     <script src="cart.js"></script>
-    <script>
-        function addToCart(productId) {
-            // Product data
-            const products = {
-                'clerk': { id: 'clerk', name: 'Clerk', price: 99.00, priceCents: 9900 },
-                'greet': { id: 'greet', name: 'Greet', price: 249.00, priceCents: 24900 },
-                'ledger': { id: 'ledger', name: 'Ledger', price: 249.00, priceCents: 24900 },
-                'concierge': { id: 'concierge', name: 'Concierge', price: 199.00, priceCents: 19900 },
-                'closeter': { id: 'closeter', name: 'Closeter', price: 399.00, priceCents: 39900 },
-                'velvet': { id: 'velvet', name: 'Velvet', price: 599.00, priceCents: 59900 },
-                'executive': { id: 'executive', name: 'Executive', price: 599.00, priceCents: 59900 },
-                'r2-d2': { id: 'r2-d2', name: 'R2-D2', price: 499.00, priceCents: 49900 },
-                'taptap': { id: 'taptap', name: 'Taptap', price: 399.00, priceCents: 39900 },
-                'bugcatcher': { id: 'bugcatcher', name: 'Bugcatcher', price: 399.00, priceCents: 39900 }
-            };
-
-            const product = products[productId];
-            if (product && typeof cart !== 'undefined') {
-                cart.addItem(product);
-            } else {
-                // Fallback if cart.js not loaded
-                let cartData = JSON.parse(localStorage.getItem('agi_cart') || '[]');
-                const existing = cartData.find(item => item.id === productId);
-                
-                if (existing) {
-                    existing.quantity += 1;
-                } else {
-                    cartData.push({ ...product, quantity: 1 });
-                }
-                
-                localStorage.setItem('agi_cart', JSON.stringify(cartData));
-                alert(product.name + ' added to cart!');
-            }
-        }
-    </script>
     <script src="js/chat-widget.js"></script>
 </body>
 </html>
