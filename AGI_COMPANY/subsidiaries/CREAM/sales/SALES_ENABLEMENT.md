@@ -12,10 +12,10 @@
 
 | Status | Count | Last Updated |
 |--------|-------|--------------|
-| **Total Prospects** | **2,003** | March 31, 2026 |
-| Priority A (Tier 1) | 784 | Major metros |
-| Priority B (Tier 2) | 646 | Secondary markets |
-| Priority C (Tier 3) | 573 | Emerging markets |
+| **Total Prospects** | **3,003** | April 5, 2026 |
+| Priority A (Tier 1) | 1,194 | Major metros |
+| Priority B (Tier 2) | 986 | Secondary markets |
+| Priority C (Tier 3) | 823 | Emerging markets |
 
 ---
 
