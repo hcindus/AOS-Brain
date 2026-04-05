@@ -51,7 +51,7 @@ CHANGELOG: Upgraded to v4.2 with Thyroid v1.1 and Model Router
 #### Legacy Components (3/3) ✅
 | Component | Status | Notes |
 |-----------|--------|-------|
-| 3D Cortex | ✅ ACTIVE | 3x32x32 neural volume |
+| 3D Cortex | ✅ ACTIVE | 32×32×3 neural volume (3 layers) |
 | TracRay | ✅ ACTIVE | Memory trajectory tracking |
 | Consciousness Layers | ✅ ACTIVE | Con/Subcon/Uncon integrated |
 
