@@ -2,7 +2,7 @@
 # Ollama Keepalive - Keep Mortimer model resident
 # Updated: 2026-04-02
 
-MORTIMER_MODEL="antoniohudnall/Mortimer:latest"
+MORTIMER_MODEL="antoniohudnall/Mort_II:latest"
 
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] Keeping Mortimer model resident..."
 
