@@ -102,6 +102,55 @@ products/aurora_lite/
 
 ---
 
+## AURORA v2 + THIS BEAST BHSI v4.1 INTEGRATION
+
+**Per Captain's Directive (April 5, 2026):**
+
+Aurora v2 must integrate with **THIS (The Hermes Integration System)** and **BEAST BHSI v4.1** (Binary High-Integrity System).
+
+### Integration Requirements
+
+**THIS (The Hermes Integration System):**
+- Cross-session memory persistence
+- Agent state synchronization
+- Shared knowledge base access
+- Event-driven communication
+
+**BEAST BHSI v4.1:**
+- Binary High-Integrity System
+- Heart v4: 72 BPM ternary, watchdog, auto-restart
+- Stomach v4: Resource management, Ollama fallback
+- Intestines v4: Error absorption, waste processing
+- Socket: `/tmp/bhsi_v4.sock`
+
+### Aurora v2 Architecture
+```
+Aurora v2
+├── THIS Integration Layer
+│   ├── Hermes Memory Bridge
+│   ├── Cross-session State Sync
+│   └── Event Bus
+├── BHSI v4.1 Core
+│   ├── SuperiorHeart (BHSI Heart)
+│   ├── Stomach (Resource Manager)
+│   ├── Intestines (Error Handler)
+│   └── Socket Interface
+└── Aurora Agent Logic
+    ├── Stand-alone Cognition
+    ├── Modular Capabilities
+    └── Router Integration
+```
+
+### Implementation Notes
+- Aurora v2 uses BHSI v4.1 as foundation
+- THIS provides memory persistence across sessions
+- Socket interface for diagnostic access
+- High-integrity error handling (BHSI Intestines)
+
+**Status:** Design phase — requires Spindle technical review
+
+---
+
 ## PATRICIA'S TASKS
 
 ### Phase 1: Assessment (Week 1)
