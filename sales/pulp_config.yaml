@@ -1,0 +1,42 @@
+# Pulp - Head of Sales Configuration
+# Runs on local Mortimer model for cost savings
+
+agent:
+  name: pulp
+  role: Head of Sales
+  tier: Corporate
+  emoji: "📞💼"
+  
+model:
+  backend: ollama
+  primary: antoniohudnall/Mortimer:latest
+  runtime: local
+  temperature: 0.7
+  max_tokens: 2048
+  
+capabilities:
+  - sales_outreach
+  - email_drafting
+  - lead_qualification
+  - demo_scheduling
+  - crm_management
+  
+workspace:
+  path: /root/.openclaw/workspace/aocros/agent_sandboxes/pulp
+  memory_path: /root/.openclaw/workspace/aocros/agent_sandboxes/pulp/memory
+  
+prospects:
+  file: /root/.openclaw/workspace/sales/prospects_corporate.csv
+  tier: Corporate
+  monthly_price: $3,999
+  target_clients: 50
+  
+portal:
+  hub: mortimer
+  url: wss://mortimer:9000
+  token: pulp-portal-2024-secure
+  classification: Q-LEVEL
+  
+logging:
+  level: info
+  file: /root/.openclaw/workspace/aocros/agent_sandboxes/pulp/memory/pulp.log
