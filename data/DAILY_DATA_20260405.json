@@ -1,6 +1,6 @@
 {
-  "date": "2026-04-05T01:51:08+00:00",
-  "timestamp_utc": 1775353868,
+  "date": "2026-04-05T04:40:55+00:00",
+  "timestamp_utc": 1775364055,
   "system_health": 
 ======================================================================
   [91m🩺 TRIAGE REPORT[0m
@@ -18,23 +18,23 @@ Checks:
   ✅ [92mOllama[0m: HEALTHY
      - status: 200
   ✅ [92mMemory[0m: HEALTHY
-     - percent_used: 34.2
-     - available_gb: 10.27
+     - percent_used: 52.1
+     - available_gb: 7.48
   ❌ [91mCore Components[0m: CRITICAL
 ======================================================================,
   "metrics": {
     "emails_processed": 30,
-    "agent_files": 96,
-    "queue_items": 15,
+    "agent_files": 97,
+    "queue_items": 27,
     "reports_generated": 21,
-    "brain_cycles": 296600
+    "brain_cycles": 308800
   },
   "security": {
     "probes_installed": true,
-    "last_check": "2026-04-05T01:51:08+00:00"
+    "last_check": "2026-04-05T04:40:55+00:00"
   },
   "github": {
     "repo": "hcindus/AOS-Brain",
-    "last_sync": "2026-04-05T01:51:08+00:00"
+    "last_sync": "2026-04-05T04:40:55+00:00"
   }
 }
