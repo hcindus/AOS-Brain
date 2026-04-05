@@ -1,0 +1,40 @@
+{
+  "date": "2026-04-05T01:51:08+00:00",
+  "timestamp_utc": 1775353868,
+  "system_health": 
+======================================================================
+  [91m🩺 TRIAGE REPORT[0m
+======================================================================
+
+Overall Status: [91mCRITICAL[0m
+Recommendation: CRITICAL: Immediate attention required for: Core Components
+
+Checks:
+  ✅ [92mBrain Process[0m: HEALTHY
+     - pids: ['1231821', '1231978']
+     - count: 2
+  ✅ [92mMission Control[0m: HEALTHY
+     - port: 8080
+  ✅ [92mOllama[0m: HEALTHY
+     - status: 200
+  ✅ [92mMemory[0m: HEALTHY
+     - percent_used: 34.2
+     - available_gb: 10.27
+  ❌ [91mCore Components[0m: CRITICAL
+======================================================================,
+  "metrics": {
+    "emails_processed": 30,
+    "agent_files": 96,
+    "queue_items": 15,
+    "reports_generated": 21,
+    "brain_cycles": 296600
+  },
+  "security": {
+    "probes_installed": true,
+    "last_check": "2026-04-05T01:51:08+00:00"
+  },
+  "github": {
+    "repo": "hcindus/AOS-Brain",
+    "last_sync": "2026-04-05T01:51:08+00:00"
+  }
+}
