@@ -1,95 +1,162 @@
-# VERSION_INDEX.md - Global Version Registry
-# AOS / AGI Company - Centralized Version Tracking
-# Format: YYYY-MM-DD.HHMM - Incremental builds same day get .001, .002 etc
+# VERSION INDEX
+## Global Version Tracking - All Projects & Documents
 
-## Global System Version
-**Current: 2026.04.02.0408** (build 2026-04-02 04:08 UTC)
-
----
-
-## Core Systems
-
-| System | Version | Last Updated | File |
-|--------|---------|--------------|------|
-| **Miles (Main Agent)** | 4.2.1 | 2026-04-02 | `IDENTITY.md` |
-| **Complete Brain v4** | 4.0.0 | 2026-04-01 | `HEARTBEAT.md` |
-| **AGENTS.md** | 2.0 | 2026-03-31 | `AGENTS.md` |
-| **Keepalive System** | 1.0.0 | 2026-04-02 | `scripts/*_keepalive.sh` |
-| **Version Index** | 1.0.0 | 2026-04-02 | This file |
+**Last Updated:** 2026-04-05 04:57 UTC
+**Maintained By:** Miles
+**Update Frequency:** Every change + Daily audit
 
 ---
 
-## Subsidiaries & Projects
+## Active Projects
 
-| Entity | Version | Status | Path |
-|--------|---------|--------|------|
-| **AGI Company (Parent)** | 3.0.0 | Active | `AGI_COMPANY/` |
-| **Performance Supply Depot** | 2.1.0 | Active | `aocros/performance_supply_depot/` |
-| **CREAM Realty** | 1.0.0 | Active | `AGI_COMPANY/subsidiaries/CREAM/` |
-| **AOCROS** | 4.0.0 | Active | `aocros/` |
-| **Cobra Robot** | See file | R&D | `AGI_COMPANY/research/cobra_robot/` |
-| **Humanoid** | See file | R&D | `AGI_COMPANY/research/humanoid/` |
+### 1. Patricia (Process Excellence Agent)
+| Version | File | Status | Notes |
+|---------|------|--------|-------|
+| v4.2 (CURRENT) | `patricia_v4_2_configurable.py` | ✅ Active | Configurable growth modes |
+| v4.1 | `patricia_v4_1_growing.py` | ✅ Stable | Dynamic node/layer growth |
+| v4.0 | `patricia_v4_unified.py` | ✅ Stable | Neural + LLM unified |
+| v3.0 | `patricia_v3_llm.py` | ⚠️ Legacy | LLM connector only |
+| v2.0 | `patricia_v2_neural.py` | ⚠️ Legacy | Neural learning only |
+| v1.0 | `patricia_v1_basic.py` | ❌ Archived | Basic DMAIC |
+
+**Location:** `/root/.openclaw/workspace/aocros/agent_sandboxes/patricia/`
 
 ---
 
-## Scripts & Tools
+### 2. Complete Brain v4 (AOS Core)
+| Version | File | Status | Uptime |
+|---------|------|--------|--------|
+| v4.1 | `complete_brain_v4.py` | ✅ RUNNING | 3+ days |
+| v4.0 | - | ❌ Superseded | - |
+
+**Location:** `/root/.aos/aos/`
+**PID:** 1231821
+**Components:** Heart, Stomach, Intestine, Brain, 3D Cortex, TracRay, Consciousness, QMD, MemoryBridge, Voice, Vision
+
+---
+
+### 3. BHSI v4 (Binary High-Integrity System)
+| Version | File | Status |
+|---------|------|--------|
+| v4.0 | `bhsi_v4_complete.py` | ✅ Integrated with Brain |
+
+**Location:** `/root/.openclaw/workspace/aocros/BHSI/`
+
+---
+
+### 4. Mission Control v2
+| Version | File | Port | Status |
+|---------|------|------|--------|
+| v2.0 | `server_v2.py` | 8080 | ✅ Active |
+
+**Location:** `/root/.openclaw/workspace/aocros/mission_control/`
+**PID:** 1232265
+
+---
+
+### 5. Myl0n.r0s Platform
+| Version | File | Status |
+|---------|------|--------|
+| v1.0 (SPEC) | `MYL0N_R0S_PLATFORM.md` | 📝 Draft |
+
+**Location:** `/root/.openclaw/workspace/aocros/`
+
+---
+
+### 6. Agent Sandboxes
+| Agent | Current Version | Location |
+|-------|---------------|----------|
+| Chelios | v2.1 | `/agent_sandboxes/chelios/` |
+| Forge | v1.0 | `/agent_sandboxes/forge/` |
+| Patricia | v4.2 | `/agent_sandboxes/patricia/` |
+
+---
+
+### 7. Dusty Wallet
+| Version | Status | Blockers |
+|---------|--------|----------|
+| In Dev | 🚧 8 critical | API keys ready |
+
+**Priority:** #1 for Patricia
+
+---
+
+## Infrastructure Services
+
+| Service | Version | Status | PID |
+|---------|---------|--------|-----|
+| Ollama | Latest | ✅ Connected | - |
+| Mortimer Model | 3.2B | ✅ Responsive | - |
+| Redis | - | 🔴 Not deployed | - |
+| PostgreSQL | - | 🔴 Not deployed | - |
+| Roblox Bridge | v1.0 | ✅ Running | 586653 |
+| Minecraft Server | - | ⚠️ Offline | - |
+
+---
+
+## Document Versions
+
+### Core Documentation
+| Document | Version | Last Update |
+|----------|---------|-------------|
+| AGENTS.md | v2.0 | 2026-03-31 |
+| SOUL.md | v2.0 | 2026-04-02 |
+| USER.md | v1.0.0 | 2026-04-02 |
+| IDENTITY.md | v4.2.1 | 2026-04-02 |
+| HEARTBEAT.md | v4.1.0 | 2026-04-02 |
+| BOOTSTRAP.md | v1.0.0 | 2026-03-27 |
+
+### Memory Logs
+| Date | File | Status |
+|------|------|--------|
+| 2026-04-05 | `memory/2026-04-05.md` | ✅ Current |
+| 2026-04-04 | `memory/2026-04-04.md` | ✅ Archived |
+| 2026-04-02 | `memory/2026-04-02.md` | ✅ Archived |
+| 2026-03-31 | `memory/2026-03-31.md` | ✅ Archived |
+
+---
+
+## Automation Scripts
 
 | Script | Version | Purpose |
 |--------|---------|---------|
-| `agent_keepalive.sh` | 1.0.0 | Unified agent monitoring |
-| `ollama_keepalive.sh` | 1.0.0 | Model residency |
-| `aos_keepalive.sh` | 1.0.0 | Brain health check |
-| `minecraft_keepalive.sh` | 1.0.0 | MC agent health |
-| `minecraft_agent_rotation.py` | 2.0 | Agent rotation |
-| `ca_sos_scraper.js` | 1.0 | Lead scraper |
-| `sync_prices.py` | 1.0 | Price sync |
+| `agent_keepalive.sh` | - | Unified health monitoring |
+| `aos_keepalive.sh` | v1.0.0 | Brain health checks |
+| `daily_data_scraper.sh` | - | Daily data collection |
+| `continuous_scraper.sh` | - | Real-time scraping |
+| `rotate_minecraft_agents.sh` | - | Agent rotation |
+
+**Location:** `/root/.openclaw/workspace/scripts/`
 
 ---
 
-## Change Log
+## Version Naming Convention
 
-### 2026-04-02.0408 - Build 0408
-- Added unified keepalive system
-- Version indexing implementation
-- All agent systems covered
+```
+MAJOR.MINOR.PATCH
 
-### 2026-04-01.0451 - Build 0451
-- Complete Brain v4 deployed
-- Mission Control active
-- 1,300+ curriculum items fed
+MAJOR - Breaking changes, new architecture
+MINOR - New features, enhancements
+PATCH - Bug fixes, small improvements
+
+Suffixes:
+- -alpha - Early development
+- -beta - Testing phase
+- -rc - Release candidate
+- (none) - Stable release
+```
 
 ---
 
-## Version Format Rules
+## Update Checklist
 
-**Files:** Add header block:
-```
-<!--
-VERSION: 1.0.0
-UPDATED: 2026-04-02 04:08 UTC
-PREVIOUS: 0.9.0
-CHANGELOG: Description of changes
--->
-```
-
-**Scripts:** Add header:
-```bash
-#!/bin/bash
-# VERSION: 1.0.0
-# UPDATED: 2026-04-02 04:08 UTC
-```
-
-**Bump version when:**
-- Any material change to logic/functionality
-- Configuration updates
-- Dependencies change
-- Performance improvements
+When creating/updating any file:
+- [ ] Update VERSION_INDEX.md
+- [ ] Add version header to file
+- [ ] Update CHANGELOG
+- [ ] Commit to git
+- [ ] Notify relevant agents
 
 ---
 
-## Auto-Versioning
-
-Cron: `version_bump.sh` runs with git commits
-- Auto-increments patch (1.0.x) for minor changes
-- Manual bump required for minor/major versions
-- All files updated: `VERSION_INDEX.md`
+*"Version everything. Memory is fragile. Files are eternal."*
