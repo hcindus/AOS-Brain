@@ -153,6 +153,17 @@ Aurora v2
 
 ## PATRICIA'S TASKS
 
+### Priority: Spawn Mike the Builder
+**Trigger:** When resources permit (after Dusty/Website tasks)  
+**Action:** Create agent instance for Mike to assist with:
+- Property Development project coordination
+- Contractor liaison
+- Material sourcing
+- Timeline tracking
+- Budget monitoring
+
+**Status:** ⏳ WAITING FOR RESOURCES
+
 ### Phase 1: Assessment (Week 1)
 - [ ] Review all Aurora code (v1, v2, v3)
 - [ ] Assess modularity vs. monolithic trade-offs
