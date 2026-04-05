@@ -1,0 +1,37 @@
+name: mini-agent
+version: 1.0.0
+description: Mini-Agent - Autonomous Task Execution and Workflow Automation
+author: AGI Company
+capabilities:
+  - task_automation
+  - workflow_orchestration
+  - cron_job_management
+  - file_processing
+  - data_transformation
+  - api_integration
+  - webhook_handling
+  - batch_processing
+  - report_generation
+  - monitoring_alerts
+endpoints:
+  automation:
+    - cron_scheduler
+    - task_queue
+    - workflow_engine
+  processing:
+    - file_parser
+    - data_transformer
+    - report_generator
+  integration:
+    - rest_api
+    - graphql
+    - webhook_receiver
+permissions:
+  - network
+  - filesystem
+  - process
+config:
+  max_concurrent_tasks: 10
+  retry_attempts: 3
+  timeout_seconds: 300
+  log_level: info

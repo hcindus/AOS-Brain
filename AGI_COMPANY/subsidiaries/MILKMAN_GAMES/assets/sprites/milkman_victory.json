@@ -1,0 +1,16 @@
+{
+  "name": "milkman_victory",
+  "type": "sprite",
+  "size": [32, 32], 
+  "frames": 8,
+  "animation": "victory",
+  "description": "MilkMan victory celebration animation",
+  "palette": {
+    "milk_white": "#F5F5F5",
+    "uniform_blue": "#1E3A8A",
+    "confetti": ["#FF0000", "#00FF00", "#0000FF", "#FFFF00"]
+  },
+  "created_by": "Mylonen+R2",
+  "created_date": "2026-03-28",
+  "game": "MilkMan"
+}

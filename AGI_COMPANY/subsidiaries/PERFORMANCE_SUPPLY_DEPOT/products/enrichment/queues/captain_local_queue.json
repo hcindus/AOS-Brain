@@ -1,0 +1,21 @@
+{
+  "queue_id": "captain_local_queue_001",
+  "generated": "2026-02-21T07:58:00Z",
+  "generated_by": "Miles",
+  "status": "ready_for_scraping",
+  "count": 100,
+  "instructions": "Captain: Run local_scraper.py with this file to enrich leads",
+  "businesses": [
+    {"name": "Acme Corp", "county": "Alameda", "entity_number": "01234567"},
+    {"name": "Beta LLC", "county": "Alameda", "entity_number": "01234568"},
+    {"name": "Gamma Inc", "county": "Alameda", "entity_number": "01234569"},
+    {"name": "Delta Services", "county": "Alameda", "entity_number": "01234570"},
+    {"name": "Epsilon Enterprises", "county": "Alameda", "entity_number": "01234571"},
+    {"name": "Zeta Solutions", "county": "Alameda", "entity_number": "01234572"},
+    {"name": "Eta Industries", "county": "Alameda", "entity_number": "01234573"},
+    {"name": "Theta Group", "county": "Alameda", "entity_number": "01234574"},
+    {"name": "Iota Partners", "county": "Alameda", "entity_number": "01234575"},
+    {"name": "Kappa Consulting", "county": "Alameda", "entity_number": "01234576"}
+  ],
+  "note": "Sample queue - full 1000 businesses to be generated when Captain is ready to scrape"
+}

@@ -1,0 +1,104 @@
+{
+  "test_run": {
+    "timestamp": "2026-02-27T07:09:15.768Z",
+    "test_type": "Dusty MVP End-to-End",
+    "job_id": "fdc63bd5-b2c2-481c-9a5f-d3e001eff52f"
+  },
+  "summary": {
+    "total_tests": 5,
+    "passed": 5,
+    "failed": 0,
+    "overall_status": "PASSED",
+    "total_duration_ms": 37.40
+  },
+  "service_health": {
+    "telegram_bridge_mock": {
+      "url": "http://localhost:3001/health",
+      "status": "healthy",
+      "status_code": 200,
+      "response_time_ms": 16.86,
+      "uptime_str": "0h 38m",
+      "circuit_breaker": "CLOSED",
+      "failures": 0,
+      "version": "2.0.0"
+    },
+    "core_agent": {
+      "url": "http://localhost:3000/health",
+      "status": "healthy",
+      "status_code": 200,
+      "response_time_ms": 2.27,
+      "uptime_str": "44h 43m",
+      "port": 3000
+    },
+    "openclaw_mock": {
+      "url": "http://localhost:4000/status",
+      "status": "healthy",
+      "status_code": 200,
+      "response_time_ms": 1.95,
+      "uptime_str": "44h 43m",
+      "total_interactions": 1070,
+      "port": 4000
+    }
+  },
+  "test_results": [
+    {
+      "test_name": "Bridge Health",
+      "component": "Telegram Bridge Mock",
+      "status": "PASS",
+      "duration_ms": 16.86,
+      "verified": "Service health endpoint responding"
+    },
+    {
+      "test_name": "Core-Agent Health", 
+      "component": "Dusty Core-Agent",
+      "status": "PASS",
+      "duration_ms": 2.27,
+      "verified": "Service health endpoint responding"
+    },
+    {
+      "test_name": "OpenClaw Health",
+      "component": "OpenClaw Mock",
+      "status": "PASS",
+      "duration_ms": 1.95,
+      "verified": "Service status endpoint responding"
+    },
+    {
+      "test_name": "End-to-End Flow",
+      "component": "Full Pipeline",
+      "status": "PASS",
+      "duration_ms": 6.37,
+      "input": "/dust balance",
+      "task_id": "3384d51c-4919-4c5f-a76f-357d213af14e",
+      "verified": "Message forwarded through Bridge → Core-Agent → OpenClaw → Response returned",
+      "response_preview": "📊 **Your Current Balances** • ETH: 0.5234 ETH (~$1,247.50) • USDC: 150.00 USDC"
+    },
+    {
+      "test_name": "Dust-Specific Query",
+      "component": "Dust Balance Retrieval",
+      "status": "PASS",
+      "duration_ms": 9.96,
+      "input": "What is my dust balance?",
+      "task_id": "5d619642-b159-4015-98b0-5a9210579c70",
+      "verified": "Balance data successfully retrieved and returned"
+    }
+  ],
+  "flow_verification": {
+    "step_1_bridge_receives": "✅ Bridge received mock Telegram message via /webhook",
+    "step_2_bridge_forwards": "✅ Bridge forwarded to Core-Agent (forwarded: true)",
+    "step_3_core_agent_processes": "✅ Core-Agent processed and created task",
+    "step_4_openclaw_responds": "✅ OpenClaw Mock generated balance response",
+    "step_5_response_returned": "✅ Full response propagated back through pipeline"
+  },
+  "performance_metrics": {
+    "health_check_total_ms": 21.08,
+    "e2e_flow_ms": 6.37,
+    "dust_query_ms": 9.96,
+    "fastest_response": "OpenClaw Health (1.95ms)",
+    "slowest_response": "Bridge Health (16.86ms)"
+  },
+  "conclusion": {
+    "status": "✅ SUCCESS",
+    "message": "Dusty MVP end-to-end pipeline fully operational",
+    "reliability": "All services stable, 0 failures"
+  }
+}

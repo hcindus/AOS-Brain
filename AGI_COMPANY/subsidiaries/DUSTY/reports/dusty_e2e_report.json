@@ -1,0 +1,55 @@
+{
+  "test_id": "dusty-e2e-cron-fdc63bd5-2026-02-23T12-39",
+  "cron_job_id": "fdc63bd5-b2c2-481c-9a5f-d3e001eff52f",
+  "test_type": "Dusty MVP End-to-End Test",
+  "timestamp": "2026-02-23T12:39:21Z",
+  "status": "DEGRADED",
+  "services": {
+    "bridge": {
+      "url": "http://localhost:3001",
+      "status": "healthy",
+      "version": "2.0.0",
+      "uptime_sec": 51190,
+      "circuit_breaker": "CLOSED"
+    },
+    "core_agent": {
+      "url": "http://localhost:3000",
+      "status": "healthy",
+      "uptime_sec": 111345
+    },
+    "openclaw_mock": {
+      "url": "http://localhost:4000",
+      "status": "healthy",
+      "uptime_sec": 1774,
+      "total_interactions": 11
+    }
+  },
+  "stages": [
+    {"name": "Health Checks", "status": "PASS", "duration_ms": 24, "details": {"bridge_ms": 20.04, "core_ms": 2.20, "openclaw_ms": 1.72}},
+    {"name": "Bridge Message Delivery", "status": "PASS", "duration_ms": 14.34, "note": "POST /webhook responds with 200, forwards to Core-Agent"},
+    {"name": "Core-Agent Processing", "status": "PASS", "duration_ms": 14.34, "details": {"task_created": true, "status": "pending", "forwarded_to_openclaw": true}},
+    {"name": "OpenClaw Response", "status": "PARTIAL", "duration_ms": null, "note": "Task stays in 'pending' - OpenClaw mock may need completion logic"},
+    {"name": "Bridge GET /test", "status": "FAIL", "duration_ms": 1.67, "note": "Endpoint not implemented (returns 404)"}
+  ],
+  "timing": {
+    "total_ms": 52,
+    "test_execution_ms": 52,
+    "breakdown": {
+      "health_checks_ms": 24,
+      "webhook_post_ms": 14.34,
+      "dust_query_ms": 9.36,
+      "get_test_endpoint_ms": 1.67
+    }
+  },
+  "summary": {
+    "total_steps": 5,
+    "passed": 3,
+    "partial": 1,
+    "failed": 1,
+    "pass_rate": "60%"
+  },
+  "issues": [
+    "OpenClaw mock creates tasks but they remain in 'pending' - completion logic needed",
+    "GET /test endpoint not implemented in Bridge v2"
+  ]
+}

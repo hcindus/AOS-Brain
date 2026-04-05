@@ -1,0 +1,21 @@
+[Unit]
+Description=AOS Ternary Brain Server
+After=network.target
+
+[Service]
+Type=simple
+User=%I
+WorkingDirectory=/home/%I/.openclaw/workspace/aos_brain_py
+ExecStart=/home/%I/.openclaw/workspace/aos_brain_py/.venv/bin/python -m brain.brain_server --port 5000
+Restart=always
+RestartSec=5
+Environment="PYTHONUNBUFFERED=1"
+Environment="AOS_BRAIN_LOG_LEVEL=info"
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=aos-brain
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,26 @@
+{
+  "name": "background_city",
+  "type": "background",
+  "size": [640, 360],
+  "description": "City skyline background for MilkMan Game",
+  "layers": [
+    {
+      "name": "sky",
+      "color": "#87CEEB",
+      "type": "gradient"
+    },
+    {
+      "name": "buildings", 
+      "color": "#4A5568",
+      "type": "silhouette"
+    },
+    {
+      "name": "clouds",
+      "color": "#FFFFFF",
+      "type": "parallax"
+    }
+  ],
+  "created_by": "Mylonen+R2",
+  "created_date": "2026-03-28",
+  "game": "MilkMan"
+}

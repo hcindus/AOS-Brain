@@ -1,0 +1,14 @@
+{
+  "name": "ui_health_bar",
+  "type": "ui",
+  "size": [64, 8],
+  "description": "Health bar UI element for MilkMan Game",
+  "states": {
+    "full": {"color": "#22C55E", "width_percent": 100},
+    "medium": {"color": "#EAB308", "width_percent": 50},
+    "low": {"color": "#EF4444", "width_percent": 25}
+  },
+  "created_by": "Mylonen+R2",
+  "created_date": "2026-03-28",
+  "game": "MilkMan"
+}

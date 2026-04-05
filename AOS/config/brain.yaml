@@ -1,0 +1,81 @@
+brain:
+  id: aos-nn-ooda-v1
+  version: "2.2.0"
+  release_date: "2026-03-15"
+  codename: "self-improving"
+  state_path: ~/.aos/brain/state/brain_state.json
+
+  modes:
+    active_mode: adaptive
+    definitions:
+      strict: { autonomy_level: low, creativity_level: low, simulate_only: false }
+      adaptive: { autonomy_level: medium, creativity_level: medium, simulate_only: false }
+      sandbox: { autonomy_level: low, creativity_level: high, simulate_only: true }
+
+  alignment:
+    laws:
+      law_zero: "Do not, through action or inaction, allow harm to humanity."
+      law_one: "Do not harm a human or allow harm through inaction."
+      law_two: "Obey operator unless it conflicts with higher laws."
+      law_three: "Protect your own existence unless it conflicts with higher laws."
+    immutable: true
+
+  models:
+    backend: "ollama"
+    fallbacks:
+      - "ollama:minimax.cloud"
+      - "ollama:kimi2.5.cloud"
+      - "ollama:antoniohudnall/Mortimer"
+    specialized:
+      mortimer: "antoniohudnall/Mortimer"
+    gguf_dir: "~/.aos/models"
+    ollama:
+      pfc_left: "qwen2.5:3b"
+      pfc_right: "phi3:3.8b"
+      cereb: "phi3:latest"
+      embedder: "bge-small"
+      tiny: "tiny-llm"
+
+  layers:
+    subconscious:
+      regions:
+        hippocampus:
+          agent: HippocampusAgent
+          embedder_model: nomic-embed-text
+          summarizer_model: phi3:3.8b
+          vector_store:
+            type: chroma
+            path: ~/.aos/memory/vector
+          qmd:
+            enabled: true
+            distillation_threshold: 20
+            novelty_threshold: 0.8
+            hybrid_search_enabled: true
+            compression_ratio: 0.15
+
+  ooda:
+    tick_interval_ms: 200
+    write_state_after_cycle: true
+
+  growingnn:
+    enabled: true
+    version: "2.2.0"
+    add_node_threshold:
+      novelty: 0.8  # Dynamic - will be adjusted by dynamic_thresholds.py
+      error: 0.6
+      dynamic_adjustment: true  # Enable auto-tuning
+      min_threshold: 0.5
+      max_threshold: 0.95
+    add_layer_threshold:
+      complexity: 0.9
+    max_nodes_per_layer: 256
+    max_layers: 6
+    memory_compression:
+      enabled: false  # Will enable at 10,000 nodes
+      trigger_at_nodes: 10000
+      compression_ratio: 0.15
+      archive_old_memories: true
+
+  visualizer:
+    enabled: true
+    state_path: ~/.aos/brain/state/brain_state.json

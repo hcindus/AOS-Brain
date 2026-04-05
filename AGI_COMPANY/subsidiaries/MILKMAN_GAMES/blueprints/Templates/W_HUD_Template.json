@@ -1,0 +1,275 @@
+{
+  "WidgetType": "UserWidget",
+  "WidgetName": "W_HUD_Template",
+  "Description": "Main HUD template with health, stamina, and interaction prompts. Designer-friendly layout.",
+  "Layout": {
+    "Root": {
+      "Type": "CanvasPanel",
+      "Name": "RootCanvas",
+      "Children": [
+        {
+          "Type": "SafeZone",
+          "Name": "SafeZone",
+          "IsGamepad": true,
+          "Children": [
+            {
+              "Type": "CanvasPanel",
+              "Name": "HUDCanvas",
+              "Children": [
+                {
+                  "Name": "HealthContainer",
+                  "Type": "HorizontalBox",
+                  "Position": {"X": 50, "Y": -100, "Anchor": "BottomLeft"},
+                  "Children": [
+                    {
+                      "Name": "HealthIcon",
+                      "Type": "Image",
+                      "Size": {"X": 32, "Y": 32},
+                      "Brush": "/Game/UI/Icons/HealthIcon.HealthIcon"
+                    },
+                    {
+                      "Name": "HealthBar",
+                      "Type": "ProgressBar",
+                      "Size": {"X": 200, "Y": 24},
+                      "FillColor": {"R": 1, "G": 0.2, "B": 0.2, "A": 1},
+                      "BackgroundColor": {"R": 0.1, "G": 0.1, "B": 0.1, "A": 0.8}
+                    },
+                    {
+                      "Name": "HealthText",
+                      "Type": "TextBlock",
+                      "Text": "100/100",
+                      "Font": {"Size": 16, "Bold": true}
+                    }
+                  ]
+                },
+                {
+                  "Name": "StaminaContainer",
+                  "Type": "HorizontalBox",
+                  "Position": {"X": 50, "Y": -60, "Anchor": "BottomLeft"},
+                  "Children": [
+                    {
+                      "Name": "StaminaIcon",
+                      "Type": "Image",
+                      "Size": {"X": 32, "Y": 32},
+                      "Brush": "/Game/UI/Icons/StaminaIcon.StaminaIcon"
+                    },
+                    {
+                      "Name": "StaminaBar",
+                      "Type": "ProgressBar",
+                      "Size": {"X": 150, "Y": 16},
+                      "FillColor": {"R": 0.2, "G": 0.8, "B": 0.2, "A": 1}
+                    }
+                  ]
+                },
+                {
+                  "Name": "Crosshair",
+                  "Type": "Image",
+                  "Position": {"X": 0, "Y": 0, "Anchor": "Center"},
+                  "Alignment": {"H": 0.5, "V": 0.5},
+                  "Size": {"X": 32, "Y": 32},
+                  "Brush": "/Game/UI/Crosshair.DefaultCrosshair"
+                },
+                {
+                  "Name": "InteractionPrompt",
+                  "Type": "HorizontalBox",
+                  "Position": {"X": 0, "Y": 100, "Anchor": "Center"},
+                  "Alignment": {"H": 0.5, "V": 0.5},
+                  "Visibility": "Collapsed",
+                  "Children": [
+                    {
+                      "Name": "KeyIcon",
+                      "Type": "Image",
+                      "Size": {"X": 24, "Y": 24},
+                      "Brush": "/Game/UI/Icons/Key_F.Key_F"
+                    },
+                    {
+                      "Name": "InteractionText",
+                      "Type": "TextBlock",
+                      "Text": "Interact",
+                      "Font": {"Size": 18}
+                    }
+                  ]
+                },
+                {
+                  "Name": "NotificationArea",
+                  "Type": "VerticalBox",
+                  "Position": {"X": 0, "Y": 100, "Anchor": "TopCenter"},
+                  "Alignment": {"H": 0.5, "V": 0},
+                  "Spacing": 5
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "Variables": [
+    {
+      "Name": "MaxHealth",
+      "Type": "float",
+      "DefaultValue": 100.0,
+      "Category": "Stats"
+    },
+    {
+      "Name": "CurrentHealth",
+      "Type": "float",
+      "DefaultValue": 100.0,
+      "Category": "Stats"
+    },
+    {
+      "Name": "MaxStamina",
+      "Type": "float",
+      "DefaultValue": 100.0,
+      "Category": "Stats"
+    },
+    {
+      "Name": "CurrentStamina",
+      "Type": "float",
+      "DefaultValue": 100.0,
+      "Category": "Stats"
+    },
+    {
+      "Name": "NotificationQueue",
+      "Type": "array of FNotificationData",
+      "Category": "Notifications"
+    }
+  ],
+  "Functions": [
+    {
+      "Name": "UpdateHealth",
+      "Inputs": [
+        {"Name": "NewHealth", "Type": "float"},
+        {"Name": "NewMaxHealth", "Type": "float"}
+      ],
+      "Description": "Update health bar and text",
+      "Nodes": [
+        {"Type": "Set", "Variable": "CurrentHealth", "Value": "NewHealth"},
+        {"Type": "Set", "Variable": "MaxHealth", "Value": "NewMaxHealth"},
+        {"Type": "SetPercent", "Target": "HealthBar", "Value": "NewHealth / NewMaxHealth"},
+        {"Type": "SetText", "Target": "HealthText", "Value": "Floor(NewHealth) + '/' + Floor(NewMaxHealth)"}
+      ]
+    },
+    {
+      "Name": "UpdateStamina",
+      "Inputs": [
+        {"Name": "NewStamina", "Type": "float"},
+        {"Name": "NewMaxStamina", "Type": "float"}
+      ],
+      "Description": "Update stamina bar",
+      "Nodes": [
+        {"Type": "Set", "Variable": "CurrentStamina", "Value": "NewStamina"},
+        {"Type": "SetPercent", "Target": "StaminaBar", "Value": "NewStamina / NewMaxStamina"}
+      ]
+    },
+    {
+      "Name": "ShowInteractionPrompt",
+      "Inputs": [
+        {"Name": "ActionText", "Type": "FString"},
+        {"Name": "KeyName", "Type": "FString", "Default": "F"}
+      ],
+      "Description": "Show interaction UI",
+      "Nodes": [
+        {"Type": "SetText", "Target": "InteractionText", "Value": "ActionText"},
+        {"Type": "SetVisibility", "Target": "InteractionPrompt", "Visibility": "Visible"},
+        {"Type": "PlayAnimation", "Animation": "PromptFadeIn"}
+      ]
+    },
+    {
+      "Name": "HideInteractionPrompt",
+      "Inputs": [],
+      "Description": "Hide interaction UI",
+      "Nodes": [
+        {"Type": "PlayAnimation", "Animation": "PromptFadeOut"},
+        {"Type": "SetVisibility", "Target": "InteractionPrompt", "Visibility": "Collapsed"}
+      ]
+    },
+    {
+      "Name": "ShowNotification",
+      "Inputs": [
+        {"Name": "Message", "Type": "FString"},
+        {"Name": "Duration", "Type": "float", "Default": 3.0},
+        {"Name": "Type", "Type": "ENotificationType", "Default": "Info"}
+      ],
+      "Description": "Add notification to queue",
+      "Nodes": [
+        {"Type": "CreateWidget", "Class": "W_NotificationItem"},
+        {"Type": "SetNotificationData"},
+        {"Type": "AddChild", "Parent": "NotificationArea"},
+        {"Type": "PlayAnimation", "Animation": "NotificationSlideIn"}
+      ]
+    }
+  ],
+  "Animations": [
+    {
+      "Name": "PromptFadeIn",
+      "Duration": 0.3,
+      "Tracks": [
+        {
+          "Target": "InteractionPrompt",
+          "Property": "RenderOpacity",
+          "Keys": [
+            {"Time": 0, "Value": 0},
+            {"Time": 0.3, "Value": 1, "Easing": "EaseOut"}
+          ]
+        },
+        {
+          "Target": "InteractionPrompt",
+          "Property": "RenderTransform.Translation",
+          "Keys": [
+            {"Time": 0, "Value": {"X": 0, "Y": 10}},
+            {"Time": 0.3, "Value": {"X": 0, "Y": 0}, "Easing": "EaseOut"}
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "NotificationSlideIn",
+      "Duration": 3.0,
+      "Tracks": [
+        {
+          "Target": "NotificationWidget",
+          "Property": "RenderTransform.Translation",
+          "Keys": [
+            {"Time": 0, "Value": {"X": 0, "Y": -50}},
+            {"Time": 0.2, "Value": {"X": 0, "Y": 0}},
+            {"Time": 2.8, "Value": {"X": 0, "Y": 0}},
+            {"Time": 3.0, "Value": {"X": 0, "Y": -50}}
+          ]
+        },
+        {
+          "Target": "NotificationWidget",
+          "Property": "RenderOpacity",
+          "Keys": [
+            {"Time": 0, "Value": 0},
+            {"Time": 0.2, "Value": 1},
+            {"Time": 2.8, "Value": 1},
+            {"Time": 3.0, "Value": 0}
+          ]
+        }
+      ]
+    }
+  ],
+  "Styling": {
+    "HealthBar": {
+      "FillColor": "#FF3333",
+      "BackgroundColor": "#1A1A1ACC",
+      "BorderRadius": 4
+    },
+    "StaminaBar": {
+      "FillColor": "#33CC33",
+      "BackgroundColor": "#1A1A1ACC",
+      "BorderRadius": 4
+    },
+    "Crosshair": {
+      "Color": "#FFFFFF80",
+      "Size": 32
+    },
+    "InteractionPrompt": {
+      "Background": "#00000080",
+      "TextColor": "#FFFFFF",
+      "BorderRadius": 8,
+      "Padding": {"Left": 12, "Right": 12, "Top": 6, "Bottom": 6}
+    }
+  }
+}

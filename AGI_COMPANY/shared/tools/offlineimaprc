@@ -1,0 +1,38 @@
+[general]
+accounts = Miles,Mortimer
+metadata = ~/.offlineimap/Metadata
+enabledervices = imap
+
+[Account Miles]
+localrepository = MilesLocal
+remoterepository = MilesRemote
+status_backend = sqlite
+
+[Repository MilesRemote]
+type = IMAP
+remotehost = mail.myl0nr0s.cloud
+remoteuser = miles@myl0nr0s.cloud
+remotepass = Myl0n.R0s
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+
+[Repository MilesLocal]
+type = Maildir
+localfolders = ~/.offlineimap/Mail/miles
+
+[Account Mortimer]
+localrepository = MortimerLocal
+remoterepository = MortimerRemote
+status_backend = sqlite
+
+[Repository MortimerRemote]
+type = IMAP
+remotehost = mail.myl0nr0s.cloud
+remoteuser = mortimer@myl0nr0s.cloud
+remotepass = Myl0n.r0s
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+
+[Repository MortimerLocal]
+type = Maildir
+localfolders = ~/.offlineimap/Mail/mortimer

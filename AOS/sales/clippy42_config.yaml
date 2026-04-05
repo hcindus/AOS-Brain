@@ -1,0 +1,42 @@
+# Clippy-42 - Assistant to Regional Manager Configuration
+# Runs on local Mortimer model for cost savings
+
+agent:
+  name: clippy-42
+  role: Assistant to Regional Manager
+  tier: Starter
+  emoji: "📝📎"
+  
+model:
+  backend: ollama
+  primary: antoniohudnall/Mortimer:latest
+  runtime: local
+  temperature: 0.7
+  max_tokens: 2048
+  
+capabilities:
+  - sales_support
+  - email_drafting
+  - lead_qualification
+  - chat_support
+  - automated_onboarding
+  
+workspace:
+  path: /root/.openclaw/workspace/aocros/agent_sandboxes/clippy-42
+  memory_path: /root/.openclaw/workspace/aocros/agent_sandboxes/clippy-42/memory
+  
+prospects:
+  file: /root/.openclaw/workspace/sales/prospects_starter.csv
+  tier: Starter
+  monthly_price: $499
+  target_clients: 401
+  
+portal:
+  hub: mortimer
+  url: wss://mortimer:9000
+  token: clippy42-portal-2024-secure
+  classification: Q-LEVEL
+  
+logging:
+  level: info
+  file: /root/.openclaw/workspace/aocros/agent_sandboxes/clippy-42/memory/clippy-42.log

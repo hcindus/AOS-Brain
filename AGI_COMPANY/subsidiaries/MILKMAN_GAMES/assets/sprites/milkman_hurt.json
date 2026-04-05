@@ -1,0 +1,17 @@
+{
+  "name": "milkman_hurt",
+  "type": "sprite",
+  "size": [32, 32],
+  "frames": 4,
+  "animation": "hurt",
+  "description": "MilkMan taking damage animation",
+  "palette": {
+    "milk_white": "#F5F5F5",
+    "uniform_blue": "#1E3A8A",
+    "hurt_red": "#DC2626",
+    "face": "#FCD34D"
+  },
+  "created_by": "Mylonen+R2",
+  "created_date": "2026-03-28",
+  "game": "MilkMan"
+}

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGI Company - Orders</title>
+    <style>
+        :root {
+            --bg-dark: #0a0a1a;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --header-bg: rgba(26, 54, 93, 0.95);
+            --text: #e5e5e5;
+            --text-muted: #a0a0a0;
+            --accent: #ed8936;
+            --accent-hover: #dd6b20;
+            --border: rgba(237, 137, 54, 0.3);
+            --success: #22c55e;
+            --pending: #eab308;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 1000;
+        }
+
+        .logo { font-size: 26px; font-weight: 800; color: var(--text); text-decoration: none; }
+        .logo span { color: var(--accent); }
+
+        .header-nav { display: flex; align-items: center; gap: 30px; }
+        .header-nav a { color: var(--text); text-decoration: none; font-weight: 600; font-size: 15px; transition: color 0.3s; }
+        .header-nav a:hover, .header-nav a.active { color: var(--accent); }
+
+        .layout { display: flex; min-height: 100vh; padding-top: 70px; padding-bottom: 60px; }
+
+        .sidebar {
+            width: 260px;
+            background: rgba(26, 54, 93, 0.9);
+            border-right: 1px solid var(--border);
+            padding: 30px 20px;
+            position: fixed;
+            left: 0;
+            top: 70px;
+            bottom: 60px;
+            overflow-y: auto;
+        }
+
+        .sidebar-section { margin-bottom: 35px; }
+        .sidebar-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+        }
+
+        .sidebar-menu { list-style: none; }
+        .sidebar-menu li { margin-bottom: 8px; }
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: rgba(237, 137, 54, 0.15);
+            color: var(--accent);
+        }
+        .sidebar-menu .icon { margin-right: 12px; font-size: 18px; width: 24px; text-align: center; }
+
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 40px;
+            background: var(--bg-dark);
+        }
+
+        h1 { font-size: 36px; margin-bottom: 10px; color: var(--text); }
+        .subtitle { font-size: 16px; color: var(--text-muted); margin-bottom: 30px; }
+
+        .order-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .order-id {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .order-date {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .order-status {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .order-status.active {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--success);
+        }
+
+        .order-status.pending {
+            background: rgba(234, 179, 8, 0.2);
+            color: var(--pending);
+        }
+
+        .order-items { margin-bottom: 15px; }
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            color: var(--text-muted);
+        }
+
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: 700;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .order-total .amount { color: var(--accent); }
+
+        .btn {
+            padding: 10px 20px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover { background: var(--accent-hover); }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 1000;
+        }
+
+        .footer-left { color: var(--text-muted); font-size: 14px; }
+        .footer-right { display: flex; gap: 25px; }
+        .footer-right a { color: var(--text-muted); text-decoration: none; font-size: 14px; transition: color 0.3s; }
+        .footer-right a:hover { color: var(--accent); }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .main-content { margin-left: 0; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="logo">AGI<span>Company</span></a>
+        <nav class="header-nav">
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="cart.html">Cart</a>
+            <a href="login.html">Login</a>
+        </nav>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Main Menu</div>
+                <ul class="sidebar-menu">
+                    <li><a href="index.html"><span class="icon">🏠</span> Home</a></li>
+                    <li><a href="products.html"><span class="icon">🛍️</span> Products</a></li>
+                    <li><a href="cart.html"><span class="icon">🛒</span> Cart</a></li>
+                    <li><a href="orders.html" class="active"><span class="icon">📦</span> Orders</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">Account</div>
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html"><span class="icon">📊</span> Dashboard</a></li>
+                    <li><a href="profile.html"><span class="icon">👤</span> Profile</a></li>
+                    <li><a href="settings.html"><span class="icon">⚙️</span> Settings</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">Support</div>
+                <ul class="sidebar-menu">
+                    <li><a href="help.html"><span class="icon">❓</span> Help Center</a></li>
+                    <li><a href="contact.html"><span class="icon">✉️</span> Contact</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h1>📦 Your Orders</h1>
+            <p class="subtitle">Track and manage your AGI agent subscriptions</p>
+
+            <div class="order-card">
+                <div class="order-header">
+                    <div>
+                        <div class="order-id">Order #AGI-2026-0001</div>
+                        <div class="order-date">March 28, 2026</div>
+                    </div>
+                    <span class="order-status active">Active</span>
+                </div>
+                <div class="order-items">
+                    <div class="order-item">
+                        <span>Executive Agent (Monthly)</span>
+                        <span>$500.00</span>
+                    </div>
+                </div>
+                <div class="order-total">
+                    <span>Total</span>
+                    <span class="amount">$500.00/mo</span>
+                </div>
+                <div style="margin-top: 15px;">
+                    <a href="#" class="btn">Manage</a>
+                </div>
+            </div>
+
+            <div class="order-card">
+                <div class="order-header">
+                    <div>
+                        <div class="order-id">Order #AGI-2026-0002</div>
+                        <div class="order-date">March 27, 2026</div>
+                    </div>
+                    <span class="order-status pending">Pending Setup</span>
+                </div>
+                <div class="order-items">
+                    <div class="order-item">
+                        <span>Technical Team Pack</span>
+                        <span>$2,000.00</span>
+                    </div>
+                </div>
+                <div class="order-total">
+                    <span>Total</span>
+                    <span class="amount">$2,000.00</span>
+                </div>
+                <div style="margin-top: 15px;">
+                    <a href="#" class="btn">View Details</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-left">© 2026 AGI Company. All rights reserved.</div>
+        <div class="footer-right">
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+            <a href="support.html">Support</a>
+        </div>
+    </footer>
+</body>
+</html>

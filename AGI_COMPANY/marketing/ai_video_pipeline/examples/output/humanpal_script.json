@@ -1,0 +1,37 @@
+{
+  "product": "humanpal",
+  "style": "modern",
+  "total_duration": 30,
+  "scenes": [
+    {
+      "type": "hook",
+      "text": "What if you could have a spokesperson that works 24/7?",
+      "duration": 3,
+      "visual_prompt": "Eye-catching opening shot for humanpal"
+    },
+    {
+      "type": "problem",
+      "text": "Hiring actors is expensive and time-consuming",
+      "duration": 6,
+      "visual_prompt": "Visual representation of the problem"
+    },
+    {
+      "type": "solution",
+      "text": "Meet Humanpal: HumanPal creates AI avatars in minutes",
+      "duration": 8,
+      "visual_prompt": "Product reveal for humanpal"
+    },
+    {
+      "type": "features",
+      "text": "With Realistic avatars, Lip-sync, you get results.",
+      "duration": 10,
+      "visual_prompt": "Feature demonstration"
+    },
+    {
+      "type": "cta",
+      "text": "Try HumanPal Free at myl0nr0s.cloud",
+      "duration": 3,
+      "visual_prompt": "Call to action with logo"
+    }
+  ]
+}

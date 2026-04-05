@@ -1,0 +1,47 @@
+Part Number,Name,Category,Qty,Unit Cost,Total Cost,Supplier,SKU,URL,Specs,Alternatives
+STR-001,Cervical Vertebra (V1-V7),Structural,7,3.5,24.5,JLC3D,PLA-F-GW,https://jlc3d.com,"PLA, 20% infill, 0.2mm layer",PETG alternative
+STR-002,Thoracic Vertebra (V8-V19),Structural,12,3.5,42.0,JLC3D,PLA-F-GW,https://jlc3d.com,"PLA, 20% infill, 0.2mm layer",PETG alternative
+STR-003,Lumbar Vertebra (V20-V24),Structural,5,3.5,17.5,JLC3D,PLA-F-GW,https://jlc3d.com,"PLA, 20% infill, 0.2mm layer",
+STR-004,Sacrum Base (V25),Structural,1,5.0,5.0,JLC3D,PLA-F-GW,https://jlc3d.com,"PLA, 40% infill for rigidity",
+STR-005,Intervertebral Discs,Structural,25,1.2,30.0,McMaster,9379K11,https://mcmaster.com,"Silicone rubber, 40A durometer",TPE 3D print
+STR-006,Rib Segments (Thoracic),Structural,24,1.0,24.0,JLC3D,PLA-F-GW,https://jlc3d.com,"PLA, 15% infill, hollow",
+STR-007,Skull Housing,Structural,1,8.0,8.0,JLC3D,PLA-F-GW,https://jlc3d.com,"PLA, 25% infill, glossy finish",
+STR-008,Phone Mount Bracket,Structural,1,3.0,3.0,JLC3D,PLA-F-GW,https://jlc3d.com,"Universal phone clamp, adjustable",
+ACT-001,MG90S Micro Servo (Pitch),Actuators,25,2.85,71.25,Amazon,B07MFK266B,https://amazon.com,"180°, 2.2kg/cm, metal gears",TowerPro SG90 ($1.50)
+ACT-002,MG90S Micro Servo (Roll),Actuators,25,2.85,71.25,Amazon,B07MFK266B,https://amazon.com,"180°, 2.2kg/cm, metal gears",
+ACT-003,DS3218 Digital Servo (Base),Actuators,2,12.99,25.98,Amazon,B076MQ22PM,https://amazon.com,"20kg/cm, 270°, high torque",DS3235 for heavier loads
+ELE-001,Raspberry Pi 5 (8GB),Electronics,1,80.0,80.0,PiShop,PI5-8GB,https://pishop.us,"8GB RAM, AI-ready",Pi 4 8GB ($75)
+ELE-002,Raspberry Pi AI HAT+,Electronics,1,70.0,70.0,PiShop,AI-HAT-PLUS,https://pishop.us,13 TOPS NPU,Coral USB ($60)
+ELE-003,PCA9685 Servo Driver,Electronics,2,12.99,25.98,Adafruit,815,https://adafruit.com,"16-channel, 12-bit PWM, I2C",SparkFun version
+ELE-004,MCP2515 CAN Controller,Electronics,1,8.99,8.99,Amazon,B01D1D0D5K,https://amazon.com,"SPI interface, servo bus compatible",
+ELE-005,Arduino Nano,Electronics,1,4.5,4.5,Arduino,A000005,https://store.arduino.cc,Low-level real-time control,Arduino Pro Mini $3
+ELE-006,Active Cooling Fan,Electronics,1,5.99,5.99,Amazon,B07WGCFZ4C,https://amazon.com,"40x40x10mm, 5V, quiet",
+ELE-007,Heat Sinks (Set),Electronics,1,3.99,3.99,Amazon,B08CDMF2RS,https://amazon.com,"Aluminum, self-adhesive",
+SEN-001,MPU6050 IMU,Sensors,2,4.5,9.0,Amazon,B07R7YXL1F,https://amazon.com,"6-axis, I2C, accelerometer + gyro",MPU9250 with magnetometer
+SEN-002,VL53L0X ToF Distance,Sensors,1,7.99,7.99,Adafruit,3317,https://adafruit.com,"2m range, obstacle detection",
+SEN-003,TCS34725 Color Sensor,Sensors,1,7.95,7.95,Adafruit,1334,https://adafruit.com,RGB color detection,
+SEN-004,IR Proximity Sensors,Sensors,4,1.5,6.0,Adafruit,1568,https://adafruit.com,"Short range, 10cm",
+SEN-005,Current Sensors (INA219),Sensors,2,3.5,7.0,Adafruit,904,https://adafruit.com,Power monitoring per bus,
+PWR-001,18650 Battery (3500mAh),Power,6,8.99,53.94,BatterySpace,18650-3500,https://batteryspace.com,"LG MJ1, protected cells",Samsung 35E
+PWR-002,BMS 3S 12V 20A,Power,1,12.99,12.99,Amazon,B08X2WBQN2,https://amazon.com,"Balance, overcharge, short protection",
+PWR-003,Step-Down Converter,Power,1,6.99,6.99,Amazon,B07R4D7R8P,https://amazon.com,"LM2596, 12V to 5V",Buck converter module
+PWR-004,Power Switch,Power,1,2.99,2.99,Amazon,B07K2K4W1Y,https://amazon.com,"Rocker, 10A rated",
+PWR-005,XT60 Connector Pair,Power,2,1.5,3.0,Amazon,B07WPHK4R9,https://amazon.com,"Gold plated, 60A rated",
+PWR-006,18650 Battery Holder,Power,1,4.99,4.99,Amazon,B07K8QWJ6J,https://amazon.com,"3S1P configuration, PCB mount",
+PWR-007,Charger 12.6V 2A,Power,1,8.99,8.99,Amazon,B07MFK266B,https://amazon.com,"Li-ion 3S charger, CC/CV",
+FAS-001,M2x8 Machine Screws,Fasteners,100,0.05,5.0,McMaster,91292A005,https://mcmaster.com,"Stainless steel, Phillips",
+FAS-002,M2x10 Machine Screws,Fasteners,100,0.05,5.0,McMaster,91292A006,https://mcmaster.com,"Stainless steel, Phillips",
+FAS-003,M2 Nuts,Fasteners,200,0.03,6.0,McMaster,90480A002,https://mcmaster.com,"Stainless steel, hex",
+FAS-004,M2 Washers,Fasteners,200,0.02,4.0,McMaster,98689A101,https://mcmaster.com,"Stainless steel, flat",
+FAS-005,Servo Horns,Fasteners,50,0.25,12.5,Amazon,Servo-Horn-Set,https://amazon.com,"Various sizes, metal + plastic",
+FAS-006,Servo Screws,Fasteners,50,0.1,5.0,Amazon,Servo-Screw-Set,https://amazon.com,"M2x6, M2x8, included with servos",
+CBL-001,Servo Extension Cables,Cables,25,0.75,18.75,Amazon,Servo-Ext-30cm,https://amazon.com,"30cm, JR style, male-female",Make custom: wire + connectors
+CBL-002,Dupont Wire Kit,Cables,1,9.99,9.99,Amazon,B07WV4WN6Q,https://amazon.com,"120pcs, M-M, M-F, F-F, 10cm-30cm",
+CBL-003,I2C Cable (Qwiic/Stemma),Cables,5,1.95,9.75,SparkFun,15081,https://sparkfun.com,"4-pin JST, 50cm",
+CBL-004,USB-C Cable,Cables,2,5.99,11.98,Amazon,USB-C-3ft,https://amazon.com,"Power + data, braided",
+CBL-005,Power Wire 18AWG,Cables,5,0.5,2.5,Amazon,Silicone-18AWG,https://amazon.com,"Silicone insulated, flexible, per meter",
+CBL-006,Heat Shrink Tubing,Cables,1,6.99,6.99,Amazon,Heat-Shrink-Set,https://amazon.com,"Assorted sizes, black",
+TLS-001,Precision Screwdriver Set,Tools,1,12.99,12.99,Amazon,Screwdriver-Set,https://amazon.com,"Phillips, flat, hex, Torx",iFixit kit ($25)
+TLS-002,Wire Strippers,Tools,1,8.99,8.99,Amazon,Wire-Stripper,https://amazon.com,"Automatic, 10-24 AWG",
+TLS-003,Multimeter,Tools,1,15.99,15.99,Amazon,Multimeter-Basic,https://amazon.com,"Voltage, current, continuity",Fluke ($100+)
+TLS-004,Soldering Iron,Tools,1,19.99,19.99,Amazon,Solder-Iron-Kit,https://amazon.com,"60W, temperature controlled",

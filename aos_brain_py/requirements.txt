@@ -1,0 +1,12 @@
+# aos_brain_py requirements
+numpy>=1.20.0
+
+# Flask API
+flask>=2.0.0
+flask-cors>=3.0.0
+
+# Optional: For llama.cpp bindings
+# llama-cpp-python
+
+# Optional: For OpenAI API compatibility
+# openai

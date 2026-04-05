@@ -1,0 +1,96 @@
+{
+  "test_name": "Dusty MVP End-to-End Test",
+  "test_id": "dusty-end-to-end-test-1772082559301",
+  "timestamp": "2026-02-26T05:09:19.261Z",
+  "cron_job_id": "fdc63bd5-b2c2-481c-9a5f-d3e001eff52f",
+  "status": "PASSED",
+  "summary": {
+    "total_steps": 4,
+    "passed": 4,
+    "failed": 0,
+    "duration_ms": 40
+  },
+  "test_steps": [
+    {
+      "step": 1,
+      "name": "Service Health Checks",
+      "status": "PASS",
+      "duration_ms": 28,
+      "details": {
+        "bridge_mock": {
+          "status": "healthy",
+          "version": "2.0.0",
+          "port": 3001,
+          "uptime_seconds": 67413,
+          "circuit_breaker": "CLOSED"
+        },
+        "core_agent": {
+          "status": "healthy",
+          "port": 3000,
+          "uptime_seconds": 67404
+        },
+        "openclaw_mock": {
+          "status": "healthy",
+          "port": 4000,
+          "total_interactions": 443,
+          "uptime_seconds": 67406
+        }
+      }
+    },
+    {
+      "step": 2,
+      "name": "Send Telegram Message via Bridge",
+      "status": "PASS",
+      "duration_ms": 7,
+      "details": {
+        "message": "Find my dust positions",
+        "user_id": 123456,
+        "request_id": "6tx7th",
+        "forwarded_to_core_agent": true
+      }
+    },
+    {
+      "step": 3,
+      "name": "Core-Agent Processes Task",
+      "status": "PASS",
+      "duration_ms": 0,
+      "details": {
+        "task_id": "78d02d2f-6bcb-4156-a87d-6371205b36ad",
+        "task_status": "forwarded",
+        "forwarded_to_openclaw": true
+      }
+    },
+    {
+      "step": 4,
+      "name": "OpenClaw Responds",
+      "status": "PASS",
+      "duration_ms": 0,
+      "details": {
+        "bot": "dusty",
+        "action": "dust_identification",
+        "response_length": 428,
+        "sample_response": "🔍 **Dust Analysis Complete**\n\nFound **15 dust positions** across your wallets..."
+      }
+    },
+    {
+      "step": 5,
+      "name": "Verify Interaction Logs",
+      "status": "PASS",
+      "duration_ms": 5,
+      "details": {
+        "total_interactions": 446,
+        "test_message_found": true,
+        "interaction_direction": "RECEIVED → SENT"
+      }
+    }
+  ],
+  "end_to_end_flow": {
+    "telegram_message_sent": true,
+    "bridge_forwarded": true,
+    "core_agent_processed": true,
+    "openclaw_responded": true,
+    "response_returned": true,
+    "total_latency_ms": 40
+  },
+  "verdict": "✅ SUCCESS - All components operational and integrated"
+}

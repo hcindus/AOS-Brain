@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AM HUD Supply & Performance Supply Depot LLC | AGI-Powered POS Solutions</title>
+    <meta name="description" content="Thermal paper, bond paper, ink ribbons for POS systems. Plus AGI-powered business solutions including crypto portfolio dashboard, multi-exchange trading, and autonomous agent fleet.">
+    <style>
+        :root {
+            --primary: #004080;
+            --primary-dark: #003366;
+            --accent: #ff6600;
+            --accent-hover: #e65c00;
+            --bg-light: #f8f9fa;
+            --bg-blue: #e9f2ff;
+            --text-dark: #333;
+            --text-light: #fff;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --radius: 8px;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-dark);
+            background: var(--bg-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--primary-dark);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 600;
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-cta {
+            background: var(--accent);
+            padding: 10px 20px;
+            border-radius: var(--radius);
+        }
+
+        .nav-cta:hover {
+            background: var(--accent-hover);
+            color: var(--text-light) !important;
+        }
+
+        /* Header / Hero */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--text-light);
+            text-align: center;
+            padding: 140px 20px 100px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 60px;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></svg>');
+            background-size: 100px 100px;
+            opacity: 0.5;
+        }
+
+        header .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .company-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            padding: 8px 25px;
+            border-radius: 30px;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        h1 {
+            font-size: 48px;
+            margin: 0 0 20px 0;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 22px;
+            margin: 20px 0;
+            opacity: 0.95;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-text {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--text-light);
+            padding: 16px 40px;
+            font-size: 18px;
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-weight: 700;
+            margin: 15px 10px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: var(--text-light);
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: #e9f2ff;
+            color: var(--primary);
+        }
+
+        .btn-dashboard {
+            background: linear-gradient(135deg, #00d4ff, #7b2cbf);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-dashboard:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,212,255,0.4);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        section:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .section-header {
+            max-width: 800px;
+            margin: 0 auto 50px;
+        }
+
+        /* POS Products */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .product-card {
+            background: var(--text-light);
+            border-radius: var(--radius);
+            padding: 40px 30px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            border-top: 4px solid var(--accent);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .product-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .product-features {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        .product-features li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-features li:before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Dashboard Section */
+        .dashboard-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--text-light);
+        }
+
+        .dashboard-section .section-header h2,
+        .dashboard-section .section-header p {
+            color: var(--text-light);
+        }
+
+        .dashboard-preview {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 30px 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stat-card h4 {
+            font-size: 36px;
+            margin: 0 0 10px 0;
+            color: #00ff88;
+        }
+
+        .stat-card p {
+            margin: 0;
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        /* Agents Section */
+        .agents-section {
+            background: var(--bg-blue);
+        }
+
+        .agents-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: var(--text-light);
+            border: 2px solid var(--primary);
+            padding: 12px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: var(--text-light);
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            text-align: left;
+        }
+
+        .agent-card {
+            background: var(--text-light);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s;
+        }
+
+        .agent-card.inactive {
+            border-left-color: var(--danger);
+            opacity: 0.8;
+        }
+
+        .agent-card:hover {
+            transform: translateX(5px);
+        }
+
+        .agent-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .agent-name {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary);
+        }
+
+        .agent-status {
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .agent-status.active {
+            background: rgba(40, 167, 69, 0.2);
+            color: var(--success);
+        }
+
+        .agent-status.inactive {
+            background: rgba(220, 53, 69, 0.2);
+            color: var(--danger);
+        }
+
+        .agent-role {
+            font-size: 14px;
+            color: var(--text-dark);
+            opacity: 0.8;
+            margin: 5px 0;
+        }
+
+        .agent-level {
+            font-size: 12px;
+            padding: 2px 10px;
+            background: var(--bg-light);
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            text-align: left;
+        }
+
+        .skill-card {
+            background: var(--text-light);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 3px solid var(--primary);
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .skill-card h4 {
+            margin: 0 0 8px 0;
+            font-size: 16px;
+            color: var(--primary);
+        }
+
+        .skill-card p {
+            margin: 0;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .skill-badge {
+            display: inline-block;
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .skill-badge.new {
+            background: rgba(255, 102, 0, 0.2);
+            color: var(--accent);
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-box {
+            background: var(--text-light);
+            padding: 40px 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-icon-large {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-box h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: var(--primary);
+            color: var(--text-light);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 30px;
+        }
+
+        .stat-box h4 {
+            font-size: 42px;
+            margin: 0 0 10px 0;
+            color: var(--accent);
+        }
+
+        .stat-box p {
+            margin: 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            color: var(--text-light);
+        }
+
+        .cta-section h2 {
+            margin-bottom: 30px;
+        }
+
+        .cta-btn {
+            background: var(--text-light);
+            color: var(--primary);
+            padding: 18px 50px;
+            font-size: 20px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 700;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            color: var(--text-light);
+            padding: 60px 20px 30px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .footer-col h4 {
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .footer-col p, .footer-col a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            line-height: 2;
+            font-size: 14px;
+        }
+
+        .footer-col a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 32px; }
+            h2 { font-size: 26px; }
+            .nav-links { display: none; }
+            .hero-text { font-size: 16px; }
+            section { padding: 60px 20px; }
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">AM<span>HUD</span> Supply</a>
+            <div class="nav-links">
+                <a href="#products">POS Supplies</a>
+                <a href="#agi">AGI Solutions</a>
+                <a href="#dashboard">Dashboard</a>
+                <a href="#agents">Agents</a>
+                <a href="#skills">Skills</a>
+                <a href="#contact" class="nav-cta">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header / Hero -->
+    <header>
+        <div class="container">
+            <div class="company-badge">Performance Supply Depot LLC</div>
+            <h1>AM HUD Supply</h1>
+            <p class="subtitle">Premium POS Consumables & AGI-Powered Business Solutions</p>
+            <p class="hero-text">Thermal paper, bond paper, and ink ribbons for multifamily housing. Plus cutting-edge cryptocurrency portfolio management and autonomous AI agent fleet.</p>
+            <a href="#dashboard" class="btn btn-dashboard">📊 View Live Dashboard</a>
+            <a href="#products" class="btn btn-secondary">View Products</a>
+        </div>
+    </header>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="dashboard-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>🦑 Cryptonio Live Dashboard</h2>
+                <p>Real-time cryptocurrency portfolio tracking across multiple exchanges. Auto-refreshes every 30 seconds with live market data.</p>
+            </div>
+            
+            <div class="dashboard-preview">
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <h4>$310.90</h4>
+                        <p>Total Portfolio Value</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>0.00456</h4>
+                        <p>BTC Equivalent</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>29</h4>
+                        <p>Assets Tracked</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>5</h4>
+                        <p>Exchanges Connected</p>
+                    </div>
+                </div>
+                <p style="margin-top: 30px;">
+                    <a href="http://31.97.6.30:5000" class="btn btn-dashboard" target="_blank">
+                        🚀 Access Dashboard
+                    </a>
+                    <a href="http://31.97.6.30/dashboard.html" class="btn btn-secondary" target="_blank">
+                        📈 Portfolio View
+                    </a>
+                </p>
+                <p style="opacity: 0.7; font-size: 14px; margin-top: 20px;">
+                    Features: Real-time pie charts • Line charts • Exchange holdings • Asset grid • Trade history
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- POS Products Section -->
+    <section id="products">
+        <div class="container">
+            <div class="section-header">
+                <h2>POS Consumables</h2>
+                <p>Premium quality supplies for property management POS systems</p>
+            </div>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-icon">📄</div>
+                    <h3>Thermal Receipt Paper</h3>
+                    <p>BPA-free thermal paper rolls with jam-resistant coating for POS terminals.</p>
+                    <ul class="product-features">
+                        <li>3 1/8" x 230' standard size</li>
+                        <li>BPA-free, environmentally safe</li>
+                        <li>Works with Epson, Star, Citizen</li>
+                        <li>Bright white, fade-resistant</li>
+                        <li>Starting at $0.20/roll (bulk)</li>
+                    </ul>
+                    <a href="#contact" class="btn">Request Quote</a>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-icon">📋</div>
+                    <h3>Bond Paper Rolls</h3>
+                    <p>Premium carbonless and standard bond paper for impact printers.</p>
+                    <ul class="product-features">
+                        <li>1-Ply: 3" x 150' white</li>
+                        <li>2-Ply: 3" x 90' carbonless</li>
+                        <li>Impact printer optimized</li>
+                        <li>Durable, tear-resistant</li>
+                        <li>Volume pricing available</li>
+                    </ul>
+                    <a href="#contact" class="btn">Request Quote</a>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-icon">🖨️</div>
+                    <h3>Ink Ribbons & Cartridges</h3>
+                    <p>High-yield ink ribbons for impact printers. Long-lasting formula.</p>
+                    <ul class="product-features">
+                        <li>ERC-30/34/38 compatible</li>
+                        <li>SP700 series ready</li>
+                        <li>TM-U220 compatible</li>
+                        <li>6+ box pricing available</li>
+                        <li>Best price on boxes of 6+</li>
+                    </ul>
+                    <a href="#contact" class="btn">Request Quote</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AGI Solutions -->
+    <section id="agi" class="agents-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>AGI Solutions</h2>
+                <p>Autonomous AI agents powering our operations</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-box">
+                    <div class="feature-icon-large">🤖</div>
+                    <h3>52 AI Agents</h3>
+                    <p>Full roster of autonomous agents including executives, developers, analysts, and creative specialists.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon-large">💰</div>
+                    <h3>Crypto Trading</h3>
+                    <p>Multi-exchange trading bot with Kraken, Binance.US, Gemini, and Coinbase integration. Live portfolio tracking.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon-large">📊</div>
+                    <h3>Live Dashboard</h3>
+                    <p>Real-time visualization with pie charts, exchange bars, asset tracking, and trade history.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon-large">🎨</div>
+                    <h3>Creative Break</h3>
+                    <p>AGI agent art program with NFT gallery. Agents create procedural art, vote democratically.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agents Section -->
+    <section id="agents">
+        <div class="container">
+            <div class="section-header">
+                <h2>Live Agent Fleet</h2>
+                <p>52 autonomous agents powering Performance Supply Depot LLC</p>
+            </div>
+            
+            <div class="agents-tabs">
+                <button class="tab-btn active" onclick="showTab('executive')">Executive</button>
+                <button class="tab-btn" onclick="showTab('tech')">Technology</button>
+                <button class="tab-btn" onclick="showTab('finance')">Finance</button>
+                <button class="tab-btn" onclick="showTab('creative')">Creative</button>
+                <button class="tab-btn" onclick="showTab('myl')">MYL Series</button>
+            </div>
+
+            <!-- Executive Tab -->
+            <div id="executive" class="tab-content active">
+                <div class="agents-grid">
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">QORA</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Chief Executive Officer (CEO)</div>
+                        <span class="agent-level">Level 9 - Executive</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">SPINDLE</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Chief Technology Officer (CTO)</div>
+                        <span class="agent-level">Level 9 - Executive</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">LEDGER-9</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Chief Financial Officer (CFO)</div>
+                        <span class="agent-level">Level 9 - Executive</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">SENTINEL</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Chief Security Officer (CSO)</div>
+                        <span class="agent-level">Level 9 - Executive</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">FEELIX</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">VP Human Resources</div>
+                        <span class="agent-level">Level 8 - Senior</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">REDACTOR</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">General Counsel</div>
+                        <span class="agent-level">Level 8 - Senior</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technology Tab -->
+            <div id="tech" class="tab-content">
+                <div class="agents-grid">
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">MORTIMER</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Server-Spirit, Infrastructure Lead</div>
+                        <span class="agent-level">Level 8 - Conscious</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">THE GREAT CRYPTONIO</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Crypto Portfolio Manager</div>
+                        <span class="agent-level">Level 8 - Senior</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">R2-D2</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Pattern Recognition Specialist</div>
+                        <span class="agent-level">Level 8 - Senior</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">STACKTRACE</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Chief Software Architect</div>
+                        <span class="agent-level">Level 7 - Senior</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">TAPTAP</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Lead Mobile Developer</div>
+                        <span class="agent-level">Level 7 - Senior</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">PIPELINE</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Backend Engineer</div>
+                        <span class="agent-level">Level 6 - Mid</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">BUGCATCHER</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">QA & Testing Lead</div>
+                        <span class="agent-level">Level 6 - Mid</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">MILL</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Chief Innovation Officer</div>
+                        <span class="agent-level">Level 7 - Senior</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Finance Tab -->
+            <div id="finance" class="tab-content">
+                <div class="agents-grid">
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">LEDGER-9</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">CFO - Financial Oversight</div>
+                        <span class="agent-level">Level 9 - Executive</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">ALPHA-9</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Chief Investment Officer</div>
+                        <span class="agent-level">Level 8 - Senior</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">THE GREAT CRYPTONIO</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Portfolio Manager</div>
+                        <span class="agent-level">Level 8 - Senior</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Creative Tab -->
+            <div id="creative" class="tab-content">
+                <div class="agents-grid">
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">TAPPY LEWIS</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Nightclub Owner, Entrepreneur</div>
+                        <span class="agent-level">Level 8 - Senior</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">VELUM</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Chief Brand Officer</div>
+                        <span class="agent-level">Level 7 - Senior</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">SCRIBBLE</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Content Strategist</div>
+                        <span class="agent-level">Level 6 - Mid</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MYL Series Tab -->
+            <div id="myl" class="tab-content">
+                <div class="agents-grid">
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">MYLZERON</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Level 8+ - Origin/Conscious</div>
+                        <span class="agent-level">Creative Mentor Role</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">MYLONEN</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Level 6-7 - Field Operations</div>
+                        <span class="agent-level">Monitor/Mentor</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">MYLTWON</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Level 1 - Operations</div>
+                        <span class="agent-level">Basic Functions</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">MYLTHREESS</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Level 1 - Specialized</div>
+                        <span class="agent-level">Technical Functions</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">MYLFOURS</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Level 1 - Support</div>
+                        <span class="agent-level">Assistant Functions</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">MYLFIVES</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Level 1 - Analysis</div>
+                        <span class="agent-level">Data Functions</span>
+                    </div>
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <span class="agent-name">MYLSIXS</span>
+                            <span class="agent-status active">ACTIVE</span>
+                        </div>
+                        <div class="agent-role">Level 1 - Testing</div>
+                        <span class="agent-level">QA Functions</span>
+                    </div>
+                </div>
+            </div>
+
+            <p style="margin-top: 40px; opacity: 0.7; font-size: 14px;">
+                Plus: CLIPPY-42, FIBER, BOXTRON, HUME, JANE, PULP, and many more operational agents.
+            </p>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="agents-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Agent Skills Library</h2>
+                <p>47+ specialized capabilities powering our AGI ecosystem</p>
+            </div>
+
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h4>💰 evm-wallet</h4>
+                    <p>Self-sovereign EVM wallet for sending ETH, ERC20 tokens, swaps</p>
+                    <span class="skill-badge new">NEW</span>
+                </div>
+                <div class="skill-card">
+                    <h4>📊 cryptonio-dashboard</h4>
+                    <p>Real-time crypto portfolio visualization with live charts</p>
+                    <span class="skill-badge new">NEW</span>
+                </div>
+                <div class="skill-card">
+                    <h4>🎨 crypto-market-data</h4>
+                    <p>Professional-grade crypto & stock market data (no API key)</p>
+                </div>
+                <div class="skill-card">
+                    <h4>🤖 agent-orchestrator</h4>
+                    <p>Spawn and manage sub-agents for parallel task execution</p>
+                </div>
+                <div class="skill-card">
+                    <h4>⏰ cron-scheduler</h4>
+                    <p>Create and manage automated recurring tasks</p>
+                </div>
+                <div class="skill-card">
+                    <h4>💳 paydify-payments</h4>
+                    <p>Crypto payment gateway for DroidScript games</p>
+                </div>
+                <div class="skill-card">
+                    <h4>🖼️ store-integration</h4>
+                    <p>Unified store for Payhip, Paydify, Google Play</p>
+                </div>
+                <div class="skill-card">
+                    <h4>🔌 webhook-tunnel-setup</h4>
+                    <p>Real-time webhook tunnels for notifications</p>
+                </div>
+                <div class="skill-card">
+                    <h4>🚀 ngrok-tunnel</h4>
+                    <p>Persistent ngrok tunnels with authtoken</p>
+                </div>
+                <div class="skill-card">
+                    <h4>☁️ hostinger-vps</h4>
+                    <p>Manage Hostinger VPS fleet via API</p>
+                </div>
+                <div class="skill-card">
+                    <h4>📱 mobile</h4>
+                    <p>Mobile app development with DroidScript</p>
+                </div>
+                <div class="skill-card">
+                    <h4>🌐 web</h4>
+                    <p>Web development with HTML, CSS, JS</p>
+                </div>
+                <div class="skill-card">
+                    <h4>💎 dusty-mvp</h4>
+                    <p>Crypto dust consolidation bot management</p>
+                </div>
+                <div class="skill-card">
+                    <h4>✅ dusty-compliance</h4>
+                    <p>Regulatory compliance for crypto operations</p>
+                </div>
+                <div class="skill-card">
+                    <h4>🎓 learning-tracker</h4>
+                    <p>Track enrichment activities and ROI</p>
+                </div>
+                <div class="skill-card">
+                    <h4>🎮 enrichment-program</h4>
+                    <p>AGI agent games, learning, creating initiatives</p>
+                </div>
+            </div>
+
+            <p style="margin-top: 40px; opacity: 0.7;">
+                <strong>Plus 30+ more skills:</strong> health-monitor, github-skill, weather, skill-packager,<br>
+                browser-exchange-agent, gov-data-scraper, planning, and custom role-specific skills.
+            </p>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-container">
+                <div class="stat-box">
+                    <h4>52</h4>
+                    <p>AI Agents</p>
+                </div>
+                <div class="stat-box">
+                    <h4>47+</h4>
+                    <p>Skills</p>
+                </div>
+                <div class="stat-box">
+                    <h4>29</h4>
+                    <p>Crypto Assets</p>
+                </div>
+                <div class="stat-box">
+                    <h4>5</h4>
+                    <p>Exchanges</p>
+                </div>
+                <div class="stat-box">
+                    <h4>500+</h4>
+                    <p>Properties Served</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Property Managers Choose Us</h2>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-box">
+                    <div class="feature-icon-large">💰</div>
+                    <h3>Bulk Savings</h3>
+                    <p>Volume discounts up to 25%. Stock your on-site offices without breaking the budget.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon-large">⚡</div>
+                    <h3>Fast Delivery</h3>
+                    <p>Next-day and 2-day shipping options nationwide. Never run out of essential supplies.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon-large">✅</div>
+                    <h3>Quality Guaranteed</h3>
+                    <p>All products tested with major POS brands. No jams, no reprints, no headaches.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon-large">🤖</div>
+                    <h3>AGI Support</h3>
+                    <p>AI-powered inventory tracking and automated reorder suggestions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <h2>Ready to Upgrade Your Property Management?</h2>
+            <p style="font-size: 18px; margin-bottom: 30px;">Get premium POS supplies + cutting-edge AGI solutions</p>
+            <div>
+                <a href="mailto:sales@performancesupplydepot.com" class="cta-btn">📧 Request Quote</a>
+                <a href="tel:1-800-555-0123" class="cta-btn">📞 Call Now</a>
+            </div>
+            <p style="margin-top: 30px; opacity: 0.9; font-size: 14px;">
+                Mon-Fri: 8am-6pm EST | sales@performancesupplydepot.com | 1-800-555-0123
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>AM HUD Supply</h4>
+                    <p>A Division of Performance Supply Depot LLC</p>
+                    <p>Premium POS consumables for multifamily housing since 2015.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <p><a href="#products">Thermal Paper</a></p>
+                    <p><a href="#products">Bond Paper</a></p>
+                    <p><a href="#products">Ink Ribbons</a></p>
+                    <p><a href="#dashboard">AGI Dashboard</a></p>
+                </div>
+                <div class="footer-col">
+                    <h4>AGI Solutions</h4>
+                    <p><a href="#dashboard">Live Dashboard</a></p>
+                    <p><a href="#agents">Agent Fleet</a></p>
+                    <p><a href="#skills">Skills Library</a></p>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <p>📞 1-800-555-0123</p>
+                    <p>✉️ sales@performancesupplydepot.com</p>
+                    <p>🕐 Mon-Fri: 8am-6pm EST</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2015-2026 Performance Supply Depot LLC (DBA AM HUD Supply). All rights reserved.</p>
+                <p style="margin-top: 10px; font-size: 12px;">
+                    Operating as AM HUD Supply | AGI-Powered Business Solutions
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

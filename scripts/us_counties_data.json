@@ -1,0 +1,620 @@
+{
+  "CA": [
+    {
+      "name": "Los Angeles County",
+      "pop": 10014009,
+      "seat": "Los Angeles",
+      "cities": [
+        "Los Angeles",
+        "Long Beach",
+        "Santa Clarita",
+        "Glendale"
+      ]
+    },
+    {
+      "name": "San Diego County",
+      "pop": 3298634,
+      "seat": "San Diego",
+      "cities": [
+        "San Diego",
+        "Chula Vista",
+        "Oceanside",
+        "Escondido"
+      ]
+    },
+    {
+      "name": "Orange County",
+      "pop": 3175692,
+      "seat": "Santa Ana",
+      "cities": [
+        "Anaheim",
+        "Santa Ana",
+        "Irvine",
+        "Huntington Beach"
+      ]
+    },
+    {
+      "name": "Riverside County",
+      "pop": 2470546,
+      "seat": "Riverside",
+      "cities": [
+        "Riverside",
+        "San Bernardino",
+        "Moreno Valley"
+      ]
+    },
+    {
+      "name": "San Bernardino County",
+      "pop": 2181654,
+      "seat": "San Bernardino",
+      "cities": [
+        "San Bernardino",
+        "Fontana",
+        "Ontario"
+      ]
+    },
+    {
+      "name": "Santa Clara County",
+      "pop": 1928000,
+      "seat": "San Jose",
+      "cities": [
+        "San Jose",
+        "Sunnyvale",
+        "Santa Clara",
+        "Mountain View"
+      ]
+    },
+    {
+      "name": "Alameda County",
+      "pop": 1684000,
+      "seat": "Oakland",
+      "cities": [
+        "Oakland",
+        "Fremont",
+        "Hayward",
+        "Berkeley"
+      ]
+    },
+    {
+      "name": "Sacramento County",
+      "pop": 1584000,
+      "seat": "Sacramento",
+      "cities": [
+        "Sacramento",
+        "Elk Grove",
+        "Roseville"
+      ]
+    }
+  ],
+  "TX": [
+    {
+      "name": "Harris County",
+      "pop": 4739000,
+      "seat": "Houston",
+      "cities": [
+        "Houston",
+        "Pasadena",
+        "Baytown",
+        "Humble"
+      ]
+    },
+    {
+      "name": "Dallas County",
+      "pop": 2613000,
+      "seat": "Dallas",
+      "cities": [
+        "Dallas",
+        "Irving",
+        "Garland",
+        "Grand Prairie"
+      ]
+    },
+    {
+      "name": "Tarrant County",
+      "pop": 2109000,
+      "seat": "Fort Worth",
+      "cities": [
+        "Fort Worth",
+        "Arlington",
+        "Grapevine",
+        "Keller"
+      ]
+    },
+    {
+      "name": "Bexar County",
+      "pop": 2006000,
+      "seat": "San Antonio",
+      "cities": [
+        "San Antonio",
+        "New Braunfels",
+        "Universal City"
+      ]
+    },
+    {
+      "name": "Travis County",
+      "pop": 1291000,
+      "seat": "Austin",
+      "cities": [
+        "Austin",
+        "Round Rock",
+        "Cedar Park",
+        "Pflugerville"
+      ]
+    },
+    {
+      "name": "Collin County",
+      "pop": 1065000,
+      "seat": "McKinney",
+      "cities": [
+        "Plano",
+        "McKinney",
+        "Frisco",
+        "Allen"
+      ]
+    }
+  ],
+  "FL": [
+    {
+      "name": "Miami-Dade County",
+      "pop": 2688000,
+      "seat": "Miami",
+      "cities": [
+        "Miami",
+        "Hialeah",
+        "Miami Beach",
+        "Coral Gables"
+      ]
+    },
+    {
+      "name": "Broward County",
+      "pop": 1953000,
+      "seat": "Fort Lauderdale",
+      "cities": [
+        "Fort Lauderdale",
+        "Pembroke Pines",
+        "Hollywood"
+      ]
+    },
+    {
+      "name": "Palm Beach County",
+      "pop": 1499000,
+      "seat": "West Palm Beach",
+      "cities": [
+        "West Palm Beach",
+        "Boca Raton",
+        "Palm Beach"
+      ]
+    },
+    {
+      "name": "Hillsborough County",
+      "pop": 1478000,
+      "seat": "Tampa",
+      "cities": [
+        "Tampa",
+        "Brandon",
+        "Plant City"
+      ]
+    },
+    {
+      "name": "Orange County",
+      "pop": 1431000,
+      "seat": "Orlando",
+      "cities": [
+        "Orlando",
+        "Kissimmee",
+        "Sanford",
+        "Winter Park"
+      ]
+    }
+  ],
+  "NY": [
+    {
+      "name": "Kings County",
+      "pop": 2592000,
+      "seat": "Brooklyn",
+      "cities": [
+        "Brooklyn"
+      ]
+    },
+    {
+      "name": "Queens County",
+      "pop": 2328000,
+      "seat": "Queens",
+      "cities": [
+        "Queens",
+        "Jamaica",
+        "Flushing"
+      ]
+    },
+    {
+      "name": "New York County",
+      "pop": 1661000,
+      "seat": "Manhattan",
+      "cities": [
+        "Manhattan"
+      ]
+    },
+    {
+      "name": "Suffolk County",
+      "pop": 1526000,
+      "seat": "Riverhead",
+      "cities": [
+        "Brentwood",
+        "West Babylon",
+        "Huntington"
+      ]
+    },
+    {
+      "name": "Bronx County",
+      "pop": 1428000,
+      "seat": "Bronx",
+      "cities": [
+        "Bronx"
+      ]
+    }
+  ],
+  "PA": [
+    {
+      "name": "Philadelphia County",
+      "pop": 1584000,
+      "seat": "Philadelphia",
+      "cities": [
+        "Philadelphia"
+      ]
+    },
+    {
+      "name": "Allegheny County",
+      "pop": 1223000,
+      "seat": "Pittsburgh",
+      "cities": [
+        "Pittsburgh"
+      ]
+    }
+  ],
+  "IL": [
+    {
+      "name": "Cook County",
+      "pop": 5173000,
+      "seat": "Chicago",
+      "cities": [
+        "Chicago",
+        "Cicero",
+        "Arlington Heights"
+      ]
+    }
+  ],
+  "OH": [
+    {
+      "name": "Cuyahoga County",
+      "pop": 1235000,
+      "seat": "Cleveland",
+      "cities": [
+        "Cleveland"
+      ]
+    },
+    {
+      "name": "Franklin County",
+      "pop": 1316000,
+      "seat": "Columbus",
+      "cities": [
+        "Columbus"
+      ]
+    }
+  ],
+  "GA": [
+    {
+      "name": "Fulton County",
+      "pop": 1071000,
+      "seat": "Atlanta",
+      "cities": [
+        "Atlanta",
+        "Sandy Springs",
+        "Roswell"
+      ]
+    }
+  ],
+  "NC": [
+    {
+      "name": "Mecklenburg County",
+      "pop": 1135000,
+      "seat": "Charlotte",
+      "cities": [
+        "Charlotte"
+      ]
+    },
+    {
+      "name": "Wake County",
+      "pop": 1170000,
+      "seat": "Raleigh",
+      "cities": [
+        "Raleigh",
+        "Cary"
+      ]
+    }
+  ],
+  "MI": [
+    {
+      "name": "Wayne County",
+      "pop": 1769000,
+      "seat": "Detroit",
+      "cities": [
+        "Detroit"
+      ]
+    }
+  ],
+  "NJ": [
+    {
+      "name": "Bergen County",
+      "pop": 955000,
+      "seat": "Hackensack",
+      "cities": [
+        "Hackensack"
+      ]
+    },
+    {
+      "name": "Essex County",
+      "pop": 854000,
+      "seat": "Newark",
+      "cities": [
+        "Newark"
+      ]
+    }
+  ],
+  "VA": [
+    {
+      "name": "Fairfax County",
+      "pop": 1144000,
+      "seat": "Fairfax",
+      "cities": [
+        "Fairfax"
+      ]
+    }
+  ],
+  "WA": [
+    {
+      "name": "King County",
+      "pop": 2261000,
+      "seat": "Seattle",
+      "cities": [
+        "Seattle",
+        "Bellevue",
+        "Kent"
+      ]
+    }
+  ],
+  "AZ": [
+    {
+      "name": "Maricopa County",
+      "pop": 4561000,
+      "seat": "Phoenix",
+      "cities": [
+        "Phoenix",
+        "Mesa",
+        "Chandler",
+        "Scottsdale"
+      ]
+    }
+  ],
+  "MA": [
+    {
+      "name": "Middlesex County",
+      "pop": 1617000,
+      "seat": "Cambridge",
+      "cities": [
+        "Cambridge",
+        "Lowell"
+      ]
+    }
+  ],
+  "TN": [
+    {
+      "name": "Davidson County",
+      "pop": 715000,
+      "seat": "Nashville",
+      "cities": [
+        "Nashville"
+      ]
+    }
+  ],
+  "IN": [
+    {
+      "name": "Marion County",
+      "pop": 977000,
+      "seat": "Indianapolis",
+      "cities": [
+        "Indianapolis"
+      ]
+    }
+  ],
+  "MO": [
+    {
+      "name": "Jackson County",
+      "pop": 717000,
+      "seat": "Kansas City",
+      "cities": [
+        "Kansas City"
+      ]
+    }
+  ],
+  "MD": [
+    {
+      "name": "Montgomery County",
+      "pop": 1062000,
+      "seat": "Rockville",
+      "cities": [
+        "Rockville"
+      ]
+    },
+    {
+      "name": "Prince Georges County",
+      "pop": 917000,
+      "seat": "Upper Marlboro",
+      "cities": [
+        "Upper Marlboro"
+      ]
+    }
+  ],
+  "WI": [
+    {
+      "name": "Milwaukee County",
+      "pop": 939000,
+      "seat": "Milwaukee",
+      "cities": [
+        "Milwaukee"
+      ]
+    }
+  ],
+  "CO": [
+    {
+      "name": "Denver County",
+      "pop": 760000,
+      "seat": "Denver",
+      "cities": [
+        "Denver"
+      ]
+    }
+  ],
+  "MN": [
+    {
+      "name": "Hennepin County",
+      "pop": 1268000,
+      "seat": "Minneapolis",
+      "cities": [
+        "Minneapolis"
+      ]
+    }
+  ],
+  "SC": [
+    {
+      "name": "Greenville County",
+      "pop": 540000,
+      "seat": "Greenville",
+      "cities": [
+        "Greenville"
+      ]
+    }
+  ],
+  "AL": [
+    {
+      "name": "Jefferson County",
+      "pop": 669000,
+      "seat": "Birmingham",
+      "cities": [
+        "Birmingham"
+      ]
+    }
+  ],
+  "LA": [
+    {
+      "name": "Orleans Parish",
+      "pop": 384000,
+      "seat": "New Orleans",
+      "cities": [
+        "New Orleans"
+      ]
+    }
+  ],
+  "KY": [
+    {
+      "name": "Jefferson County",
+      "pop": 782000,
+      "seat": "Louisville",
+      "cities": [
+        "Louisville"
+      ]
+    }
+  ],
+  "OR": [
+    {
+      "name": "Multnomah County",
+      "pop": 812000,
+      "seat": "Portland",
+      "cities": [
+        "Portland"
+      ]
+    }
+  ],
+  "OK": [
+    {
+      "name": "Oklahoma County",
+      "pop": 797000,
+      "seat": "Oklahoma City",
+      "cities": [
+        "Oklahoma City"
+      ]
+    }
+  ],
+  "CT": [
+    {
+      "name": "Fairfield County",
+      "pop": 959000,
+      "seat": "Bridgeport",
+      "cities": [
+        "Bridgeport",
+        "Stamford"
+      ]
+    }
+  ],
+  "UT": [
+    {
+      "name": "Salt Lake County",
+      "pop": 1185000,
+      "seat": "Salt Lake City",
+      "cities": [
+        "Salt Lake City"
+      ]
+    }
+  ],
+  "NV": [
+    {
+      "name": "Clark County",
+      "pop": 2313000,
+      "seat": "Las Vegas",
+      "cities": [
+        "Las Vegas",
+        "Henderson",
+        "North Las Vegas"
+      ]
+    }
+  ],
+  "AR": [
+    {
+      "name": "Pulaski County",
+      "pop": 399000,
+      "seat": "Little Rock",
+      "cities": [
+        "Little Rock"
+      ]
+    }
+  ],
+  "MS": [
+    {
+      "name": "Hinds County",
+      "pop": 227000,
+      "seat": "Jackson",
+      "cities": [
+        "Jackson"
+      ]
+    }
+  ],
+  "KS": [
+    {
+      "name": "Johnson County",
+      "pop": 613000,
+      "seat": "Olathe",
+      "cities": [
+        "Olathe"
+      ]
+    }
+  ],
+  "IA": [
+    {
+      "name": "Polk County",
+      "pop": 492000,
+      "seat": "Des Moines",
+      "cities": [
+        "Des Moines"
+      ]
+    }
+  ]
+}

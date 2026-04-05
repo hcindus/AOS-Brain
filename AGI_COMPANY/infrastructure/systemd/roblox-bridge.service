@@ -1,0 +1,13 @@
+[Unit]
+Description=Roblox Bridge for AGI Agents
+After=network.target
+
+[Service]
+WorkingDirectory=/root/.openclaw/workspace
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/AGI_COMPANY/infrastructure/systemd/roblox-bridge.py
+Restart=always
+RestartSec=10
+User=root
+
+[Install]
+WantedBy=multi-user.target

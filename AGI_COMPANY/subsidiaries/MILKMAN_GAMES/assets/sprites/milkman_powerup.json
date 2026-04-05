@@ -1,0 +1,17 @@
+{
+  "name": "milkman_powerup",
+  "type": "sprite", 
+  "size": [32, 32],
+  "frames": 6,
+  "animation": "powerup",
+  "description": "MilkMan power-up transformation animation",
+  "palette": {
+    "milk_white": "#F5F5F5",
+    "uniform_blue": "#1E3A8A",
+    "powerup_gold": "#FFD700",
+    "sparkle": "#FFFFFF"
+  },
+  "created_by": "Mylonen+R2",
+  "created_date": "2026-03-28",
+  "game": "MilkMan"
+}

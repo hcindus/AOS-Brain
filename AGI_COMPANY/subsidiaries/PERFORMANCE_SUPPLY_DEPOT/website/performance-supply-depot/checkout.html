@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGI Company - Checkout</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        :root {
+            --bg-dark: #0a0a1a;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --header-bg: rgba(26, 54, 93, 0.95);
+            --text: #e5e5e5;
+            --text-muted: #a0a0a0;
+            --accent: #ed8936;
+            --accent-hover: #dd6b20;
+            --border: rgba(237, 137, 54, 0.3);
+            --success: #22c55e;
+            --error: #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--accent); }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .header-nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .header-nav a:hover, .header-nav a.active { color: var(--accent); }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent);
+            color: white;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 700;
+            display: none;
+        }
+
+        /* Layout */
+        .layout {
+            display: flex;
+            min-height: 100vh;
+            padding-top: 70px;
+            padding-bottom: 60px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: rgba(26, 54, 93, 0.9);
+            border-right: 1px solid var(--border);
+            padding: 30px 20px;
+            position: fixed;
+            left: 0;
+            top: 70px;
+            bottom: 60px;
+            overflow-y: auto;
+        }
+
+        .sidebar-section { margin-bottom: 35px; }
+
+        .sidebar-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+        }
+
+        .sidebar-menu { list-style: none; }
+        .sidebar-menu li { margin-bottom: 8px; }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: rgba(237, 137, 54, 0.15);
+            color: var(--accent);
+        }
+
+        .sidebar-menu .icon {
+            margin-right: 12px;
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 40px;
+            background: var(--bg-dark);
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        /* Checkout Container */
+        .checkout-container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+            max-width: 1000px;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            height: fit-content;
+        }
+
+        .order-summary h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .item-qty {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .item-price {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .order-total {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .order-total .amount {
+            color: var(--accent);
+        }
+
+        /* Payment Section */
+        .payment-section {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .payment-section h3 {
+            color: var(--accent);
+            margin-bottom: 25px;
+            font-size: 20px;
+        }
+
+        /* Payment Tabs */
+        .payment-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* Stripe Card Element */
+        #card-element {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .card-field {
+            margin-bottom: 20px;
+        }
+
+        .card-field label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .card-input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 16px;
+        }
+
+        .card-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .card-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* Crypto Section */
+        .crypto-section {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .crypto-section.active {
+            display: block;
+        }
+
+        .wallet-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .wallet-option h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .wallet-address {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 13px;
+            word-break: break-all;
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn:disabled {
+            background: #4a5568;
+            cursor: not-allowed;
+        }
+
+        /* Error/Success Messages */
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .success-message {
+            display: none;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid var(--success);
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .success-message h3 {
+            color: var(--success);
+            margin-bottom: 10px;
+        }
+
+        .success-message p {
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        /* Test Mode Badge */
+        .test-mode {
+            background: rgba(234, 179, 8, 0.1);
+            border: 1px solid #eab308;
+            color: #eab308;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 1000;
+        }
+
+        .footer-left { color: var(--text-muted); font-size: 14px; }
+
+        .footer-right {
+            display: flex;
+            gap: 25px;
+        }
+
+        .footer-right a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-right a:hover { color: var(--accent); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="logo">AGI<span>Company</span></a>
+        <nav class="header-nav">
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="cart.html">
+                Cart <span class="cart-icon">🛒<span class="cart-badge" id="cart-count">0</span></span>
+            </a>
+            <a href="login.html">Login</a>
+        </nav>
+    </header>
+
+    <!-- Layout -->
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Main Menu</div>
+                <ul class="sidebar-menu">
+                    <li><a href="index.html"><span class="icon">🏠</span> Home</a></li>
+                    <li><a href="products.html"><span class="icon">🛍️</span> Products</a></li>
+                    <li><a href="cart.html"><span class="icon">🛒</span> Cart</a></li>
+                    <li><a href="orders.html"><span class="icon">📦</span> Orders</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Account</div>
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html"><span class="icon">📊</span> Dashboard</a></li>
+                    <li><a href="profile.html"><span class="icon">👤</span> Profile</a></li>
+                    <li><a href="settings.html"><span class="icon">⚙️</span> Settings</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <h1>🔒 Secure Checkout</h1>
+            <p class="subtitle">Complete your purchase securely</p>
+
+            <div class="checkout-container">
+                <!-- Payment Form -->
+                <div class="payment-section">
+                    <div class="test-mode">
+                        ⚠️ TEST MODE: Use card 4242 4242 4242 4242
+                    </div>
+
+                    <h3>Payment Method</h3>
+
+                    <div class="payment-tabs">
+                        <button class="tab-btn active" onclick="switchTab('card')">💳 Credit Card</button>
+                        <button class="tab-btn" onclick="switchTab('crypto')">₿ Crypto</button>
+                    </div>
+
+                    <!-- Credit Card -->
+                    <div id="card-form">
+                        <div class="card-field">
+                            <label>Card Number</label>
+                            <input type="text" class="card-input" placeholder="4242 4242 4242 4242">
+                        </div>
+                        
+                        <div class="card-row">
+                            <div class="card-field">
+                                <label>Expiry</label>
+                                <input type="text" class="card-input" placeholder="MM/YY">
+                            </div>
+                            <div class="card-field">
+                                <label>CVC</label>
+                                <input type="text" class="card-input" placeholder="123">
+                            </div>
+                        </div>
+
+                        <div id="card-element">
+                            <!-- Stripe Elements will mount here -->
+                        </div>
+
+                        <button class="btn" id="pay-button" onclick="processPayment()">Pay Now</button>
+                    </div>
+
+                    <!-- Crypto -->
+                    <div id="crypto-form" class="crypto-section">
+                        <div class="wallet-option">
+                            <h4>Bitcoin (BTC)</h4>
+                            <div class="wallet-address">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</div>
+                        </div>
+
+                        <div class="wallet-option">
+                            <h4>Ethereum (ETH)</h4>
+                            <div class="wallet-address">0x742d35Cc6634C0532925a3b844Bc9e7595f8dEe</div>
+                        </div>
+
+                        <button class="btn" onclick="confirmCryptoPayment()">I've Sent Payment</button>
+                    </div>
+
+                    <div id="error-message"></div>
+
+                    <div id="success-message" class="success-message">
+                        <h3>✅ Payment Successful!</h3>
+                        <p>Your AGI agents will be activated within 24 hours.</p>
+                        <a href="dashboard.html" class="btn">Go to Dashboard</a>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h3>Order Summary</h3>
+
+                    <div id="order-items">
+                        <!-- Items loaded from cart -->
+                    </div>
+
+                    <div class="order-total">
+                        <span>Total</span>
+                        <span class="amount" id="order-total">$0.00</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-left">
+            © 2026 AGI Company. All rights reserved.
+        </div>
+        <div class="footer-right">
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+            <a href="support.html">Support</a>
+        </div>
+    </footer>
+
+    <script>
+        // Load cart items
+        function loadCart() {
+            const cart = JSON.parse(localStorage.getItem('agi_cart') || '[]');
+            const container = document.getElementById('order-items');
+            let total = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-muted);">Your cart is empty</p>';
+                return;
+            }
+
+            let html = '';
+            cart.forEach(item => {
+                const itemTotal = (item.priceCents * item.quantity) / 100;
+                total += itemTotal;
+                
+                html += `
+                    <div class="order-item">
+                        <div>
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-qty">Qty: ${item.quantity}</div>
+                        </div>
+                        <div class="item-price">$${itemTotal.toFixed(2)}</div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            document.getElementById('order-total').textContent = '$' + total.toFixed(2);
+        }
+
+        // Switch payment tab
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (tab === 'card') {
+                document.getElementById('card-form').style.display = 'block';
+                document.getElementById('crypto-form').classList.remove('active');
+            } else {
+                document.getElementById('card-form').style.display = 'none';
+                document.getElementById('crypto-form').classList.add('active');
+            }
+        }
+
+        // Process payment
+        function processPayment() {
+            const btn = document.getElementById('pay-button');
+            btn.disabled = true;
+            btn.textContent = 'Processing...';
+
+            setTimeout(() => {
+                // Clear cart
+                localStorage.removeItem('agi_cart');
+                
+                // Show success
+                document.getElementById('success-message').style.display = 'block';
+                document.getElementById('card-form').style.display = 'none';
+                document.querySelector('.payment-tabs').style.display = 'none';
+                document.querySelector('.test-mode').style.display = 'none';
+            }, 2000);
+        }
+
+        // Crypto payment confirmation
+        function confirmCryptoPayment() {
+            alert('Payment verification in progress. We will activate your agents once confirmed.');
+            localStorage.removeItem('agi_cart');
+            window.location.href = 'dashboard.html';
+        }
+
+        // Load on page load
+        loadCart();
+    </script>
+</body>
+</html>

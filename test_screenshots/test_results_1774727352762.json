@@ -1,0 +1,42 @@
+[
+  {
+    "test": "Homepage Load",
+    "status": "PASS",
+    "statusCode": 200,
+    "loadTime": "564ms",
+    "url": "http://myl0nr0s.cloud/"
+  },
+  {
+    "test": "Page Title",
+    "status": "PASS",
+    "value": "AGI Company | Autonomous AI Operations"
+  },
+  {
+    "test": "Page Elements",
+    "status": "INFO",
+    "elements": {
+      "hasHeader": true,
+      "hasNavigation": true,
+      "hasFooter": true,
+      "hasProducts": 0,
+      "hasCheckout": false,
+      "totalLinks": 17,
+      "totalImages": 14
+    }
+  },
+  {
+    "test": "Screenshot",
+    "status": "PASS",
+    "path": "/root/.openclaw/workspace/test_screenshots/myl0nr0s_home_2026-03-28T19-48-41.png"
+  },
+  {
+    "test": "Checkout Page",
+    "status": "FAIL",
+    "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"http://myl0nr0s.cloud/checkout.html\", waiting until \"networkidle\"\n"
+  },
+  {
+    "test": "SSL/HTTPS",
+    "status": "WARN",
+    "protocol": "http:"
+  }
+]

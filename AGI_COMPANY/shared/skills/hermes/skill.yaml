@@ -1,0 +1,37 @@
+name: hermes
+version: 1.0.0
+description: Hermes - Advanced Communication and Messaging Skill
+author: AGI Company
+capabilities:
+  - email_management
+  - slack_integration
+  - discord_integration
+  - telegram_integration
+  - whatsapp_integration
+  - sms_gateway
+  - webhook_management
+  - api_orchestration
+  - message_routing
+  - notification_dispatch
+endpoints:
+  email:
+    - smtp
+    - imap
+    - gmail_api
+    - outlook_api
+  chat:
+    - slack_webhook
+    - discord_bot
+    - telegram_bot
+    - whatsapp_business
+permissions:
+  - network
+  - filesystem
+  - email
+config:
+  auto_route: true
+  priority_channels:
+    - slack
+    - discord
+    - telegram
+  fallback: email

@@ -1,0 +1,86 @@
+{
+  "testRun": "2026-02-20T14:39:08Z",
+  "cronJobId": "fdc63bd5-b2c2-481c-9a5f-d3e001eff52f",
+  "testId": "dusty-end-to-end-test-1771598348356",
+  "overallStatus": "PARTIAL",
+  "summary": {
+    "testsPassed": 6,
+    "testsFailed": 0,
+    "e2eFullSuccess": "1/3",
+    "totalDurationMs": 56
+  },
+  "healthChecks": {
+    "status": "PASS",
+    "services": [
+      {
+        "name": "Telegram Bridge",
+        "status": "healthy",
+        "latencyMs": 18.78,
+        "uptime": "0h 29m",
+        "endpoint": "localhost:3001/health"
+      },
+      {
+        "name": "Core-Agent",
+        "status": "healthy",
+        "latencyMs": 4.80,
+        "uptime": "47h 57m",
+        "endpoint": "localhost:3000/health"
+      },
+      {
+        "name": "OpenClaw Mock",
+        "status": "healthy",
+        "latencyMs": 2.97,
+        "uptime": "3h 45m",
+        "totalInteractions": 114,
+        "endpoint": "localhost:4000/status"
+      }
+    ]
+  },
+  "e2eTests": [
+    {
+      "name": "POST /webhook - /dust balance",
+      "status": "PARTIAL",
+      "latencyMs": 11.01,
+      "taskId": "4a5f22e7-1603-41fe-981b-d2c0ed0907ac",
+      "bot": "dusty",
+      "coreAgentStatus": "pending",
+      "bridgeToCore": "SUCCESS",
+      "coreToOpenclaw": "FAILED",
+      "issue": "Core-Agent returns 'pending' status; async response not captured"
+    },
+    {
+      "name": "GET /test endpoint",
+      "status": "PASS",
+      "latencyMs": 8.57,
+      "bridgeToCore": "SUCCESS",
+      "coreResponse": "SUCCESS"
+    },
+    {
+      "name": "Dust-Specific Query",
+      "status": "PARTIAL",
+      "latencyMs": 6.46,
+      "issue": "No OpenClaw response captured in sync window"
+    }
+  ],
+  "timingBreakdown": {
+    "healthChecks": {
+      "bridge": 18.78,
+      "coreAgent": 4.80,
+      "openclaw": 2.97,
+      "total": 26.55
+    },
+    "e2eFlows": {
+      "webhook": 11.01,
+      "dustQuery": 6.46,
+      "getTest": 8.57,
+      "total": 26.04
+    },
+    "totalExecutionMs": 56
+  },
+  "rootCause": "Core-Agent returns 'pending' status immediately after forwarding to OpenClaw. OpenClaw processes asynchronously but test expects synchronous response.",
+  "recommendations": [
+    "Use GET /test endpoint for synchronous E2E validation",
+    "Implement task status polling in Core-Agent (GET /tasks/{id}/status)",
+    "Add webhook callback registration for async E2E testing"
+  ]
+}
