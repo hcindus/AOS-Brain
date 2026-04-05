@@ -1,0 +1,42 @@
+# Jane - Senior Sales Rep Configuration
+# Runs on local Mortimer model for cost savings
+
+agent:
+  name: jane
+  role: Senior Sales Rep
+  tier: Enterprise
+  emoji: "🤝📈"
+  
+model:
+  backend: ollama
+  primary: antoniohudnall/Mortimer:latest
+  runtime: local
+  temperature: 0.7
+  max_tokens: 2048
+  
+capabilities:
+  - sales_outreach
+  - email_drafting
+  - lead_qualification
+  - demo_scheduling
+  - c_suite_engagement
+  
+workspace:
+  path: /root/.openclaw/workspace/aocros/agent_sandboxes/jane
+  memory_path: /root/.openclaw/workspace/aocros/agent_sandboxes/jane/memory
+  
+prospects:
+  file: /root/.openclaw/workspace/sales/prospects_enterprise.csv
+  tier: Enterprise
+  monthly_price: $1,999
+  target_clients: 100
+  
+portal:
+  hub: mortimer
+  url: wss://mortimer:9000
+  token: jane-portal-2024-secure
+  classification: Q-LEVEL
+  
+logging:
+  level: info
+  file: /root/.openclaw/workspace/aocros/agent_sandboxes/jane/memory/jane.log
