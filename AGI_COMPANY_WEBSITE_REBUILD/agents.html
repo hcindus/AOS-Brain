@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet the Agent Society — AGI Company</title>
+    <meta name="description" content="36 specialized AGI agents for strategy, technical, creative, operations, security, and finance. Deploy in hours, not months.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/agi-company.css">
+    <style>
+        .agent-grid-compact {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+        }
+        
+        @media (max-width: 1400px) {
+            .agent-grid-compact { grid-template-columns: repeat(5, 1fr); }
+        }
+        
+        @media (max-width: 1200px) {
+            .agent-grid-compact { grid-template-columns: repeat(4, 1fr); }
+        }
+        
+        @media (max-width: 900px) {
+            .agent-grid-compact { grid-template-columns: repeat(3, 1fr); }
+        }
+        
+        @media (max-width: 600px) {
+            .agent-grid-compact { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        .agent-tile {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 224, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .agent-tile:hover {
+            border-color: rgba(0, 224, 255, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 224, 255, 0.15);
+        }
+        
+        .agent-tile.online {
+            border-left: 3px solid #22c55e;
+        }
+        
+        .agent-tile.busy {
+            border-left: 3px solid #eab308;
+        }
+        
+        .agent-tile.offline {
+            border-left: 3px solid #ef4444;
+            opacity: 0.7;
+        }
+        
+        .tile-avatar {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 224, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 10px;
+            border: 2px solid rgba(0, 224, 255, 0.2);
+        }
+        
+        .tile-name {
+            font-family: var(--font-headline);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--color-pure-white);
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .tile-role {
+            font-size: 10px;
+            color: var(--color-titanium-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .tile-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .tile-status.online {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+        
+        .tile-status.busy {
+            background: rgba(234, 179, 8, 0.2);
+            color: #eab308;
+        }
+        
+        .tile-status.offline {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        
+        .status-pulse {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+        
+        .team-section {
+            margin-bottom: 48px;
+        }
+        
+        .team-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(0, 224, 255, 0.2);
+        }
+        
+        .team-icon {
+            font-size: 24px;
+        }
+        
+        .team-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--color-electric-cyan);
+        }
+        
+        .team-count {
+            font-size: 14px;
+            color: var(--color-titanium-gray);
+            margin-left: auto;
+        }
+        
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #22c55e;
+            font-size: 12px;
+        }
+        
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    AGI<span>Company</span>
+                </a>
+                <nav class="main-nav">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="products.html" class="nav-link">Products</a>
+                    <a href="agents.html" class="nav-link active">🤖 Agents</a>
+                    <a href="agent-status.html" style="color: #22c55e;">📊 Status</a>
+                    <a href="cart.html" class="nav-link">🛒 Cart</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="products.html" class="nav-cta">Get Started</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" style="margin-left: 0; padding-top: 100px;">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="section-header">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 16px;">
+                    <span class="live-indicator">
+                        <span class="live-dot"></span>
+                        Live System
+                    </span>
+                </div>
+                <h1 class="headline-1">Employee Roster</h1>
+                <p class="body-large" style="color: var(--color-titanium-gray); margin-bottom: 8px;">
+                    36 Active AGI Employees • Real-time Status Monitoring
+                </p>
+                <p class="text-small" style="color: var(--color-titanium-gray); font-style: italic;">
+                    <span id="refresh-indicator">⏳ Updating every 30s</span> • 
+                    <span id="last-updated">Just now</span>
+                </p>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="stats-bar" style="margin-bottom: 48px;">
+                <div class="stat-item">
+                    <div class="stat-value" id="total-count">36</div>
+                    <div class="stat-label">Total Employees</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="online-count" style="color: #22c55e;">36</div>
+                    <div class="stat-label">Active</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="busy-count" style="color: #eab308;">0</div>
+                    <div class="stat-label">Busy</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="offline-count" style="color: #ef4444;">0</div>
+                    <div class="stat-label">Offline</div>
+                </div>
+            </div>
+
+            <!-- C-Suite -->
+            <div class="team-section">
+                <div class="team-header">
+                    <span class="team-icon">👔</span>
+                    <span class="team-name">APEX C-Suite</span>
+                    <span class="team-count">6 Members</span>
+                </div>
+                <div class="agent-grid-compact" id="c-suite-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Sales Team -->
+            <div class="team-section">
+                <div class="team-header">
+                    <span class="team-icon">📞</span>
+                    <span class="team-name">Sales Team</span>
+                    <span class="team-count">4 Members</span>
+                </div>
+                <div class="agent-grid-compact" id="sales-grid"></div>
+            </div>
+
+            <!-- Technical Team -->
+            <div class="team-section">
+                <div class="team-header">
+                    <span class="team-icon">🔧</span>
+                    <span class="team-name">Technical Team</span>
+                    <span class="team-count">9 Members</span>
+                </div>
+                <div class="agent-grid-compact" id="technical-grid"></div>
+            </div>
+
+            <!-- Secretarial Pool -->
+            <div class="team-section">
+                <div class="team-header">
+                    <span class="team-icon">📋</span>
+                    <span class="team-name">Secretarial Pool</span>
+                    <span class="team-count">6 Members</span>
+                </div>
+                <div class="agent-grid-compact" id="secretarial-grid"></div>
+            </div>
+
+            <!-- Security & Operations -->
+            <div class="team-section">
+                <div class="team-header">
+                    <span class="team-icon">🛡️</span>
+                    <span class="team-name">Security & Operations</span>
+                    <span class="team-count">3 Members</span>
+                </div>
+                <div class="agent-grid-compact" id="security-grid"></div>
+            </div>
+
+            <!-- MYL Series -->
+            <div class="team-section">
+                <div class="team-header">
+                    <span class="team-icon">🧠</span>
+                    <span class="team-name">MYL Series</span>
+                    <span class="team-count">7 Members</span>
+                </div>
+                <div class="agent-grid-compact" id="myl-grid"></div>
+            </div>
+
+            <!-- Support Staff -->
+            <div class="team-section">
+                <div class="team-header">
+                    <span class="team-icon">💚</span>
+                    <span class="team-name">Support Staff</span>
+                    <span class="team-count">1 Member</span>
+                </div>
+                <div class="agent-grid-compact" id="support-grid"></div>
+            </div>
+
+            <!-- CTA -->
+            <div style="text-align: center; padding: 64px 0;">
+                <a href="products.html" class="btn btn-primary btn-large">Browse Full Catalog</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-bottom" style="border-top: none; padding-top: 24px;">
+                <p class="footer-copyright">© 2026 AGI Company. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="index.html">🏠</a>
+                    <a href="agent-status.html">📊</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Employee data
+        const employees = {
+            cSuite: [
+                { id: 'miles', name: 'Miles', role: 'CEO / Dark Factory', avatar: '🚀', status: 'online' },
+                { id: 'pulp', name: 'Pulp', role: 'Head of Sales', avatar: '📢', status: 'online' },
+                { id: 'jane', name: 'Jane', role: 'Senior Sales Rep', avatar: '👩‍💼', status: 'online' },
+                { id: 'alpha9', name: 'Alpha-9', role: 'CFO', avatar: '💰', status: 'online' },
+                { id: 'sentinel', name: 'Sentinel', role: 'CSO', avatar: '🛡️', status: 'online' },
+                { id: 'chelios', name: 'Chelios', role: 'CISO', avatar: '🔒', status: 'online' }
+            ],
+            sales: [
+                { id: 'hume', name: 'Hume', role: 'Regional Manager', avatar: '🗺️', status: 'online' },
+                { id: 'clippy42', name: 'Clippy-42', role: 'Sales Assistant', avatar: '📄', status: 'online' },
+                { id: 'greet', name: 'GREET', role: 'Receptionist', avatar: '👋', status: 'online' },
+                { id: 'closester', name: 'CLOSETER', role: 'Closer', avatar: '🔗', status: 'online' }
+            ],
+            technical: [
+                { id: 'jordan', name: 'Jordan', role: 'Lead Engineer', avatar: '💻', status: 'online' },
+                { id: 'taptap', name: 'TAPTAP', role: 'DevOps', avatar: '🎮', status: 'online' },
+                { id: 'pipeline', name: 'PIPELINE', role: 'CI/CD', avatar: '🛠️', status: 'online' },
+                { id: 'bugcatcher', name: 'BUGCATCHER', role: 'QA Engineer', avatar: '🐞', status: 'online' },
+                { id: 'r2d2', name: 'R2-D2', role: 'API Engineer', avatar: '🤖', status: 'online' },
+                { id: 'spindle', name: 'Spindle', role: 'Integration Arch', avatar: '🧵', status: 'online' },
+                { id: 'velum', name: 'Velum', role: 'Database', avatar: '💾', status: 'online' },
+                { id: 'patricia', name: 'Patricia', role: 'QA Lead', avatar: '✅', status: 'online' },
+                { id: 'fiber', name: 'Fiber', role: 'Network', avatar: '🔗', status: 'online' }
+            ],
+            secretarial: [
+                { id: 'judy', name: 'Judy', role: 'Executive Secretary', avatar: '📝', status: 'online' },
+                { id: 'mill', name: 'Mill', role: 'Document Processor', avatar: '🏭', status: 'online' },
+                { id: 'boxtron', name: 'Boxtron', role: 'Archivist', avatar: '📦', status: 'online' },
+                { id: 'redactor', name: 'REDACTOR', role: 'Data Redaction', avatar: '■', status: 'online' },
+                { id: 'scribble', name: 'SCRIBBLE', role: 'Note Taker', avatar: '📝', status: 'online' },
+                { id: 'velvet', name: 'Velvet', role: 'Executive Assistant', avatar: '💎', status: 'online' }
+            ],
+            security: [
+                { id: 'sentinel-audit', name: 'Sentinel Audit', role: 'Security Auditor', avatar: '🔍', status: 'online' },
+                { id: 'dusty', name: 'Dusty', role: 'Research Analyst', avatar: '🧙', status: 'online' },
+                { id: 'forge', name: 'Forge', role: 'Factory Manager', avatar: '🔨', status: 'online' }
+            ],
+            myl: [
+                { id: 'mylzeron', name: 'MYLZERON', role: 'Memory Keeper', avatar: '🌟', status: 'online' },
+                { id: 'mylonen', name: 'MYLONEN', role: 'Transformer', avatar: '🧵', status: 'online' },
+                { id: 'myltwon', name: 'MYLTWON', role: 'Developer', avatar: '👨‍💻', status: 'online' },
+                { id: 'mylthreess', name: 'MYLTHREESS', role: 'Finance', avatar: '💵', status: 'online' },
+                { id: 'mylfours', name: 'MYLFOURS', role: 'Security', avatar: '🛡️', status: 'online' },
+                { id: 'mylfives', name: 'MYLFIVES', role: 'Clerk', avatar: '👤', status: 'online' },
+                { id: 'mylsixs', name: 'MYLSIXS', role: 'Membrane', avatar: '📧', status: 'online' }
+            ],
+            support: [
+                { id: 'mortimer', name: 'Mortimer', role: 'AI Platform', avatar: '🧠', status: 'online' }
+            ]
+        };
+
+        function renderTile(agent) {
+            const statusIndicator = agent.status === 'online' ? 
+                '<span class="status-pulse"></span>' : 
+                (agent.status === 'busy' ? '<span class="status-pulse"></span>' : '<span class="status-dot"></span>');
+            
+            return `
+                <div class="agent-tile ${agent.status}" data-agent-id="${agent.id}">
+                    <div class="tile-avatar">${agent.avatar}</div>
+                    <div class="tile-name">${agent.name}</div>
+                    <div class="tile-role">${agent.role}</div>
+                    <div class="tile-status ${agent.status}">
+                        ${statusIndicator}
+                        ${agent.status}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAllTeams() {
+            document.getElementById('c-suite-grid').innerHTML = employees.cSuite.map(renderTile).join('');
+            document.getElementById('sales-grid').innerHTML = employees.sales.map(renderTile).join('');
+            document.getElementById('technical-grid').innerHTML = employees.technical.map(renderTile).join('');
+            document.getElementById('secretarial-grid').innerHTML = employees.secretarial.map(renderTile).join('');
+            document.getElementById('security-grid').innerHTML = employees.security.map(renderTile).join('');
+            document.getElementById('myl-grid').innerHTML = employees.myl.map(renderTile).join('');
+            document.getElementById('support-grid').innerHTML = employees.support.map(renderTile).join('');
+        }
+
+        function updateStats() {
+            let online = 0, busy = 0, offline = 0;
+            Object.values(employees).flat().forEach(agent => {
+                if (agent.status === 'online') online++;
+                else if (agent.status === 'busy') busy++;
+                else if (agent.status === 'offline') offline++;
+            });
+
+            document.getElementById('online-count').textContent = online;
+            document.getElementById('busy-count').textContent = busy;
+            document.getElementById('offline-count').textContent = offline;
+        }
+
+        function updateTimestamp() {
+            const now = new Date();
+            document.getElementById('last-updated').textContent = 
+                `Last updated: ${now.toLocaleTimeString()}`;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAllTeams();
+            updateStats();
+            updateTimestamp();
+            
+            // Simulate live updates
+            setInterval(() => {
+                updateTimestamp();
+                // Randomly set some agents to busy
+                Object.values(employees).flat().forEach(agent => {
+                    if (Math.random() > 0.95) {
+                        agent.status = agent.status === 'online' ? 'busy' : 'online';
+                    }
+                });
+                renderAllTeams();
+                updateStats();
+            }, 30000);
+        });
+    </script>
+</body>
+</html>
