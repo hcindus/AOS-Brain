@@ -97,6 +97,8 @@
             min-height: 100vh;
             padding-top: 70px;
             padding-bottom: 60px;
+            position: relative;
+            z-index: 1;
         }
 
         /* Sidebar */
@@ -162,9 +164,14 @@
         /* Hero */
         .hero {
             background: linear-gradient(135deg, rgba(26, 54, 93, 0.9) 0%, rgba(26, 54, 93, 0.7) 100%);
-            padding: 100px 60px;
+            padding: 120px 60px;
             text-align: center;
             border-bottom: 1px solid var(--border);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .hero h1 {
@@ -172,6 +179,8 @@
             font-weight: 800;
             margin-bottom: 20px;
             line-height: 1.2;
+            color: var(--text);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .hero h1 span {
@@ -298,6 +307,17 @@
             background: rgba(255, 255, 255, 0.2);
         }
 
+        .btn-tertiary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-tertiary:hover {
+            background: rgba(237, 137, 54, 0.1);
+            border-color: var(--accent);
+        }
+
         /* Footer */
         .footer {
             position: fixed;
@@ -315,7 +335,11 @@
             z-index: 1000;
         }
 
-        .footer-left { color: var(--text-muted); font-size: 14px; }
+        .footer-left { 
+            color: var(--text); 
+            font-size: 14px;
+            font-weight: 500;
+        }
 
         .footer-right {
             display: flex;
@@ -356,6 +380,7 @@
         <nav class="header-nav">
             <a href="index.html" class="active">Home</a>
             <a href="products.html">Products</a>
+            <a href="agents.html">🤖 Agents</a>
             <a href="cart.html">
                 Cart <span class="cart-icon">🛒<span class="cart-badge" id="cart-count">0</span></span>
             </a>
@@ -372,6 +397,7 @@
                 <ul class="sidebar-menu">
                     <li><a href="index.html" class="active"><span class="icon">🏠</span> Home</a></li>
                     <li><a href="products.html"><span class="icon">🛍️</span> Products</a></li>
+                    <li><a href="agents.html"><span class="icon">🤖</span> Agents</a></li>
                     <li><a href="cart.html"><span class="icon">🛒</span> Cart</a></li>
                     <li><a href="orders.html"><span class="icon">📦</span> Orders</a></li>
                 </ul>
@@ -399,11 +425,12 @@
         <main class="main-content">
             <!-- Hero -->
             <section class="hero">
-                <h1>Build Your<br><span>Autonomous Workforce</span></h1>
+                <h1>Build Your <br><span>Autonomous Workforce</span></h1>
                 <p>Deploy AI agents that work 24/7. No training. No breaks. No limits.</p>
                 <div class="hero-buttons">
                     <a href="products.html" class="btn">Browse Agents</a>
-                    <a href="login.html" class="btn btn-secondary">Business Login</a>
+                    <a href="agents.html" class="btn btn-secondary">View Team Roster</a>
+                    <a href="login.html" class="btn btn-tertiary">Business Login</a>
                 </div>
             </section>
 
@@ -439,7 +466,7 @@
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🔧</div>
-                        <h3>Technical Team>
+                        <h3>Technical Team</h3>
                         <p>Code review, debugging, infrastructure management. Always on.</p>
                     </div>
                     <div class="feature-card">
@@ -465,5 +492,6 @@
     </footer>
 
     <script src="cart.js"></script>
+    <script src="js/chat-widget.js"></script>
 </body>
 </html>
