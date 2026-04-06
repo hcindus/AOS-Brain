@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReggieStarr — Digital Cash Register</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header */
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: fixed;
+            width: 100%;
+            background: rgba(10,10,26,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .nav-links a:hover { color: #ff6b35; }
+        .cta-btn {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #0a0a1a;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        /* Hero */
+        .hero { padding: 160px 0 80px; text-align: center; }
+        .hero h1 { font-size: 56px; font-weight: 800; margin-bottom: 20px; }
+        .hero p { font-size: 20px; color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto 30px; }
+        .hero-btns { display: flex; gap: 15px; justify-content: center; }
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.3);
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+        
+        /* Demo Section */
+        .demo { padding: 60px 0; background: rgba(255,255,255,0.02); }
+        .demo-frame {
+            background: #1a1a2a;
+            border-radius: 16px;
+            border: 2px solid rgba(255,107,53,0.2);
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .demo-frame h3 { margin-bottom: 20px; color: #ff6b35; }
+        .demo-embed {
+            background: #0a0a1a;
+            border-radius: 12px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.5);
+        }
+        .keypad-preview {
+            display: grid;
+            grid-template-columns: repeat(4, 60px);
+            gap: 8px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .key {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        .key.enter { background: #ff6b35; color: #0a0a1a; font-weight: 700; }
+        
+        /* Features */
+        .features { padding: 60px 0; }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 30px;
+        }
+        .feature-icon { font-size: 40px; margin-bottom: 15px; }
+        
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">ReggieStarr</div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#demo">Live Demo</a>
+            </div>
+            <a href="#get-started" class="cta-btn">Get Started</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>The Digital Cash Register<br>Reimagined</h1>
+            <p>Professional POS with multi-language support, crypto payments, kitchen display, and real-time inventory.</p>
+            <div class="hero-btns">
+                <a href="#get-started" class="cta-btn">Download Free</a>
+                <a href="/AGI_COMPANY/subsidiaries/PERFORMANCE_SUPPLY_DEPOT/products/ReggieStarr/" class="btn-secondary">Live Dashboard →</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="demo" id="demo">
+        <div class="container">
+            <div class="demo-frame">
+                <h3>🖥️ Live POS Demo</h3>
+                <div class="demo-embed">
+                    <div class="keypad-preview">
+                        <button class="key">7</button>
+                        <button class="key">8</button>
+                        <button class="key">9</button>
+                        <button class="key">PLU</button>
+                        <button class="key">4</button>
+                        <button class="key">5</button>
+                        <button class="key">6</button>
+                        <button class="key">Dept</button>
+                        <button class="key">1</button>
+                        <button class="key">2</button>
+                        <button class="key">3</button>
+                        <button class="key">Disc</button>
+                        <button class="key">0</button>
+                        <button class="key">00</button>
+                        <button class="key">.</button>
+                        <button class="key enter">Enter</button>
+                    </div>
+                    <p style="margin-top:20px;color:rgba(255,255,255,0.6)">Interactive keypad preview. Full version includes touchscreen, receipt printer, and cash drawer.</p>
+                </div>
+                <a href="/AGI_COMPANY/subsidiaries/PERFORMANCE_SUPPLY_DEPOT/products/ReggieStarr/" class="cta-btn" style="margin-top:20px;display:inline-block">Launch Full POS →</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <h2 style="text-align:center;margin-bottom:40px">Everything Your Business Needs</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💱</div>
+                    <h3>Multi-Currency</h3>
+                    <p>USD, EUR, GBP, BTC and more with real-time conversion.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>8 Languages</h3>
+                    <p>English, Spanish, French, German, Chinese, Japanese, Arabic, Portuguese.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Kitchen Display</h3>
+                    <p>Send orders directly to kitchen. No lost tickets.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Inventory</h3>
+                    <p>Real-time stock tracking with automatic reorder alerts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="download" id="download" style="padding: 60px 0; background: rgba(255,107,53,0.05);">
+        <div class="container" style="text-align: center;">
+            <h2 style="margin-bottom: 20px;">Download ReggieStarr</h2>
+            <p style="color: rgba(255,255,255,0.6); margin-bottom: 30px;">Available for Raspberry Pi POS hardware. Mobile app coming soon.</p>
+            
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <!-- Raspberry Pi Build -->
+                <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 30px; min-width: 250px;">
+                    <div style="font-size: 48px; margin-bottom: 15px;">🥧</div>
+                    <h3 style="margin-bottom: 10px;">Raspberry Pi</h3>
+                    <p style="color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 15px;">Version 1.0.0.1 • RS-79</p>
+                    <a href="/downloads/reggiestarr-v1.0.0.1.zip" class="cta-btn" style="display: inline-block;" onclick="alert('Build in progress. Check back soon!'); return false;">
+                        Download for Pi
+                    </a>
+                </div>
+                
+                <!-- Android APK -->
+                <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 30px; min-width: 250px;">
+                    <div style="font-size: 48px; margin-bottom: 15px;">🤖</div>
+                    <h3 style="margin-bottom: 10px;">Android</h3>
+                    <p style="color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 15px;">Version 1.0.0 • Tablet Mode</p>
+                    <a href="/downloads/reggiestarr-v1.0.0.apk" class="cta-btn" style="display: inline-block;" onclick="alert('APK build in progress. Check back soon!'); return false;">
+                        Download APK
+                    </a>
+                </div>
+            </div>
+            
+            <p style="margin-top: 30px; color: rgba(255,255,255,0.4); font-size: 14px;">
+                📱 Scan QR code with your phone to download directly • Compatible with RS-79 hardware
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 ReggieStarr — Performance Supply Depot LLC</p>
+        </div>
+    </footer>
+</body>
+</html>
