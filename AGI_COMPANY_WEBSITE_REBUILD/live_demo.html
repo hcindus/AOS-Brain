@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Demo — AGI Company Products</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 50%, #0a0a1a 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header */
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: fixed;
+            width: 100%;
+            background: rgba(10,10,26,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00d4ff, #ff6b35);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 160px 0 80px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 20px;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        
+        /* Demo Cards */
+        .demos {
+            padding: 60px 0;
+        }
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+        .demo-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .demo-card.cream {
+            border-color: rgba(0,212,255,0.3);
+        }
+        .demo-card.cream:hover {
+            box-shadow: 0 20px 40px rgba(0,212,255,0.1);
+        }
+        .demo-card.reggie {
+            border-color: rgba(255,107,53,0.3);
+        }
+        .demo-card.reggie:hover {
+            box-shadow: 0 20px 40px rgba(255,107,53,0.1);
+        }
+        .demo-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        .demo-card h2 {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+        .demo-card.cream h2 {
+            color: #00d4ff;
+        }
+        .demo-card.reggie h2 {
+            color: #ff6b35;
+        }
+        .demo-card p {
+            color: rgba(255,255,255,0.6);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .demo-btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .demo-btn:hover {
+            transform: translateY(-2px);
+        }
+        .cream .demo-btn {
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            color: #0a0a1a;
+        }
+        .cream .demo-btn:hover {
+            box-shadow: 0 10px 30px rgba(0,212,255,0.3);
+        }
+        .reggie .demo-btn {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #0a0a1a;
+        }
+        .reggie .demo-btn:hover {
+            box-shadow: 0 10px 30px rgba(255,107,53,0.3);
+        }
+        
+        /* Status Badge */
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        .status-live {
+            background: rgba(0,255,136,0.2);
+            color: #00ff88;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .demo-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">AGI Company — Live Demos</div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Experience Our Products</h1>
+            <p>Interactive demos of CREAM Real Estate CRM and ReggieStarr POS. Try before you download.</p>
+        </div>
+    </section>
+
+    <section class="demos">
+        <div class="container">
+            <div class="demo-grid">
+                <!-- CREAM -->
+                <div class="demo-card cream">
+                    <div class="status-badge status-live">🟢 Live Demo</div>
+                    <div class="demo-icon">🏠</div>
+                    <h2>CREAM</h2>
+                    <p>AI-powered Real Estate CRM. Lead scoring, automated follow-ups, deal pipeline, and commission tracking designed for real estate professionals.</p>
+                    <a href="cream.html" class="demo-btn">Launch CREAM Demo →</a>
+                </div>
+                
+                <!-- ReggieStarr -->
+                <div class="demo-card reggie">
+                    <div class="status-badge status-live">🟢 Live Demo</div>
+                    <div class="demo-icon">🖥️</div>
+                    <h2>ReggieStarr</h2>
+                    <p>Digital Cash Register System. Multi-currency support, kitchen display, inventory management, and crypto payments for restaurants and retail.</p>
+                    <a href="rs79.html" class="demo-btn">Launch ReggieStarr Demo →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 AGI Company — Performance Supply Depot LLC</p>
+        </div>
+    </footer>
+</body>
+</html>
