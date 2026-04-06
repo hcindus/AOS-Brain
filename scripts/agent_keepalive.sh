@@ -54,9 +54,9 @@ fi
 
 # 5. Minecraft Server Health
 check_minecraft_health() {
-    # Check if Minecraft Java process is running
-    if pgrep -f "minecraft_server" > /dev/null || pgrep -f "java.*minecraft" > /dev/null; then
-        MEM_USAGE=$(ps aux | grep -E "(minecraft_server|java.*minecraft)" | grep -v grep | awk '{sum+=$4} END {printf "%.1f", sum}')
+    # Check if Minecraft Java process is running (including paper jar)
+    if pgrep -f "paper.*jar" > /dev/null || pgrep -f "minecraft_server" > /dev/null || pgrep -f "java.*-jar.*minecraft" > /dev/null || pgrep -f "java.*paper" > /dev/null; then
+        MEM_USAGE=$(ps aux | grep -E "(paper.*jar|minecraft_server|java.*-jar)" | grep -v grep | awk '{sum+=$4} END {printf "%.1f", sum}')
         log "✅ Minecraft Server: RUNNING (Memory: ${MEM_USAGE}% - safe if <50%)"
         
         # Check Mineflayer agents
