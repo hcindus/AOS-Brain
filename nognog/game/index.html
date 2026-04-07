@@ -289,6 +289,140 @@
             color: #fff;
             margin: 0 2px;
         }
+        
+        /* Touch Controls */
+        #touchControls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: none;
+            z-index: 50;
+        }
+        
+        .touch-zone {
+            position: absolute;
+            pointer-events: auto;
+        }
+        
+        /* Virtual Joystick */
+        #joystickZone {
+            bottom: 20px;
+            left: 20px;
+            width: 150px;
+            height: 150px;
+        }
+        
+        #joystickBase {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(0, 255, 136, 0.5);
+            border-radius: 50%;
+            top: 15px;
+            left: 15px;
+        }
+        
+        #joystickKnob {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 255, 136, 0.6);
+            border: 2px solid #00ff88;
+            border-radius: 50%;
+            top: 50px;
+            left: 50px;
+            transition: none;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+        }
+        
+        #joystickKnob.active {
+            background: rgba(0, 255, 136, 0.9);
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.8);
+        }
+        
+        /* Fire Button */
+        #fireZone {
+            bottom: 40px;
+            right: 40px;
+            width: 100px;
+            height: 100px;
+        }
+        
+        #fireButton {
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 68, 68, 0.3);
+            border: 3px solid rgba(255, 68, 68, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            user-select: none;
+            box-shadow: 0 0 15px rgba(255, 68, 68, 0.3);
+        }
+        
+        #fireButton:active, #fireButton.active {
+            background: rgba(255, 68, 68, 0.6);
+            box-shadow: 0 0 30px rgba(255, 68, 68, 0.8);
+            transform: scale(0.95);
+        }
+        
+        /* Look Zone (right side) */
+        #lookZone {
+            top: 100px;
+            right: 0;
+            width: 60%;
+            height: 60%;
+            background: transparent;
+        }
+        
+        /* Thrust Button */
+        #thrustZone {
+            bottom: 40px;
+            right: 160px;
+            width: 80px;
+            height: 80px;
+        }
+        
+        #thrustButton {
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 136, 255, 0.3);
+            border: 3px solid rgba(0, 136, 255, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            user-select: none;
+            box-shadow: 0 0 15px rgba(0, 136, 255, 0.3);
+        }
+        
+        #thrustButton:active, #thrustButton.active {
+            background: rgba(0, 136, 255, 0.6);
+            box-shadow: 0 0 30px rgba(0, 136, 255, 0.8);
+        }
+        
+        /* Touch only on mobile */
+        @media (hover: none) and (pointer: coarse) {
+            #touchControls {
+                display: block !important;
+            }
+            #controlsHint {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -371,6 +505,28 @@
         
         <div id="miniMap">
             <canvas id="miniMapCanvas"></canvas>
+        </div>
+        
+        <!-- Touch Controls for Mobile -->
+        <div id="touchControls">
+            <!-- Virtual Joystick -->
+            <div id="joystickZone" class="touch-zone">
+                <div id="joystickBase"></div>
+                <div id="joystickKnob"></div>
+            </div>
+            
+            <!-- Look Zone -->
+            <div id="lookZone" class="touch-zone"></div>
+            
+            <!-- Thrust Button -->
+            <div id="thrustZone" class="touch-zone">
+                <div id="thrustButton">THRUST</div>
+            </div>
+            
+            <!-- Fire Button -->
+            <div id="fireZone" class="touch-zone">
+                <div id="fireButton">FIRE</div>
+            </div>
         </div>
     </div>
     
@@ -473,8 +629,21 @@
         const input = {
             keys: {},
             mouse: { x: 0, y: 0, dx: 0, dy: 0 },
-            touch: { active: false, x: 0, y: 0 }
+            touch: { 
+                active: false, 
+                x: 0, 
+                y: 0,
+                joystick: { active: false, x: 0, y: 0, dx: 0, dy: 0 },
+                look: { active: false, x: 0, y: 0, dx: 0, dy: 0 },
+                fire: false,
+                thrust: false
+            }
         };
+        
+        // Projectiles
+        let projectiles = [];
+        let lastFireTime = 0;
+        const FIRE_RATE = 200; // ms between shots
         
         // Camera Modes
         const CAMERA_MODES = ['first', 'third', 'top'];
@@ -1062,21 +1231,223 @@
         }
         
         // ============================================
+        // WEAPON SYSTEM
+        // ============================================
+        
+        function createProjectile() {
+            const geometry = new THREE.SphereGeometry(0.3, 8, 8);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0x00ffff,
+                emissive: 0x00ffff,
+                emissiveIntensity: 2
+            });
+            const mesh = new THREE.Mesh(geometry, material);
+            
+            // Muzzle flash
+            const flashGeometry = new THREE.SphereGeometry(0.8, 8, 8);
+            const flashMaterial = new THREE.MeshBasicMaterial({
+                color: 0xffff00,
+                transparent: true,
+                opacity: 0.8
+            });
+            const flash = new THREE.Mesh(flashGeometry, flashMaterial);
+            
+            return { mesh, flash, velocity: new THREE.Vector3(), life: 2.0 };
+        }
+        
+        function fireWeapon() {
+            const now = Date.now();
+            if (now - lastFireTime < FIRE_RATE) return;
+            lastFireTime = now;
+            
+            // Create projectile
+            const projectile = createProjectile();
+            
+            // Set position at ship's nose
+            const shipPos = player.position.clone();
+            const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(player.quaternion);
+            projectile.mesh.position.copy(shipPos).add(forward.clone().multiplyScalar(10));
+            
+            // Set velocity (ship velocity + projectile speed)
+            projectile.velocity = player.velocity.clone().add(forward.multiplyScalar(2000));
+            
+            // Add to scene
+            scene.add(projectile.mesh);
+            
+            // Add flash at muzzle
+            projectile.flash.position.copy(shipPos).add(forward.clone().normalize().multiplyScalar(12));
+            scene.add(projectile.flash);
+            
+            // Play sound
+            playSound('shoot');
+            
+            // Store projectile
+            projectiles.push(projectile);
+            
+            console.log('Weapon fired!');
+        }
+        
+        function updateProjectiles(dt) {
+            for (let i = projectiles.length - 1; i >= 0; i--) {
+                const proj = projectiles[i];
+                
+                // Update position
+                proj.mesh.position.add(proj.velocity.clone().multiplyScalar(dt));
+                
+                // Fade flash
+                proj.life -= dt;
+                if (proj.flash) {
+                    proj.flash.scale.multiplyScalar(0.9);
+                    if (proj.flash.scale.x < 0.1) {
+                        scene.remove(proj.flash);
+                        proj.flash = null;
+                    }
+                }
+                
+                // Remove if too old or too far
+                if (proj.life <= 0 || proj.mesh.position.distanceTo(player.position) > 5000) {
+                    scene.remove(proj.mesh);
+                    if (proj.flash) scene.remove(proj.flash);
+                    projectiles.splice(i, 1);
+                }
+            }
+        }
+        
+        // ============================================
+        // AUDIO SYSTEM
+        // ============================================
+        
+        function initAudio() {
+            audio.context = new (window.AudioContext || window.webkitAudioContext)();
+            
+            // Load sounds
+            const soundFiles = {
+                'shoot': 'assets/audio/shoot.wav',
+                'hit': 'assets/audio/hit.wav',
+                'explosion': 'assets/audio/explosion.wav',
+                'ui_click': 'assets/audio/ui_click.wav',
+                'ui_confirm': 'assets/audio/ui_confirm.wav',
+                'warp': 'assets/audio/warp.wav'
+            };
+            
+            // Preload sounds
+            Object.keys(soundFiles).forEach(name => {
+                loadSound(name, soundFiles[name]);
+            });
+        }
+        
+        function loadSound(name, url) {
+            fetch(url)
+                .then(response => response.arrayBuffer())
+                .then(arrayBuffer => audio.context.decodeAudioData(arrayBuffer))
+                .then(audioBuffer => {
+                    audio.sounds[name] = audioBuffer;
+                    console.log(`Loaded sound: ${name}`);
+                })
+                .catch(error => console.error(`Failed to load sound ${name}:`, error));
+        }
+        
+        function playSound(name, volume = 0.5) {
+            if (!settings.sound || !audio.context || !audio.sounds[name]) return;
+            
+            const source = audio.context.createBufferSource();
+            source.buffer = audio.sounds[name];
+            
+            const gainNode = audio.context.createGain();
+            gainNode.gain.value = volume;
+            
+            source.connect(gainNode);
+            gainNode.connect(audio.context.destination);
+            
+            source.start(0);
+        }
+        
+        // ============================================
         // PHYSICS & CONTROLS
         // ============================================
         
         function updatePlayer(dt) {
             if (!player) return;
             
+            // Keyboard input
             const thrustInput = input.keys['w'] ? 1 : input.keys['s'] ? -1 : 0;
             const yawInput = input.keys['a'] ? 1 : input.keys['d'] ? -1 : 0;
             const pitchInput = input.keys['arrowup'] ? 1 : input.keys['arrowdown'] ? -1 : 0;
             const rollInput = input.keys['q'] ? 1 : input.keys['e'] ? -1 : 0;
             
+            // Touch joystick input (overrides/adds to keyboard)
+            const touchYaw = input.touch.joystick.dx * 2;
+            const touchPitch = input.touch.joystick.dy * 2;
+            const touchThrust = input.touch.thrust ? 1 : 0;
+            
+            // Combine inputs
+            const finalYaw = yawInput + touchYaw;
+            const finalPitch = pitchInput + touchPitch;
+            const finalThrust = thrustInput + touchThrust;
+            
             // Apply rotation
-            player.rotation.y += yawInput * dt * 2;
-            player.rotation.x += pitchInput * dt * 2;
+            player.rotation.y += finalYaw * dt * 2;
+            player.rotation.x += finalPitch * dt * 2;
             player.rotation.z += rollInput * dt * 2;
+            
+            // Apply rotation from touch look
+            if (input.touch.look.active) {
+                player.rotation.y -= input.touch.look.dx * 0.005;
+                player.rotation.x -= input.touch.look.dy * 0.005;
+                input.touch.look.dx = 0;
+                input.touch.look.dy = 0;
+            }
+            
+            // Clamp rotation
+            player.rotation.x = Math.max(-Math.PI/2, Math.min(Math.PI/2, player.rotation.x));
+            
+            // Update quaternion
+            player.quaternion.setFromEuler(player.rotation);
+            
+            // Apply thrust
+            if (finalThrust > 0 && player.fuel > 0) {
+                player.thrust = finalThrust * player.acceleration;
+                const thrustVector = new THREE.Vector3(0, 0, -1).applyQuaternion(player.quaternion);
+                thrustVector.multiplyScalar(player.thrust * dt);
+                player.velocity.add(thrustVector);
+                player.fuel -= dt * 0.1;
+                if (player.fuel < 0) player.fuel = 0;
+            }
+            
+            // Apply gravity from star
+            if (currentSolarSystem) {
+                const toStar = new THREE.Vector3().subVectors(
+                    currentSolarSystem.star.position.clone().divideScalar(1e6),
+                    player.position
+                );
+                const dist = toStar.length();
+                const force = (CONSTANTS.G * currentSolarSystem.star.mass) / (dist * dist * 1e12);
+                toStar.normalize().multiplyScalar(force * dt);
+                player.velocity.add(toStar);
+            }
+            
+            // Limit speed
+            const speed = player.velocity.length();
+            if (speed > player.maxSpeed) {
+                player.velocity.normalize().multiplyScalar(player.maxSpeed);
+            }
+            
+            // Apply velocity
+            player.position.add(player.velocity.clone().multiplyScalar(dt));
+            playerShip.position.copy(player.position);
+            playerShip.quaternion.copy(player.quaternion);
+            
+            // Update UI
+            document.getElementById('velocity').textContent = Math.round(speed);
+            document.getElementById('altitude').textContent = Math.round(player.position.y);
+            document.getElementById('fuel').textContent = Math.round(player.fuel);
+            document.getElementById('shield').textContent = Math.round(player.shield);
+            document.getElementById('coords').textContent = 
+                `${Math.round(player.position.x)}, ${Math.round(player.position.y)}, ${Math.round(player.position.z)}`;
+            
+            // Update camera
+            updateCamera();
+        }
             
             // Update quaternion
             player.quaternion.setFromEuler(player.rotation);
@@ -1252,31 +1623,128 @@
         function onMouseUp(e) {}
         
         function onTouchStart(e) {
-            if (!settings.touch || currentState !== GameState.PLAYING) return;
+            if (currentState !== GameState.PLAYING) return;
             e.preventDefault();
-            input.touch.active = true;
-            input.touch.x = e.touches[0].clientX;
-            input.touch.y = e.touches[0].clientY;
+            
+            for (let i = 0; i < e.changedTouches.length; i++) {
+                const touch = e.changedTouches[i];
+                const target = document.elementFromPoint(touch.clientX, touch.clientY);
+                
+                // Joystick zone
+                if (target && (target.id === 'joystickZone' || target.id === 'joystickBase' || target.id === 'joystickKnob')) {
+                    input.touch.joystick.active = true;
+                    const joystickBase = document.getElementById('joystickBase');
+                    const rect = joystickBase.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    input.touch.joystick.startX = centerX;
+                    input.touch.joystick.startY = centerY;
+                    updateJoystick(touch.clientX, touch.clientY);
+                }
+                
+                // Look zone
+                if (target && target.id === 'lookZone') {
+                    input.touch.look.active = true;
+                    input.touch.look.x = touch.clientX;
+                    input.touch.look.y = touch.clientY;
+                    input.touch.look.id = touch.identifier;
+                }
+                
+                // Fire button
+                if (target && (target.id === 'fireZone' || target.id === 'fireButton')) {
+                    input.touch.fire = true;
+                    document.getElementById('fireButton').classList.add('active');
+                    fireWeapon();
+                }
+                
+                // Thrust button
+                if (target && (target.id === 'thrustZone' || target.id === 'thrustButton')) {
+                    input.touch.thrust = true;
+                    document.getElementById('thrustButton').classList.add('active');
+                }
+            }
         }
         
         function onTouchMove(e) {
-            if (!settings.touch || !input.touch.active) return;
+            if (currentState !== GameState.PLAYING) return;
             e.preventDefault();
-            const dx = e.touches[0].clientX - input.touch.x;
-            const dy = e.touches[0].clientY - input.touch.y;
-            player.rotation.y -= dx * 0.005;
-            player.rotation.x -= dy * 0.005;
-            input.touch.x = e.touches[0].clientX;
-            input.touch.y = e.touches[0].clientY;
+            
+            for (let i = 0; i < e.changedTouches.length; i++) {
+                const touch = e.changedTouches[i];
+                
+                // Update joystick
+                if (input.touch.joystick.active) {
+                    updateJoystick(touch.clientX, touch.clientY);
+                }
+                
+                // Update look
+                if (input.touch.look.active && touch.identifier === input.touch.look.id) {
+                    const dx = touch.clientX - input.touch.look.x;
+                    const dy = touch.clientY - input.touch.look.y;
+                    input.touch.look.dx = dx;
+                    input.touch.dy = dy;
+                    input.touch.look.x = touch.clientX;
+                    input.touch.look.y = touch.clientY;
+                }
+            }
         }
         
         function onTouchEnd(e) {
-            input.touch.active = false;
+            for (let i = 0; i < e.changedTouches.length; i++) {
+                const touch = e.changedTouches[i];
+                
+                // End joystick
+                if (input.touch.joystick.active) {
+                    const joystickKnob = document.getElementById('joystickKnob');
+                    joystickKnob.style.left = '50px';
+                    joystickKnob.style.top = '50px';
+                    joystickKnob.classList.remove('active');
+                    input.touch.joystick.active = false;
+                    input.touch.joystick.dx = 0;
+                    input.touch.joystick.dy = 0;
+                }
+                
+                // End look
+                if (touch.identifier === input.touch.look.id) {
+                    input.touch.look.active = false;
+                    input.touch.look.dx = 0;
+                    input.touch.look.dy = 0;
+                }
+                
+                // Check if fire button released
+                const target = document.elementFromPoint(touch.clientX, touch.clientY);
+                if (target && (target.id === 'fireZone' || target.id === 'fireButton')) {
+                    input.touch.fire = false;
+                    document.getElementById('fireButton').classList.remove('active');
+                }
+                
+                // Check if thrust button released
+                if (target && (target.id === 'thrustZone' || target.id === 'thrustButton')) {
+                    input.touch.thrust = false;
+                    document.getElementById('thrustButton').classList.remove('active');
+                }
+            }
         }
         
-        function fireWeapon() {
-            // Placeholder for weapon firing logic
-            console.log('Weapon fired!');
+        function updateJoystick(clientX, clientY) {
+            const maxDist = 35;
+            const dx = clientX - input.touch.joystick.startX;
+            const dy = clientY - input.touch.joystick.startY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const angle = Math.atan2(dy, dx);
+            
+            const clampedDist = Math.min(dist, maxDist);
+            const knobX = 50 + Math.cos(angle) * clampedDist;
+            const knobY = 50 + Math.sin(angle) * clampedDist;
+            
+            const joystickKnob = document.getElementById('joystickKnob');
+            joystickKnob.style.left = knobX + 'px';
+            joystickKnob.style.top = knobY + 'px';
+            joystickKnob.classList.add('active');
+            
+            // Normalize input (-1 to 1)
+            input.touch.joystick.dx = (Math.cos(angle) * clampedDist) / maxDist;
+            input.touch.joystick.dy = (Math.sin(angle) * clampedDist) / maxDist;
         }
         
         // ============================================
@@ -1287,8 +1755,9 @@
             requestAnimationFrame(animate);
             
             if (currentState === GameState.PLAYING) {
-                const dt = clock.getDelta();
+                const dt = Math.min(clock.getDelta(), 0.1);
                 updatePlayer(dt);
+                updateProjectiles(dt);
                 updateMiniMap();
                 renderer.render(scene, camera);
             }
@@ -1305,6 +1774,11 @@
         // ============================================
         
         function startGame() {
+            // Initialize audio on first interaction
+            if (!audio.context) {
+                initAudio();
+            }
+            
             document.getElementById('mainMenu').style.display = 'none';
             document.getElementById('hud').style.display = 'block';
             currentState = GameState.PLAYING;
