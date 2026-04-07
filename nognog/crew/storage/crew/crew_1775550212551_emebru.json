@@ -3,11 +3,11 @@
   "name": "Aria",
   "role": "MEDIC",
   "level": 5,
-  "xp": 63,
+  "xp": 134,
   "stats": {
     "health": 150,
     "maxHealth": 150,
-    "energy": 38.613590013342915,
+    "energy": 19.274102318258297,
     "morale": 100,
     "loyalty": 89
   },
@@ -17,8 +17,14 @@
     "scanning": 17,
     "combat": 23
   },
-  "missionsCompleted": 0,
-  "discoveries": [],
+  "missionsCompleted": 1,
+  "discoveries": [
+    {
+      "name": "Ancient Ruins",
+      "location": "Alpha-1",
+      "timestamp": 1775552360145
+    }
+  ],
   "status": "ACTIVE",
   "location": {
     "universe": "PRIME",

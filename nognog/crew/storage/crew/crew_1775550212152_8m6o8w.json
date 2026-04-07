@@ -3,11 +3,11 @@
   "name": "Nyx",
   "role": "ENGINEER",
   "level": 5,
-  "xp": 63,
+  "xp": 134,
   "stats": {
     "health": 150,
     "maxHealth": 150,
-    "energy": 39.1148233785772,
+    "energy": 20.56702646217915,
     "morale": 100,
     "loyalty": 94
   },
@@ -17,8 +17,14 @@
     "scanning": 15,
     "combat": 14
   },
-  "missionsCompleted": 0,
-  "discoveries": [],
+  "missionsCompleted": 1,
+  "discoveries": [
+    {
+      "name": "Rare Minerals",
+      "location": "Alpha-1",
+      "timestamp": 1775552360144
+    }
+  ],
   "status": "ACTIVE",
   "location": {
     "universe": "PRIME",
