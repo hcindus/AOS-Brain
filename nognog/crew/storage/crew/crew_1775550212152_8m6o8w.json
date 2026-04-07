@@ -3,7 +3,7 @@
   "name": "Nyx",
   "role": "ENGINEER",
   "level": 5,
-  "xp": 695,
+  "xp": 805,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 15,
     "combat": 14
   },
-  "missionsCompleted": 5,
+  "missionsCompleted": 6,
   "discoveries": [
     {
       "name": "Rare Minerals",
@@ -43,6 +43,11 @@
       "name": "Rare Minerals",
       "location": "Alpha-1",
       "timestamp": 1775561428952
+    },
+    {
+      "name": "Hidden Base",
+      "location": "Alpha-1",
+      "timestamp": 1775565452739
     }
   ],
   "status": "ACTIVE",
