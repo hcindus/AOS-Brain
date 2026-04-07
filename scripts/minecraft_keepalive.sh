@@ -1,7 +1,8 @@
 #!/bin/bash
-# VERSION: 1.0.0
-# UPDATED: 2026-04-02 04:08 UTC
-# CHANGELOG: Initial MC agent health check
+# VERSION: 1.0.1
+# UPDATED: 2026-04-07 04:13 UTC
+# CHANGELOG: v1.0.1 - Version bump for indexing consistency
+#            v1.0.0 - Initial MC agent health check
 #
 # Minecraft Agent Keepalive
 # Ensures Mineflayer agents stay connected

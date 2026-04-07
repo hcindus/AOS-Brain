@@ -1,4 +1,8 @@
 #!/bin/bash
+# VERSION: 1.0.0
+# UPDATED: 2026-04-07 04:13 UTC
+# CHANGELOG: Added version indexing header
+#
 # AOS Brain Keepalive Script
 # Checks Complete Brain v4 health and restarts if needed
 

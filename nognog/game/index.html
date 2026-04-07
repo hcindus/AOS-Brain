@@ -871,44 +871,39 @@
             return system;
         }
         
-        // Universe Generator
+        // Universe Generator (optimized)
         function generateUniverse(type, seed) {
             const rng = new SeededRandom(seed);
             const universe = {
                 type: type,
                 seed: seed,
-                galaxies: [],
+                galaxies: [], // Just metadata, not full star data
                 solarSystems: [],
                 backgroundColor: UNIVERSE_TYPES[type].color
             };
             
-            // Generate Galaxies
-            const numGalaxies = rng.int(100, CONSTANTS.MAX_GALAXIES);
+            // Generate lightweight galaxy metadata (not full stars - visual only)
+            const numGalaxies = rng.int(50, 200); // Reduced from 1000
             for (let i = 0; i < numGalaxies; i++) {
-                const galaxyType = rng.int(0, 6);
-                const galaxySeed = rng.next() * 1000000;
-                const galaxyStars = generateGalaxyShape(galaxyType, galaxySeed);
-                
                 universe.galaxies.push({
-                    type: galaxyType,
-                    seed: galaxySeed,
+                    type: rng.int(0, 6),
+                    seed: rng.next() * 1000000,
                     position: new THREE.Vector3(
                         rng.range(-1e12, 1e12),
                         rng.range(-1e11, 1e11),
                         rng.range(-1e12, 1e12)
                     ),
-                    stars: galaxyStars,
-                    solarSystems: []
+                    size: rng.range(1e9, 1e11)
                 });
             }
             
-            // Generate Solar Systems near player start
-            for (let i = 0; i < 50; i++) {
+            // Generate Solar Systems near player start (limit to 5 for speed)
+            for (let i = 0; i < 5; i++) {
                 const ssSeed = rng.next() * 1000000;
                 const position = new THREE.Vector3(
-                    rng.range(-1e11, 1e11),
+                    rng.range(-5e10, 5e10),
                     rng.range(-1e10, 1e10),
-                    rng.range(-1e11, 1e11)
+                    rng.range(-5e10, 5e10)
                 );
                 universe.solarSystems.push(generateSolarSystem(ssSeed, position));
             }
@@ -1142,21 +1137,52 @@
             const positions = [];
             const colors = [];
             
+            // Realistic star color distribution (blue-white hottest, red coolest)
+            const starColors = [
+                { color: new THREE.Color(0xaaccff), weight: 5 },   // Blue-white (O/B type)
+                { color: new THREE.Color(0xffffff), weight: 10 },  // White (A type)
+                { color: new THREE.Color(0xffffcc), weight: 15 }, // Yellow-white (F type)
+                { color: new THREE.Color(0xffdd88), weight: 25 }, // Yellow (G type - like Sun)
+                { color: new THREE.Color(0xffaa66), weight: 25 }, // Orange (K type)
+                { color: new THREE.Color(0xff6644), weight: 15 }, // Red-orange (M type)
+                { color: new THREE.Color(0xff4444), weight: 5 }   // Deep red (cool dwarfs)
+            ];
+            
+            // Build weighted color array
+            const weightedColors = [];
+            starColors.forEach(sc => {
+                for (let w = 0; w < sc.weight; w++) {
+                    weightedColors.push(sc.color);
+                }
+            });
+            
             for (let i = 0; i < 10000; i++) {
                 const x = (Math.random() - 0.5) * 1e6;
                 const y = (Math.random() - 0.5) * 1e6;
                 const z = (Math.random() - 0.5) * 1e6;
                 positions.push(x, y, z);
                 
-                const color = new THREE.Color();
-                color.setHSL(Math.random(), 0.5, 0.8);
+                // Pick from weighted distribution for realistic star colors
+                const baseColor = weightedColors[Math.floor(Math.random() * weightedColors.length)];
+                const color = baseColor.clone();
+                
+                // Add slight random variation to each star
+                const variation = (Math.random() - 0.5) * 0.1;
+                color.r = Math.min(1, Math.max(0, color.r + variation));
+                color.g = Math.min(1, Math.max(0, color.g + variation));
+                color.b = Math.min(1, Math.max(0, color.b + variation));
+                
                 colors.push(color.r, color.g, color.b);
             }
             
             geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
             geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
             
-            const material = new THREE.PointsMaterial({ size: 2, vertexColors: true });
+            const material = new THREE.PointsMaterial({ 
+                size: 2.5, 
+                vertexColors: true,
+                sizeAttenuation: true
+            });
             const stars = new THREE.Points(geometry, material);
             scene.add(stars);
         }
