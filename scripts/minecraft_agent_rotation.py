@@ -15,13 +15,13 @@ AGENT_DIR = "/root/.openclaw/workspace/scripts/minecraft_agents"
 LOG_DIR = "/root/.openclaw/workspace/logs"
 
 AGENTS = [
-    {"name": "Forge", "username": "forge", "role": "builder", "port": 25566},
-    {"name": "Patricia", "username": "patricia", "role": "explorer", "port": 25566},
-    {"name": "Chelios", "username": "chelios", "role": "guard", "port": 25566},
-    {"name": "Aurora", "username": "aurora", "role": "gatherer", "port": 25566},
-    {"name": "Patricia2", "username": "patricia2", "role": "miner", "port": 25566},
-    {"name": "Chelios2", "username": "chelios2", "role": "farmer", "port": 25566},
-    {"name": "Forge2", "username": "forge2", "role": "crafter", "port": 25566},
+    {"name": "Forge", "username": "forge", "role": "builder", "port": 25565},
+    {"name": "Patricia", "username": "patricia", "role": "explorer", "port": 25565},
+    {"name": "Chelios", "username": "chelios", "role": "guard", "port": 25565},
+    {"name": "Aurora", "username": "aurora", "role": "gatherer", "port": 25565},
+    {"name": "Patricia2", "username": "patricia2", "role": "miner", "port": 25565},
+    {"name": "Chelios2", "username": "chelios2", "role": "farmer", "port": 25565},
+    {"name": "Forge2", "username": "forge2", "role": "crafter", "port": 25565},
 ]
 
 def log(msg):

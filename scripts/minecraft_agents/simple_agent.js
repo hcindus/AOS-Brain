@@ -13,7 +13,7 @@ const WebSocket = require('ws');
 
 const AGENT_ID = process.argv[2] || 'agent_' + Math.floor(Math.random() * 1000);
 const MC_HOST = process.argv[3] || 'localhost';
-const MC_PORT = parseInt(process.argv[4]) || 25566;
+const MC_PORT = parseInt(process.argv[4]) || 25565;
 const BRAIN_URL = process.argv[5] || 'ws://localhost:8767';
 
 console.log(`[${AGENT_ID}] Starting autonomous agent...`);
