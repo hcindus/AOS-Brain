@@ -536,6 +536,7 @@
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+    <script src="js/player/VoxelShips.js"></script>
     <script src="js/core/BrainBridge.js"></script>
     <script src="js/portals/PortalSystem.js"></script>
     <script>
@@ -975,8 +976,13 @@
                     createSolarSystemVisuals(currentUniverse.solarSystems[0]);
                     currentSolarSystem = currentUniverse.solarSystems[0];
                     createStarfield();
+
+                    // Spawn Gordon fleet
+                    loadingText.textContent = "Spawning Gordon fleet...";
+                    spawnGordonFleet();
+
                     loadingProgress.style.width = "100%";
-                    
+
                     setTimeout(() => {
                         document.getElementById('loading').style.display = 'none';
                         currentState = GameState.MENU;
@@ -1787,9 +1793,56 @@
         }
         
         // ============================================
+        // GORDON FLEET
+        // ============================================
+
+        let gordonFleet = [];
+
+        function spawnGordonFleet() {
+            if (typeof VoxelShips === 'undefined') {
+                console.error('[Game] VoxelShips not loaded');
+                return;
+            }
+
+            const voxelShips = new VoxelShips();
+            console.log('[Game] Spawning Gordon fleet...');
+
+            // Spawn fleet near player but offset
+            const fleetCenter = player ? player.position.clone().add(new THREE.Vector3(500, 100, -300)) : new THREE.Vector3(500, 200, -300);
+
+            gordonFleet = voxelShips.spawnGordonFleet(scene, 5, fleetCenter);
+
+            console.log(`[Game] Gordon fleet spawned: ${gordonFleet.length} ships`);
+        }
+
+        function updateGordonFleet(dt) {
+            gordonFleet.forEach((ship, index) => {
+                if (!ship) return;
+
+                // Gentle bobbing motion
+                const time = Date.now() * 0.001;
+                const offset = index * 1.5;
+
+                ship.position.y += Math.sin(time + offset) * 0.5;
+
+                // Slow rotation
+                ship.rotation.y += dt * 0.1;
+
+                // Animate thruster glows
+                if (ship.userData.thrusterGlows) {
+                    ship.userData.thrusterGlows.forEach(glow => {
+                        const intensity = 0.5 + Math.sin(time * 3 + offset) * 0.2;
+                        glow.material.opacity = intensity;
+                        glow.scale.setScalar(1 + Math.sin(time * 2) * 0.1);
+                    });
+                }
+            });
+        }
+
+        // ============================================
         // GAME LOOP
         // ============================================
-        
+
         function animate() {
             requestAnimationFrame(animate);
             
@@ -1798,6 +1851,7 @@
                 updatePlayer(dt);
                 updateProjectiles(dt);
                 updateMiniMap();
+                updateGordonFleet(dt);
                 
                 // Update portals
                 if (window.portalSystem) {

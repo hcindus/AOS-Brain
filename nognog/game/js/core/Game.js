@@ -8,13 +8,18 @@ class Game {
         this.canvas = document.getElementById('gameCanvas');
         this.state = 'menu';
         this.clock = new THREE.Clock();
-        
+
         // Systems
         this.renderer = null;
         this.universe = null;
         this.player = null;
         this.audio = null;
-        
+        this.voxelShips = new VoxelShips();
+
+        // Available ships
+        this.availableShips = this.voxelShips.getAvailableShips();
+        this.selectedShip = 'explorer'; // Default
+
         // Settings
         this.settings = {
             sound: true,
@@ -22,11 +27,15 @@ class Game {
             invert: false,
             touch: true
         };
-        
+
+        // Gordon fleet (spawned in world)
+        this.gordonFleet = [];
+
         // Bind methods
         this.animate = this.animate.bind(this);
-        
+
         console.log('[Game] Controller initialized');
+        console.log('[Game] Available ships:', this.availableShips.map(s => s.name).join(', '));
     }
     
     async init() {
@@ -107,9 +116,12 @@ class Game {
             } else if (loadProgress === 60) {
                 loadingText.textContent = 'Spawning player ship...';
             } else if (loadProgress === 90) {
-                loadingText.textContent = 'Finalizing...';
+                loadingText.textContent = 'Spawning Gordon fleet...';
+
+                // Spawn Gordon ships in the universe
+                this.spawnGordonFleet();
             }
-            
+
             if (loadProgress >= 100) {
                 clearInterval(loadingInterval);
                 
@@ -209,9 +221,60 @@ class Game {
             
             // Update HUD
             this.updateHUD();
+
+            // Update Gordon fleet animation
+            this.updateGordonFleet(deltaTime);
         }
     }
-    
+
+    /**
+     * Spawn the Gordon fleet in the universe
+     */
+    spawnGordonFleet() {
+        if (!this.voxelShips || !this.renderer) return;
+
+        console.log('[Game] Spawning Gordon fleet...');
+
+        // Spawn fleet near player but offset
+        const playerPos = this.player ? this.player.position : new THREE.Vector3(0, 100, 500);
+        const fleetCenter = playerPos.clone().add(new THREE.Vector3(500, 100, -300));
+
+        this.gordonFleet = this.voxelShips.spawnGordonFleet(
+            this.renderer.scene,
+            5, // 5 Gordon ships
+            fleetCenter
+        );
+
+        console.log(`[Game] Gordon fleet spawned: ${this.gordonFleet.length} ships`);
+    }
+
+    /**
+     * Update Gordon fleet animations
+     */
+    updateGordonFleet(deltaTime) {
+        this.gordonFleet.forEach((ship, index) => {
+            if (!ship) return;
+
+            // Gentle bobbing motion
+            const time = Date.now() * 0.001;
+            const offset = index * 1.5;
+
+            ship.position.y += Math.sin(time + offset) * 0.5;
+
+            // Slow rotation
+            ship.rotation.y += deltaTime * 0.1;
+
+            // Animate thruster glows
+            if (ship.userData.thrusterGlows) {
+                ship.userData.thrusterGlows.forEach(glow => {
+                    const intensity = 0.5 + Math.sin(time * 3 + offset) * 0.2;
+                    glow.material.opacity = intensity;
+                    glow.scale.setScalar(1 + Math.sin(time * 2) * 0.1);
+                });
+            }
+        });
+    }
+
     saveGame() {
         const saveData = {
             timestamp: Date.now(),
