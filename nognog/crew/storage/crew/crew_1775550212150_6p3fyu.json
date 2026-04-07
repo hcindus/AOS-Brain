@@ -1,0 +1,70 @@
+{
+  "id": "crew_1775550212150_6p3fyu",
+  "name": "Vex",
+  "role": "PILOT",
+  "level": 5,
+  "xp": 845,
+  "stats": {
+    "health": 150,
+    "maxHealth": 150,
+    "energy": 0,
+    "morale": 100,
+    "loyalty": 96
+  },
+  "skills": {
+    "navigation": 10,
+    "repair": 26,
+    "scanning": 10,
+    "combat": 10
+  },
+  "missionsCompleted": 8,
+  "discoveries": [
+    {
+      "name": "Anomalous Planet",
+      "location": "Alpha-1",
+      "timestamp": 1775552300142
+    },
+    {
+      "name": "Derelict Ship",
+      "location": "Alpha-1",
+      "timestamp": 1775555092743
+    },
+    {
+      "name": "Nebula Cloud",
+      "location": "Alpha-1",
+      "timestamp": 1775555963351
+    },
+    {
+      "name": "Anomalous Planet",
+      "location": "Alpha-1",
+      "timestamp": 1775557104251
+    },
+    {
+      "name": "Derelict Ship",
+      "location": "Alpha-1",
+      "timestamp": 1775558215350
+    },
+    {
+      "name": "Derelict Ship",
+      "location": "Alpha-1",
+      "timestamp": 1775558395649
+    },
+    {
+      "name": "Hidden Base",
+      "location": "Alpha-1",
+      "timestamp": 1775558966452
+    },
+    {
+      "name": "Rare Minerals",
+      "location": "Alpha-1",
+      "timestamp": 1775562329845
+    }
+  ],
+  "status": "ACTIVE",
+  "location": {
+    "universe": "PRIME",
+    "system": "Alpha-1"
+  },
+  "created": 1775550212150,
+  "lastActive": 1775550212150
+}
