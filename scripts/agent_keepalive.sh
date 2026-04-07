@@ -88,4 +88,20 @@ else
     log "✅ Disk Space: ${DISK_PERCENT}% (healthy)"
 fi
 
+# 8. Society Simulation Agents
+if pgrep -f "society_agent.js" > /dev/null; then
+    SOCIETY_COUNT=$(pgrep -f "society_agent.js" | wc -l)
+    log "✅ Society Agents: $SOCIETY_COUNT/5 running (3 male, 2 female)"
+    
+    # Check society server
+    if pgrep -f "society_server.py" > /dev/null; then
+        log "✅ Society Server: RUNNING (port 8768)"
+    else
+        log "⚠️ Society Server: NOT RUNNING - attempting restart..."
+        /usr/bin/python3 /root/.openclaw/workspace/scripts/minecraft_agents/society_server.py &
+    fi
+else
+    log "⚠️ Society Agents: None running"
+fi
+
 log "=== Keepalive Check Complete ==="
