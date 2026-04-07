@@ -537,6 +537,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
     <script src="js/player/VoxelShips.js"></script>
+    <script src="js/player/CrewVisuals.js"></script>
     <script src="js/core/BrainBridge.js"></script>
     <script src="js/portals/PortalSystem.js"></script>
     <script>
@@ -980,6 +981,10 @@
                     // Spawn Gordon fleet
                     loadingText.textContent = "Spawning Gordon fleet...";
                     spawnGordonFleet();
+
+                    // Spawn N'og nog crew
+                    loadingText.textContent = "Welcoming crew aboard...";
+                    spawnNogCrew();
 
                     loadingProgress.style.width = "100%";
 
@@ -1793,6 +1798,36 @@
         }
         
         // ============================================
+        // CREW VISUALS
+        // ============================================
+
+        let nogCrew = [];
+
+        function spawnNogCrew() {
+            if (typeof CrewVisuals === 'undefined') {
+                console.error('[Game] CrewVisuals not loaded');
+                return;
+            }
+
+            const crewVisuals = new CrewVisuals();
+            console.log('[Game] Spawning N\'og nog crew...');
+
+            // Spawn crew near player start
+            const crewCenter = new THREE.Vector3(100, 50, 400);
+
+            nogCrew = crewVisuals.spawnNogCrew(scene, crewCenter);
+
+            console.log(`[Game] N'og crew spawned: ${nogCrew.length} members`);
+        }
+
+        function updateCrew(dt) {
+            if (typeof CrewVisuals === 'undefined' || nogCrew.length === 0) return;
+
+            const crewVisuals = new CrewVisuals();
+            crewVisuals.updateCrew(nogCrew, dt);
+        }
+
+        // ============================================
         // GORDON FLEET
         // ============================================
 
@@ -1852,6 +1887,7 @@
                 updateProjectiles(dt);
                 updateMiniMap();
                 updateGordonFleet(dt);
+                updateCrew(dt);
                 
                 // Update portals
                 if (window.portalSystem) {
