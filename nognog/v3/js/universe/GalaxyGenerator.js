@@ -4,6 +4,40 @@
  * using logarithmic spiral mathematics
  */
 
+// Seeded Random (must be defined before GalaxyGenerator)
+class SeededRandom {
+    constructor(seed) {
+        this.seed = seed;
+        this.lastMax = 1;
+    }
+
+    next() {
+        this.seed = (this.seed * 9301 + 49297) % 233280;
+        return this.seed / 233280;
+    }
+
+    range(min, max) {
+        this.lastMax = max;
+        return min + this.next() * (max - min);
+    }
+
+    int(min, max) {
+        return Math.floor(this.range(min, max));
+    }
+
+    choice(array) {
+        return array[this.int(0, array.length)];
+    }
+
+    gauss(mean = 0, stdDev = 1) {
+        // Box-Muller transform
+        const u1 = this.next();
+        const u2 = this.next();
+        const z = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+        return mean + z * stdDev;
+    }
+}
+
 class GalaxyGenerator {
     constructor(seed = Math.random() * 100000) {
         this.rng = new SeededRandom(seed);
@@ -353,40 +387,6 @@ class GalaxyGenerator {
         }
         
         return universe;
-    }
-}
-
-// Seeded Random
-class SeededRandom {
-    constructor(seed) {
-        this.seed = seed;
-        this.lastMax = 1;
-    }
-    
-    next() {
-        this.seed = (this.seed * 9301 + 49297) % 233280;
-        return this.seed / 233280;
-    }
-    
-    range(min, max) {
-        this.lastMax = max;
-        return min + this.next() * (max - min);
-    }
-    
-    int(min, max) {
-        return Math.floor(this.range(min, max));
-    }
-    
-    choice(array) {
-        return array[this.int(0, array.length)];
-    }
-    
-    gauss(mean = 0, stdDev = 1) {
-        // Box-Muller transform
-        const u1 = this.next();
-        const u2 = this.next();
-        const z = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
-        return mean + z * stdDev;
     }
 }
 
