@@ -500,6 +500,7 @@
             <span class="key">SPACE</span> Fire<br>
             <span class="key">V</span> Change View<br>
             <span class="key">M</span> Map<br>
+            <span class="key">P</span> Photo Shoot<br>
             <span class="key">ESC</span> Menu
         </div>
         
@@ -538,6 +539,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
     <script src="js/player/VoxelShips.js"></script>
     <script src="js/player/CrewVisuals.js"></script>
+    <script src="js/render/ScreenshotSystem.js"></script>
     <script src="js/core/BrainBridge.js"></script>
     <script src="js/portals/PortalSystem.js"></script>
     <script>
@@ -1643,6 +1645,12 @@
                         document.getElementById('miniMap').style.display = 
                             document.getElementById('miniMap').style.display === 'none' ? 'block' : 'none';
                         break;
+                    case 'p':
+                        // Photo shoot!
+                        if (nogCrew.length > 0) {
+                            takeCrewPhoto();
+                        }
+                        break;
                 }
             }
         }
@@ -1984,8 +1992,44 @@
                 document.getElementById('mainMenu').style.display = 'none';
             }
         }
-        
-        // Initialize
+
+        // ============================================
+        // PHOTO SHOOT FUNCTION
+        // ============================================
+
+        async function takeCrewPhoto() {
+            if (typeof ScreenshotSystem === 'undefined' || nogCrew.length === 0) {
+                console.warn('[Photo] Crew not ready for photo');
+                return;
+            }
+
+            console.log('[Photo] Taking crew photo...');
+
+            // Pause game
+            const wasPlaying = currentState === GameState.PLAYING;
+            currentState = GameState.PAUSED;
+
+            // Create screenshot system
+            const ss = new ScreenshotSystem(renderer, scene, camera);
+
+            // Take the photo
+            try {
+                const result = await ss.photoShoot(nogCrew);
+                console.log('[Photo] Photo saved!');
+            } catch (err) {
+                console.error('[Photo] Failed:', err);
+            }
+
+            // Resume
+            if (wasPlaying) {
+                currentState = GameState.PLAYING;
+            }
+        }
+
+        // ============================================
+        // INITIALIZE
+        // ============================================
+
         init();
     </script>
 </body>
