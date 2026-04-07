@@ -3,11 +3,11 @@
   "name": "Aria",
   "role": "MEDIC",
   "level": 5,
-  "xp": 134,
+  "xp": 245,
   "stats": {
     "health": 150,
     "maxHealth": 150,
-    "energy": 19.274102318258297,
+    "energy": 0,
     "morale": 100,
     "loyalty": 89
   },
@@ -17,12 +17,17 @@
     "scanning": 17,
     "combat": 23
   },
-  "missionsCompleted": 1,
+  "missionsCompleted": 2,
   "discoveries": [
     {
       "name": "Ancient Ruins",
       "location": "Alpha-1",
       "timestamp": 1775552360145
+    },
+    {
+      "name": "Nebula Cloud",
+      "location": "Alpha-1",
+      "timestamp": 1775553471443
     }
   ],
   "status": "ACTIVE",
