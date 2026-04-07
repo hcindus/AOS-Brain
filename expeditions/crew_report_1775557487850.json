@@ -1,0 +1,71 @@
+{
+  "timestamp": "2026-04-07T10:24:47.850Z",
+  "summary": {
+    "total": 5,
+    "active": 5
+  },
+  "members": [
+    {
+      "name": "Vex",
+      "role": "PILOT",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 439,
+      "status": "ACTIVE",
+      "missions": 4,
+      "discoveries": 4
+    },
+    {
+      "name": "Nyx",
+      "role": "ENGINEER",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 339,
+      "status": "ACTIVE",
+      "missions": 2,
+      "discoveries": 2
+    },
+    {
+      "name": "Jax",
+      "role": "SCIENTIST",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 289,
+      "status": "ACTIVE",
+      "missions": 1,
+      "discoveries": 1
+    },
+    {
+      "name": "Luna",
+      "role": "COMBAT",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 339,
+      "status": "ACTIVE",
+      "missions": 2,
+      "discoveries": 2
+    },
+    {
+      "name": "Aria",
+      "role": "MEDIC",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 339,
+      "status": "ACTIVE",
+      "missions": 2,
+      "discoveries": 2
+    }
+  ],
+  "highlights": [
+    "Vex discovered Anomalous Planet",
+    "Nyx discovered Anomalous Planet",
+    "Jax discovered Ancient Ruins",
+    "Luna discovered Anomalous Planet",
+    "Aria discovered Nebula Cloud"
+  ]
+}
