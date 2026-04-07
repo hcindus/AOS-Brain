@@ -501,6 +501,9 @@
             <span class="key">V</span> Change View<br>
             <span class="key">M</span> Map<br>
             <span class="key">P</span> Photo Shoot<br>
+            <span class="key">K</span> Deploy Sat (Basic)<br>
+            <span class="key">L</span> Deploy Sat (Adv)<br>
+            <span class="key">;</span> Deploy Sat (Comm)<br>
             <span class="key">ESC</span> Menu
         </div>
         
@@ -540,6 +543,7 @@
     <script src="js/player/VoxelShips.js"></script>
     <script src="js/player/CrewVisuals.js"></script>
     <script src="js/render/ScreenshotSystem.js"></script>
+    <script src="js/universe/SatelliteDeployer.js"></script>
     <script src="js/core/BrainBridge.js"></script>
     <script src="js/portals/PortalSystem.js"></script>
     <script>
@@ -1648,8 +1652,21 @@
                     case 'p':
                         // Photo shoot!
                         if (nogCrew.length > 0) {
-                            takeCrewPhoto();
+                            const nearestSat = findNearestSatellite();
+                            takeCrewPhoto(nearestSat);
                         }
+                        break;
+                    case 'k':
+                        // Deploy satellite
+                        deploySatellite('basic');
+                        break;
+                    case 'l':
+                        // Deploy advanced satellite
+                        deploySatellite('advanced');
+                        break;
+                    case ';':
+                        // Deploy comm satellite
+                        deploySatellite('comm');
                         break;
                 }
             }
@@ -1896,6 +1913,7 @@
                 updateMiniMap();
                 updateGordonFleet(dt);
                 updateCrew(dt);
+                updateSatellites(dt);
                 
                 // Update portals
                 if (window.portalSystem) {
@@ -1930,7 +1948,61 @@
                 renderer.render(scene, camera);
             }
         }
-        
+
+        // ============================================
+        // SATELLITE DEPLOYMENT
+        // ============================================
+
+        let satelliteDeployer = null;
+        let deployedSatellites = [];
+
+        function initSatelliteDeployer() {
+            if (typeof SatelliteDeployer === 'undefined') {
+                console.error('[Satellite] Deployer not loaded');
+                return;
+            }
+
+            satelliteDeployer = new SatelliteDeployer(scene, player);
+            scene.userData.satelliteDeployer = satelliteDeployer;
+
+            console.log('[Satellite] Deployer initialized');
+        }
+
+        function deploySatellite(type = 'basic') {
+            if (!satelliteDeployer) {
+                initSatelliteDeployer();
+            }
+
+            if (satelliteDeployer) {
+                const sat = satelliteDeployer.deploy(type);
+                if (sat) {
+                    deployedSatellites.push(sat);
+                    console.log(`[Satellite] Deployed ${type} satellite. Total: ${deployedSatellites.length}`);
+                }
+            }
+        }
+
+        function updateSatellites(dt) {
+            if (satelliteDeployer) {
+                satelliteDeployer.update(dt);
+
+                // Check for nearby satellites
+                const nearby = satelliteDeployer.checkInteraction();
+                if (nearby) {
+                    // Show interaction hint
+                    if (!window.satelliteHintShown) {
+                        console.log('[Satellite] Press P to take photo with deployed satellite');
+                        window.satelliteHintShown = true;
+                    }
+                }
+            }
+        }
+
+        function findNearestSatellite() {
+            if (!satelliteDeployer) return null;
+            return satelliteDeployer.checkInteraction();
+        }
+
         function onWindowResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
@@ -1997,13 +2069,17 @@
         // PHOTO SHOOT FUNCTION
         // ============================================
 
-        async function takeCrewPhoto() {
+        async function takeCrewPhoto(satellite = null) {
             if (typeof ScreenshotSystem === 'undefined' || nogCrew.length === 0) {
                 console.warn('[Photo] Crew not ready for photo');
                 return;
             }
 
-            console.log('[Photo] Taking crew photo...');
+            if (satellite) {
+                console.log('[Photo] Taking crew photo with deployed satellite...');
+            } else {
+                console.log('[Photo] Taking crew photo...');
+            }
 
             // Pause game
             const wasPlaying = currentState === GameState.PLAYING;
@@ -2012,9 +2088,9 @@
             // Create screenshot system
             const ss = new ScreenshotSystem(renderer, scene, camera);
 
-            // Take the photo
+            // Take the photo (with satellite if available)
             try {
-                const result = await ss.photoShoot(nogCrew);
+                const result = await ss.photoShoot(nogCrew, satellite);
                 console.log('[Photo] Photo saved!');
             } catch (err) {
                 console.error('[Photo] Failed:', err);

@@ -322,16 +322,89 @@ class ScreenshotSystem {
     }
 
     /**
-     * Full photo shoot sequence
+     * Setup photo scene with an existing deployed satellite
      */
-    async photoShoot(crewMembers) {
+    setupPhotoSceneWithSatellite(satellite, crewMembers) {
+        console.log('[Screenshot] Setting up photo scene with deployed satellite...');
+
+        // Create crew group
+        const crewGroup = new THREE.Group();
+        crewGroup.name = "PhotoCrew";
+
+        // Position crew between camera and satellite
+        const satPos = satellite.position.clone();
+        const cameraPos = satPos.clone().add(new THREE.Vector3(0, 20, 150));
+
+        if (crewMembers && crewMembers.length > 0) {
+            // Arrange in formation facing satellite
+            const spacing = 20;
+            const totalWidth = (crewMembers.length - 1) * spacing;
+            const startX = -totalWidth / 2;
+
+            crewMembers.forEach((crew, index) => {
+                const clone = crew.clone();
+                clone.position.set(
+                    startX + index * spacing,
+                    0,
+                    0
+                );
+                clone.rotation.y = Math.PI; // Face satellite
+                crewGroup.add(clone);
+            });
+        }
+
+        // Position crew in front of satellite
+        crewGroup.position.copy(satPos).add(new THREE.Vector3(0, 10, 80));
+        this.scene.add(crewGroup);
+
+        // Position camera
+        this.camera.position.copy(cameraPos);
+        this.camera.lookAt(satPos);
+
+        // Add dramatic lighting
+        const keyLight = new THREE.DirectionalLight(0xFFFFFF, 1.5);
+        keyLight.position.set(30, 50, 50);
+        this.scene.add(keyLight);
+
+        const fillLight = new THREE.DirectionalLight(0x88CCFF, 0.6);
+        fillLight.position.set(-30, 30, 50);
+        this.scene.add(fillLight);
+
+        const backLight = new THREE.SpotLight(0xFFAA00, 1.0);
+        backLight.position.copy(satPos).add(new THREE.Vector3(0, 50, -30));
+        backLight.lookAt(crewGroup.position);
+        this.scene.add(backLight);
+
+        // Rim light on satellite
+        const rimLight = new THREE.SpotLight(0x00FF88, 0.8);
+        rimLight.position.set(0, 30, 100);
+        rimLight.lookAt(satPos);
+        this.scene.add(rimLight);
+
+        return { satellite, crewGroup, lights: [keyLight, fillLight, backLight, rimLight] };
+    }
+
+    /**
+     * Full photo shoot sequence (with optional satellite)
+     */
+    async photoShoot(crewMembers, satellite = null) {
         console.log('[Screenshot] Starting photo shoot...');
 
-        // Setup scene
-        const { satellite, crewGroup, lights } = this.setupPhotoScene(crewMembers);
+        let photoSetup;
+        
+        if (satellite && satellite.userData && satellite.userData.type === 'satellite') {
+            // Use deployed satellite
+            photoSetup = this.setupPhotoSceneWithSatellite(satellite, crewMembers);
+        } else {
+            // Create temporary satellite
+            photoSetup = this.setupPhotoScene(crewMembers);
+        }
+
+        const { crewGroup, lights } = photoSetup;
+        const sat = photoSetup.satellite;
 
         // Animate
-        await this.animateSatellite(satellite, 3000);
+        await this.animateSatellite(sat, 3000);
 
         // Capture
         const imageData = await this.capture(`nog_crew_${Date.now()}.png`);
@@ -339,13 +412,19 @@ class ScreenshotSystem {
         // Export data
         const exportData = this.exportPhotoData(crewMembers, {
             photoShoot: true,
-            satelliteModel: 'CommSat-X7'
+            satelliteModel: sat.userData?.satelliteType || 'CommSat-X7',
+            satelliteId: sat.userData?.id || 'temp',
+            deployed: sat.userData?.deployed || false
         });
 
-        // Cleanup
-        this.scene.remove(satellite);
+        // Cleanup (only remove temporary elements, not deployed satellite)
         this.scene.remove(crewGroup);
         lights.forEach(l => this.scene.remove(l));
+        
+        // Only remove satellite if it was temporary
+        if (!sat.userData?.deployed) {
+            this.scene.remove(sat);
+        }
 
         console.log('[Screenshot] Photo shoot complete!');
         return { imageData, exportData };
