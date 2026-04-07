@@ -536,6 +536,8 @@
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+    <script src="js/core/BrainBridge.js"></script>
+    <script src="js/portals/PortalSystem.js"></script>
     <script>
         // ============================================
         // N'OG NOG - Universal Explorer
@@ -1254,6 +1256,17 @@
             playerShip = createPlayerShip();
             playerShip.position.copy(player.position);
             scene.add(playerShip);
+            
+            // Initialize portal system
+            window.portalSystem = new PortalSystem(currentSolarSystem);
+            window.portalSystem.portalEffects.forEach(effect => {
+                scene.add(effect.mesh);
+            });
+            console.log('[Game] Portal system initialized');
+            
+            // Connect to Brain
+            window.brainBridge = new BrainBridge();
+            console.log('[Game] BrainBridge connecting...');
         }
         
         // ============================================
@@ -1785,6 +1798,37 @@
                 updatePlayer(dt);
                 updateProjectiles(dt);
                 updateMiniMap();
+                
+                // Update portals
+                if (window.portalSystem) {
+                    window.portalSystem.update(dt);
+                    
+                    // Check for portal teleport
+                    const teleport = window.portalSystem.checkTeleport(player);
+                    if (teleport && teleport.success) {
+                        // Sync ship position after teleport
+                        playerShip.position.copy(player.position);
+                    }
+                }
+                
+                // Send game state to Brain
+                if (window.brainBridge && player) {
+                    const nearbyPortals = [];
+                    if (window.portalSystem) {
+                        for (const portal of window.portalSystem.portals.values()) {
+                            const dist = player.position.distanceTo(portal.position);
+                            if (dist < 500) {
+                                nearbyPortals.push({
+                                    id: portal.id,
+                                    distance: dist,
+                                    type: portal.type
+                                });
+                            }
+                        }
+                    }
+                    window.brainBridge.sendGameState(player, nearbyPortals);
+                }
+                
                 renderer.render(scene, camera);
             }
         }
