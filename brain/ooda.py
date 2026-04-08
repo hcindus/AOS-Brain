@@ -11,6 +11,7 @@ from conscious import ConsciousLayer
 from subconscious import SubconsciousLayer
 from unconscious import UnconsciousLayer
 from memory_bridge import MemoryBridge
+from memory_bootstrap import patch_hippocampus_for_resilience
 
 class OODA:
     def __init__(self, cfg):
@@ -19,6 +20,8 @@ class OODA:
         # 1. Initialize Regions (Agents)
         self.thalamus = ThalamusAgent(self.cfg)
         self.hippo = HippocampusAgent(self.cfg)
+        # Patch hippocampus for resilience
+        self.hippo = patch_hippocampus_for_resilience(self.hippo)
         self.limbic = LimbicAgent(self.cfg)
         self.pfc = PFCAgent(self.cfg)
         self.cereb = CerebellumAgent(self.cfg)
@@ -32,7 +35,10 @@ class OODA:
         
         # 3. Initialize Memory Bridge for workspace file integration
         self.memory_bridge = MemoryBridge()
-        self.memory_bridge.index_memory_files()  # Initial index
+        # Index files in background (don't block startup)
+        import threading
+        self._index_thread = threading.Thread(target=self.memory_bridge.index_memory_files, daemon=True)
+        self._index_thread.start()
         
         self.state_writer = StateWriter(self.cfg["state_path"])
         
