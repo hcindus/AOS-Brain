@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpaceBattle v2.0 - Play Now</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0f0a2a 100%);
+            min-height: 100vh;
+            color: #ff8844;
+            overflow-x: hidden;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="star" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="white"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><g opacity="0.3"><circle cx="100" cy="200" r="2" fill="url(%23star)"/><circle cx="400" cy="100" r="1.5" fill="url(%23star)"/><circle cx="700" cy="300" r="2" fill="url(%23star)"/><circle cx="200" cy="500" r="1" fill="url(%23star)"/><circle cx="600" cy="600" r="2.5" fill="url(%23star)"/><circle cx="900" cy="400" r="1.5" fill="url(%23star)"/><circle cx="300" cy="800" r="2" fill="url(%23star)"/></g></svg>') repeat;
+            opacity: 0.5;
+            animation: stars 100s linear infinite;
+        }
+        
+        @keyframes stars {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100px); }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 8vw;
+            max-font-size: 120px;
+            background: linear-gradient(135deg, #ff0044, #ff8800, #ff0044);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 100px rgba(255, 68, 0, 0.4);
+            letter-spacing: 0.1em;
+            animation: gradient 3s ease infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .tagline {
+            font-size: 1.5em;
+            color: #888;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+        
+        .play-button {
+            display: inline-block;
+            padding: 25px 60px;
+            background: rgba(255, 68, 0, 0.15);
+            border: 3px solid #ff4400;
+            color: #ff8844;
+            font-size: 2em;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            transition: all 0.3s;
+            margin-bottom: 40px;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+        }
+        
+        .play-button:hover {
+            background: rgba(255, 68, 0, 0.35);
+            box-shadow: 0 0 60px rgba(255, 68, 0, 0.6);
+            transform: scale(1.05);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+        
+        .feature-card {
+            background: rgba(255, 68, 0, 0.05);
+            border: 1px solid #ff4400;
+            padding: 30px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover {
+            background: rgba(255, 68, 0, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(255, 68, 0, 0.2);
+        }
+        
+        .feature-card h3 {
+            color: #ffaa66;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        
+        .feature-card p {
+            color: #888;
+            line-height: 1.6;
+        }
+        
+        .stats-bar {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            border-top: 1px solid #ff4400;
+            border-bottom: 1px solid #ff4400;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 3em;
+            color: #ff8844;
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9em;
+        }
+        
+        .controls-section {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 40px;
+            background: rgba(255, 68, 0, 0.05);
+            border: 1px solid #ff4400;
+            border-radius: 8px;
+        }
+        
+        .controls-section h2 {
+            color: #ffaa66;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2em;
+            text-transform: uppercase;
+        }
+        
+        .control-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #333;
+        }
+        
+        .control-row:last-child {
+            border-bottom: none;
+        }
+        
+        .key {
+            background: #333;
+            padding: 5px 15px;
+            border-radius: 4px;
+            color: #ff8844;
+            font-family: monospace;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #444;
+            border-top: 1px solid #222;
+        }
+        
+        footer a {
+            color: #666;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            color: #ff8844;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 12vw; }
+            .play-button { padding: 20px 40px; font-size: 1.5em; }
+            .features { grid-template-columns: 1fr; padding: 30px 20px; }
+            .stats-bar { gap: 30px; padding: 20px; }
+            .stat-value { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>SPACEBATTLE</h1>
+            <p class="tagline">100x100x100 Grid Universe</p>
+            
+            <a href="/spacebattle/index.html" class="play-button">Launch Game</a>
+            
+            <div class="stats-bar">
+                <div class="stat">
+                    <div class="stat-value">1M</div>
+                    <div class="stat-label">Grid Cells</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">∞</div>
+                    <div class="stat-label">Solar Systems</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Enemy Types</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Free to Play</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="feature-card">
+            <h3>🌌 Procedural Universe</h3>
+            <p>Every grid cell (100x100x100) generates its own unique solar system with procedurally generated suns, planets, moons, and asteroid belts.</p>
+        </div>
+        
+        <div class="feature-card">
+            <h3>🚀 Voxel Ships</h3>
+            <p>Fly customizable voxel spacecraft with distinct designs. Choose from nimble fighters, industrial Gordon-class ships, and deadly interceptors.</p>
+        </div>
+        
+        <div class="feature-card">
+            <h3>🤖 AI Combat</h3>
+            <p>Battle intelligent enemy AI that chases, evades, and fires back. Dynamic difficulty scaling with wave progression.</p>
+        </div>
+        
+        <div class="feature-card">
+            <h3>💥 Physics Combat</h3>
+            <p>Real collision detection - crash into asteroids, bounce off planets, or get destroyed by the sun's gravitational pull.</p>
+        </div>
+        
+        <div class="feature-card">
+            <h3>🛡️ Shields & Weapons</h3>
+            <p>Regenerating shields, hull integrity, weapon heat management, and explosive particle effects create intense combat.</p>
+        </div>
+        
+        <div class="feature-card">
+            <h3>📱 Cross-Platform</h3>
+            <p>Play with mouse/keyboard on desktop or touch controls on mobile. Seamless experience across all devices.</p>
+        </div>
+    </section>
+    
+    <section class="controls-section">
+        <h2>Flight Controls</h2>
+        
+        <div class="control-row">
+            <span>Thrust Forward</span>
+            <span class="key">W</span>
+        </div>
+        
+        <div class="control-row">
+            <span>Thrust Back</span>
+            <span class="key">S</span>
+        </div>
+        
+        <div class="control-row">
+            <span>Roll Left/Right</span>
+            <span class="key">A / D</span>
+        </div>
+        
+        <div class="control-row">
+            <span>Aim</span>
+            <span class="key">MOUSE</span>
+        </div>
+        
+        <div class="control-row">
+            <span>Fire Weapons</span>
+            <span class="key">L-CLICK / SPACE</span>
+        </div>
+        
+        <div class="control-row">
+            <span>Pause Menu</span>
+            <span class="key">ESC</span>
+        </div>
+    </section>
+    
+    <footer>
+        <p>Powered by <a href="https://threejs.org">Three.js</a> | Built by AGI Company</p>
+        <p style="margin-top: 10px;"><a href="https://github.com/hcindus/AOS-Brain">View Source on GitHub</a></p>
+    </footer>
+</body>
+</html>
