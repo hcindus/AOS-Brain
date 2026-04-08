@@ -1,6 +1,9 @@
 """
-Memory Bridge: Connects AOS Brain to Workspace Memory Files
-Lightweight version - uses Ollama embeddings directly, no ChromaDB required
+Memory Bridge v2.0 - Non-blocking with Embedding Orchestrator
+Connects AOS Brain to Workspace Memory Files
+
+Uses EmbeddingOrchestrator for non-blocking, fault-tolerant embeddings.
+Never blocks the OODA loop.
 """
 
 import os
@@ -10,23 +13,20 @@ import hashlib
 from pathlib import Path
 from typing import List, Dict, Optional, Tuple
 import numpy as np
+import threading
 
-try:
-    import requests
-    REQUESTS_AVAILABLE = True
-except ImportError:
-    REQUESTS_AVAILABLE = False
+# Import the embedding orchestrator
+from embedding_orchestrator import get_orchestrator, EmbeddingConfig
 
 
 class MemoryBridge:
     """
     Bridges workspace memory files to the brain's retrieval system.
     
+    Non-blocking architecture - uses EmbeddingOrchestrator for embeddings.
     When limbic detects high novelty, this queries:
     - /root/.openclaw/workspace/MEMORY.md (long-term curated memory)
     - /root/.openclaw/workspace/memory/*.md (daily logs)
-    
-    Uses Ollama nomic-embed-text for semantic similarity.
     """
     
     def __init__(self, workspace_path: str = "/root/.openclaw/workspace"):
@@ -38,31 +38,26 @@ class MemoryBridge:
         self.index: List[Dict] = []
         self.indexed_hashes: Dict[str, str] = {}
         
-        # Embedding model
-        self.embed_model = "nomic-embed-text:latest"
+        # Initialize embedding orchestrator (non-blocking)
+        config = EmbeddingConfig(
+            enable_local=True,
+            enable_remote=True,  # Try Ollama if available
+            enable_stub=True,    # Never block
+            local_timeout_ms=150,
+            remote_timeout_ms=500
+        )
+        self.orchestrator = get_orchestrator(config)
         
-        # Similarity threshold for retrieval (lower = more permissive)
+        # Similarity threshold for retrieval
         self.similarity_threshold = 0.5
         
-    def _get_embedding(self, text: str) -> Optional[List[float]]:
-        """Get embedding via Ollama's nomic-embed-text."""
-        if not REQUESTS_AVAILABLE:
-            return None
-            
-        try:
-            # Truncate long texts for embedding
-            text = text[:2000] if len(text) > 2000 else text
-            
-            resp = requests.post(
-                "http://localhost:11434/api/embeddings",
-                json={"model": self.embed_model, "prompt": text},
-                timeout=30
-            )
-            resp.raise_for_status()
-            return resp.json().get("embedding")
-        except Exception as e:
-            print(f"[MemoryBridge] Embedding failed: {e}")
-            return None
+        # Async indexing
+        self._indexing_thread: Optional[threading.Thread] = None
+        self._indexing_complete = False
+        
+    def _get_embedding(self, text: str) -> Tuple[List[float], str]:
+        """Get embedding via orchestrator (never blocks)."""
+        return self.orchestrator.get_sync(text, allow_stub=True)
     
     def _cosine_similarity(self, a: List[float], b: List[float]) -> float:
         """Calculate cosine similarity between two vectors."""
@@ -112,8 +107,22 @@ class MemoryBridge:
     def index_memory_files(self, force_reindex: bool = False) -> Dict:
         """
         Index MEMORY.md and memory/*.md into in-memory index.
-        Returns stats: {'indexed': N, 'skipped': M, 'errors': K}
+        Non-blocking - returns immediately, indexes in background.
         """
+        # Start indexing in background thread
+        if self._indexing_thread is None or not self._indexing_thread.is_alive():
+            self._indexing_thread = threading.Thread(
+                target=self._do_indexing,
+                args=(force_reindex,),
+                daemon=True
+            )
+            self._indexing_thread.start()
+            print("[MemoryBridge] Indexing started in background")
+        
+        return {"status": "indexing", "indexed": len(self.index)}
+    
+    def _do_indexing(self, force_reindex: bool = False):
+        """Background indexing work."""
         stats = {"indexed": 0, "skipped": 0, "errors": 0}
         
         # Files to index
@@ -123,20 +132,7 @@ class MemoryBridge:
         if self.memory_dir.exists():
             files_to_index.extend(sorted(self.memory_dir.glob("*.md")))
         
-        new_index = []
-        
         for file_path in files_to_index:
-            file_id = str(file_path.relative_to(self.workspace))
-            current_hash = self._file_hash(file_path)
-            
-            # Skip if unchanged and not forcing reindex
-            if not force_reindex and file_id in self.indexed_hashes:
-                if self.indexed_hashes[file_id] == current_hash:
-                    stats["skipped"] += 1
-                    # Keep existing entries for this file
-                    new_index.extend([e for e in self.index if e.get("source") == file_id])
-                    continue
-            
             try:
                 content = file_path.read_text(encoding="utf-8")
                 chunks = self._chunk_text(content)
@@ -145,129 +141,109 @@ class MemoryBridge:
                     if len(chunk_text) < 100:
                         continue
                     
-                    embedding = self._get_embedding(chunk_text)
-                    if embedding:
-                        new_index.append({
-                            "text": chunk_text,
-                            "source": file_id,
-                            "line": line_num,
-                            "hash": current_hash,
-                            "embedding": embedding,
-                            "indexed_at": time.time()
-                        })
-                        stats["indexed"] += 1
-                    else:
-                        stats["errors"] += 1
-                
-                self.indexed_hashes[file_id] = current_hash
-                
+                    # Get embedding (non-blocking via orchestrator)
+                    embedding, source = self._get_embedding(chunk_text)
+                    
+                    self.index.append({
+                        "text": chunk_text,
+                        "embedding": embedding,
+                        "source": str(file_path.relative_to(self.workspace)),
+                        "line": line_num,
+                        "embedding_source": source
+                    })
+                    stats["indexed"] += 1
+                    
             except Exception as e:
-                print(f"[MemoryBridge] Error indexing {file_id}: {e}")
+                print(f"[MemoryBridge] Error indexing {file_path}: {e}")
                 stats["errors"] += 1
         
-        self.index = new_index
-        print(f"[MemoryBridge] Index complete: {stats['indexed']} chunks, {stats['skipped']} skipped, {stats['errors']} errors")
-        return stats
+        self._indexing_complete = True
+        print(f"[MemoryBridge] Indexing complete: {stats}")
     
-    def query(self, query_text: str, n_results: int = 3, novelty: float = 0.0) -> Dict:
+    def query(self, query_text: str, n_results: int = 2, novelty: float = 0.0) -> Dict:
         """
-        Query workspace memory when limbic signals high novelty.
-        
-        Args:
-            query_text: The current observation/context to match against
-            n_results: Number of memory snippets to return
-            novelty: Current novelty score (for logging)
-            
-        Returns:
-            Dict with 'results', 'novelty_trigger', 'source_count'
+        Query indexed memories for relevant context.
+        Non-blocking - returns immediately with available results.
         """
-        if not self.index:
-            # Auto-index on first query
-            stats = self.index_memory_files()
-            if stats["indexed"] == 0:
-                return {
-                    "results": [],
-                    "novelty_trigger": novelty,
-                    "source_count": 0,
-                    "error": "No memory files indexed"
-                }
-        
         # Get query embedding
-        query_embedding = self._get_embedding(query_text)
-        if not query_embedding:
-            return {
-                "results": [],
-                "novelty_trigger": novelty,
-                "source_count": 0,
-                "error": "Failed to embed query"
-            }
+        query_emb, _ = self._get_embedding(query_text)
         
-        # Calculate similarities
+        # If index is empty or still building, return empty
+        if not self.index:
+            return {"results": [], "source_count": 0}
+        
+        # Score all chunks by similarity
         scored = []
-        for entry in self.index:
-            sim = self._cosine_similarity(query_embedding, entry["embedding"])
-            if sim >= self.similarity_threshold:
-                scored.append({**entry, "similarity": sim})
+        for item in self.index:
+            sim = self._cosine_similarity(query_emb, item["embedding"])
+            scored.append((sim, item))
         
-        # Sort by similarity and take top N
-        scored.sort(key=lambda x: x["similarity"], reverse=True)
-        top_results = scored[:n_results]
+        # Sort by similarity
+        scored.sort(key=lambda x: x[0], reverse=True)
         
-        # Format results
-        formatted = []
-        for r in top_results:
-            formatted.append({
-                "text": r["text"][:600],  # Truncate for context
-                "source": r["source"],
-                "line": r["line"],
-                "relevance": round(r["similarity"], 3)
-            })
+        # Return top N
+        top_results = [
+            {
+                "text": item["text"][:200],
+                "source": item["source"],
+                "relevance": sim,
+                "embedding_source": item.get("embedding_source", "unknown")
+            }
+            for sim, item in scored[:n_results]
+        ]
         
         return {
-            "results": formatted,
-            "novelty_trigger": novelty,
-            "source_count": len(formatted),
-            "total_indexed": len(self.index),
-            "query": query_text[:100]  # Truncated for debug
+            "results": top_results,
+            "source_count": len(self.index),
+            "indexing_complete": self._indexing_complete
         }
     
-    def should_query_memory(self, novelty: float, novelty_avg: float) -> bool:
-        """
-        Determine if we should query workspace memory based on limbic signals.
-        
-        Query when:
-        - Current novelty is high (>0.75)
-        - Novelty is significantly above average (> avg + 0.15)
-        """
-        threshold = 0.75
-        above_avg = novelty > (novelty_avg + 0.15) if novelty_avg > 0 else novelty > threshold
-        return novelty > threshold or above_avg
-
-
-# Singleton instance for brain integration
-_memory_bridge = None
-
-def get_memory_bridge() -> MemoryBridge:
-    """Get or create the memory bridge singleton."""
-    global _memory_bridge
-    if _memory_bridge is None:
-        _memory_bridge = MemoryBridge()
-    return _memory_bridge
+    def should_query_memory(self, novelty: float, novelty_avg: float, threshold: float = 0.7) -> bool:
+        """Determine if we should query memory based on novelty."""
+        return novelty > threshold or novelty_avg > threshold * 0.8
+    
+    def get_stats(self) -> Dict:
+        """Get MemoryBridge statistics."""
+        return {
+            "indexed_items": len(self.index),
+            "indexing_complete": self._indexing_complete,
+            "indexing_active": self._indexing_thread is not None and self._indexing_thread.is_alive(),
+            "orchestrator": self.orchestrator.get_stats()
+        }
 
 
 if __name__ == "__main__":
-    # Test the bridge
+    print("=" * 60)
+    print("MemoryBridge v2.0 Test")
+    print("Non-blocking with Embedding Orchestrator")
+    print("=" * 60)
+    
+    # Create bridge
     bridge = MemoryBridge()
-    print("Testing Memory Bridge...")
     
-    # Index files
-    stats = bridge.index_memory_files()
-    print(f"\nIndex stats: {stats}")
+    print("\n1. Starting indexing (non-blocking)...")
+    result = bridge.index_memory_files()
+    print(f"   Status: {result['status']}")
     
-    # Query
-    if bridge.index:
-        result = bridge.query("persistence memory recall consciousness", n_results=2, novelty=0.8)
-        print(f"\nQuery result:")
-        print(json.dumps(result, indent=2))
-    else:
-        print("\nNo documents indexed")
+    print("\n2. Querying immediately (should return even if indexing)...")
+    query_result = bridge.query("test query", n_results=2)
+    print(f"   Results: {len(query_result['results'])}")
+    print(f"   Sources indexed: {query_result['source_count']}")
+    
+    print("\n3. Waiting for indexing...")
+    time.sleep(2)
+    
+    stats = bridge.get_stats()
+    print(f"   Indexed: {stats['indexed_items']}")
+    print(f"   Complete: {stats['indexing_complete']}")
+    print(f"   Orchestrator cache hits: {stats['orchestrator']['cache_hits']}")
+    
+    print("\n4. Querying again...")
+    query_result = bridge.query("neural networks", n_results=2)
+    print(f"   Results: {len(query_result['results'])}")
+    for r in query_result['results']:
+        print(f"   - {r['source']}: {r['text'][:50]}...")
+    
+    print("\n" + "=" * 60)
+    print("Test complete")
+    print("=" * 60)

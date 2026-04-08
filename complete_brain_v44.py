@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-AOS COMPLETE BRAIN v4.4
-Legacy + Ternary + Socket + THYROID v1.2 + Model Router + LIVER v1.0 + KIDNEYS v1.0
+AOS COMPLETE BRAIN v4.5
+Legacy + Ternary + Socket + THYROID v1.2 + Model Router + LIVER v1.0 + KIDNEYS v1.0 + LUNGS v1.0
 
 Components:
 - SuperiorHeart (Ternary emotion)
@@ -16,14 +16,18 @@ Components:
 - Vision Manager (Camera)
 - Socket Server (Diagnostic interface)
 - THYROID v1.2 (Endocrine-style regulation)
+- LUNGS v1.0 (Respiratory system - INHALE/GAS_EXHANGE/EXHALE)
 - LIVER v1.0 (Ternary blood filtration - CLEAN/PURIFY/TOXIC)
 - KIDNEYS v1.0 (Ternary waste management - FILTER/REABSORB/EXCRETE)
 - Model Router (tinyllama for decisions, Mort_II for voice)
 
-NEW in v4.4:
+NEW in v4.5:
+- LUNGS v1.0: Respiratory system for ambient intake
+- Full respiratory pipeline: Lungs → Liver → Brain → Kidneys
+
+v4.4 Features:
 - LIVER v1.0: Pre-brain signal/noise filtration
 - KIDNEYS v1.0: Post-brain pattern recycling
-- Full signal/noise pipeline: Liver → Brain → Kidneys
 """
 
 import sys
@@ -51,6 +55,7 @@ from thyroid_v12 import AOSThyroidV12, ThyroidState
 from liver_v1 import AOSLiverV1, LiverState, BloodSample
 from kidneys_v1 import AOSKidneysV1, KidneyState
 from model_router import AOSModelRouter
+from ternary_lungs_v1 import TernaryLungs, TernaryOxygenPacket
 
 from ternary_interfaces import HeartBeatInput, BrainInput, HeartState
 
@@ -172,6 +177,31 @@ class BrainSocketServer:
             if self.brain.kidneys:
                 return self.brain.kidneys.get_status()
             return {'error': 'Kidneys not available'}
+        elif cmd == 'lungs':
+            if self.brain.lungs:
+                return self.brain.lungs.get_status()
+            return {'error': 'Lungs not available'}
+        elif cmd == 'breathe':
+            if self.brain.lungs:
+                ambient = params.get('ambient', [])
+                valence = params.get('valence', 0.0)
+                demand = params.get('demand', 1.0)
+                o2, waste = self.brain.lungs.step(ambient, valence, demand)
+                return {
+                    'oxygen': o2.to_dict(),
+                    'waste': waste.to_dict()
+                }
+            return {'error': 'Lungs not available'}
+        elif cmd == 'hold_breath':
+            if self.brain.lungs:
+                self.brain.lungs.hold_breath()
+                return {'status': 'breath_held'}
+            return {'error': 'Lungs not available'}
+        elif cmd == 'release_breath':
+            if self.brain.lungs:
+                self.brain.lungs.release_breath()
+                return {'status': 'breath_released'}
+            return {'error': 'Lungs not available'}
         elif cmd == 'router':
             if self.brain.router:
                 return {
@@ -268,6 +298,14 @@ class CompleteBrainV44:
         self.kidneys = AOSKidneysV1(
             signal_threshold=0.5,
             reabsorb_threshold=0.2
+        )
+        
+        # NEW v4.5: Ternary Lungs v1.0 (respiratory system)
+        print("\n[NEW v4.5] Ternary Lungs v1.0 (respiratory/gas exchange)...")
+        self.lungs = TernaryLungs(
+            base_breath_rate=1.0,
+            base_pressure=1.0,
+            classification_threshold=0.2
         )
         
         # Thyroid v1.2 (endocrine regulation)
@@ -381,7 +419,40 @@ class CompleteBrainV44:
         # 1. Raw visual input
         raw_observation = self._get_visual_input()
         
-        # 2. LIVER: Pre-brain filtration (SIGNAL vs NOISE)
+        # 1.5: LUNGS: Inhale ambient atmosphere and perform gas exchange
+        # Get heart state first for lung rhythm modulation
+        heart_valence = 0.0
+        metabolic_demand = 1.0
+        if hasattr(self, 'heart') and self.heart:
+            # Estimate valence from heart state (-1 to +1)
+            heart_state = self.heart.rhythm.state
+            if hasattr(heart_state, 'value'):
+                heart_valence = heart_state.value / 10.0  # Normalize roughly
+            metabolic_demand = 0.6 + (self.heart.rhythm.bpm - 60) / 120.0
+        
+        # Create ambient stream from raw observation
+        ambient_stream = [raw_observation] if raw_observation else []
+        
+        # Lungs perform gas exchange
+        oxygen_packet, exhaled_waste = self.lungs.step(
+            ambient_stream=ambient_stream,
+            heart_valence=heart_valence,
+            metabolic_demand=metabolic_demand
+        )
+        
+        # Use oxygenated signal as the filtered observation
+        # Prioritize positives, then neutrals, then fall back to raw
+        if oxygen_packet.positives:
+            filtered_obs = str(oxygen_packet.positives[0])
+        elif oxygen_packet.neutrals:
+            filtered_obs = str(oxygen_packet.neutrals[0])
+        else:
+            filtered_obs = raw_observation
+        
+        # Get lungs metrics for tracking
+        lung_metrics = self.lungs.get_metrics()
+        
+        # 2. LIVER: Pre-brain filtration (now working on oxygenated input)
         filtered_obs, liver_state, liver_meta = self._filter_through_liver(raw_observation)
         
         # Track signal quality
@@ -499,6 +570,7 @@ class CompleteBrainV44:
             summary = self.consciousness.get_layer_summary()
             thyroid_state = self.thyroid.state.name
             kidney_state_str = self.kidneys.state.name
+            lung_phase = self.lungs.phase if hasattr(self.lungs, 'phase') else "REST"
             avg_signal = sum(self.signal_quality_history[-20:]) / min(len(self.signal_quality_history[-20:]), 20)
             
             print(f"\n[Cycle {self.tick_count:5d}] "
@@ -509,6 +581,7 @@ class CompleteBrainV44:
                   f"🫘 {kidney_state_str:8s} | "
                   f"📶 {avg_signal:.2f}")
             print(f"              Liver: {liver_state.name:8s} | "
+                  f"Lungs: {lung_phase:8s} | "
                   f"Con:{summary['conscious']['active_items']}/"
                   f"Sub:{summary['subconscious']['active_items']} | "
                   f"Waste:{kidney_meta['bladder_level']}")
@@ -525,7 +598,7 @@ class CompleteBrainV44:
         recent_signal = sum(self.signal_quality_history[-20:]) / max(len(self.signal_quality_history[-20:]), 1) if self.signal_quality_history else 0.5
         
         return {
-            "version": "4.4",
+            "version": "4.5",
             "tick": self.tick_count,
             "phase": self.current_phase,
             "signal_quality_20avg": recent_signal,
@@ -534,14 +607,15 @@ class CompleteBrainV44:
             "qmd": self.qmd.get_stats(),
             "consciousness": self.consciousness.get_layer_summary(),
             "thyroid": self.thyroid.get_status() if self.thyroid else None,
+            "lungs": self.lungs.get_status() if hasattr(self, 'lungs') and self.lungs else None,
             "liver": self.liver.get_status() if self.liver else None,
             "kidneys": self.kidneys.get_status() if self.kidneys else None,
             "router": {
                 "models": self.router.MODELS if self.router else None,
                 "stats": self.router.get_stats() if self.router else None
             },
-            "components_active": 14,
-            "pipeline": "Liver → Brain → Kidneys"
+            "components_active": 15,
+            "pipeline": "Lungs → Liver → Brain → Kidneys"
         }
     
     def run(self):
@@ -578,8 +652,8 @@ class CompleteBrainV44:
 
 if __name__ == "__main__":
     print("\n" + "=" * 70)
-    print("  🧠 COMPLETE BRAIN v4.4")
-    print("  Liver v1.0 + Kidneys v1.0 + Thyroid v1.2 + Signal/Noise Pipeline")
+    print("  🧠 COMPLETE BRAIN v4.5")
+    print("  Lungs v1.0 + Liver v1.0 + Kidneys v1.0 + Thyroid v1.2 + Respiratory Pipeline")
     print("=" * 70)
     
     brain = CompleteBrainV44()
@@ -592,5 +666,5 @@ if __name__ == "__main__":
         traceback.print_exc()
     finally:
         print("=" * 70)
-        print("  Complete Brain v4.4 Finished")
+        print("  Complete Brain v4.5 Finished")
         print("=" * 70)

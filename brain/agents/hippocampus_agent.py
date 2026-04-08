@@ -40,43 +40,71 @@ class HippocampusAgent:
         self.novelty_decay = 0.95    # Decay factor for repeated similar inputs
         
         # Vector Store Migration to ChromaDB
+        self.using_chroma = False
+        self.distilled_vectors = []
+        self.chroma_client = None
+        self.collection = None
+        
         if CHROMA_AVAILABLE:
             try:
+                import threading
+                import time as time_module
+                
                 db_path = self.qmd_config.get("vector_store", {}).get("path", "~/.aos/memory/vector").replace("~", "/root")
+                
+                # Create client with short timeout
                 self.chroma_client = chromadb.PersistentClient(path=db_path)
                 self.collection = self.chroma_client.get_or_create_collection(name="qmd_memory")
                 self.using_chroma = True
-                self.total_traces = self.collection.count()
-                print(f"[QMD] ChromaDB Vector Memory Online. Documents: {self.total_traces}")
+                
+                # Get count in background thread to prevent blocking
+                def get_count():
+                    try:
+                        self.total_traces = self.collection.count()
+                        print(f"[QMD] ChromaDB Vector Memory Online. Documents: {self.total_traces}")
+                    except Exception as e:
+                        print(f"[QMD] Failed to get count: {e}")
+                        self.using_chroma = False
+                
+                count_thread = threading.Thread(target=get_count, daemon=True)
+                count_thread.start()
+                count_thread.join(timeout=2.0)  # Wait max 2 seconds
+                
+                if count_thread.is_alive():
+                    print("[QMD] ChromaDB count timed out, using fallback")
+                    self.using_chroma = False
+                    
             except Exception as e:
-                self.using_chroma = False
-                self.distilled_vectors = []
                 print(f"[QMD] Failed to mount ChromaDB: {e}. Falling back to mocked vectors.")
-        else:
-            self.using_chroma = False
-            self.distilled_vectors = []
+                self.using_chroma = False
 
     def _ollama_summarize(self, prompt: str) -> str:
         """Calls the local Phi-3 model to compress memory traces into dense QMD concepts."""
-        try:
-            resp = requests.post(
-                "http://localhost:11434/api/generate",
-                json={"model": self.summarizer_model, "prompt": prompt, "stream": False},
-                timeout=60,
-            )
-            resp.raise_for_status()
-            response_text = resp.json().get("response", "").strip()
-            
-            # Validate response - reject error messages
-            if response_text.startswith("[") and "Error" in response_text:
-                return None
-            if len(response_text) < 10:
-                return None
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                resp = requests.post(
+                    "http://localhost:11434/api/generate",
+                    json={"model": self.summarizer_model, "prompt": prompt, "stream": False},
+                    timeout=120,  # Increased from 60
+                )
+                resp.raise_for_status()
+                response_text = resp.json().get("response", "").strip()
                 
-            return response_text
-        except Exception as e:
-            print(f"[QMD] Ollama summarization failed: {e}")
-            return None
+                # Validate response - reject error messages
+                if response_text.startswith("[") and "Error" in response_text:
+                    return None
+                if len(response_text) < 10:
+                    return None
+                    
+                return response_text
+            except Exception as e:
+                print(f"[QMD] Ollama summarization failed (attempt {attempt + 1}/{max_retries}): {e}")
+                if attempt < max_retries - 1:
+                    time.sleep(2 ** attempt)  # Exponential backoff
+                    continue
+                return None
+        return None
 
     def calculate_novelty(self, trace) -> float:
         """
@@ -198,35 +226,37 @@ class HippocampusAgent:
             # Only store if summarization succeeded
             if compressed_insight:
                 if self.using_chroma:
-                    doc_id = f"qmd_concept_{int(time.time())}"
+                    # Store to ChromaDB with metadata
                     try:
+                        import hashlib
+                        doc_id = hashlib.md5(compressed_insight.encode()).hexdigest()
                         self.collection.add(
                             documents=[compressed_insight],
-                            metadatas=[{
-                                "source": "episodic_buffer_distillation", 
-                                "timestamp": time.time(),
-                                "traces_compressed": len(self.episodic_buffer)
-                            }],
+                            metadatas=[{"timestamp": time.time(), "buffer_size": len(self.episodic_buffer)}],
                             ids=[doc_id]
                         )
-                        print(f"[QMD] Stored concept. Total documents: {self.collection.count()}")
+                        self.total_traces += 1
                     except Exception as e:
-                        print(f"[QMD] Chroma DB insert failed: {e}")
+                        print(f"[QMD] ChromaDB storage failed: {e}")
+                        # Fallback to mocked vector
+                        self.distilled_vectors.append(compressed_insight)
                 else:
+                    # Fallback to in-memory
                     self.distilled_vectors.append(compressed_insight)
             else:
                 print("[QMD] Skipping storage - summarization failed")
         
+        # Clear buffer after distillation attempt
         self.episodic_buffer = []
 
-    def get_novelty_stats(self):
-        """Return novelty statistics for GrowingNN."""
+    def get_novelty_stats(self) -> dict:
+        """Return novelty statistics for state tracking."""
         if not self.novelty_scores:
-            return {"current": 0.0, "average": 0.0, "max": 0.0}
+            return {"current": 0.0, "average": 0.0, "max": 0.0, "total_traces": self.total_traces}
         
         return {
-            "current": self.novelty_scores[-1],
-            "average": np.mean(self.novelty_scores[-100:]),
-            "max": max(self.novelty_scores),
+            "current": self.novelty_scores[-1] if self.novelty_scores else 0.0,
+            "average": np.mean(self.novelty_scores) if self.novelty_scores else 0.0,
+            "max": max(self.novelty_scores) if self.novelty_scores else 0.0,
             "total_traces": self.total_traces
         }
