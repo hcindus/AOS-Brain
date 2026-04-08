@@ -15,11 +15,26 @@
         
         #gameCanvas { display: block; }
         
+        /* Bob Ross Palette Colors */
+        :root {
+            --thalo-blue: #0a1a2a;
+            --midnite-black: #0a0a0f;
+            --star-glow: rgba(0, 200, 255, 0.3);
+        }
+
+        /* Starfield Canvas for Menu Background */
+        #starfieldCanvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+        }
+
         /* Main Menu */
         #mainMenu {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0f0a2a 100%);
+            background: linear-gradient(135deg, var(--thalo-blue) 0%, #0f1525 50%, var(--midnite-black) 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -535,6 +550,9 @@
     </style>
 </head>
 <body>
+    <!-- Starfield Canvas for Menu Background -->
+    <canvas id="starfieldCanvas"></canvas>
+
     <!-- Scanlines -->
     <div class="scanlines"></div>
 
@@ -706,5 +724,109 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="js/SpaceBattle.js"></script>
+    
+    <script>
+    // Starfield Canvas for Menu Background
+    const starCanvas = document.getElementById('starfieldCanvas');
+    const starCtx = starCanvas.getContext('2d');
+    let starAnimationId = null;
+    
+    function resizeStarfield() {
+        starCanvas.width = window.innerWidth;
+        starCanvas.height = window.innerHeight;
+    }
+    resizeStarfield();
+    window.addEventListener('resize', resizeStarfield);
+    
+    // Create stars
+    const stars = [];
+    const numStars = 2000;
+    
+    for (let i = 0; i < numStars; i++) {
+        const temp = Math.random();
+        let color, size, alpha;
+        
+        if (temp < 0.7) {
+            // White/blue tinted stars (Thalo blue influence)
+            color = `rgba(${200 + Math.random() * 55}, ${220 + Math.random() * 35}, 255,`;
+            size = Math.random() * 1.5 + 0.5;
+            alpha = Math.random() * 0.6 + 0.4;
+        } else if (temp < 0.9) {
+            // Warm orange stars
+            color = `rgba(255, ${180 + Math.random() * 60}, ${100 + Math.random() * 100},`;
+            size = Math.random() * 2 + 1;
+            alpha = Math.random() * 0.7 + 0.3;
+        } else {
+            // Deep blue stars (Thalo blue)
+            color = `rgba(${80 + Math.random() * 40}, ${120 + Math.random() * 60}, 200,`;
+            size = Math.random() * 1.5 + 0.8;
+            alpha = Math.random() * 0.5 + 0.5;
+        }
+        
+        stars.push({
+            x: Math.random() * starCanvas.width,
+            y: Math.random() * starCanvas.height,
+            z: Math.random() * 1000,
+            size: size,
+            color: color,
+            alpha: alpha,
+            twinkle: Math.random() * Math.PI * 2,
+            twinkleSpeed: Math.random() * 0.02 + 0.01
+        });
+    }
+    
+    function animateStars() {
+        // Thalo blue gradient background (Bob Ross palette)
+        const gradient = starCtx.createRadialGradient(
+            starCanvas.width / 2, starCanvas.height / 2, 0,
+            starCanvas.width / 2, starCanvas.height / 2, starCanvas.width
+        );
+        gradient.addColorStop(0, '#0a1a2a');
+        gradient.addColorStop(0.5, '#0a0f1a');
+        gradient.addColorStop(1, '#05080c');
+        
+        starCtx.fillStyle = gradient;
+        starCtx.fillRect(0, 0, starCanvas.width, starCanvas.height);
+        
+        // Draw stars with twinkle
+        stars.forEach(star => {
+            star.twinkle += star.twinkleSpeed;
+            const twinkleAlpha = star.alpha * (0.7 + 0.3 * Math.sin(star.twinkle));
+            
+            starCtx.beginPath();
+            starCtx.arc(star.x, star.y, star.size * (0.8 + 0.4 * Math.sin(star.twinkle)), 0, Math.PI * 2);
+            starCtx.fillStyle = star.color + twinkleAlpha + ')';
+            starCtx.fill();
+            
+            // Glow for larger stars
+            if (star.size > 1.5) {
+                starCtx.beginPath();
+                starCtx.arc(star.x, star.y, star.size * 2, 0, Math.PI * 2);
+                starCtx.fillStyle = star.color + (twinkleAlpha * 0.2) + ')';
+                starCtx.fill();
+            }
+        });
+        
+        starAnimationId = requestAnimationFrame(animateStars);
+    }
+    
+    // Start starfield animation immediately
+    animateStars();
+    
+    // Stop starfield when game starts to save resources
+    window.addEventListener('gameStart', () => {
+        if (starAnimationId) {
+            cancelAnimationFrame(starAnimationId);
+            starAnimationId = null;
+        }
+        starCanvas.style.display = 'none';
+    });
+    
+    // Resume starfield when returning to menu
+    window.addEventListener('returnToMenu', () => {
+        starCanvas.style.display = 'block';
+        if (!starAnimationId) animateStars();
+    });
+    </script>
 </body>
 </html>

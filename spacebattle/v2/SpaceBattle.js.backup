@@ -100,32 +100,7 @@ class SpaceBattle {
             noise.start();
         };
         
-        // Thrust sound - short burst when accelerating
-        this.sounds.thrust = () => {
-            if (!this.audioContext) return;
-            const osc = this.audioContext.createOscillator();
-            const gain = this.audioContext.createGain();
-            const filter = this.audioContext.createBiquadFilter();
-            
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(80, this.audioContext.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(60, this.audioContext.currentTime + 0.1);
-            
-            filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(800, this.audioContext.currentTime);
-            
-            gain.gain.setValueAtTime(0.2, this.audioContext.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.1);
-            
-            osc.connect(filter);
-            filter.connect(gain);
-            gain.connect(this.audioContext.destination);
-            
-            osc.start();
-            osc.stop(this.audioContext.currentTime + 0.1);
-        };
-        
-        // Engine hum - continuous low rumble
+        // Engine
         this.sounds.engine = () => {
             if (!this.audioContext) return;
             // Continuous engine hum managed elsewhere
@@ -156,11 +131,12 @@ class SpaceBattle {
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         
-        // Create starfield background - FIXED: simpler material that always renders
+        // Create starfield background
         this.createStarField();
         
-        // DUAL SYSTEMS LIGHTING - Two suns with shadows
-        this.setupLighting();
+        // Add ambient light so ships are visible even in shadow
+        this.ambientLight = new THREE.AmbientLight(0x333344, 0.4);
+        this.scene.add(this.ambientLight);
         
         // Initialize grid at current position
         this.generateGridCell(this.currentGridPos.x, this.currentGridPos.y, this.currentGridPos.z);
@@ -181,29 +157,11 @@ class SpaceBattle {
         await this.simulateLoading();
     }
     
-    // DUAL SYSTEMS: Two sun lighting setup
-    setupLighting() {
-        // Ambient base
-        this.ambientLight = new THREE.AmbientLight(0x111122, 0.3);
-        this.scene.add(this.ambientLight);
-        
-        // Sun 1 - Warm orange
-        this.sun1Light = new THREE.PointLight(0xffaa44, 2, 2000);
-        this.sun1Light.position.set(-400, 200, -400);
-        this.sun1Light.castShadow = true;
-        this.scene.add(this.sun1Light);
-        
-        // Sun 2 - Cool blue  
-        this.sun2Light = new THREE.PointLight(0x44aaff, 1.5, 2000);
-        this.sun2Light.position.set(400, -100, 400);
-        this.sun2Light.castShadow = true;
-        this.scene.add(this.sun2Light);
-    }
-    
     createStarField() {
         const geometry = new THREE.BufferGeometry();
         const positions = [];
         const colors = [];
+        const sizes = [];
         
         for (let i = 0; i < 8000; i++) {
             const x = (Math.random() - 0.5) * 10000;
@@ -211,35 +169,62 @@ class SpaceBattle {
             const z = (Math.random() - 0.5) * 10000;
             positions.push(x, y, z);
             
-            // Star colors with more variety
+            // Star colors
             const temp = Math.random();
-            if (temp < 0.6) {
-                colors.push(1, 1, 0.95); // White-ish
-            } else if (temp < 0.8) {
-                colors.push(1, 0.8, 0.6); // Orange
-            } else if (temp < 0.95) {
-                colors.push(0.7, 0.8, 1); // Blue-ish
+            if (temp < 0.7) {
+                colors.push(1, 0.95, 0.9); // White
+            } else if (temp < 0.9) {
+                colors.push(1, 0.7, 0.5); // Orange
             } else {
-                colors.push(1, 0.9, 0.7); // Yellow
+                colors.push(0.7, 0.7, 1); // Blue
             }
+            
+            sizes.push(Math.random() * 2 + 0.5);
         }
         
         geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
         geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+        geometry.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1));
         
-        // FIXED: Use PointsMaterial instead of ShaderMaterial for reliable rendering
-        const material = new THREE.PointsMaterial({
-            size: 2,
+        // Use ShaderMaterial for better star rendering
+        const material = new THREE.ShaderMaterial({
+            uniforms: {
+                pointSize: { value: 2.0 }
+            },
+            vertexShader: `
+                attribute float size;
+                varying vec3 vColor;
+                void main() {
+                    vColor = color;
+                    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                    gl_PointSize = size * (300.0 / -mvPosition.z);
+                    gl_Position = projectionMatrix * mvPosition;
+                }
+            `,
+            fragmentShader: `
+                varying vec3 vColor;
+                void main() {
+                    float dist = length(gl_PointCoord - vec2(0.5));
+                    if (dist > 0.5) discard;
+                    float alpha = 1.0 - smoothstep(0.0, 0.5, dist);
+                    gl_FragColor = vec4(vColor, alpha);
+                }
+            `,
             vertexColors: true,
             transparent: true,
-            opacity: 0.8,
-            sizeAttenuation: true
+            depthWrite: false,
+            blending: THREE.AdditiveBlending
         });
         
         this.starField = new THREE.Points(geometry, material);
         this.starField.name = 'starField';
-        this.starField.renderOrder = -1000; // Render first
         this.scene.add(this.starField);
+        
+        // Ensure stars render before other objects
+        this.starField.renderOrder = -1000;
+        
+        // Store reference for camera-relative positioning
+        this.starField.userData.isBackground = true;
     }
     
     // Generate solar system for a grid cell
@@ -932,15 +917,6 @@ class PlayerShip {
         this.acceleration = 40;
         this.rotationSpeed = 2;
         
-        // Thrust sound state
-        this.thrustPlaying = false;
-        
-        // N'og nog GRAVITY - gravitational pull from suns
-        this.gravitySources = [
-            { position: new THREE.Vector3(-400, 200, -400), strength: 50000 }, // Sun 1
-            { position: new THREE.Vector3(400, -100, 400), strength: 35000 }   // Sun 2
-        ];
-        
         this.mesh = this.createVoxelShip();
         scene.add(this.mesh);
         
@@ -1040,19 +1016,10 @@ class PlayerShip {
             forward.applyQuaternion(this.mesh.quaternion);
             this.velocity.add(forward.multiplyScalar(this.acceleration * thrust * delta));
             
-            // Engine effect - visual
+            // Engine effect
             this.engineGlow.scale.setScalar(1 + thrust * 0.3 + Math.random() * 0.1);
-            
-            // ENGINE SOUND - play thrust sound
-            if (!this.thrustPlaying && this.game.sounds.thrust) {
-                this.game.sounds.thrust();
-                this.thrustPlaying = true;
-                // Reset after short delay to allow retriggering
-                setTimeout(() => { this.thrustPlaying = false; }, 150);
-            }
         } else {
             this.engineGlow.scale.setScalar(1);
-            this.thrustPlaying = false;
         }
         
         // Apply velocity with drag
@@ -1061,9 +1028,6 @@ class PlayerShip {
         if (speed > this.maxSpeed) {
             this.velocity.normalize().multiplyScalar(this.maxSpeed);
         }
-        
-        // N'OG NOG GRAVITY - Apply gravitational pull from suns
-        this.applyNogNogGravity(delta);
         
         this.mesh.position.add(this.velocity.clone().multiplyScalar(delta));
         
@@ -1112,18 +1076,6 @@ class PlayerShip {
     applyGravity(gravity, delta) {
         // Apply gravitational acceleration to velocity
         this.velocity.add(gravity.multiplyScalar(delta));
-    }
-    
-    // N'og nog style gravity - pull from suns
-    applyNogNogGravity(delta) {
-        this.gravitySources.forEach(source => {
-            const dist = this.mesh.position.distanceTo(source.position);
-            if (dist < 800) { // Gravity range
-                const force = source.strength / (dist * dist);
-                const dir = source.position.clone().sub(this.mesh.position).normalize();
-                this.velocity.add(dir.multiplyScalar(force * delta * 0.1));
-            }
-        });
     }
 }
 
