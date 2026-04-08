@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpaceBattle - Arcade Space Combat</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            overflow: hidden; 
+            background: #000; 
+            font-family: 'Courier New', monospace;
+            user-select: none;
+        }
+        
+        #gameCanvas { display: block; }
+        
+        /* UI Overlay */
+        #ui {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        /* Main Menu */
+        #mainMenu {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a1a 50%, #0f0a1a 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            pointer-events: auto;
+        }
+        
+        #mainMenu h1 {
+            font-size: 5em;
+            background: linear-gradient(135deg, #ff0044, #ff8800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(255, 68, 0, 0.5);
+            margin-bottom: 10px;
+            letter-spacing: 0.1em;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        #mainMenu h2 {
+            font-size: 1.2em;
+            color: #888;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+        
+        .menuButton {
+            width: 300px;
+            padding: 18px 30px;
+            margin: 10px;
+            background: rgba(255, 68, 0, 0.1);
+            border: 2px solid #ff4400;
+            color: #ff8844;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .menuButton:hover {
+            background: rgba(255, 68, 0, 0.3);
+            box-shadow: 0 0 30px rgba(255, 68, 0, 0.5);
+            transform: scale(1.05);
+        }
+        
+        /* HUD */
+        #hud {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none;
+            pointer-events: none;
+        }
+        
+        .hudPanel {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #ff4400;
+            color: #ff8844;
+            padding: 15px;
+            font-size: 14px;
+        }
+        
+        #statsPanel {
+            top: 20px;
+            left: 20px;
+            min-width: 220px;
+        }
+        
+        #scorePanel {
+            top: 20px;
+            right: 20px;
+            min-width: 180px;
+            text-align: right;
+        }
+        
+        #weaponPanel {
+            bottom: 20px;
+            left: 20px;
+            min-width: 200px;
+        }
+        
+        .hudRow {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+        }
+        
+        .hudLabel {
+            color: #aa6644;
+        }
+        
+        .hudValue {
+            color: #ff8844;
+            font-weight: bold;
+        }
+        
+        /* Health Bars */
+        .barContainer {
+            width: 150px;
+            height: 12px;
+            background: #222;
+            border: 1px solid #444;
+            margin-top: 5px;
+        }
+        
+        .barFill {
+            height: 100%;
+            transition: width 0.3s;
+        }
+        
+        #shieldBar { background: linear-gradient(90deg, #0044ff, #0088ff); }
+        #hullBar { background: linear-gradient(90deg, #ff0044, #ff8800); }
+        
+        /* Crosshair */
+        #crosshair {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            pointer-events: none;
+        }
+        
+        #crosshair::before, #crosshair::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 68, 0, 0.8);
+        }
+        
+        #crosshair::before {
+            width: 2px;
+            height: 20px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        #crosshair::after {
+            width: 20px;
+            height: 2px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        /* Radar */
+        #radar {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 180px;
+            height: 180px;
+            background: rgba(0, 10, 20, 0.9);
+            border: 2px solid #ff4400;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        #radarCanvas {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Loading Screen */
+        #loading {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            color: #ff8844;
+        }
+        
+        #loadingBar {
+            width: 350px;
+            height: 6px;
+            background: #222;
+            margin-top: 20px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        #loadingProgress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff0044, #ff8800);
+            box-shadow: 0 0 15px #ff4400;
+            transition: width 0.3s;
+        }
+        
+        /* Touch Controls */
+        #touchControls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: none;
+        }
+        
+        .touchZone {
+            position: absolute;
+            pointer-events: auto;
+        }
+        
+        #joystickZone {
+            bottom: 50px;
+            left: 50px;
+            width: 140px;
+            height: 140px;
+        }
+        
+        #joystickBase {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 68, 0, 0.15);
+            border: 2px solid rgba(255, 68, 0, 0.5);
+            border-radius: 50%;
+            top: 10px;
+            left: 10px;
+        }
+        
+        #joystickKnob {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 68, 0, 0.6);
+            border: 2px solid #ff4400;
+            border-radius: 50%;
+            top: 45px;
+            left: 45px;
+            box-shadow: 0 0 20px rgba(255, 68, 0, 0.5);
+        }
+        
+        #fireZone {
+            bottom: 60px;
+            right: 50px;
+            width: 100px;
+            height: 100px;
+        }
+        
+        #fireButton {
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 0, 0, 0.2);
+            border: 3px solid #ff0000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff4444;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        #fireButton:active {
+            background: rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 30px #ff0000;
+        }
+        
+        /* Game Over Screen */
+        #gameOver {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 150;
+            pointer-events: auto;
+        }
+        
+        #gameOver h1 {
+            font-size: 4em;
+            color: #ff0044;
+            text-shadow: 0 0 30px #ff0044;
+            margin-bottom: 20px;
+        }
+        
+        #finalScore {
+            font-size: 2em;
+            color: #ff8844;
+            margin-bottom: 40px;
+        }
+        
+        /* Wave Notification */
+        #waveNotification {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3em;
+            color: #ff8844;
+            text-shadow: 0 0 30px #ff4400;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        
+        #waveNotification.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Menu -->
+    <div id="mainMenu">
+        <h1>SPACEBATTLE</h1>
+        <h2>Arcade Space Combat</h2>
+        <button class="menuButton" onclick="startGame()">Start Mission</button>
+        <button class="menuButton" onclick="showControls()">Controls</button>
+    </div>
+    
+    <!-- Loading Screen -->
+    <div id="loading">
+        <div style="font-size: 2em; margin-bottom: 20px;">Initializing Combat Systems...</div>
+        <div id="loadingBar">
+            <div id="loadingProgress"></div>
+        </div>
+    </div>
+    
+    <!-- HUD -->
+    <div id="hud">
+        <div class="hudPanel" id="statsPanel">
+            <div class="hudRow"><span class="hudLabel">WAVE:</span><span class="hudValue" id="waveNum">1</span></div>
+            <div class="hudRow"><span class="hudLabel">SHIELD:</span></div>
+            <div class="barContainer"><div class="barFill" id="shieldBar" style="width: 100%"></div></div>
+            <div class="hudRow"><span class="hudLabel">HULL:</span></div>
+            <div class="barContainer"><div class="barFill" id="hullBar" style="width: 100%"></div></div>
+        </div>
+        
+        <div class="hudPanel" id="scorePanel">
+            <div class="hudRow"><span class="hudLabel">SCORE:</span><span class="hudValue" id="score">0</span></div>
+            <div class="hudRow"><span class="hudLabel">KILLS:</span><span class="hudValue" id="kills">0</span></div>
+            <div class="hudRow"><span class="hudLabel">TIME:</span><span class="hudValue" id="gameTime">00:00</span></div>
+        </div>
+        
+        <div class="hudPanel" id="weaponPanel">
+            <div class="hudRow"><span class="hudLabel">WEAPON:</span><span class="hudValue" id="weaponName">Laser Cannon</span></div>
+            <div class="hudRow"><span class="hudLabel">AMMO:</span><span class="hudValue" id="ammo">∞</span></div>
+            <div class="hudRow"><span class="hudLabel">HEAT:</span><span class="hudValue" id="heat">0%</span></div>
+        </div>
+        
+        <div id="crosshair"></div>
+        
+        <div id="radar">
+            <canvas id="radarCanvas"></canvas>
+        </div>
+        
+        <div id="waveNotification">WAVE 1</div>
+    </div>
+    
+    <!-- Game Over Screen -->
+    <div id="gameOver">
+        <h1>MISSION FAILED</h1>
+        <div id="finalScore">Score: 0</div>
+        <button class="menuButton" onclick="restartGame()">Retry Mission</button>
+        <button class="menuButton" onclick="returnToMenu()">Main Menu</button>
+    </div>
+    
+    <!-- Touch Controls -->
+    <div id="touchControls">
+        <div id="joystickZone" class="touchZone">
+            <div id="joystickBase"></div>
+            <div id="joystickKnob"></div>
+        </div>
+        <div id="fireZone" class="touchZone">
+            <div id="fireButton">FIRE</div>
+        </div>
+    </div>
+    
+    <!-- Canvas -->
+    <canvas id="gameCanvas"></canvas>
+    
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/SpaceBattle.js"></script>
+    <script>
+        let game;
+        
+        function startGame() {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('loading').style.display = 'flex';
+            
+            game = new SpaceBattle();
+            game.init().then(() => {
+                game.start();
+            });
+        }
+        
+        function showControls() {
+            alert(`CONTROLS:
+
+KEYBOARD:
+W/S - Thrust Forward/Back
+A/D - Rotate Left/Right
+Q/E - Roll
+SPACE - Fire
+M - Toggle Radar
+
+MOUSE:
+Move - Aim
+Click - Fire
+
+Touch screen activates touch controls automatically.
+
+OBJECTIVE:
+Destroy enemy waves. Survive as long as possible.`);
+        }
+        
+        function restartGame() {
+            document.getElementById('gameOver').style.display = 'none';
+            game.restart();
+        }
+        
+        function returnToMenu() {
+            document.getElementById('gameOver').style.display = 'none';
+            document.getElementById('hud').style.display = 'none';
+            document.getElementById('mainMenu').style.display = 'flex';
+            if (game) game.cleanup();
+        }
+        
+        // Show touch controls on mobile
+        if ('ontouchstart' in window) {
+            document.getElementById('touchControls').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
