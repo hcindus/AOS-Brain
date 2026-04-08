@@ -3,7 +3,7 @@
   "name": "Luna",
   "role": "COMBAT",
   "level": 5,
-  "xp": 3033,
+  "xp": 3193,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 24,
     "combat": 15
   },
-  "missionsCompleted": 20,
+  "missionsCompleted": 22,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -118,6 +118,16 @@
       "name": "Anomalous Planet",
       "location": "Alpha-1",
       "timestamp": 1775608012441
+    },
+    {
+      "name": "Unknown Signal",
+      "location": "Alpha-1",
+      "timestamp": 1775611497150
+    },
+    {
+      "name": "Derelict Ship",
+      "location": "Alpha-1",
+      "timestamp": 1775612638452
     }
   ],
   "status": "ACTIVE",
