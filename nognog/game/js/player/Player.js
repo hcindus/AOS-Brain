@@ -1,12 +1,13 @@
 /**
- * Player.js - Player Controller
- * Handles player movement, physics, camera, and input
+ * Player.js - Player Controller with Landing Mechanics
+ * Handles player movement, physics, camera, input, and planetary landing
  */
 
 class Player {
     constructor(scene, camera) {
         this.scene = scene;
         this.camera = camera;
+        this.solarSystemManager = null;
         
         // Ship properties
         this.position = new THREE.Vector3(0, 100, 500);
@@ -57,6 +58,13 @@ class Player {
             look: { active: false, dx: 0, dy: 0 }
         };
         
+        // Landing state
+        this.landed = false;
+        this.landedBody = null; // Planet or moon currently landed on
+        this.landedPosition = new THREE.Vector3();
+        this.landedOrientation = new THREE.Quaternion();
+        this.surfaceNormal = new THREE.Vector3(0, 1, 0);
+        
         // Ship model
         this.ship = this.createShip();
         scene.add(this.ship);
@@ -66,11 +74,9 @@ class Player {
         this.lastFireTime = 0;
         this.fireRate = 200; // ms
         
-        // Landing
-        this.landed = false;
-        this.landedPlanet = null;
-        
         this.setupInput();
+        
+        console.log('[Player] Initialized with landing mechanics');
     }
     
     createShip() {
@@ -133,10 +139,58 @@ class Player {
         group.add(glow);
         this.engineGlow = glow;
         
+        // Landing gear (retracted by default)
+        this.landingGear = this.createLandingGear();
+        this.landingGear.visible = false;
+        group.add(this.landingGear);
+        
         // Point light
         const light = new THREE.PointLight(0x00ff88, 1, 100);
         light.position.set(0, 0, 15);
         group.add(light);
+        
+        return group;
+    }
+    
+    createLandingGear() {
+        const group = new THREE.Group();
+        
+        const legGeo = new THREE.CylinderGeometry(0.5, 0.5, 8);
+        const legMat = new THREE.MeshPhongMaterial({ color: 0x666666 });
+        
+        // Front leg
+        const frontLeg = new THREE.Mesh(legGeo, legMat);
+        frontLeg.position.set(0, -6, -5);
+        frontLeg.rotation.x = Math.PI / 6;
+        group.add(frontLeg);
+        
+        // Front foot
+        const footGeo = new THREE.BoxGeometry(3, 1, 4);
+        const frontFoot = new THREE.Mesh(footGeo, legMat);
+        frontFoot.position.set(0, -9, -7);
+        group.add(frontFoot);
+        
+        // Rear legs
+        const rearLeft = new THREE.Mesh(legGeo, legMat);
+        rearLeft.position.set(-6, -6, 8);
+        rearLeft.rotation.x = -Math.PI / 6;
+        rearLeft.rotation.z = -Math.PI / 8;
+        group.add(rearLeft);
+        
+        const rearRight = new THREE.Mesh(legGeo, legMat);
+        rearRight.position.set(6, -6, 8);
+        rearRight.rotation.x = -Math.PI / 6;
+        rearRight.rotation.z = Math.PI / 8;
+        group.add(rearRight);
+        
+        // Rear feet
+        const rearLeftFoot = new THREE.Mesh(footGeo, legMat);
+        rearLeftFoot.position.set(-8, -9, 10);
+        group.add(rearLeftFoot);
+        
+        const rearRightFoot = new THREE.Mesh(footGeo, legMat);
+        rearRightFoot.position.set(8, -9, 10);
+        group.add(rearRightFoot);
         
         return group;
     }
@@ -165,6 +219,9 @@ class Player {
     }
     
     onKeyDown(e) {
+        // Don't process input when landed (except for takeoff)
+        if (this.landed && e.code !== 'KeyT') return;
+        
         switch(e.code) {
             case 'KeyW': case 'ArrowUp': this.input.forward = true; break;
             case 'KeyS': case 'ArrowDown': this.input.backward = true; break;
@@ -175,6 +232,11 @@ class Player {
             case 'Space': this.input.fire = true; break;
             case 'ShiftLeft': case 'ShiftRight': this.input.thrust = true; break;
             case 'KeyV': this.toggleCamera(); break;
+            case 'KeyT': 
+                if (this.landed) {
+                    this.takeoff();
+                }
+                break;
         }
     }
     
@@ -192,15 +254,16 @@ class Player {
     }
     
     onMouseMove(e) {
-        if (document.pointerLockElement === document.body) {
+        if (document.pointerLockElement === document.body && !this.landed) {
             this.mouse.dx += e.movementX * this.mouse.sensitivity;
             this.mouse.dy += e.movementY * this.mouse.sensitivity;
         }
     }
     
     onTouchStart(e) {
+        if (this.landed) return;
+        
         for (let touch of e.touches) {
-            // Check which zone
             const target = document.elementFromPoint(touch.clientX, touch.clientY);
             if (target) {
                 if (target.id === 'joystickZone' || target.id === 'joystickBase') {
@@ -226,8 +289,9 @@ class Player {
     
     onTouchMove(e) {
         e.preventDefault();
+        if (this.landed) return;
+        
         for (let touch of e.touches) {
-            // Update joystick
             if (this.touch.joystick.active) {
                 const dx = touch.clientX - this.touch.joystick.startX;
                 const dy = touch.clientY - this.touch.joystick.startY;
@@ -239,7 +303,6 @@ class Player {
                 this.touch.joystick.dy = (Math.sin(angle) * dist) / maxDist;
             }
             
-            // Update look
             if (this.touch.look.active && touch.identifier === this.touch.look.id) {
                 const dx = touch.clientX - this.touch.look.x;
                 const dy = touch.clientY - this.touch.look.y;
@@ -277,8 +340,95 @@ class Player {
         console.log(`Camera: ${names[this.cameraMode]}`);
     }
     
-    update(deltaTime) {
+    /**
+     * Land on a celestial body
+     */
+    land(target) {
         if (this.landed) return;
+        
+        this.landed = true;
+        this.landedBody = target.body;
+        this.surfaceNormal = target.normal || new THREE.Vector3(0, 1, 0);
+        
+        // Calculate landing position on surface
+        this.landedPosition.copy(target.landingPoint);
+        this.landedPosition.add(this.surfaceNormal.clone().multiplyScalar(5)); // Hover slightly above
+        
+        // Store orientation
+        this.landedOrientation.copy(this.quaternion);
+        
+        // Position ship
+        this.position.copy(this.landedPosition);
+        
+        // Align ship with surface normal
+        const up = this.surfaceNormal;
+        const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(this.quaternion);
+        const right = new THREE.Vector3().crossVectors(forward, up).normalize();
+        const newForward = new THREE.Vector3().crossVectors(up, right).normalize();
+        
+        const alignMatrix = new THREE.Matrix4();
+        alignMatrix.makeBasis(right, up, newForward.negate());
+        this.quaternion.setFromRotationMatrix(alignMatrix);
+        
+        // Zero velocity
+        this.velocity.set(0, 0, 0);
+        
+        // Show landing gear
+        this.landingGear.visible = true;
+        
+        // Restore fuel slowly while landed
+        this.startFuelRegeneration();
+        
+        console.log(`[Player] Landed on ${target.body.name}`);
+    }
+    
+    /**
+     * Take off from landed position
+     */
+    takeoff() {
+        if (!this.landed) return;
+        
+        this.landed = false;
+        
+        // Initial upward thrust
+        const takeoffForce = this.surfaceNormal.clone().multiplyScalar(100);
+        this.velocity.add(takeoffForce);
+        
+        // Hide landing gear
+        this.landingGear.visible = false;
+        
+        // Stop fuel regeneration
+        this.stopFuelRegeneration();
+        
+        this.landedBody = null;
+        
+        console.log('[Player] Takeoff complete');
+    }
+    
+    startFuelRegeneration() {
+        this.fuelRegenInterval = setInterval(() => {
+            if (this.fuel < this.maxFuel) {
+                this.fuel = Math.min(this.maxFuel, this.fuel + 1);
+            }
+        }, 500);
+    }
+    
+    stopFuelRegeneration() {
+        if (this.fuelRegenInterval) {
+            clearInterval(this.fuelRegenInterval);
+            this.fuelRegenInterval = null;
+        }
+    }
+    
+    update(deltaTime) {
+        if (this.landed) {
+            // Stay locked to landing position with slight drift
+            this.position.copy(this.landedPosition);
+            this.ship.position.copy(this.position);
+            this.ship.quaternion.copy(this.quaternion);
+            this.updateCamera();
+            return;
+        }
         
         // Apply rotation from mouse/touch
         const yaw = -this.mouse.dx * this.rotationSpeed * deltaTime;
@@ -300,7 +450,6 @@ class Player {
         if (this.input.rollLeft) this.rotation.z += this.rotationSpeed * deltaTime;
         if (this.input.rollRight) this.rotation.z -= this.rotationSpeed * deltaTime;
         
-        // Apply touch roll from joystick
         if (this.touch.joystick.active) {
             this.rotation.z += this.touch.joystick.dx * this.rotationSpeed * deltaTime;
         }
@@ -364,6 +513,13 @@ class Player {
         const thrustIntensity = this.velocity.length() / this.maxSpeed;
         this.engineGlow.material.opacity = 0.3 + thrustIntensity * 0.4;
         this.engineGlow.scale.setScalar(1 + thrustIntensity * 0.5);
+        
+        // Animate landing gear retracting/extending
+        if (this.landingGear.visible && this.landingGear.scale.y < 1) {
+            this.landingGear.scale.y = Math.min(1, this.landingGear.scale.y + deltaTime * 5);
+        } else if (!this.landingGear.visible && this.landingGear.scale.y > 0) {
+            this.landingGear.scale.y = Math.max(0, this.landingGear.scale.y - deltaTime * 5);
+        }
     }
     
     updateCamera() {
@@ -403,8 +559,8 @@ class Player {
         this.projectiles.push(projectile);
         
         // Play sound
-        if (window.gameAudio) {
-            window.gameAudio.play('laser');
+        if (window.game && window.game.audio) {
+            window.game.audio.play('laser');
         }
     }
     
@@ -421,13 +577,17 @@ class Player {
     }
     
     getStats() {
+        const altitude = this.landed ? 0 : Math.max(0, this.position.y);
+        
         return {
             velocity: Math.round(this.velocity.length()),
-            altitude: Math.round(this.position.y / 1000),
+            altitude: Math.round(altitude / 1000),
             fuel: Math.round(this.fuel),
             shield: Math.round(this.shield),
             hull: Math.round(this.hull),
-            coords: `${Math.round(this.position.x)}, ${Math.round(this.position.y)}, ${Math.round(this.position.z)}`
+            coords: `${Math.round(this.position.x)}, ${Math.round(this.position.y)}, ${Math.round(this.position.z)}`,
+            landed: this.landed,
+            landedBody: this.landedBody ? this.landedBody.name : null
         };
     }
     
@@ -438,7 +598,9 @@ class Player {
             rotation: { x: this.rotation.x, y: this.rotation.y, z: this.rotation.z },
             fuel: this.fuel,
             shield: this.shield,
-            hull: this.hull
+            hull: this.hull,
+            landed: this.landed,
+            landedBody: this.landedBody ? this.landedBody.name : null
         };
     }
 }

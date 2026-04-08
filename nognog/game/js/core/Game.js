@@ -1,6 +1,6 @@
 /**
  * Game.js - Main Game Controller
- * Initializes and coordinates all game systems
+ * Initializes and coordinates all game systems with Solar System Physics
  */
 
 class Game {
@@ -12,6 +12,7 @@ class Game {
         // Systems
         this.renderer = null;
         this.universe = null;
+        this.solarSystemManager = null;
         this.player = null;
         this.audio = null;
         this.voxelShips = new VoxelShips();
@@ -30,6 +31,16 @@ class Game {
 
         // Gordon fleet (spawned in world)
         this.gordonFleet = [];
+
+        // Physics
+        this.gravityEnabled = true;
+        this.collisionEnabled = true;
+        this.landingEnabled = true;
+        
+        // Game state
+        this.playerDied = false;
+        this.landingTarget = null;
+        this.slingshotActive = false;
 
         // Bind methods
         this.animate = this.animate.bind(this);
@@ -52,8 +63,24 @@ class Game {
         this.universe = new Universe(Math.random() * 100000);
         this.universe.generate();
         
-        // Create player
+        // Create solar system manager for 100x100x100 voxel grid
+        this.solarSystemManager = new SolarSystemManager(
+            this.renderer.scene, 
+            this.universe.seed
+        );
+        
+        // Generate initial system at 0,0,0
+        this.solarSystemManager.getSystemAt(0, 0, 0);
+        
+        // Create player with solar system manager
         this.player = new Player(this.renderer.scene, this.renderer.camera);
+        this.player.solarSystemManager = this.solarSystemManager;
+        
+        // Position player near first planet
+        this.player.position.set(400, 50, 0);
+        
+        // Generate nearby systems for exploration
+        this.generateNearbySystems();
         
         // Setup UI
         this.setupUI();
@@ -62,6 +89,23 @@ class Game {
         this.animate();
         
         console.log('[Game] Initialization complete');
+        console.log('[Game] Solar systems active at voxel coordinates');
+    }
+    
+    /**
+     * Generate solar systems at nearby 100x100x100 voxel coordinates
+     */
+    generateNearbySystems() {
+        // Generate systems in a 3x3x3 grid around origin
+        for (let x = -1; x <= 1; x++) {
+            for (let y = -1; y <= 1; y++) {
+                for (let z = -1; z <= 1; z++) {
+                    if (x === 0 && y === 0 && z === 0) continue; // Skip origin (already generated)
+                    this.solarSystemManager.getSystemAt(x * 100, y * 100, z * 100);
+                }
+            }
+        }
+        console.log('[Game] Generated nearby solar systems');
     }
     
     setupUI() {
@@ -91,6 +135,12 @@ class Game {
             if (e.key.toLowerCase() === 'm') {
                 this.toggleMap();
             }
+            if (e.key.toLowerCase() === 'l') {
+                this.attemptLanding();
+            }
+            if (e.key.toLowerCase() === 't') {
+                this.takeoff();
+            }
         });
     }
     
@@ -112,14 +162,14 @@ class Game {
             progress.style.width = loadProgress + '%';
             
             if (loadProgress === 30) {
-                loadingText.textContent = 'Generating solar system...';
+                loadingText.textContent = 'Generating solar systems...';
             } else if (loadProgress === 60) {
-                loadingText.textContent = 'Spawning player ship...';
-            } else if (loadProgress === 90) {
+                loadingText.textContent = 'Calculating orbital mechanics...';
+            } else if (loadProgress === 80) {
                 loadingText.textContent = 'Spawning Gordon fleet...';
-
-                // Spawn Gordon ships in the universe
                 this.spawnGordonFleet();
+            } else if (loadProgress === 90) {
+                loadingText.textContent = 'Initializing physics...';
             }
 
             if (loadProgress >= 100) {
@@ -138,7 +188,10 @@ class Game {
                 // Update system info
                 this.updateSystemInfo();
                 
-                console.log('[Game] Started');
+                // Show help
+                this.showMessage('Welcome to N\'og nog! Press L to land on planets. Avoid stars!', 5000);
+                
+                console.log('[Game] Started with solar systems and physics');
             }
         }, 100);
         
@@ -167,6 +220,66 @@ class Game {
         map.style.display = map.style.display === 'none' ? 'block' : 'none';
     }
     
+    /**
+     * Attempt to land on a nearby planet
+     */
+    attemptLanding() {
+        if (this.player.landed) {
+            this.showMessage('Already landed. Press T to take off.', 3000);
+            return;
+        }
+        
+        const target = this.solarSystemManager.getLandingTarget(this.player.position);
+        if (target && target.distance < 30 && this.player.velocity.length() < 50) {
+            this.player.land(target);
+            this.showMessage(`Landed on ${target.body.name}! Press T to take off.`, 3000);
+            this.audio.play('ui_confirm');
+        } else if (target) {
+            this.showMessage(`Approach ${target.body.name} slowly for landing. Speed: ${Math.round(this.player.velocity.length())}`, 3000);
+        } else {
+            this.showMessage('No landing zone nearby. Find a planet.', 3000);
+        }
+    }
+    
+    /**
+     * Take off from planet
+     */
+    takeoff() {
+        if (!this.player.landed) {
+            this.showMessage('Not landed on any surface.', 2000);
+            return;
+        }
+        
+        this.player.takeoff();
+        this.showMessage('Liftoff! Thrusters engaged.', 3000);
+        this.audio.play('engine');
+    }
+    
+    /**
+     * Show temporary message
+     */
+    showMessage(text, duration = 3000) {
+        const msgDiv = document.createElement('div');
+        msgDiv.style.cssText = `
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 255, 136, 0.9);
+            color: #000;
+            padding: 20px 40px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            z-index: 1000;
+            pointer-events: none;
+        `;
+        msgDiv.textContent = text;
+        document.body.appendChild(msgDiv);
+        
+        setTimeout(() => msgDiv.remove(), duration);
+    }
+    
     updateSystemInfo() {
         const system = this.universe.getCurrentSystem();
         if (!system) return;
@@ -188,6 +301,50 @@ class Game {
         document.getElementById('fuel').textContent = stats.fuel;
         document.getElementById('shield').textContent = stats.shield;
         document.getElementById('coords').textContent = stats.coords;
+        
+        // Check for slingshot opportunity
+        const slingshot = this.checkSlingshot();
+        if (slingshot && slingshot.available) {
+            const indicator = document.getElementById('slingshotIndicator') || this.createSlingshotIndicator();
+            indicator.style.display = 'block';
+            indicator.textContent = `SLINGSHOT: ${Math.round(slingshot.efficiency * 100)}%`;
+        } else {
+            const indicator = document.getElementById('slingshotIndicator');
+            if (indicator) indicator.style.display = 'none';
+        }
+    }
+    
+    createSlingshotIndicator() {
+        const indicator = document.createElement('div');
+        indicator.id = 'slingshotIndicator';
+        indicator.style.cssText = `
+            position: absolute;
+            bottom: 250px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 200, 0, 0.8);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: none;
+            z-index: 100;
+        `;
+        document.getElementById('hud').appendChild(indicator);
+        return indicator;
+    }
+    
+    checkSlingshot() {
+        let bestSlingshot = null;
+        
+        this.solarSystemManager.systems.forEach(system => {
+            const slingshot = system.calculateSlingshot(this.player.position, this.player.velocity);
+            if (slingshot.available && (!bestSlingshot || slingshot.efficiency > bestSlingshot.efficiency)) {
+                bestSlingshot = slingshot;
+            }
+        });
+        
+        return bestSlingshot;
     }
     
     animate() {
@@ -196,6 +353,17 @@ class Game {
         const deltaTime = Math.min(this.clock.getDelta(), 0.1);
         
         if (this.state === 'playing') {
+            // Update solar systems (orbits, rotations)
+            if (this.solarSystemManager) {
+                this.solarSystemManager.update(deltaTime);
+            }
+            
+            // Apply physics to player
+            if (this.player && !this.player.landed) {
+                this.applyPhysics(deltaTime);
+                this.checkCollisions();
+            }
+            
             // Update player
             if (this.player) {
                 this.player.update(deltaTime);
@@ -211,12 +379,9 @@ class Game {
             this.renderer.updateWarp(deltaTime);
             this.renderer.render();
             
-            // Update mini map
-            if (this.player && this.universe) {
-                this.renderer.updateMiniMap(
-                    this.player.position,
-                    this.universe.getCurrentSystem()?.planets || []
-                );
+            // Update mini map with celestial bodies
+            if (this.player && this.solarSystemManager) {
+                this.updateMiniMap();
             }
             
             // Update HUD
@@ -224,6 +389,208 @@ class Game {
 
             // Update Gordon fleet animation
             this.updateGordonFleet(deltaTime);
+            
+            // Check if player died
+            if (this.playerDied) {
+                this.handlePlayerDeath();
+            }
+            
+            // Generate new systems as player explores
+            this.manageSystemGeneration();
+        }
+    }
+    
+    /**
+     * Apply physics (gravity) to player
+     */
+    applyPhysics(deltaTime) {
+        if (!this.gravityEnabled || !this.solarSystemManager) return;
+        
+        const gravity = this.solarSystemManager.calculateGravity(this.player.position, 1);
+        
+        // Apply gravitational force
+        const acceleration = gravity.force.clone().multiplyScalar(deltaTime * 100);
+        this.player.velocity.add(acceleration);
+        
+        // Apply slingshot if available
+        if (this.slingshotActive && gravity.starDistance < 200) {
+            this.solarSystemManager.systems.forEach(system => {
+                const slingshot = system.calculateSlingshot(this.player.position, this.player.velocity);
+                if (slingshot.available) {
+                    const boost = slingshot.direction.clone().multiplyScalar(slingshot.boost * 500 * deltaTime);
+                    this.player.velocity.add(boost);
+                }
+            });
+        }
+        
+        // Check for star death zone
+        if (gravity.inDeathZone) {
+            this.playerDied = true;
+        }
+    }
+    
+    /**
+     * Check for collisions with celestial bodies
+     */
+    checkCollisions() {
+        if (!this.collisionEnabled || !this.solarSystemManager) return;
+        
+        const collisions = this.solarSystemManager.checkCollisions(this.player.position, 10);
+        
+        collisions.forEach(collision => {
+            if (collision.fatal) {
+                // Death by star or other fatal collision
+                this.playerDied = true;
+                this.showMessage('COLLISION DETECTED - SHIP DESTROYED', 5000);
+            } else if (collision.type === 'planet' || collision.type === 'moon') {
+                // Can land if slow enough
+                if (collision.canLand && this.player.velocity.length() < 100) {
+                    // Gentle bounce if not trying to land
+                    const normal = collision.normal || new THREE.Vector3(0, 1, 0);
+                    const bounce = normal.clone().multiplyScalar(50);
+                    this.player.velocity.reflect(normal).multiplyScalar(0.3);
+                    this.player.velocity.add(bounce);
+                    
+                    // Show landing prompt if very close
+                    if (collision.distance < collision.body.radius + 30) {
+                        this.showMessage(`Press L to land on ${collision.body.name}`, 2000);
+                    }
+                } else {
+                    // Crash landing
+                    this.player.shield -= 20;
+                    this.player.velocity.reflect(collision.normal || new THREE.Vector3(0, 1, 0)).multiplyScalar(0.5);
+                    this.audio.play('explosion');
+                }
+            } else if (collision.type === 'asteroid') {
+                // Asteroid collision
+                this.player.shield -= collision.damage || 10;
+                const pushDir = new THREE.Vector3()
+                    .subVectors(this.player.position, collision.body.mesh.position)
+                    .normalize();
+                this.player.velocity.add(pushDir.multiplyScalar(100));
+                this.audio.play('hit');
+            }
+        });
+        
+        // Check shield depletion
+        if (this.player.shield <= 0) {
+            this.playerDied = true;
+        }
+    }
+    
+    /**
+     * Handle player death
+     */
+    handlePlayerDeath() {
+        this.playerDied = false;
+        this.player.shield = 0;
+        
+        // Explosion effect
+        this.audio.play('explosion');
+        
+        // Respawn
+        setTimeout(() => {
+            this.player.position.set(400, 50, 0);
+            this.player.velocity.set(0, 0, 0);
+            this.player.shield = 100;
+            this.player.fuel = 100;
+            this.player.landed = false;
+            this.showMessage('Ship destroyed! Respawning...', 3000);
+        }, 3000);
+    }
+    
+    /**
+     * Update mini map with celestial bodies
+     */
+    updateMiniMap() {
+        const mapCanvas = document.getElementById('miniMapCanvas');
+        if (!mapCanvas) return;
+        
+        const ctx = mapCanvas.getContext('2d');
+        const w = mapCanvas.width;
+        const h = mapCanvas.height;
+        const cx = w / 2;
+        const cy = h / 2;
+        
+        // Clear
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        ctx.fillRect(0, 0, w, h);
+        
+        // Scale factor
+        const scale = 0.05;
+        
+        // Draw stars (centers of systems)
+        this.solarSystemManager.systems.forEach(system => {
+            const relX = (system.centerPosition.x - this.player.position.x) * scale;
+            const relZ = (system.centerPosition.z - this.player.position.z) * scale;
+            
+            if (Math.abs(relX) < w/2 && Math.abs(relZ) < h/2) {
+                // Star
+                ctx.fillStyle = '#' + system.star.color.toString(16).padStart(6, '0');
+                ctx.beginPath();
+                ctx.arc(cx + relX, cy + relZ, 8, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Glow
+                const gradient = ctx.createRadialGradient(
+                    cx + relX, cy + relZ, 2,
+                    cx + relX, cy + relZ, 15
+                );
+                gradient.addColorStop(0, 'rgba(255, 200, 100, 0.5)');
+                gradient.addColorStop(1, 'rgba(255, 200, 100, 0)');
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(cx + relX, cy + relZ, 15, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Draw planets
+                system.planets.forEach(planet => {
+                    const px = (planet.mesh.position.x - this.player.position.x) * scale;
+                    const pz = (planet.mesh.position.z - this.player.position.z) * scale;
+                    
+                    if (Math.abs(px) < w/2 && Math.abs(pz) < h/2) {
+                        ctx.fillStyle = '#' + planet.color.toString(16).padStart(6, '0');
+                        ctx.beginPath();
+                        ctx.arc(cx + px, cy + pz, Math.max(2, planet.radius * scale * 0.1), 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                });
+            }
+        });
+        
+        // Draw player
+        ctx.fillStyle = '#00ff88';
+        ctx.beginPath();
+        ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Player direction
+        const dir = new THREE.Vector3(0, 0, -1).applyQuaternion(this.player.quaternion);
+        ctx.strokeStyle = '#00ff88';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + dir.x * 15, cy + dir.z * 15);
+        ctx.stroke();
+    }
+    
+    /**
+     * Generate new solar systems as player explores
+     */
+    manageSystemGeneration() {
+        if (!this.solarSystemManager || !this.player) return;
+        
+        const vx = Math.floor(this.player.position.x / 100);
+        const vy = Math.floor(this.player.position.y / 100);
+        const vz = Math.floor(this.player.position.z / 100);
+        
+        // Generate systems in a 2-voxel radius
+        for (let x = vx - 2; x <= vx + 2; x++) {
+            for (let y = vy - 2; y <= vy + 2; y++) {
+                for (let z = vz - 2; z <= vz + 2; z++) {
+                    this.solarSystemManager.getSystemAt(x * 100, y * 100, z * 100);
+                }
+            }
         }
     }
 
@@ -339,6 +706,12 @@ class GameAudio {
         
         // UI click
         this.sounds['click'] = this.createTone(1000, 0.05, 'sine');
+        
+        // UI confirm
+        this.sounds['ui_confirm'] = this.createTone(1500, 0.1, 'sine');
+        
+        // Hit
+        this.sounds['hit'] = this.createNoise(0.1, 'highpass');
     }
     
     createTone(freq, duration, type = 'sine') {
