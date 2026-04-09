@@ -1,0 +1,137 @@
+[
+  {
+    "model": "phi3:latest",
+    "size": "3.8B",
+    "tests": [
+      {
+        "test": "High Novelty",
+        "expected": "EXPLORE",
+        "got": "UNKNOWN",
+        "confidence": 0.3,
+        "latency_ms": 0,
+        "correct": false,
+        "valid": false
+      },
+      {
+        "test": "Low Reward",
+        "expected": "EXPLORE",
+        "got": "EXPLORE",
+        "confidence": 0.95,
+        "latency_ms": 8932.780265808105,
+        "correct": true,
+        "valid": true
+      },
+      {
+        "test": "Stable",
+        "expected": "EXPLOIT",
+        "got": "CONTINUE",
+        "confidence": 0.95,
+        "latency_ms": 2176.131248474121,
+        "correct": false,
+        "valid": true
+      },
+      {
+        "test": "Greeting",
+        "expected": "CONTINUE",
+        "got": "EXPLORE",
+        "confidence": 0.95,
+        "latency_ms": 2331.8333625793457,
+        "correct": false,
+        "valid": true
+      }
+    ],
+    "avg_latency": 4480.24829228719,
+    "accuracy": 25.0,
+    "valid_responses": 3
+  },
+  {
+    "model": "qwen2.5:3b",
+    "size": "3B",
+    "tests": [
+      {
+        "test": "High Novelty",
+        "expected": "EXPLORE",
+        "got": "EXPLORE",
+        "confidence": 0.95,
+        "latency_ms": 15331.762790679932,
+        "correct": true,
+        "valid": true
+      },
+      {
+        "test": "Low Reward",
+        "expected": "EXPLORE",
+        "got": "EXPLORE",
+        "confidence": 0.95,
+        "latency_ms": 1459.3563079833984,
+        "correct": true,
+        "valid": true
+      },
+      {
+        "test": "Stable",
+        "expected": "EXPLOIT",
+        "got": "CONTINUE",
+        "confidence": 0.95,
+        "latency_ms": 1518.1970596313477,
+        "correct": false,
+        "valid": true
+      },
+      {
+        "test": "Greeting",
+        "expected": "CONTINUE",
+        "got": "CONTINUE",
+        "confidence": 0.95,
+        "latency_ms": 1538.198709487915,
+        "correct": true,
+        "valid": true
+      }
+    ],
+    "avg_latency": 4961.878716945648,
+    "accuracy": 75.0,
+    "valid_responses": 4
+  },
+  {
+    "model": "tinyllama:latest",
+    "size": "1.1B",
+    "tests": [
+      {
+        "test": "High Novelty",
+        "expected": "EXPLORE",
+        "got": "EXPLORE",
+        "confidence": 0.7,
+        "latency_ms": 2852.473735809326,
+        "correct": true,
+        "valid": true
+      },
+      {
+        "test": "Low Reward",
+        "expected": "EXPLORE",
+        "got": "EXPLORE",
+        "confidence": 0.7,
+        "latency_ms": 963.8981819152832,
+        "correct": true,
+        "valid": true
+      },
+      {
+        "test": "Stable",
+        "expected": "EXPLOIT",
+        "got": "EXPLORE",
+        "confidence": 0.7,
+        "latency_ms": 1023.2589244842529,
+        "correct": false,
+        "valid": true
+      },
+      {
+        "test": "Greeting",
+        "expected": "CONTINUE",
+        "got": "EXPLORE",
+        "confidence": 0.7,
+        "latency_ms": 868.2775497436523,
+        "correct": false,
+        "valid": true
+      }
+    ],
+    "avg_latency": 1426.9770979881287,
+    "accuracy": 50.0,
+    "valid_responses": 4
+  }
+]
