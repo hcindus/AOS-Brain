@@ -3,7 +3,7 @@
   "name": "Luna",
   "role": "COMBAT",
   "level": 5,
-  "xp": 9669,
+  "xp": 9785,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 24,
     "combat": 15
   },
-  "missionsCompleted": 61,
+  "missionsCompleted": 62,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -323,6 +323,11 @@
       "name": "Nebula Cloud",
       "location": "Alpha-1",
       "timestamp": 1775749170708
+    },
+    {
+      "name": "Alien Artifact",
+      "location": "Alpha-1",
+      "timestamp": 1775750011707
     }
   ],
   "status": "ACTIVE",
