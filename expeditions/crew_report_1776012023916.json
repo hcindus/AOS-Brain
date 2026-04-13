@@ -1,0 +1,71 @@
+{
+  "timestamp": "2026-04-12T16:40:23.916Z",
+  "summary": {
+    "total": 5,
+    "active": 5
+  },
+  "members": [
+    {
+      "name": "Vex",
+      "role": "PILOT",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 22420,
+      "status": "ACTIVE",
+      "missions": 141,
+      "discoveries": 141
+    },
+    {
+      "name": "Nyx",
+      "role": "ENGINEER",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 22570,
+      "status": "ACTIVE",
+      "missions": 144,
+      "discoveries": 144
+    },
+    {
+      "name": "Jax",
+      "role": "SCIENTIST",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 23370,
+      "status": "ACTIVE",
+      "missions": 160,
+      "discoveries": 160
+    },
+    {
+      "name": "Luna",
+      "role": "COMBAT",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 22720,
+      "status": "ACTIVE",
+      "missions": 147,
+      "discoveries": 147
+    },
+    {
+      "name": "Aria",
+      "role": "MEDIC",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 22720,
+      "status": "ACTIVE",
+      "missions": 147,
+      "discoveries": 147
+    }
+  ],
+  "highlights": [
+    "Vex discovered Anomalous Planet",
+    "Nyx discovered Rare Minerals",
+    "Jax discovered Derelict Ship",
+    "Luna discovered Nebula Cloud",
+    "Aria discovered Hidden Base"
+  ]
+}
