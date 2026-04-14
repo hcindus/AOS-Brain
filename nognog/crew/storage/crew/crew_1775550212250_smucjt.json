@@ -3,7 +3,7 @@
   "name": "Jax",
   "role": "SCIENTIST",
   "level": 5,
-  "xp": 29000,
+  "xp": 29193,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 21,
     "combat": 23
   },
-  "missionsCompleted": 197,
+  "missionsCompleted": 199,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -1003,6 +1003,16 @@
       "name": "Space Anomaly",
       "location": "Alpha-1",
       "timestamp": 1776123671309
+    },
+    {
+      "name": "Anomalous Planet",
+      "location": "Alpha-1",
+      "timestamp": 1776127186601
+    },
+    {
+      "name": "Ancient Ruins",
+      "location": "Alpha-1",
+      "timestamp": 1776128088301
     }
   ],
   "status": "ACTIVE",
