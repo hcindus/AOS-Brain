@@ -89,13 +89,16 @@ class ShoppingCart {
 
     updateCartUI() {
         // Update cart icon count
-        const cartCountElements = document.querySelectorAll('.cart-count');
+        const cartCountElements = document.querySelectorAll('.cart-count, #cart-count');
+        const count = this.getItemCount();
         cartCountElements.forEach(el => {
-            el.textContent = this.getItemCount();
-            el.style.display = this.getItemCount() > 0 ? 'inline' : 'none';
+            el.textContent = count;
+            if (el.style) {
+                el.style.display = count > 0 ? 'inline' : 'none';
+            }
         });
 
-        // Update cart total
+        // Update cart total displays
         const cartTotalElements = document.querySelectorAll('.cart-total');
         cartTotalElements.forEach(el => {
             el.textContent = `$${this.getTotalFormatted()}`;
