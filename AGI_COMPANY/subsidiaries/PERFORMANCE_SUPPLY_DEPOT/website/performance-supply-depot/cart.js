@@ -52,8 +52,26 @@ class ShoppingCart {
         }
     }
 
-    getTotal() {
+    getSubtotal() {
         return this.items.reduce((sum, item) => sum + (item.priceCents * item.quantity), 0);
+    }
+
+    getSubtotalFormatted() {
+        return (this.getSubtotal() / 100).toFixed(2);
+    }
+
+    getShipping() {
+        // $15.56 per item (per quantity unit)
+        const totalQuantity = this.items.reduce((sum, item) => sum + item.quantity, 0);
+        return totalQuantity * 1556; // $15.56 in cents
+    }
+
+    getShippingFormatted() {
+        return (this.getShipping() / 100).toFixed(2);
+    }
+
+    getTotal() {
+        return this.getSubtotal() + this.getShipping();
     }
 
     getTotalFormatted() {
@@ -153,7 +171,11 @@ class ShoppingCart {
             <div style="background: var(--primary); color: white; padding: 25px; border-radius: 8px;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
                     <span>Subtotal</span>
-                    <span>$${this.getTotalFormatted()}</span>
+                    <span>$${this.getSubtotalFormatted()}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                    <span>Shipping ($15.56 × ${this.getItemCount()} items)</span>
+                    <span>$${this.getShippingFormatted()}</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
                     <span>Tax (0%)</span>
@@ -161,7 +183,7 @@ class ShoppingCart {
                 </div>
                 <div style="display: flex; justify-content: space-between; font-size: 20px; font-weight: 700; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;">
                     <span>Total</span>
-                    <span>$${this.getTotalFormatted()}/mo</span>
+                    <span>$${this.getTotalFormatted()}</span>
                 </div>
             </div>
         `;

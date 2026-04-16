@@ -604,9 +604,13 @@
             }
 
             let html = '';
+            let subtotal = 0;
+            let totalQuantity = 0;
+            
             cart.forEach(item => {
                 const itemTotal = (item.priceCents * item.quantity) / 100;
-                total += itemTotal;
+                subtotal += itemTotal;
+                totalQuantity += item.quantity;
                 
                 html += `
                     <div class="order-item">
@@ -618,6 +622,21 @@
                     </div>
                 `;
             });
+
+            // Calculate shipping ($15.56 per item)
+            const shipping = totalQuantity * 15.56;
+            const total = subtotal + shipping;
+
+            // Add shipping line
+            html += `
+                <div class="order-item" style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 15px; padding-top: 15px;">
+                    <div>
+                        <div class="item-name" style="color: var(--text-muted);">Shipping</div>
+                        <div class="item-qty">$15.56 × ${totalQuantity} items</div>
+                    </div>
+                    <div class="item-price">$${shipping.toFixed(2)}</div>
+                </div>
+            `;
 
             container.innerHTML = html;
             document.getElementById('order-total').textContent = '$' + total.toFixed(2);
