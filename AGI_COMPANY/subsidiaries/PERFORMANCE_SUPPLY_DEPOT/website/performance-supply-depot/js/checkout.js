@@ -77,13 +77,18 @@ async function loadCartDisplay() {
     // Calculate totals
     const shipping = totalQuantity * 15.56;
     // Tax will be calculated based on shipping address
-    const tax = await calculateTax(subtotal, shipping);
+    const taxResult = await calculateTax(subtotal, shipping);
+    const tax = taxResult.tax_amount;
     const total = subtotal + shipping + tax;
 
     // Update displays
     document.getElementById('cart-subtotal').textContent = `$${subtotal.toFixed(2)}`;
     document.getElementById('cart-shipping').textContent = `$${shipping.toFixed(2)}`;
     document.getElementById('cart-tax').textContent = `$${tax.toFixed(2)}`;
+    if (taxResult.tax_rate > 0) {
+        const taxLabel = document.querySelector('.total-line.tax small');
+        if (taxLabel) taxLabel.textContent = `(${(taxResult.tax_rate * 100).toFixed(2)}% CA)`;
+    }
     document.getElementById('cart-total').textContent = `$${total.toFixed(2)}`;
 
     // Update header cart count
@@ -99,6 +104,10 @@ async function calculateTax(subtotal, shipping) {
     const state = document.getElementById('shipping-state')?.value || 
                   document.getElementById('billing-state')?.value || '';
     
+    if (!state) {
+        return { tax_amount: 0, tax_rate: 0 };
+    }
+    
     try {
         const response = await fetch(`${API_BASE}/calculate-tax`, {
             method: 'POST',
@@ -112,13 +121,13 @@ async function calculateTax(subtotal, shipping) {
         
         if (response.ok) {
             const data = await response.json();
-            return data.tax_amount / 100;
+            return { tax_amount: data.tax_amount / 100, tax_rate: data.tax_rate };
         }
     } catch (e) {
         console.log('Tax calculation failed, using 0%');
     }
     
-    return 0;
+    return { tax_amount: 0, tax_rate: 0 };
 }
 
 // Update tax when state changes
