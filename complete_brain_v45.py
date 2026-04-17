@@ -599,7 +599,6 @@ class CompleteBrainV44:
         
         return {
             "version": "4.5",
-            "components_active": 16,
             "tick": self.tick_count,
             "phase": self.current_phase,
             "signal_quality_20avg": recent_signal,
@@ -615,14 +614,14 @@ class CompleteBrainV44:
                 "models": self.router.MODELS if self.router else None,
                 "stats": self.router.get_stats() if self.router else None
             },
-            "components_active": 16,
+            "components_active": 15,
             "pipeline": "Lungs → Liver → Brain → Kidneys"
         }
     
     def run(self):
         """Run complete system with full signal/noise pipeline"""
-        print("\n[SYSTEM] Complete Brain v4.5 running...")
-        print("         Respiratory pipeline: Lungs → Liver → Brain → Kidneys")
+        print("\n[SYSTEM] Complete Brain v4.4 running...")
+        print("         Signal pipeline: Liver → Brain → Kidneys")
         
         # Start all organ monitors
         self.thyroid.start()
