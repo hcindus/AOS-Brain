@@ -1,0 +1,92 @@
+{
+  "metadata": {
+    "scraper": "captain_local",
+    "timestamp": "2026-04-17T03:45:36.104305",
+    "total": 10,
+    "successful": 0,
+    "failed": 10,
+    "success_rate": "0.0%"
+  },
+  "results": [
+    {
+      "name": "Acme Corp",
+      "county": "Alameda",
+      "entity_number": "01234567",
+      "sos_url": "https://businesssearch.sos.ca.gov/Document/RequestItem?entity_number=01234567",
+      "status": "failed",
+      "retry_count": 1
+    },
+    {
+      "name": "Beta LLC",
+      "county": "Alameda",
+      "entity_number": "01234568",
+      "sos_url": "https://businesssearch.sos.ca.gov/Document/RequestItem?entity_number=01234568",
+      "status": "failed",
+      "retry_count": 1
+    },
+    {
+      "name": "Gamma Inc",
+      "county": "Alameda",
+      "entity_number": "01234569",
+      "sos_url": "https://businesssearch.sos.ca.gov/Document/RequestItem?entity_number=01234569",
+      "status": "failed",
+      "retry_count": 1
+    },
+    {
+      "name": "Delta Services",
+      "county": "Alameda",
+      "entity_number": "01234570",
+      "sos_url": "https://businesssearch.sos.ca.gov/Document/RequestItem?entity_number=01234570",
+      "status": "failed",
+      "retry_count": 1
+    },
+    {
+      "name": "Epsilon Enterprises",
+      "county": "Alameda",
+      "entity_number": "01234571",
+      "sos_url": "https://businesssearch.sos.ca.gov/Document/RequestItem?entity_number=01234571",
+      "status": "failed",
+      "retry_count": 1
+    },
+    {
+      "name": "Zeta Solutions",
+      "county": "Alameda",
+      "entity_number": "01234572",
+      "sos_url": "https://businesssearch.sos.ca.gov/Document/RequestItem?entity_number=01234572",
+      "status": "failed",
+      "retry_count": 1
+    },
+    {
+      "name": "Eta Industries",
+      "county": "Alameda",
+      "entity_number": "01234573",
+      "sos_url": "https://businesssearch.sos.ca.gov/Document/RequestItem?entity_number=01234573",
+      "status": "failed",
+      "retry_count": 1
+    },
+    {
+      "name": "Theta Group",
+      "county": "Alameda",
+      "entity_number": "01234574",
+      "sos_url": "https://businesssearch.sos.ca.gov/Document/RequestItem?entity_number=01234574",
+      "status": "failed",
+      "retry_count": 1
+    },
+    {
+      "name": "Iota Partners",
+      "county": "Alameda",
+      "entity_number": "01234575",
+      "sos_url": "https://businesssearch.sos.ca.gov/Document/RequestItem?entity_number=01234575",
+      "status": "failed",
+      "retry_count": 1
+    },
+    {
+      "name": "Kappa Consulting",
+      "county": "Alameda",
+      "entity_number": "01234576",
+      "sos_url": "https://businesssearch.sos.ca.gov/Document/RequestItem?entity_number=01234576",
+      "status": "failed",
+      "retry_count": 1
+    }
+  ]
+}
