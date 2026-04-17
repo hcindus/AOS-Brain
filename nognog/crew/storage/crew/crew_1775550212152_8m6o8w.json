@@ -3,7 +3,7 @@
   "name": "Nyx",
   "role": "ENGINEER",
   "level": 5,
-  "xp": 41617,
+  "xp": 41725,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 15,
     "combat": 14
   },
-  "missionsCompleted": 266,
+  "missionsCompleted": 268,
   "discoveries": [
     {
       "name": "Rare Minerals",
@@ -1348,6 +1348,16 @@
       "name": "Space Anomaly",
       "location": "Alpha-1",
       "timestamp": 1776399710886
+    },
+    {
+      "name": "Ancient Ruins",
+      "location": "Alpha-1",
+      "timestamp": 1776400940908
+    },
+    {
+      "name": "Unknown Signal",
+      "location": "Alpha-1",
+      "timestamp": 1776401030909
     }
   ],
   "status": "ACTIVE",
