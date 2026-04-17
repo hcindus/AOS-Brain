@@ -1,0 +1,34 @@
+{
+  "report_type": "Six Sigma Quality Assessment",
+  "generated_by": "Patricia",
+  "timestamp": "2026-04-17T11:20:20.204088",
+  "metrics": {
+    "total_orders": 17,
+    "active_orders": 1,
+    "avg_cycle_time_days": 0,
+    "defects_detected": 1,
+    "dpmo": 58823.53,
+    "sigma_level": 5.41,
+    "target_sigma": 6.0,
+    "improvement_gap": 0.59
+  },
+  "defects": [
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-POS-E00B0CE0",
+      "product": "ReggieStarr POS System",
+      "priority": "high",
+      "queued_since": "2026-04-17T04:06:40.338507",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "MEDIUM",
+      "action": "Review high-priority queue processing",
+      "impact": "Accelerate 1 urgent orders",
+      "owner": "Production Manager"
+    }
+  ]
+}
