@@ -3,7 +3,7 @@
   "name": "Nyx",
   "role": "ENGINEER",
   "level": 5,
-  "xp": 43469,
+  "xp": 43536,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 15,
     "combat": 14
   },
-  "missionsCompleted": 277,
+  "missionsCompleted": 278,
   "discoveries": [
     {
       "name": "Rare Minerals",
@@ -1403,6 +1403,11 @@
       "name": "Nebula Cloud",
       "location": "Alpha-1",
       "timestamp": 1776426021414
+    },
+    {
+      "name": "Unknown Signal",
+      "location": "Alpha-1",
+      "timestamp": 1776440181678
     }
   ],
   "status": "ACTIVE",
