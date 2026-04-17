@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReggieStart POS</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">🍔</span>
+        <span class="logo-text">ReggieStart POS</span>
+      </div>
+      <div class="store-info">
+        <span id="store-name">Demo Store</span>
+        <span id="current-time">--:--</span>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Left Panel: Product Grid -->
+      <section class="products-panel">
+        <div class="category-tabs">
+          <button class="tab-btn active" data-category="all">All</button>
+          <button class="tab-btn" data-category="Food">Food</button>
+          <button class="tab-btn" data-category="Beverages">Drinks</button>
+          <button class="tab-btn" data-category="Desserts">Desserts</button>
+        </div>
+        
+        <div class="search-bar">
+          <input type="text" id="product-search" placeholder="🔍 Search products or enter PLU...">
+        </div>
+        
+        <div class="products-grid" id="products-grid">
+          <!-- Products loaded dynamically -->
+        </div>
+      </section>
+
+      <!-- Right Panel: Transaction -->
+      <section class="transaction-panel">
+        <div class="transaction-header">
+          <h2>Current Transaction</h2>
+          <button class="btn-clear" id="clear-transaction">Clear</button>
+        </div>
+        
+        <div class="cart-items" id="cart-items">
+          <div class="empty-cart">
+            <p>🛒 Cart is empty</p>
+            <p class="sub-text">Select products to begin</p>
+          </div>
+        </div>
+        
+        <div class="transaction-totals">
+          <div class="total-row">
+            <span>Subtotal:</span>
+            <span id="subtotal">$0.00</span>
+          </div>
+          <div class="total-row">
+            <span>Tax (<span id="tax-rate">8.5%</span>):</span>
+            <span id="tax">$0.00</span>
+          </div>
+          <div class="total-row grand-total">
+            <span>TOTAL:</span>
+            <span id="grand-total">$0.00</span>
+          </div>
+        </div>
+        
+        <div class="payment-methods">
+          <button class="payment-btn cash" data-method="Cash">
+            <span class="icon">💵</span>
+            <span>Cash</span>
+          </button>
+          <button class="payment-btn credit" data-method="Credit">
+            <span class="icon">💳</span>
+            <span>Credit</span>
+          </button>
+          <button class="payment-btn debit" data-method="Debit">
+            <span class="icon">🏦</span>
+            <span>Debit</span>
+          </button>
+        </div>
+        
+        <div class="numpad">
+          <div class="numpad-row">
+            <button class="num-btn" data-num="7">7</button>
+            <button class="num-btn" data-num="8">8</button>
+            <button class="num-btn" data-num="9">9</button>
+            <button class="func-btn" data-func="qty">Qty</button>
+          </div>
+          <div class="numpad-row">
+            <button class="num-btn" data-num="4">4</button>
+            <button class="num-btn" data-num="5">5</button>
+            <button class="num-btn" data-num="6">6</button>
+            <button class="func-btn void" data-func="void">Void</button>
+          </div>
+          <div class="numpad-row">
+            <button class="num-btn" data-num="1">1</button>
+            <button class="num-btn" data-num="2">2</button>
+            <button class="num-btn" data-num="3">3</button>
+            <button class="func-btn" data-func="disc">Disc</button>
+          </div>
+          <div class="numpad-row">
+            <button class="num-btn" data-num="0">0</button>
+            <button class="num-btn" data-num=".">.</button>
+            <button class="func-btn plu" data-func="plu">PLU</button>
+            <button class="func-btn enter" data-func="enter">⏎</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Status Bar -->
+    <footer class="status-bar">
+      <div class="status-left">
+        <span class="status-indicator online">● Offline Mode</span>
+        <span class="status-separator">|</span>
+        <span id="transaction-count">Transactions Today: 0</span>
+      </div>
+      <div class="status-right">
+        <button class="status-btn" id="btn-reports">📊 Reports</button>
+        <button class="status-btn" id="btn-settings">⚙️ Settings</button>
+        <button class="status-btn" id="btn-help">❓ Help</button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Payment Modal -->
+  <div class="modal" id="payment-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Payment</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="payment-summary">
+          <div class="amount-due">
+            <label>Amount Due:</label>
+            <span id="modal-total">$0.00</span>
+          </div>
+          
+          <div class="amount-received">
+            <label>Amount Received:</label>
+            <input type="number" id="amount-received" step="0.01" placeholder="0.00">
+          </div>
+          
+          <div class="change-due">
+            <label>Change:</label>
+            <span id="change-amount">$0.00</span>
+          </div>
+        </div>
+        
+        <div class="payment-actions">
+          <button class="btn-cancel">Cancel</button>
+          <button class="btn-complete">Complete Payment ✓</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Receipt Modal -->
+  <div class="modal" id="receipt-modal">
+    <div class="modal-content receipt">
+      <div class="receipt-preview" id="receipt-preview">
+        <!-- Receipt content generated here -->
+      </div>
+      
+      <div class="receipt-actions">
+        <button class="btn-print">🖨️ Print Receipt</button>
+        <button class="btn-email">📧 Email Receipt</button>
+        <button class="btn-skip">Skip → New Transaction</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reports Modal -->
+  <div class="modal" id="reports-modal">
+    <div class="modal-content large">
+      <div class="modal-header">
+        <h2>📊 Reports</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="report-tabs">
+          <button class="report-tab active" data-report="daily">Daily Summary</button>
+          <button class="report-tab" data-report="transactions">Transactions</button>
+          <button class="report-tab" data-report="products">Top Products</button>
+        </div>
+        
+        <div class="report-content" id="report-content">
+          <!-- Report content loaded dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

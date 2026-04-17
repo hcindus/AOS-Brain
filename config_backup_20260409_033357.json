@@ -1,0 +1,40 @@
+{
+  "timestamp": "$(date -Iseconds)",
+  "host": "Miles",
+  "brain": {
+    "version": "4.2",
+    "socket": "/tmp/aos_brain.sock",
+    "pid": $(pgrep -f "complete_brain_v44" | head -1),
+    "phase": "Observe",
+    "tick": 1
+  },
+  "mission_control": {
+    "version": "2.1.0",
+    "port": 8080,
+    "url": "http://localhost:8080"
+  },
+  "thyroid": {
+    "mode": "OLLAMA",
+    "budget": 1.0,
+    "memory_threshold": 75
+  },
+  "models": {
+    "decision": "tinyllama:latest",
+    "voice": "antoniohudnall/Mort_II:latest",
+    "embedding": "nomic-embed-text:latest",
+    "reasoning": "qwen2.5:3b"
+  },
+  "services": {
+    "aos-brain-v4": "active",
+    "aos-mission-control": "active",
+    "aos-bhsi-v4": "restarting"
+  },
+  "sockets": {
+    "aos_brain": "/tmp/aos_brain.sock",
+    "bhsi_v4": "/tmp/bhsi_v4.sock"
+  },
+  "system": {
+    "memory_percent": 54.2,
+    "memory_available_mb": 7339
+  }
+}

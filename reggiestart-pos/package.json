@@ -1,0 +1,79 @@
+{
+  "name": "reggiestart-pos",
+  "version": "1.0.0",
+  "description": "ReggieStart POS - Full-featured standalone point of sale system",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:linux": "electron-builder --linux",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "dist": "npm run build:linux && npm run build:win",
+    "test": "jest",
+    "lint": "eslint src/"
+  },
+  "keywords": ["pos", "point-of-sale", "retail", "standalone", "offline"],
+  "author": "AGI Company <pos@agi-company.ai>",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.0",
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "better-sqlite3": "^9.4.0",
+    "uuid": "^9.0.0"
+  },
+  "build": {
+    "appId": "com.agicompany.reggiestart",
+    "productName": "ReggieStart POS",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "database/**/*",
+      "node_modules/**/*"
+    ],
+    "linux": {
+      "target": [
+        {
+          "target": "deb",
+          "arch": ["x64", "arm64"]
+        },
+        {
+          "target": "AppImage",
+          "arch": ["x64"]
+        }
+      ],
+      "category": "Office",
+      "icon": "assets/icons/icon.png"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64", "ia32"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "assets/icons/icon.ico"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["x64", "arm64"]
+        }
+      ],
+      "icon": "assets/icons/icon.icns",
+      "category": "public.app-category.business"
+    }
+  }
+}
