@@ -3,7 +3,7 @@
   "name": "Aria",
   "role": "MEDIC",
   "level": 5,
-  "xp": 49897,
+  "xp": 49954,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 17,
     "combat": 23
   },
-  "missionsCompleted": 335,
+  "missionsCompleted": 336,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -1693,6 +1693,11 @@
       "name": "Alien Artifact",
       "location": "Alpha-1",
       "timestamp": 1776541103792
+    },
+    {
+      "name": "Ancient Ruins",
+      "location": "Alpha-1",
+      "timestamp": 1776545843885
     }
   ],
   "status": "ACTIVE",
