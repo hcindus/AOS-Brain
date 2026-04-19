@@ -26,13 +26,14 @@ else
 fi
 
 # 2. Complete Brain v4 (AOD daemon)
-if pgrep -f "complete_brain_v4.py" > /dev/null; then
-    PID=$(pgrep -f "complete_brain_v4.py")
+if pgrep -f "complete_brain_v45.py" > /dev/null; then
+    PID=$(pgrep -f "complete_brain_v45.py")
     UPTIME=$(ps -o etime= -p $PID 2>/dev/null || echo "unknown")
-    log "✅ Complete Brain v4: RUNNING (PID $PID, uptime: $UPTIME)"
+    log "✅ Complete Brain v4.5: RUNNING (PID $PID, uptime: $UPTIME)"
 else
-    log "❌ Complete Brain v4: NOT RUNNING - attempting restart..."
-    /usr/bin/python3 /root/.aos/aos/complete_brain_v4.py &
+    log "❌ Complete Brain v4.5: NOT RUNNING - attempting restart..."
+    export PYTHONPATH=/root/.aos/aos
+    /usr/bin/python3 /root/.aos/aos/complete_brain_v45.py &
 fi
 
 # 3. Mission Control Server

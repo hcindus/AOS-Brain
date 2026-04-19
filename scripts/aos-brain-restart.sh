@@ -43,7 +43,7 @@ systemctl daemon-reload
 
 # Start brain service
 echo ""
-echo "🚀 Starting AOS Brain v4.1..."
+echo "🚀 Starting AOS Brain v4.5..."
 systemctl start aos-brain-v4.service
 sleep 3
 
@@ -122,3 +122,4 @@ echo "   • Diagnose: python3 /root/.openclaw/workspace/aocros/mission_control/
 echo "   • Full check: python3 /root/.openclaw/workspace/aocros/mission_control/diagnostic.py diagnostic"
 echo ""
 echo -e "${GREEN}✅ AOS Brain v4.1 is ready!${NC}"
+

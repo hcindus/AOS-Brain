@@ -50,7 +50,7 @@ def attempt_fix(num):
     
     # Check brain process
     try:
-        result = subprocess.run(['pgrep', '-f', 'complete_brain_v4.py'], 
+        result = subprocess.run(['pgrep', '-f', 'complete_brain_v45.py'], 
                               capture_output=True, text=True)
         if result.returncode == 0:
             pids = result.stdout.strip().split('\n')
