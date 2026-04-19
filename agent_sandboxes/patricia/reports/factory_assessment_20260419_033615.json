@@ -1,0 +1,133 @@
+{
+  "report_type": "Six Sigma Quality Assessment",
+  "generated_by": "Patricia",
+  "timestamp": "2026-04-19T03:36:15.103876",
+  "metrics": {
+    "total_orders": 36,
+    "active_orders": 0,
+    "avg_cycle_time_days": 1.54,
+    "defects_detected": 12,
+    "dpmo": 333333.33,
+    "sigma_level": 2.67,
+    "target_sigma": 6.0,
+    "improvement_gap": 3.33
+  },
+  "defects": [
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-CREAM-BUILD-001",
+      "product": "CREAM Mobile App - Android",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:21:54",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-CREAM-RN-001",
+      "product": "CREAM React Native - Cross Platform",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:22:38",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-DEPOTCHAOS-MACOS-001",
+      "product": "DepotChaos macOS App",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:24:05",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-DEPOTCHAOS-IOS-001",
+      "product": "DepotChaos iOS App",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:24:05",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-DEPOTCHAOS-WEB-001",
+      "product": "DepotChaos Web PWA",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:27:41",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-DEPOTCHAOS-FLUTTER-001",
+      "product": "DepotChaos Flutter",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:27:41",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-MILKMAN-2D-001",
+      "product": "Milkman Game - 2D Version",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:31:11",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-MILKMAN-3D-001",
+      "product": "Milkman Game - 3D Version",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:31:11",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-LECHE-2D-001",
+      "product": "Leche Game - 2D Version",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:31:11",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-LECHE-3D-001",
+      "product": "Leche Game - 3D Version",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:31:11",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-DAVERSE-UNITY-001",
+      "product": "DaVerse - Unity Version",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:31:57",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-DAVERSE-UNREAL-001",
+      "product": "DaVerse - Unreal Engine Version",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:31:57",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "MEDIUM",
+      "action": "Review high-priority queue processing",
+      "impact": "Accelerate 12 urgent orders",
+      "owner": "Production Manager"
+    }
+  ]
+}

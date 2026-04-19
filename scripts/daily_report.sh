@@ -110,6 +110,27 @@ else
 fi
 echo "" >> "$REPORT_FILE"
 
+# Section 5.6: Game Development Queue (Added per Captain request)
+echo "🎮 GAME DEVELOPMENT QUEUE" >> "$REPORT_FILE"
+echo "-----------------------------------------------" >> "$REPORT_FILE"
+if [ -f "$FACTORY_DB" ]; then
+    # Count game jobs
+    GAME_QUEUED=$(sqlite3 "$FACTORY_DB" "SELECT COUNT(*) FROM production_orders WHERE status='queued' AND product_type='game';" 2>/dev/null || echo "0")
+    GAME_COMPLETED=$(sqlite3 "$FACTORY_DB" "SELECT COUNT(*) FROM production_orders WHERE status='completed' AND product_type='game';" 2>/dev/null || echo "0")
+    echo "Games in Queue: $GAME_QUEUED" >> "$REPORT_FILE"
+    echo "Games Completed: $GAME_COMPLETED" >> "$REPORT_FILE"
+    echo "" >> "$REPORT_FILE"
+    
+    # List all game queue
+    if [ "$GAME_QUEUED" -gt 0 ]; then
+        echo "Active Game Builds:" >> "$REPORT_FILE"
+        sqlite3 "$FACTORY_DB" "SELECT id, product_name, priority, metadata FROM production_orders WHERE status='queued' AND product_type='game' ORDER BY created_at DESC;" 2>/dev/null >> "$REPORT_FILE" || echo "  (Game data unavailable)" >> "$REPORT_FILE"
+    fi
+else
+    echo "Game Queue: Database unavailable" >> "$REPORT_FILE"
+fi
+echo "" >> "$REPORT_FILE"
+
 # Section 6: Compliance Status
 echo "📋 COMPLIANCE STATUS" >> "$REPORT_FILE"
 echo "-----------------------------------------------" >> "$REPORT_FILE"
