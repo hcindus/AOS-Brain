@@ -402,6 +402,76 @@
             transform: translate(-50%, -50%);
             transition: transform 0.1s;
         }
+
+        /* Game Controls - Save/Load/Sound */
+        #gameControls {
+            position: absolute;
+            top: 20px;
+            right: 50%;
+            transform: translateX(50%);
+            z-index: 200;
+            display: flex;
+            gap: 10px;
+        }
+
+        .control-btn {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(0, 255, 136, 0.5);
+            color: #00ff88;
+            cursor: pointer;
+            border-radius: 0.25rem;
+            transition: all 0.3s;
+        }
+
+        .control-btn:hover {
+            background: rgba(0, 255, 136, 0.2);
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        /* FPS Counter */
+        #fpsCounter {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9rem;
+            color: #00ff88;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(0, 255, 136, 0.5);
+            border-radius: 0.25rem;
+        }
+
+        /* Mobile Action Buttons */
+        #mobileButtons {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 200;
+        }
+
+        #mobileButtons button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 255, 136, 0.5);
+            background: rgba(0, 0, 0, 0.8);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        #mobileButtons button:active {
+            background: rgba(0, 255, 136, 0.3);
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body>
@@ -558,12 +628,29 @@
                 <span><span class="control-key">V</span> Cam</span>
                 <span><span class="control-key">M</span> Map</span>
                 <span><span class="control-key">Space</span> Fire</span>
+                <span><span class="control-key">P</span> Save</span>
+                <span><span class="control-key">O</span> Load</span>
             </div>
-            
+
+            <!-- Game Controls -->
+            <div id="gameControls">
+                <button id="saveBtn" class="control-btn">💾 Save</button>
+                <button id="loadBtn" class="control-btn">📂 Load</button>
+                <button id="soundBtn" class="control-btn">🔊 Sound</button>
+            </div>
+
+            <!-- FPS Counter -->
+            <div id="fpsCounter">60 FPS</div>
+
             <!-- Mobile Controls -->
             <div id="mobileControls">
                 <div class="joystick" id="moveJoystick">
                     <div class="joystick-knob"></div>
+                </div>
+                <div id="mobileButtons">
+                    <button id="mobileFire">🔥</button>
+                    <button id="mobileBoost">🚀</button>
+                    <button id="mobileLand">🌍</button>
                 </div>
             </div>
         </div>

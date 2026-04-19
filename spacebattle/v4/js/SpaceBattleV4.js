@@ -206,11 +206,11 @@ class SpaceBattleV4 {
     setupInput() {
         window.addEventListener('keydown', (e) => {
             this.keys[e.code] = true;
-            if (e.code === 'Space') this.player?.fire();
+            if (e.code === 'Space' && this.player) this.player.fire();
             if (e.code === 'KeyL') this.player?.toggleLanding();
             if (e.code === 'KeyV') this.toggleCamera();
             if (e.code === 'KeyM') this.toggleMap();
-            if (e.code === 'KeyQ') this.player?.rollLeft = true;
+            if (e.code === 'KeyQ' && this.player) this.player.rollLeft = true;
             if (e.code === 'KeyE') this.player?.rollRight = true;
             if (e.code === 'Escape') this.togglePause();
         });
@@ -1500,9 +1500,9 @@ function initLandingAnimation() {
     
     const particles = new THREE.Points(geometry, material);
     scene.add(particles);
-    
+
     camera.position.z = 15;
-    
+
     function animate() {
         requestAnimationFrame(animate);
         particles.rotation.y += 0.001;
@@ -1510,13 +1510,248 @@ function initLandingAnimation() {
         renderer.render(scene, camera);
     }
     animate();
-    
+
     window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
     });
 }
+
+// ==================== GAME STATE MANAGEMENT ====================
+
+SpaceBattleV4.prototype.saveGame = function() {
+    const gameState = {
+        currentGridPos: this.currentGridPos,
+        universeSeed: this.universeSeed,
+        score: this.score,
+        kills: this.kills,
+        wave: this.wave,
+        startTime: this.startTime,
+        playerHealth: this.player?.health || 100,
+        playerShield: this.player?.shield || 100,
+        timestamp: Date.now()
+    };
+
+    try {
+        localStorage.setItem('spacebattle_v4_save', JSON.stringify(gameState));
+        this.showNotification('Game Saved! 💾', '#00ff88');
+        return true;
+    } catch (e) {
+        console.warn('Failed to save game:', e);
+        this.showNotification('Save Failed!', '#ff4444');
+        return false;
+    }
+};
+
+SpaceBattleV4.prototype.loadGame = function() {
+    try {
+        const saved = localStorage.getItem('spacebattle_v4_save');
+        if (!saved) {
+            this.showNotification('No Save Found', '#ffaa00');
+            return false;
+        }
+
+        const gameState = JSON.parse(saved);
+
+        // Restore state
+        this.currentGridPos = gameState.currentGridPos || { x: 50, y: 50, z: 50 };
+        this.universeSeed = gameState.universeSeed || Math.random() * 100000;
+        this.score = gameState.score || 0;
+        this.kills = gameState.kills || 0;
+        this.wave = gameState.wave || 1;
+        this.startTime = gameState.startTime || Date.now();
+
+        if (this.player) {
+            this.player.health = gameState.playerHealth || 100;
+            this.player.shield = gameState.playerShield || 100;
+        }
+
+        this.showNotification('Game Loaded! 📂', '#00ff88');
+        return true;
+    } catch (e) {
+        console.warn('Failed to load game:', e);
+        this.showNotification('Load Failed!', '#ff4444');
+        return false;
+    }
+};
+
+SpaceBattleV4.prototype.showNotification = function(message, color = '#00ff88') {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.9);
+        border: 2px solid ${color};
+        color: ${color};
+        padding: 1rem 2rem;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.2rem;
+        border-radius: 0.5rem;
+        z-index: 10000;
+        text-align: center;
+        pointer-events: none;
+    `;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transition = 'opacity 0.5s';
+        setTimeout(() => notification.remove(), 500);
+    }, 2000);
+};
+
+SpaceBattleV4.prototype.toggleSound = function() {
+    if (!this.audioContext) {
+        this.initAudio();
+    }
+
+    if (this.audioContext) {
+        if (this.audioContext.state === 'suspended') {
+            this.audioContext.resume();
+            this.showNotification('Sound Enabled 🔊', '#00ff88');
+        } else {
+            this.audioContext.suspend();
+            this.showNotification('Sound Disabled 🔇', '#ff4444');
+        }
+    }
+};
+
+SpaceBattleV4.prototype.setupMobileControls = function() {
+    // Touch joystick setup
+    const joystick = document.getElementById('moveJoystick');
+    const knob = joystick?.querySelector('.joystick-knob');
+
+    if (!joystick || !knob) return;
+
+    let touching = false;
+    const center = { x: 60, y: 60 };
+
+    joystick.addEventListener('touchstart', (e) => {
+        touching = true;
+        updateJoystick(e.touches[0]);
+    });
+
+    joystick.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        if (touching) updateJoystick(e.touches[0]);
+    });
+
+    joystick.addEventListener('touchend', () => {
+        touching = false;
+        this.joystick.active = false;
+        knob.style.transform = 'translate(-50%, -50%)';
+    });
+
+    const updateJoystick = (touch) => {
+        const rect = joystick.getBoundingClientRect();
+        const x = touch.clientX - rect.left - rect.width / 2;
+        const y = touch.clientY - rect.top - rect.height / 2;
+
+        const maxDist = 40;
+        const dist = Math.min(Math.sqrt(x * x + y * y), maxDist);
+        const angle = Math.atan2(y, x);
+
+        const clampedX = Math.cos(angle) * dist;
+        const clampedY = Math.sin(angle) * dist;
+
+        knob.style.transform = `translate(calc(-50% + ${clampedX}px), calc(-50% + ${clampedY}px))`;
+
+        this.joystick.active = true;
+        this.joystick.x = clampedX / maxDist;
+        this.joystick.y = -clampedY / maxDist; // Invert Y
+    };
+
+    // Mobile action buttons
+    const mobileFire = document.getElementById('mobileFire');
+    const mobileBoost = document.getElementById('mobileBoost');
+    const mobileLand = document.getElementById('mobileLand');
+
+    mobileFire?.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        this.keys[' '] = true;
+        this.fire();
+    });
+
+    mobileFire?.addEventListener('touchend', () => {
+        this.keys[' '] = false;
+    });
+
+    mobileBoost?.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        this.keys['Shift'] = true;
+    });
+
+    mobileBoost?.addEventListener('touchend', () => {
+        this.keys['Shift'] = false;
+    });
+
+    mobileLand?.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        this.land();
+    });
+};
+
+SpaceBattleV4.prototype.updateFPS = function() {
+    const fpsCounter = document.getElementById('fpsCounter');
+    if (!fpsCounter) return;
+
+    let frameCount = 0;
+    let lastTime = performance.now();
+
+    const countFrame = () => {
+        frameCount++;
+        const now = performance.now();
+        const elapsed = now - lastTime;
+
+        if (elapsed >= 1000) {
+            const fps = Math.round((frameCount * 1000) / elapsed);
+            fpsCounter.textContent = `${fps} FPS`;
+            fpsCounter.style.color = fps >= 50 ? '#00ff88' : fps >= 30 ? '#ffaa00' : '#ff4444';
+            frameCount = 0;
+            lastTime = now;
+        }
+
+        if (this.state === 'playing') {
+            requestAnimationFrame(countFrame);
+        }
+    };
+
+    requestAnimationFrame(countFrame);
+};
+
+// ==================== ENHANCED GAME METHODS ====================
+
+const originalStart = SpaceBattleV4.prototype.start;
+SpaceBattleV4.prototype.start = function() {
+    originalStart.call(this);
+
+    // Setup mobile controls
+    this.setupMobileControls();
+
+    // Start FPS counter
+    this.updateFPS();
+
+    // Setup button event listeners
+    document.getElementById('saveBtn')?.addEventListener('click', () => this.saveGame());
+    document.getElementById('loadBtn')?.addEventListener('click', () => this.loadGame());
+    document.getElementById('soundBtn')?.addEventListener('click', () => this.toggleSound());
+
+    // Keyboard shortcuts for save/load
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'p' || e.key === 'P') {
+            e.preventDefault();
+            this.saveGame();
+        }
+        if (e.key === 'o' || e.key === 'O') {
+            e.preventDefault();
+            this.loadGame();
+        }
+    });
+};
 
 function enterUniverse() {
     window.game.start();
@@ -1533,5 +1768,7 @@ Shift - Boost (hold for slingshot)
 V - Change camera view
 Space - Fire
 M - Map
+P - Save Game
+O - Load Game
 ESC - Pause`);
 }

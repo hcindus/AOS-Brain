@@ -1,21 +1,16 @@
 {
   "name": "cream-desktop",
+  "private": true,
   "version": "1.0.0",
-  "description": "CREAM PIM Desktop - Time & Chaos Clone (Tauri + React)",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "tauri": "tauri",
-    "tauri:dev": "tauri dev",
-    "tauri:build": "tauri build"
+    "tauri": "tauri"
   },
   "dependencies": {
     "@tauri-apps/api": "^1.5.0",
-    "@tauri-apps/plugin-dialog": "^1.0.0",
-    "@tauri-apps/plugin-fs": "^1.0.0",
-    "@tauri-apps/plugin-notification": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.0",
