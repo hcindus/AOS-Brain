@@ -1,0 +1,48 @@
+{
+  "date": "2026-04-19T03:48:06+00:00",
+  "timestamp_utc": 1776570486,
+  "system_health": 
+======================================================================
+  [92m🩺 TRIAGE REPORT[0m
+======================================================================
+
+Overall Status: [92mHEALTHY[0m
+Recommendation: All systems healthy. Continue monitoring.
+
+Checks:
+  ✅ [92mBrain Process[0m: HEALTHY
+     - pids: ['15105', '17378']
+     - count: 2
+     - version: v4.x
+  ✅ [92mOllama[0m: HEALTHY
+     - models_available: 8
+     - v42_models: [{'name': 'antoniohudnall/Mort_II:latest', 'model': 'antoniohudnall/Mort_II:latest', 'modified_at': '2026-04-05T05:24:07.868838554Z', 'size': 2019393292, 'digest': '338835bc18515b4575a3a2bc7c80e37b6539fa5b75b3b3b43744719dc8ae284c', 'details': {'parent_model': '', 'format': 'gguf', 'family': 'llama', 'families': ['llama'], 'parameter_size': '3.2B', 'quantization_level': 'Q4_K_M'}}, {'name': 'tinyllama:latest', 'model': 'tinyllama:latest', 'modified_at': '2026-03-27T16:14:58.502354375Z', 'size': 637700138, 'digest': '2644915ede352ea7bdfaff0bfac0be74c719d5d5202acb63a6fb095b52f394a4', 'details': {'parent_model': '', 'format': 'gguf', 'family': 'llama', 'families': ['llama'], 'parameter_size': '1B', 'quantization_level': 'Q4_0'}}, {'name': 'nomic-embed-text:latest', 'model': 'nomic-embed-text:latest', 'modified_at': '2026-03-15T08:43:37.762794233Z', 'size': 274302450, 'digest': '0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f', 'details': {'parent_model': '', 'format': 'gguf', 'family': 'nomic-bert', 'families': ['nomic-bert'], 'parameter_size': '137M', 'quantization_level': 'F16'}}]
+  ✅ [92mMemory[0m: HEALTHY
+     - percent: 56.0
+  ✅ [92mThyroid[0m: HEALTHY
+     - state: BASELINE
+     - ollama_level: 0.0
+     - local_level: 1.0
+     - last_secretion_seconds_ago: 999
+     - secretion_count_today: 0
+     - baseline_timeout: 120.0
+     - secretions_today: 0
+     - total_secretion_time: 0.0
+     - baseline_time: 0.0
+======================================================================,
+  "metrics": {
+    "emails_processed": 30,
+    "agent_files": 106,
+    "queue_items": 32,
+    "reports_generated": 22,
+    "brain_cycles": 
+  },
+  "security": {
+    "probes_installed": true,
+    "last_check": "2026-04-19T03:48:06+00:00"
+  },
+  "github": {
+    "repo": "hcindus/AOS-Brain",
+    "last_sync": "2026-04-19T03:48:06+00:00"
+  }
+}
