@@ -1,0 +1,61 @@
+{
+  "report_type": "Six Sigma Quality Assessment",
+  "generated_by": "Patricia",
+  "timestamp": "2026-04-19T03:26:14.993686",
+  "metrics": {
+    "total_orders": 25,
+    "active_orders": 0,
+    "avg_cycle_time_days": 1.54,
+    "defects_detected": 4,
+    "dpmo": 160000.0,
+    "sigma_level": 4.4,
+    "target_sigma": 6.0,
+    "improvement_gap": 1.6
+  },
+  "defects": [
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-CREAM-BUILD-001",
+      "product": "CREAM Mobile App - Android",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:21:54",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-CREAM-RN-001",
+      "product": "CREAM React Native - Cross Platform",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:22:38",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-DEPOTCHAOS-MACOS-001",
+      "product": "DepotChaos macOS App",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:24:05",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-DEPOTCHAOS-IOS-001",
+      "product": "DepotChaos iOS App",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:24:05",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "MEDIUM",
+      "action": "Review high-priority queue processing",
+      "impact": "Accelerate 4 urgent orders",
+      "owner": "Production Manager"
+    }
+  ]
+}
