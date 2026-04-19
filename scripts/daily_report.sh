@@ -83,6 +83,33 @@ echo "6. Sales & Performance Supply Depot" >> "$REPORT_FILE"
 echo "7. AOS Brain Development" >> "$REPORT_FILE"
 echo "" >> "$REPORT_FILE"
 
+# Section 5.5: Dark Factory Queue Status (Added per Captain request)
+echo "🏭 DARK FACTORY QUEUE STATUS" >> "$REPORT_FILE"
+echo "-----------------------------------------------" >> "$REPORT_FILE"
+FACTORY_DB="/root/.openclaw/workspace/data/factory/dark_factory.db"
+if [ -f "$FACTORY_DB" ]; then
+    # Count queued jobs
+    QUEUED_JOBS=$(sqlite3 "$FACTORY_DB" "SELECT COUNT(*) FROM production_orders WHERE status='queued';" 2>/dev/null || echo "0")
+    COMPLETED_JOBS=$(sqlite3 "$FACTORY_DB" "SELECT COUNT(*) FROM production_orders WHERE status='completed';" 2>/dev/null || echo "0")
+    echo "Queued Jobs: $QUEUED_JOBS" >> "$REPORT_FILE"
+    echo "Completed Jobs: $COMPLETED_JOBS" >> "$REPORT_FILE"
+    echo "" >> "$REPORT_FILE"
+    
+    # List active queue (top 10)
+    if [ "$QUEUED_JOBS" -gt 0 ]; then
+        echo "Active Queue (top 10):" >> "$REPORT_FILE"
+        sqlite3 "$FACTORY_DB" "SELECT id, product_name, priority, created_at FROM production_orders WHERE status='queued' ORDER BY created_at DESC LIMIT 10;" 2>/dev/null >> "$REPORT_FILE" || echo "  (Queue data unavailable)" >> "$REPORT_FILE"
+    fi
+    
+    # Recent completions (top 5)
+    echo "" >> "$REPORT_FILE"
+    echo "Recent Completions (last 5):" >> "$REPORT_FILE"
+    sqlite3 "$FACTORY_DB" "SELECT id, product_name, completed_at FROM production_orders WHERE status='completed' ORDER BY completed_at DESC LIMIT 5;" 2>/dev/null >> "$REPORT_FILE" || echo "  (No recent completions)" >> "$REPORT_FILE"
+else
+    echo "Factory Database: Not found" >> "$REPORT_FILE"
+fi
+echo "" >> "$REPORT_FILE"
+
 # Section 6: Compliance Status
 echo "📋 COMPLIANCE STATUS" >> "$REPORT_FILE"
 echo "-----------------------------------------------" >> "$REPORT_FILE"
