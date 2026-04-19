@@ -31,7 +31,7 @@ sleep 2
 
 # Kill any remaining brain processes
 echo "🧹 Cleaning up..."
-pkill -f "complete_brain_v4.py" 2>/dev/null || true
+pkill -f "complete_brain_v45.py" 2>/dev/null || true
 sleep 1
 
 # Remove old socket
@@ -89,7 +89,7 @@ echo "  📊 System Status"
 echo "========================================"
 
 # Check processes
-BRAIN_PID=$(pgrep -f "complete_brain_v4.py" | head -1)
+BRAIN_PID=$(pgrep -f "complete_brain_v45.py" | head -1)
 MC_PID=$(pgrep -f "server_v2.py" | head -1)
 
 if [ -n "$BRAIN_PID" ]; then
