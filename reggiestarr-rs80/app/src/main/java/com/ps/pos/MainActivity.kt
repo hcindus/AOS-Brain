@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ps.pos.ui.screens.ProductManagementScreen
 import com.ps.pos.ui.screens.RegisterScreen
+import com.ps.pos.ui.screens.TransactionHistoryScreen
 import com.ps.pos.ui.theme.RS80Theme
 import com.ps.pos.viewmodel.RegisterViewModel
 
@@ -52,8 +53,9 @@ fun POSApp() {
             )
         }
         composable("transactions") {
-            // Placeholder for transactions screen
-            Text("Transactions - Coming Soon")
+            TransactionHistoryScreen(
+                onBack = { navController.popBackStack() }
+            )
         }
     }
 }
