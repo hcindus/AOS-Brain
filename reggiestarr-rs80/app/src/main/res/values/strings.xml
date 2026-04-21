@@ -1,19 +1,43 @@
 <resources>
     <string name="app_name">ReggieStarr RS-80</string>
+    <string name="app_version">1.0.0</string>
+    
+    <!-- Screen labels -->
     <string name="title_register">Register</string>
-    <string name="title_history">History</string>
+    <string name="title_products">Products</string>
+    <string name="title_transactions">Transactions</string>
     <string name="title_settings">Settings</string>
-    <string name="checkout">Checkout</string>
-    <string name="total">Total</string>
-    <string name="subtotal">Subtotal</string>
-    <string name="tax">Tax</string>
-    <string name="cash">Cash</string>
-    <string name="card">Card</string>
+    
+    <!-- Actions -->
+    <string name="action_add">Add</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_print">Print</string>
+    <string name="action_checkout">Checkout</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_save">Save</string>
+    
+    <!-- Calculator -->
+    <string name="calc_qty">QTY</string>
+    <string name="calc_plu">PLU</string>
+    <string name="calc_price">PRICE</string>
+    <string name="calc_enter">ENTER</string>
+    <string name="calc_clear">C</string>
+    
+    <!-- Totals -->
+    <string name="subtotal">Subtotal:</string>
+    <string name="tax">Tax:</string>
+    <string name="total">Total:</string>
+    <string name="change">Change:</string>
+    
+    <!-- Payment -->
+    <string name="payment_cash">Cash</string>
+    <string name="payment_card">Card</string>
+    <string name="payment_other">Other</string>
+    <string name="tendered">Tendered</string>
     <string name="complete_sale">Complete Sale</string>
-    <string name="cancel">Cancel</string>
-    <string name="plu_hint">PLU / Price</string>
-    <string name="open_price">Open Price</string>
-    <string name="tax_inclusive">Tax Inclusive</string>
-    <string name="tax_exclusive">Tax Exclusive</string>
-    <string name="tax_exempt">Tax Exempt</string>
+    
+    <!-- Receipt -->
+    <string name="receipt_header">ReggieStarr RS-80</string>
+    <string name="receipt_thank_you">Thank you for your business!</string>
+    <string name="receipt_transaction">Transaction:</string>
 </resources>

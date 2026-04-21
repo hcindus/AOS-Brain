@@ -1,0 +1,7 @@
+<resources>
+    <style name="Theme.RS80" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:colorPrimary">@color/rs80_primary</item>
+        <item name="android:colorAccent">@color/rs80_accent</item>
+        <item name="android:windowBackground">@color/rs80_background</item>
+    </style>
+</resources>
