@@ -27,7 +27,8 @@ fun RegisterScreen(
     viewModel: RegisterViewModel,
     onNavigateToProducts: () -> Unit = {},
     onNavigateToTransactions: () -> Unit = {},
-    onNavigateToSettings: () -> Unit = {}
+    onNavigateToSettings: () -> Unit = {},
+    onNavigateToReports: () -> Unit = {}
 ) {
     val cartItems by viewModel.cartItems.collectAsState()
     val subtotal by viewModel.subtotal.collectAsState()
@@ -65,6 +66,13 @@ fun RegisterScreen(
                             onClick = {
                                 showMenu = false
                                 onNavigateToTransactions()
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Reports") },
+                            onClick = {
+                                showMenu = false
+                                onNavigateToReports()
                             }
                         )
                         DropdownMenuItem(

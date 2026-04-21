@@ -47,6 +47,7 @@ fun POSApp() {
                 viewModel = viewModel(),
                 onNavigateToProducts = { navController.navigate("products") },
                 onNavigateToTransactions = { navController.navigate("transactions") },
+                onNavigateToReports = { navController.navigate("reports") },
                 onNavigateToSettings = { navController.navigate("settings") }
             )
         }
@@ -62,6 +63,11 @@ fun POSApp() {
         }
         composable("settings") {
             SettingsScreen(
+                onBack = { navController.popBackStack() }
+            )
+        }
+        composable("reports") {
+            ReportsScreen(
                 onBack = { navController.popBackStack() }
             )
         }
