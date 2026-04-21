@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ps.pos.ui.screens.ProductManagementScreen
 import com.ps.pos.ui.screens.RegisterScreen
+import com.ps.pos.ui.screens.SettingsScreen
 import com.ps.pos.ui.screens.TransactionHistoryScreen
 import com.ps.pos.ui.theme.RS80Theme
 import com.ps.pos.viewmodel.RegisterViewModel
@@ -44,7 +45,8 @@ fun POSApp() {
             RegisterScreen(
                 viewModel = viewModel(),
                 onNavigateToProducts = { navController.navigate("products") },
-                onNavigateToTransactions = { navController.navigate("transactions") }
+                onNavigateToTransactions = { navController.navigate("transactions") },
+                onNavigateToSettings = { navController.navigate("settings") }
             )
         }
         composable("products") {
@@ -54,6 +56,11 @@ fun POSApp() {
         }
         composable("transactions") {
             TransactionHistoryScreen(
+                onBack = { navController.popBackStack() }
+            )
+        }
+        composable("settings") {
+            SettingsScreen(
                 onBack = { navController.popBackStack() }
             )
         }

@@ -27,7 +27,8 @@ import com.ps.pos.viewmodel.RegisterViewModel
 fun RegisterScreen(
     viewModel: RegisterViewModel,
     onNavigateToProducts: () -> Unit = {},
-    onNavigateToTransactions: () -> Unit = {}
+    onNavigateToTransactions: () -> Unit = {},
+    onNavigateToSettings: () -> Unit = {}
 ) {
     val cartItems by viewModel.cartItems.collectAsState()
     val subtotal by viewModel.subtotal.collectAsState()
@@ -60,6 +61,13 @@ fun RegisterScreen(
                             onClick = {
                                 showMenu = false
                                 onNavigateToTransactions()
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Settings") },
+                            onClick = {
+                                showMenu = false
+                                onNavigateToSettings()
                             }
                         )
                     }
