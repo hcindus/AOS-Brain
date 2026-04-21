@@ -5,10 +5,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Receipt
+import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.*
@@ -36,6 +35,8 @@ fun RegisterScreen(
     val total by viewModel.total.collectAsState()
     var showCheckout by remember { mutableStateOf(false) }
     var showMenu by remember { mutableStateOf(false) }
+    var showBarcodeInput by remember { mutableStateOf(false) }
+    var barcodeText by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -44,6 +45,9 @@ fun RegisterScreen(
                 actions = {
                     IconButton(onClick = { showMenu = true }) {
                         Icon(Icons.Default.Menu, "Menu")
+                    }
+                    IconButton(onClick = { showBarcodeInput = true }) {
+                        Icon(Icons.Default.QrCodeScanner, "Scan Barcode")
                     }
                     DropdownMenu(
                         expanded = showMenu,
