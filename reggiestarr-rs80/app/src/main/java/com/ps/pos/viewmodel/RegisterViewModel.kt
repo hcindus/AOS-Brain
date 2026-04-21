@@ -59,6 +59,24 @@ class RegisterViewModel(
         }
     }
 
+    fun lookupProductByBarcode(barcode: String) {
+        viewModelScope.launch {
+            // In real implementation, call repository.getProductByBarcode(barcode)
+            // For now, search in sample products
+            val products = listOf(
+                Product(plu = "1001", name = "Coca-Cola 20oz", price = 2.49, category = "Beverages", barcode = "012345678901"),
+                Product(plu = "1002", name = "Doritos Nacho", price = 1.99, category = "Snacks", barcode = "012345678902"),
+                Product(plu = "1003", name = "Marlboro Red", price = 8.99, category = "Tobacco", barcode = "012345678903"),
+                Product(plu = "1004", name = "Red Bull 8.4oz", price = 2.99, category = "Beverages", barcode = "012345678904"),
+                Product(plu = "1005", name = "Snickers Bar", price = 1.29, category = "Snacks", barcode = "012345678905"),
+                Product(plu = "1006", name = "Bud Light 6pk", price = 8.49, category = "Alcohol", barcode = "012345678906"),
+                Product(plu = "1007", name = "USB Cable", price = 5.99, category = "Electronics", barcode = "012345678907"),
+                Product(plu = "1008", name = "Lighter", price = 1.49, category = "General", barcode = "012345678908")
+            )
+            currentProduct = products.find { it.barcode == barcode }
+        }
+    }
+
     fun setQuantity(qty: Int) {
         currentQuantity = qty.coerceAtLeast(1)
     }

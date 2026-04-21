@@ -164,6 +164,57 @@ fun RegisterScreen(
             }
         )
     }
+
+    // Barcode input dialog for USB scanners
+    if (showBarcodeInput) {
+        AlertDialog(
+            onDismissRequest = { showBarcodeInput = false },
+            title = { Text("Scan Barcode") },
+            text = {
+                Column {
+                    Text(
+                        "Scan a barcode or enter manually:",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedTextField(
+                        value = barcodeText,
+                        onValueChange = { barcodeText = it },
+                        label = { Text("Barcode") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        "Tip: USB scanners work automatically in the keypad area",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (barcodeText.isNotBlank()) {
+                            viewModel.lookupProductByBarcode(barcodeText)
+                            barcodeText = ""
+                            showBarcodeInput = false
+                        }
+                    },
+                    enabled = barcodeText.isNotBlank()
+                ) {
+                    Text("Lookup")
+                }
+            },
+            dismissButton = {
+                OutlinedButton(
+                    onClick = { showBarcodeInput = false }
+                ) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
 }
 
 @Composable
