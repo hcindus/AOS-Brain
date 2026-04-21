@@ -6,27 +6,24 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductDao {
-    @Query("SELECT * FROM products ORDER BY name")
-    fun getAll(): Flow<List<Product>>
+    @Query("SELECT * FROM products WHERE isActive = 1 ORDER BY name")
+    fun getAllProducts(): Flow<List<Product>>
 
-    @Query("SELECT * FROM products WHERE department = :dept ORDER BY name")
-    fun getByDepartment(dept: String): Flow<List<Product>>
+    @Query("SELECT * FROM products WHERE plu = :plu LIMIT 1")
+    suspend fun getByPlu(plu: String): Product?
 
-    @Query("SELECT * FROM products WHERE pluCode = :code LIMIT 1")
-    suspend fun getByPlu(code: String): Product?
+    @Query("SELECT * FROM products WHERE barcode = :barcode LIMIT 1")
+    suspend fun getByBarcode(barcode: String): Product?
 
-    @Query("SELECT * FROM products WHERE openPrice = 0 ORDER BY name")
-    fun getFixedPrice(): Flow<List<Product>>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(product: Product)
+    @Query("SELECT * FROM products WHERE name LIKE '%' || :query || '%'")
+    fun searchProducts(query: String): Flow<List<Product>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(products: List<Product>)
+    suspend fun insert(product: Product): Long
+
+    @Update
+    suspend fun update(product: Product)
 
     @Delete
     suspend fun delete(product: Product)
-
-    @Query("UPDATE products SET stock = stock - :qty WHERE pluCode = :code AND trackInventory = 1")
-    suspend fun decrementStock(code: String, qty: Double)
 }

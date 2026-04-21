@@ -1,14 +1,13 @@
 package com.ps.pos.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Print
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -16,216 +15,166 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ps.pos.data.entities.Product
+import androidx.compose.ui.unit.sp
+import com.ps.pos.data.entities.LineItem
 import com.ps.pos.ui.components.CalculatorKeypad
 import com.ps.pos.viewmodel.RegisterViewModel
-import java.text.NumberFormat
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(viewModel: RegisterViewModel) {
-    val products by viewModel.products.collectAsState()
-    val cart by viewModel.cart.collectAsState()
-    val currentInput by viewModel.currentInput.collectAsState()
-    val showCheckout by viewModel.showCheckout.collectAsState()
-    
-    val currencyFormat = NumberFormat.getCurrencyInstance()
-    
-    Column(modifier = Modifier.fillMaxSize()) {
-        // Product Grid (top half)
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
-            modifier = Modifier.weight(1f),
-            contentPadding = PaddingValues(8.dp)
-        ) {
-            items(products) { product ->
-                ProductButton(
-                    product = product,
-                    onClick = { viewModel.onProductClick(product) }
+    val cartItems by viewModel.cartItems.collectAsState()
+    val subtotal by viewModel.subtotal.collectAsState()
+    val tax by viewModel.tax.collectAsState()
+    val total by viewModel.total.collectAsState()
+    var showCheckout by remember { mutableStateOf(false) }
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("ReggieStarr RS-80") },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
                 )
-            }
+            )
         }
-        
-        // Cart and Input Section
-        Card(
+    ) { padding ->
+        Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                .fillMaxSize()
+                .padding(padding)
         ) {
-            Row(modifier = Modifier.fillMaxSize()) {
-                // Cart Display
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(8.dp)
+            // Left side - Cart
+            Column(
+                modifier = Modifier
+                    .weight(0.6f)
+                    .fillMaxHeight()
+                    .padding(16.dp)
+            ) {
+                // Cart header
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        "Cart",
-                        style = MaterialTheme.typography.titleMedium
+                        "Cart (${cartItems.size})",
+                        style = MaterialTheme.typography.headlineSmall
                     )
-                    
-                    LazyColumn(
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        items(cart) { item ->
-                            CartItemRow(
-                                item = item,
-                                onRemove = { viewModel.removeFromCart(cart.indexOf(item)) }
-                            )
-                        }
-                    }
-                    
-                    // Totals
-                    val subtotal = cart.sumOf { it.unitPrice * it.quantity }
-                    val tax = cart.sumOf { 
-                        val (_, taxAmt) = com.ps.pos.utils.TaxCalculator.calculateTax(
-                            it.unitPrice * it.quantity,
-                            it.product.taxRate,
-                            it.product.taxType
-                        )
-                        taxAmt
-                    }
-                    val total = subtotal + tax
-                    
-                    Divider(modifier = Modifier.padding(vertical = 4.dp))
-                    Text("Subtotal: ${currencyFormat.format(subtotal)}")
-                    Text("Tax: ${currencyFormat.format(tax)}")
-                    Text(
-                        "Total: ${currencyFormat.format(total)}",
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                    
-                    // Checkout Button
-                    Button(
-                        onClick = { viewModel.onCheckout() },
-                        modifier = Modifier.fillMaxWidth(),
-                        enabled = cart.isNotEmpty()
-                    ) {
-                        Icon(Icons.Default.ShoppingCart, contentDescription = null)
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text("Checkout")
+                    IconButton(onClick = { viewModel.clearCart() }) {
+                        Icon(Icons.Default.Delete, "Clear cart")
                     }
                 }
-                
-                // Calculator and Input
-                Column(
+
+                // Cart items
+                LazyColumn(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(8.dp)
+                        .fillMaxWidth()
                 ) {
-                    // Current input display
-                    OutlinedTextField(
-                        value = currentInput,
-                        onValueChange = { },
-                        readOnly = true,
-                        label = { Text("PLU / Price") },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true
-                    )
-                    
-                    Spacer(modifier = Modifier.height(8.dp))
-                    
-                    // Calculator Keypad (7-8-9 top, Clear/Enter top row)
-                    CalculatorKeypad(
-                        onDigit = { viewModel.onDigitInput(it) },
-                        onClear = { viewModel.onClear() },
-                        onDelete = { viewModel.onDelete() },
-                        onEnter = { viewModel.onEnter() },
-                        modifier = Modifier.fillMaxSize()
-                    )
+                    items(cartItems) { item ->
+                        CartItemRow(
+                            item = item,
+                            onRemove = { viewModel.removeFromCart(item) }
+                        )
+                    }
+                }
+
+                Divider(modifier = Modifier.padding(vertical = 8.dp))
+
+                // Totals
+                TotalRow("Subtotal:", subtotal)
+                TotalRow("Tax (8.25%):", tax)
+                TotalRow("Total:", total, isTotal = true)
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Checkout button
+                Button(
+                    onClick = { showCheckout = true },
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = cartItems.isNotEmpty()
+                ) {
+                    Icon(Icons.Default.ShoppingCart, null)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("CHECKOUT")
                 }
             }
+
+            // Right side - Calculator Keypad
+            CalculatorKeypad(
+                onProductLookup = { plu -> viewModel.lookupProduct(plu) },
+                onQuantity = { qty -> viewModel.setQuantity(qty) },
+                onAddToCart = { viewModel.addToCart() },
+                modifier = Modifier.weight(0.4f)
+            )
         }
     }
-    
-    // Checkout Dialog
+
     if (showCheckout) {
         CheckoutDialog(
-            cart = cart,
-            onDismiss = { viewModel.dismissCheckout() },
+            total = total,
+            onDismiss = { showCheckout = false },
             onComplete = { paymentType, tendered ->
-                viewModel.completeCheckout(paymentType, tendered)
+                viewModel.completeTransaction(paymentType, tendered)
+                showCheckout = false
             }
         )
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ProductButton(
-    product: Product,
-    onClick: () -> Unit
-) {
-    val displayPrice = if (product.openPrice) "OPEN" else
-        NumberFormat.getCurrencyInstance().format(product.price)
-    
+fun CartItemRow(item: LineItem, onRemove: () -> Unit) {
     Card(
-        onClick = onClick,
-        modifier = Modifier
-            .padding(4.dp)
-            .aspectRatio(1f),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = product.name,
-                style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Center,
-                maxLines = 2
-            )
-            Text(
-                text = displayPrice,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary
-            )
-            if (product.taxType != "EXCLUSIVE") {
-                Text(
-                    text = product.taxType,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.secondary
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun CartItemRow(
-    item: RegisterViewModel.CartItem,
-    onRemove: () -> Unit
-) {
-    val currencyFormat = NumberFormat.getCurrencyInstance()
-    
-    Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Column(modifier = Modifier.weight(1f)) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = item.productName,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Text(
+                    text = "${item.quantity} x $${String.format("%.2f", item.unitPrice)}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
             Text(
-                item.product.name,
-                style = MaterialTheme.typography.bodyMedium
-            )
-            Text(
-                "${item.quantity.toInt()} × ${currencyFormat.format(item.unitPrice)}",
-                style = MaterialTheme.typography.bodySmall
+                text = "$${String.format("%.2f", item.totalPrice)}",
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.primary
             )
         }
+    }
+}
+
+@Composable
+fun TotalRow(label: String, amount: Double, isTotal: Boolean = false) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
         Text(
-            currencyFormat.format(item.unitPrice * item.quantity),
-            style = MaterialTheme.typography.bodyMedium
+            text = label,
+            style = if (isTotal) MaterialTheme.typography.headlineSmall
+            else MaterialTheme.typography.bodyLarge
         )
-        IconButton(onClick = onRemove) {
-            Icon(Icons.Default.Delete, contentDescription = "Remove")
-        }
+        Text(
+            text = "$${String.format("%.2f", amount)}",
+            style = if (isTotal) MaterialTheme.typography.headlineSmall
+            else MaterialTheme.typography.bodyLarge,
+            color = if (isTotal) MaterialTheme.colorScheme.primary
+            else MaterialTheme.colorScheme.onSurface
+        )
     }
 }

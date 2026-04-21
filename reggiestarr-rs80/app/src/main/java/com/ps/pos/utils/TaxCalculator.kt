@@ -1,44 +1,13 @@
 package com.ps.pos.utils
 
-import com.ps.pos.data.entities.Product
-
 object TaxCalculator {
-    
-    fun calculateTax(price: Double, taxRate: Double, taxType: String): Pair<Double, Double> {
-        return when (taxType.uppercase()) {
-            "INCLUSIVE" -> {
-                // Price already includes tax
-                val taxAmount = price - (price / (1 + taxRate))
-                val basePrice = price - taxAmount
-                Pair(basePrice, taxAmount)
-            }
-            "EXEMPT" -> {
-                // No tax
-                Pair(price, 0.0)
-            }
-            else -> {
-                // EXCLUSIVE - add tax to price
-                val taxAmount = price * taxRate
-                Pair(price, taxAmount)
-            }
-        }
+    private const val TAX_RATE = 0.0825 // 8.25% - adjust for your jurisdiction
+
+    fun calculateTax(subtotal: Double): Double {
+        return (subtotal * TAX_RATE * 100).toInt() / 100.0 // Round to 2 decimals
     }
 
-    fun getDisplayPrice(product: Product): Double {
-        return if (product.taxType == "INCLUSIVE") {
-            // For inclusive, show the total (price already includes tax)
-            product.price
-        } else {
-            product.price
-        }
-    }
-
-    fun getPriceBeforeTax(product: Product): Double {
-        return if (product.taxType == "INCLUSIVE") {
-            val (base, _) = calculateTax(product.price, product.taxRate, product.taxType)
-            base
-        } else {
-            product.price
-        }
+    fun calculateTotal(subtotal: Double): Double {
+        return subtotal + calculateTax(subtotal)
     }
 }

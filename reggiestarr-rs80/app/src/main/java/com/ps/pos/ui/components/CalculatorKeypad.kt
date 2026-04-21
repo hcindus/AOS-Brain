@@ -1,105 +1,191 @@
 package com.ps.pos.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun CalculatorKeypad(
-    onDigit: (String) -> Unit,
-    onClear: () -> Unit,
-    onDelete: () -> Unit,
-    onEnter: () -> Unit,
+    onProductLookup: (String) -> Unit,
+    onQuantity: (Int) -> Unit,
+    onAddToCart: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    // Calculator layout: 7-8-9 top, Clear/Enter top row
-    Column(modifier = modifier.padding(4.dp)) {
-        // Row 1: Clear (spans 2), Enter (spans 2)
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Button(
-                onClick = onClear,
-                modifier = Modifier
-                    .weight(2f)
-                    .padding(2.dp)
-                    .height(56.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.error
-                )
+    var display by remember { mutableStateOf("") }
+    var mode by remember { mutableStateOf(KeypadMode.QUANTITY) }
+
+    Column(
+        modifier = modifier
+            .fillMaxHeight()
+            .background(Color(0xFF2C2C2C))
+            .padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // Display
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(80.dp)
+                .background(Color(0xFF1A1A1A), RoundedCornerShape(8.dp))
+                .padding(16.dp),
+            contentAlignment = Alignment.CenterEnd
+        ) {
+            Text(
+                text = display.ifEmpty { "0" },
+                fontSize = 48.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                textAlign = TextAlign.End
+            )
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Mode indicator
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            ModeButton("QTY", mode == KeypadMode.QUANTITY) { mode = KeypadMode.QUANTITY }
+            ModeButton("PLU", mode == KeypadMode.PLU) { mode = KeypadMode.PLU }
+            ModeButton("PRICE", mode == KeypadMode.PRICE) { mode = KeypadMode.PRICE }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Keypad grid
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.SpaceEvenly
+        ) {
+            // Row 7 8 9
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Text("C", style = MaterialTheme.typography.titleLarge)
+                CalcButton("7") { display += "7" }
+                CalcButton("8") { display += "8" }
+                CalcButton("9") { display += "9" }
             }
-            Button(
-                onClick = onEnter,
-                modifier = Modifier
-                    .weight(2f)
-                    .padding(2.dp)
-                    .height(56.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-                )
+            // Row 4 5 6
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Text("Enter", style = MaterialTheme.typography.titleMedium)
+                CalcButton("4") { display += "4" }
+                CalcButton("5") { display += "5" }
+                CalcButton("6") { display += "6" }
             }
-        }
-
-        // Row 2: 7 8 9
-        Row(modifier = Modifier.fillMaxWidth()) {
-            listOf("7", "8", "9").forEach { digit ->
-                DigitButton(digit, Modifier.weight(1f)) { onDigit(digit) }
-            }
-        }
-
-        // Row 3: 4 5 6
-        Row(modifier = Modifier.fillMaxWidth()) {
-            listOf("4", "5", "6").forEach { digit ->
-                DigitButton(digit, Modifier.weight(1f)) { onDigit(digit) }
-            }
-        }
-
-        // Row 4: 1 2 3
-        Row(modifier = Modifier.fillMaxWidth()) {
-            listOf("1", "2", "3").forEach { digit ->
-                DigitButton(digit, Modifier.weight(1f)) { onDigit(digit) }
-            }
-        }
-
-        // Row 5: . 0 00 Delete
-        Row(modifier = Modifier.fillMaxWidth()) {
-            DigitButton(".", Modifier.weight(1f)) { onDigit(".") }
-            DigitButton("0", Modifier.weight(1f)) { onDigit("0") }
-            DigitButton("00", Modifier.weight(1f)) { onDigit("00") }
-            IconButton(
-                onClick = onDelete,
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(2.dp)
+            // Row 1 2 3
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Delete")
+                CalcButton("1") { display += "1" }
+                CalcButton("2") { display += "2" }
+                CalcButton("3") { display += "3" }
             }
+            // Row C 0 00
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                CalcButton("C", Color(0xFFE53935)) {
+                    display = ""
+                }
+                CalcButton("0") { display += "0" }
+                CalcButton("00") { display += "00" }
+            }
+            // Row . +/- Enter
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                CalcButton(".", Color(0xFF757575)) { if (!display.contains(".")) display += "." }
+                CalcButton("+/-", Color(0xFF757575)) {
+                    display = if (display.startsWith("-")) display.drop(1) else "-$display"
+                }
+                ActionButton("ENTER", Color(0xFF43A047)) {
+                    when (mode) {
+                        KeypadMode.QUANTITY -> display.toIntOrNull()?.let { onQuantity(it) }
+                        KeypadMode.PLU -> if (display.isNotEmpty()) onProductLookup(display)
+                        KeypadMode.PRICE -> {}
+                    }
+                    display = ""
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Add to cart
+        Button(
+            onClick = onAddToCart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1976D2))
+        ) {
+            Text("ADD TO CART", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         }
     }
 }
 
 @Composable
-private fun DigitButton(
+fun CalcButton(
     text: String,
-    modifier: Modifier = Modifier,
+    color: Color = Color(0xFF424242),
     onClick: () -> Unit
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier
-            .padding(2.dp)
-            .height(64.dp),
-        shape = MaterialTheme.shapes.small
+        modifier = Modifier.size(72.dp),
+        shape = CircleShape,
+        colors = ButtonDefaults.buttonColors(containerColor = color)
     ) {
-        Text(
-            text,
-            style = MaterialTheme.typography.headlineSmall
-        )
+        Text(text, fontSize = 24.sp, fontWeight = FontWeight.Bold)
     }
+}
+
+@Composable
+fun ActionButton(
+    text: String,
+    color: Color = Color(0xFF43A047),
+    onClick: () -> Unit
+) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier.size(width = 144.dp, height = 72.dp),
+        shape = RoundedCornerShape(36.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = color)
+    ) {
+        Text(text, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+    }
+}
+
+@Composable
+fun ModeButton(text: String, selected: Boolean, onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier.size(width = 80.dp, height = 36.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = if (selected) Color(0xFF1976D2) else Color(0xFF616161)
+        )
+    ) {
+        Text(text, fontSize = 12.sp)
+    }
+}
+
+enum class KeypadMode {
+    QUANTITY, PLU, PRICE
 }
