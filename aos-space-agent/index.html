@@ -385,10 +385,16 @@
     </div>
 
     <div id="app-layer">
+        <!-- Loading overlay -->
+        <div id="loading-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,10,26,0.95); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--neon-cyan); font-size: 24px;">
+            <div>🚀 Initializing AOS Space Agent Fleet...</div>
+            <div style="margin-top: 20px; font-size: 14px; color: #888;">Connecting 4 agents to brain socket...</div>
+            <div id="init-status" style="margin-top: 10px; font-size: 12px;"></div>
+        </div>
         <!-- Navigator Agent -->
         <div class="agent-widget floating" id="agent-navigator" style="animation-delay: 0s;">
             <div class="drag-handle">⋮⋮</div>
-            <div class="connection-status" id="conn-nav"></div>
+            <div class="connection-status" id="conn-navigator"></div>
             <div class="agent-header">
                 <div class="agent-avatar">🧭</div>
                 <div class="agent-info">
@@ -400,8 +406,10 @@
                 <div class="chat-message system">Connected to browser automation tools.</div>
             </div>
             <div class="input-area">
-                <input type="text" id="input-navigator" placeholder="Navigate to... or search for...">
-                <button onclick="sendToAgent('navigator')">Send</button>
+                <input type="text" id="input-navigator" placeholder="Navigate to... or search for..."
+                       onkeydown="if(event.key==='Enter'&&fleet.agents&&fleet.agents.size)sendToAgent('navigator')">
+                <button onclick="if(fleet.agents&&fleet.agents.size)sendToAgent('navigator')" 
+                        style="opacity:0.5" id="btn-navigator">Send</button>
             </div>
             <div class="agent-tools">
                 <button class="tool-btn" onclick="agentTool('navigator', 'navigate')">🌐 Go To</button>

@@ -32,6 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initializeAgents() {
+    // Update loading status
+    const statusEl = document.getElementById('init-status');
+    if (statusEl) statusEl.textContent = 'Creating Navigator Alpha...';
+    
     // Agent Alpha - Navigator
     const navigator = new AOSSpaceAgent({
         id: 'navigator',
@@ -39,6 +43,8 @@ function initializeAgents() {
         role: 'navigator',
         brainSocket: '/brain'
     });
+    
+    if (statusEl) statusEl.textContent = 'Creating Analyst Beta...';
     
     // Agent Beta - Analyst
     const analyst = new AOSSpaceAgent({
@@ -48,6 +54,8 @@ function initializeAgents() {
         brainSocket: '/brain'
     });
     
+    if (statusEl) statusEl.textContent = 'Creating Executor Gamma...';
+    
     // Agent Gamma - Executor
     const executor = new AOSSpaceAgent({
         id: 'executor',
@@ -55,6 +63,8 @@ function initializeAgents() {
         role: 'executor',
         brainSocket: '/brain'
     });
+    
+    if (statusEl) statusEl.textContent = 'Creating Coordinator Delta...';
     
     // Agent Delta - Coordinator
     const coordinator = new AOSSpaceAgent({
@@ -64,21 +74,38 @@ function initializeAgents() {
         brainSocket: '/brain'
     });
     
+    if (statusEl) statusEl.textContent = 'Storing agents in fleet...';
+    
     // Store agents
     fleet.agents.set('navigator', navigator);
     fleet.agents.set('analyst', analyst);
     fleet.agents.set('executor', executor);
     fleet.agents.set('coordinator', coordinator);
     
+    if (statusEl) statusEl.textContent = 'Connecting to brain...';
+    
     // Connect to brain
     setTimeout(async () => {
         for (const [id, agent] of fleet.agents) {
+            if (statusEl) statusEl.textContent = `Connecting ${agent.name}...`;
             const connected = await agent.connectToBrain();
             updateConnectionStatus(id, connected);
             
             // Send welcome message
             addChatMessage(id, `Connected as ${agent.name}. Ready for commands.`, 'system');
         }
+        
+        if (statusEl) statusEl.textContent = 'Fleet ready!';
+        
+        // Hide loading overlay
+        setTimeout(() => {
+            const overlay = document.getElementById('loading-overlay');
+            if (overlay) {
+                overlay.style.opacity = '0';
+                overlay.style.transition = 'opacity 0.5s';
+                setTimeout(() => overlay.remove(), 500);
+            }
+        }, 500);
     }, 1000);
 }
 
@@ -104,9 +131,20 @@ function addChatMessage(agentId, message, type = 'agent') {
 }
 
 async function sendToAgent(agentId) {
-    const input = document.getElementById(`input-${agentId}`);
-    const message = input.value.trim();
+    // Check if agents initialized
+    if (!fleet.agents || fleet.agents.size === 0) {
+        console.error('[AOS Space Agent] Fleet not initialized yet');
+        alert('Agents still initializing... please wait a moment and try again.');
+        return;
+    }
     
+    const input = document.getElementById(`input-${agentId}`);
+    if (!input) {
+        console.error(`[AOS Space Agent] Input not found: input-${agentId}`);
+        return;
+    }
+    
+    const message = input.value.trim();
     if (!message) return;
     
     // Clear input
@@ -118,7 +156,8 @@ async function sendToAgent(agentId) {
     // Get agent
     const agent = fleet.agents.get(agentId);
     if (!agent) {
-        addChatMessage(agentId, 'Error: Agent not found', 'system');
+        console.error(`[AOS Space Agent] Agent not found: ${agentId}`, fleet.agents);
+        addChatMessage(agentId, `Error: Agent "${agentId}" not initialized yet. Available: ${Array.from(fleet.agents.keys()).join(', ')}`, 'system');
         return;
     }
     
@@ -140,8 +179,18 @@ async function sendToAgent(agentId) {
 }
 
 async function agentTool(agentId, tool) {
+    // Check if agents initialized
+    if (!fleet.agents || fleet.agents.size === 0) {
+        console.error('[AOS Space Agent] Fleet not initialized yet');
+        alert('Agents still initializing... please wait a moment.');
+        return;
+    }
+    
     const agent = fleet.agents.get(agentId);
-    if (!agent) return;
+    if (!agent) {
+        console.error(`[AOS Space Agent] Agent not found for tool: ${agentId}`, fleet.agents);
+        return;
+    }
     
     addChatMessage(agentId, `Executing tool: ${tool}...`, 'system');
     
