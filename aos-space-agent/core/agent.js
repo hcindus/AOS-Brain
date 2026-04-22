@@ -43,6 +43,12 @@ class AOSSpaceAgent {
             this.toolsImpl = new AgentTools(this);
         }
         
+        // Initialize voice system
+        if (typeof AgentVoiceSystem !== 'undefined' && typeof window !== 'undefined') {
+            this.voice = new AgentVoiceSystem(this);
+            console.log(`[AOS Space Agent] Voice system initialized: ${this.voice.currentVoice}`);
+        }
+        
         console.log(`[AOS Space Agent] Initialized: ${this.name} (${this.id})`);
         
         // Speak greeting if personality loaded

@@ -437,3 +437,132 @@ window.agentTool = agentTool;
 window.fleetAction = fleetAction;
 window.toggleAnimation = toggleAnimation;
 window.closeWidget = closeWidget;
+// ===== VOICE UI FUNCTIONS =====
+
+function toggleVoiceUI(agentId) {
+    const voiceControls = document.getElementById(`voice-${agentId}`);
+    if (voiceControls) {
+        const isVisible = voiceControls.style.display !== 'none';
+        voiceControls.style.display = isVisible ? 'none' : 'flex';
+    }
+}
+
+async function toggleListening(agentId) {
+    const agent = fleet.agents?.get(agentId);
+    if (!agent || !agent.voice) {
+        alert('Voice system not initialized');
+        return;
+    }
+    
+    const statusEl = document.getElementById(`voice-status-${agentId}`);
+    const micBtn = document.getElementById(`mic-${agentId}`);
+    
+    if (agent.voice.isListening) {
+        // Stop listening
+        agent.voice.stopListening();
+        if (statusEl) statusEl.textContent = 'Click 🎤 to talk';
+        if (micBtn) micBtn.textContent = '🎤 Speak';
+    } else {
+        // Start listening
+        const started = agent.voice.startListening();
+        
+        if (started) {
+            // Setup callbacks
+            agent.voice.onSpeechRecognized = (transcript) => {
+                addChatMessage(agentId, `🎤 ${transcript}`, 'user');
+                
+                // Auto-send after recognition
+                setTimeout(() => {
+                    const input = document.getElementById(`input-${agentId}`);
+                    if (input) {
+                        input.value = transcript;
+                        sendToAgent(agentId);
+                    }
+                }, 500);
+            };
+            
+            agent.voice.onListeningStart = () => {
+                if (micBtn) {
+                    micBtn.textContent = '🔴 Stop';
+                    micBtn.style.background = '#f00';
+                }
+                if (statusEl) statusEl.textContent = 'Listening... speak now';
+            };
+            
+            agent.voice.onListeningEnd = () => {
+                if (micBtn) {
+                    micBtn.textContent = '🎤 Speak';
+                    micBtn.style.background = '';
+                }
+                if (statusEl) statusEl.textContent = 'Click 🎤 to talk';
+            };
+            
+            agent.voice.onInterimSpeech = (interim) => {
+                if (statusEl) statusEl.textContent = `Hearing: "${interim}"`;
+            };
+            
+            if (micBtn) {
+                micBtn.textContent = '🔴 Listening...';
+                micBtn.style.background = '#f00';
+            }
+            if (statusEl) statusEl.textContent = 'Listening... speak now';
+        } else {
+            alert('Microphone access denied or not available');
+        }
+    }
+}
+
+function showVoiceSelector(agentId) {
+    const agent = fleet.agents?.get(agentId);
+    if (!agent || !agent.voice) {
+        alert('Voice system not available');
+        return;
+    }
+    
+    // Create modal for voice selection
+    const modal = document.createElement('div');
+    modal.className = 'voice-modal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(10, 10, 26, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    `;
+    
+    const selector = agent.voice.createVoiceSelector();
+    selector.style.maxWidth = '400px';
+    
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = '×';
+    closeBtn.style.cssText = `
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        color: #f00;
+        font-size: 32px;
+        cursor: pointer;
+    `;
+    closeBtn.onclick = () => modal.remove();
+    
+    modal.appendChild(selector);
+    modal.appendChild(closeBtn);
+    document.body.appendChild(modal);
+    
+    // Close on outside click
+    modal.onclick = (e) => {
+        if (e.target === modal) modal.remove();
+    };
+}
+
+// Add voice UI functions to window
+window.toggleVoiceUI = toggleVoiceUI;
+window.toggleListening = toggleListening;
+window.showVoiceSelector = showVoiceSelector;

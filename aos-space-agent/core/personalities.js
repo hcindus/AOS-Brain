@@ -79,6 +79,12 @@ class AgentPersonality {
     }
     
     speak(text) {
+        // Use the agent's voice system if available
+        if (this.agent && this.agent.voice) {
+            return this.agent.voice.speak(text);
+        }
+        
+        // Fallback to basic implementation
         if (!window.speechSynthesis) {
             console.warn('[AgentPersonality] Web Speech API not available');
             return false;
@@ -97,6 +103,13 @@ class AgentPersonality {
         if (this.voice && voices.length > 0) {
             const matchingVoice = voices.find(v => v.name.includes(this.voice));
             if (matchingVoice) {
+                utterance.voice = matchingVoice;
+            }
+        }
+        
+        window.speechSynthesis.speak(utterance);
+        return true;
+    }
                 utterance.voice = matchingVoice;
             }
         }

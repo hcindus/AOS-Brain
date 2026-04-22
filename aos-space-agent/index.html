@@ -416,6 +416,12 @@
                 <button class="tool-btn" onclick="agentTool('navigator', 'search')">🔍 Search</button>
                 <button class="tool-btn" onclick="agentTool('navigator', 'screenshot')">📸 Capture</button>
                 <button class="tool-btn" onclick="agentTool('navigator', 'extract')">📊 Extract</button>
+                <button class="tool-btn voice-btn" onclick="toggleVoiceUI('navigator')">🎤 Voice</button>
+            </div>
+            <div class="voice-controls" id="voice-navigator" style="display:none;">
+                <button class="mic-btn" id="mic-navigator" onclick="toggleListening('navigator')">🎤 Speak</button>
+                <button class="voice-selector-btn" onclick="showVoiceSelector('navigator')">🔊 Voice</button>
+                <span class="voice-status" id="voice-status-navigator">Click 🎤 to talk</span>
             </div>
         </div>
 
@@ -442,6 +448,12 @@
                 <button class="tool-btn" onclick="agentTool('analyst', 'perceive')">💭 Perceive</button>
                 <button class="tool-btn" onclick="agentTool('analyst', 'create_widget')">📈 Widget</button>
                 <button class="tool-btn" onclick="agentTool('analyst', 'analyze')">🔮 Analyze</button>
+                <button class="tool-btn voice-btn" onclick="toggleVoiceUI('analyst')">🎤 Voice</button>
+            </div>
+            <div class="voice-controls" id="voice-analyst" style="display:none;">
+                <button class="mic-btn" id="mic-analyst" onclick="toggleListening('analyst')">🎤 Speak</button>
+                <button class="voice-selector-btn" onclick="showVoiceSelector('analyst')">🔊 Voice</button>
+                <span class="voice-status" id="voice-status-analyst">Click 🎤 to talk</span>
             </div>
         </div>
 
