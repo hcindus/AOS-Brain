@@ -8,8 +8,16 @@ class AOSSpaceAgent {
     constructor(config = {}) {
         this.id = config.id || `agent_${Date.now()}`;
         this.name = config.name || 'AOS Agent';
-        this.role = config.role || 'general'; // navigator, analyst, executor
+        this.role = config.role || 'general'; // navigator, analyst, executor, coordinator
         this.brainSocketUrl = config.brainSocket || '/brain';
+        
+        // Load personality if available
+        this.personality = null;
+        if (typeof AgentPersonalities !== 'undefined' && AgentPersonalities[this.role]) {
+            this.personality = AgentPersonalities[this.role];
+            this.name = this.personality.name;
+            console.log(`[AOS Space Agent] Personality loaded: ${this.personality.name} (${this.personality.personality})`);
+        }
         
         // Agent state
         this.memory = {
@@ -30,7 +38,20 @@ class AOSSpaceAgent {
         this.tools = new Map();
         this.registerCoreTools();
         
+        // Initialize functional tools
+        if (typeof AgentTools !== 'undefined') {
+            this.toolsImpl = new AgentTools(this);
+        }
+        
         console.log(`[AOS Space Agent] Initialized: ${this.name} (${this.id})`);
+        
+        // Speak greeting if personality loaded
+        if (this.personality && typeof window !== 'undefined') {
+            setTimeout(() => {
+                const greeting = this.personality.getGreeting();
+                console.log(`[${this.name}] ${greeting}`);
+            }, 100);
+        }
     }
     
     registerCoreTools() {
@@ -239,15 +260,42 @@ class AOSSpaceAgent {
         
         if (toolCall) {
             const result = await this.executeTool(toolCall.tool, toolCall.params);
+            
+            // Generate personality response for tool execution
+            let responseText;
+            if (this.personality) {
+                const personalityResponse = this.personality.generateResponse(message, { tool: toolCall.tool, result });
+                responseText = personalityResponse.text;
+                
+                // Speak the response
+                if (personalityResponse.speak) {
+                    this.personality.speak(responseText);
+                }
+            } else {
+                responseText = `Executed ${toolCall.tool}: ${JSON.stringify(result).slice(0, 100)}`;
+            }
+            
             return {
                 type: 'tool_result',
                 tool: toolCall.tool,
+                text: responseText,
                 result
             };
         }
         
-        // Generate response based on role
-        const response = this.generateResponse(message);
+        // Generate response based on role (with personality)
+        let response;
+        if (this.personality) {
+            const personalityResponse = this.personality.generateResponse(message, {});
+            response = personalityResponse.text;
+            
+            // Speak!
+            if (personalityResponse.speak) {
+                this.personality.speak(response);
+            }
+        } else {
+            response = this.generateResponse(message);
+        }
         
         this.messageHistory.push({
             role: 'assistant',
@@ -297,15 +345,20 @@ class AOSSpaceAgent {
         }
     }
     
-    // ========== TOOL IMPLEMENTATIONS ==========
+    // ========== TOOL IMPLEMENTATIONS (Using Functional Tools) ==========
     
     async toolNavigate(params) {
+        // Use functional tools if available
+        if (this.toolsImpl) {
+            return await this.toolsImpl.navigate(params.url);
+        }
+        
+        // Fallback to simple implementation
         let url = params.url;
         if (!url.startsWith('http')) {
             url = 'https://' + url;
         }
         
-        // Open in new tab (or iframe in real implementation)
         if (typeof window !== 'undefined') {
             window.open(url, '_blank');
         }
@@ -343,6 +396,10 @@ class AOSSpaceAgent {
     }
     
     async toolBrainStatus() {
+        // Use functional tools if available
+        if (this.toolsImpl) {
+            return await this.toolsImpl.brainStatus();
+        }
         return await this.getBrainStatus();
     }
     
