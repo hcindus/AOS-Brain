@@ -7,6 +7,7 @@ import socket
 import struct
 import random
 import time
+import json
 
 MINECRAFT_HOST = "localhost"
 RCON_PORT = 25575
@@ -69,6 +70,37 @@ class RCONClient:
             self.socket.close()
 
 
+def tellraw(text, color="white", bold=False, prefix=None, prefix_color="gold"):
+    """Build a JSON chat component for /tellraw command.
+    
+    Args:
+        text: Main message text
+        color: Minecraft color name (white, gold, green, aqua, red, yellow, etc.)
+        bold: Whether text should be bold
+        prefix: Optional prefix text (like "[MYL]")
+        prefix_color: Color for the prefix
+    """
+    components = []
+    
+    if prefix:
+        components.append({
+            "text": prefix,
+            "color": prefix_color,
+            "bold": True
+        })
+        components.append({"text": " "})
+    
+    main_component = {
+        "text": text,
+        "color": color
+    }
+    if bold:
+        main_component["bold"] = True
+    components.append(main_component)
+    
+    return json.dumps(components)
+
+
 def spawn_agents_and_build():
     rcon = RCONClient(MINECRAFT_HOST, RCON_PORT, RCON_PASSWORD)
     
@@ -89,7 +121,7 @@ def spawn_agents_and_build():
         print(f"Spawning {len(agents)} MYL agents...")
         
         # Spawn center platform
-        rcon.command("say §6[MYL] Initializing Dark Factory agents...")
+        rcon.command(f'tellraw @a {tellraw("Initializing Dark Factory agents...", "yellow", prefix="[MYL]", prefix_color="gold")}')
         
         center_x, center_y, center_z = 100, 70, 100
         
@@ -112,7 +144,7 @@ def spawn_agents_and_build():
         
         # Create platform for the agents
         print("Building platform...")
-        rcon.command("say §6[MYL] Constructing agent base...")
+        rcon.command(f'tellraw @a {tellraw("Constructing agent base...", "yellow", prefix="[MYL]", prefix_color="gold")}')
         
         # Build a circular platform
         for dx in range(-20, 21):
@@ -131,7 +163,7 @@ def spawn_agents_and_build():
         
         # Spawn some activity - each agent places blocks around them
         print("Triggering agent building actions...")
-        rcon.command("say §6[MYL] Agents beginning construction...")
+        rcon.command(f'tellraw @a {tellraw("Agents beginning construction...", "yellow", prefix="[MYL]", prefix_color="gold")}')
         
         for i, agent in enumerate(agents):
             angle = (i / len(agents)) * 2 * 3.14159
@@ -147,7 +179,7 @@ def spawn_agents_and_build():
                 rcon.command(f"setblock {x} {y + h} {z} {block}")
                 time.sleep(0.1)
         
-        # Make agents say hello
+        # Make agents say hello using tellraw (entity name + colored message)
         greetings = [
             "Hello from MYLZERON!",
             "MYLONE reporting for duty!",
@@ -159,12 +191,19 @@ def spawn_agents_and_build():
         ]
         
         for i, agent in enumerate(agents):
-            rcon.command(f'execute as @e[type=armor_stand,tag={agent}] run say §b{greetings[i]}')
+            # Build tellraw that shows entity name + colored message
+            # @s selector picks the executing entity's name
+            msg_json = json.dumps([
+                {"selector": "@s"},
+                {"text": " "},
+                {"text": greetings[i], "color": "aqua", "bold": True}
+            ])
+            rcon.command(f'execute as @e[type=armor_stand,tag={agent}] run tellraw @a {msg_json}')
             time.sleep(0.3)
         
         # Final announcement
-        rcon.command("say §2[MYL] All 7 Dark Factory agents deployed and building!")
-        rcon.command("say §7Agents: mylzeron, mylonen, myltwon, myylthreen, mylforon, mylfivon, mylsixon")
+        rcon.command(f'tellraw @a {tellraw("All 7 Dark Factory agents deployed and building!", "green", bold=True, prefix="[MYL]", prefix_color="gold")}')
+        rcon.command(f'tellraw @a {tellraw("Agents: mylzeron, mylonen, myltwon, mylthreen, mylforon, mylfivon, mylsixon", "gray")}')
         
         print("\n✓ All MYL agents spawned and active!")
         print(f"✓ Location: ({center_x}, {center_y}, {center_z})")
