@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emma - AOS Space Agent</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --neon-cyan: #00f3ff;
+            --neon-purple: #8b5cf6;
+            --neon-pink: #ff00ff;
+            --bg-dark: #0a0a1a;
+            --glass: rgba(10, 10, 26, 0.9);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        #universe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        #emma-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            width: 90%;
+            max-width: 600px;
+        }
+        
+        .emma-widget {
+            background: var(--glass);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 24px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 60px rgba(0, 243, 255, 0.2), 
+                        inset 0 0 60px rgba(0, 243, 255, 0.05);
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 60px rgba(0, 243, 255, 0.2), inset 0 0 60px rgba(0, 243, 255, 0.05); }
+            50% { box-shadow: 0 0 100px rgba(0, 243, 255, 0.4), inset 0 0 80px rgba(0, 243, 255, 0.1); }
+        }
+        
+        .emma-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .emma-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            animation: avatar-pulse 3s ease-in-out infinite;
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.5);
+        }
+        
+        @keyframes avatar-pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(0, 243, 255, 0.5); }
+            50% { transform: scale(1.05); box-shadow: 0 0 60px rgba(139, 92, 246, 0.7); }
+        }
+        
+        .emma-info h1 {
+            font-size: 28px;
+            margin: 0 0 5px 0;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .emma-info span {
+            font-size: 14px;
+            color: #888;
+        }
+        
+        .emma-status {
+            display: flex;
+            gap: 10px;
+            margin-left: auto;
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #333;
+            transition: all 0.3s;
+        }
+        
+        .status-dot.active { background: #0f0; box-shadow: 0 0 15px #0f0; }
+        .status-dot.brain { background: var(--neon-purple); }
+        .status-dot.brain.connected { background: #0f0; box-shadow: 0 0 15px #0f0; }
+        .status-dot.brain.offline { background: #f00; }
+        .status-dot.speaking { background: var(--neon-cyan); animation: blink 1s infinite; }
+        .status-dot.listening { background: #f0f; animation: blink 0.5s infinite; }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .emma-chat {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .chat-message {
+            margin-bottom: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            animation: fade-in 0.3s ease;
+        }
+        
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .chat-message.user {
+            background: rgba(0, 243, 255, 0.15);
+            margin-left: 40px;
+            border-left: 3px solid var(--neon-cyan);
+        }
+        
+        .chat-message.emma {
+            background: rgba(139, 92, 246, 0.15);
+            margin-right: 40px;
+            border-right: 3px solid var(--neon-purple);
+        }
+        
+        .chat-message.system {
+            background: rgba(255, 255, 255, 0.05);
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+        }
+        
+        .emma-input-area {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .emma-input {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 16px 20px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .emma-input:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+        }
+        
+        .emma-btn {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            border: none;
+            border-radius: 16px;
+            padding: 16px 28px;
+            color: black;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .emma-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.5);
+        }
+        
+        .emma-voice-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .voice-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            padding: 12px 20px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .voice-btn:hover {
+            background: rgba(0, 243, 255, 0.2);
+            border-color: var(--neon-cyan);
+        }
+        
+        .voice-btn.active {
+            background: rgba(255, 0, 0, 0.3);
+            border-color: #f00;
+            animation: pulse-red 1s infinite;
+        }
+        
+        @keyframes pulse-red {
+            0%, 100% { box-shadow: 0 0 10px #f00; }
+            50% { box-shadow: 0 0 25px #f00; }
+        }
+        
+        .emma-tools {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        
+        .tool-btn {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 14px 10px;
+            color: white;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .tool-btn:hover {
+            background: rgba(0, 243, 255, 0.15);
+            border-color: var(--neon-cyan);
+            transform: translateY(-2px);
+        }
+        
+        .tool-btn.category-nav { border-top: 2px solid #0f0; }
+        .tool-btn.category-brain { border-top: 2px solid var(--neon-purple); }
+        .tool-btn.category-task { border-top: 2px solid #f90; }
+        .tool-btn.category-util { border-top: 2px solid #0cf; }
+        
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--neon-cyan);
+        }
+        
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(0, 243, 255, 0.3);
+            border-top-color: var(--neon-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .widget-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+            background: var(--glass);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 20px;
+            padding: 25px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 80px rgba(0, 243, 255, 0.3);
+            min-width: 400px;
+            max-width: 600px;
+        }
+        
+        .widget-modal.active { display: block; }
+        
+        .widget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .widget-close {
+            background: none;
+            border: none;
+            color: #f00;
+            font-size: 28px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="universe"></canvas>
+    
+    <div id="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div style="font-size: 24px; margin-bottom: 10px;">Initializing Emma...</div>
+        <div id="loading-status" style="font-size: 14px; color: #888;">Loading consciousness...</div>
+    </div>
+    
+    <div id="emma-container">
+        <div class="emma-widget">
+            <div class="emma-header">
+                <div class="emma-avatar">👩‍💻</div>
+                <div class="emma-info">
+                    <h1>Emma</h1>
+                    <span>AOS Space Agent · Multi-Role Intelligence</span>
+                </div>
+                <div class="emma-status">
+                    <div class="status-dot brain" id="brain-status" title="Brain Connection"></div>
+                    <div class="status-dot" id="voice-status" title="Voice Status"></div>
+                    <div class="status-dot" id="active-status" title="Active"></div>
+                </div>
+            </div>
+            
+            <div class="emma-chat" id="emma-chat">
+                <div class="chat-message system">Initializing systems...</div>
+            </div>
+            
+            <div class="emma-voice-controls">
+                <button class="voice-btn" id="mic-btn" onclick="toggleListening()">
+                    🎤 Speak
+                </button>
+                <button class="voice-btn" onclick="showVoiceSelector()">
+                    🔊 Voice
+                </button>
+                <button class="voice-btn" onclick="toggleAutoSpeak()">
+                    🔈 <span id="auto-speak-label">Auto: ON</span>
+                </button>
+            </div>
+            
+            <div class="emma-input-area">
+                <input type="text" class="emma-input" id="emma-input" 
+                       placeholder="Ask me anything... navigate, analyze, execute, or just chat!"
+                       onkeydown="if(event.key==='Enter')sendToEmma()">
+                <button class="emma-btn" onclick="sendToEmma()">Send</button>
+            </div>
+            
+            <div class="emma-tools">
+                <button class="tool-btn category-nav" onclick="emmaTool('navigate')">🌐 Navigate</button>
+                <button class="tool-btn category-nav" onclick="emmaTool('search')">🔍 Search</button>
+                <button class="tool-btn category-brain" onclick="emmaTool('brain_status')">🧠 Brain</button>
+                <button class="tool-btn category-brain" onclick="emmaTool('perceive')">💭 Perceive</button>
+                <button class="tool-btn category-brain" onclick="emmaTool('analyze')">📊 Analyze</button>
+                <button class="tool-btn category-task" onclick="emmaTool('health_check')">❤️ Health</button>
+                <button class="tool-btn category-task" onclick="emmaTool('scan')">🔎 Scan</button>
+                <button class="tool-btn category-task" onclick="emmaTool('deploy')">🚀 Deploy</button>
+                <button class="tool-btn category-util" onclick="emmaTool('screenshot')">📸 Capture</button>
+                <button class="tool-btn category-util" onclick="emmaTool('extract')">📊 Extract</button>
+                <button class="tool-btn category-util" onclick="emmaTool('widget')">📈 Widget</button>
+                <button class="tool-btn category-util" onclick="emmaTool('sync')">🔄 Sync</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="widget-modal" id="widget-modal">
+        <div class="widget-header">
+            <h3 id="widget-title">Widget</h3>
+            <button class="widget-close" onclick="closeWidget()">×</button>
+        </div>
+        <div id="widget-content"></div>
+    </div>
+    
+    <script src="space-universe.js"></script>
+    <script src="core/voice.js"></script>
+    <script src="core/tools.js"></script>
+    <script src="emma.js"></script>
+</body>
+</html>
