@@ -25,15 +25,34 @@ else
     log "⚠️ Mortimer: UNRESPONSIVE - Model may have unloaded"
 fi
 
-# 2. Complete Brain v4 (AOD daemon)
-if pgrep -f "complete_brain_v45.py" > /dev/null; then
-    PID=$(pgrep -f "complete_brain_v45.py")
+# 2. Complete Brain v4 (AOD daemon) - check for duplicates
+BRAIN_PIDS=$(pgrep -f "complete_brain_v45\.py")
+BRAIN_COUNT=$(echo "$BRAIN_PIDS" | grep -c '^' 2>/dev/null || echo "0")
+
+if [ "$BRAIN_COUNT" -eq 0 ]; then
+    log "❌ Complete Brain v4.5: NOT RUNNING - attempting restart..."
+    systemctl restart aos-brain-v4 2>/dev/null || log "Failed to restart brain"
+elif [ "$BRAIN_COUNT" -eq 1 ]; then
+    PID=$(echo "$BRAIN_PIDS" | head -1)
     UPTIME=$(ps -o etime= -p $PID 2>/dev/null || echo "unknown")
     log "✅ Complete Brain v4.5: RUNNING (PID $PID, uptime: $UPTIME)"
 else
-    log "❌ Complete Brain v4.5: NOT RUNNING - attempting restart..."
-    export PYTHONPATH=/root/.aos/aos
-    /usr/bin/python3 /root/.aos/aos/complete_brain_v45.py &
+    log "⚠️ Complete Brain v4.5: $BRAIN_COUNT DUPLICATES DETECTED"
+    OLDEST=$(echo "$BRAIN_PIDS" | sort -n | head -1)
+    for pid in $BRAIN_PIDS; do
+        [ "$pid" != "$OLDEST" ] && kill "$pid" 2>/dev/null
+    done
+    UPTIME=$(ps -o etime= -p $OLDEST 2>/dev/null || echo "unknown")
+    log "✅ Complete Brain v4.5: CLEANED (PID $OLDEST, uptime: $UPTIME)"
+fi
+
+# 2b. BHSI (Stomach + Intestines) - check health
+if pgrep -f "bhsi_v4_brain_connector" > /dev/null; then
+    BHSI_PID=$(pgrep -f "bhsi_v4_brain_connector" | head -1)
+    log "✅ BHSI v4 (Stomach/Intestines): RUNNING (PID $BHSI_PID)"
+else
+    log "❌ BHSI v4: NOT RUNNING - attempting restart..."
+    systemctl restart aos-bhsi-v4 2>/dev/null || log "Failed to restart BHSI"
 fi
 
 # 3. Mission Control Server
