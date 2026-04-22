@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Agent Fleet - TappyLewis & Myl0nR0s</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --neon-cyan: #00f3ff;
+            --neon-purple: #8b5cf6;
+            --neon-orange: #ff7a00;
+            --neon-pink: #ff00ff;
+            --bg-dark: #0a0a1a;
+            --glass: rgba(10, 10, 26, 0.8);
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: var(--bg-dark);
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        #universe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        #ui-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .agent-widget {
+            position: absolute;
+            pointer-events: auto;
+            background: var(--glass);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 12px;
+            padding: 16px;
+            min-width: 280px;
+            max-width: 360px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .agent-widget:hover {
+            box-shadow: 0 0 50px rgba(0, 243, 255, 0.4);
+        }
+        
+        .agent-widget.dragging {
+            cursor: grabbing;
+            z-index: 100;
+        }
+        
+        .agent-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .agent-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 10px var(--neon-cyan); }
+            50% { box-shadow: 0 0 30px var(--neon-cyan); }
+        }
+        
+        .agent-info h3 {
+            font-size: 16px;
+            margin: 0;
+            color: var(--neon-cyan);
+        }
+        
+        .agent-info span {
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .agent-status {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .status-pill {
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 20px;
+            background: rgba(0, 243, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+        }
+        
+        .agent-chat {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 12px;
+            padding: 8px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            font-size: 13px;
+        }
+        
+        .chat-message {
+            margin-bottom: 8px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .chat-message.user {
+            background: rgba(0, 243, 255, 0.1);
+            margin-left: 20px;
+        }
+        
+        .agent-input {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .agent-input input {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: white;
+            font-size: 13px;
+            outline: none;
+        }
+        
+        .agent-input input:focus {
+            border-color: var(--neon-cyan);
+        }
+        
+        .agent-input button {
+            background: var(--neon-cyan);
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .agent-input button:hover {
+            background: var(--neon-purple);
+            color: white;
+        }
+        
+        .agent-tools {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .tool-btn {
+            font-size: 11px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tool-btn:hover {
+            background: var(--neon-purple);
+            border-color: var(--neon-purple);
+        }
+        
+        .drag-handle {
+            cursor: grab;
+            padding: 4px;
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            opacity: 0.5;
+        }
+        
+        .drag-handle:hover {
+            opacity: 1;
+        }
+        
+        #controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+            pointer-events: auto;
+        }
+        
+        .control-btn {
+            background: var(--glass);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 12px;
+            padding: 12px 24px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        
+        .control-btn:hover {
+            background: var(--neon-cyan);
+            color: black;
+            box-shadow: 0 0 30px var(--neon-cyan);
+        }
+        
+        #fleet-status {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 20;
+            background: var(--glass);
+            border: 1px solid var(--neon-purple);
+            border-radius: 12px;
+            padding: 16px;
+            backdrop-filter: blur(10px);
+            pointer-events: auto;
+        }
+        
+        #fleet-status h2 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: var(--neon-purple);
+        }
+        
+        .fleet-stat {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        
+        .connection-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* Agent-specific styles */
+        #agent-alpha { top: 15%; left: 10%; }
+        #agent-beta { top: 20%; left: 60%; }
+        #agent-gamma { top: 55%; left: 25%; }
+    </style>
+</head>
+<body>
+    <canvas id="universe"></canvas>
+    
+    <div id="fleet-status">
+        <h2>🚀 Space Fleet</h2>
+        <div class="fleet-stat"><span>Active Agents:</span><span id="agent-count">3</span></div>
+        <div class="fleet-stat"><span>Brain Link:</span><span style="color: #0f0">Connected</span></div>
+        <div class="fleet-stat"><span>Tools Available:</span><span>7</span></div>
+        <div class="fleet-stat"><span>Domain:</span><span id="domain">detecting...</span></div>
+    </div>
+    
+    <div id="ui-layer">
+        <!-- Agent Alpha: Navigator -->
+        <div class="agent-widget floating" id="agent-alpha" style="animation-delay: 0s;">
+            <div class="drag-handle">⋮⋮</div>
+            <div class="agent-header">
+                <div class="agent-avatar">🧭</div>
+                <div class="agent-info">
+                    <h3>Agent Alpha</h3>
+                    <span>Navigator & Browser</span>
+                </div>
+            </div>
+            <div class="agent-status">
+                <span class="status-pill">🌐 Web</span>
+                <span class="status-pill">🔍 Search</span>
+                <span class="status-pill" style="color: #0f0">● Active</span>
+            </div>
+            <div class="agent-chat" id="chat-alpha">
+                <div class="chat-message">Hello Captain! I'm connected to browser tools.</div>
+            </div>
+            <div class="agent-input">
+                <input type="text" id="input-alpha" placeholder="Navigate to... or ask me...">
+                <button onclick="sendToAgent('alpha')">Send</button>
+            </div>
+            <div class="agent-tools">
+                <button class="tool-btn" onclick="agentTool('alpha', 'navigate')">🌐 Navigate</button>
+                <button class="tool-btn" onclick="agentTool('alpha', 'search')">🔍 Search</button>
+                <button class="tool-btn" onclick="agentTool('alpha', 'screenshot')">📸 Screenshot</button>
+                <button class="tool-btn" onclick="agentTool('alpha', 'extract')">📊 Extract</button>
+            </div>
+        </div>
+        
+        <!-- Agent Beta: Analyst -->
+        <div class="agent-widget floating" id="agent-beta" style="animation-delay: -2s;">
+            <div class="drag-handle">⋮⋮</div>
+            <div class="agent-header">
+                <div class="agent-avatar" style="background: linear-gradient(135deg, #ff7a00, #ff00ff);">📊</div>
+                <div class="agent-info">
+                    <h3>Agent Beta</h3>
+                    <span>Data & Brain Link</span>
+                </div>
+            </div>
+            <div class="agent-status">
+                <span class="status-pill">🧠 Brain</span>
+                <span class="status-pill">📈 Analytics</span>
+                <span class="status-pill" style="color: #0f0">● Active</span>
+            </div>
+            <div class="agent-chat" id="chat-beta">
+                <div class="chat-message">Connected to AOS Brain v4.5. Ready to cascade.</div>
+            </div>
+            <div class="agent-input">
+                <input type="text" id="input-beta" placeholder="Query brain status...">
+                <button onclick="sendToAgent('beta')">Send</button>
+            </div>
+            <div class="agent-tools">
+                <button class="tool-btn" onclick="agentTool('beta', 'brain-status')">🧠 Brain Status</button>
+                <button class="tool-btn" onclick="agentTool('beta', 'perceive')">💭 Perceive</button>
+                <button class="tool-btn" onclick="agentTool('beta', 'analyze')">📈 Analyze</button>
+                <button class="tool-btn" onclick="agentTool('beta', 'forecast')">🔮 Forecast</button>
+            </div>
+        </div>
+        
+        <!-- Agent Gamma: Task Runner -->
+        <div class="agent-widget floating" id="agent-gamma" style="animation-delay: -4s;">
+            <div class="drag-handle">⋮⋮</div>
+            <div class="agent-header">
+                <div class="agent-avatar" style="background: linear-gradient(135deg, #ff00ff, #8b5cf6);">⚡</div>
+                <div class="agent-info">
+                    <h3>Agent Gamma</h3>
+                    <span>Executor & Scripts</span>
+                </div>
+            </div>
+            <div class="agent-status">
+                <span class="status-pill">⚡ Execute</span>
+                <span class="status-pill">🔧 Tools</span>
+                <span class="status-pill" style="color: #0f0">● Active</span>
+            </div>
+            <div class="agent-chat" id="chat-gamma">
+                <div class="chat-message">Task execution ready. 7 skills available.</div>
+            </div>
+            <div class="agent-input">
+                <input type="text" id="input-gamma" placeholder="Run command or task...">
+                <button onclick="sendToAgent('gamma')">Send</button>
+            </div>
+            <div class="agent-tools">
+                <button class="tool-btn" onclick="agentTool('gamma', 'bash')">💻 Bash</button>
+                <button class="tool-btn" onclick="agentTool('gamma', 'health-check')">❤️ Health</button>
+                <button class="tool-btn" onclick="agentTool('gamma', 'deploy')">🚀 Deploy</button>
+                <button class="tool-btn" onclick="agentTool('gamma', 'scan')">🔎 Scan</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="controls">
+        <button class="control-btn" onclick="addAgent()">➕ Add Agent</button>
+        <button class="control-btn" onclick="fleetAction('sync')">🔄 Fleet Sync</button>
+        <button class="control-btn" onclick="fleetAction('cascade')">🌊 Cascade All</button>
+        <button class="control-btn" onclick="toggleFloat()">🎯 Toggle Float</button>
+    </div>
+
+    <script src="space-universe.js"></script>
+    <script src="space-agents.js"></script>
+</body>
+</html>
