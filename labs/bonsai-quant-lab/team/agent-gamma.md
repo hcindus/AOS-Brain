@@ -12,17 +12,19 @@ Track ternary quantization ecosystem and document all findings.
 
 #### BQL-006: llama.cpp Ternary Support Tracking
 
+**Status:** ✅ INITIAL RESEARCH COMPLETE
+
 **Monitoring Targets:**
-- [ ] GitHub: ggerganov/llama.cpp — issues mentioning "ternary", "1.58-bit", "BitNet"
-- [ ] GitHub: ollama/ollama — PRs mentioning quantization support
-- [ ] arXiv: Papers citing BitNet b1.58
+- [x] GitHub: ggerganov/llama.cpp — issues mentioning "ternary", "1.58-bit", "BitNet"
+- [x] GitHub: ollama/ollama — PRs mentioning quantization support
+- [x] arXiv: Papers citing BitNet b1.58
 
-**Key Questions:**
-1. Is ternary support on llama.cpp roadmap?
-2. Any experimental branches with ternary kernels?
-3. Estimated timeline for mainstream support?
+**Key Findings:**
+1. **Is ternary support on llama.cpp roadmap?** ❌ Not officially. PrismML fork exists with "upstream PR coming soon" (no timeline)
+2. **Any experimental branches with ternary kernels?** ✅ Yes - Microsoft BitNet and PrismML forks
+3. **Estimated timeline for mainstream support?** ⏳ Unknown - no public roadmap
 
-**Deliverable:** `ternary-roadmap-report.md` updated weekly
+**Deliverable:** `ternary-ecosystem-report.md` created
 
 #### BQL-007: Alternative Model Research
 
