@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AOS Space Agent Fleet - Tappylewis & Myl0nR0s</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --neon-cyan: #00f3ff;
+            --neon-purple: #8b5cf6;
+            --neon-pink: #ff00ff;
+            --neon-orange: #ff7a00;
+            --bg-dark: #0a0a1a;
+            --glass: rgba(10, 10, 26, 0.85);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        #universe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        #app-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .agent-widget {
+            position: absolute;
+            pointer-events: auto;
+            background: var(--glass);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 16px;
+            padding: 20px;
+            min-width: 320px;
+            max-width: 400px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .agent-widget:hover {
+            box-shadow: 0 0 60px rgba(0, 243, 255, 0.3);
+            border-color: var(--neon-purple);
+        }
+        
+        .agent-widget.dragging {
+            cursor: grabbing;
+            z-index: 100;
+            box-shadow: 0 0 80px rgba(0, 243, 255, 0.5);
+        }
+        
+        .agent-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .agent-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            animation: pulse 2.5s ease-in-out infinite;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 15px var(--neon-cyan); }
+            50% { box-shadow: 0 0 35px var(--neon-cyan), 0 0 50px var(--neon-purple); }
+        }
+        
+        .agent-info h3 {
+            font-size: 18px;
+            margin: 0 0 4px 0;
+            color: var(--neon-cyan);
+        }
+        
+        .agent-info span {
+            font-size: 13px;
+            color: #888;
+        }
+        
+        .connection-status {
+            position: absolute;
+            top: 20px;
+            right: 50px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #333;
+            transition: background 0.3s;
+        }
+        
+        .connection-status.connected {
+            background: #0f0;
+            box-shadow: 0 0 10px #0f0;
+        }
+        
+        .connection-status.offline {
+            background: #f00;
+            box-shadow: 0 0 10px #f00;
+        }
+        
+        .agent-tools {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .tool-btn {
+            font-size: 12px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tool-btn:hover {
+            background: var(--neon-purple);
+            border-color: var(--neon-purple);
+            transform: translateY(-2px);
+        }
+        
+        .chat-area {
+            max-height: 180px;
+            overflow-y: auto;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+        }
+        
+        .chat-message {
+            margin-bottom: 8px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        .chat-message.user {
+            background: rgba(0, 243, 255, 0.15);
+            margin-left: 20px;
+        }
+        
+        .chat-message.agent {
+            background: rgba(139, 92, 246, 0.15);
+        }
+        
+        .chat-message.system {
+            background: rgba(255, 255, 255, 0.05);
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .input-area {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .input-area input {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 10px 15px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .input-area input:focus {
+            border-color: var(--neon-cyan);
+        }
+        
+        .input-area button {
+            background: var(--neon-cyan);
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .input-area button:hover {
+            background: var(--neon-purple);
+            color: white;
+            box-shadow: 0 0 20px var(--neon-purple);
+        }
+        
+        .drag-handle {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            cursor: grab;
+            padding: 5px;
+            opacity: 0.5;
+            font-size: 16px;
+        }
+        
+        .drag-handle:hover {
+            opacity: 1;
+        }
+        
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+        
+        /* Agent positions */
+        #agent-navigator { top: 12%; left: 8%; }
+        #agent-analyst { top: 15%; right: 8%; }
+        #agent-executor { top: 55%; left: 15%; }
+        #agent-coordinator { top: 58%; right: 12%; }
+        
+        /* Floating animation */
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        /* Fleet controls */
+        #fleet-controls {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            display: flex;
+            gap: 15px;
+            pointer-events: auto;
+        }
+        
+        .control-btn {
+            background: var(--glass);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 12px;
+            padding: 12px 24px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        
+        .control-btn:hover {
+            background: var(--neon-cyan);
+            color: black;
+            box-shadow: 0 0 30px var(--neon-cyan);
+        }
+        
+        /* Status panel */
+        #status-panel {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 20;
+            background: var(--glass);
+            border: 1px solid var(--neon-purple);
+            border-radius: 12px;
+            padding: 16px;
+            backdrop-filter: blur(10px);
+            pointer-events: auto;
+            min-width: 200px;
+        }
+        
+        #status-panel h2 {
+            font-size: 16px;
+            color: var(--neon-purple);
+            margin-bottom: 12px;
+        }
+        
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        
+        .status-value {
+            color: var(--neon-cyan);
+        }
+        
+        /* Widget container */
+        .widget-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 50;
+            background: var(--glass);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 60px rgba(0, 243, 255, 0.3);
+        }
+        
+        .widget-container.active {
+            display: block;
+        }
+        
+        .widget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .widget-close {
+            background: none;
+            border: none;
+            color: #f00;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="universe"></canvas>
+    
+    <div id="status-panel">
+        <h2>🚀 AOS Fleet</h2>
+        <div class="status-row">
+            <span>Agents:</span>
+            <span class="status-value" id="agent-count">4</span>
+        </div>
+        <div class="status-row">
+            <span>Brain Link:</span>
+            <span class="status-value" id="brain-status">checking...</span>
+        </div>
+        <div class="status-row">
+            <span>Spaces:</span>
+            <span class="status-value" id="space-count">0</span>
+        </div>
+        <div class="status-row">
+            <span>Widgets:</span>
+            <span class="status-value" id="widget-count">0</span>
+        </div>
+        <div class="status-row">
+            <span>Domain:</span>
+            <span class="status-value" id="domain-detect">...</span>
+        </div>
+    </div>
+
+    <div id="app-layer">
+        <!-- Navigator Agent -->
+        <div class="agent-widget floating" id="agent-navigator" style="animation-delay: 0s;">
+            <div class="drag-handle">⋮⋮</div>
+            <div class="connection-status" id="conn-nav"></div>
+            <div class="agent-header">
+                <div class="agent-avatar">🧭</div>
+                <div class="agent-info">
+                    <h3>Navigator Alpha</h3>
+                    <span>Web & Browser Tools</span>
+                </div>
+            </div>
+            <div class="chat-area" id="chat-navigator">
+                <div class="chat-message system">Connected to browser automation tools.</div>
+            </div>
+            <div class="input-area">
+                <input type="text" id="input-navigator" placeholder="Navigate to... or search for...">
+                <button onclick="sendToAgent('navigator')">Send</button>
+            </div>
+            <div class="agent-tools">
+                <button class="tool-btn" onclick="agentTool('navigator', 'navigate')">🌐 Go To</button>
+                <button class="tool-btn" onclick="agentTool('navigator', 'search')">🔍 Search</button>
+                <button class="tool-btn" onclick="agentTool('navigator', 'screenshot')">📸 Capture</button>
+                <button class="tool-btn" onclick="agentTool('navigator', 'extract')">📊 Extract</button>
+            </div>
+        </div>
+
+        <!-- Analyst Agent -->
+        <div class="agent-widget floating" id="agent-analyst" style="animation-delay: -1.5s;">
+            <div class="drag-handle">⋮⋮</div>
+            <div class="connection-status" id="conn-analyst"></div>
+            <div class="agent-header">
+                <div class="agent-avatar" style="background: linear-gradient(135deg, #ff7a00, #ff00ff);">📊</div>
+                <div class="agent-info">
+                    <h3>Analyst Beta</h3>
+                    <span>Brain & Data Connection</span>
+                </div>
+            </div>
+            <div class="chat-area" id="chat-analyst">
+                <div class="chat-message system">Connecting to AOS Brain v4.5...</div>
+            </div>
+            <div class="input-area">
+                <input type="text" id="input-analyst" placeholder="Query brain status or perceive data...">
+                <button onclick="sendToAgent('analyst')">Send</button>
+            </div>
+            <div class="agent-tools">
+                <button class="tool-btn" onclick="agentTool('analyst', 'brain_status')">🧠 Status</button>
+                <button class="tool-btn" onclick="agentTool('analyst', 'perceive')">💭 Perceive</button>
+                <button class="tool-btn" onclick="agentTool('analyst', 'create_widget')">📈 Widget</button>
+                <button class="tool-btn" onclick="agentTool('analyst', 'analyze')">🔮 Analyze</button>
+            </div>
+        </div>
+
+        <!-- Executor Agent -->
+        <div class="agent-widget floating" id="agent-executor" style="animation-delay: -3s;">
+            <div class="drag-handle">⋮⋮</div>
+            <div class="connection-status" id="conn-executor"></div>
+            <div class="agent-header">
+                <div class="agent-avatar" style="background: linear-gradient(135deg, #ff00ff, #8b5cf6);">⚡</div>
+                <div class="agent-info">
+                    <h3>Executor Gamma</h3>
+                    <span>Task & Script Runner</span>
+                </div>
+            </div>
+            <div class="chat-area" id="chat-executor">
+                <div class="chat-message system">Task execution ready. 7 skills available.</div>
+            </div>
+            <div class="input-area">
+                <input type="text" id="input-executor" placeholder="Run command or execute task...">
+                <button onclick="sendToAgent('executor')">Send</button>
+            </div>
+            <div class="agent-tools">
+                <button class="tool-btn" onclick="agentTool('executor', 'health_check')">❤️ Health</button>
+                <button class="tool-btn" onclick="agentTool('executor', 'deploy')">🚀 Deploy</button>
+                <button class="tool-btn" onclick="agentTool('executor', 'scan')">🔎 Scan</button>
+                <button class="tool-btn" onclick="agentTool('executor', 'skill')">🛠️ Skill</button>
+            </div>
+        </div>
+
+        <!-- Coordinator Agent -->
+        <div class="agent-widget floating" id="agent-coordinator" style="animation-delay: -4.5s;">
+            <div class="drag-handle">⋮⋮</div>
+            <div class="connection-status" id="conn-coordinator"></div>
+            <div class="agent-header">
+                <div class="agent-avatar" style="background: linear-gradient(135deg, #00f3ff, #0f0);">🌐</div>
+                <div class="agent-info">
+                    <h3>Coordinator Delta</h3>
+                    <span>Fleet & Space Manager</span>
+                </div>
+            </div>
+            <div class="chat-area" id="chat-coordinator">
+                <div class="chat-message system">Fleet coordination active. 4 agents online.</div>
+            </div>
+            <div class="input-area">
+                <input type="text" id="input-coordinator" placeholder="Coordinate fleet or create space...">
+                <button onclick="sendToAgent('coordinator')">Send</button>
+            </div>
+            <div class="agent-tools">
+                <button class="tool-btn" onclick="agentTool('coordinator', 'sync')">🔄 Sync</button>
+                <button class="tool-btn" onclick="agentTool('coordinator', 'cascade')">🌊 Cascade</button>
+                <button class="tool-btn" onclick="agentTool('coordinator', 'new_space')">➕ Space</button>
+                <button class="tool-btn" onclick="agentTool('coordinator', 'broadcast')">📢 All</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="fleet-controls">
+        <button class="control-btn" onclick="fleetAction('add_agent')">➕ Add Agent</button>
+        <button class="control-btn" onclick="fleetAction('sync_all')">🔄 Fleet Sync</button>
+        <button class="control-btn" onclick="fleetAction('brain_cascade')">🧠 Brain Link</button>
+        <button class="control-btn" onclick="toggleAnimation()">🎯 Float Toggle</button>
+    </div>
+
+    <!-- Widget Modal -->
+    <div class="widget-container" id="widget-modal">
+        <div class="widget-header">
+            <h3 id="widget-title">Widget</h3>
+            <button class="widget-close" onclick="closeWidget()">×</button>
+        </div>
+        <div id="widget-content"></div>
+    </div>
+
+    <script src="space-universe.js"></script>
+    <script src="core/agent.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
