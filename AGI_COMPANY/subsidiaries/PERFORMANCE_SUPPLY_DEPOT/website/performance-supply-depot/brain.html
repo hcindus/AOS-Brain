@@ -143,7 +143,31 @@
                 </div>
             </div>
 
-            <h3 style="color:var(--accent);margin-bottom:20px;">Brain Regions</h3>
+            <h3 style="color:var(--accent);margin-bottom:20px;">Brain v4.5 Pipeline</h3>
+            <div class="regions-grid">
+                <div class="region-card">
+                    <h4>Lungs</h4>
+                    <div class="region-status">🫁</div>
+                    <div class="region-activity">Breathing</div>
+                </div>
+                <div class="region-card">
+                    <h4>Liver</h4>
+                    <div class="region-status">🫘</div>
+                    <div class="region-activity">Filtering</div>
+                </div>
+                <div class="region-card">
+                    <h4>Brain Core</h4>
+                    <div class="region-status">🧠</div>
+                    <div class="region-activity">Deciding</div>
+                </div>
+                <div class="region-card">
+                    <h4>Kidneys</h4>
+                    <div class="region-status">🫀</div>
+                    <div class="region-activity">Recycling</div>
+                </div>
+            </div>
+
+            <h3 style="color:var(--accent);margin-bottom:20px;margin-top:30px;">Brain Regions</h3>
             <div class="regions-grid">
                 <div class="region-card">
                     <h4>Thalamus</h4>
@@ -183,7 +207,7 @@
                 <div class="region-card">
                     <h4>Heart</h4>
                     <div class="region-status">💓</div>
-                    <div class="region-activity">30 BPM</div>
+                    <div class="region-activity">72 BPM</div>
                 </div>
             </div>
         </main>
@@ -294,15 +318,53 @@
             renderer.setSize(container.clientWidth, container.clientHeight);
         });
 
-        // Fetch brain metrics (simulated for now)
-        function updateMetrics() {
-            document.getElementById('tick').textContent = Math.floor(Math.random() * 1000 + 50000);
-            document.getElementById('phase').textContent = ['Observe', 'Orient', 'Decide', 'Act'][Math.floor(Math.random() * 4)];
-            document.getElementById('mode').textContent = 'adaptive';
-            document.getElementById('nodes').textContent = Math.floor(Math.random() * 100 + 1000).toLocaleString();
-            document.getElementById('novelty').textContent = (0.5 + Math.random() * 0.3).toFixed(2);
-            document.getElementById('error').textContent = (Math.random() * 0.1).toFixed(3);
-            document.getElementById('clusters').textContent = Math.floor(Math.random() * 50 + 200).toLocaleString();
+        // Fetch real brain metrics from v4.5
+        const BRAIN_API = 'http://localhost:8080/api/status';
+        
+        async function updateMetrics() {
+            try {
+                const response = await fetch(BRAIN_API);
+                const data = await response.json();
+                
+                // Core metrics
+                document.getElementById('tick').textContent = data.tick?.toLocaleString() || '--';
+                document.getElementById('phase').textContent = data.phase || '--';
+                document.getElementById('mode').textContent = data.thyroid?.state || '--';
+                
+                // 3D Cortex metrics
+                document.getElementById('nodes').textContent = data.cortex?.volume_size?.toLocaleString() || '--';
+                document.getElementById('novelty').textContent = data.cortex?.conscious_mean?.toFixed(3) || '--';
+                document.getElementById('error').textContent = data.kidneys?.noise_estimate?.toFixed(3) || '--';
+                document.getElementById('clusters').textContent = data.tracray?.episodes?.toLocaleString() || '--';
+                
+                // Update region statuses based on real data
+                updateRegionActivity(data);
+                
+            } catch (e) {
+                console.log('Brain API unavailable, using cached data');
+            }
+        }
+        
+        function updateRegionActivity(data) {
+            const regions = document.querySelectorAll('.region-activity');
+            const phase = data.phase?.toLowerCase() || '';
+            
+            // Map phase to region activity
+            const activityMap = {
+                'observe': ['Observing', 'Monitoring', 'Sensing', 'Perceiving', 'Processing', 'Coordinating', 'Regulating'],
+                'orient': ['Analyzing', 'Evaluating', 'Planning', 'Processing', 'Processing', 'Coordinating', 'Regulating'],
+                'decide': ['Processing', 'Processing', 'Evaluating', 'Planning', 'Preparing', 'Coordinating', 'Regulating'],
+                'act': ['Processing', 'Storing', 'Responding', 'Executing', 'Acting', 'Coordinating', 'Regulating']
+            };
+            
+            const activities = activityMap[phase] || activityMap['observe'];
+            regions.forEach((region, i) => {
+                region.textContent = activities[i] || 'Active';
+            });
+            
+            // Update BPM
+            const heartBpm = document.querySelector('.region-card:last-child .region-activity');
+            if (heartBpm) heartBpm.textContent = '72 BPM';
         }
 
         updateMetrics();
