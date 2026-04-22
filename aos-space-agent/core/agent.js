@@ -9,7 +9,14 @@ class AOSSpaceAgent {
         this.id = config.id || `agent_${Date.now()}`;
         this.name = config.name || 'AOS Agent';
         this.role = config.role || 'general'; // navigator, analyst, executor, coordinator
-        this.brainSocketUrl = config.brainSocket || '/brain';
+        this.brainSocketUrl = config.brainSocket || (() => {
+            // Auto-detect best brain connection
+            const hostname = window.location.hostname;
+            if (hostname.includes('myl0nr0s.cloud')) {
+                return 'https://tappylewis.cloud/brain'; // Use tappylewis as brain proxy
+            }
+            return '/brain';
+        })();
         
         // Load personality if available
         this.personality = null;
