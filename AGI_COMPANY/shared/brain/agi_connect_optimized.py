@@ -400,7 +400,7 @@ class UnifiedEventBus:
         """Transform event for Minecraft world"""
         return {
             "type": f"minecraft_{event.event_type}",
-            "message": f"§b[Cross-Platform]§r {event.payload.get('message', '')}",
+            "message": f"[Cross-Platform] {event.payload.get('message', '')}",
             "location": event.payload.get("location", (0, 70, 0)),
             "broadcast": event.priority >= 8,  # High priority = server-wide
         }

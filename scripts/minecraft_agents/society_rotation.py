@@ -16,11 +16,11 @@ LOG_DIR = "/root/.openclaw/workspace/logs"
 
 # The 5 Society Members: 3 Male, 2 Female
 SOCIETY_AGENTS = [
-    {"name": "Marcus", "username": "marcus", "role": "leader", "gender": "male", "color": "§6", "port": 25566},
-    {"name": "Julius", "username": "julius", "role": "builder", "gender": "male", "color": "§2", "port": 25566},
-    {"name": "Titus", "username": "titus", "role": "guardian", "gender": "male", "color": "§4", "port": 25566},
-    {"name": "Julia", "username": "julia", "role": "farmer", "gender": "female", "color": "§a", "port": 25566},
-    {"name": "Livia", "username": "livia", "role": "explorer", "gender": "female", "color": "§b", "port": 25566},
+    {"name": "Marcus", "username": "marcus", "role": "leader", "gender": "male", "port": 25566},
+    {"name": "Julius", "username": "julius", "role": "builder", "gender": "male", "port": 25566},
+    {"name": "Titus", "username": "titus", "role": "guardian", "gender": "male", "port": 25566},
+    {"name": "Julia", "username": "julia", "role": "farmer", "gender": "female", "port": 25566},
+    {"name": "Livia", "username": "livia", "role": "explorer", "gender": "female", "port": 25566},
 ]
 
 def log(msg):

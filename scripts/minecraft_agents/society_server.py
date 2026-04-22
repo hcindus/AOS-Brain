@@ -14,11 +14,11 @@ from collections import defaultdict
 
 # Society Configuration
 SOCIETY_AGENTS = {
-    'marcus': {'name': 'Marcus', 'gender': 'male', 'role': 'leader', 'color': '§6'},
-    'julius': {'name': 'Julius', 'gender': 'male', 'role': 'builder', 'color': '§2'},
-    'titus': {'name': 'Titus', 'gender': 'male', 'role': 'guardian', 'color': '§4'},
-    'julia': {'name': 'Julia', 'gender': 'female', 'role': 'farmer', 'color': '§a'},
-    'livia': {'name': 'Livia', 'gender': 'female', 'role': 'explorer', 'color': '§b'}
+    'marcus': {'name': 'Marcus', 'gender': 'male', 'role': 'leader', 'color': ''},
+    'julius': {'name': 'Julius', 'gender': 'male', 'role': 'builder', 'color': ''},
+    'titus': {'name': 'Titus', 'gender': 'male', 'role': 'guardian', 'color': ''},
+    'julia': {'name': 'Julia', 'gender': 'female', 'role': 'farmer', 'color': ''},
+    'livia': {'name': 'Livia', 'gender': 'female', 'role': 'explorer', 'color': ''}
 }
 
 # Society State

@@ -22,11 +22,11 @@ const AGENT_GENDER = process.env.AGENT_GENDER || (AGENT_ID.includes('a') || AGEN
 
 // Society agent definitions
 const SOCIETY_AGENTS = {
-    'marcus': { name: 'Marcus', gender: 'male', role: 'leader', personality: 'charismatic', color: '§6' },
-    'julius': { name: 'Julius', gender: 'male', role: 'builder', personality: 'diligent', color: '§2' },
-    'titus': { name: 'Titus', gender: 'male', role: 'guardian', personality: 'brave', color: '§4' },
-    'julia': { name: 'Julia', gender: 'female', role: 'farmer', personality: 'nurturing', color: '§a' },
-    'livia': { name: 'Livia', gender: 'female', role: 'explorer', personality: 'curious', color: '§b' }
+    'marcus': { name: 'Marcus', gender: 'male', role: 'leader', personality: 'charismatic', color: '' },
+    'julius': { name: 'Julius', gender: 'male', role: 'builder', personality: 'diligent', color: '' },
+    'titus': { name: 'Titus', gender: 'male', role: 'guardian', personality: 'brave', color: '' },
+    'julia': { name: 'Julia', gender: 'female', role: 'farmer', personality: 'nurturing', color: '' },
+    'livia': { name: 'Livia', gender: 'female', role: 'explorer', personality: 'curious', color: '' }
 };
 
 const AGENT_CONFIG = SOCIETY_AGENTS[AGENT_ID.toLowerCase()] || {
@@ -34,7 +34,7 @@ const AGENT_CONFIG = SOCIETY_AGENTS[AGENT_ID.toLowerCase()] || {
     gender: AGENT_GENDER,
     role: 'settler',
     personality: 'adaptable',
-    color: '§7'
+    color: ''
 };
 
 console.log(`[${AGENT_ID}] 🏛️ Society Agent v1.0 - ${AGENT_CONFIG.name} (${AGENT_CONFIG.gender}, ${AGENT_CONFIG.role})`);
@@ -128,7 +128,7 @@ function announceArrival() {
         `Greetings. I am ${AGENT_CONFIG.name}, ready to serve the society.`
     ];
     const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-    bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] ${greeting}`);
+    bot.chat(`[${AGENT_CONFIG.name}] ${greeting}`);
 }
 
 // Main Life Loop
@@ -263,7 +263,7 @@ async function handleSocialInteractions(perception) {
             // Chat occasionally
             if (state.tick % 50 === 0 && Math.random() < 0.3) {
                 const chatLines = getSocialChat();
-                bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] ${chatLines}`);
+                bot.chat(`[${AGENT_CONFIG.name}] ${chatLines}`);
             }
         }
     }
@@ -282,7 +282,7 @@ function getSocialChat() {
 }
 
 function proposePartnership(agent) {
-    bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] Greetings, ${agent.name}. I sense we could build something... enduring together.`);
+    bot.chat(`[${AGENT_CONFIG.name}] Greetings, ${agent.name}. I sense we could build something... enduring together.`);
 
     if (societyConnected) {
         societyWs.send(JSON.stringify({
@@ -324,7 +324,7 @@ async function leaderBehavior(perception) {
         moveTo(gatheringPoint, 5);
 
         if (state.tick % 100 === 0) {
-            bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] Citizens! Let us work together for the glory of our settlement!`);
+            bot.chat(`[${AGENT_CONFIG.name}] Citizens! Let us work together for the glory of our settlement!`);
         }
     } else {
         // Explore to find others
@@ -348,7 +348,7 @@ async function guardianBehavior(perception) {
     // Guardians patrol and defend
     if (perception.threats.length > 0) {
         const threat = perception.threats[0];
-        bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] Threat detected! Defending the settlement!`);
+        bot.chat(`[${AGENT_CONFIG.name}] Threat detected! Defending the settlement!`);
 
         // Move toward threat and engage
         const target = bot.nearestEntity(e => e.name === threat.name);
@@ -394,7 +394,7 @@ async function explorerBehavior(perception) {
         explore();
 
         if (state.tick % 60 === 0) {
-            bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] New terrain explored! Reporting findings...`);
+            bot.chat(`[${AGENT_CONFIG.name}] New terrain explored! Reporting findings...`);
             state.civilization.contributions += 1;
         }
     }
@@ -406,15 +406,15 @@ async function contributeToCivilization(perception) {
 
     if (totalContribution > 50 && state.civilization.tier === 0) {
         state.civilization.tier = 1;
-        bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] ★ Our society has advanced to the Tribal Age! ★`);
+        bot.chat(`[${AGENT_CONFIG.name}] ★ Our society has advanced to the Tribal Age! ★`);
         announceCivilizationProgress();
     } else if (totalContribution > 150 && state.civilization.tier === 1) {
         state.civilization.tier = 2;
-        bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] ★ Our society has advanced to the Village Age! ★`);
+        bot.chat(`[${AGENT_CONFIG.name}] ★ Our society has advanced to the Village Age! ★`);
         announceCivilizationProgress();
     } else if (totalContribution > 300 && state.civilization.tier === 2) {
         state.civilization.tier = 3;
-        bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] ★ Our society has advanced to the Town Age! ★`);
+        bot.chat(`[${AGENT_CONFIG.name}] ★ Our society has advanced to the Town Age! ★`);
         announceCivilizationProgress();
     }
 }
@@ -441,7 +441,7 @@ async function gatherResource(block, type) {
         state.civilization.contributions += 1;
 
         if (state.tick % 20 === 0) {
-            bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] Gathering ${type}... (${state.inventory[type]} collected)`);
+            bot.chat(`[${AGENT_CONFIG.name}] Gathering ${type}... (${state.inventory[type]} collected)`);
         }
     } catch (e) {
         // Pathfinding error, continue
@@ -456,7 +456,7 @@ async function attemptBuilding() {
         state.civilization.structures.push('home');
         state.inventory.wood -= 10;
 
-        bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] Building my dwelling...`);
+        bot.chat(`[${AGENT_CONFIG.name}] Building my dwelling...`);
 
         // Announce structure built
         if (societyConnected) {
@@ -523,31 +523,31 @@ function handleSocietyMessage(msg) {
     switch (msg.type) {
         case 'partnership_accepted':
             state.partner = msg.from;
-            bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] 💕 ${msg.message}`);
+            bot.chat(`[${AGENT_CONFIG.name}] 💕 ${msg.message}`);
             break;
 
         case 'child_born':
             state.children.push(msg.child_name);
-            bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] 🎉 A child is born! Welcome, ${msg.child_name}!`);
+            bot.chat(`[${AGENT_CONFIG.name}] 🎉 A child is born! Welcome, ${msg.child_name}!`);
             break;
 
         case 'civilization_event':
-            bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] 📜 ${msg.message}`);
+            bot.chat(`[${AGENT_CONFIG.name}] 📜 ${msg.message}`);
             break;
 
         case 'command':
             if (msg.command === 'gather') {
                 const gatheringPoint = msg.params.location;
-                bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] I heed the call!`);
+                bot.chat(`[${AGENT_CONFIG.name}] I heed the call!`);
                 moveTo(gatheringPoint, 2);
             } else if (msg.command === 'build') {
-                bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] Construction begins!`);
+                bot.chat(`[${AGENT_CONFIG.name}] Construction begins!`);
             }
             break;
 
         case 'reproduction_possible':
             if (state.partner && msg.with === AGENT_ID) {
-                bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] 💑 Our love brings forth new life!`);
+                bot.chat(`[${AGENT_CONFIG.name}] 💑 Our love brings forth new life!`);
             }
             break;
     }
@@ -560,7 +560,7 @@ function sleep(ms) {
 // Event handlers
 bot.once('spawn', () => {
     console.log(`[${AGENT_ID}] ✅ Spawned in world`);
-    bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] I, ${AGENT_CONFIG.name}, have arrived to build a civilization!`);
+    bot.chat(`[${AGENT_CONFIG.name}] I, ${AGENT_CONFIG.name}, have arrived to build a civilization!`);
     connectSociety();
     lifeLoop();
 });
@@ -577,17 +577,17 @@ bot.on('chat', (username, message) => {
             `How may I serve the society today?`
         ];
         const response = responses[Math.floor(Math.random() * responses.length)];
-        bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] ${response}`);
+        bot.chat(`[${AGENT_CONFIG.name}] ${response}`);
     }
 
     // Society commands
     if (message.includes('society status')) {
-        bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] Civilization tier: ${state.civilization.tier}, Contributions: ${state.civilization.contributions}`);
+        bot.chat(`[${AGENT_CONFIG.name}] Civilization tier: ${state.civilization.tier}, Contributions: ${state.civilization.contributions}`);
     }
 });
 
 bot.on('death', () => {
-    bot.chat(`${AGENT_CONFIG.color}[${AGENT_CONFIG.name}] I have fallen! But civilization endures...`);
+    bot.chat(`[${AGENT_CONFIG.name}] I have fallen! But civilization endures...`);
 });
 
 bot.on('error', (err) => {

@@ -1,21 +1,26 @@
 #!/bin/bash
-# VERSION: 1.0.0
-# UPDATED: 2026-04-02 04:08 UTC
-# CHANGELOG: Initial unified keepalive system
+# VERSION: 2.0.0
+# UPDATED: 2026-04-22 07:20 UTC
+# CHANGELOG: v2.0 - Removed brain duplicate handling (systemd manages), added --no-restart flag for systemd use
 #
-# Agent Keepalive Monitor
+# Agent Keepalive Monitor v2.0
 # Ensures all critical agent systems remain running
+# NOTE: Brain/BHSI health is handled by systemd and aos_keepalive.sh - NOT this script
 
 LOG_FILE="/root/.openclaw/workspace/logs/agent_keepalive.log"
 mkdir -p $(dirname $LOG_FILE)
+
+# Check if --no-restart flag passed (for systemd integration)
+NO_RESTART=false
+[[ "$1" == "--no-restart" ]] && NO_RESTART=true
 
 log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S UTC')] $1" | tee -a "$LOG_FILE"
 }
 
-log "=== Agent Keepalive Check ==="
+log "=== Agent Keepalive Check v2.0 ==="
 
-# 1. Ollama Mortimer Model
+# 1. Ollama Mortimer Model (external dependency)
 curl -s --max-time 8 http://localhost:11434/api/generate \
   -d '{"model":"antoniohudnall/Mortimer:latest","prompt":"p","stream":false}' \
   > /dev/null 2>&1
@@ -25,70 +30,59 @@ else
     log "⚠️ Mortimer: UNRESPONSIVE - Model may have unloaded"
 fi
 
-# 2. Complete Brain v4 (AOD daemon) - check for duplicates
-BRAIN_PIDS=$(pgrep -f "complete_brain_v45\.py")
-BRAIN_COUNT=$(echo "$BRAIN_PIDS" | grep -c '^' 2>/dev/null || echo "0")
-
-if [ "$BRAIN_COUNT" -eq 0 ]; then
-    log "❌ Complete Brain v4.5: NOT RUNNING - attempting restart..."
-    systemctl restart aos-brain-v4 2>/dev/null || log "Failed to restart brain"
-elif [ "$BRAIN_COUNT" -eq 1 ]; then
-    PID=$(echo "$BRAIN_PIDS" | head -1)
-    UPTIME=$(ps -o etime= -p $PID 2>/dev/null || echo "unknown")
-    log "✅ Complete Brain v4.5: RUNNING (PID $PID, uptime: $UPTIME)"
+# 2. Complete Brain v4.5 - MONITOR ONLY, systemd manages restarts
+BRAIN_PID=$(pgrep -o -f "complete_brain_v45\.py")
+if [ -n "$BRAIN_PID" ]; then
+    UPTIME=$(ps -o etime= -p $BRAIN_PID 2>/dev/null | xargs || echo "unknown")
+    log "✅ Complete Brain v4.5: MONITORED (PID $BRAIN_PID, uptime: $UPTIME)"
 else
-    log "⚠️ Complete Brain v4.5: $BRAIN_COUNT DUPLICATES DETECTED"
-    OLDEST=$(echo "$BRAIN_PIDS" | sort -n | head -1)
-    for pid in $BRAIN_PIDS; do
-        [ "$pid" != "$OLDEST" ] && kill "$pid" 2>/dev/null
-    done
-    UPTIME=$(ps -o etime= -p $OLDEST 2>/dev/null || echo "unknown")
-    log "✅ Complete Brain v4.5: CLEANED (PID $OLDEST, uptime: $UPTIME)"
+    log "⚠️ Complete Brain v4.5: NOT RUNNING - systemd should auto-restart"
+    # Only attempt restart if not in systemd mode
+    if [ "$NO_RESTART" = false ]; then
+        log "   Attempting systemd restart..."
+        systemctl restart aos-brain-v4 2>/dev/null || log "   Failed to restart via systemd"
+    fi
 fi
 
-# 2b. BHSI (Stomach + Intestines) - check health
-if pgrep -f "bhsi_v4_brain_connector" > /dev/null; then
-    BHSI_PID=$(pgrep -f "bhsi_v4_brain_connector" | head -1)
-    log "✅ BHSI v4 (Stomach/Intestines): RUNNING (PID $BHSI_PID)"
+# 3. BHSI v4 - MONITOR ONLY (systemd managed)
+BHSI_PID=$(pgrep -o -f "bhsi_v4_brain_connector")
+if [ -n "$BHSI_PID" ]; then
+    UPTIME=$(ps -o etime= -p $BHSI_PID 2>/dev/null | xargs || echo "unknown")
+    log "✅ BHSI v4: MONITORED (PID $BHSI_PID, uptime: $UPTIME)"
 else
-    log "❌ BHSI v4: NOT RUNNING - attempting restart..."
-    systemctl restart aos-bhsi-v4 2>/dev/null || log "Failed to restart BHSI"
+    log "⚠️ BHSI v4: NOT RUNNING - systemd should auto-restart"
 fi
 
-# 3. Mission Control Server
+# 4. Mission Control Server (standalone process)
 if pgrep -f "mission_control/server_v2.py" > /dev/null; then
     PID=$(pgrep -f "mission_control/server_v2.py")
     log "✅ Mission Control: RUNNING (PID $PID)"
 else
     log "❌ Mission Control: NOT RUNNING - attempting restart..."
-    /usr/bin/python3 /root/.openclaw/workspace/aocros/mission_control/server_v2.py &
+    if [ "$NO_RESTART" = false ]; then
+        /usr/bin/python3 /root/.openclaw/workspace/aocros/mission_control/server_v2.py &
+    fi
 fi
 
-# 4. Roblox Bridge
+# 5. Roblox Bridge (standalone)
 if pgrep -f "roblox-bridge.py" > /dev/null; then
     PID=$(pgrep -f "roblox-bridge.py")
     log "✅ Roblox Bridge: RUNNING (PID $PID)"
 else
-    log "❌ Roblox Bridge: NOT RUNNING - check systemd service"
+    log "⚠️ Roblox Bridge: NOT RUNNING - check systemd service"
 fi
 
-# 5. Minecraft Server Health
-check_minecraft_health() {
-    # Check if Minecraft Java process is running (including paper jar)
-    if pgrep -f "paper.*jar" > /dev/null || pgrep -f "minecraft_server" > /dev/null || pgrep -f "java.*-jar.*minecraft" > /dev/null || pgrep -f "java.*paper" > /dev/null; then
-        MEM_USAGE=$(ps aux | grep -E "(paper.*jar|minecraft_server|java.*-jar)" | grep -v grep | awk '{sum+=$4} END {printf "%.1f", sum}')
-        log "✅ Minecraft Server: RUNNING (Memory: ${MEM_USAGE}% - safe if <50%)"
-        
-        # Check Mineflayer agents
-        AGENT_COUNT=$(pgrep -f "mineflayer" | wc -l)
-        log "✅ Mineflayer Agents: $AGENT_COUNT active"
-    else
-        log "⚠️ Minecraft Server: Process not found"
-    fi
-}
-check_minecraft_health
+# 6. Minecraft Server Health
+if pgrep -f "paper.*jar" > /dev/null || pgrep -f "minecraft_server" > /dev/null || pgrep -f "java.*paper" > /dev/null; then
+    MEM_USAGE=$(ps aux | grep -E "(paper|minecraft_server|java.*-jar)" | grep -v grep | awk '{sum+=$4} END {printf "%.1f", sum}')
+    log "✅ Minecraft Server: RUNNING (Memory: ${MEM_USAGE}% - safe if <50%)"
+    AGENT_COUNT=$(pgrep -f "mineflayer" | wc -l)
+    log "✅ Mineflayer Agents: $AGENT_COUNT active"
+else
+    log "⚠️ Minecraft Server: Process not found"
+fi
 
-# 6. Memory Health
+# 7. System Health
 MEM_PERCENT=$(free | awk '/Mem/{printf "%.0f", $3/$2*100}')
 if [ "$MEM_PERCENT" -gt 90 ]; then
     log "⚠️ SYSTEM MEMORY: ${MEM_PERCENT}% - CRITICAL"
@@ -98,7 +92,6 @@ else
     log "✅ System Memory: ${MEM_PERCENT}% (healthy)"
 fi
 
-# 7. Disk Space
 DISK_PERCENT=$(df / | awk 'NR==2 {print $5}' | tr -d '%')
 if [ "$DISK_PERCENT" -gt 90 ]; then
     log "⚠️ DISK SPACE: ${DISK_PERCENT}% - CRITICAL"
@@ -111,14 +104,14 @@ fi
 # 8. Society Simulation Agents (simple_society_agent.js)
 SOCIETY_COUNT=$(pgrep -f "simple_society_agent.js" 2>/dev/null | wc -l)
 if [ "$SOCIETY_COUNT" -ge 5 ]; then
-    log "✅ Society Agents: $SOCIETY_COUNT/5 running (3 male, 2 female)"
+    log "✅ Society Agents: $SOCIETY_COUNT/5 running"
 elif [ "$SOCIETY_COUNT" -gt 0 ]; then
     log "⚠️ Society Agents: $SOCIETY_COUNT/5 running - some agents down"
 else
     log "⚠️ Society Agents: None running - society-agents.service should auto-restart"
 fi
 
-# 9. AGI Company Agent Services
+# 9. AGI Company Agent Services (systemd managed)
 for svc in patricia-factory forge-factory chelios-security jordan-office aurora-tasks; do
     if systemctl is-active "$svc" > /dev/null 2>&1; then
         log "✅ Agent Service: $svc ACTIVE"
