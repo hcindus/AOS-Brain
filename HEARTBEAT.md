@@ -1,18 +1,24 @@
 <!--
-VERSION: 4.5.0
-UPDATED: 2026-04-07 19:20 UTC
-CHANGELOG: Added Ternary Lungs v1.0 - Respiratory System
+VERSION: 4.5.1
+UPDATED: 2026-04-22 06:13 UTC
+CHANGELOG: Added Persistence v1.0, Cortex 32×32×32 correction
 -->
 
 # HEARTBEAT.md
 
 # AOS Brain Health Monitoring
 
-## Current Status - UPDATED 2026-04-07 19:20 UTC
+## Current Status - UPDATED 2026-04-22 06:13 UTC
 
-**✅ COMPLETE BRAIN v4.5 RUNNING** - 2026-04-07 19:20 UTC
+**✅ COMPLETE BRAIN v4.5.1 RUNNING** - 2026-04-22 06:13 UTC
 
-### What's New in v4.5
+### What's New in v4.5.1
+- 💾 **PERSISTENCE v1.0** - Brain state survives restarts
+- 🧠 **32×32×32 Cortex** - Corrected from 64×64×80 (327KB → 32KB)
+- 🔁 **Auto-Checkpoint** - Saves every 60s + on shutdown
+- 📈 **Continuity** - Tick count, TracRay, organ states persist
+
+### v4.5.0 Features
 - 🫁 **TERNARY LUNGS v1.0** - Respiratory system for cognitive atmosphere
 - 💨 **Complete Respiratory Pipeline** - Lungs → Liver → Brain → Kidneys
 - 🌬️ **Ambient Intake** - Events, telemetry, signals gas exchange
@@ -71,8 +77,8 @@ CHANGELOG: Added Ternary Lungs v1.0 - Respiratory System
 #### Legacy Components (3/3) ✅
 | Component | Status | Notes |
 |-----------|--------|-------|
-| 3D Cortex | ✅ ACTIVE | 32×32×3 neural volume (3 layers) |
-| TracRay | ✅ ACTIVE | Memory trajectory tracking |
+| 3D Cortex | ✅ ACTIVE | **32×32×32** neural cube (32,768 nodes) |
+| TracRay | ✅ ACTIVE | Memory trajectory tracking with persistence |
 | Consciousness Layers | ✅ ACTIVE | Con/Subcon/Uncon integrated |
 
 #### Sensory (2/2) ✅
@@ -81,10 +87,53 @@ CHANGELOG: Added Ternary Lungs v1.0 - Respiratory System
 | Voice Interface | ✅ ACTIVE | 7 voices, TTS via Mort_II |
 | Vision Interface | ⚠️ STUB | OpenCV not available |
 
+#### Persistence Components (1/1) 💾 NEW
+| Component | Status | Notes |
+|-----------|--------|-------|
+| **PERSISTENCE v1.0** | ✅ ACTIVE | State survives restarts, 60s auto-save |
+
 #### Interface (1/1) ✅
 | Component | Status | Notes |
 |-----------|--------|-------|
 | Socket Server | ✅ RUNNING | Unix socket for diagnostics |
+
+### Socket Commands (v4.5.1)
+
+#### Brain Status
+```bash
+# Get full status
+echo '{"cmd":"status"}' | nc -U /tmp/aos_brain.sock
+
+# Persistence operations
+echo '{"cmd":"save"}' | nc -U /tmp/aos_brain.sock
+echo '{"cmd":"load"}' | nc -U /tmp/aos_brain.sock
+echo '{"cmd":"tick"}' | nc -U /tmp/aos_brain.sock
+```
+
+#### Organ Status Commands
+```bash
+# Get Liver status
+echo '{"cmd":"liver"}' | nc -U /tmp/aos_brain.sock
+
+# Get Kidneys status
+echo '{"cmd":"kidneys"}' | nc -U /tmp/aos_brain.sock
+
+# Get Lungs status  
+echo '{"cmd":"lungs"}' | nc -U /tmp/aos_brain.sock
+
+# Get Thyroid status
+echo '{"cmd":"thyroid"}' | nc -U /tmp/aos_brain.sock
+```
+
+#### File Locations (v4.5.1)
+| File | Path | Purpose |
+|------|------|---------|
+| Brain v4.5.1 | `/root/.aos/aos/complete_brain_v45.py` | Main brain with persistence |
+| Persistence | `/root/.aos/aos/brain_persistence.py` | Save/restore state |
+| State Dir | `/var/lib/aos/brain_state/` | Persistent state storage |
+| State File | `/var/lib/aos/brain_state/brain_state.pkl` | Main state pickle |
+| Backups | `/var/lib/aos/brain_state/backups/` | Timestamped backups |
+| Metadata | `/var/lib/aos/brain_state/brain_metadata.json` | Human-readable summary |
 
 ### Mission Control v2.0
 | Component | URL | Status |
@@ -160,19 +209,34 @@ python3 /root/.openclaw/workspace/aocros/mission_control/diagnostic.py status
 python3 /root/.aos/aos/complete_test_suite.py
 ```
 
-### Architecture v4.4
+### Architecture v4.5.1
 ```
-Complete Brain v4.4 - Signal/Noise Pipeline
+Complete Brain v4.5.1 - Persistent Signal/Noise Pipeline
 ├── SuperiorHeart (Ternary emotion)
 ├── Stomach v2 (Information digestion)
 ├── Intestine v2 (Distribution)
 ├── Brain v3.1 (7-region OODA)
-├── 3D Cortex (Spatial consciousness)
-├── TracRay (Memory trajectories)
-├── Consciousness Layers (Con/Subcon/Uncon)
+├── 3D Cortex (32×32×32 neural cube) 💾
+├── TracRay (Memory trajectories with persistence) 💾
+├── Consciousness Layers (Con/Subcon/Uncon) 💾
 ├── QMD Loop (tinyllama in OLLAMA mode)
 ├── MemoryBridge (nomic-embed-text)
 ├── Voice Manager (TTS via Mort_II)
+├── Vision Manager (Camera/stub)
+├── Socket Server (Unix socket interface)
+├── Thyroid v1.2 (Endocrine regulation) 💾
+├── Model Router (tinyllama/Mort_II/nomic)
+├── LUNGS v1.0 (Respiratory/Gas Exchange) 🫁
+├── LIVER v1.0 (Pre-brain filtration) 🫘
+├── KIDNEYS v1.0 (Post-brain recycling) 🫀
+└── PERSISTENCE v1.0 (State survival) 💾 NEW
+
+Signal Flow v4.5.1:
+Raw Input → LUNGS (INHALE/CLASSIFY) → LIVER (CLEAN/PURIFY) 
+  → Brain → KIDNEYS (FILTER/EXCRETE) → Output
+  ↓                              ↓
+  → PERSISTENCE (Auto-save)      → PERSISTENCE (60s checkpoint)
+```
 ├── Vision Manager (Camera/stub)
 ├── Socket Server (Unix socket interface)
 ├── Thyroid v1.2 (Endocrine regulation)
