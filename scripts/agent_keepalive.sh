@@ -108,20 +108,23 @@ else
     log "✅ Disk Space: ${DISK_PERCENT}% (healthy)"
 fi
 
-# 8. Society Simulation Agents
-if pgrep -f "society_agent.js" > /dev/null; then
-    SOCIETY_COUNT=$(pgrep -f "society_agent.js" | wc -l)
+# 8. Society Simulation Agents (simple_society_agent.js)
+SOCIETY_COUNT=$(pgrep -f "simple_society_agent.js" 2>/dev/null | wc -l)
+if [ "$SOCIETY_COUNT" -ge 5 ]; then
     log "✅ Society Agents: $SOCIETY_COUNT/5 running (3 male, 2 female)"
-    
-    # Check society server
-    if pgrep -f "society_server.py" > /dev/null; then
-        log "✅ Society Server: RUNNING (port 8768)"
-    else
-        log "⚠️ Society Server: NOT RUNNING - attempting restart..."
-        /usr/bin/python3 /root/.openclaw/workspace/scripts/minecraft_agents/society_server.py &
-    fi
+elif [ "$SOCIETY_COUNT" -gt 0 ]; then
+    log "⚠️ Society Agents: $SOCIETY_COUNT/5 running - some agents down"
 else
-    log "⚠️ Society Agents: None running"
+    log "⚠️ Society Agents: None running - society-agents.service should auto-restart"
 fi
+
+# 9. AGI Company Agent Services
+for svc in patricia-factory forge-factory chelios-security jordan-office aurora-tasks; do
+    if systemctl is-active "$svc" > /dev/null 2>&1; then
+        log "✅ Agent Service: $svc ACTIVE"
+    else
+        log "⚠️ Agent Service: $svc INACTIVE"
+    fi
+done
 
 log "=== Keepalive Check Complete ==="

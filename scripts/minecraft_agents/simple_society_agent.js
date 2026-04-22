@@ -14,11 +14,11 @@ const MC_HOST = process.argv[3] || 'localhost';
 const MC_PORT = parseInt(process.argv[4]) || 25565;
 
 const AGENTS = {
-  'marcus': { name: 'Marcus', role: 'leader', color: '§6' },
-  'julius': { name: 'Julius', role: 'builder', color: '§2' },
-  'titus': { name: 'Titus', role: 'guardian', color: '§4' },
-  'julia': { name: 'Julia', role: 'farmer', color: '§a' },
-  'livia': { name: 'Livia', role: 'explorer', color: '§b' }
+  'marcus': { name: 'Marcus', role: 'leader', color: '' },
+  'julius': { name: 'Julius', role: 'builder', color: '' },
+  'titus': { name: 'Titus', role: 'guardian', color: '' },
+  'julia': { name: 'Julia', role: 'farmer', color: '' },
+  'livia': { name: 'Livia', role: 'explorer', color: '' }
 };
 
 const config = AGENTS[AGENT_ID.toLowerCase()] || { name: AGENT_ID, role: 'settler', color: '§7' };
@@ -74,10 +74,10 @@ function behaviorTick() {
   // Occasional chat
   if (tick % 12 === 0) {
     const messages = [
-      `${config.color}Reporting in.`,
-      `${config.color}Standing by.`,
-      `${config.color}All systems nominal.`,
-      `${config.color}Tick ${tick}.`
+      `Reporting in.`,
+      `Standing by.`,
+      `All systems nominal.`,
+      `Tick ${tick}.`
     ];
     bot.chat(messages[Math.floor(Math.random() * messages.length)]);
   }
