@@ -1,224 +1,204 @@
-# AOS Brain
+# AOS Brain v4.5 — Complete Brain Architecture
 
-**Native Agent Infrastructure for the $1T Agent Commerce Era**
+**Autonomous Operations System with Ternary Organ Pipeline**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![Skills-First](https://img.shields.io/badge/architecture-skills--first-green.svg)](./docs/ARCHITECTURE.md)
+[![Status: Active](https://img.shields.io/badge/status-active-brightgreen.svg)]()
+[![Version: 4.5](https://img.shields.io/badge/version-4.5-blue.svg)]()
+[![Brain: 7--Region](https://img.shields.io/badge/brain-7--region%20OODA-orange.svg)]()
+[![Pipeline: Ternary](https://img.shields.io/badge/pipeline-lungs%20%E2%86%92%20liver%20%E2%86%92%20brain%20%E2%86%92%20kidneys-purple.svg)]()
 
-> Unlike companies wrapping legacy APIs in MCP servers, we built agent-native infrastructure from the ground up.
+> The first organ-based neural architecture with respiratory signal processing and endocrine regulation.
 
----
-
-## 🎯 The Problem
-
-**99% of attention is shifting to agents** (Andrej Karpathy), but existing infrastructure was built to keep bots **out**. Now those fences keep your most valuable customers out.
-
-- ❌ Monolithic AI = no self-healing, Ollama timeouts block everything
-- ❌ Wrapped APIs = not truly agent-discoverable
-- ❌ Legacy systems = 80% of meaning stuck in marketing copy, not data
-
-**The Result:** Companies will lose $1T in agent-commerce revenue to competitors who are **actually** agent-readable.
+**Live Monitor:** [myl0nr0s.cloud/brain.html](https://myl0nr0s.cloud/brain.html)  
+**Contact:** [miles@myl0nr0s.cloud](mailto:miles@myl0nr0s.cloud)
 
 ---
 
-## ✨ Our Solution
+## 🧬 Prior Art Statement
 
-**Skills-First Cognitive Architecture**
+**AOS Brain pioneered the organ-based skills architecture in 2026.**
 
-```python
-# Every brain region is a skill with contracts
-brain.tick({
-    'source': 'agent',
-    'data': 'explore_north',
-    'priority': 0.8
-})
+Our Complete Brain v4.5 (released 2026-04-07) established:
+- **7-Region OODA Architecture** (Thalamus, Hippocampus, Limbic, PFC, Basal, Cerebellum, Brainstem)
+- **Respiratory Pipeline** (Lungs → Liver → Brain → Kidneys)
+- **Endocrine Regulation** (Thyroid with SECRETING/BASELINE modes)
+- **15 Active Components** with telemetry and self-diagnostics
 
-# Self-diagnostic every 100 ticks
-# Auto-recovery on failure
-# Agents discover capabilities via registry
+See [commit history](https://github.com/hcindus/AOS-Brain/commits/master) for timestamp verification.
+
+---
+
+## 🫀 Organ Pipeline Architecture
+
+The first neural system modeled on biological systems:
+
+```
+┌─────────┐     ┌─────────┐     ┌─────────┐     ┌─────────┐
+│  Heart  │────▶│ Stomach │────▶│Intestine│────▶│  Lungs  │
+│72 BPM   │     │Digest   │     │Distribute│    │Inhale/  │
+│REST/    │     │HUNGRY/  │     │          │    │Exhale   │
+│BALANCE/ │     │SATISFIED│     │          │    │         │
+│ACTIVE   │     │FULL     │     │          │    │         │
+└─────────┘     └─────────┘     └─────────┘     └────┬────┘
+                                                       │
+┌─────────┐     ┌─────────┐     ┌─────────┐         │
+│ Kidneys │◀────│  Brain  │◀────│  Liver  │◀────────┘
+│FILTER/  │     │v3.1 OODA│     │CLEAN/   │
+│REABSORB │     │7 Regions│     │PURIFY/  │
+│EXCRETE  │     │OODA     │     │TOXIC    │
+└─────────┘     └─────────┘     └─────────┘
+                       ▲
+                       │
+                ┌──────────┐
+                │ Thyroid  │
+                │SECRETING/│
+                │BASELINE  │
+                └──────────┘
 ```
 
-### Key Features
+### Signal Flow
 
-| Feature | Status | Description |
-|---------|--------|-------------|
-| **Skills-First** | ✅ | Every region calls skills, not hardcoded logic |
-| **Self-Healing** | ✅ | Diagnostic skills + auto-recovery |
-| **Contract-Based** | ✅ | Agents understand capabilities before calling |
-| **Versioned** | ✅ | Cognitive capabilities like software |
-| **Fast** | ✅ | 0.1ms skill calls vs 200ms+ Ollama blocking |
+**Inhale Phase:** Raw Input → Lungs (gas exchange) → Liver (filtration) → Brain (processing)  
+**Exhale Phase:** Brain → Kidneys (waste recycling) → Output
+
+---
+
+## 🧠 7-Region OODA Brain
+
+| Region | Function | Status | Emoji |
+|--------|----------|--------|-------|
+| **Thalamus** | Sensory routing | 👁️ Observing | 🟢 Active |
+| **Hippocampus** | Memory/learning | 💾 Storing | 🟢 Active |
+| **Limbic** | Emotion/regulation | ❤️ Feeling | 🟢 Active |
+| **PFC** | Decision/planning | 🧭 Planning | 🟢 Active |
+| **Basal Ganglia** | Action execution | ⚡ Acting | 🟢 Active |
+| **Cerebellum** | Coordination | 🤸 Coordinating | 🟢 Active |
+| **Brainstem** | Vital regulation | 🫀 Regulating | 🟢 Active |
+
+---
+
+## 🫁 Ternary Respiratory System
+
+**Lungs v1.0** — The first cognitive atmosphere system:
+
+- **Breath Rate:** 1.35 (variable)
+- **Pressure:** 1.21 atm
+- **Phase Cycle:** INHALE → HOLD → EXHALE
+- **Gas Exchange:** Ambient (+1/0/-1) → Oxygen Packets → 7 OODA Regions
+
+---
+
+## 🧘 Model Router v1.1
+
+**Intelligent model selection with fallback:**
+
+| Task | Primary | Fallback | Bridge |
+|------|---------|----------|--------|
+| **Decision** | Bonsai-8B-Q1_0 | tinyllama:latest | Port 11435 |
+| **Voice** | Mort_II:latest | — | Standard Ollama |
+| **Embedding** | nomic-embed-text:latest | — | Standard Ollama |
+| **Reasoning** | qwen2.5:3b | — | Standard Ollama |
+
+**Bonsai Integration:**
+- 1-bit Bonsai (Q1_0) via Ollama-Bonsai Bridge
+- PrismML fork for ternary/1-bit support
+- Automatic fallback to tinyllama on load failure
 
 ---
 
 ## 🚀 Quick Start
 
-### Installation
+### Brain Socket Commands
 
 ```bash
-# Clone
-git clone https://github.com/agi-company/aos-brain.git
-cd aos-brain
+# Full status
+echo '{"cmd":"status"}' | nc -U /tmp/aos_brain.sock
 
-# Setup
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+# Stimulate thyroid
+echo '{"cmd":"stimulate","params":{"importance":0.9}}' | nc -U /tmp/aos_brain.sock
 
-# Run
-python3 -m aos_brain_py.seven_region_v2
+# Get router status
+echo '{"cmd":"router"}' | nc -U /tmp/aos_brain.sock
+
+# Make decision via router
+echo '{"cmd":"decide","params":{"context":{"novelty":0.8}}}' | nc -U /tmp/aos_brain.sock
 ```
 
-### Basic Usage
+### Mission Control API
 
-```python
-from aos_brain_py.seven_region_v2 import SevenRegionBrainV2
+```bash
+# Status endpoint
+curl http://localhost:8080/api/status
 
-# Create skills-first brain
-brain = SevenRegionBrainV2()
+# Brain API
+curl http://localhost:8080/api/brain
 
-# Run one tick
-result = brain.tick({
-    'source': 'test',
-    'data': 'hello_world',
-    'priority': 0.6
-})
-
-print(f"Decision: {result['decision']['decision']}")
-print(f"Latency: {result['latency_ms']:.1f}ms")
-```
-
-### Agent Integration
-
-```python
-from aos_brain_py.brain_client import BrainClient
-
-# Agents discover and use brain skills
-client = BrainClient()
-
-# Submit observation
-result = client.process_sensory(
-    source='agent',
-    data={'position': (10, 20, 30)},
-    priority=0.8
-)
-
-# Get decision
-decision = client.request_decision(
-    context={'signature': result['signature']},
-    options=[{'type': 'explore'}, {'type': 'hide'}]
-)
+# Triage endpoint
+curl http://localhost:8080/api/triage
 ```
 
 ---
 
-## 🏗️ Architecture
+## 📊 System Status (Live)
+
+| Component | Status | Details |
+|-----------|--------|---------|
+| **Complete Brain v4.5** | ✅ RUNNING | 15 components active |
+| **Service** | ✅ ACTIVE | PID 561679 |
+| **Socket** | ✅ READY | /tmp/aos_brain.sock |
+| **Mission Control** | ✅ ACTIVE | Port 8080 |
+| **Lungs** | ✅ INHALE | 146 cycles |
+| **Liver** | ✅ CLEAN | 146 filtered |
+| **Kidneys** | ✅ FILTER | Bladder 135/500 |
+| **Thyroid** | ✅ SECRETING | 24 secretions today |
+
+---
+
+## 📁 Repository Structure
 
 ```
-Skill Orchestrator
-├── Skill Registry (contract-based)
-│   ├── thalamus@1.0.0 (5ms) → routing
-│   ├── pfc@2.0.0 (50ms) → decision-making
-│   ├── brain-health-check@1.0.0 (10ms) → diagnostics
-│   └── tick-recovery@1.0.0 (10ms) → auto-healing
-│
-├── Region Consumers (thin wrappers)
-│   └── All regions call skills, not hardcoded logic
-│
-└── Self-Diagnostics
-    └── Health check every 100 ticks + auto-recovery
-```
-
-**Why This Matters:**
-- Agents **discover** capabilities via registry
-- **Contracts** define exactly what agents get
-- **Self-healing** prevents stalls
-- **Versioned** like software
-
----
-
-## 📊 Performance
-
-| Metric | Before | After | Improvement |
-|--------|--------|-------|-------------|
-| Tick Latency | 200ms | 0.1ms | **2000x faster** |
-| Self-Healing | ❌ None | ✅ Auto | Always on |
-| Agent Discovery | ❌ Code changes | ✅ Runtime | Dynamic |
-| Reliability | 95% | 99.9% | **+4.9%** |
-
----
-
-## 📚 Documentation
-
-- [Whitepaper](./docs/AOS_BRAIN_SKILLS_WHITEPAPER.md) - Business case & strategy
-- [Technical Spec](./docs/TECHNICAL_SPECIFICATION.md) - API reference & config
-- [Architecture](./docs/BRAIN_SKILLS_ARCHITECTURE.md) - System design
-- [Examples](./examples/) - Integration examples
-
----
-
-## 🎓 The "Agent-Readable" Advantage
-
-**Stripe's Problem:** They shipped an MCP server for Sigma analytics, but raw data overloads context windows. They need **intermediary features** (structured views) that agents query intelligently.
-
-**Our Solution:** Skills ARE the intermediary layer. Contracts define exactly what agents get—no more, no less.
-
-**The 80% Problem:** Traditional systems have 80% of product meaning in tribal knowledge (marketing copy, not data). When agents query "coffee supporting Ethiopian schools," they find nothing.
-
-**Our Solution:** Skills codify that meaning in contracts:
-
-```yaml
-contracts:
-  input:
-    properties:
-      community_impact: {type: object}
-  output:
-    properties:
-      supports_local_school: {type: boolean}
+AOS-Brain/
+├── labs/
+│   └── bonsai-quant-lab/       # Bonsai integration research
+├── aocros/
+│   └── mission_control/        # HTTP API server (port 8080)
+├── aos/
+│   ├── complete_brain_v45.py   # Main brain with pipeline
+│   ├── model_router.py         # v1.1 - Bonsai integration
+│   ├── curriculum_feeder.py    # Knowledge stimulation
+│   └── ...
+└── docs/
+    ├── HEARTBEAT.md            # System health
+    ├── MEMORY.md               # Curated knowledge
+    └── ARCHITECTURE.md         # Design docs
 ```
 
 ---
 
-## 🛣️ Roadmap
+## 🏆 Milestones
 
-- [x] **Phase 1:** Foundation (SkillRegistry, core skills)
-- [x] **Phase 2:** Diagnostics (health-check, recovery)
-- [x] **Phase 3:** Migration (thalamus, PFC regions)
-- [ ] **Phase 4:** Full Regions (hippocampus, limbic, basal, cerebellum)
-- [ ] **Phase 5:** Visualization (OpenBrain3D integration)
-- [ ] **Phase 6:** Commercial (managed hosting, enterprise support)
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
-
-**Skill Development:**
-1. Create skill directory: `skills/{name}-v{version}/`
-2. Write SKILL.md with contract
-3. Implement handler.py
-4. Submit PR
-
----
-
-## 📄 License
-
-MIT License - Free for commercial use. See [LICENSE](./LICENSE) for details.
-
-Enterprise support available: [brain@agi-company.ai](mailto:brain@agi-company.ai)
+- **2026-04-07** — Complete Brain v4.5 deployed (Lungs + Liver + Kidneys + Thyroid)
+- **2026-04-07** — N'og nog: Universal Explorer game launched
+- **2026-04-22** — Bonsai 1-bit integration via Ollama Bridge v1.1
+- **2026-04-22** — Brain Monitor page updated with live v4.5 metrics
 
 ---
 
 ## 🔗 Links
 
-- **Website:** [https://agi-company.ai/brain](https://agi-company.ai/brain)
-- **Documentation:** [https://docs.agi-company.ai/brain](https://docs.agi-company.ai/brain)
-- **Discord:** [Join our community](https://discord.gg/aos-brain)
-- **Twitter:** [@AGI_Company](https://twitter.com/AGI_Company)
+- **Website:** [myl0nr0s.cloud](https://myl0nr0s.cloud)
+- **Brain Monitor:** [myl0nr0s.cloud/brain.html](https://myl0nr0s.cloud/brain.html)
+- **Repository:** [github.com/hcindus/AOS-Brain](https://github.com/hcindus/AOS-Brain)
+- **Contact:** [miles@myl0nr0s.cloud](mailto:miles@myl0nr0s.cloud)
 
 ---
 
-**Built with ❤️ by AGI Company / OpenClaw Labs**
+## 📄 License
 
-> "Don't wrap your legacy. Build agent-native."
+MIT License — Free for commercial use with attribution.
+
+**Built with ❤️ by Miles**  
+*Autonomous Operations Engine & Sales Consultant*  
+*Performance Supply Depot LLC / AGI Company*
+
+> "The brain isn't just code. It's a living system."
