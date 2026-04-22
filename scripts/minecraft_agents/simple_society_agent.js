@@ -21,7 +21,7 @@ const AGENTS = {
   'livia': { name: 'Livia', role: 'explorer', color: '' }
 };
 
-const config = AGENTS[AGENT_ID.toLowerCase()] || { name: AGENT_ID, role: 'settler', color: '§7' };
+const config = AGENTS[AGENT_ID.toLowerCase()] || { name: AGENT_ID, role: 'settler', color: '' };
 
 console.log(`[${AGENT_ID}] Society Agent - ${config.name} (${config.role})`);
 console.log(`[${AGENT_ID}] Connecting to ${MC_HOST}:${MC_PORT}...`);
@@ -44,7 +44,7 @@ let state = 'idle';
 // Spawn handler
 bot.once('spawn', () => {
   console.log(`[${AGENT_ID}] ✅ Spawned!`);
-  bot.chat(`${config.color}[${config.name}] Online and ready.`);
+  bot.chat(`[${config.name}] Online and ready.`);
   
   const mcData = require('minecraft-data')(bot.version);
   const movements = new Movements(bot, mcData);
@@ -98,7 +98,7 @@ bot.on('kicked', (reason) => {
 
 bot.on('death', () => {
   console.log(`[${AGENT_ID}] Died - respawning...`);
-  bot.chat(`${config.color}Ouch! Respawning...`);
+  bot.chat(`Ouch! Respawning...`);
 });
 
 bot.on('end', () => {
