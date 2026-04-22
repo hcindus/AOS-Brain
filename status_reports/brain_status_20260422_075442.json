@@ -1,0 +1,116 @@
+{
+    "version": "4.5",
+    "tick": 1352,
+    "phase": "Observe",
+    "signal_quality_20avg": 0.865,
+    "cortex": {
+        "conscious_mean": 0.5007514357566833,
+        "conscious_max": 0.587742030620575,
+        "subconscious_mean": -0.001213467829432692,
+        "unconscious_mean": -4.333196325604266e-05,
+        "volume_size": 32768,
+        "history_length": 100
+    },
+    "tracray": {
+        "total_points": 1352,
+        "episodes": 13,
+        "current_episode_length": 52,
+        "capacity": 5000,
+        "utilization": 0.2704
+    },
+    "qmd": {
+        "total_cycles": 76,
+        "avg_latency_ms": 134.56120521094144,
+        "cache_hits": 1276,
+        "cache_size": 4
+    },
+    "consciousness": {
+        "conscious": {
+            "active_items": 10,
+            "capacity": 10
+        },
+        "subconscious": {
+            "active_items": 0,
+            "capacity": 100
+        },
+        "unconscious": {
+            "active_items": 0,
+            "capacity": 1000
+        },
+        "cross_talk_events": 100
+    },
+    "thyroid": {
+        "state": "BASELINE",
+        "ollama_level": 0.0,
+        "local_level": 1.0,
+        "last_secretion_seconds_ago": 999,
+        "secretion_count_today": 0,
+        "baseline_timeout": 120.0,
+        "secretions_today": 0,
+        "total_secretion_time": 0.0,
+        "baseline_time": 0.0
+    },
+    "lungs": {
+        "organ": "TernaryLungs",
+        "version": "1.0",
+        "phase": "INHALE",
+        "phase_progress": 0.0,
+        "breath_rate": 1.35,
+        "pressure": 1.21,
+        "oxygen_saturation": 0.0,
+        "cycles": {
+            "inhale": 1352,
+            "exhale": 1352
+        },
+        "base": {
+            "breath_rate": 1.0,
+            "pressure": 1.0
+        }
+    },
+    "liver": {
+        "state": "CLEAN",
+        "filtered_total": 1352,
+        "toxic_neutralized": 0,
+        "bile_stored": 0,
+        "bile_capacity": 1000,
+        "purify_threshold": 0.3,
+        "toxic_threshold": 0.7
+    },
+    "kidneys": {
+        "state": "FILTER",
+        "total_processed": 1352,
+        "reabsorbed": 0,
+        "excreted": 902,
+        "bladder_level": 371,
+        "bladder_capacity": 500,
+        "nutrients_stored": 77,
+        "recent_signal_avg": 0.45,
+        "noise_estimate": 0.5492818202691253,
+        "unique_patterns_seen": 77
+    },
+    "router": {
+        "models": {
+            "decision": "bonsai-8b-q1_0",
+            "decision_fallback": "tinyllama:latest",
+            "voice": "antoniohudnall/Mort_II:latest",
+            "embedding": "nomic-embed-text:latest",
+            "reasoning": "qwen2.5:3b"
+        },
+        "stats": {
+            "decision": {
+                "calls": 0,
+                "avg_latency": 0
+            },
+            "voice": {
+                "calls": 0,
+                "avg_latency": 0
+            },
+            "embedding": {
+                "calls": 0,
+                "avg_latency": 0
+            }
+        }
+    },
+    "components_active": 15,
+    "pipeline": "Lungs \u2192 Liver \u2192 Brain \u2192 Kidneys"
+}
