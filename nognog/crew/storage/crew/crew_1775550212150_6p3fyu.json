@@ -3,7 +3,7 @@
   "name": "Vex",
   "role": "PILOT",
   "level": 5,
-  "xp": 67984,
+  "xp": 68052,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 10,
     "combat": 10
   },
-  "missionsCompleted": 419,
+  "missionsCompleted": 420,
   "discoveries": [
     {
       "name": "Anomalous Planet",
@@ -2113,6 +2113,11 @@
       "name": "Alien Artifact",
       "location": "Alpha-1",
       "timestamp": 1776957232213
+    },
+    {
+      "name": "Derelict Ship",
+      "location": "Alpha-1",
+      "timestamp": 1776962482310
     }
   ],
   "status": "ACTIVE",
