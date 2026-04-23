@@ -3,7 +3,7 @@
   "name": "Nyx",
   "role": "ENGINEER",
   "level": 5,
-  "xp": 68374,
+  "xp": 68441,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 15,
     "combat": 14
   },
-  "missionsCompleted": 428,
+  "missionsCompleted": 429,
   "discoveries": [
     {
       "name": "Rare Minerals",
@@ -2158,6 +2158,11 @@
       "name": "Ancient Ruins",
       "location": "Alpha-1",
       "timestamp": 1776955972193
+    },
+    {
+      "name": "Ancient Ruins",
+      "location": "Alpha-1",
+      "timestamp": 1776961102293
     }
   ],
   "status": "ACTIVE",
