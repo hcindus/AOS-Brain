@@ -3,7 +3,7 @@
   "name": "Aria",
   "role": "MEDIC",
   "level": 5,
-  "xp": 69784,
+  "xp": 69899,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 17,
     "combat": 23
   },
-  "missionsCompleted": 463,
+  "missionsCompleted": 465,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -2333,6 +2333,16 @@
       "name": "Nebula Cloud",
       "location": "Alpha-1",
       "timestamp": 1776947332046
+    },
+    {
+      "name": "Unknown Signal",
+      "location": "Alpha-1",
+      "timestamp": 1776950602102
+    },
+    {
+      "name": "Alien Artifact",
+      "location": "Alpha-1",
+      "timestamp": 1776950842104
     }
   ],
   "status": "ACTIVE",
