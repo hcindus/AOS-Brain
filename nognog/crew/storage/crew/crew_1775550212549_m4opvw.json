@@ -3,7 +3,7 @@
   "name": "Luna",
   "role": "COMBAT",
   "level": 5,
-  "xp": 71254,
+  "xp": 71324,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 24,
     "combat": 15
   },
-  "missionsCompleted": 476,
+  "missionsCompleted": 477,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -2398,6 +2398,11 @@
       "name": "Hidden Base",
       "location": "Alpha-1",
       "timestamp": 1776969682484
+    },
+    {
+      "name": "Rare Minerals",
+      "location": "Alpha-1",
+      "timestamp": 1776975292608
     }
   ],
   "status": "ACTIVE",
