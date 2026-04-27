@@ -3,7 +3,7 @@
   "name": "Nyx",
   "role": "ENGINEER",
   "level": 5,
-  "xp": 83984,
+  "xp": 84045,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 15,
     "combat": 14
   },
-  "missionsCompleted": 529,
+  "missionsCompleted": 530,
   "discoveries": [
     {
       "name": "Rare Minerals",
@@ -2663,6 +2663,11 @@
       "name": "Unknown Signal",
       "location": "Alpha-1",
       "timestamp": 1777266988870
+    },
+    {
+      "name": "Alien Artifact",
+      "location": "Alpha-1",
+      "timestamp": 1777277729132
     }
   ],
   "status": "ACTIVE",
