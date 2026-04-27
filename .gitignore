@@ -40,3 +40,5 @@ logs/*.log
 
 # Duplicate folder (previously committed)
 AOS/
+labs/bonsai-quant-lab/models/Bonsai-8B-Q1_0.gguf
+labs/bonsai-quant-lab/models/.cache/huggingface/download/*.gguf.metadata
