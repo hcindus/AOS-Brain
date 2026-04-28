@@ -1,0 +1,8 @@
+# Weekly Newsletter Generation Schedule
+# Generates newsletter content every Monday at 9 AM PST (12 PM UTC)
+
+# Generate weekly newsletter
+0 12 * * 1 root cd /root/.openclaw/workspace/scripts/x_marketing && /usr/bin/python3 newsletter_generator.py current >> /var/log/newsletter_content.log 2>&1
+
+# Generate HTML version for email templates
+0 13 * * 1 root cd /root/.openclaw/workspace/scripts/x_marketing && /usr/bin/python3 newsletter_generator.py html > /var/www/psdepot.com/newsletters/current_week.html 2>/dev/null
