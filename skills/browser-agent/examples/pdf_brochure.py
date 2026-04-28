@@ -32,29 +32,7 @@ def generate_pdf_brochure():
         pdf_path = OUTPUT_DIR / f"psdepot_brochure_{timestamp}.pdf"
         
         print("📄 Generating PDF...")
-        agent.save_pdf(str(pdf_path), {
-            "format": "A4",
-            "printBackground": True,
-            "margin": {
-                "top": "20mm",
-                "right": "15mm",
-                "bottom": "20mm",
-                "left": "15mm"
-            },
-            "displayHeaderFooter": True,
-            "headerTemplate": """
-                <div style="font-size:9px; margin-left: 1cm; width:100%; 
-                     text-align: center; color: #666;">
-                    Performance Supply Depot - www.psdepot.com
-                </div>
-            """,
-            "footerTemplate": """
-                <div style="font-size:9px; margin-right: 1cm; width:100%; 
-                     text-align: right; color: #666;">
-                    Page <span class="pageNumber"></span> of <span class="totalPages"></span>
-                </div>
-            """
-        })
+        agent.save_pdf(str(pdf_path))  # Use default options
         
         # Also generate product catalog (specific pages)
         print("📄 Generating product catalog...")
@@ -62,11 +40,7 @@ def generate_pdf_brochure():
         agent.wait_for_timeout(2000)
         
         catalog_path = OUTPUT_DIR / f"psdepot_catalog_{timestamp}.pdf"
-        agent.save_pdf(str(catalog_path), {
-            "format": "Letter",
-            "printBackground": True,
-            "margin": {"top": "10mm", "right": "10mm", "bottom": "10mm", "left": "10mm"}
-        })
+        agent.save_pdf(str(catalog_path))  # Use default options
     
     # Save metadata
     metadata = {
