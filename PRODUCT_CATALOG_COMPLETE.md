@@ -404,7 +404,7 @@
 | myl0nr0s.cloud | AGI Portal, Mission Control | ✅ Live |
 | tappylewis.cloud | Gaming/Secondary | ✅ Live |
 | psdepot.com | Performance Supply Depot | ✅ Live |
-| performancesupplydepot.com | Redirect to psdepot | ⏳ DNS Pending |
+| performancesupplydepot.com | 301 Redirect → psdepot.com | ✅ Configured |
 
 ---
 

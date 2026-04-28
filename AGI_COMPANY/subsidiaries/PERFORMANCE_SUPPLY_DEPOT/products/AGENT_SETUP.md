@@ -46,7 +46,7 @@
 - Project-based: Custom quotes
 
 ## Contact
-- Email: ops@performancesupplydepot.com
+- Email: ops@psdepot.com
 - Phone: 1-800-PERFORM
 
 ## Agent Status

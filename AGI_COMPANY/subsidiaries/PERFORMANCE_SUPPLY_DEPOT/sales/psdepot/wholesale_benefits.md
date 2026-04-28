@@ -314,7 +314,7 @@ Our AGI analyzes your current:
 ### Dedicated Wholesale Team
 
 **Phone:** 1-800-PSD-BULK (1-800-773-2855)
-**Email:** wholesale@performancesupplydepot.com
+**Email:** wholesale@psdepot.com
 **Direct AGI Agent:** Text "BULK QUOTE" to (555) PSD-AGENT
 
 ### Regional Account Managers

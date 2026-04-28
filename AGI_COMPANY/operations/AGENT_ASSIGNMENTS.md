@@ -205,7 +205,7 @@
 ### Virtual Receptionists
 | Agent | Role | Assignment |
 |-------|------|------------|
-| **Greet** | Tier1/Secretarial | 24/7 virtual receptionist for performancesupplydepot.com |
+| **Greet** | Tier1/Secretarial | 24/7 virtual receptionist for psdepot.com |
 | **Velvet** | Tier3/Secretarial | Premium service for 3 high-net-worth clients |
 | **Personal** | Secretarial | Life management for 5 professional clients |
 

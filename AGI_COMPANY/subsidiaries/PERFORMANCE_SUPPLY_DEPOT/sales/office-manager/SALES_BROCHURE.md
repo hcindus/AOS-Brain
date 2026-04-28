@@ -114,7 +114,7 @@ An AGI-powered office management system that:
 **Contact:**
 - 📧 sales@performance-supply-depot.com
 - 💬 Telegram: @MilesAOSBot
-- 🌐 performancesupplydepot.com/office-manager
+- 🌐 psdepot.com/office-manager
 
 ---
 

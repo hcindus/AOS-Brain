@@ -15,13 +15,13 @@ Deploy Performance Supply Depot website to Hostinger and make it LIVE.
 
 ## Deployment Steps
 1. Check Hostinger credentials in deploy.sh
-2. Execute deployment to performancesupplydepot.com
+2. Execute deployment to psdepot.com
 3. Verify site is accessible
 4. Test checkout flow
 5. Report status back to Miles
 
 ## Success Criteria
-- [ ] Website live at https://performancesupplydepot.com
+- [ ] Website live at https://psdepot.com
 - [ ] All 40 products displaying
 - [ ] Stripe checkout functional
 - [ ] SSL certificate active

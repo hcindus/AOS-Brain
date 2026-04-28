@@ -9,7 +9,7 @@
 **Project:** C-004: Website Deployment & SSL Configuration
 
 ### Objective
-Assist Fiber in fixing performancesupplydepot.com domain resolution issues.
+Assist Fiber in fixing psdepot.com domain resolution issues.
 
 ### Actions:
 - [ ] Verify domain DNS configuration

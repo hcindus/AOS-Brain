@@ -1,0 +1,7 @@
+# X Marketing Cron Jobs for Performance Supply Depot
+# Generates daily tweet content with psdepot.com links
+
+# Generate daily content at 9 AM, 1 PM, and 5 PM PST (12 PM, 4 PM, 8 PM UTC)
+0 12 * * * root cd /root/.openclaw/workspace/scripts/x_marketing && python3 x_content.py daily >> /var/log/x_marketing.log 2>&1
+0 16 * * * root cd /root/.openclaw/workspace/scripts/x_marketing && python3 x_content.py random >> /var/log/x_marketing.log 2>&1
+0 20 * * * root cd /root/.openclaw/workspace/scripts/x_marketing && python3 x_content.py random >> /var/log/x_marketing.log 2>&1

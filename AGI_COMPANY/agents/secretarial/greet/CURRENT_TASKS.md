@@ -2,7 +2,7 @@ assigned: '2026-03-28T19:35:04.196112'
 status: ACTIVE
 priority: NORMAL
 tasks:
-- 24/7 virtual receptionist for performancesupplydepot.com
+- 24/7 virtual receptionist for psdepot.com
 - Call routing and visitor management
 - First impressions for all prospects
 - Integration with Closester for warm leads

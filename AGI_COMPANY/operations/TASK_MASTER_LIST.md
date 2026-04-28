@@ -61,7 +61,7 @@
 
 ### C-004: Website Deployment & SSL Configuration
 **Priority:** CRITICAL  
-**Task:** Deploy performancesupplydepot.com with HTTPS  
+**Task:** Deploy psdepot.com with HTTPS  
 **Description:** Domain not resolving — website completely inaccessible. Cannot process sales. SSL certificate needed. myl0nr0s.cloud has HTTP working (port 80) but HTTPS not configured.
 **Assigned:** Fiber (Infrastructure) 🔌, Jordan (PM) 🔧  
 **Estimated Time:** 2-3 days  
@@ -71,7 +71,7 @@
 - SSL certificate (Let's Encrypt or Cloudflare) ⏳
 - Hosting provider verification ⏳
 **Blockers:**
-- Domain performancesupplydepot.com DNS not resolving
+- Domain psdepot.com DNS not resolving
 - May need to contact hosting provider (Hostinger)
 **Status:** BLOCKED — Domain resolution issue
 

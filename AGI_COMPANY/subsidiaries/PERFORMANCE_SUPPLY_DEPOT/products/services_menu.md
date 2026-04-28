@@ -46,5 +46,5 @@
 ---
 
 ## Contact
-- ops@performancesupplydepot.com
+- ops@psdepot.com
 - 1-800-PERFORM

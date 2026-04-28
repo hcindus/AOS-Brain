@@ -151,8 +151,8 @@ At Performance Supply Depot, we don't just sell POS supplies—we deliver **inte
 
 **Performance Supply Depot LLC**
 - **Phone**: 1-800-PSD-SALE
-- **Email**: sales@performancesupplydepot.com
-- **Web**: www.performancesupplydepot.com
+- **Email**: sales@psdepot.com
+- **Web**: www.psdepot.com
 - **AGI Ordering**: Text "ORDER" to your assigned AGI agent
 
 **Same-Day Shipping** on orders placed before 3 PM EST

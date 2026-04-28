@@ -8,7 +8,7 @@
 ### Method 1: Hostinger Control Panel (Recommended)
 
 1. **Log in:** https://www.hostinger.com
-2. **Navigate:** Hosting → performancesupplydepot.com → File Manager
+2. **Navigate:** Hosting → psdepot.com → File Manager
 3. **Upload:**
    - Go to `public_html/`
    - Upload `index.html` (replace existing)
@@ -17,7 +17,7 @@
 ### Method 2: FTP Upload
 
 **FTP Credentials:**
-- **Host:** ftp.performancesupplydepot.com
+- **Host:** ftp.psdepot.com
 - **User:** [Get from Hostinger panel]
 - **Pass:** [Get from Hostinger panel]
 - **Port:** 21
@@ -59,14 +59,14 @@ git push hostinger main
 ```bash
 # From local machine:
 scp -r /root/.openclaw/workspace/aocros/AGI_COMPANY_WEBSITES/performance-supply-depot/* \
-  [USER]@ftp.performancesupplydepot.com:/public_html/
+  [USER]@ftp.psdepot.com:/public_html/
 ```
 
 ---
 
 ## ✅ POST-DEPLOY CHECKLIST
 
-- [ ] Website loads at https://performancesupplydepot.com
+- [ ] Website loads at https://psdepot.com
 - [ ] All pages render correctly
 - [ ] Contact form works
 - [ ] Mobile responsive

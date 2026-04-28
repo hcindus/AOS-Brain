@@ -1,5 +1,5 @@
 # Website Readiness Report
-## performancesupplydepot.com
+## psdepot.com
 
 **Report Generated:** 2026-03-16 06:38 UTC  
 **Reported By:** Pulp (Head of Sales)
@@ -23,9 +23,9 @@
 ## Detailed Findings
 
 ### 1. Domain Resolution Check
-**Test:** DNS lookup for performancesupplydepot.com  
+**Test:** DNS lookup for psdepot.com  
 **Result:** 🔴 FAILED  
-**Error:** `getaddrinfo ENOTFOUND performancesupplydepot.com`  
+**Error:** `getaddrinfo ENOTFOUND psdepot.com`  
 
 **Impact:** CRITICAL  
 - Website is not accessible to public
@@ -123,7 +123,7 @@
 
 ### Immediate (Today)
 1. **Contact DevOps team** - Domain/hosting issue is blocking all sales
-2. **Verify domain registration** - Ensure performancesupplydepot.com is owned
+2. **Verify domain registration** - Ensure psdepot.com is owned
 3. **Check hosting account** - Confirm server is provisioned
 
 ### Short-term (This Week)
