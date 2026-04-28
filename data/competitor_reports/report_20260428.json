@@ -1,0 +1,17 @@
+{
+  "date": "2026-04-28T04:42:18.123479",
+  "competitors": [
+    {
+      "name": "WebstaurantStore",
+      "price": null,
+      "status": "error",
+      "error": "Page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://www.webstaurantstore.com/\", waiting until \"networkidle\"\n"
+    },
+    {
+      "name": "Amazon",
+      "price": null,
+      "status": "error",
+      "error": "Page.fill: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"input[type='search'], input[name='q'], #twotabsearchtextbox\")\n"
+    }
+  ]
+}
