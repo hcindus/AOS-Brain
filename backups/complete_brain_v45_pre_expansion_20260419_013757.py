@@ -236,26 +236,6 @@ class BrainSocketServer:
                 state, result, meta = self.brain.liver.process(sample)
                 return {'state': state.name, 'result': result, 'metadata': meta}
             return {'error': 'Liver not available'}
-        elif cmd == 'perceive':
-            # Direct perception into consciousness layers
-            observation = params.get('observation', '')
-            intensity = params.get('intensity', 0.8)
-            if self.brain.consciousness:
-                self.brain.consciousness.perceive(observation, intensity=intensity)
-                self.brain.consciousness.consolidate()
-                # Get counts after perception
-                con = len(self.brain.consciousness.conscious.get_active())
-                sub = len(self.brain.consciousness.subconscious.get_active())
-                unc = len(self.brain.consciousness.unconscious.get_active())
-                return {
-                    'perceived': True,
-                    'observation': observation[:50],
-                    'intensity': intensity,
-                    'conscious_items': con,
-                    'subconscious_items': sub,
-                    'unconscious_items': unc
-                }
-            return {'error': 'Consciousness manager not available'}
         else:
             return {'error': f'Unknown command: {cmd}'}
 
@@ -619,7 +599,6 @@ class CompleteBrainV44:
         
         return {
             "version": "4.5",
-            "components_active": 16,
             "tick": self.tick_count,
             "phase": self.current_phase,
             "signal_quality_20avg": recent_signal,
@@ -635,14 +614,14 @@ class CompleteBrainV44:
                 "models": self.router.MODELS if self.router else None,
                 "stats": self.router.get_stats() if self.router else None
             },
-            "components_active": 16,
+            "components_active": 15,
             "pipeline": "Lungs → Liver → Brain → Kidneys"
         }
     
     def run(self):
         """Run complete system with full signal/noise pipeline"""
-        print("\n[SYSTEM] Complete Brain v4.5 running...")
-        print("         Respiratory pipeline: Lungs → Liver → Brain → Kidneys")
+        print("\n[SYSTEM] Complete Brain v4.4 running...")
+        print("         Signal pipeline: Liver → Brain → Kidneys")
         
         # Start all organ monitors
         self.thyroid.start()
