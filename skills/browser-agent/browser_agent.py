@@ -60,13 +60,24 @@ class BrowserAgent:
         self._init_browser()
     
     def _init_browser(self):
-        """Initialize Playwright browser"""
+        """Initialize Playwright browser with stealth features"""
         self.playwright = sync_playwright().start()
         
-        # Browser launch options
+        # Browser launch options with stealth
         launch_options = {
             "headless": self.headless,
-            "slow_mo": self.slow_mo
+            "slow_mo": self.slow_mo,
+            "args": [
+                "--disable-blink-features=AutomationControlled",
+                "--disable-web-security",
+                "--disable-features=IsolateOrigins,site-per-process",
+                "--disable-dev-shm-usage",
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--disable-accelerated-2d-canvas",
+                "--disable-gpu",
+                "--window-size=1920,1080",
+            ]
         }
         
         if self.proxy:
@@ -75,19 +86,80 @@ class BrowserAgent:
         # Launch Chromium
         self.browser = self.playwright.chromium.launch(**launch_options)
         
-        # Create context with viewport
+        # Create context with stealth options
         context_options = {
             "viewport": self.viewport,
-            "user_agent": self.custom_user_agent or self._get_default_user_agent()
+            "user_agent": self.custom_user_agent or self._get_default_user_agent(),
+            "locale": "en-US",
+            "timezone_id": "America/Los_Angeles",
+            "geolocation": {"latitude": 36.1699, "longitude": -115.1398},  # Las Vegas
+            "permissions": ["geolocation"],
+            "color_scheme": "light",
+            "reduced_motion": "no-preference",
         }
         
         self.context = self.browser.new_context(**context_options)
+        
+        # Add stealth scripts to evade detection
+        self.context.add_init_script("""
+            // Override navigator.webdriver
+            Object.defineProperty(navigator, 'webdriver', {
+                get: () => undefined
+            });
+            
+            // Override permissions
+            const originalQuery = window.navigator.permissions.query;
+            window.navigator.permissions.query = (parameters) => (
+                parameters.name === 'notifications' ?
+                Promise.resolve({ state: Notification.permission }) :
+                originalQuery(parameters)
+            );
+            
+            // Hide automation flags
+            Object.defineProperty(navigator, 'plugins', {
+                get: () => [1, 2, 3, 4, 5]
+            });
+            
+            Object.defineProperty(navigator, 'languages', {
+                get: () => ['en-US', 'en']
+            });
+            
+            // Override chrome runtime
+            window.chrome = { runtime: {} };
+            
+            // Override Notification
+            const originalNotification = window.Notification;
+            Object.defineProperty(window, 'Notification', {
+                get: function() {
+                    return originalNotification;
+                },
+                set: function(value) {
+                    originalNotification = value;
+                }
+            });
+        """)
+        
         self.page = self.context.new_page()
+        
+        # Set extra headers for realism
+        self.page.set_extra_http_headers({
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.5",
+            "Accept-Encoding": "gzip, deflate, br",
+            "DNT": "1",
+            "Connection": "keep-alive",
+            "Upgrade-Insecure-Requests": "1",
+            "Sec-Fetch-Dest": "document",
+            "Sec-Fetch-Mode": "navigate",
+            "Sec-Fetch-Site": "none",
+            "Sec-Fetch-User": "?1",
+            "Cache-Control": "max-age=0",
+        })
         
         # Set default timeout
         self.page.set_default_timeout(30000)
         
-        print(f"✅ Browser initialized (headless={self.headless}, viewport={self.viewport})")
+        print(f"✅ Browser initialized with stealth (headless={self.headless}, viewport={self.viewport})")
     
     def _get_default_user_agent(self) -> str:
         """Get realistic user agent"""

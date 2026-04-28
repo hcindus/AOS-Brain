@@ -1,17 +1,21 @@
 {
-  "date": "2026-04-28T04:42:18.123479",
+  "date": "2026-04-28T04:43:41.501512",
   "competitors": [
     {
       "name": "WebstaurantStore",
-      "price": null,
-      "status": "error",
-      "error": "Page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://www.webstaurantstore.com/\", waiting until \"networkidle\"\n"
+      "url": "https://www.webstaurantstore.com",
+      "price": "",
+      "product": "Commercial Supplies & Equipment from WebstaurantStore",
+      "screenshot": "/tmp/webstaurantstore_debug.png",
+      "status": "no_price_found"
     },
     {
       "name": "Amazon",
-      "price": null,
-      "status": "error",
-      "error": "Page.fill: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"input[type='search'], input[name='q'], #twotabsearchtextbox\")\n"
+      "url": "https://www.amazon.com",
+      "price": "",
+      "product": "",
+      "screenshot": "/tmp/amazon_debug.png",
+      "status": "no_price_found"
     }
   ]
 }
