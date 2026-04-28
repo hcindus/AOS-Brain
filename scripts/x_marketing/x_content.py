@@ -31,19 +31,19 @@ MESSAGE_TEMPLATES = [
         "zh": f"收据打印机有条纹? 每月用异丙醇清洁热敏头。需要帮助? {PHONE} | {WEBSITE}",
     },
     {
-        "en": f"Same-day delivery available for in-stock items ordered by 2 PM. Serving Las Vegas restaurants. {PHONE} | {WEBSITE}",
-        "es": f"Entrega mismo día disponible para artículos en stock ordenados antes 2 PM. Servimos restaurantes Las Vegas. {PHONE} | {WEBSITE}",
-        "zh": f"下午2点前下单的现货可当日送达。服务拉斯维加斯餐厅。{PHONE} | {WEBSITE}",
+        "en": f"Printer Swaps available - Trade in your old printer for a refurbished unit. Ask about options: {PHONE} | {WEBSITE}",
+        "es": f"Cambio de Impresoras disponible - Cambie su impresora vieja por una reacondicionada. Pregunte opciones: {PHONE} | {WEBSITE}",
+        "zh": f"打印机以旧换新服务 - 用旧打印机换翻新机。询问详情: {PHONE} | {WEBSITE}",
     },
     {
-        "en": f"We service Samsung, Clover, Square, and most major POS systems. Local Vegas technicians. {PHONE} | {WEBSITE}",
-        "es": f"Serviciamos Samsung, Clover, Square y la mayoría de sistemas POS. Técnicos locales en Las Vegas. {PHONE} | {WEBSITE}",
-        "zh": f"我们维修三星、Clover、Square及大多数POS系统。拉斯维加斯本地技术人员。{PHONE} | {WEBSITE}",
+        "en": f"Cabling Services for any POS system. Professional installation and network setup. Book now: {PHONE} | {WEBSITE}",
+        "es": f"Servicios de Cableado para cualquier sistema POS. Instalación profesional y configuración de red. Reserve: {PHONE} | {WEBSITE}",
+        "zh": f"任何POS系统的布线服务。专业安装和网络设置。立即预约: {PHONE} | {WEBSITE}",
     },
     {
-        "en": f"Samsung POS systems starting at $495. Professional installation available. Questions? {PHONE} | {WEBSITE}",
-        "es": f"Sistemas POS Samsung desde $495. Instalación profesional disponible. Preguntas? {PHONE} | {WEBSITE}",
-        "zh": f"三星POS系统起价$495。提供专业安装。有问题? {PHONE} | {WEBSITE}",
+        "en": f"Sam4s POS Systems now available. Reliable hardware for restaurants and retail. Get a quote: {PHONE} | {WEBSITE}",
+        "es": f"Sistemas Sam4s POS ahora disponibles. Hardware confiable para restaurantes y retail. Cotización: {PHONE} | {WEBSITE}",
+        "zh": f"Sam4s POS系统现已到货。适用于餐厅和零售的可靠硬件。获取报价: {PHONE} | {WEBSITE}",
     },
     {
         "en": f"Running low on supplies? We recommend keeping a 2-week buffer. Order now: {PHONE} | {WEBSITE}",

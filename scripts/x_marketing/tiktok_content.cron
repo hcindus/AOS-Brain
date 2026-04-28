@@ -1,0 +1,8 @@
+# TikTok Content Generation Schedule
+# Generates video scripts daily - manual filming/posting required
+
+# Generate daily TikTok content ideas
+0 10 * * * root cd /root/.openclaw/workspace/scripts/x_marketing && /usr/bin/python3 tiktok_content.py daily >> /var/log/tiktok_content.log 2>&1
+
+# Generate weekly content calendar (Mondays)
+0 9 * * 1 root cd /root/.openclaw/workspace/scripts/x_marketing && /usr/bin/python3 tiktok_content.py week >> /var/log/tiktok_content.log 2>&1
