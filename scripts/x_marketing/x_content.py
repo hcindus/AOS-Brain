@@ -1,113 +1,179 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 X (Twitter) Content Generator for Performance Supply Depot
-Generates tweet content ready to copy/paste into X console
+Ethical, factual content designed to help small business owners succeed.
+
+PRINCIPLES:
+- No false claims or exaggerated savings
+- Actual product prices and services offered
+- Educational content that adds value
+- Respectful tone, no pressure tactics
+- Clear contact information for genuine inquiries
 """
 
 import random
 import sys
 from datetime import datetime
 
-# Content Templates - All linking to psdepot.com
+PHONE = "888-881-6834"
+WEBSITE = "https://psdepot.com"
+
+# Ethical Content Templates - Focused on value and education
 TEMPLATES = {
-    "product_highlight": [
-        "Running low on receipt paper? 📄 We stock thermal rolls for every POS system. Same-day delivery in Vegas. Check prices: https://psdepot.com #POSsupplies #RestaurantLife",
-        "Samsung POS systems starting at $495. Professional setup included. Upgrade your checkout: https://psdepot.com #POS #SmallBusiness",
-        "Kitchen printer acting up? 🖨️ Our techs repair all major brands on-site. Book now: https://psdepot.com #PrinterRepair #LasVegas",
-        "Save 20% on your first order. Thermal paper, ink ribbons, POS accessories — we beat most prices: https://psdepot.com #Deals",
-        "Need scales for your restaurant? We carry CAS, AND, and Samsung models starting at $795: https://psdepot.com #Scales #RestaurantEquipment",
-    ],
-    "tips": [
-        "💡 Tip: Store thermal paper away from heat/sunlight to prevent premature darkening. Quality supplies = fewer reprints. https://psdepot.com #RestaurantTips",
-        "Is your receipt printer streaking? Clean the thermal head monthly with isopropyl alcohol. More maintenance tips: https://psdepot.com #TechTips",
-        "🍽️ Busy weekend ahead? Stock up on receipt paper Friday — avoid the Sunday night panic. Order now: https://psdepot.com #RestaurantLife",
-        "Pro tip: Bond paper for impact printers should be stored in a cool, dry place. We deliver fresh stock: https://psdepot.com #SupplyTips",
-    ],
-    "social_proof": [
-        "Local diner switched to us last month — now saving $200+/month on supplies. See how much you could save: https://psdepot.com 💰",
-        "\"We went from 3 stockouts a month to zero.\" — Las Vegas Grill owner. Same-day delivery works. https://psdepot.com 🚚",
-        "Our tech fixed 3 printers in one visit. That's the kind of service you get with a local supplier. https://psdepot.com 🔧 #LasVegas",
-    ],
-    "promotional": [
-        "🚨 New customers: 20% off first order + free printer diagnostic. Mention code VEGAS20. https://psdepot.com #LimitedTime",
-        "Running a restaurant in Vegas? We specialize in POS supplies with same-day delivery. Let's talk: https://psdepot.com 📞 888-881-6834",
-        "End-of-month stock check? 📋 We can get you same-day delivery on most items. Order by 2pm: https://psdepot.com #SameDayDelivery",
-    ],
-    "engagement": [
-        "What POS system are you running? 💻 Samsung, Clover, Square — we service them all. Let us know in the replies! https://psdepot.com",
-        "Poll: What's your biggest supply headache? 🗳️ A) Running out of receipt paper B) Printer breakdowns C) Delivery delays D) High costs https://psdepot.com",
-        "Question for restaurant owners: How often does your receipt printer need service? 🤔 We're curious! https://psdepot.com #RestaurantTalk",
-    ]
+    "en": {
+        "educational": [
+            f"Tip: Thermal paper darkens when exposed to heat/sunlight. Store in a cool, dry place to extend shelf life. Questions? {PHONE} | {WEBSITE}",
+            f"Receipt printer streaking? Try cleaning the thermal head monthly with isopropyl alcohol on a lint-free cloth. {WEBSITE} | {PHONE}",
+            f"Did you know? Bond paper for impact printers lasts longer when stored flat, not on its side. More tips: {WEBSITE} | {PHONE}",
+            f"Regular printer maintenance can prevent costly breakdowns during rush hour. We offer on-site service in Vegas. {PHONE} | {WEBSITE}",
+            f"Choosing the right receipt paper matters. Thermal for heat-based printers, bond for impact printers. Need help? {PHONE} | {WEBSITE}",
+        ],
+        "service_info": [
+            f"We service Samsung, Clover, Square, and most major POS systems. Local technicians available in Las Vegas. {PHONE} | {WEBSITE}",
+            f"Same-day delivery available for in-stock items when ordered by 2 PM. Serving Las Vegas restaurants. {PHONE} | {WEBSITE}",
+            f"POS system questions? Our team has 15+ years experience with restaurant point-of-sale equipment. Call us: {PHONE} | {WEBSITE}",
+            f"From receipt paper to full POS setups — we help Vegas restaurants keep operations running smoothly. {PHONE} | {WEBSITE}",
+        ],
+        "pricing_transparent": [
+            f"Samsung POS systems: Starting at $495 with professional installation available. Get a quote: {PHONE} | {WEBSITE}",
+            f"Thermal receipt paper rolls in stock. Competitive pricing with volume discounts available. Inquire: {PHONE} | {WEBSITE}",
+            f"Restaurant scales (CAS, AND, Samsung) starting at $795. Calibrated and ready for commercial use. {PHONE} | {WEBSITE}",
+            f"Printer repair service: Diagnostic fee applies, credited toward repair. No surprises. Vegas local: {PHONE} | {WEBSITE}",
+        ],
+        "helpful": [
+            f"Running low on supplies? We recommend keeping a 2-week buffer to avoid weekend stockouts. Order: {PHONE} | {WEBSITE}",
+            f"Q3 planning time. Evaluating your POS supply costs? We're happy to provide a comparison quote. {PHONE} | {WEBSITE}",
+            f"New restaurant opening in Vegas? We help with POS setup, supply planning, and staff training. {PHONE} | {WEBSITE}",
+            f"Questions about printer compatibility? Send us your model number — we'll confirm the right supplies. {PHONE} | {WEBSITE}",
+        ],
+    },
+    "es": {
+        "educational": [
+            f"Consejo: El papel térmico se oscurece con el calor y sol. Guárdelo en lugar fresco y seco. Preguntas? {PHONE} | {WEBSITE}",
+            f"¿Su impresora de recibos tiene rayas? Limpie la cabeza térmica mensual con alcohol isopropílico. {PHONE} | {WEBSITE}",
+            f"El papel bond para impresoras de impacto dura más si se guarda plano, no de lado. Más consejos: {PHONE} | {WEBSITE}",
+            f"El mantenimiento regular de impresoras evita fallas costosas durante las horas pico. Servicio en Las Vegas: {PHONE} | {WEBSITE}",
+            f"Papel térmico para impresoras de calor, papel bond para impresoras de impacto. ¿Necesita ayuda? {PHONE} | {WEBSITE}",
+        ],
+        "service_info": [
+            f"Serviciamos Samsung, Clover, Square y la mayoría de sistemas POS. Técnicos locales en Las Vegas. {PHONE} | {WEBSITE}",
+            f"Entrega mismo día disponible para artículos en stock si ordena antes de las 2 PM. {PHONE} | {WEBSITE}",
+            f"¿Preguntas sobre sistemas POS? Nuestro equipo tiene 15+ años de experiencia. Llámenos: {PHONE} | {WEBSITE}",
+            f"Desde papel térmico hasta configuraciones POS completas — ayudamos a restaurantes en Las Vegas. {PHONE} | {WEBSITE}",
+        ],
+        "pricing_transparent": [
+            f"Sistemas POS Samsung: Desde $495 con instalación profesional disponible. Cotización: {PHONE} | {WEBSITE}",
+            f"Rollos de papel térmico en stock. Precios competitivos con descuentos por volumen. Pregunte: {PHONE} | {WEBSITE}",
+            f"Básculas para restaurantes (CAS, AND, Samsung) desde $795. Calibradas para uso comercial. {PHONE} | {WEBSITE}",
+            f"Servicio de reparación: Aplica cuota de diagnóstico, acreditada a la reparación. {PHONE} | {WEBSITE}",
+        ],
+        "helpful": [
+            f"¿Se le acaban los suministros? Recomendamos mantener reserva de 2 semanas. Ordene: {PHONE} | {WEBSITE}",
+            f"Temporada de planificación Q3. ¿Evaluando costos de suministros POS? Cotización sin compromiso: {PHONE} | {WEBSITE}",
+            f"¿Abriendo restaurante nuevo en Las Vegas? Ayudamos con configuración POS y capacitación. {PHONE} | {WEBSITE}",
+            f"¿Preguntas sobre compatibilidad de impresoras? Envíenos el modelo — confirmamos los suministros. {PHONE} | {WEBSITE}",
+        ],
+    },
+    "zh": {
+        "educational": [
+            f"提示: 热敏纸遇热和阳光会变黑。存放在阴凉干燥处可延长保质期。咨询: {PHONE} | {WEBSITE}",
+            f"收据打印机有条纹? 每月用异丙醇和无绒布清洁热敏头。{PHONE} | {WEBSITE}",
+            f"击打式打印机的债券纸平放比侧放更耐用。更多提示: {PHONE} | {WEBSITE}",
+            f"定期打印机维护可防止繁忙时段的昂贵故障。拉斯维加斯上门服务: {PHONE} | {WEBSITE}",
+            f"热敏纸用于热敏打印机，债券纸用于击打式打印机。需要帮助? {PHONE} | {WEBSITE}",
+        ],
+        "service_info": [
+            f"我们维修三星、Clover、Square及大多数POS系统。拉斯维加斯本地技术人员。{PHONE} | {WEBSITE}",
+            f"下午2点前下单的现货可当日送达。服务拉斯维加斯餐厅。{PHONE} | {WEBSITE}",
+            f"POS系统问题? 我们的团队有15年以上餐厅收银设备经验。致电: {PHONE} | {WEBSITE}",
+            f"从收据纸到完整POS系统 — 我们帮助拉斯维加斯餐厅顺利运营。{PHONE} | {WEBSITE}",
+        ],
+        "pricing_transparent": [
+            f"三星POS系统: $495起，提供专业安装。获取报价: {PHONE} | {WEBSITE}",
+            f"热敏收据纸卷有货。价格竞争力强，量大优惠。咨询: {PHONE} | {WEBSITE}",
+            f"餐厅秤(CAS、AND、三星) $795起。校准完毕，商用就绪。{PHONE} | {WEBSITE}",
+            f"打印机维修服务: 收取诊断费，维修时抵扣。无隐藏费用。{PHONE} | {WEBSITE}",
+        ],
+        "helpful": [
+            f"耗材不足? 我们建议保持2周库存避免周末缺货。下单: {PHONE} | {WEBSITE}",
+            f"Q3规划时间。评估POS耗材成本? 我们很乐意提供对比报价。{PHONE} | {WEBSITE}",
+            f"在拉斯维加斯开新餐厅? 我们提供POS设置、供应规划和员工培训。{PHONE} | {WEBSITE}",
+            f"打印机兼容性问题? 发送型号给我们 — 我们确认正确的耗材。{PHONE} | {WEBSITE}",
+        ],
+    }
 }
 
-def get_random_tweet():
-    """Generate a random tweet"""
-    category = random.choice(list(TEMPLATES.keys()))
-    return random.choice(TEMPLATES[category])
-
-def get_tweet_by_category(category):
-    """Get a tweet from specific category"""
-    if category in TEMPLATES:
-        return random.choice(TEMPLATES[category])
-    return get_random_tweet()
-
-def generate_daily_content():
-    """Generate 3 tweets for the day"""
-    tweets = []
-    used = set()
+def get_tweet(lang="en", category=None):
+    """Get a tweet in specified language"""
+    if lang not in TEMPLATES:
+        lang = "en"
     
-    for _ in range(3):
-        tweet = get_random_tweet()
-        while tweet in used:
-            tweet = get_random_tweet()
-        used.add(tweet)
-        tweets.append(tweet)
+    if category and category in TEMPLATES[lang]:
+        return random.choice(TEMPLATES[lang][category])
     
-    return tweets
+    category = random.choice(list(TEMPLATES[lang].keys()))
+    return random.choice(TEMPLATES[lang][category])
+
+def generate_trilingual_daily():
+    """Generate 1 tweet in each language - balanced across categories"""
+    return {
+        "en": get_tweet("en", "educational"),
+        "es": get_tweet("es", "service_info"),
+        "zh": get_tweet("zh", "helpful")
+    }
 
 def main():
     if len(sys.argv) < 2:
         print("=" * 60)
         print("X Marketing Content Generator - Performance Supply Depot")
+        print("Ethical, factual content for small business owners")
+        print("Phone:", PHONE)
+        print("Website:", WEBSITE)
         print("=" * 60)
-        print("\nCategories:")
-        for cat in TEMPLATES.keys():
-            print(f"  - {cat}")
+        print("\nCategories: educational, service_info, pricing_transparent, helpful")
         print("\nUsage:")
-        print("  x_content.py daily       # Generate 3 tweets for today")
-        print("  x_content.py random      # Get one random tweet")
-        print("  x_content.py <category>  # Get tweet from category")
+        print("  x_content.py daily       # Generate 1 tweet per language")
+        print("  x_content.py en          # Random English tweet")
+        print("  x_content.py es          # Random Spanish tweet")
+        print("  x_content.py zh          # Random Chinese tweet")
         return
     
     command = sys.argv[1]
     
     if command == "daily":
-        tweets = generate_daily_content()
-        print(f"\n📅 Daily Content for {datetime.now().strftime('%Y-%m-%d')}\n")
+        tweets = generate_trilingual_daily()
+        print(f"\n📅 Ethical Marketing Content - {datetime.now().strftime('%Y-%m-%d')}\n")
         print("=" * 60)
-        for i, tweet in enumerate(tweets, 1):
-            print(f"\n🐦 Tweet {i}:")
-            print(f"{tweet}")
-            print(f"\nLength: {len(tweet)} characters")
+        print("Ethical Guidelines: Factual • Educational • No Pressure • Transparent")
+        print("=" * 60)
+        
+        print("\n🇺🇸 ENGLISH (Educational Focus):")
+        print(f"{tweets['en']}")
+        print(f"Length: {len(tweets['en'])} chars")
+        
+        print("\n🇪🇸 SPANISH (Service Focus):")
+        print(f"{tweets['es']}")
+        print(f"Length: {len(tweets['es'])} chars")
+        
+        print("\n🇨🇳 CHINESE (Helpful Focus):")
+        print(f"{tweets['zh']}")
+        print(f"Length: {len(tweets['zh'])} chars")
+        
         print("\n" + "=" * 60)
         print("\n✅ Ready to copy/paste into X Agent console")
+        print("📋 Log file: /var/log/x_marketing.log")
         
-    elif command == "random":
-        tweet = get_random_tweet()
-        print(f"\n🐦 Random Tweet:")
-        print(f"{tweet}")
-        print(f"\nLength: {len(tweet)} characters")
-        print("\n✅ Copy and paste into X Agent console")
-        
-    elif command in TEMPLATES:
-        tweet = get_tweet_by_category(command)
-        print(f"\n🐦 {command.replace('_', ' ').title()} Tweet:")
+    elif command in ["en", "es", "zh"]:
+        tweet = get_tweet(command)
+        lang_name = {"en": "English", "es": "Spanish", "zh": "Chinese"}[command]
+        print(f"\n🐦 {lang_name} Tweet:")
         print(f"{tweet}")
         print(f"\nLength: {len(tweet)} characters")
         
     else:
-        print(f"❌ Unknown category: {command}")
-        print(f"Available: {', '.join(TEMPLATES.keys())}")
+        print(f"❌ Unknown command: {command}")
+        print("Use: daily, en, es, or zh")
 
 if __name__ == "__main__":
     main()
