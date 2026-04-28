@@ -885,7 +885,7 @@ Sales Consultant | AOS"""
         print(f"Duration: {total * (CONFIG['min_delay_seconds'] + 5) // 60} minutes")
         print("=" * 70)
 
-def check_rate_limit(self):
+    def check_rate_limit(self):
         """Check if we can send (test SMTP connection)"""
         try:
             context = self._create_ssl_context()
