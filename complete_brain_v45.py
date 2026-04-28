@@ -236,6 +236,138 @@ class BrainSocketServer:
                 state, result, meta = self.brain.liver.process(sample)
                 return {'state': state.name, 'result': result, 'metadata': meta}
             return {'error': 'Liver not available'}
+        elif cmd == 'seed_layers':
+            # Directly seed subconscious and unconscious layers
+            import json
+            seed_path = params.get('path', '/root/.openclaw/workspace/aos/layer_export.json')
+            try:
+                with open(seed_path, 'r') as f:
+                    data = json.load(f)
+                
+                # Seed subconscious
+                for item in data.get('subconscious', []):
+                    self.brain.consciousness.subconscious.add(
+                        item['content'],
+                        intensity=item.get('intensity', 0.7),
+                        associations=item.get('associations', [])
+                    )
+                
+                # Seed unconscious
+                for item in data.get('unconscious', []):
+                    self.brain.consciousness.unconscious.add(
+                        item['content'],
+                        intensity=item.get('intensity', 0.8),
+                        associations=item.get('associations', [])
+                    )
+                
+                sub_count = len(self.brain.consciousness.subconscious.get_active(min_intensity=0.3))
+                unc_count = len(self.brain.consciousness.unconscious.get_active(min_intensity=0.3))
+                
+                return {
+                    'seeded': True,
+                    'subconscious_seeded': len(data.get('subconscious', [])),
+                    'unconscious_seeded': len(data.get('unconscious', [])),
+                    'subconscious_active': sub_count,
+                    'unconscious_active': unc_count
+                }
+            except Exception as e:
+                return {'error': str(e)}
+        elif cmd == 'add_to_layer':
+            # Direct addition to any consciousness layer
+            layer = params.get('layer', 'subconscious')  # conscious/subconscious/unconscious
+            content = params.get('content', '')
+            intensity = params.get('intensity', 0.8)
+            associations = params.get('associations', [])
+            
+            target_layer = None
+            if layer == 'conscious':
+                target_layer = self.brain.consciousness.conscious
+            elif layer == 'subconscious':
+                target_layer = self.brain.consciousness.subconscious
+            elif layer == 'unconscious':
+                target_layer = self.brain.consciousness.unconscious
+            
+            if target_layer:
+                target_layer.add(content, intensity=intensity, associations=associations)
+                active_count = len(target_layer.get_active(min_intensity=0.3))
+                return {
+                    'added': True,
+                    'layer': layer,
+                    'content': content[:50],
+                    'active_items': active_count
+                }
+            return {'error': f'Unknown layer: {layer}'}
+        elif cmd == 'perceive':
+            observation = params.get('observation', '')
+            intensity = params.get('intensity', 0.8)
+            if self.brain.consciousness:
+                self.brain.consciousness.perceive(observation, intensity=intensity)
+                self.brain.consciousness.consolidate()
+                con = len(self.brain.consciousness.conscious.get_active())
+                sub = len(self.brain.consciousness.subconscious.get_active(min_intensity=0.1))
+                unc = len(self.brain.consciousness.unconscious.get_active(min_intensity=0.1))
+                return {
+                    'perceived': True,
+                    'observation': observation[:50],
+                    'intensity': intensity,
+                    'conscious_items': con,
+                    'subconscious_items': sub,
+                    'unconscious_items': unc
+                }
+            return {'error': 'Consciousness not available'}
+        elif cmd == 'ingest':
+            # Feed through stomach -> intestine -> brain (full metabolic cycle)
+            content = params.get('content', '')
+            source = params.get('source', 'socket')
+            priority = params.get('priority', 0.8)
+            
+            if self.brain.stomach:
+                # Ingest into stomach buffer
+                self.brain.stomach.ingest(source, content, priority=priority)
+                
+                # Get digestion metrics
+                buffer_size = len(self.brain.stomach.input_buffer)
+                state = self.brain.stomach.state.name if hasattr(self.brain.stomach.state, 'name') else str(self.brain.stomach.state)
+                
+                return {
+                    'ingested': True,
+                    'source': source,
+                    'buffer_size': buffer_size,
+                    'stomach_state': state,
+                    'message': 'Content queued in stomach. Will digest on next tick cycle.'
+                }
+            return {'error': 'Stomach not available'}
+        elif cmd == 'save':
+            # Trigger manual state save
+            if hasattr(self.brain, 'persistence') and self.brain.persistence:
+                success = self.brain.persistence.save_state(force=True)
+                tick = getattr(self.brain, 'tick_count', 0)
+                return {
+                    'saved': success,
+                    'tick': tick,
+                    'state_file': str(self.brain.persistence.STATE_FILE) if success else None
+                }
+            return {'error': 'Persistence not available'}
+        elif cmd == 'load':
+            # Check if saved state exists
+            if hasattr(self.brain, 'persistence') and self.brain.persistence:
+                state = self.brain.persistence.load_state()
+                if state:
+                    return {
+                        'loaded': True,
+                        'tick': state.get('tick_count', 0),
+                        'saved_at': state.get('saved_at', 'unknown'),
+                        'has_cortex': state.get('cortex') is not None,
+                        'has_tracray': state.get('tracray') is not None
+                    }
+                return {'loaded': False, 'message': 'No saved state found'}
+            return {'error': 'Persistence not available'}
+        elif cmd == 'tick':
+            # Return current tick count
+            return {
+                'tick': getattr(self.brain, 'tick_count', 0),
+                'phase': getattr(self.brain, 'current_phase', 'unknown')
+            }
         else:
             return {'error': f'Unknown command: {cmd}'}
 
@@ -268,7 +400,7 @@ class CompleteBrainV44:
         
         # Legacy components
         print("\n[Legacy 1/5] 3D Cortex...")
-        self.cortex = Cortex3D(width=32, height=32, depth=3)
+        self.cortex = Cortex3D(width=32, height=32, depth=32)
         
         print("[Legacy 2/5] TracRay...")
         self.tracray = TracRay(capacity=5000)
@@ -341,8 +473,21 @@ class CompleteBrainV44:
         signal.signal(signal.SIGTERM, self._signal_handler)
         signal.signal(signal.SIGINT, self._signal_handler)
         
+        # NEW: Persistence Layer v1.0
+        print("\n[Persistence v1.0] Loading brain state...")
+        try:
+            from brain_persistence import integrate_persistence, start_auto_save
+            self.persistence = integrate_persistence(self)
+            start_auto_save(self, interval_seconds=60)
+            print("  ✅ Persistence active - Auto-save every 60s")
+        except Exception as e:
+            print(f"  ⚠️ Persistence not loaded: {e}")
+            self.persistence = None
+        
         print("\n" + "=" * 70)
         print("  ✅ ALL SYSTEMS INITIALIZED")
+        if self.persistence:
+            print(f"  💾 Persistence: ON (tick {self.tick_count})")
         print("=" * 70)
         
         # Announce via router (non-blocking, just print)

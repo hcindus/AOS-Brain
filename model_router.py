@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """
-AOS Model Router v1.0
+AOS Model Router v1.1
 Routes different tasks to optimal models:
-  - Decisions: tinyllama (fast, structured)
+  - Decisions: Bonsai via Bridge (1-bit, 1.58-bit supported)
+  - Fallback: tinyllama (fast, reliable)
   - Voice/Chat: Mort_II (natural, conversational)
   - Embeddings: nomic-embed-text
+
+Updated 2026-04-22: Now uses Ollama-Bonsai Bridge on port 11435
 """
 
 import requests
@@ -15,11 +18,15 @@ from typing import Dict, Tuple
 class AOSModelRouter:
     """
     Intelligent model selection for different task types
-    Like the Thyroid but for model choice, not mode
+    Uses Ollama-Bonsai Bridge (port 11435) for ternary/1-bit support
     """
     
+    # Bridge endpoint (routes Bonsai to PrismML fork, others to standard Ollama)
+    OLLAMA_URL = "http://localhost:11435/api/generate"
+    
     MODELS = {
-        "decision": "tinyllama:latest",      # Fast, structured output
+        "decision": "bonsai-8b-q1_0",        # 1-bit Bonsai via bridge
+        "decision_fallback": "tinyllama:latest",  # Fallback for reliability
         "voice": "antoniohudnall/Mort_II:latest",  # Natural conversation
         "embedding": "nomic-embed-text:latest",    # Vector embeddings
         "reasoning": "qwen2.5:3b",           # Complex reasoning
@@ -37,7 +44,7 @@ class AOSModelRouter:
         print(f"  Embedding: {self.MODELS['embedding']}")
     
     def decide(self, context: Dict) -> Tuple[str, float]:
-        """Make a decision using tinyllama"""
+        """Make a decision using Bonsai via bridge (fallback to tinyllama)"""
         model = self.MODELS["decision"]
         
         prompt = self._format_decision_prompt(context)
@@ -45,7 +52,7 @@ class AOSModelRouter:
         start = time.time()
         try:
             resp = requests.post(
-                "http://localhost:11434/api/generate",
+                self.OLLAMA_URL,  # Bridge endpoint (port 11435)
                 json={
                     "model": model,
                     "prompt": prompt,
@@ -68,7 +75,41 @@ class AOSModelRouter:
             else:
                 return "ERROR", 0.0
         except Exception as e:
-            return f"ERROR: {str(e)[:20]}", 0.0
+            # Fallback to tinyllama on error
+            print(f"[ModelRouter] Bonsai failed ({str(e)[:30]}), falling back to tinyllama")
+            return self._decide_fallback(context)
+    
+    def _decide_fallback(self, context: Dict) -> Tuple[str, float]:
+        """Fallback decision using tinyllama"""
+        model = self.MODELS["decision_fallback"]
+        prompt = self._format_decision_prompt(context)
+        
+        start = time.time()
+        try:
+            resp = requests.post(
+                self.OLLAMA_URL,  # Bridge endpoint handles fallback too
+                json={
+                    "model": model,
+                    "prompt": prompt,
+                    "stream": False,
+                    "options": {
+                        "temperature": 0.1,
+                        "num_predict": 15
+                    }
+                },
+                timeout=5
+            )
+            latency = (time.time() - start) * 1000
+            
+            if resp.status_code == 200:
+                text = resp.json().get("response", "").strip().upper()
+                action, confidence = self._parse_action(text)
+                print(f"[ModelRouter] Fallback decision: {action} ({confidence:.2f})")
+                return action, confidence
+            else:
+                return "ERROR", 0.0
+        except Exception as e2:
+            return f"ERROR: {str(e2)[:20]}", 0.0
     
     def speak(self, message: str, context: Dict = None) -> str:
         """Generate natural voice response using Mort_II"""
@@ -84,7 +125,7 @@ Your response:"""
         start = time.time()
         try:
             resp = requests.post(
-                "http://localhost:11434/api/generate",
+                self.OLLAMA_URL,  # Bridge endpoint handles all models
                 json={
                     "model": model,
                     "prompt": prompt,

@@ -42,10 +42,13 @@ class Cortex3D:
         # 3D neural volume
         self.volume = np.zeros((depth, height, width), dtype=np.float32)
         
-        # Layer activations
+        # Layer activations - first 3 are named consciousness layers
         self.conscious = self.volume[0]  # Z=0
-        self.subconscious = self.volume[1]  # Z=1
-        self.unconscious = self.volume[2]  # Z=2
+        self.subconscious = self.volume[1] if depth > 1 else self.volume[0]  # Z=1
+        self.unconscious = self.volume[2] if depth > 2 else self.volume[0]  # Z=2
+        
+        # Additional layers for deep processing (Z=3 to Z=depth-1)
+        self.deep_layers = [self.volume[i] for i in range(3, depth)] if depth > 3 else []
         
         # Processing history
         self.activation_history = deque(maxlen=100)
@@ -55,11 +58,26 @@ class Cortex3D:
         self.subconscious_weights = np.random.randn(height, width) * 0.1
         self.unconscious_weights = np.random.randn(height, width) * 0.1
         
+        # Weights for deep layers (Z=3+)
+        self.deep_weights = [np.random.randn(height, width) * 0.05 for _ in range(max(0, depth - 3))]
+        
         print(f"[3DCortex] Initialized {depth}x{height}x{width} neural volume")
     
     def activate(self, input_vector: np.ndarray, layer: str = "conscious") -> np.ndarray:
-        """Activate a specific layer"""
-        layer_idx = {"conscious": 0, "subconscious": 1, "unconscious": 2}.get(layer, 0)
+        """Activate a specific layer. For deep volume, 'conscious' maps to Z=0,
+        'subconscious' to Z=1, 'unconscious' to Z=2, and 'deep_N' to deeper layers."""
+        # Map layer name to index
+        layer_map = {"conscious": 0, "subconscious": 1, "unconscious": 2}
+        if layer in layer_map:
+            layer_idx = layer_map[layer]
+        elif layer.startswith("deep_"):
+            deep_num = int(layer.split("_")[1])
+            layer_idx = 3 + deep_num  # deep_0 = Z=3, deep_1 = Z=4, etc.
+        else:
+            layer_idx = 0
+        
+        # Ensure valid layer index
+        layer_idx = min(layer_idx, self.depth - 1)
         
         # Reshape input to match layer dimensions
         if len(input_vector) != self.width * self.height:

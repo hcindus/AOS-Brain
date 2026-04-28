@@ -96,11 +96,11 @@ class ConsciousnessManager:
         # Three layers
         self.conscious = ConsciousnessLayer(ConsciousnessLevel.CONSCIOUS, capacity=10)
         self.subconscious = ConsciousnessLayer(ConsciousnessLevel.SUBCONSCIOUS, capacity=100)
-        self.unconscious = ConsciousnessLayer(ConsciousnessLevel.UNCONSCIOUS, capacity=1000)
+        self.unconscious = ConsciousnessLayer(ConsciousnessLevel.UNCONSCIOUS, capacity=2000)  # Expanded from 1000
         
         # Propagation weights
-        self.downward_weight = 0.3  # Conscious -> Subconscious -> Unconscious
-        self.upward_weight = 0.2    # Unconscious -> Subconscious -> Conscious
+        self.downward_weight = 0.6  # Conscious -> Subconscious -> Unconscious (was 0.3)
+        self.upward_weight = 0.3    # Unconscious -> Subconscious -> Conscious (was 0.2)
         
         # Integration history
         self.cross_talk_log: deque = deque(maxlen=100)
@@ -139,7 +139,7 @@ class ConsciousnessManager:
             })
         
         # Subconscious -> Unconscious
-        subcon_items = self.subconscious.get_active(min_intensity=0.4)
+        subcon_items = self.subconscious.get_active(min_intensity=0.15)
         for item in subcon_items:
             # Deep abstraction
             abstraction = self._create_abstraction(item.content)
@@ -211,31 +211,70 @@ class ConsciousnessManager:
         return list(self.cross_talk_log)[-n:]
     
     def get_layer_summary(self) -> Dict:
-        """Get summary of all layers"""
+        """Get summary of all layers with lowered thresholds for sub/uncon"""
         return {
             "conscious": {
                 "active_items": len(self.conscious.get_active()),
                 "capacity": self.conscious.capacity
             },
             "subconscious": {
-                "active_items": len(self.subconscious.get_active()),
+                "active_items": len(self.subconscious.get_active(min_intensity=0.1)),
                 "capacity": self.subconscious.capacity
             },
             "unconscious": {
-                "active_items": len(self.unconscious.get_active()),
+                "active_items": len(self.unconscious.get_active(min_intensity=0.05)),
                 "capacity": self.unconscious.capacity
             },
             "cross_talk_events": len(self.cross_talk_log)
         }
     
     def consolidate(self):
-        """Consolidate all layers (memory maintenance)"""
+        """Consolidate all layers (memory maintenance + compression)"""
         self.conscious.clear_faded()
         self.subconscious.clear_faded()
+        
+        # Unconscious compression: merge similar patterns
+        self._compress_unconscious()
         self.unconscious.clear_faded()
         
         # Attempt upward propagation for insights
         self._propagate_up()
+    
+    def _compress_unconscious(self):
+        """Compress unconscious layer by merging similar abstractions"""
+        if len(self.unconscious.contents) < self.unconscious.capacity * 0.8:
+            return  # Only compress when approaching capacity
+        
+        # Group by association patterns
+        by_hash = {}
+        merged = 0
+        
+        for item in list(self.unconscious.contents):
+            # Create signature from associations
+            sig = tuple(sorted(item.associations)) if item.associations else ('none',)
+            
+            if sig in by_hash:
+                # Merge: boost existing item, drop duplicate
+                by_hash[sig].intensity = max(by_hash[sig].intensity, item.intensity)
+                by_hash[sig].timestamp = max(by_hash[sig].timestamp, item.timestamp)
+                merged += 1
+            else:
+                by_hash[sig] = item
+        
+        # Rebuild contents with merged items
+        if merged > 0:
+            self.unconscious.contents.clear()
+            for item in by_hash.values():
+                self.unconscious.contents.append(item)
+            
+            self.cross_talk_log.append({
+                "direction": "compress",
+                "from": "unconscious",
+                "to": "unconscious",
+                "merged": merged,
+                "remaining": len(self.unconscious.contents),
+                "timestamp": time.time()
+            })
 
 
 if __name__ == "__main__":
