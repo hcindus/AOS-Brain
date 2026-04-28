@@ -1,0 +1,1001 @@
+full_name,first_name,last_name,email,phone,brokerage,metro_area,state,years_experience,transactions_12mo,sales_volume,license_number,license_state,rating,cream_fit_score,priority,source,scraped_at
+Gary Peterson,Gary,Peterson,peterson.gary@realtyonegroup.com,(216) 953-3066,LGI Homes,Oklahoma City,OK,2,9,899832,OK107135,OK,4.7,67,C,realtor_scraper,2026-04-28T07:04:06.114382+00:00
+Robert Johnson,Robert,Johnson,robertj@redfin.com,(970) 931-6289,Nest Seekers,Cincinnati,OH,18,23,2960983,OH983768,OH,4.7,66,B,realtor_scraper,2026-04-28T07:04:06.114441+00:00
+Thomas Davis,Thomas,Davis,davis.thomas@outlook.com,(434) 672-4079,Douglas Elliman,Los Angeles,CA,19,37,5331798,CA426531,CA,4.0,92,A,realtor_scraper,2026-04-28T07:04:06.114465+00:00
+Donna Price,Donna,Price,donna.price@kw.com,(971) 301-2814,Coldwell Banker,Phoenix,AZ,8,14,3686720,AZ331323,AZ,4.7,90,A,realtor_scraper,2026-04-28T07:04:06.114488+00:00
+John Kim,John,Kim,john19@kw.com,(707) 869-1282,D.R. Horton,Memphis,TN,6,25,4616003,TN463406,TN,4.5,67,C,realtor_scraper,2026-04-28T07:04:06.114500+00:00
+Aaron Morris,Aaron,Morris,aaronm@weichert.com,(703) 453-7458,Vylla Home,Colorado Springs,CO,7,13,8758142,CO684375,CO,4.1,94,C,realtor_scraper,2026-04-28T07:04:06.114511+00:00
+Larry Long,Larry,Long,larry.long@outlook.com,(862) 485-5866,Zillow Premier,Seattle,WA,22,38,9306106,WA969142,WA,3.6,86,A,realtor_scraper,2026-04-28T07:04:06.114521+00:00
+Joseph King,Joseph,King,joseph22@sothebysrealty.com,(380) 278-8372,Redfin,Reno,NV,21,49,14634835,NV568821,NV,4.2,76,C,realtor_scraper,2026-04-28T07:04:06.114531+00:00
+Jerry Brooks,Jerry,Brooks,jerry36@realtor.com,(708) 801-4926,eXp Realty,Cleveland,OH,16,13,7475115,OH821204,OH,4.1,66,B,realtor_scraper,2026-04-28T07:04:06.114541+00:00
+Heather White,Heather,White,heather53@hotmail.com,(586) 917-3316,RE/MAX,Jacksonville,FL,11,25,6648447,FL554682,FL,4.9,66,B,realtor_scraper,2026-04-28T07:04:06.114560+00:00
+Stephanie Watson,Stephanie,Watson,stephaniew@berkshirehathawayhs.com,(858) 532-6611,RE/MAX,New York,NY,10,26,2962708,NY929278,NY,5.0,82,A,realtor_scraper,2026-04-28T07:04:06.114582+00:00
+Raymond Watson,Raymond,Watson,raymondw@coldwellbanker.com,(814) 624-3081,Redfin,Chicago,IL,18,11,3815348,IL682673,IL,4.6,84,A,realtor_scraper,2026-04-28T07:04:06.114594+00:00
+Timothy Jackson,Timothy,Jackson,tjackson@remax.net,(713) 897-2417,Nest Seekers,Richmond,VA,15,16,10363440,VA657315,VA,4.8,78,C,realtor_scraper,2026-04-28T07:04:06.114610+00:00
+Nicholas Ruiz,Nicholas,Ruiz,nicholas.ruiz@yahoo.com,(210) 925-7142,Zillow Premier,Las Vegas,NV,5,37,7300823,NV916883,NV,5.0,67,A,realtor_scraper,2026-04-28T07:04:06.114624+00:00
+Jessica Chavez,Jessica,Chavez,jchavez@sothebysrealty.com,(618) 702-2175,Douglas Elliman,Dallas-Fort Worth,TX,21,24,1533898,TX394910,TX,3.7,80,A,realtor_scraper,2026-04-28T07:04:06.114635+00:00
+Brenda Carter,Brenda,Carter,carter.brenda@elliman.com,(715) 790-9628,Beazer Homes,Austin,TX,23,23,6543342,TX886436,TX,4.3,74,A,realtor_scraper,2026-04-28T07:04:06.114645+00:00
+George Kelly,George,Kelly,kelly.george@realtyonegroup.com,(321) 614-1520,HomeSmart,Reno,NV,16,16,12474458,NV478309,NV,4.6,100,C,realtor_scraper,2026-04-28T07:04:06.114654+00:00
+Amanda Collins,Amanda,Collins,amanda.collins@century21.com,(715) 244-4103,Redfin,New Orleans,LA,11,20,3481602,LA698768,LA,3.7,77,C,realtor_scraper,2026-04-28T07:04:06.114664+00:00
+Aaron Williams,Aaron,Williams,williams.aaron@gmail.com,(973) 993-2870,Realty One Group,Kansas City,MO,17,35,5787997,MO175605,MO,3.7,63,B,realtor_scraper,2026-04-28T07:04:06.114674+00:00
+Raymond Robinson,Raymond,Robinson,raymond92@weichert.com,(216) 800-4942,Century 21,Salt Lake City,UT,18,20,12430354,UT160243,UT,4.8,75,B,realtor_scraper,2026-04-28T07:04:06.114683+00:00
+Gregory Alvarez,Gregory,Alvarez,gregory.alvarez@outlook.com,(863) 745-3848,Century Communities,San Antonio,TX,6,37,6764630,TX576411,TX,4.8,77,B,realtor_scraper,2026-04-28T07:04:06.114693+00:00
+Melissa Walker,Melissa,Walker,melissa.walker@berkshirehathawayhs.com,(626) 552-4968,Beazer Homes,Philadelphia,PA,3,6,1208745,PA193720,PA,4.5,78,A,realtor_scraper,2026-04-28T07:04:06.114703+00:00
+Tyler Chavez,Tyler,Chavez,chavez.tyler@gmail.com,(667) 715-1431,Century 21,Colorado Springs,CO,16,32,3224445,CO852206,CO,4.6,78,C,realtor_scraper,2026-04-28T07:04:06.114712+00:00
+Kenneth Nelson,Kenneth,Nelson,kenneth80@redfin.com,(305) 709-8315,Better Homes & Gardens,Nashville,TN,2,3,1824143,TN310928,TN,4.2,70,A,realtor_scraper,2026-04-28T07:04:06.114724+00:00
+Timothy Harris,Timothy,Harris,timothyh@gmail.com,(315) 334-4560,eXp Realty,New Orleans,LA,7,35,2127639,LA823428,LA,4.7,66,C,realtor_scraper,2026-04-28T07:04:06.114733+00:00
+Steven King,Steven,King,king.steven@berkshirehathawayhs.com,(724) 770-9469,Realty One Group,Las Vegas,NV,12,30,3784842,NV100289,NV,4.7,84,A,realtor_scraper,2026-04-28T07:04:06.114742+00:00
+Angela Myers,Angela,Myers,angela.myers@gmail.com,(769) 950-9096,KB Home,Miami,FL,7,41,2565676,FL133663,FL,4.6,93,A,realtor_scraper,2026-04-28T07:04:06.114755+00:00
+Christine Carter,Christine,Carter,carter.christine@exprealty.com,(908) 352-4097,D.R. Horton,Dallas-Fort Worth,TX,6,26,4846984,TX958511,TX,4.6,88,A,realtor_scraper,2026-04-28T07:04:06.114765+00:00
+Dennis Johnson,Dennis,Johnson,johnson.dennis@coldwellbanker.com,(901) 974-7894,Century 21,Jacksonville,FL,24,22,9629559,FL932147,FL,4.4,83,B,realtor_scraper,2026-04-28T07:04:06.114774+00:00
+Laura Long,Laura,Long,laura91@kw.com,(414) 744-3694,Meritage Homes,Dallas-Fort Worth,TX,9,49,11403211,TX721726,TX,4.7,95,A,realtor_scraper,2026-04-28T07:04:06.114782+00:00
+Christopher Sanchez,Christopher,Sanchez,christopher74@redfin.com,(213) 306-6309,CalAtlantic Homes,Riverside,CA,8,43,10419143,CA258298,CA,4.2,100,B,realtor_scraper,2026-04-28T07:04:06.114792+00:00
+Alexander Turner,Alexander,Turner,turner.alexander@elliman.com,(860) 996-5208,ERA,Tampa,FL,5,49,1580437,FL255367,FL,5.0,76,A,realtor_scraper,2026-04-28T07:04:06.114801+00:00
+Brian Brown,Brian,Brown,brian.brown@homesmart.com,(510) 866-1909,ERA,Oklahoma City,OK,12,44,11334873,OK322947,OK,3.9,74,C,realtor_scraper,2026-04-28T07:04:06.114810+00:00
+Carol Young,Carol,Young,carol.young@century21.com,(567) 664-8301,eXp Realty,Milwaukee,WI,14,35,3607873,WI470761,WI,4.7,92,C,realtor_scraper,2026-04-28T07:04:06.114829+00:00
+Benjamin Baker,Benjamin,Baker,benjamin22@coldwellbanker.com,(918) 581-2884,United Real Estate,Phoenix,AZ,12,34,5734080,AZ414968,AZ,4.6,69,A,realtor_scraper,2026-04-28T07:04:06.114838+00:00
+Alexander Morris,Alexander,Morris,alexander.morris@hotmail.com,(413) 730-1025,Pulte Homes,Austin,TX,22,40,10495783,TX122406,TX,4.3,93,A,realtor_scraper,2026-04-28T07:04:06.114847+00:00
+Amanda Roberts,Amanda,Roberts,roberts.amanda@homesmart.com,(267) 282-5642,Pulte Homes,Sacramento,CA,11,26,8092928,CA733036,CA,3.6,86,B,realtor_scraper,2026-04-28T07:04:06.114856+00:00
+George Thomas,George,Thomas,georget@realtor.com,(571) 554-5514,KB Home,San Diego,CA,23,44,8517075,CA634007,CA,4.0,93,A,realtor_scraper,2026-04-28T07:04:06.114865+00:00
+Raymond Gray,Raymond,Gray,raymond43@redfin.com,(806) 804-8940,Toll Brothers,San Diego,CA,23,27,13796808,CA337396,CA,4.6,80,A,realtor_scraper,2026-04-28T07:04:06.114876+00:00
+David Patel,David,Patel,david77@berkshirehathawayhs.com,(573) 969-3756,Lennar,Philadelphia,PA,10,49,9770389,PA699512,PA,4.4,60,A,realtor_scraper,2026-04-28T07:04:06.114885+00:00
+Dorothy Jackson,Dorothy,Jackson,dorothyj@elliman.com,(470) 753-3644,Toll Brothers,Virginia Beach,VA,9,11,12254031,VA616611,VA,4.4,74,C,realtor_scraper,2026-04-28T07:04:06.114894+00:00
+Benjamin Baker,Benjamin,Baker,benjamin13@weichert.com,(270) 558-3332,HomeSmart,Seattle,WA,12,16,13353631,WA991004,WA,4.2,84,A,realtor_scraper,2026-04-28T07:04:06.114903+00:00
+William Nelson,William,Nelson,william.nelson@century21.com,(417) 545-7257,LGI Homes,New York,NY,19,11,4599562,NY396133,NY,4.8,80,A,realtor_scraper,2026-04-28T07:04:06.114911+00:00
+Katherine Wright,Katherine,Wright,wright.katherine@kw.com,(213) 314-1981,Better Homes & Gardens,St. Louis,MO,17,10,9974116,MO418500,MO,3.8,75,B,realtor_scraper,2026-04-28T07:04:06.114923+00:00
+Charles King,Charles,King,charles.king@century21.com,(725) 780-1746,HomeSmart,Orlando,FL,1,5,291346,FL641485,FL,4.3,60,A,realtor_scraper,2026-04-28T07:04:06.114933+00:00
+Gary Morris,Gary,Morris,gary.morris@elliman.com,(631) 433-6207,Nest Seekers,Baltimore,MD,16,40,8681507,MD806332,MD,3.7,73,B,realtor_scraper,2026-04-28T07:04:06.114942+00:00
+Mary Nguyen,Mary,Nguyen,nguyen.mary@compass.com,(936) 963-3848,ERA,Kansas City,MO,9,44,2224108,MO539790,MO,3.8,71,B,realtor_scraper,2026-04-28T07:04:06.114951+00:00
+Shirley Davis,Shirley,Davis,shirleyd@homesmart.com,(769) 888-1368,eXp Realty,Minneapolis,MN,16,17,8365050,MN715895,MN,4.2,82,B,realtor_scraper,2026-04-28T07:04:06.114963+00:00
+Kevin Walker,Kevin,Walker,kevin32@remax.net,(629) 236-4645,Ryan Homes,Baton Rouge,LA,19,29,8918642,LA798466,LA,3.6,78,C,realtor_scraper,2026-04-28T07:04:06.114972+00:00
+Stephen Evans,Stephen,Evans,stephene@redfin.com,(989) 354-4771,Century 21,Memphis,TN,16,23,10052681,TN978879,TN,4.4,100,C,realtor_scraper,2026-04-28T07:04:06.114984+00:00
+Rachel Collins,Rachel,Collins,rachel.collins@century21.com,(312) 309-7765,KB Home,Cleveland,OH,18,34,3431711,OH662522,OH,3.9,84,B,realtor_scraper,2026-04-28T07:04:06.114993+00:00
+James Hill,James,Hill,jhill@coldwellbanker.com,(786) 560-2905,CalAtlantic Homes,Boston,MA,22,15,11686799,MA906046,MA,3.8,84,A,realtor_scraper,2026-04-28T07:04:06.115001+00:00
+Nicholas Hall,Nicholas,Hall,nhall@elliman.com,(440) 333-2755,D.R. Horton,Cincinnati,OH,14,47,4945803,OH245877,OH,4.6,75,B,realtor_scraper,2026-04-28T07:04:06.115010+00:00
+Nicole Johnson,Nicole,Johnson,nicole34@compass.com,(806) 305-2138,United Real Estate,Milwaukee,WI,7,45,8831701,WI300476,WI,3.5,84,C,realtor_scraper,2026-04-28T07:04:06.115023+00:00
+Kimberly Baker,Kimberly,Baker,kimberly.baker@elliman.com,(912) 974-7195,Vylla Home,Philadelphia,PA,24,11,11790877,PA672198,PA,3.6,94,A,realtor_scraper,2026-04-28T07:04:06.115032+00:00
+Jeffrey Bennett,Jeffrey,Bennett,jeffrey41@weichert.com,(561) 818-9211,Pulte Homes,St. Louis,MO,12,46,12245432,MO153384,MO,4.6,93,B,realtor_scraper,2026-04-28T07:04:06.115040+00:00
+Donna Martinez,Donna,Martinez,dmartinez@elliman.com,(952) 647-5775,NVR,Salt Lake City,UT,17,29,5857677,UT877675,UT,3.9,95,B,realtor_scraper,2026-04-28T07:04:06.115049+00:00
+Scott Gray,Scott,Gray,gray.scott@sothebysrealty.com,(760) 394-3030,Toll Brothers,Orlando,FL,1,5,19788,FL140926,FL,4.2,82,A,realtor_scraper,2026-04-28T07:04:06.115065+00:00
+Janet Reyes,Janet,Reyes,janetr@hotmail.com,(936) 287-8757,M/I Homes,Riverside,CA,1,4,364871,CA195173,CA,4.7,62,B,realtor_scraper,2026-04-28T07:04:06.115075+00:00
+Ruth Jones,Ruth,Jones,rjones@kw.com,(480) 770-2797,HomeSmart,Nashville,TN,16,18,12582196,TN517680,TN,4.7,100,A,realtor_scraper,2026-04-28T07:04:06.115084+00:00
+Margaret Hill,Margaret,Hill,margareth@kw.com,(813) 744-4002,Sotheby's,Raleigh,NC,11,29,6350260,NC686767,NC,4.3,76,B,realtor_scraper,2026-04-28T07:04:06.115096+00:00
+Ruth Bennett,Ruth,Bennett,ruth.bennett@realtyonegroup.com,(228) 639-3353,RE/MAX,Albuquerque,NM,1,2,334931,NM112572,NM,4.9,73,C,realtor_scraper,2026-04-28T07:04:06.115105+00:00
+Steven Mendoza,Steven,Mendoza,smendoza@hotmail.com,(209) 358-4302,Nest Seekers,Dallas-Fort Worth,TX,14,43,6516430,TX493016,TX,4.0,67,A,realtor_scraper,2026-04-28T07:04:06.115114+00:00
+Charles Campbell,Charles,Campbell,charles29@century21.com,(603) 770-9979,Century Communities,San Francisco,CA,5,31,10264731,CA951721,CA,4.7,95,A,realtor_scraper,2026-04-28T07:04:06.115126+00:00
+Matthew Nelson,Matthew,Nelson,nelson.matthew@hotmail.com,(310) 439-1577,Better Homes & Gardens,San Diego,CA,17,33,11520254,CA430701,CA,4.3,100,A,realtor_scraper,2026-04-28T07:04:06.115134+00:00
+Charles Wright,Charles,Wright,charles16@elliman.com,(239) 341-3916,Sotheby's,Baton Rouge,LA,6,33,8298741,LA431356,LA,3.5,93,C,realtor_scraper,2026-04-28T07:04:06.115143+00:00
+Aaron Lopez,Aaron,Lopez,aaron.lopez@weichert.com,(570) 440-6777,Tri Pointe Homes,Cleveland,OH,10,39,9834557,OH508067,OH,4.4,87,B,realtor_scraper,2026-04-28T07:04:06.115151+00:00
+Christine Morales,Christine,Morales,cmorales@outlook.com,(458) 818-2567,United Real Estate,Los Angeles,CA,9,23,13605450,CA986773,CA,4.5,100,A,realtor_scraper,2026-04-28T07:04:06.115162+00:00
+Pamela Martinez,Pamela,Martinez,pamela.martinez@homesmart.com,(769) 530-7029,NVR,Baton Rouge,LA,8,29,1941870,LA399465,LA,3.6,95,C,realtor_scraper,2026-04-28T07:04:06.115171+00:00
+Steven Clark,Steven,Clark,steven.clark@kw.com,(626) 509-4205,Century Communities,Riverside,CA,3,10,1432322,CA152410,CA,4.6,95,B,realtor_scraper,2026-04-28T07:04:06.115180+00:00
+Jacob Rivera,Jacob,Rivera,rivera.jacob@century21.com,(858) 569-9935,Lennar,New York,NY,1,4,423012,NY591272,NY,3.7,65,A,realtor_scraper,2026-04-28T07:04:06.115188+00:00
+Donald Clark,Donald,Clark,clark.donald@weichert.com,(914) 656-9667,Meritage Homes,Phoenix,AZ,0,1,161880,AZ560257,AZ,3.8,66,A,realtor_scraper,2026-04-28T07:04:06.115197+00:00
+Paul Baker,Paul,Baker,paul29@remax.net,(520) 434-9661,NVR,Richmond,VA,1,0,144540,VA820418,VA,0.0,43,C,realtor_scraper,2026-04-28T07:04:06.115209+00:00
+Amanda Rivera,Amanda,Rivera,arivera@remax.net,(628) 444-1517,Pulte Homes,Kansas City,MO,25,35,4500051,MO978902,MO,3.8,72,B,realtor_scraper,2026-04-28T07:04:06.115221+00:00
+Deborah Rogers,Deborah,Rogers,deborah9@gmail.com,(276) 288-7319,Century 21,New Orleans,LA,24,40,1680961,LA519811,LA,3.5,78,C,realtor_scraper,2026-04-28T07:04:06.115230+00:00
+Larry Rivera,Larry,Rivera,larry92@redfin.com,(628) 415-8276,Realty One Group,Portland,OR,5,11,6336852,OR381068,OR,4.5,65,B,realtor_scraper,2026-04-28T07:04:06.115239+00:00
+Margaret Gomez,Margaret,Gomez,gomez.margaret@redfin.com,(385) 969-4884,Nest Seekers,Sacramento,CA,7,36,9691678,CA656029,CA,3.8,84,B,realtor_scraper,2026-04-28T07:04:06.115247+00:00
+Michelle Peterson,Michelle,Peterson,michelle80@berkshirehathawayhs.com,(539) 717-9705,Beazer Homes,Columbus,OH,15,19,4736253,OH653640,OH,4.2,87,B,realtor_scraper,2026-04-28T07:04:06.115257+00:00
+Jason Parker,Jason,Parker,jasonp@coldwellbanker.com,(812) 345-9677,CalAtlantic Homes,Seattle,WA,18,43,8590100,WA333792,WA,4.3,69,A,realtor_scraper,2026-04-28T07:04:06.115266+00:00
+Susan Rogers,Susan,Rogers,susan.rogers@kw.com,(702) 345-4609,Nest Seekers,Detroit,MI,17,19,3518418,MI282529,MI,5.0,65,B,realtor_scraper,2026-04-28T07:04:06.115275+00:00
+Robert Garcia,Robert,Garcia,robert.garcia@compass.com,(762) 279-4362,Taylor Morrison,Kansas City,MO,22,25,6105298,MO846461,MO,4.4,64,B,realtor_scraper,2026-04-28T07:04:06.115283+00:00
+Brenda Harris,Brenda,Harris,bharris@compass.com,(979) 843-9929,Pulte Homes,Kansas City,MO,5,41,9580744,MO288218,MO,5.0,88,B,realtor_scraper,2026-04-28T07:04:06.115291+00:00
+Shirley Martinez,Shirley,Martinez,shirley.martinez@redfin.com,(580) 815-8567,NVR,Baltimore,MD,25,28,9930534,MD814387,MD,4.9,76,B,realtor_scraper,2026-04-28T07:04:06.115300+00:00
+Amanda Diaz,Amanda,Diaz,diaz.amanda@sothebysrealty.com,(269) 356-7096,Lennar,Cleveland,OH,2,3,1220431,OH547008,OH,4.5,83,B,realtor_scraper,2026-04-28T07:04:06.115311+00:00
+Matthew Martin,Matthew,Martin,matthew.martin@exprealty.com,(602) 756-5412,Beazer Homes,Columbus,OH,1,5,440571,OH793324,OH,4.3,93,B,realtor_scraper,2026-04-28T07:04:06.115323+00:00
+Timothy Peterson,Timothy,Peterson,timothyp@elliman.com,(520) 870-6542,Coldwell Banker,Salt Lake City,UT,20,29,4132208,UT883570,UT,4.3,93,B,realtor_scraper,2026-04-28T07:04:06.115332+00:00
+John Robinson,John,Robinson,johnr@compass.com,(206) 815-5392,RE/MAX,Minneapolis,MN,22,32,14025496,MN470505,MN,4.2,100,B,realtor_scraper,2026-04-28T07:04:06.115341+00:00
+Maria Diaz,Maria,Diaz,maria.diaz@elliman.com,(608) 225-8496,Nest Seekers,Albuquerque,NM,21,28,8305161,NM904730,NM,4.0,88,C,realtor_scraper,2026-04-28T07:04:06.115349+00:00
+Jeffrey Harris,Jeffrey,Harris,jeffrey70@exprealty.com,(856) 246-4952,CalAtlantic Homes,Milwaukee,WI,10,35,13493162,WI286390,WI,3.9,100,C,realtor_scraper,2026-04-28T07:04:06.115358+00:00
+Donald Ramos,Donald,Ramos,dramos@outlook.com,(216) 413-4712,Century 21,San Antonio,TX,3,4,1076562,TX847255,TX,4.5,63,B,realtor_scraper,2026-04-28T07:04:06.115367+00:00
+Joseph Clark,Joseph,Clark,jclark@homesmart.com,(747) 661-8491,Berkshire Hathaway,Milwaukee,WI,15,40,12387976,WI159128,WI,4.3,88,C,realtor_scraper,2026-04-28T07:04:06.115375+00:00
+Ryan Robinson,Ryan,Robinson,ryan.robinson@kw.com,(651) 552-3715,Taylor Morrison,Oklahoma City,OK,24,39,9131408,OK985333,OK,4.9,82,C,realtor_scraper,2026-04-28T07:04:06.115384+00:00
+Kenneth Stewart,Kenneth,Stewart,kenneth43@kw.com,(570) 691-2057,Ryan Homes,Austin,TX,11,27,11952215,TX696043,TX,4.2,74,A,realtor_scraper,2026-04-28T07:04:06.115392+00:00
+Dennis Wilson,Dennis,Wilson,dennis.wilson@yahoo.com,(903) 918-4072,Toll Brothers,San Jose,CA,11,40,6433257,CA602998,CA,4.5,85,B,realtor_scraper,2026-04-28T07:04:06.115423+00:00
+Jennifer Ramos,Jennifer,Ramos,jenniferr@homesmart.com,(917) 615-6611,eXp Realty,Cleveland,OH,19,41,13099022,OH848925,OH,4.5,72,B,realtor_scraper,2026-04-28T07:04:06.115432+00:00
+Maria Davis,Maria,Davis,mariad@century21.com,(805) 328-2942,Realty One Group,San Diego,CA,15,14,13215326,CA509043,CA,4.0,76,A,realtor_scraper,2026-04-28T07:04:06.115446+00:00
+Patricia Young,Patricia,Young,young.patricia@remax.net,(913) 955-1196,D.R. Horton,Baton Rouge,LA,7,11,11618844,LA649042,LA,4.4,70,C,realtor_scraper,2026-04-28T07:04:06.115455+00:00
+Anthony Ward,Anthony,Ward,anthony25@kw.com,(562) 613-9178,Toll Brothers,Las Vegas,NV,12,34,9974425,NV535443,NV,4.9,95,A,realtor_scraper,2026-04-28T07:04:06.115464+00:00
+Thomas Harris,Thomas,Harris,tharris@kw.com,(906) 707-6223,Century 21,Los Angeles,CA,24,30,5875980,CA422440,CA,3.9,61,A,realtor_scraper,2026-04-28T07:04:06.115473+00:00
+William Wilson,William,Wilson,william.wilson@exprealty.com,(803) 308-6962,Toll Brothers,Milwaukee,WI,1,3,148556,WI566905,WI,4.9,61,C,realtor_scraper,2026-04-28T07:04:06.115481+00:00
+Samuel Robinson,Samuel,Robinson,samuelr@redfin.com,(515) 367-8785,Nest Seekers,Atlanta,GA,5,15,3742278,GA948248,GA,4.0,83,A,realtor_scraper,2026-04-28T07:04:06.115490+00:00
+Ashley Walker,Ashley,Walker,ashley.walker@outlook.com,(615) 371-8058,Vylla Home,Baton Rouge,LA,2,5,1037758,LA513883,LA,4.6,87,C,realtor_scraper,2026-04-28T07:04:06.115498+00:00
+Ruth Flores,Ruth,Flores,ruth48@coldwellbanker.com,(209) 288-2286,Better Homes & Gardens,Portland,OR,3,9,554112,OR850910,OR,5.0,67,B,realtor_scraper,2026-04-28T07:04:06.115507+00:00
+David Bennett,David,Bennett,bennett.david@berkshirehathawayhs.com,(409) 483-3338,LGI Homes,San Diego,CA,11,25,2512462,CA838453,CA,4.9,92,A,realtor_scraper,2026-04-28T07:04:06.115518+00:00
+Michelle Howard,Michelle,Howard,michelleh@sothebysrealty.com,(432) 462-7965,Toll Brothers,Oklahoma City,OK,2,6,809040,OK816957,OK,4.2,60,C,realtor_scraper,2026-04-28T07:04:06.115530+00:00
+Frank Wilson,Frank,Wilson,frank48@berkshirehathawayhs.com,(616) 667-5035,D.R. Horton,Seattle,WA,9,40,9380727,WA243676,WA,4.8,68,A,realtor_scraper,2026-04-28T07:04:06.115539+00:00
+Michael Chavez,Michael,Chavez,michaelc@kw.com,(551) 615-4499,M/I Homes,Boise,ID,2,8,1422461,ID323036,ID,4.3,83,C,realtor_scraper,2026-04-28T07:04:06.115550+00:00
+Gary Brown,Gary,Brown,gary38@coldwellbanker.com,(401) 731-4550,Taylor Morrison,Phoenix,AZ,17,25,11824131,AZ105805,AZ,3.6,100,A,realtor_scraper,2026-04-28T07:04:06.115564+00:00
+Maria Richardson,Maria,Richardson,mrichardson@homesmart.com,(413) 209-1270,Meritage Homes,San Diego,CA,23,47,4890805,CA106719,CA,4.3,62,A,realtor_scraper,2026-04-28T07:04:06.115577+00:00
+Larry Diaz,Larry,Diaz,diaz.larry@weichert.com,(907) 734-6703,The Agency,Sacramento,CA,9,25,3796128,CA862958,CA,3.6,88,B,realtor_scraper,2026-04-28T07:04:06.115592+00:00
+Lisa Jackson,Lisa,Jackson,lisa.jackson@gmail.com,(412) 452-6154,Pulte Homes,San Francisco,CA,4,9,1274606,CA667889,CA,4.9,87,A,realtor_scraper,2026-04-28T07:04:06.115603+00:00
+Diane Castillo,Diane,Castillo,dianec@elliman.com,(267) 912-6518,Better Homes & Gardens,Kansas City,MO,25,28,2093836,MO379451,MO,5.0,69,B,realtor_scraper,2026-04-28T07:04:06.115612+00:00
+Andrew Morris,Andrew,Morris,amorris@gmail.com,(413) 204-2699,Realty One Group,Virginia Beach,VA,17,43,3051808,VA287012,VA,4.7,62,C,realtor_scraper,2026-04-28T07:04:06.115620+00:00
+Cynthia Hall,Cynthia,Hall,chall@realtyonegroup.com,(719) 992-5374,Zillow Premier,San Diego,CA,0,5,496415,CA257241,CA,3.7,92,A,realtor_scraper,2026-04-28T07:04:06.115632+00:00
+Jack Harris,Jack,Harris,jack73@century21.com,(678) 403-1453,Taylor Morrison,Las Vegas,NV,6,12,5748732,NV727915,NV,3.6,64,A,realtor_scraper,2026-04-28T07:04:06.115641+00:00
+Brenda Ortiz,Brenda,Ortiz,brendao@compass.com,(765) 935-8862,Meritage Homes,Philadelphia,PA,1,0,294215,PA563724,PA,0.0,49,A,realtor_scraper,2026-04-28T07:04:06.115649+00:00
+Matthew Diaz,Matthew,Diaz,diaz.matthew@century21.com,(947) 745-7525,Compass,Denver,CO,25,18,12961242,CO102624,CO,4.1,87,A,realtor_scraper,2026-04-28T07:04:06.115658+00:00
+Gregory Evans,Gregory,Evans,evans.gregory@homesmart.com,(541) 474-2931,ERA,St. Louis,MO,2,14,1289720,MO953333,MO,4.4,65,B,realtor_scraper,2026-04-28T07:04:06.115667+00:00
+Tyler Clark,Tyler,Clark,tclark@compass.com,(380) 509-7470,Sotheby's,Cleveland,OH,17,34,12679907,OH257052,OH,4.7,100,B,realtor_scraper,2026-04-28T07:04:06.115676+00:00
+Emily White,Emily,White,ewhite@exprealty.com,(229) 914-1203,LGI Homes,Charlotte,NC,15,30,7494621,NC754853,NC,4.9,72,A,realtor_scraper,2026-04-28T07:04:06.115685+00:00
+Steven Gray,Steven,Gray,sgray@weichert.com,(573) 826-5297,Century Communities,Los Angeles,CA,14,13,14058114,CA809137,CA,5.0,70,A,realtor_scraper,2026-04-28T07:04:06.115694+00:00
+Lisa Sanchez,Lisa,Sanchez,sanchez.lisa@outlook.com,(731) 308-5527,Lennar,Portland,OR,15,31,12534639,OR548161,OR,4.7,78,B,realtor_scraper,2026-04-28T07:04:06.115705+00:00
+Aaron Smith,Aaron,Smith,smith.aaron@century21.com,(508) 385-8128,Redfin,Milwaukee,WI,20,23,10797350,WI276620,WI,4.1,100,C,realtor_scraper,2026-04-28T07:04:06.115714+00:00
+Kevin Gutierrez,Kevin,Gutierrez,gutierrez.kevin@kw.com,(901) 347-2930,Nest Seekers,Miami,FL,21,47,1502844,FL943338,FL,4.7,70,A,realtor_scraper,2026-04-28T07:04:06.115726+00:00
+Laura Davis,Laura,Davis,laura68@yahoo.com,(951) 935-9393,United Real Estate,San Jose,CA,21,50,5247345,CA399103,CA,4.1,79,B,realtor_scraper,2026-04-28T07:04:06.115734+00:00
+Brandon Gomez,Brandon,Gomez,bgomez@realtor.com,(434) 712-7699,eXp Realty,Tampa,FL,18,35,11068376,FL289762,FL,4.8,91,A,realtor_scraper,2026-04-28T07:04:06.115742+00:00
+Heather Hernandez,Heather,Hernandez,heatherh@gmail.com,(505) 339-8435,Weichert,San Antonio,TX,12,36,12169415,TX978418,TX,3.8,99,B,realtor_scraper,2026-04-28T07:04:06.115751+00:00
+Amanda Lee,Amanda,Lee,amandal@elliman.com,(979) 366-1658,Keller Williams,Louisville,KY,25,35,11173635,KY310818,KY,3.7,72,C,realtor_scraper,2026-04-28T07:04:06.115760+00:00
+Joshua Morales,Joshua,Morales,joshua.morales@elliman.com,(219) 208-9641,Sotheby's,Jacksonville,FL,1,0,403928,FL897060,FL,0.0,55,B,realtor_scraper,2026-04-28T07:04:06.115768+00:00
+Mark Cox,Mark,Cox,mark.cox@hotmail.com,(843) 630-8569,Meritage Homes,Los Angeles,CA,22,27,5773216,CA692221,CA,4.1,90,A,realtor_scraper,2026-04-28T07:04:06.115777+00:00
+John Richardson,John,Richardson,johnr@homesmart.com,(714) 371-3242,Compass,Albuquerque,NM,12,29,6824852,NM527214,NM,3.6,79,C,realtor_scraper,2026-04-28T07:04:06.115786+00:00
+Donna Wilson,Donna,Wilson,donna.wilson@realtyonegroup.com,(608) 962-3415,Compass,Seattle,WA,8,27,12084621,WA627306,WA,4.8,79,A,realtor_scraper,2026-04-28T07:04:06.115794+00:00
+Edward Jackson,Edward,Jackson,ejackson@exprealty.com,(217) 545-7028,M/I Homes,Baton Rouge,LA,1,5,488770,LA105103,LA,4.1,79,C,realtor_scraper,2026-04-28T07:04:06.115803+00:00
+Jonathan Reed,Jonathan,Reed,jreed@realtyonegroup.com,(530) 732-8674,Compass,Sacramento,CA,22,33,9342235,CA179016,CA,4.9,81,B,realtor_scraper,2026-04-28T07:04:06.115818+00:00
+Richard Mendoza,Richard,Mendoza,mendoza.richard@yahoo.com,(615) 686-5718,Coldwell Banker,New York,NY,2,13,647410,NY130656,NY,3.6,66,A,realtor_scraper,2026-04-28T07:04:06.115827+00:00
+Larry Thompson,Larry,Thompson,larryt@homesmart.com,(361) 288-1069,Tri Pointe Homes,Dallas-Fort Worth,TX,16,35,14339306,TX416146,TX,4.1,92,A,realtor_scraper,2026-04-28T07:04:06.115835+00:00
+Stephen Reyes,Stephen,Reyes,stephen.reyes@hotmail.com,(608) 427-3460,Realty One Group,Louisville,KY,12,22,13102607,KY261137,KY,3.5,92,C,realtor_scraper,2026-04-28T07:04:06.115843+00:00
+Heather Kelly,Heather,Kelly,heather.kelly@yahoo.com,(831) 587-4267,The Agency,San Diego,CA,12,46,13650739,CA324627,CA,4.5,90,A,realtor_scraper,2026-04-28T07:04:06.115852+00:00
+Margaret King,Margaret,King,margaret.king@century21.com,(919) 515-4645,LGI Homes,Baltimore,MD,12,34,12957177,MD769361,MD,4.6,90,B,realtor_scraper,2026-04-28T07:04:06.115861+00:00
+Kevin Turner,Kevin,Turner,kturner@outlook.com,(660) 876-1894,LGI Homes,Dallas-Fort Worth,TX,0,1,422129,TX509890,TX,4.3,75,A,realtor_scraper,2026-04-28T07:04:06.115869+00:00
+Sharon Bailey,Sharon,Bailey,sharonb@century21.com,(361) 330-6668,Weichert,Chicago,IL,13,39,12593154,IL477717,IL,3.7,90,A,realtor_scraper,2026-04-28T07:04:06.115881+00:00
+Kathleen Cruz,Kathleen,Cruz,kathleenc@exprealty.com,(219) 920-1891,Better Homes & Gardens,Baltimore,MD,5,35,4330693,MD534149,MD,4.4,92,B,realtor_scraper,2026-04-28T07:04:06.115890+00:00
+Lisa Wilson,Lisa,Wilson,lisa.wilson@century21.com,(785) 900-4811,Compass,Riverside,CA,2,10,536004,CA492934,CA,3.6,95,B,realtor_scraper,2026-04-28T07:04:06.115898+00:00
+Gary Cruz,Gary,Cruz,gary.cruz@elliman.com,(817) 894-9656,Vylla Home,Philadelphia,PA,6,28,5480484,PA845658,PA,4.6,89,A,realtor_scraper,2026-04-28T07:04:06.115909+00:00
+Nicholas Reyes,Nicholas,Reyes,nicholas.reyes@elliman.com,(802) 400-8456,Realty One Group,Houston,TX,1,5,232733,TX884285,TX,4.9,63,A,realtor_scraper,2026-04-28T07:04:06.115918+00:00
+Heather Diaz,Heather,Diaz,heather74@realtor.com,(213) 788-2989,Pulte Homes,Reno,NV,16,35,6547777,NV644862,NV,4.7,78,C,realtor_scraper,2026-04-28T07:04:06.115929+00:00
+Sarah Roberts,Sarah,Roberts,roberts.sarah@realtor.com,(586) 927-5027,M/I Homes,San Antonio,TX,4,10,887619,TX903884,TX,3.8,67,B,realtor_scraper,2026-04-28T07:04:06.115938+00:00
+Alexander Scott,Alexander,Scott,alexander25@redfin.com,(678) 620-7495,Meritage Homes,Columbus,OH,24,27,12758409,OH468117,OH,4.9,79,B,realtor_scraper,2026-04-28T07:04:06.115946+00:00
+Charles Nelson,Charles,Nelson,charlesn@sothebysrealty.com,(928) 912-6956,Nest Seekers,Tampa,FL,19,42,1786495,FL561223,FL,3.7,93,A,realtor_scraper,2026-04-28T07:04:06.115955+00:00
+Mary Clark,Mary,Clark,mary.clark@century21.com,(252) 701-8004,D.R. Horton,Riverside,CA,0,4,165385,CA461532,CA,3.7,78,B,realtor_scraper,2026-04-28T07:04:06.115963+00:00
+Jonathan Hall,Jonathan,Hall,jhall@hotmail.com,(318) 333-8185,Nest Seekers,Las Vegas,NV,17,41,4966153,NV460429,NV,4.0,79,A,realtor_scraper,2026-04-28T07:04:06.115972+00:00
+Emma Cruz,Emma,Cruz,cruz.emma@redfin.com,(210) 858-3145,Taylor Morrison,Portland,OR,18,46,13599009,OR129747,OR,3.9,84,B,realtor_scraper,2026-04-28T07:04:06.115980+00:00
+Dorothy Williams,Dorothy,Williams,dorothy.williams@coldwellbanker.com,(812) 274-5779,Coldwell Banker,Baltimore,MD,16,45,12434690,MD859942,MD,4.0,75,B,realtor_scraper,2026-04-28T07:04:06.115989+00:00
+Cynthia Johnson,Cynthia,Johnson,cjohnson@century21.com,(920) 719-3072,eXp Realty,Reno,NV,12,26,13326037,NV449695,NV,3.6,78,C,realtor_scraper,2026-04-28T07:04:06.116000+00:00
+Sharon Sanders,Sharon,Sanders,sharon17@remax.net,(570) 870-5190,Pulte Homes,Tucson,AZ,15,48,4043912,AZ241802,AZ,4.2,85,C,realtor_scraper,2026-04-28T07:04:06.116009+00:00
+Scott White,Scott,White,scottw@exprealty.com,(347) 400-8344,eXp Realty,Columbus,OH,20,36,7448475,OH233554,OH,4.9,67,B,realtor_scraper,2026-04-28T07:04:06.116017+00:00
+Jack Diaz,Jack,Diaz,diaz.jack@outlook.com,(732) 517-9582,Weichert,San Antonio,TX,10,24,6789252,TX530778,TX,4.5,64,B,realtor_scraper,2026-04-28T07:04:06.116025+00:00
+Raymond Ross,Raymond,Ross,ross.raymond@century21.com,(573) 835-9912,eXp Realty,Charlotte,NC,19,50,3607216,NC353487,NC,4.1,88,A,realtor_scraper,2026-04-28T07:04:06.116038+00:00
+William Ramos,William,Ramos,wramos@outlook.com,(734) 565-5769,Douglas Elliman,Tucson,AZ,19,33,2586811,AZ314044,AZ,3.7,67,C,realtor_scraper,2026-04-28T07:04:06.116046+00:00
+Betty Alvarez,Betty,Alvarez,betty.alvarez@kw.com,(725) 474-6721,Nest Seekers,Cleveland,OH,23,31,14053513,OH407002,OH,3.5,73,B,realtor_scraper,2026-04-28T07:04:06.116063+00:00
+Elizabeth Robinson,Elizabeth,Robinson,elizabeth55@exprealty.com,(816) 724-7913,Beazer Homes,Cincinnati,OH,1,3,313415,OH374942,OH,3.8,74,B,realtor_scraper,2026-04-28T07:04:06.116072+00:00
+Donald Roberts,Donald,Roberts,donald74@century21.com,(667) 664-6809,KB Home,Los Angeles,CA,6,40,5607036,CA542374,CA,3.8,68,A,realtor_scraper,2026-04-28T07:04:06.116081+00:00
+Katherine Morgan,Katherine,Morgan,katherine81@redfin.com,(608) 393-3743,Taylor Morrison,Boise,ID,22,32,9058335,ID271132,ID,4.0,72,C,realtor_scraper,2026-04-28T07:04:06.116089+00:00
+William White,William,White,william.white@sothebysrealty.com,(432) 287-9440,Beazer Homes,Las Vegas,NV,23,12,9777935,NV561609,NV,4.2,71,A,realtor_scraper,2026-04-28T07:04:06.116103+00:00
+Brenda Torres,Brenda,Torres,torres.brenda@sothebysrealty.com,(207) 637-2969,Meritage Homes,Dallas-Fort Worth,TX,15,30,7640779,TX166401,TX,4.4,61,A,realtor_scraper,2026-04-28T07:04:06.116112+00:00
+Carol Alvarez,Carol,Alvarez,alvarez.carol@hotmail.com,(918) 352-5267,Zillow Premier,Kansas City,MO,17,13,5598120,MO487624,MO,4.5,80,B,realtor_scraper,2026-04-28T07:04:06.116120+00:00
+Eric Mendoza,Eric,Mendoza,eric.mendoza@yahoo.com,(253) 892-4869,Weichert,Cincinnati,OH,9,26,13242166,OH584433,OH,4.8,100,B,realtor_scraper,2026-04-28T07:04:06.116129+00:00
+Robert King,Robert,King,robert11@realtyonegroup.com,(337) 247-7219,Meritage Homes,Portland,OR,12,23,13405873,OR386795,OR,3.9,100,B,realtor_scraper,2026-04-28T07:04:06.116137+00:00
+Donna Scott,Donna,Scott,donna90@realtyonegroup.com,(435) 765-9712,Century Communities,Austin,TX,7,15,11222944,TX583167,TX,3.7,73,A,realtor_scraper,2026-04-28T07:04:06.116145+00:00
+Nicole Chavez,Nicole,Chavez,nicole.chavez@yahoo.com,(662) 601-8208,United Real Estate,Atlanta,GA,6,33,13373245,GA191541,GA,4.8,90,A,realtor_scraper,2026-04-28T07:04:06.116153+00:00
+James Myers,James,Myers,james25@gmail.com,(308) 791-5241,Pulte Homes,Charlotte,NC,7,29,3781645,NC436874,NC,4.3,83,A,realtor_scraper,2026-04-28T07:04:06.116165+00:00
+Helen Ross,Helen,Ross,helen.ross@compass.com,(762) 546-3349,HomeSmart,Oklahoma City,OK,2,3,1327131,OK208079,OK,4.4,63,C,realtor_scraper,2026-04-28T07:04:06.116174+00:00
+Dorothy Walker,Dorothy,Walker,dorothyw@weichert.com,(715) 872-4143,Sotheby's,Charlotte,NC,6,44,4008869,NC740593,NC,4.8,77,A,realtor_scraper,2026-04-28T07:04:06.116183+00:00
+Charles Wood,Charles,Wood,cwood@realtor.com,(562) 632-1548,ERA,Tampa,FL,15,48,5786056,FL531258,FL,4.9,62,A,realtor_scraper,2026-04-28T07:04:06.116194+00:00
+Linda Nelson,Linda,Nelson,linda.nelson@compass.com,(401) 858-5743,M/I Homes,St. Louis,MO,18,37,11326799,MO622921,MO,4.2,74,B,realtor_scraper,2026-04-28T07:04:06.116202+00:00
+Steven Gomez,Steven,Gomez,steveng@redfin.com,(501) 664-8238,Zillow Premier,Los Angeles,CA,9,32,14191204,CA183590,CA,4.0,80,A,realtor_scraper,2026-04-28T07:04:06.116213+00:00
+Matthew Brooks,Matthew,Brooks,matthewb@berkshirehathawayhs.com,(714) 509-7514,Zillow Premier,Boise,ID,8,38,1536964,ID179724,ID,4.5,77,C,realtor_scraper,2026-04-28T07:04:06.116222+00:00
+Daniel Ortiz,Daniel,Ortiz,ortiz.daniel@berkshirehathawayhs.com,(906) 563-3938,Beazer Homes,Orlando,FL,9,28,8536346,FL277818,FL,3.7,65,A,realtor_scraper,2026-04-28T07:04:06.116234+00:00
+Alexander Collins,Alexander,Collins,collins.alexander@gmail.com,(508) 617-7714,Coldwell Banker,Cincinnati,OH,13,14,7954846,OH576317,OH,4.7,68,B,realtor_scraper,2026-04-28T07:04:06.116243+00:00
+Patrick Stewart,Patrick,Stewart,pstewart@weichert.com,(512) 409-5107,eXp Realty,Atlanta,GA,17,50,5497653,GA617717,GA,4.6,89,A,realtor_scraper,2026-04-28T07:04:06.116252+00:00
+Raymond Allen,Raymond,Allen,raymond.allen@berkshirehathawayhs.com,(859) 923-1105,LGI Homes,San Jose,CA,16,11,11826110,CA822158,CA,4.5,72,B,realtor_scraper,2026-04-28T07:04:06.116261+00:00
+Stephen Sanchez,Stephen,Sanchez,stephen.sanchez@exprealty.com,(408) 294-7262,NVR,Charlotte,NC,12,10,3692084,NC730799,NC,3.5,88,A,realtor_scraper,2026-04-28T07:04:06.116269+00:00
+Christopher Gonzalez,Christopher,Gonzalez,christopher.gonzalez@outlook.com,(701) 369-6591,eXp Realty,Nashville,TN,23,49,8143903,TN107069,TN,4.7,68,A,realtor_scraper,2026-04-28T07:04:06.116281+00:00
+Thomas Harris,Thomas,Harris,thomas74@redfin.com,(802) 573-7261,Tri Pointe Homes,Baton Rouge,LA,3,6,1798840,LA860889,LA,3.7,79,C,realtor_scraper,2026-04-28T07:04:06.116293+00:00
+Mark Watson,Mark,Watson,mwatson@sothebysrealty.com,(914) 750-2871,eXp Realty,Philadelphia,PA,9,33,11465757,PA913812,PA,3.9,79,A,realtor_scraper,2026-04-28T07:04:06.116311+00:00
+Sarah Hernandez,Sarah,Hernandez,sarah.hernandez@realtor.com,(703) 567-8991,M/I Homes,Orlando,FL,8,49,9245941,FL303899,FL,4.5,77,A,realtor_scraper,2026-04-28T07:04:06.116330+00:00
+Emma Nelson,Emma,Nelson,emma.nelson@exprealty.com,(205) 279-8313,RE/MAX,Virginia Beach,VA,7,33,7323640,VA941344,VA,3.9,93,C,realtor_scraper,2026-04-28T07:04:06.116344+00:00
+Rachel Murphy,Rachel,Murphy,rachel.murphy@century21.com,(502) 233-9793,Ryan Homes,Salt Lake City,UT,11,14,3511089,UT540626,UT,4.8,82,B,realtor_scraper,2026-04-28T07:04:06.116356+00:00
+Joshua Taylor,Joshua,Taylor,jtaylor@gmail.com,(815) 301-4587,eXp Realty,Phoenix,AZ,14,22,3380595,AZ730018,AZ,3.6,74,A,realtor_scraper,2026-04-28T07:04:06.116368+00:00
+Kathleen Morales,Kathleen,Morales,morales.kathleen@gmail.com,(845) 945-2145,eXp Realty,Boston,MA,1,2,434554,MA938599,MA,4.4,66,A,realtor_scraper,2026-04-28T07:04:06.116380+00:00
+Ashley Taylor,Ashley,Taylor,ashleyt@homesmart.com,(757) 764-4534,Toll Brothers,Boston,MA,18,20,5593707,MA100634,MA,3.5,74,A,realtor_scraper,2026-04-28T07:04:06.116391+00:00
+Donna Williams,Donna,Williams,williams.donna@redfin.com,(706) 842-7467,Taylor Morrison,San Diego,CA,14,17,3335701,CA759808,CA,4.1,82,A,realtor_scraper,2026-04-28T07:04:06.116452+00:00
+Aaron Long,Aaron,Long,aaronl@exprealty.com,(817) 783-7688,Nest Seekers,Cleveland,OH,15,18,1533758,OH324947,OH,3.8,64,B,realtor_scraper,2026-04-28T07:04:06.116462+00:00
+George Anderson,George,Anderson,georgea@compass.com,(361) 771-1167,M/I Homes,Houston,TX,11,35,9051946,TX183836,TX,4.8,85,A,realtor_scraper,2026-04-28T07:04:06.116478+00:00
+Paul Sanchez,Paul,Sanchez,paul2@elliman.com,(479) 402-8011,Zillow Premier,San Francisco,CA,10,35,9463705,CA877733,CA,4.8,76,A,realtor_scraper,2026-04-28T07:04:06.116490+00:00
+Jason Cox,Jason,Cox,jason61@elliman.com,(405) 515-3990,Better Homes & Gardens,Kansas City,MO,2,13,1612471,MO824618,MO,5.0,87,B,realtor_scraper,2026-04-28T07:04:06.116499+00:00
+Justin Long,Justin,Long,jlong@realtyonegroup.com,(406) 470-8454,Better Homes & Gardens,Denver,CO,14,48,7324975,CO793880,CO,5.0,95,A,realtor_scraper,2026-04-28T07:04:06.116508+00:00
+Daniel Martin,Daniel,Martin,martin.daniel@exprealty.com,(734) 851-2331,M/I Homes,Salt Lake City,UT,14,38,6354083,UT571768,UT,4.8,67,B,realtor_scraper,2026-04-28T07:04:06.116517+00:00
+Sandra Ramos,Sandra,Ramos,sramos@coldwellbanker.com,(252) 863-1612,Berkshire Hathaway,Cleveland,OH,6,45,5402607,OH437279,OH,4.0,79,B,realtor_scraper,2026-04-28T07:04:06.116526+00:00
+Paul Murphy,Paul,Murphy,paul84@hotmail.com,(912) 437-2876,Weichert,Boise,ID,21,45,4425917,ID832648,ID,4.0,71,C,realtor_scraper,2026-04-28T07:04:06.116535+00:00
+Jessica Morgan,Jessica,Morgan,jessica.morgan@compass.com,(203) 768-6490,Weichert,Boston,MA,6,18,11295655,MA782536,MA,4.6,96,A,realtor_scraper,2026-04-28T07:04:06.116545+00:00
+Alexander Roberts,Alexander,Roberts,alexanderr@elliman.com,(872) 286-3932,Realty One Group,Memphis,TN,6,38,10302364,TN610031,TN,4.0,70,C,realtor_scraper,2026-04-28T07:04:06.116567+00:00
+William Ross,William,Ross,williamr@hotmail.com,(959) 482-2878,Century Communities,Seattle,WA,13,15,12892122,WA740666,WA,4.6,93,A,realtor_scraper,2026-04-28T07:04:06.116586+00:00
+Robert Torres,Robert,Torres,torres.robert@yahoo.com,(956) 761-1401,Taylor Morrison,Oklahoma City,OK,9,37,3092605,OK386139,OK,4.8,64,C,realtor_scraper,2026-04-28T07:04:06.116607+00:00
+Pamela Richardson,Pamela,Richardson,pamelar@sothebysrealty.com,(323) 955-3104,Beazer Homes,Minneapolis,MN,16,16,13763181,MN419329,MN,4.1,73,B,realtor_scraper,2026-04-28T07:04:06.116620+00:00
+Ruth Cook,Ruth,Cook,ruthc@century21.com,(202) 663-4225,Vylla Home,San Diego,CA,14,10,2435744,CA858866,CA,4.7,78,A,realtor_scraper,2026-04-28T07:04:06.116640+00:00
+Kenneth Scott,Kenneth,Scott,kenneths@outlook.com,(478) 235-8150,Century Communities,Cincinnati,OH,10,37,13051359,OH370910,OH,3.8,95,B,realtor_scraper,2026-04-28T07:04:06.116650+00:00
+Brian Young,Brian,Young,byoung@sothebysrealty.com,(740) 835-3427,Keller Williams,Milwaukee,WI,13,19,7981782,WI617733,WI,4.5,88,C,realtor_scraper,2026-04-28T07:04:06.116660+00:00
+Kevin Taylor,Kevin,Taylor,kevin95@homesmart.com,(516) 744-4987,Beazer Homes,Cleveland,OH,16,43,9624951,OH914827,OH,3.7,80,B,realtor_scraper,2026-04-28T07:04:06.116669+00:00
+Daniel Bailey,Daniel,Bailey,daniel.bailey@century21.com,(559) 569-1344,Keller Williams,Indianapolis,IN,9,38,12506703,IN299664,IN,4.9,93,B,realtor_scraper,2026-04-28T07:04:06.116682+00:00
+Benjamin Johnson,Benjamin,Johnson,benjamin.johnson@remax.net,(272) 222-4739,The Agency,Seattle,WA,0,3,78511,WA400103,WA,4.6,92,A,realtor_scraper,2026-04-28T07:04:06.116701+00:00
+Gary Hughes,Gary,Hughes,gary.hughes@realtyonegroup.com,(510) 473-1233,NVR,Memphis,TN,24,43,10205418,TN785778,TN,4.5,72,C,realtor_scraper,2026-04-28T07:04:06.116721+00:00
+Laura Bailey,Laura,Bailey,bailey.laura@elliman.com,(719) 453-2146,Century 21,Milwaukee,WI,23,10,3039219,WI334345,WI,4.3,65,C,realtor_scraper,2026-04-28T07:04:06.116735+00:00
+Patricia Reed,Patricia,Reed,reed.patricia@gmail.com,(501) 239-2271,Berkshire Hathaway,Virginia Beach,VA,10,47,11344923,VA916180,VA,3.6,78,C,realtor_scraper,2026-04-28T07:04:06.116755+00:00
+Deborah Hill,Deborah,Hill,hill.deborah@coldwellbanker.com,(510) 743-2673,LGI Homes,Denver,CO,22,10,5536306,CO270708,CO,4.6,95,A,realtor_scraper,2026-04-28T07:04:06.116780+00:00
+Lisa Lopez,Lisa,Lopez,lisa70@redfin.com,(276) 698-8219,Weichert,New York,NY,19,37,11358960,NY197243,NY,4.6,100,A,realtor_scraper,2026-04-28T07:04:06.116796+00:00
+Debra Baker,Debra,Baker,debra12@exprealty.com,(217) 914-8148,Nest Seekers,San Antonio,TX,6,24,7643650,TX189691,TX,4.2,67,B,realtor_scraper,2026-04-28T07:04:06.116810+00:00
+Emma Ross,Emma,Ross,emmar@coldwellbanker.com,(432) 341-9194,Tri Pointe Homes,Atlanta,GA,25,45,3004437,GA238963,GA,4.7,89,A,realtor_scraper,2026-04-28T07:04:06.116827+00:00
+Andrew Cox,Andrew,Cox,andrewc@yahoo.com,(631) 951-4719,Coldwell Banker,Detroit,MI,0,2,327810,MI334936,MI,4.2,53,B,realtor_scraper,2026-04-28T07:04:06.116838+00:00
+John Hill,John,Hill,hill.john@kw.com,(312) 927-2757,CalAtlantic Homes,Chicago,IL,0,1,61946,IL220552,IL,4.7,40,A,realtor_scraper,2026-04-28T07:04:06.116848+00:00
+Nancy Ortiz,Nancy,Ortiz,nortiz@yahoo.com,(432) 809-6495,Taylor Morrison,Baton Rouge,LA,20,36,8431599,LA749944,LA,4.9,89,C,realtor_scraper,2026-04-28T07:04:06.116859+00:00
+Ashley Young,Ashley,Young,ayoung@redfin.com,(254) 865-1310,CalAtlantic Homes,Baton Rouge,LA,15,27,5446135,LA757186,LA,3.6,94,C,realtor_scraper,2026-04-28T07:04:06.116868+00:00
+Gary Scott,Gary,Scott,gary.scott@weichert.com,(262) 748-3739,Better Homes & Gardens,Portland,OR,8,20,6873307,OR122710,OR,3.9,91,B,realtor_scraper,2026-04-28T07:04:06.116877+00:00
+Laura Clark,Laura,Clark,laurac@compass.com,(804) 821-4516,Vylla Home,Cincinnati,OH,11,16,3915233,OH821400,OH,4.5,95,B,realtor_scraper,2026-04-28T07:04:06.116889+00:00
+Scott Jackson,Scott,Jackson,scott96@yahoo.com,(610) 596-9144,Better Homes & Gardens,Salt Lake City,UT,22,10,8794917,UT349698,UT,4.3,95,B,realtor_scraper,2026-04-28T07:04:06.116898+00:00
+Robert Torres,Robert,Torres,rtorres@century21.com,(443) 486-8739,RE/MAX,Salt Lake City,UT,1,1,230315,UT620005,UT,4.9,74,B,realtor_scraper,2026-04-28T07:04:06.116906+00:00
+Mark Brooks,Mark,Brooks,mbrooks@homesmart.com,(646) 680-3864,Berkshire Hathaway,Orlando,FL,11,28,1919797,FL508514,FL,4.3,64,A,realtor_scraper,2026-04-28T07:04:06.116915+00:00
+Joshua Kim,Joshua,Kim,joshua.kim@redfin.com,(720) 809-5619,Lennar,Tucson,AZ,2,7,1300516,AZ978107,AZ,3.6,90,C,realtor_scraper,2026-04-28T07:04:06.116924+00:00
+Catherine Long,Catherine,Long,long.catherine@remax.net,(956) 977-4965,eXp Realty,Raleigh,NC,23,50,10533408,NC944198,NC,3.8,75,B,realtor_scraper,2026-04-28T07:04:06.116939+00:00
+Ronald Cruz,Ronald,Cruz,cruz.ronald@coldwellbanker.com,(502) 729-1123,Century 21,Memphis,TN,23,45,12801830,TN277097,TN,4.4,91,C,realtor_scraper,2026-04-28T07:04:06.116948+00:00
+Timothy Roberts,Timothy,Roberts,roberts.timothy@berkshirehathawayhs.com,(859) 741-7642,Better Homes & Gardens,Milwaukee,WI,13,40,10768353,WI903953,WI,4.2,92,C,realtor_scraper,2026-04-28T07:04:06.116957+00:00
+Christopher Ruiz,Christopher,Ruiz,christopherr@gmail.com,(540) 757-1449,CalAtlantic Homes,Jacksonville,FL,23,39,12014629,FL218937,FL,3.6,100,B,realtor_scraper,2026-04-28T07:04:06.116966+00:00
+Katherine Moore,Katherine,Moore,kmoore@berkshirehathawayhs.com,(563) 518-2814,KB Home,Detroit,MI,8,33,3068330,MI997321,MI,3.8,89,B,realtor_scraper,2026-04-28T07:04:06.116974+00:00
+Jason Wilson,Jason,Wilson,jasonw@yahoo.com,(684) 720-9860,Ryan Homes,Columbus,OH,17,25,13831962,OH895945,OH,4.5,70,B,realtor_scraper,2026-04-28T07:04:06.116986+00:00
+Donald Price,Donald,Price,dprice@elliman.com,(435) 643-5980,Coldwell Banker,Phoenix,AZ,20,23,4163873,AZ332745,AZ,4.7,72,A,realtor_scraper,2026-04-28T07:04:06.116995+00:00
+George Torres,George,Torres,gtorres@remax.net,(469) 706-8178,Lennar,Atlanta,GA,20,35,8792145,GA914506,GA,4.9,88,A,realtor_scraper,2026-04-28T07:04:06.117007+00:00
+Laura Phillips,Laura,Phillips,phillips.laura@realtor.com,(619) 818-8984,M/I Homes,Phoenix,AZ,16,40,12365905,AZ237838,AZ,4.3,76,A,realtor_scraper,2026-04-28T07:04:06.117017+00:00
+Susan Anderson,Susan,Anderson,sanderson@exprealty.com,(430) 507-7368,Taylor Morrison,Seattle,WA,22,47,7910807,WA605576,WA,5.0,93,A,realtor_scraper,2026-04-28T07:04:06.117029+00:00
+Mark Hall,Mark,Hall,mark.hall@century21.com,(661) 366-1309,Century 21,Chicago,IL,11,31,10400235,IL234886,IL,3.8,100,A,realtor_scraper,2026-04-28T07:04:06.117050+00:00
+Nancy Phillips,Nancy,Phillips,nancy.phillips@outlook.com,(619) 551-8019,Vylla Home,Philadelphia,PA,13,43,13128905,PA709133,PA,3.9,100,A,realtor_scraper,2026-04-28T07:04:06.117083+00:00
+Nancy Johnson,Nancy,Johnson,nancy8@redfin.com,(562) 985-7529,CalAtlantic Homes,Colorado Springs,CO,24,15,2133870,CO745250,CO,4.5,76,C,realtor_scraper,2026-04-28T07:04:06.117098+00:00
+Rachel Anderson,Rachel,Anderson,rachel.anderson@sothebysrealty.com,(830) 492-7850,Beazer Homes,San Diego,CA,13,33,9469165,CA587961,CA,5.0,72,A,realtor_scraper,2026-04-28T07:04:06.117114+00:00
+Brenda Mendoza,Brenda,Mendoza,bmendoza@exprealty.com,(318) 901-8421,ERA,Oklahoma City,OK,5,19,14099006,OK758087,OK,4.1,90,C,realtor_scraper,2026-04-28T07:04:06.117126+00:00
+Melissa Perez,Melissa,Perez,melissa.perez@yahoo.com,(737) 625-4492,Coldwell Banker,Cincinnati,OH,10,19,7136928,OH480041,OH,3.5,61,B,realtor_scraper,2026-04-28T07:04:06.117141+00:00
+Melissa Scott,Melissa,Scott,melissa.scott@realtor.com,(947) 331-8966,LGI Homes,Tampa,FL,17,43,10368806,FL476128,FL,4.1,73,A,realtor_scraper,2026-04-28T07:04:06.117153+00:00
+James Wood,James,Wood,wood.james@elliman.com,(504) 331-4392,ERA,Las Vegas,NV,8,21,4986383,NV155082,NV,4.6,93,A,realtor_scraper,2026-04-28T07:04:06.117167+00:00
+Donna Morgan,Donna,Morgan,donnam@weichert.com,(425) 858-6879,Nest Seekers,Philadelphia,PA,7,48,6326760,PA563713,PA,3.8,69,A,realtor_scraper,2026-04-28T07:04:06.117180+00:00
+Mark Murphy,Mark,Murphy,mark.murphy@gmail.com,(607) 889-8945,HomeSmart,Reno,NV,5,35,12638194,NV865885,NV,4.1,79,C,realtor_scraper,2026-04-28T07:04:06.117190+00:00
+Christopher Torres,Christopher,Torres,ctorres@realtyonegroup.com,(757) 313-5238,Ryan Homes,Raleigh,NC,3,10,1263412,NC206729,NC,4.6,87,B,realtor_scraper,2026-04-28T07:04:06.117200+00:00
+David Brooks,David,Brooks,david26@realtyonegroup.com,(913) 655-5494,Beazer Homes,New York,NY,4,3,1531450,NY429261,NY,4.5,78,A,realtor_scraper,2026-04-28T07:04:06.117209+00:00
+Barbara King,Barbara,King,barbara96@elliman.com,(973) 401-6006,Pulte Homes,St. Louis,MO,8,27,11250185,MO270753,MO,4.3,85,B,realtor_scraper,2026-04-28T07:04:06.117219+00:00
+Amy Mitchell,Amy,Mitchell,mitchell.amy@century21.com,(269) 501-8637,Better Homes & Gardens,Salt Lake City,UT,7,25,7251895,UT291669,UT,3.6,78,B,realtor_scraper,2026-04-28T07:04:06.117228+00:00
+Margaret Reyes,Margaret,Reyes,margaret.reyes@realtor.com,(828) 788-2810,KB Home,Portland,OR,3,14,1968216,OR246068,OR,4.9,67,B,realtor_scraper,2026-04-28T07:04:06.117237+00:00
+Catherine Nelson,Catherine,Nelson,cnelson@sothebysrealty.com,(267) 679-4935,D.R. Horton,Cleveland,OH,2,13,909740,OH147001,OH,3.9,71,B,realtor_scraper,2026-04-28T07:04:06.117250+00:00
+Charles Baker,Charles,Baker,charles29@elliman.com,(732) 317-7277,Ryan Homes,New Orleans,LA,5,19,6558436,LA121236,LA,4.2,93,C,realtor_scraper,2026-04-28T07:04:06.117262+00:00
+Stephanie Morris,Stephanie,Morris,morris.stephanie@elliman.com,(830) 482-1579,Keller Williams,Jacksonville,FL,17,22,13011140,FL462106,FL,3.5,100,B,realtor_scraper,2026-04-28T07:04:06.117271+00:00
+Catherine Williams,Catherine,Williams,cwilliams@redfin.com,(843) 201-2564,CalAtlantic Homes,Riverside,CA,10,41,9331769,CA794223,CA,4.3,72,B,realtor_scraper,2026-04-28T07:04:06.117280+00:00
+Andrew Morales,Andrew,Morales,amorales@sothebysrealty.com,(214) 500-2110,Redfin,Cincinnati,OH,8,30,9574187,OH522290,OH,3.6,68,B,realtor_scraper,2026-04-28T07:04:06.117289+00:00
+Jack Walker,Jack,Walker,jack.walker@redfin.com,(703) 407-5427,Sotheby's,San Jose,CA,9,20,3628938,CA870358,CA,4.4,67,B,realtor_scraper,2026-04-28T07:04:06.117297+00:00
+Sandra Lee,Sandra,Lee,lee.sandra@redfin.com,(970) 593-9228,Meritage Homes,Riverside,CA,15,24,7243798,CA514682,CA,4.3,71,B,realtor_scraper,2026-04-28T07:04:06.117307+00:00
+Donald Parker,Donald,Parker,donald.parker@realtyonegroup.com,(628) 953-1256,Tri Pointe Homes,Charlotte,NC,8,10,3275073,NC435853,NC,4.0,93,A,realtor_scraper,2026-04-28T07:04:06.117316+00:00
+Katherine Sanchez,Katherine,Sanchez,katherine.sanchez@outlook.com,(878) 743-5919,Douglas Elliman,San Jose,CA,18,42,8298518,CA732772,CA,3.5,61,B,realtor_scraper,2026-04-28T07:04:06.117324+00:00
+Matthew Jones,Matthew,Jones,matthewj@compass.com,(220) 366-8734,Weichert,Boston,MA,19,31,12332956,MA918556,MA,4.9,74,A,realtor_scraper,2026-04-28T07:04:06.117333+00:00
+Timothy Phillips,Timothy,Phillips,phillips.timothy@elliman.com,(843) 608-1370,M/I Homes,Boise,ID,19,23,7699888,ID592975,ID,4.0,65,C,realtor_scraper,2026-04-28T07:04:06.117345+00:00
+Donald Wood,Donald,Wood,donald82@homesmart.com,(941) 458-3257,Weichert,Columbus,OH,19,42,6882556,OH566832,OH,5.0,93,B,realtor_scraper,2026-04-28T07:04:06.117357+00:00
+Gary Rivera,Gary,Rivera,gary.rivera@homesmart.com,(539) 853-9558,Taylor Morrison,San Jose,CA,17,19,2075505,CA443497,CA,4.0,70,B,realtor_scraper,2026-04-28T07:04:06.117377+00:00
+Laura Nelson,Laura,Nelson,lauran@realtyonegroup.com,(682) 492-7047,Vylla Home,San Antonio,TX,18,47,7685073,TX357829,TX,3.6,72,B,realtor_scraper,2026-04-28T07:04:06.117393+00:00
+William Turner,William,Turner,williamt@exprealty.com,(712) 666-7119,Weichert,Houston,TX,7,28,6592504,TX917020,TX,4.8,65,A,realtor_scraper,2026-04-28T07:04:06.117957+00:00
+Daniel Gonzalez,Daniel,Gonzalez,gonzalez.daniel@redfin.com,(774) 635-3991,Weichert,San Francisco,CA,0,2,63140,CA354596,CA,3.9,40,A,realtor_scraper,2026-04-28T07:04:06.117974+00:00
+Jerry Robinson,Jerry,Robinson,robinson.jerry@hotmail.com,(878) 756-4475,Century Communities,Houston,TX,14,42,1940797,TX404085,TX,5.0,93,A,realtor_scraper,2026-04-28T07:04:06.117986+00:00
+Rebecca Peterson,Rebecca,Peterson,rpeterson@elliman.com,(309) 232-5072,Beazer Homes,Portland,OR,24,17,11226990,OR128032,OR,4.0,83,B,realtor_scraper,2026-04-28T07:04:06.117996+00:00
+Emily Murphy,Emily,Murphy,emily.murphy@realtor.com,(808) 277-1943,Toll Brothers,Miami,FL,9,10,10413162,FL169996,FL,4.1,100,A,realtor_scraper,2026-04-28T07:04:06.118006+00:00
+Gregory Cook,Gregory,Cook,gregory.cook@exprealty.com,(307) 466-4595,KB Home,Sacramento,CA,6,27,11029734,CA200807,CA,5.0,85,B,realtor_scraper,2026-04-28T07:04:06.118015+00:00
+Elizabeth Gomez,Elizabeth,Gomez,egomez@outlook.com,(740) 547-5095,Berkshire Hathaway,Seattle,WA,11,44,3349202,WA723392,WA,4.3,67,A,realtor_scraper,2026-04-28T07:04:06.118027+00:00
+Nicholas Moore,Nicholas,Moore,nicholas.moore@sothebysrealty.com,(406) 617-2370,Berkshire Hathaway,Tampa,FL,17,26,10658070,FL780540,FL,4.5,85,A,realtor_scraper,2026-04-28T07:04:06.118041+00:00
+Linda Patel,Linda,Patel,lpatel@compass.com,(202) 293-2343,Coldwell Banker,Orlando,FL,19,48,10671946,FL773912,FL,4.4,72,A,realtor_scraper,2026-04-28T07:04:06.118055+00:00
+Christine Taylor,Christine,Taylor,christine52@hotmail.com,(712) 803-5977,Ryan Homes,San Jose,CA,14,17,12399225,CA996012,CA,4.3,100,B,realtor_scraper,2026-04-28T07:04:06.118076+00:00
+Dennis Ward,Dennis,Ward,dennis.ward@realtor.com,(234) 307-7808,CalAtlantic Homes,Riverside,CA,6,46,12700897,CA385095,CA,4.7,78,B,realtor_scraper,2026-04-28T07:04:06.118088+00:00
+Robert Watson,Robert,Watson,rwatson@weichert.com,(718) 587-5103,ERA,Cincinnati,OH,9,30,14363062,OH851632,OH,4.5,70,B,realtor_scraper,2026-04-28T07:04:06.118100+00:00
+Stephanie Diaz,Stephanie,Diaz,stephanie96@elliman.com,(786) 669-4046,eXp Realty,Philadelphia,PA,3,14,1932280,PA168549,PA,4.8,91,A,realtor_scraper,2026-04-28T07:04:06.118113+00:00
+Karen Miller,Karen,Miller,karen89@sothebysrealty.com,(310) 689-9481,Pulte Homes,Reno,NV,20,29,2653761,NV653163,NV,4.8,85,C,realtor_scraper,2026-04-28T07:04:06.118135+00:00
+Jennifer Davis,Jennifer,Davis,jennifer63@century21.com,(904) 538-9194,Lennar,San Antonio,TX,21,47,2830513,TX878038,TX,4.8,83,B,realtor_scraper,2026-04-28T07:04:06.118147+00:00
+Heather Hall,Heather,Hall,heatherh@century21.com,(307) 302-6516,Zillow Premier,Tampa,FL,13,26,6597949,FL697687,FL,4.5,76,A,realtor_scraper,2026-04-28T07:04:06.118158+00:00
+Emily Cruz,Emily,Cruz,emilyc@remax.net,(281) 906-6521,Sotheby's,Oklahoma City,OK,4,5,945113,OK411389,OK,4.3,64,C,realtor_scraper,2026-04-28T07:04:06.118174+00:00
+Dorothy Mendoza,Dorothy,Mendoza,dorothy37@elliman.com,(956) 508-1438,RE/MAX,Dallas-Fort Worth,TX,19,28,10561820,TX837715,TX,4.1,100,A,realtor_scraper,2026-04-28T07:04:06.118186+00:00
+Angela Gutierrez,Angela,Gutierrez,angelag@exprealty.com,(475) 689-1752,Berkshire Hathaway,Houston,TX,8,33,3357823,TX348153,TX,4.9,69,A,realtor_scraper,2026-04-28T07:04:06.118198+00:00
+Raymond Reed,Raymond,Reed,rreed@outlook.com,(572) 561-5169,Century 21,Los Angeles,CA,17,37,8870400,CA529879,CA,4.8,84,A,realtor_scraper,2026-04-28T07:04:06.118211+00:00
+Christopher Phillips,Christopher,Phillips,phillips.christopher@realtor.com,(567) 889-5536,Century 21,Salt Lake City,UT,24,49,6550374,UT686458,UT,4.2,71,B,realtor_scraper,2026-04-28T07:04:06.118222+00:00
+Gary Evans,Gary,Evans,gary.evans@compass.com,(567) 286-8878,The Agency,Baltimore,MD,20,18,9114103,MD391776,MD,4.9,60,B,realtor_scraper,2026-04-28T07:04:06.118235+00:00
+Carolyn Nelson,Carolyn,Nelson,nelson.carolyn@outlook.com,(540) 329-1764,NVR,Cleveland,OH,4,10,1786476,OH457771,OH,3.6,60,B,realtor_scraper,2026-04-28T07:04:06.118246+00:00
+Christine Mitchell,Christine,Mitchell,christine98@redfin.com,(539) 395-7328,RE/MAX,Colorado Springs,CO,20,29,12033323,CO260585,CO,4.8,81,C,realtor_scraper,2026-04-28T07:04:06.118258+00:00
+Rebecca Morgan,Rebecca,Morgan,rebeccam@homesmart.com,(203) 899-7855,LGI Homes,New York,NY,10,29,7816995,NY488143,NY,4.0,64,A,realtor_scraper,2026-04-28T07:04:06.118270+00:00
+Elizabeth Parker,Elizabeth,Parker,elizabeth34@coldwellbanker.com,(626) 447-1786,Sotheby's,Reno,NV,7,44,11094957,NV267008,NV,3.5,79,C,realtor_scraper,2026-04-28T07:04:06.118282+00:00
+Brenda Parker,Brenda,Parker,bparker@weichert.com,(252) 452-4732,Meritage Homes,Tucson,AZ,8,39,13515635,AZ327072,AZ,4.8,95,C,realtor_scraper,2026-04-28T07:04:06.118305+00:00
+Barbara Thomas,Barbara,Thomas,thomas.barbara@sothebysrealty.com,(937) 594-9662,The Agency,Charlotte,NC,13,40,9257977,NC908441,NC,5.0,89,A,realtor_scraper,2026-04-28T07:04:06.118318+00:00
+Katherine Wilson,Katherine,Wilson,wilson.katherine@gmail.com,(928) 223-6385,LGI Homes,San Jose,CA,24,42,10034131,CA516375,CA,4.5,79,B,realtor_scraper,2026-04-28T07:04:06.118330+00:00
+Michelle Mendoza,Michelle,Mendoza,michelle92@exprealty.com,(701) 928-5241,Century Communities,Louisville,KY,8,17,2625240,KY568252,KY,3.9,68,C,realtor_scraper,2026-04-28T07:04:06.118342+00:00
+George Gray,George,Gray,ggray@berkshirehathawayhs.com,(978) 723-1659,Century Communities,Richmond,VA,12,24,9329132,VA569985,VA,4.4,81,C,realtor_scraper,2026-04-28T07:04:06.118354+00:00
+Anthony Flores,Anthony,Flores,aflores@remax.net,(620) 464-2966,Berkshire Hathaway,Nashville,TN,13,50,7749759,TN369517,TN,4.0,67,A,realtor_scraper,2026-04-28T07:04:06.118366+00:00
+David Scott,David,Scott,scott.david@exprealty.com,(907) 416-6796,eXp Realty,Louisville,KY,11,48,3323859,KY890838,KY,3.5,67,C,realtor_scraper,2026-04-28T07:04:06.118377+00:00
+Emma Ross,Emma,Ross,ross.emma@coldwellbanker.com,(862) 706-9297,Tri Pointe Homes,Cleveland,OH,12,46,4245703,OH421865,OH,3.9,73,B,realtor_scraper,2026-04-28T07:04:06.118388+00:00
+Donna Johnson,Donna,Johnson,donna12@coldwellbanker.com,(562) 432-7014,Toll Brothers,Philadelphia,PA,12,20,7072712,PA141594,PA,4.2,79,A,realtor_scraper,2026-04-28T07:04:06.118415+00:00
+Justin Rogers,Justin,Rogers,justin.rogers@exprealty.com,(912) 712-3717,Compass,Houston,TX,6,31,12769302,TX835176,TX,4.7,79,A,realtor_scraper,2026-04-28T07:04:06.118426+00:00
+Catherine Martin,Catherine,Martin,martin.catherine@realtor.com,(234) 578-1993,NVR,San Diego,CA,19,39,3345087,CA655408,CA,4.1,65,A,realtor_scraper,2026-04-28T07:04:06.118445+00:00
+Joshua Morris,Joshua,Morris,joshua64@realtor.com,(770) 862-5078,Century Communities,Kansas City,MO,10,28,7778954,MO113615,MO,3.8,65,B,realtor_scraper,2026-04-28T07:04:06.118456+00:00
+Samuel Robinson,Samuel,Robinson,samuel77@exprealty.com,(214) 713-7454,Lennar,San Francisco,CA,19,32,12968938,CA742929,CA,4.6,78,A,realtor_scraper,2026-04-28T07:04:06.118468+00:00
+Ashley Davis,Ashley,Davis,ashley80@realtor.com,(925) 453-4577,NVR,Tucson,AZ,24,27,6955332,AZ461336,AZ,3.6,83,C,realtor_scraper,2026-04-28T07:04:06.118480+00:00
+Andrew Morales,Andrew,Morales,andrew69@weichert.com,(856) 544-5603,Keller Williams,Riverside,CA,12,12,14524999,CA222038,CA,3.6,76,B,realtor_scraper,2026-04-28T07:04:06.118495+00:00
+Katherine Baker,Katherine,Baker,katherineb@compass.com,(831) 832-8676,Pulte Homes,San Diego,CA,12,50,3874529,CA240341,CA,4.6,90,A,realtor_scraper,2026-04-28T07:04:06.118506+00:00
+Catherine Peterson,Catherine,Peterson,catherine85@exprealty.com,(207) 833-4780,Berkshire Hathaway,Cincinnati,OH,5,10,10185426,OH384716,OH,4.9,85,B,realtor_scraper,2026-04-28T07:04:06.118518+00:00
+Ruth Collins,Ruth,Collins,ruth10@elliman.com,(870) 958-6005,Toll Brothers,Houston,TX,24,28,2140803,TX884327,TX,4.8,62,A,realtor_scraper,2026-04-28T07:04:06.118529+00:00
+John Hughes,John,Hughes,hughes.john@century21.com,(754) 406-9488,LGI Homes,New York,NY,6,18,12082352,NY491688,NY,4.8,95,A,realtor_scraper,2026-04-28T07:04:06.118540+00:00
+Melissa Cruz,Melissa,Cruz,melissa.cruz@realtyonegroup.com,(667) 278-5082,Redfin,Baton Rouge,LA,22,45,2380197,LA883984,LA,3.9,76,C,realtor_scraper,2026-04-28T07:04:06.118552+00:00
+Steven Thomas,Steven,Thomas,thomas.steven@sothebysrealty.com,(650) 922-9904,Ryan Homes,Memphis,TN,1,0,241501,TN251321,TN,0.0,45,C,realtor_scraper,2026-04-28T07:04:06.118569+00:00
+Steven Richardson,Steven,Richardson,srichardson@kw.com,(442) 851-9415,Ryan Homes,Philadelphia,PA,13,29,9587101,PA680284,PA,4.1,93,A,realtor_scraper,2026-04-28T07:04:06.118581+00:00
+Jerry Cook,Jerry,Cook,jerryc@kw.com,(385) 208-2926,Toll Brothers,San Diego,CA,16,13,8063413,CA724856,CA,4.9,62,A,realtor_scraper,2026-04-28T07:04:06.118597+00:00
+Deborah Garcia,Deborah,Garcia,dgarcia@remax.net,(410) 252-1777,Nest Seekers,Seattle,WA,25,29,10221231,WA481076,WA,4.2,100,A,realtor_scraper,2026-04-28T07:04:06.118609+00:00
+Scott Morales,Scott,Morales,scottm@kw.com,(274) 602-9545,M/I Homes,Oklahoma City,OK,19,15,9408613,OK985509,OK,3.9,81,C,realtor_scraper,2026-04-28T07:04:06.118621+00:00
+Helen Chavez,Helen,Chavez,helen99@elliman.com,(301) 257-7823,Pulte Homes,Dallas-Fort Worth,TX,13,23,2683909,TX809463,TX,4.2,88,A,realtor_scraper,2026-04-28T07:04:06.118632+00:00
+Steven Green,Steven,Green,steven46@weichert.com,(860) 852-4041,Keller Williams,Oklahoma City,OK,19,50,12775777,OK827628,OK,3.9,88,C,realtor_scraper,2026-04-28T07:04:06.118643+00:00
+Jonathan Hill,Jonathan,Hill,jhill@realtyonegroup.com,(850) 635-7247,HomeSmart,Cleveland,OH,13,14,7521237,OH547462,OH,3.8,75,B,realtor_scraper,2026-04-28T07:04:06.118654+00:00
+Kenneth James,Kenneth,James,kenneth86@redfin.com,(667) 497-4064,Vylla Home,Tucson,AZ,7,25,4088333,AZ177453,AZ,4.1,87,C,realtor_scraper,2026-04-28T07:04:06.118668+00:00
+Anthony Kim,Anthony,Kim,anthonyk@homesmart.com,(937) 452-5188,Compass,Boston,MA,9,37,13983625,MA893362,MA,4.8,85,A,realtor_scraper,2026-04-28T07:04:06.118679+00:00
+Samantha Myers,Samantha,Myers,myers.samantha@realtyonegroup.com,(765) 279-8997,Redfin,New Orleans,LA,18,20,1763513,LA110285,LA,4.1,86,C,realtor_scraper,2026-04-28T07:04:06.118694+00:00
+Amanda Young,Amanda,Young,young.amanda@gmail.com,(650) 538-8249,M/I Homes,Raleigh,NC,6,33,13988101,NC726119,NC,3.7,100,B,realtor_scraper,2026-04-28T07:04:06.118705+00:00
+Heather Thompson,Heather,Thompson,hthompson@redfin.com,(209) 947-2544,CalAtlantic Homes,Tampa,FL,20,30,10276153,FL289131,FL,4.0,71,A,realtor_scraper,2026-04-28T07:04:06.118716+00:00
+Michael Sanders,Michael,Sanders,msanders@exprealty.com,(662) 742-6196,Toll Brothers,Las Vegas,NV,16,45,6684838,NV299240,NV,3.6,78,A,realtor_scraper,2026-04-28T07:04:06.118727+00:00
+Rachel Alvarez,Rachel,Alvarez,rachel.alvarez@outlook.com,(412) 530-2800,Tri Pointe Homes,New Orleans,LA,14,15,8869921,LA761341,LA,5.0,77,C,realtor_scraper,2026-04-28T07:04:06.118738+00:00
+Janet Phillips,Janet,Phillips,janet.phillips@compass.com,(904) 608-7317,eXp Realty,Indianapolis,IN,4,11,1272631,IN458660,IN,4.9,68,B,realtor_scraper,2026-04-28T07:04:06.118749+00:00
+Ashley Harris,Ashley,Harris,ashley15@remax.net,(435) 827-3899,Pulte Homes,Orlando,FL,16,42,13790624,FL794538,FL,3.8,93,A,realtor_scraper,2026-04-28T07:04:06.118759+00:00
+Lisa Taylor,Lisa,Taylor,lisat@elliman.com,(239) 727-6800,Lennar,Baton Rouge,LA,7,21,12426726,LA796869,LA,4.7,89,C,realtor_scraper,2026-04-28T07:04:06.118770+00:00
+Ashley Hill,Ashley,Hill,ashley25@compass.com,(870) 275-8923,D.R. Horton,Miami,FL,8,10,7583681,FL888222,FL,4.5,64,A,realtor_scraper,2026-04-28T07:04:06.118781+00:00
+Christine Morgan,Christine,Morgan,christine32@exprealty.com,(330) 542-2765,United Real Estate,Nashville,TN,13,46,2097150,TN589550,TN,4.9,78,A,realtor_scraper,2026-04-28T07:04:06.118792+00:00
+Kimberly Miller,Kimberly,Miller,kmiller@weichert.com,(831) 263-1663,Better Homes & Gardens,Colorado Springs,CO,15,35,6500683,CO513986,CO,4.3,88,C,realtor_scraper,2026-04-28T07:04:06.118806+00:00
+Brandon Ruiz,Brandon,Ruiz,brandonr@realtor.com,(218) 231-3285,Keller Williams,Louisville,KY,10,19,3833930,KY850079,KY,3.6,80,C,realtor_scraper,2026-04-28T07:04:06.118820+00:00
+Samantha Davis,Samantha,Davis,sdavis@realtor.com,(641) 932-4182,Zillow Premier,Salt Lake City,UT,17,34,5848151,UT842424,UT,3.7,74,B,realtor_scraper,2026-04-28T07:04:06.118831+00:00
+Melissa Turner,Melissa,Turner,melissat@weichert.com,(479) 351-5587,Berkshire Hathaway,Colorado Springs,CO,16,29,14636606,CO608188,CO,3.8,77,C,realtor_scraper,2026-04-28T07:04:06.118842+00:00
+Brian Diaz,Brian,Diaz,brian.diaz@compass.com,(424) 904-3958,NVR,Memphis,TN,5,44,14442428,TN648961,TN,4.9,100,C,realtor_scraper,2026-04-28T07:04:06.118853+00:00
+Larry Bennett,Larry,Bennett,larry.bennett@berkshirehathawayhs.com,(815) 204-3091,Lennar,Dallas-Fort Worth,TX,20,26,12666912,TX609244,TX,4.6,72,A,realtor_scraper,2026-04-28T07:04:06.118864+00:00
+Tyler Harris,Tyler,Harris,tylerh@weichert.com,(978) 846-2039,Redfin,Kansas City,MO,12,21,11466230,MO855246,MO,3.6,98,B,realtor_scraper,2026-04-28T07:04:06.118875+00:00
+Amy Edwards,Amy,Edwards,amy.edwards@remax.net,(207) 684-2092,Vylla Home,Tampa,FL,12,50,11686170,FL591530,FL,4.9,87,A,realtor_scraper,2026-04-28T07:04:06.118886+00:00
+Karen Richardson,Karen,Richardson,richardson.karen@hotmail.com,(205) 458-1489,Berkshire Hathaway,Los Angeles,CA,16,32,4812109,CA490677,CA,3.6,62,A,realtor_scraper,2026-04-28T07:04:06.118897+00:00
+Kimberly Hall,Kimberly,Hall,kimberly.hall@exprealty.com,(857) 360-4364,Berkshire Hathaway,Seattle,WA,14,47,13396939,WA638670,WA,4.9,87,A,realtor_scraper,2026-04-28T07:04:06.118908+00:00
+Donald Ward,Donald,Ward,donald.ward@compass.com,(574) 928-7383,RE/MAX,Las Vegas,NV,16,34,14492947,NV680782,NV,4.3,81,A,realtor_scraper,2026-04-28T07:04:06.118932+00:00
+Ryan Young,Ryan,Young,ryan48@kw.com,(608) 312-2601,The Agency,Virginia Beach,VA,8,29,10083147,VA331172,VA,4.7,73,C,realtor_scraper,2026-04-28T07:04:06.118943+00:00
+Raymond Parker,Raymond,Parker,raymondp@century21.com,(859) 233-1318,Redfin,Portland,OR,12,31,2023817,OR794230,OR,4.7,92,B,realtor_scraper,2026-04-28T07:04:06.118954+00:00
+Alexander Hall,Alexander,Hall,ahall@outlook.com,(605) 991-7856,Weichert,Baton Rouge,LA,10,49,4325901,LA328923,LA,3.9,87,C,realtor_scraper,2026-04-28T07:04:06.118965+00:00
+Gary Wood,Gary,Wood,gwood@kw.com,(601) 349-7772,Century 21,Jacksonville,FL,22,15,5766557,FL857382,FL,3.6,77,B,realtor_scraper,2026-04-28T07:04:06.118980+00:00
+Susan Hall,Susan,Hall,shall@coldwellbanker.com,(443) 548-8422,Meritage Homes,Minneapolis,MN,7,36,9126492,MN515405,MN,3.9,82,B,realtor_scraper,2026-04-28T07:04:06.118990+00:00
+David Flores,David,Flores,david62@elliman.com,(339) 638-9188,CalAtlantic Homes,Seattle,WA,9,48,12523234,WA371805,WA,4.5,93,A,realtor_scraper,2026-04-28T07:04:06.119001+00:00
+Karen Howard,Karen,Howard,karenh@outlook.com,(417) 952-1971,Weichert,Jacksonville,FL,2,12,1917683,FL829027,FL,3.8,87,B,realtor_scraper,2026-04-28T07:04:06.119011+00:00
+Margaret Phillips,Margaret,Phillips,phillips.margaret@sothebysrealty.com,(417) 435-6840,Douglas Elliman,New Orleans,LA,16,15,14529044,LA523900,LA,4.3,81,C,realtor_scraper,2026-04-28T07:04:06.119023+00:00
+George Ross,George,Ross,george12@homesmart.com,(734) 661-1165,RE/MAX,St. Louis,MO,15,12,4729333,MO279750,MO,3.8,62,B,realtor_scraper,2026-04-28T07:04:06.119034+00:00
+Karen Hall,Karen,Hall,karen85@redfin.com,(402) 671-1588,The Agency,Baltimore,MD,21,50,12715733,MD401795,MD,4.4,89,B,realtor_scraper,2026-04-28T07:04:06.119048+00:00
+Patrick Turner,Patrick,Turner,pturner@weichert.com,(610) 399-7242,Weichert,Virginia Beach,VA,20,28,8532255,VA336230,VA,4.0,87,C,realtor_scraper,2026-04-28T07:04:06.119068+00:00
+Aaron Ruiz,Aaron,Ruiz,ruiz.aaron@hotmail.com,(732) 655-2458,D.R. Horton,Philadelphia,PA,2,13,1488904,PA495387,PA,4.7,80,A,realtor_scraper,2026-04-28T07:04:06.119084+00:00
+Jerry Ortiz,Jerry,Ortiz,jerry99@realtyonegroup.com,(806) 341-5370,CalAtlantic Homes,Phoenix,AZ,7,19,4371887,AZ213008,AZ,4.0,61,A,realtor_scraper,2026-04-28T07:04:06.119095+00:00
+Joseph Young,Joseph,Young,jyoung@elliman.com,(209) 805-3844,Berkshire Hathaway,Richmond,VA,7,18,5679839,VA985866,VA,4.2,95,C,realtor_scraper,2026-04-28T07:04:06.119106+00:00
+Patricia Kelly,Patricia,Kelly,kelly.patricia@coldwellbanker.com,(352) 668-1029,The Agency,Atlanta,GA,9,49,5977189,GA122605,GA,3.9,87,A,realtor_scraper,2026-04-28T07:04:06.119117+00:00
+Amanda Garcia,Amanda,Garcia,amanda82@homesmart.com,(606) 662-9697,Nest Seekers,Sacramento,CA,19,22,12986857,CA280598,CA,4.3,98,B,realtor_scraper,2026-04-28T07:04:06.119128+00:00
+Michelle Gonzalez,Michelle,Gonzalez,gonzalez.michelle@redfin.com,(248) 858-4326,M/I Homes,Phoenix,AZ,25,36,11235702,AZ949330,AZ,3.5,100,A,realtor_scraper,2026-04-28T07:04:06.119138+00:00
+Donna Jackson,Donna,Jackson,donna65@exprealty.com,(718) 991-4816,Tri Pointe Homes,Seattle,WA,15,26,3734895,WA948465,WA,3.6,75,A,realtor_scraper,2026-04-28T07:04:06.119153+00:00
+Angela Baker,Angela,Baker,angela62@realtyonegroup.com,(515) 498-7647,Redfin,Louisville,KY,19,45,14292380,KY576328,KY,4.7,80,C,realtor_scraper,2026-04-28T07:04:06.119164+00:00
+Linda King,Linda,King,king.linda@weichert.com,(763) 816-9815,Berkshire Hathaway,Columbus,OH,15,18,8339353,OH365618,OH,4.2,91,B,realtor_scraper,2026-04-28T07:04:06.119180+00:00
+Larry Morales,Larry,Morales,lmorales@berkshirehathawayhs.com,(706) 494-6810,HomeSmart,Miami,FL,16,13,9216555,FL666110,FL,4.0,84,A,realtor_scraper,2026-04-28T07:04:06.119191+00:00
+Nancy Roberts,Nancy,Roberts,nancy.roberts@redfin.com,(586) 779-5747,United Real Estate,Miami,FL,21,12,1569384,FL836918,FL,4.0,90,A,realtor_scraper,2026-04-28T07:04:06.119202+00:00
+Joseph Lee,Joseph,Lee,joseph.lee@homesmart.com,(781) 574-5552,Taylor Morrison,Sacramento,CA,7,34,5466502,CA180741,CA,4.3,62,B,realtor_scraper,2026-04-28T07:04:06.119216+00:00
+Pamela King,Pamela,King,pking@century21.com,(616) 602-3853,Redfin,Nashville,TN,5,24,2230367,TN342912,TN,4.6,90,A,realtor_scraper,2026-04-28T07:04:06.119227+00:00
+Emily Roberts,Emily,Roberts,roberts.emily@coldwellbanker.com,(815) 940-3129,Nest Seekers,St. Louis,MO,19,11,3413973,MO811667,MO,4.7,68,B,realtor_scraper,2026-04-28T07:04:06.119238+00:00
+Maria Ward,Maria,Ward,maria8@remax.net,(361) 726-3534,Compass,Baton Rouge,LA,0,5,282298,LA788457,LA,4.3,80,C,realtor_scraper,2026-04-28T07:04:06.119249+00:00
+Samuel Perez,Samuel,Perez,samuel84@weichert.com,(803) 244-1706,Beazer Homes,Sacramento,CA,3,10,558461,CA535195,CA,3.5,77,B,realtor_scraper,2026-04-28T07:04:06.119260+00:00
+Linda Brooks,Linda,Brooks,lbrooks@century21.com,(650) 970-6584,United Real Estate,Cleveland,OH,3,11,706699,OH916225,OH,4.4,67,B,realtor_scraper,2026-04-28T07:04:06.119271+00:00
+Carolyn Allen,Carolyn,Allen,carolyn60@outlook.com,(701) 826-1931,Sotheby's,Albuquerque,NM,5,11,6039772,NM333051,NM,4.5,83,C,realtor_scraper,2026-04-28T07:04:06.119282+00:00
+Nicole Gray,Nicole,Gray,ngray@hotmail.com,(239) 848-6431,KB Home,Boston,MA,3,11,1762440,MA134119,MA,3.5,87,A,realtor_scraper,2026-04-28T07:04:06.119297+00:00
+Carolyn Torres,Carolyn,Torres,carolyn5@redfin.com,(203) 546-7304,Century 21,Colorado Springs,CO,1,2,156469,CO603523,CO,4.2,67,C,realtor_scraper,2026-04-28T07:04:06.119308+00:00
+Richard Stewart,Richard,Stewart,stewart.richard@elliman.com,(339) 795-2172,Century 21,Denver,CO,3,7,1041238,CO385792,CO,3.9,80,A,realtor_scraper,2026-04-28T07:04:06.119322+00:00
+Scott Lewis,Scott,Lewis,slewis@realtyonegroup.com,(224) 282-8867,Sotheby's,Seattle,WA,19,16,12208555,WA419694,WA,4.7,95,A,realtor_scraper,2026-04-28T07:04:06.119333+00:00
+Charles Diaz,Charles,Diaz,diaz.charles@compass.com,(417) 295-8828,Zillow Premier,Minneapolis,MN,14,28,10365567,MN295303,MN,4.3,88,B,realtor_scraper,2026-04-28T07:04:06.119344+00:00
+Pamela Stewart,Pamela,Stewart,stewart.pamela@century21.com,(214) 275-8599,LGI Homes,Richmond,VA,14,24,14350672,VA725000,VA,3.6,88,C,realtor_scraper,2026-04-28T07:04:06.119355+00:00
+Larry Collins,Larry,Collins,larryc@elliman.com,(678) 531-4437,KB Home,Baltimore,MD,8,38,11872038,MD182199,MD,4.6,87,B,realtor_scraper,2026-04-28T07:04:06.119365+00:00
+Christine Gomez,Christine,Gomez,christineg@berkshirehathawayhs.com,(432) 919-1296,Taylor Morrison,San Diego,CA,2,9,1500187,CA799606,CA,4.2,60,A,realtor_scraper,2026-04-28T07:04:06.119376+00:00
+Helen Johnson,Helen,Johnson,johnson.helen@realtor.com,(216) 712-2893,Toll Brothers,Virginia Beach,VA,1,5,225274,VA870631,VA,4.4,64,C,realtor_scraper,2026-04-28T07:04:06.119388+00:00
+Richard Kelly,Richard,Kelly,richardk@remax.net,(507) 838-1324,Meritage Homes,Houston,TX,20,22,2868628,TX809505,TX,3.7,83,A,realtor_scraper,2026-04-28T07:04:06.119419+00:00
+Catherine Wright,Catherine,Wright,catherinew@weichert.com,(518) 641-3979,M/I Homes,San Antonio,TX,23,46,6102120,TX473615,TX,4.8,80,B,realtor_scraper,2026-04-28T07:04:06.119435+00:00
+Stephen Gomez,Stephen,Gomez,stepheng@century21.com,(208) 944-9611,Douglas Elliman,Raleigh,NC,10,10,3910418,NC385794,NC,3.8,68,B,realtor_scraper,2026-04-28T07:04:06.119447+00:00
+Melissa Evans,Melissa,Evans,melissae@elliman.com,(760) 585-8982,Better Homes & Gardens,Jacksonville,FL,18,15,14109505,FL887320,FL,4.6,73,B,realtor_scraper,2026-04-28T07:04:06.119458+00:00
+Brandon Long,Brandon,Long,blong@weichert.com,(715) 799-6201,United Real Estate,Boston,MA,8,49,6312715,MA628318,MA,4.8,84,A,realtor_scraper,2026-04-28T07:04:06.119470+00:00
+Stephen Ortiz,Stephen,Ortiz,sortiz@hotmail.com,(331) 869-3555,Zillow Premier,Los Angeles,CA,13,38,12912916,CA758048,CA,4.5,82,A,realtor_scraper,2026-04-28T07:04:06.119482+00:00
+Dennis Cooper,Dennis,Cooper,dennis1@exprealty.com,(502) 825-5666,Century 21,Nashville,TN,2,11,1479345,TN665308,TN,4.7,83,A,realtor_scraper,2026-04-28T07:04:06.119494+00:00
+Jacob Davis,Jacob,Davis,jdavis@gmail.com,(725) 258-2169,Lennar,Minneapolis,MN,16,42,3626026,MN578077,MN,4.1,80,B,realtor_scraper,2026-04-28T07:04:06.119511+00:00
+Matthew Hughes,Matthew,Hughes,hughes.matthew@weichert.com,(925) 572-2873,Beazer Homes,Orlando,FL,22,49,8928678,FL666216,FL,3.9,77,A,realtor_scraper,2026-04-28T07:04:06.119524+00:00
+Scott Bailey,Scott,Bailey,sbailey@sothebysrealty.com,(518) 817-7385,Beazer Homes,Boise,ID,23,47,14748404,ID928733,ID,4.7,91,C,realtor_scraper,2026-04-28T07:04:06.119541+00:00
+Jennifer Hall,Jennifer,Hall,hall.jennifer@outlook.com,(443) 421-7912,Tri Pointe Homes,New Orleans,LA,6,10,9978837,LA847985,LA,4.2,92,C,realtor_scraper,2026-04-28T07:04:06.119555+00:00
+Scott Lopez,Scott,Lopez,slopez@sothebysrealty.com,(770) 303-8656,RE/MAX,Tucson,AZ,5,27,10312281,AZ815537,AZ,4.8,70,C,realtor_scraper,2026-04-28T07:04:06.119573+00:00
+Elizabeth Patel,Elizabeth,Patel,elizabethp@kw.com,(313) 294-5147,Better Homes & Gardens,San Antonio,TX,17,44,9781584,TX339290,TX,4.4,91,B,realtor_scraper,2026-04-28T07:04:06.119586+00:00
+Sharon Wright,Sharon,Wright,swright@century21.com,(608) 301-7705,Compass,Austin,TX,20,27,7950428,TX625305,TX,4.4,88,A,realtor_scraper,2026-04-28T07:04:06.119599+00:00
+Matthew Wood,Matthew,Wood,matthew.wood@exprealty.com,(615) 815-1749,Century Communities,Denver,CO,12,47,3579482,CO775004,CO,3.7,90,A,realtor_scraper,2026-04-28T07:04:06.119611+00:00
+Thomas Perez,Thomas,Perez,tperez@weichert.com,(402) 776-6349,LGI Homes,Jacksonville,FL,3,15,1974488,FL977978,FL,4.1,77,B,realtor_scraper,2026-04-28T07:04:06.119623+00:00
+Paul Campbell,Paul,Campbell,paul76@redfin.com,(415) 965-2206,Vylla Home,Indianapolis,IN,1,1,74653,IN759841,IN,4.0,52,B,realtor_scraper,2026-04-28T07:04:06.119634+00:00
+Jerry James,Jerry,James,james.jerry@weichert.com,(863) 293-4410,CalAtlantic Homes,Los Angeles,CA,4,4,1927189,CA302952,CA,3.6,95,A,realtor_scraper,2026-04-28T07:04:06.119646+00:00
+Kimberly Price,Kimberly,Price,kimberly.price@remax.net,(352) 509-6868,Century 21,Nashville,TN,1,2,163519,TN422176,TN,5.0,42,A,realtor_scraper,2026-04-28T07:04:06.119659+00:00
+Shirley Peterson,Shirley,Peterson,speterson@exprealty.com,(973) 848-8297,Better Homes & Gardens,Miami,FL,18,37,11024359,FL294326,FL,4.7,77,A,realtor_scraper,2026-04-28T07:04:06.119672+00:00
+Samantha Garcia,Samantha,Garcia,samantha.garcia@outlook.com,(865) 873-3116,Tri Pointe Homes,Riverside,CA,10,35,6948756,CA487470,CA,4.4,93,B,realtor_scraper,2026-04-28T07:04:06.119685+00:00
+Charles Brooks,Charles,Brooks,charles61@elliman.com,(681) 798-3526,Coldwell Banker,Colorado Springs,CO,0,1,243261,CO684683,CO,3.5,62,C,realtor_scraper,2026-04-28T07:04:06.119707+00:00
+Carolyn Baker,Carolyn,Baker,carolynb@weichert.com,(440) 903-1107,Century 21,Minneapolis,MN,6,40,10234947,MN472854,MN,4.2,80,B,realtor_scraper,2026-04-28T07:04:06.119721+00:00
+Christopher Martin,Christopher,Martin,christopher.martin@kw.com,(785) 845-5905,eXp Realty,Colorado Springs,CO,24,43,7875092,CO504233,CO,3.6,75,C,realtor_scraper,2026-04-28T07:04:06.119734+00:00
+Charles Evans,Charles,Evans,evans.charles@century21.com,(435) 580-7932,Better Homes & Gardens,Nashville,TN,10,49,8641959,TN412003,TN,4.6,77,A,realtor_scraper,2026-04-28T07:04:06.119746+00:00
+Diane King,Diane,King,diane.king@hotmail.com,(712) 774-5246,CalAtlantic Homes,Chicago,IL,6,17,3433765,IL992475,IL,3.7,60,A,realtor_scraper,2026-04-28T07:04:06.119759+00:00
+Sandra Alvarez,Sandra,Alvarez,salvarez@hotmail.com,(909) 225-3892,Keller Williams,Detroit,MI,18,25,13916528,MI767552,MI,4.1,98,B,realtor_scraper,2026-04-28T07:04:06.119771+00:00
+Samantha Jones,Samantha,Jones,samantha.jones@coldwellbanker.com,(479) 715-7065,Tri Pointe Homes,Detroit,MI,5,44,8696549,MI681547,MI,4.2,72,B,realtor_scraper,2026-04-28T07:04:06.119784+00:00
+Pamela Lewis,Pamela,Lewis,plewis@redfin.com,(585) 202-8883,RE/MAX,Tucson,AZ,0,3,52938,AZ172317,AZ,4.1,94,C,realtor_scraper,2026-04-28T07:04:06.119798+00:00
+Kathleen Bailey,Kathleen,Bailey,kathleen53@coldwellbanker.com,(312) 974-7134,Century 21,Richmond,VA,6,15,5533084,VA786203,VA,4.8,89,C,realtor_scraper,2026-04-28T07:04:06.119813+00:00
+Nicholas Williams,Nicholas,Williams,nicholasw@exprealty.com,(786) 686-9810,Sotheby's,Orlando,FL,2,11,1362049,FL420437,FL,4.1,93,A,realtor_scraper,2026-04-28T07:04:06.119829+00:00
+Gregory White,Gregory,White,gwhite@remax.net,(432) 283-2486,Weichert,Chicago,IL,16,10,6829493,IL966963,IL,5.0,94,A,realtor_scraper,2026-04-28T07:04:06.119847+00:00
+Patricia Ramirez,Patricia,Ramirez,patricia77@hotmail.com,(220) 841-6530,Compass,Colorado Springs,CO,13,22,2166876,CO312299,CO,4.4,64,C,realtor_scraper,2026-04-28T07:04:06.119859+00:00
+Richard Diaz,Richard,Diaz,rdiaz@kw.com,(954) 254-6818,Tri Pointe Homes,Miami,FL,8,47,7939365,FL949055,FL,3.5,72,A,realtor_scraper,2026-04-28T07:04:06.119872+00:00
+David Thomas,David,Thomas,david.thomas@coldwellbanker.com,(831) 619-4389,Vylla Home,Cleveland,OH,10,44,7493945,OH230178,OH,4.9,74,B,realtor_scraper,2026-04-28T07:04:06.119884+00:00
+Nicholas Jones,Nicholas,Jones,nicholasj@kw.com,(941) 223-1702,Vylla Home,Tucson,AZ,25,47,2782936,AZ681052,AZ,4.7,63,C,realtor_scraper,2026-04-28T07:04:06.119897+00:00
+Joshua White,Joshua,White,white.joshua@redfin.com,(636) 485-3706,Weichert,Cincinnati,OH,3,14,678071,OH105890,OH,4.6,80,B,realtor_scraper,2026-04-28T07:04:06.119913+00:00
+Ruth Adams,Ruth,Adams,radams@century21.com,(323) 784-4975,Pulte Homes,Cincinnati,OH,10,30,3735411,OH610955,OH,4.5,80,B,realtor_scraper,2026-04-28T07:04:06.119926+00:00
+Rebecca Wright,Rebecca,Wright,rwright@berkshirehathawayhs.com,(260) 694-5624,Zillow Premier,San Jose,CA,21,28,10145946,CA567412,CA,4.0,75,B,realtor_scraper,2026-04-28T07:04:06.119939+00:00
+Ruth Patel,Ruth,Patel,ruth.patel@compass.com,(563) 723-4980,HomeSmart,Jacksonville,FL,1,0,103267,FL419076,FL,0.0,53,B,realtor_scraper,2026-04-28T07:04:06.119950+00:00
+Betty Wright,Betty,Wright,bwright@weichert.com,(540) 657-1725,ERA,Chicago,IL,14,50,12250811,IL428428,IL,3.5,100,A,realtor_scraper,2026-04-28T07:04:06.119962+00:00
+Christopher Hall,Christopher,Hall,christopherh@gmail.com,(817) 394-1049,Nest Seekers,Virginia Beach,VA,17,40,3474437,VA777299,VA,4.9,90,C,realtor_scraper,2026-04-28T07:04:06.119980+00:00
+Alexander Nguyen,Alexander,Nguyen,alexander.nguyen@compass.com,(323) 728-9519,Century Communities,Indianapolis,IN,22,26,12414615,IN610791,IN,4.6,76,B,realtor_scraper,2026-04-28T07:04:06.119994+00:00
+Carol Morales,Carol,Morales,carol29@outlook.com,(440) 812-3510,Taylor Morrison,Milwaukee,WI,9,16,10821348,WI152655,WI,4.3,84,C,realtor_scraper,2026-04-28T07:04:06.120006+00:00
+Eric Phillips,Eric,Phillips,eric75@homesmart.com,(323) 740-6981,M/I Homes,Louisville,KY,9,36,8496124,KY697987,KY,3.6,60,C,realtor_scraper,2026-04-28T07:04:06.120020+00:00
+Edward Ramirez,Edward,Ramirez,ramirez.edward@coldwellbanker.com,(952) 833-6238,CalAtlantic Homes,Miami,FL,13,49,11229538,FL503184,FL,4.9,89,A,realtor_scraper,2026-04-28T07:04:06.120034+00:00
+Brian Hall,Brian,Hall,brian12@hotmail.com,(813) 394-8715,Sotheby's,Kansas City,MO,25,38,11897388,MO715638,MO,4.2,78,B,realtor_scraper,2026-04-28T07:04:06.120051+00:00
+Edward Rodriguez,Edward,Rodriguez,edward.rodriguez@gmail.com,(954) 673-3298,The Agency,Reno,NV,11,37,6440073,NV192340,NV,5.0,64,C,realtor_scraper,2026-04-28T07:04:06.120073+00:00
+Laura Long,Laura,Long,llong@redfin.com,(334) 615-4547,CalAtlantic Homes,Milwaukee,WI,22,35,8930566,WI819295,WI,3.9,61,C,realtor_scraper,2026-04-28T07:04:06.120087+00:00
+Joseph Sanchez,Joseph,Sanchez,jsanchez@realtyonegroup.com,(208) 482-9297,Nest Seekers,New York,NY,5,30,6239561,NY135293,NY,4.0,69,A,realtor_scraper,2026-04-28T07:04:06.120111+00:00
+Edward Allen,Edward,Allen,allen.edward@weichert.com,(336) 281-7061,ERA,Atlanta,GA,20,17,5358674,GA659594,GA,4.6,69,A,realtor_scraper,2026-04-28T07:04:06.120123+00:00
+Alexander Chavez,Alexander,Chavez,alexanderc@sothebysrealty.com,(303) 275-6810,RE/MAX,Phoenix,AZ,24,50,14229569,AZ509464,AZ,4.9,99,A,realtor_scraper,2026-04-28T07:04:06.120139+00:00
+Jonathan Campbell,Jonathan,Campbell,jcampbell@redfin.com,(339) 627-7074,LGI Homes,Philadelphia,PA,8,25,10324328,PA199670,PA,4.8,100,A,realtor_scraper,2026-04-28T07:04:06.120151+00:00
+Sharon Long,Sharon,Long,sharon76@homesmart.com,(321) 618-4704,Lennar,San Francisco,CA,23,13,2157120,CA382270,CA,4.4,70,A,realtor_scraper,2026-04-28T07:04:06.120164+00:00
+Catherine Rodriguez,Catherine,Rodriguez,crodriguez@sothebysrealty.com,(513) 939-2085,Nest Seekers,San Francisco,CA,4,8,779239,CA581058,CA,3.6,95,A,realtor_scraper,2026-04-28T07:04:06.120176+00:00
+Carolyn Williams,Carolyn,Williams,williams.carolyn@redfin.com,(605) 641-6800,Sotheby's,New Orleans,LA,21,42,3732058,LA667703,LA,5.0,69,C,realtor_scraper,2026-04-28T07:04:06.120188+00:00
+Frank Robinson,Frank,Robinson,frank85@kw.com,(832) 953-8016,Beazer Homes,Philadelphia,PA,17,16,6665522,PA545029,PA,4.7,88,A,realtor_scraper,2026-04-28T07:04:06.120200+00:00
+Katherine Cooper,Katherine,Cooper,katherine.cooper@coldwellbanker.com,(614) 642-6552,Zillow Premier,San Jose,CA,7,30,3075737,CA538164,CA,4.0,80,B,realtor_scraper,2026-04-28T07:04:06.120213+00:00
+Cynthia Wright,Cynthia,Wright,cwright@outlook.com,(760) 596-9034,Taylor Morrison,Albuquerque,NM,10,22,11613309,NM515422,NM,4.7,91,C,realtor_scraper,2026-04-28T07:04:06.120235+00:00
+Jennifer Peterson,Jennifer,Peterson,jennifer97@coldwellbanker.com,(904) 472-6045,Better Homes & Gardens,Virginia Beach,VA,15,50,14976375,VA987747,VA,3.9,100,C,realtor_scraper,2026-04-28T07:04:06.120253+00:00
+Samuel Rodriguez,Samuel,Rodriguez,srodriguez@exprealty.com,(248) 871-4918,Century Communities,Philadelphia,PA,16,50,4884564,PA825088,PA,4.1,91,A,realtor_scraper,2026-04-28T07:04:06.120269+00:00
+Tyler Lopez,Tyler,Lopez,tlopez@realtor.com,(863) 505-7500,Tri Pointe Homes,Tucson,AZ,21,33,1850993,AZ543863,AZ,4.6,93,C,realtor_scraper,2026-04-28T07:04:06.120291+00:00
+Benjamin Brooks,Benjamin,Brooks,benjamin57@remax.net,(608) 464-7156,The Agency,St. Louis,MO,11,18,9312481,MO748602,MO,4.9,83,B,realtor_scraper,2026-04-28T07:04:06.120304+00:00
+Jack Lopez,Jack,Lopez,lopez.jack@outlook.com,(575) 958-4329,Weichert,Reno,NV,5,25,14127751,NV443339,NV,3.6,100,C,realtor_scraper,2026-04-28T07:04:06.120320+00:00
+Emily Brown,Emily,Brown,emilyb@berkshirehathawayhs.com,(209) 989-8919,United Real Estate,Riverside,CA,23,28,9087720,CA785097,CA,4.5,74,B,realtor_scraper,2026-04-28T07:04:06.120333+00:00
+Carolyn Brooks,Carolyn,Brooks,brooks.carolyn@outlook.com,(828) 510-3029,Nest Seekers,Riverside,CA,25,31,14352102,CA921345,CA,3.7,75,B,realtor_scraper,2026-04-28T07:04:06.120344+00:00
+Margaret Robinson,Margaret,Robinson,margaretr@berkshirehathawayhs.com,(410) 710-6370,Taylor Morrison,Albuquerque,NM,19,46,9170435,NM622760,NM,3.6,73,C,realtor_scraper,2026-04-28T07:04:06.120355+00:00
+Jacob Jackson,Jacob,Jackson,jacob65@hotmail.com,(571) 807-9368,Ryan Homes,Los Angeles,CA,10,17,4352451,CA182549,CA,4.7,66,A,realtor_scraper,2026-04-28T07:04:06.120367+00:00
+Sarah Bennett,Sarah,Bennett,sarahb@century21.com,(276) 941-7905,eXp Realty,Tampa,FL,9,29,8034398,FL249725,FL,3.7,68,A,realtor_scraper,2026-04-28T07:04:06.120378+00:00
+Lisa Anderson,Lisa,Anderson,lisaa@redfin.com,(410) 205-3606,Redfin,San Jose,CA,22,40,14549377,CA418354,CA,4.8,100,B,realtor_scraper,2026-04-28T07:04:06.120390+00:00
+Tyler Taylor,Tyler,Taylor,tylert@elliman.com,(828) 961-7103,LGI Homes,New York,NY,14,27,2697322,NY840437,NY,3.6,71,A,realtor_scraper,2026-04-28T07:04:06.120420+00:00
+Shirley Hernandez,Shirley,Hernandez,shirleyh@century21.com,(707) 901-6202,Meritage Homes,Indianapolis,IN,11,33,11596751,IN812445,IN,3.8,81,B,realtor_scraper,2026-04-28T07:04:06.120436+00:00
+Brenda Peterson,Brenda,Peterson,brenda32@yahoo.com,(352) 319-5433,Ryan Homes,Virginia Beach,VA,2,10,1455297,VA113009,VA,3.5,83,C,realtor_scraper,2026-04-28T07:04:06.120448+00:00
+Rachel Young,Rachel,Young,rachel.young@elliman.com,(234) 671-1638,Pulte Homes,Denver,CO,7,25,1885558,CO621214,CO,4.0,61,A,realtor_scraper,2026-04-28T07:04:06.120460+00:00
+Helen Edwards,Helen,Edwards,helen.edwards@century21.com,(717) 822-6393,Vylla Home,Detroit,MI,18,33,9858728,MI940530,MI,3.9,79,B,realtor_scraper,2026-04-28T07:04:06.120471+00:00
+Carol Allen,Carol,Allen,carol.allen@elliman.com,(707) 891-6111,Berkshire Hathaway,Dallas-Fort Worth,TX,9,33,5321974,TX591018,TX,4.2,88,A,realtor_scraper,2026-04-28T07:04:06.120483+00:00
+Donna Edwards,Donna,Edwards,donna85@berkshirehathawayhs.com,(361) 416-2633,Taylor Morrison,Austin,TX,16,10,3527984,TX135749,TX,4.6,62,A,realtor_scraper,2026-04-28T07:04:06.120494+00:00
+George Morales,George,Morales,george37@weichert.com,(385) 529-3849,Beazer Homes,New Orleans,LA,13,43,2363281,LA244989,LA,4.8,73,C,realtor_scraper,2026-04-28T07:04:06.120509+00:00
+Emily Bennett,Emily,Bennett,ebennett@coldwellbanker.com,(831) 970-4829,Keller Williams,Milwaukee,WI,2,4,510488,WI371596,WI,3.9,64,C,realtor_scraper,2026-04-28T07:04:06.120520+00:00
+Richard Flores,Richard,Flores,rflores@berkshirehathawayhs.com,(512) 662-7039,RE/MAX,Virginia Beach,VA,22,14,12989371,VA123251,VA,4.5,100,C,realtor_scraper,2026-04-28T07:04:06.120531+00:00
+Stephen Baker,Stephen,Baker,stephenb@redfin.com,(216) 762-9895,The Agency,Virginia Beach,VA,19,25,14267437,VA875935,VA,4.2,89,C,realtor_scraper,2026-04-28T07:04:06.120547+00:00
+Dorothy Kelly,Dorothy,Kelly,dorothy.kelly@remax.net,(864) 957-9701,The Agency,New York,NY,10,37,6430650,NY699152,NY,4.5,93,A,realtor_scraper,2026-04-28T07:04:06.120565+00:00
+Eric Wood,Eric,Wood,ewood@exprealty.com,(620) 352-7785,Taylor Morrison,Austin,TX,20,46,12113260,TX280228,TX,4.9,82,A,realtor_scraper,2026-04-28T07:04:06.120578+00:00
+Samuel Campbell,Samuel,Campbell,samuel33@outlook.com,(667) 759-6911,Zillow Premier,Reno,NV,16,24,6028642,NV347991,NV,4.3,68,C,realtor_scraper,2026-04-28T07:04:06.120590+00:00
+Kevin Phillips,Kevin,Phillips,kevin.phillips@coldwellbanker.com,(336) 356-5422,HomeSmart,Baton Rouge,LA,19,35,11964298,LA725101,LA,3.8,70,C,realtor_scraper,2026-04-28T07:04:06.120601+00:00
+Patricia Reed,Patricia,Reed,patricia.reed@realtyonegroup.com,(858) 282-6741,NVR,Cleveland,OH,11,17,9291219,OH882846,OH,3.8,73,B,realtor_scraper,2026-04-28T07:04:06.120613+00:00
+Melissa Ramos,Melissa,Ramos,mramos@berkshirehathawayhs.com,(316) 323-2506,Century 21,Riverside,CA,18,37,3971108,CA862298,CA,4.7,74,B,realtor_scraper,2026-04-28T07:04:06.120624+00:00
+Jonathan King,Jonathan,King,jonathank@weichert.com,(530) 723-5404,NVR,New York,NY,18,38,10085945,NY361593,NY,4.6,87,A,realtor_scraper,2026-04-28T07:04:06.120636+00:00
+Emily Alvarez,Emily,Alvarez,emilya@weichert.com,(803) 369-1016,Sotheby's,Albuquerque,NM,19,31,3465567,NM498238,NM,3.6,70,C,realtor_scraper,2026-04-28T07:04:06.120647+00:00
+Betty Edwards,Betty,Edwards,betty53@yahoo.com,(959) 382-7653,Ryan Homes,Columbus,OH,4,13,942585,OH553556,OH,4.5,68,B,realtor_scraper,2026-04-28T07:04:06.120660+00:00
+Samuel Evans,Samuel,Evans,evans.samuel@elliman.com,(380) 703-8983,Century 21,Tucson,AZ,14,45,2660678,AZ220375,AZ,4.1,79,C,realtor_scraper,2026-04-28T07:04:06.120672+00:00
+Ashley Lee,Ashley,Lee,ashleyl@redfin.com,(480) 729-5498,Keller Williams,Baton Rouge,LA,20,21,10738669,LA909566,LA,3.8,70,C,realtor_scraper,2026-04-28T07:04:06.120692+00:00
+Betty Diaz,Betty,Diaz,bdiaz@century21.com,(734) 548-6560,Taylor Morrison,Riverside,CA,2,15,1504991,CA859148,CA,4.8,95,B,realtor_scraper,2026-04-28T07:04:06.120704+00:00
+Christine Brooks,Christine,Brooks,cbrooks@kw.com,(775) 249-8344,ERA,Baton Rouge,LA,19,31,14696791,LA328096,LA,4.1,88,C,realtor_scraper,2026-04-28T07:04:06.120716+00:00
+Helen Mitchell,Helen,Mitchell,helen26@coldwellbanker.com,(213) 797-9348,Ryan Homes,Riverside,CA,8,45,14978517,CA313580,CA,4.1,87,B,realtor_scraper,2026-04-28T07:04:06.120727+00:00
+Betty Martinez,Betty,Martinez,bmartinez@realtor.com,(617) 751-5530,Coldwell Banker,Houston,TX,24,41,9789309,TX269983,TX,3.7,76,A,realtor_scraper,2026-04-28T07:04:06.120738+00:00
+Margaret Scott,Margaret,Scott,margarets@redfin.com,(475) 384-8445,United Real Estate,Jacksonville,FL,1,5,308753,FL510001,FL,4.2,94,B,realtor_scraper,2026-04-28T07:04:06.120749+00:00
+Laura Garcia,Laura,Garcia,lgarcia@coldwellbanker.com,(260) 994-3107,KB Home,Detroit,MI,7,48,6870445,MI580981,MI,4.2,61,B,realtor_scraper,2026-04-28T07:04:06.120762+00:00
+Anthony Ward,Anthony,Ward,ward.anthony@outlook.com,(937) 388-8692,The Agency,Cincinnati,OH,15,17,6249735,OH827343,OH,4.3,90,B,realtor_scraper,2026-04-28T07:04:06.120774+00:00
+Eric Cruz,Eric,Cruz,cruz.eric@compass.com,(484) 854-6855,Pulte Homes,San Jose,CA,4,8,806431,CA620622,CA,3.9,70,B,realtor_scraper,2026-04-28T07:04:06.120786+00:00
+Kimberly Phillips,Kimberly,Phillips,kphillips@weichert.com,(704) 659-7756,HomeSmart,Miami,FL,3,12,1824069,FL866511,FL,4.1,62,A,realtor_scraper,2026-04-28T07:04:06.120797+00:00
+Mark Gutierrez,Mark,Gutierrez,gutierrez.mark@hotmail.com,(781) 991-2108,Berkshire Hathaway,Atlanta,GA,13,27,8453924,GA337965,GA,4.3,73,A,realtor_scraper,2026-04-28T07:04:06.120812+00:00
+Karen Flores,Karen,Flores,karen.flores@elliman.com,(508) 242-1256,Meritage Homes,Riverside,CA,13,47,4709502,CA201687,CA,4.5,73,B,realtor_scraper,2026-04-28T07:04:06.120824+00:00
+Ashley Campbell,Ashley,Campbell,acampbell@yahoo.com,(330) 648-7305,United Real Estate,Reno,NV,14,49,8406092,NV654139,NV,4.8,76,C,realtor_scraper,2026-04-28T07:04:06.120835+00:00
+Mark Anderson,Mark,Anderson,marka@weichert.com,(317) 740-5364,LGI Homes,Raleigh,NC,20,34,12275661,NC875372,NC,4.0,95,B,realtor_scraper,2026-04-28T07:04:06.120848+00:00
+Michael Ortiz,Michael,Ortiz,michael.ortiz@realtyonegroup.com,(274) 588-7609,NVR,Columbus,OH,24,24,6651859,OH727086,OH,3.7,83,B,realtor_scraper,2026-04-28T07:04:06.120863+00:00
+Jason Thomas,Jason,Thomas,thomas.jason@coldwellbanker.com,(832) 924-3703,Redfin,Boise,ID,18,42,14090799,ID846357,ID,3.7,78,C,realtor_scraper,2026-04-28T07:04:06.120875+00:00
+Jennifer Turner,Jennifer,Turner,jennifer.turner@weichert.com,(864) 691-2759,The Agency,San Diego,CA,21,43,5305816,CA103594,CA,4.7,81,A,realtor_scraper,2026-04-28T07:04:06.120888+00:00
+George Martinez,George,Martinez,martinez.george@yahoo.com,(401) 908-5804,CalAtlantic Homes,Boise,ID,25,21,5915209,ID920578,ID,4.0,92,C,realtor_scraper,2026-04-28T07:04:06.120900+00:00
+Rebecca Ramos,Rebecca,Ramos,rebecca54@weichert.com,(201) 946-6648,Sotheby's,Boston,MA,3,14,1862009,MA187834,MA,4.1,80,A,realtor_scraper,2026-04-28T07:04:06.120911+00:00
+Pamela Garcia,Pamela,Garcia,garcia.pamela@compass.com,(339) 774-6315,United Real Estate,Atlanta,GA,7,34,4986434,GA862720,GA,3.6,80,A,realtor_scraper,2026-04-28T07:04:06.120923+00:00
+Shirley Diaz,Shirley,Diaz,shirley92@realtor.com,(847) 875-4088,ERA,Portland,OR,21,32,11451284,OR592295,OR,4.2,87,B,realtor_scraper,2026-04-28T07:04:06.120938+00:00
+Brian Cox,Brian,Cox,brianc@exprealty.com,(445) 530-5540,RE/MAX,Cleveland,OH,13,47,4201168,OH348920,OH,4.9,82,B,realtor_scraper,2026-04-28T07:04:06.120950+00:00
+Rachel Hughes,Rachel,Hughes,rachel.hughes@kw.com,(312) 658-2948,The Agency,Boise,ID,9,48,9834340,ID859649,ID,4.5,76,C,realtor_scraper,2026-04-28T07:04:06.120966+00:00
+Rebecca Sanders,Rebecca,Sanders,rsanders@weichert.com,(445) 377-2569,Lennar,Austin,TX,23,32,11200385,TX771873,TX,4.9,74,A,realtor_scraper,2026-04-28T07:04:06.120977+00:00
+Richard Patel,Richard,Patel,richard.patel@coldwellbanker.com,(413) 366-9091,M/I Homes,Phoenix,AZ,10,36,4740515,AZ859092,AZ,4.1,83,A,realtor_scraper,2026-04-28T07:04:06.120989+00:00
+Michael King,Michael,King,king.michael@redfin.com,(609) 239-3417,Compass,Albuquerque,NM,18,27,8322031,NM942528,NM,3.7,87,C,realtor_scraper,2026-04-28T07:04:06.121004+00:00
+Ashley Cruz,Ashley,Cruz,ashley16@coldwellbanker.com,(727) 958-1694,Beazer Homes,Cincinnati,OH,20,36,8183579,OH986639,OH,4.6,81,B,realtor_scraper,2026-04-28T07:04:06.121016+00:00
+Carol Lee,Carol,Lee,caroll@homesmart.com,(832) 994-2279,D.R. Horton,Memphis,TN,11,34,6134848,TN178546,TN,4.1,85,C,realtor_scraper,2026-04-28T07:04:06.121030+00:00
+Jacob Myers,Jacob,Myers,jacob28@homesmart.com,(270) 917-8620,NVR,Nashville,TN,12,23,4792747,TN404974,TN,4.5,63,A,realtor_scraper,2026-04-28T07:04:06.121048+00:00
+Joseph Gutierrez,Joseph,Gutierrez,josephg@redfin.com,(231) 741-2653,Lennar,Portland,OR,12,23,10030436,OR576935,OR,3.8,100,B,realtor_scraper,2026-04-28T07:04:06.121072+00:00
+Paul Mendoza,Paul,Mendoza,paulm@century21.com,(956) 587-3654,KB Home,Boston,MA,10,49,6969227,MA973610,MA,4.7,68,A,realtor_scraper,2026-04-28T07:04:06.121088+00:00
+Ruth Wood,Ruth,Wood,ruthw@hotmail.com,(619) 271-1426,M/I Homes,Cleveland,OH,3,12,1917449,OH249845,OH,4.0,82,B,realtor_scraper,2026-04-28T07:04:06.121101+00:00
+Donald White,Donald,White,dwhite@elliman.com,(531) 831-1284,Ryan Homes,Los Angeles,CA,0,1,241368,CA494084,CA,4.6,63,A,realtor_scraper,2026-04-28T07:04:06.121114+00:00
+Cynthia Miller,Cynthia,Miller,miller.cynthia@redfin.com,(912) 629-1468,LGI Homes,Baltimore,MD,18,44,4459758,MD482316,MD,4.6,89,B,realtor_scraper,2026-04-28T07:04:06.121126+00:00
+Tyler Morgan,Tyler,Morgan,tmorgan@outlook.com,(303) 904-9383,HomeSmart,Tucson,AZ,21,28,4872856,AZ867825,AZ,4.5,89,C,realtor_scraper,2026-04-28T07:04:06.121138+00:00
+Linda Murphy,Linda,Murphy,linda.murphy@homesmart.com,(325) 815-8583,Century Communities,Tucson,AZ,15,48,8337539,AZ734713,AZ,4.5,81,C,realtor_scraper,2026-04-28T07:04:06.121150+00:00
+Kenneth Nelson,Kenneth,Nelson,knelson@weichert.com,(727) 379-2469,Sotheby's,Milwaukee,WI,12,21,14581871,WI812319,WI,4.4,75,C,realtor_scraper,2026-04-28T07:04:06.121162+00:00
+Brenda Mendoza,Brenda,Mendoza,mendoza.brenda@gmail.com,(272) 563-2384,ERA,Minneapolis,MN,19,48,14169556,MN822570,MN,4.0,76,B,realtor_scraper,2026-04-28T07:04:06.121174+00:00
+Brenda Wood,Brenda,Wood,wood.brenda@remax.net,(309) 523-7991,Century Communities,San Diego,CA,0,1,425359,CA419133,CA,4.9,46,A,realtor_scraper,2026-04-28T07:04:06.121186+00:00
+Katherine Nguyen,Katherine,Nguyen,katherine.nguyen@redfin.com,(430) 787-7765,Tri Pointe Homes,Colorado Springs,CO,16,34,12962341,CO992028,CO,4.6,94,C,realtor_scraper,2026-04-28T07:04:06.121200+00:00
+Nicholas Moore,Nicholas,Moore,nmoore@realtyonegroup.com,(843) 935-5385,eXp Realty,Detroit,MI,24,41,8684781,MI417068,MI,4.9,90,B,realtor_scraper,2026-04-28T07:04:06.121216+00:00
+Dorothy Stewart,Dorothy,Stewart,dorothy.stewart@compass.com,(409) 295-1560,Nest Seekers,San Jose,CA,3,5,1750143,CA821570,CA,4.3,68,B,realtor_scraper,2026-04-28T07:04:06.121229+00:00
+Larry Baker,Larry,Baker,larryb@outlook.com,(813) 205-1867,Toll Brothers,Colorado Springs,CO,20,11,11263736,CO313268,CO,3.7,92,C,realtor_scraper,2026-04-28T07:04:06.121246+00:00
+William Harris,William,Harris,williamh@elliman.com,(210) 437-6387,Keller Williams,Houston,TX,23,13,3340281,TX406729,TX,4.2,73,A,realtor_scraper,2026-04-28T07:04:06.121261+00:00
+Sandra Allen,Sandra,Allen,sandra.allen@hotmail.com,(507) 586-4761,Nest Seekers,Albuquerque,NM,4,14,1089639,NM892706,NM,4.8,85,C,realtor_scraper,2026-04-28T07:04:06.121274+00:00
+Jack Green,Jack,Green,jackg@coldwellbanker.com,(501) 242-9469,Nest Seekers,Cincinnati,OH,0,2,469149,OH226153,OH,4.4,66,B,realtor_scraper,2026-04-28T07:04:06.121288+00:00
+Jerry Cooper,Jerry,Cooper,jerry63@coldwellbanker.com,(504) 385-6065,Sotheby's,San Jose,CA,24,23,3248992,CA908338,CA,4.9,93,B,realtor_scraper,2026-04-28T07:04:06.121301+00:00
+Michael Rodriguez,Michael,Rodriguez,michaelr@homesmart.com,(641) 222-6507,eXp Realty,Phoenix,AZ,14,24,5717415,AZ491165,AZ,3.7,71,A,realtor_scraper,2026-04-28T07:04:06.121314+00:00
+Brian Jackson,Brian,Jackson,brian.jackson@realtor.com,(864) 996-9484,Redfin,Boise,ID,20,12,12630128,ID958858,ID,4.8,89,C,realtor_scraper,2026-04-28T07:04:06.121328+00:00
+Joseph Turner,Joseph,Turner,josepht@redfin.com,(214) 562-9230,NVR,Orlando,FL,5,38,3771922,FL624602,FL,4.8,61,A,realtor_scraper,2026-04-28T07:04:06.121342+00:00
+Paul Morales,Paul,Morales,pmorales@hotmail.com,(847) 571-3265,Nest Seekers,Sacramento,CA,1,0,179985,CA914307,CA,0.0,72,B,realtor_scraper,2026-04-28T07:04:06.121359+00:00
+Andrew Martin,Andrew,Martin,amartin@hotmail.com,(417) 858-9404,United Real Estate,St. Louis,MO,1,4,217123,MO829199,MO,3.7,93,B,realtor_scraper,2026-04-28T07:04:06.121373+00:00
+Emily Evans,Emily,Evans,emily53@realtor.com,(318) 292-1076,NVR,Dallas-Fort Worth,TX,19,25,13356843,TX215222,TX,5.0,100,A,realtor_scraper,2026-04-28T07:04:06.121384+00:00
+William Turner,William,Turner,wturner@exprealty.com,(216) 564-2648,Pulte Homes,New York,NY,2,13,997809,NY919067,NY,4.6,74,A,realtor_scraper,2026-04-28T07:04:06.121444+00:00
+Ronald Scott,Ronald,Scott,ronalds@berkshirehathawayhs.com,(530) 274-7641,Vylla Home,Chicago,IL,20,17,2019480,IL801888,IL,4.9,77,A,realtor_scraper,2026-04-28T07:04:06.121466+00:00
+Thomas Kim,Thomas,Kim,thomas74@century21.com,(720) 868-1740,Beazer Homes,Los Angeles,CA,16,46,12348841,CA387936,CA,4.9,79,A,realtor_scraper,2026-04-28T07:04:06.121482+00:00
+James Hernandez,James,Hernandez,james.hernandez@remax.net,(870) 588-6609,Meritage Homes,Minneapolis,MN,16,27,8677603,MN451141,MN,4.4,70,B,realtor_scraper,2026-04-28T07:04:06.121501+00:00
+Steven Long,Steven,Long,stevenl@hotmail.com,(602) 857-8726,NVR,Chicago,IL,14,27,1903244,IL678976,IL,4.8,67,A,realtor_scraper,2026-04-28T07:04:06.121513+00:00
+Dorothy Long,Dorothy,Long,long.dorothy@gmail.com,(719) 899-4032,CalAtlantic Homes,Reno,NV,0,1,364412,NV287292,NV,3.9,40,C,realtor_scraper,2026-04-28T07:04:06.121526+00:00
+Kimberly James,Kimberly,James,kjames@exprealty.com,(763) 893-3348,CalAtlantic Homes,San Antonio,TX,18,13,13042309,TX965437,TX,3.8,84,B,realtor_scraper,2026-04-28T07:04:06.121537+00:00
+Jacob Watson,Jacob,Watson,watson.jacob@weichert.com,(442) 244-3064,Redfin,New York,NY,8,28,12575873,NY456975,NY,3.7,82,A,realtor_scraper,2026-04-28T07:04:06.121553+00:00
+Anthony Nelson,Anthony,Nelson,anthony77@realtor.com,(781) 418-1305,eXp Realty,Baton Rouge,LA,25,22,9884579,LA898302,LA,4.7,61,C,realtor_scraper,2026-04-28T07:04:06.121570+00:00
+Cynthia Howard,Cynthia,Howard,cynthia.howard@berkshirehathawayhs.com,(337) 508-2686,Vylla Home,Baltimore,MD,0,0,495095,MD320421,MD,0.0,55,B,realtor_scraper,2026-04-28T07:04:06.121590+00:00
+Andrew Myers,Andrew,Myers,andrew47@berkshirehathawayhs.com,(209) 522-9294,NVR,Raleigh,NC,2,14,1058956,NC347856,NC,4.9,69,B,realtor_scraper,2026-04-28T07:04:06.121607+00:00
+Laura Campbell,Laura,Campbell,laurac@homesmart.com,(231) 501-2008,Sotheby's,Louisville,KY,10,34,9431290,KY365581,KY,4.0,64,C,realtor_scraper,2026-04-28T07:04:06.121619+00:00
+Sandra Thomas,Sandra,Thomas,sthomas@berkshirehathawayhs.com,(760) 986-3893,Redfin,Orlando,FL,25,43,10691492,FL333231,FL,4.3,90,A,realtor_scraper,2026-04-28T07:04:06.121631+00:00
+Angela Cox,Angela,Cox,angela71@century21.com,(478) 822-8756,Redfin,Columbus,OH,18,41,14262837,OH464531,OH,3.8,86,B,realtor_scraper,2026-04-28T07:04:06.121643+00:00
+Robert Allen,Robert,Allen,rallen@exprealty.com,(458) 293-2828,Keller Williams,Detroit,MI,6,38,6888518,MI160136,MI,4.6,84,B,realtor_scraper,2026-04-28T07:04:06.121656+00:00
+Michael Thomas,Michael,Thomas,thomas.michael@berkshirehathawayhs.com,(303) 757-3108,Zillow Premier,Charlotte,NC,14,49,2967903,NC351774,NC,4.6,93,A,realtor_scraper,2026-04-28T07:04:06.121667+00:00
+William King,William,King,wking@sothebysrealty.com,(564) 397-5189,Nest Seekers,Philadelphia,PA,19,21,14320120,PA649438,PA,4.3,79,A,realtor_scraper,2026-04-28T07:04:06.121679+00:00
+Susan Green,Susan,Green,sgreen@century21.com,(949) 714-4335,Berkshire Hathaway,Reno,NV,2,3,972871,NV813180,NV,3.8,71,C,realtor_scraper,2026-04-28T07:04:06.121705+00:00
+Ryan Harris,Ryan,Harris,rharris@realtyonegroup.com,(424) 915-6245,Meritage Homes,Oklahoma City,OK,6,10,3922640,OK848808,OK,3.9,91,C,realtor_scraper,2026-04-28T07:04:06.121725+00:00
+Timothy Martin,Timothy,Martin,timothy89@weichert.com,(814) 582-9258,LGI Homes,Nashville,TN,6,33,11856969,TN805417,TN,5.0,81,A,realtor_scraper,2026-04-28T07:04:06.121749+00:00
+Sarah Thomas,Sarah,Thomas,sarah1@outlook.com,(210) 990-4376,Lennar,Philadelphia,PA,2,4,815562,PA562147,PA,3.6,64,A,realtor_scraper,2026-04-28T07:04:06.121766+00:00
+Deborah Mitchell,Deborah,Mitchell,mitchell.deborah@yahoo.com,(434) 522-3400,NVR,Baton Rouge,LA,1,1,269970,LA459048,LA,4.9,67,C,realtor_scraper,2026-04-28T07:04:06.121780+00:00
+Brian Evans,Brian,Evans,bevans@sothebysrealty.com,(270) 763-9392,Meritage Homes,Denver,CO,8,38,7280265,CO696577,CO,4.0,84,A,realtor_scraper,2026-04-28T07:04:06.121793+00:00
+Laura Thompson,Laura,Thompson,laurat@gmail.com,(747) 774-3542,Better Homes & Gardens,Orlando,FL,13,26,6282744,FL537528,FL,3.6,71,A,realtor_scraper,2026-04-28T07:04:06.121805+00:00
+Anna Hill,Anna,Hill,hill.anna@kw.com,(701) 693-6766,Taylor Morrison,Salt Lake City,UT,3,14,1769956,UT746436,UT,4.1,95,B,realtor_scraper,2026-04-28T07:04:06.121818+00:00
+Edward Green,Edward,Green,edward54@sothebysrealty.com,(274) 324-2668,Meritage Homes,Tucson,AZ,1,5,32047,AZ985283,AZ,3.7,69,C,realtor_scraper,2026-04-28T07:04:06.121830+00:00
+Sharon Carter,Sharon,Carter,carter.sharon@redfin.com,(813) 777-4966,Ryan Homes,Albuquerque,NM,8,26,9875714,NM659511,NM,4.1,91,C,realtor_scraper,2026-04-28T07:04:06.121841+00:00
+Edward Cook,Edward,Cook,edward32@yahoo.com,(315) 207-5751,LGI Homes,Boston,MA,17,22,7478374,MA852844,MA,5.0,83,A,realtor_scraper,2026-04-28T07:04:06.121861+00:00
+Melissa Brooks,Melissa,Brooks,melissa.brooks@yahoo.com,(959) 930-2496,Berkshire Hathaway,Riverside,CA,22,50,3988084,CA359987,CA,4.3,65,B,realtor_scraper,2026-04-28T07:04:06.121874+00:00
+Kimberly Cruz,Kimberly,Cruz,cruz.kimberly@hotmail.com,(518) 673-3770,Taylor Morrison,New York,NY,1,2,147261,NY365515,NY,4.6,58,A,realtor_scraper,2026-04-28T07:04:06.121888+00:00
+Gary Walker,Gary,Walker,gary.walker@exprealty.com,(763) 261-2720,Realty One Group,Miami,FL,25,14,2257067,FL257744,FL,4.2,60,A,realtor_scraper,2026-04-28T07:04:06.121900+00:00
+Frank Morris,Frank,Morris,frank.morris@realtor.com,(775) 424-2510,Coldwell Banker,Tampa,FL,9,33,11704213,FL643369,FL,4.0,95,A,realtor_scraper,2026-04-28T07:04:06.121917+00:00
+Emma Cooper,Emma,Cooper,emmac@elliman.com,(435) 446-5297,D.R. Horton,Los Angeles,CA,14,25,10330035,CA383081,CA,4.8,89,A,realtor_scraper,2026-04-28T07:04:06.121929+00:00
+Deborah Murphy,Deborah,Murphy,deborahm@redfin.com,(202) 704-8858,The Agency,Boston,MA,11,10,12817289,MA724009,MA,3.6,78,A,realtor_scraper,2026-04-28T07:04:06.121941+00:00
+David Campbell,David,Campbell,david98@realtor.com,(954) 417-1457,NVR,Atlanta,GA,13,23,13153500,GA878708,GA,4.0,81,A,realtor_scraper,2026-04-28T07:04:06.121958+00:00
+Christine Jackson,Christine,Jackson,cjackson@century21.com,(385) 317-7321,ERA,Cincinnati,OH,19,39,6347626,OH322154,OH,4.6,78,B,realtor_scraper,2026-04-28T07:04:06.121971+00:00
+Robert Mendoza,Robert,Mendoza,robertm@kw.com,(828) 718-3909,Pulte Homes,Boise,ID,7,37,3719062,ID991626,ID,4.7,74,C,realtor_scraper,2026-04-28T07:04:06.121984+00:00
+Daniel Brown,Daniel,Brown,dbrown@berkshirehathawayhs.com,(330) 404-9908,RE/MAX,San Jose,CA,6,27,9577683,CA188585,CA,3.7,88,B,realtor_scraper,2026-04-28T07:04:06.122001+00:00
+Jerry Richardson,Jerry,Richardson,jrichardson@weichert.com,(985) 432-5181,Redfin,Milwaukee,WI,13,39,11934133,WI942118,WI,3.9,83,C,realtor_scraper,2026-04-28T07:04:06.122014+00:00
+Scott Perez,Scott,Perez,scott.perez@redfin.com,(503) 747-3651,NVR,Tampa,FL,24,36,6460189,FL996338,FL,4.2,70,A,realtor_scraper,2026-04-28T07:04:06.122026+00:00
+Jacob Kelly,Jacob,Kelly,jacob85@homesmart.com,(571) 623-6641,ERA,Houston,TX,15,15,1737367,TX821825,TX,4.9,95,A,realtor_scraper,2026-04-28T07:04:06.122039+00:00
+Robert Williams,Robert,Williams,robertw@redfin.com,(681) 645-7396,Toll Brothers,Jacksonville,FL,24,36,7905779,FL558837,FL,3.9,82,B,realtor_scraper,2026-04-28T07:04:06.122051+00:00
+John Williams,John,Williams,johnw@hotmail.com,(334) 820-3208,Lennar,Tampa,FL,3,7,921033,FL625895,FL,4.9,83,A,realtor_scraper,2026-04-28T07:04:06.122095+00:00
+Matthew Hughes,Matthew,Hughes,matthew.hughes@sothebysrealty.com,(408) 209-8383,Toll Brothers,Orlando,FL,22,44,7004592,FL581148,FL,3.8,93,A,realtor_scraper,2026-04-28T07:04:06.122111+00:00
+Jack Ross,Jack,Ross,ross.jack@coldwellbanker.com,(619) 606-8941,Century Communities,New York,NY,13,24,5134158,NY530657,NY,4.3,69,A,realtor_scraper,2026-04-28T07:04:06.122133+00:00
+Diane Lopez,Diane,Lopez,lopez.diane@exprealty.com,(317) 903-1552,eXp Realty,Los Angeles,CA,0,3,367396,CA473169,CA,4.3,95,A,realtor_scraper,2026-04-28T07:04:06.122144+00:00
+Ronald Smith,Ronald,Smith,smith.ronald@gmail.com,(501) 416-9262,ERA,Charlotte,NC,3,9,646882,NC669589,NC,3.8,63,A,realtor_scraper,2026-04-28T07:04:06.122157+00:00
+Nicole Watson,Nicole,Watson,nicole46@sothebysrealty.com,(727) 513-2677,Weichert,Jacksonville,FL,9,13,14621165,FL191417,FL,4.8,100,B,realtor_scraper,2026-04-28T07:04:06.122172+00:00
+James Chavez,James,Chavez,jchavez@hotmail.com,(315) 381-5796,Realty One Group,Louisville,KY,24,20,11084188,KY619964,KY,3.9,100,C,realtor_scraper,2026-04-28T07:04:06.122186+00:00
+Larry Morgan,Larry,Morgan,lmorgan@kw.com,(272) 539-8451,Pulte Homes,New Orleans,LA,4,9,814854,LA610641,LA,3.7,89,C,realtor_scraper,2026-04-28T07:04:06.122207+00:00
+Margaret Lee,Margaret,Lee,lee.margaret@kw.com,(224) 856-7488,Meritage Homes,Virginia Beach,VA,2,12,1013382,VA466408,VA,4.7,62,C,realtor_scraper,2026-04-28T07:04:06.122222+00:00
+Gregory Hall,Gregory,Hall,ghall@remax.net,(818) 951-8799,Meritage Homes,Salt Lake City,UT,13,20,2195546,UT121227,UT,4.9,89,B,realtor_scraper,2026-04-28T07:04:06.122235+00:00
+George Gutierrez,George,Gutierrez,george93@outlook.com,(757) 681-3800,Zillow Premier,Kansas City,MO,7,19,2461289,MO313233,MO,4.7,91,B,realtor_scraper,2026-04-28T07:04:06.122248+00:00
+Cynthia Stewart,Cynthia,Stewart,stewart.cynthia@exprealty.com,(201) 884-6509,HomeSmart,Denver,CO,15,48,4552268,CO268934,CO,4.4,95,A,realtor_scraper,2026-04-28T07:04:06.122260+00:00
+Melissa Murphy,Melissa,Murphy,melissa.murphy@berkshirehathawayhs.com,(505) 449-9331,Weichert,Detroit,MI,24,48,11690594,MI695803,MI,4.7,72,B,realtor_scraper,2026-04-28T07:04:06.122272+00:00
+Alexander Robinson,Alexander,Robinson,arobinson@redfin.com,(772) 785-7259,Realty One Group,Colorado Springs,CO,19,10,1608251,CO559443,CO,4.8,64,C,realtor_scraper,2026-04-28T07:04:06.122285+00:00
+Christopher Adams,Christopher,Adams,christophera@exprealty.com,(320) 848-1494,Compass,San Diego,CA,1,0,75847,CA251027,CA,0.0,64,A,realtor_scraper,2026-04-28T07:04:06.122297+00:00
+Donald Martin,Donald,Martin,donald12@gmail.com,(531) 634-9684,M/I Homes,Los Angeles,CA,9,19,4634712,CA659940,CA,4.0,64,A,realtor_scraper,2026-04-28T07:04:06.122317+00:00
+Brian Cox,Brian,Cox,brian68@berkshirehathawayhs.com,(951) 590-5170,Meritage Homes,San Jose,CA,16,25,3705905,CA143198,CA,4.9,87,B,realtor_scraper,2026-04-28T07:04:06.122330+00:00
+Eric Hughes,Eric,Hughes,hughes.eric@yahoo.com,(361) 974-4213,KB Home,Las Vegas,NV,23,36,5955230,NV408090,NV,4.9,71,A,realtor_scraper,2026-04-28T07:04:06.122347+00:00
+Nicole Stewart,Nicole,Stewart,nicoles@elliman.com,(724) 437-5878,Realty One Group,Miami,FL,19,50,2094193,FL478896,FL,4.4,66,A,realtor_scraper,2026-04-28T07:04:06.122360+00:00
+Ryan Mitchell,Ryan,Mitchell,mitchell.ryan@century21.com,(303) 233-9150,RE/MAX,Tucson,AZ,18,26,9021327,AZ815738,AZ,4.1,80,C,realtor_scraper,2026-04-28T07:04:06.122373+00:00
+George Ruiz,George,Ruiz,georger@elliman.com,(206) 709-1193,Century Communities,Denver,CO,12,43,8178433,CO976907,CO,3.9,88,A,realtor_scraper,2026-04-28T07:04:06.122385+00:00
+Lisa Kim,Lisa,Kim,lisa92@redfin.com,(646) 540-6706,eXp Realty,Detroit,MI,10,44,6049837,MI858775,MI,4.6,82,B,realtor_scraper,2026-04-28T07:04:06.122416+00:00
+James Chavez,James,Chavez,jchavez@berkshirehathawayhs.com,(205) 810-9245,Redfin,Riverside,CA,6,10,5480490,CA460035,CA,3.9,68,B,realtor_scraper,2026-04-28T07:04:06.122426+00:00
+Anna Lewis,Anna,Lewis,anna.lewis@realtyonegroup.com,(540) 526-5912,Century 21,San Jose,CA,19,15,8342652,CA557863,CA,4.2,66,B,realtor_scraper,2026-04-28T07:04:06.122435+00:00
+Sarah Lewis,Sarah,Lewis,lewis.sarah@outlook.com,(701) 303-6524,Better Homes & Gardens,Atlanta,GA,18,45,11326610,GA381943,GA,3.8,83,A,realtor_scraper,2026-04-28T07:04:06.122444+00:00
+Amanda Sanders,Amanda,Sanders,amanda87@compass.com,(813) 780-9260,Vylla Home,Sacramento,CA,21,10,7163621,CA161536,CA,4.7,60,B,realtor_scraper,2026-04-28T07:04:06.122456+00:00
+Debra Nelson,Debra,Nelson,nelson.debra@kw.com,(615) 845-5052,Beazer Homes,Denver,CO,22,23,1761125,CO445835,CO,4.2,80,A,realtor_scraper,2026-04-28T07:04:06.122466+00:00
+Timothy Harris,Timothy,Harris,tharris@exprealty.com,(669) 248-3094,Zillow Premier,Miami,FL,0,5,273099,FL773889,FL,4.6,73,A,realtor_scraper,2026-04-28T07:04:06.122474+00:00
+Heather Kelly,Heather,Kelly,hkelly@hotmail.com,(772) 443-5040,ERA,St. Louis,MO,23,11,4909015,MO905247,MO,3.7,80,B,realtor_scraper,2026-04-28T07:04:06.122483+00:00
+Justin Parker,Justin,Parker,parker.justin@sothebysrealty.com,(910) 699-2286,Weichert,Sacramento,CA,22,40,6296503,CA718867,CA,4.0,71,B,realtor_scraper,2026-04-28T07:04:06.122492+00:00
+Nicholas Peterson,Nicholas,Peterson,nicholasp@gmail.com,(316) 412-9719,Compass,Las Vegas,NV,20,41,9987716,NV926939,NV,5.0,93,A,realtor_scraper,2026-04-28T07:04:06.122504+00:00
+William Mitchell,William,Mitchell,mitchell.william@berkshirehathawayhs.com,(312) 602-2345,Weichert,Charlotte,NC,0,4,342800,NC744555,NC,4.9,86,A,realtor_scraper,2026-04-28T07:04:06.122513+00:00
+Jessica Peterson,Jessica,Peterson,jessica49@century21.com,(657) 722-2387,The Agency,Louisville,KY,22,12,13819498,KY551704,KY,4.9,87,C,realtor_scraper,2026-04-28T07:04:06.122521+00:00
+Andrew Ross,Andrew,Ross,aross@hotmail.com,(810) 852-2219,Tri Pointe Homes,Chicago,IL,9,48,12557226,IL518903,IL,3.8,70,A,realtor_scraper,2026-04-28T07:04:06.122530+00:00
+Shirley Mitchell,Shirley,Mitchell,smitchell@exprealty.com,(657) 959-6603,M/I Homes,Richmond,VA,7,39,12157825,VA507437,VA,4.9,71,C,realtor_scraper,2026-04-28T07:04:06.122538+00:00
+Lisa Mendoza,Lisa,Mendoza,lisa26@realtyonegroup.com,(985) 298-9051,Compass,Virginia Beach,VA,14,20,6486975,VA629024,VA,4.0,91,C,realtor_scraper,2026-04-28T07:04:06.122553+00:00
+Emma Mitchell,Emma,Mitchell,emitchell@exprealty.com,(309) 369-5978,Zillow Premier,Virginia Beach,VA,8,28,6986990,VA791902,VA,4.5,84,C,realtor_scraper,2026-04-28T07:04:06.122566+00:00
+Maria Garcia,Maria,Garcia,mgarcia@remax.net,(213) 850-1313,Vylla Home,San Antonio,TX,12,48,8709411,TX885403,TX,4.7,69,B,realtor_scraper,2026-04-28T07:04:06.122579+00:00
+Ryan Ross,Ryan,Ross,rross@elliman.com,(801) 614-1009,Keller Williams,Columbus,OH,25,12,10084651,OH400160,OH,4.4,93,B,realtor_scraper,2026-04-28T07:04:06.122592+00:00
+Margaret Hill,Margaret,Hill,hill.margaret@realtyonegroup.com,(747) 846-1719,Better Homes & Gardens,Virginia Beach,VA,15,47,11866672,VA561172,VA,3.5,96,C,realtor_scraper,2026-04-28T07:04:06.122604+00:00
+Patricia Reyes,Patricia,Reyes,preyes@gmail.com,(317) 687-5411,HomeSmart,Boston,MA,8,11,13551848,MA716551,MA,4.5,79,A,realtor_scraper,2026-04-28T07:04:06.122613+00:00
+Nancy Cruz,Nancy,Cruz,cruz.nancy@sothebysrealty.com,(858) 534-5755,Meritage Homes,Nashville,TN,18,33,13249571,TN498980,TN,4.7,75,A,realtor_scraper,2026-04-28T07:04:06.122622+00:00
+Edward Cox,Edward,Cox,edward84@realtyonegroup.com,(681) 778-1919,Keller Williams,Virginia Beach,VA,12,19,11756743,VA371467,VA,3.9,100,C,realtor_scraper,2026-04-28T07:04:06.122631+00:00
+Paul Patel,Paul,Patel,ppatel@hotmail.com,(818) 237-1995,Taylor Morrison,Orlando,FL,10,40,3060136,FL641594,FL,4.8,79,A,realtor_scraper,2026-04-28T07:04:06.122640+00:00
+Jacob Morris,Jacob,Morris,jacob44@kw.com,(414) 726-7501,LGI Homes,Baton Rouge,LA,19,23,3729882,LA655305,LA,3.5,61,C,realtor_scraper,2026-04-28T07:04:06.122653+00:00
+Jennifer Richardson,Jennifer,Richardson,jenniferr@coldwellbanker.com,(410) 521-3066,Compass,San Francisco,CA,4,4,1556923,CA803181,CA,4.9,77,A,realtor_scraper,2026-04-28T07:04:06.122664+00:00
+Kimberly Ramirez,Kimberly,Ramirez,ramirez.kimberly@redfin.com,(754) 720-5427,Tri Pointe Homes,Boston,MA,22,27,2122879,MA232816,MA,3.7,81,A,realtor_scraper,2026-04-28T07:04:06.122673+00:00
+Frank Allen,Frank,Allen,franka@outlook.com,(507) 412-7475,Sotheby's,Reno,NV,14,30,11952210,NV866995,NV,4.3,83,C,realtor_scraper,2026-04-28T07:04:06.122684+00:00
+Rebecca Jones,Rebecca,Jones,rebecca.jones@realtor.com,(917) 752-1421,ERA,New York,NY,18,19,10098709,NY837973,NY,3.5,71,A,realtor_scraper,2026-04-28T07:04:06.122706+00:00
+Barbara Rivera,Barbara,Rivera,barbara.rivera@remax.net,(352) 484-1158,NVR,Austin,TX,20,25,3776190,TX669566,TX,4.5,86,A,realtor_scraper,2026-04-28T07:04:06.122722+00:00
+Jerry Evans,Jerry,Evans,jevans@compass.com,(714) 832-3785,Weichert,Boise,ID,23,48,7720505,ID749298,ID,3.5,84,C,realtor_scraper,2026-04-28T07:04:06.122733+00:00
+Larry Anderson,Larry,Anderson,larry59@realtyonegroup.com,(215) 222-3019,Zillow Premier,Seattle,WA,13,25,4266926,WA755021,WA,4.4,85,A,realtor_scraper,2026-04-28T07:04:06.122744+00:00
+Scott Myers,Scott,Myers,scottm@hotmail.com,(734) 995-1612,D.R. Horton,Reno,NV,22,32,3373548,NV307986,NV,4.5,64,C,realtor_scraper,2026-04-28T07:04:06.122755+00:00
+Anthony Nguyen,Anthony,Nguyen,anguyen@realtyonegroup.com,(717) 921-5426,Zillow Premier,Denver,CO,10,32,10104040,CO470206,CO,4.2,86,A,realtor_scraper,2026-04-28T07:04:06.122766+00:00
+Samantha Turner,Samantha,Turner,samanthat@berkshirehathawayhs.com,(630) 909-2938,Taylor Morrison,Los Angeles,CA,21,39,14577940,CA603403,CA,4.4,100,A,realtor_scraper,2026-04-28T07:04:06.122780+00:00
+Kenneth Cooper,Kenneth,Cooper,kenneth.cooper@hotmail.com,(352) 956-4265,Keller Williams,San Francisco,CA,1,3,131003,CA416694,CA,4.7,82,A,realtor_scraper,2026-04-28T07:04:06.122801+00:00
+Brenda Diaz,Brenda,Diaz,diaz.brenda@elliman.com,(786) 276-6574,RE/MAX,Indianapolis,IN,24,32,3736347,IN252899,IN,4.9,75,B,realtor_scraper,2026-04-28T07:04:06.122809+00:00
+David Brown,David,Brown,david.brown@realtyonegroup.com,(325) 958-8790,Redfin,Charlotte,NC,13,33,6969272,NC901837,NC,4.1,69,A,realtor_scraper,2026-04-28T07:04:06.122818+00:00
+James Sanchez,James,Sanchez,james.sanchez@redfin.com,(206) 569-6682,Century 21,San Jose,CA,5,13,9064473,CA179645,CA,3.5,68,B,realtor_scraper,2026-04-28T07:04:06.122827+00:00
+Patricia Turner,Patricia,Turner,patricia76@realtor.com,(937) 334-2063,Zillow Premier,Austin,TX,21,13,3726236,TX144763,TX,3.8,81,A,realtor_scraper,2026-04-28T07:04:06.122839+00:00
+Tyler Robinson,Tyler,Robinson,tylerr@remax.net,(559) 706-1665,RE/MAX,Los Angeles,CA,4,12,1547732,CA423699,CA,3.9,60,A,realtor_scraper,2026-04-28T07:04:06.122847+00:00
+Gregory Campbell,Gregory,Campbell,gregory67@realtyonegroup.com,(718) 420-4599,Taylor Morrison,Colorado Springs,CO,22,40,5398045,CO885939,CO,4.1,61,C,realtor_scraper,2026-04-28T07:04:06.122857+00:00
+Anthony Ramos,Anthony,Ramos,ramos.anthony@elliman.com,(870) 404-3879,Lennar,Salt Lake City,UT,11,49,6062535,UT741828,UT,4.8,72,B,realtor_scraper,2026-04-28T07:04:06.122866+00:00
+Diane Gonzalez,Diane,Gonzalez,dgonzalez@compass.com,(878) 221-9882,HomeSmart,Cleveland,OH,4,10,513072,OH612628,OH,3.8,86,B,realtor_scraper,2026-04-28T07:04:06.122875+00:00
+Amanda Bailey,Amanda,Bailey,amanda.bailey@yahoo.com,(970) 764-5602,Tri Pointe Homes,Boston,MA,24,36,9894299,MA354842,MA,4.5,85,A,realtor_scraper,2026-04-28T07:04:06.122884+00:00
+Jacob Hughes,Jacob,Hughes,hughes.jacob@outlook.com,(781) 765-9839,eXp Realty,Detroit,MI,16,24,10586184,MI906286,MI,4.8,100,B,realtor_scraper,2026-04-28T07:04:06.122895+00:00
+Richard Wood,Richard,Wood,richard.wood@realtyonegroup.com,(984) 395-5799,Zillow Premier,Cleveland,OH,9,34,14101028,OH411396,OH,4.9,92,B,realtor_scraper,2026-04-28T07:04:06.122904+00:00
+Ronald Garcia,Ronald,Garcia,garcia.ronald@redfin.com,(626) 558-1531,Coldwell Banker,Orlando,FL,7,47,9481917,FL899765,FL,4.5,88,A,realtor_scraper,2026-04-28T07:04:06.122912+00:00
+Patrick Gonzalez,Patrick,Gonzalez,gonzalez.patrick@century21.com,(786) 675-5152,Vylla Home,Houston,TX,25,32,8197036,TX942955,TX,5.0,66,A,realtor_scraper,2026-04-28T07:04:06.122921+00:00
+Sandra Long,Sandra,Long,sandral@realtor.com,(505) 353-6924,Zillow Premier,Albuquerque,NM,8,48,6864432,NM431327,NM,4.5,85,C,realtor_scraper,2026-04-28T07:04:06.122929+00:00
+Maria Nguyen,Maria,Nguyen,marian@sothebysrealty.com,(931) 434-3353,Redfin,San Jose,CA,11,30,14381663,CA614756,CA,3.7,74,B,realtor_scraper,2026-04-28T07:04:06.122941+00:00
+Dorothy Lee,Dorothy,Lee,dorothy.lee@gmail.com,(865) 972-1102,Beazer Homes,Riverside,CA,11,15,2452143,CA989264,CA,4.9,65,B,realtor_scraper,2026-04-28T07:04:06.122950+00:00
+Gary Scott,Gary,Scott,gscott@kw.com,(430) 617-2220,D.R. Horton,Minneapolis,MN,17,47,10905007,MN285345,MN,4.2,77,B,realtor_scraper,2026-04-28T07:04:06.122958+00:00
+Catherine Anderson,Catherine,Anderson,catherine.anderson@exprealty.com,(936) 456-3085,Coldwell Banker,Raleigh,NC,21,19,5070235,NC551205,NC,3.6,71,B,realtor_scraper,2026-04-28T07:04:06.122972+00:00
+Angela Chavez,Angela,Chavez,chavez.angela@century21.com,(570) 586-1673,Weichert,Sacramento,CA,12,24,2228685,CA391100,CA,4.3,86,B,realtor_scraper,2026-04-28T07:04:06.122981+00:00
+Jack Sanders,Jack,Sanders,jack32@outlook.com,(765) 524-6615,Redfin,Seattle,WA,21,28,4383382,WA420454,WA,4.0,91,A,realtor_scraper,2026-04-28T07:04:06.122993+00:00
+Janet Moore,Janet,Moore,moore.janet@realtyonegroup.com,(779) 619-7434,Compass,San Jose,CA,1,5,423390,CA190863,CA,4.8,87,B,realtor_scraper,2026-04-28T07:04:06.123001+00:00
+Gregory Turner,Gregory,Turner,gregory.turner@sothebysrealty.com,(669) 815-9678,Ryan Homes,Phoenix,AZ,19,21,2958082,AZ649841,AZ,4.2,80,A,realtor_scraper,2026-04-28T07:04:06.123021+00:00
+Richard Brooks,Richard,Brooks,richardb@coldwellbanker.com,(713) 792-7773,Meritage Homes,San Diego,CA,12,14,2602416,CA372241,CA,3.9,80,A,realtor_scraper,2026-04-28T07:04:06.123040+00:00
+Diane Howard,Diane,Howard,diane.howard@gmail.com,(442) 754-3872,Lennar,Memphis,TN,0,0,485691,TN476711,TN,0.0,73,C,realtor_scraper,2026-04-28T07:04:06.123052+00:00
+Matthew Lopez,Matthew,Lopez,matthew.lopez@exprealty.com,(210) 927-5084,Meritage Homes,Phoenix,AZ,9,24,12217365,AZ264082,AZ,4.5,74,A,realtor_scraper,2026-04-28T07:04:06.123093+00:00
+Debra Green,Debra,Green,debra82@century21.com,(330) 858-9471,CalAtlantic Homes,Phoenix,AZ,0,0,310552,AZ419066,AZ,0.0,75,A,realtor_scraper,2026-04-28T07:04:06.123104+00:00
+Betty Patel,Betty,Patel,bettyp@exprealty.com,(580) 594-3815,KB Home,Charlotte,NC,0,4,10846,NC525538,NC,4.0,65,A,realtor_scraper,2026-04-28T07:04:06.123116+00:00
+Kenneth Edwards,Kenneth,Edwards,kenneth.edwards@hotmail.com,(210) 365-2684,Nest Seekers,Virginia Beach,VA,24,28,5153399,VA115257,VA,3.9,67,C,realtor_scraper,2026-04-28T07:04:06.123129+00:00
+Michelle Hernandez,Michelle,Hernandez,mhernandez@yahoo.com,(570) 400-6484,Berkshire Hathaway,Oklahoma City,OK,2,15,1789486,OK751852,OK,4.9,92,C,realtor_scraper,2026-04-28T07:04:06.123143+00:00
+James Flores,James,Flores,james.flores@yahoo.com,(209) 545-1932,D.R. Horton,Tucson,AZ,1,3,303922,AZ643148,AZ,4.2,88,C,realtor_scraper,2026-04-28T07:04:06.123158+00:00
+Andrew Rivera,Andrew,Rivera,rivera.andrew@redfin.com,(206) 284-3220,Ryan Homes,Denver,CO,24,33,1811272,CO676236,CO,4.0,87,A,realtor_scraper,2026-04-28T07:04:06.123168+00:00
+Amanda Castillo,Amanda,Castillo,castillo.amanda@century21.com,(765) 565-5616,ERA,Baton Rouge,LA,7,35,10253738,LA203720,LA,4.2,100,C,realtor_scraper,2026-04-28T07:04:06.123176+00:00
+Carol Peterson,Carol,Peterson,carol65@compass.com,(906) 416-3868,Century 21,New Orleans,LA,21,34,5266118,LA827713,LA,3.7,69,C,realtor_scraper,2026-04-28T07:04:06.123189+00:00
+Amanda Walker,Amanda,Walker,amanda58@weichert.com,(831) 252-9130,Nest Seekers,Minneapolis,MN,2,11,1935569,MN104265,MN,4.3,78,B,realtor_scraper,2026-04-28T07:04:06.123198+00:00
+Sharon Ward,Sharon,Ward,sharon84@elliman.com,(802) 793-9189,Redfin,San Antonio,TX,17,37,7610920,TX591336,TX,4.0,61,B,realtor_scraper,2026-04-28T07:04:06.123207+00:00
+Paul Morris,Paul,Morris,paul.morris@yahoo.com,(610) 947-2370,LGI Homes,Philadelphia,PA,18,22,5614871,PA376593,PA,4.4,68,A,realtor_scraper,2026-04-28T07:04:06.123216+00:00
+Elizabeth Jackson,Elizabeth,Jackson,elizabethj@realtyonegroup.com,(256) 456-4895,Better Homes & Gardens,Seattle,WA,13,34,13404089,WA545192,WA,4.6,86,A,realtor_scraper,2026-04-28T07:04:06.123224+00:00
+Kimberly Green,Kimberly,Green,green.kimberly@remax.net,(984) 699-4767,LGI Homes,Las Vegas,NV,4,11,1107929,NV751220,NV,5.0,81,A,realtor_scraper,2026-04-28T07:04:06.123233+00:00
+Joshua Turner,Joshua,Turner,joshua68@homesmart.com,(317) 356-5950,NVR,Charlotte,NC,8,15,3860140,NC903098,NC,4.2,82,A,realtor_scraper,2026-04-28T07:04:06.123242+00:00
+Michael Bennett,Michael,Bennett,mbennett@sothebysrealty.com,(757) 585-5777,Toll Brothers,Raleigh,NC,0,4,421861,NC923950,NC,3.6,70,B,realtor_scraper,2026-04-28T07:04:06.123253+00:00
+Samantha Hernandez,Samantha,Hernandez,samantha86@berkshirehathawayhs.com,(480) 369-4618,Douglas Elliman,Memphis,TN,13,40,12043714,TN786079,TN,4.1,97,C,realtor_scraper,2026-04-28T07:04:06.123262+00:00
+Melissa Morales,Melissa,Morales,melissam@redfin.com,(727) 220-1264,Toll Brothers,Atlanta,GA,5,47,12344150,GA576714,GA,3.8,97,A,realtor_scraper,2026-04-28T07:04:06.123271+00:00
+Donald Morris,Donald,Morris,morris.donald@hotmail.com,(228) 951-7732,Ryan Homes,Richmond,VA,24,36,13438792,VA428881,VA,3.7,100,C,realtor_scraper,2026-04-28T07:04:06.123280+00:00
+Ruth Garcia,Ruth,Garcia,ruthg@berkshirehathawayhs.com,(818) 899-3660,eXp Realty,Indianapolis,IN,4,5,1423225,IN534727,IN,4.6,89,B,realtor_scraper,2026-04-28T07:04:06.123288+00:00
+Emily Nelson,Emily,Nelson,enelson@sothebysrealty.com,(914) 851-9453,Sotheby's,Milwaukee,WI,13,43,3982671,WI245034,WI,4.5,86,C,realtor_scraper,2026-04-28T07:04:06.123296+00:00
+Jerry Richardson,Jerry,Richardson,richardson.jerry@outlook.com,(248) 512-2856,Better Homes & Gardens,Sacramento,CA,19,34,3267893,CA237026,CA,4.7,75,B,realtor_scraper,2026-04-28T07:04:06.123305+00:00
+Eric Ruiz,Eric,Ruiz,ericr@realtor.com,(419) 444-5822,LGI Homes,New York,NY,3,11,1745090,NY296566,NY,4.8,60,A,realtor_scraper,2026-04-28T07:04:06.123316+00:00
+Jennifer Evans,Jennifer,Evans,jennifer.evans@realtor.com,(863) 854-4404,Redfin,Cincinnati,OH,10,11,9350915,OH187746,OH,3.7,89,B,realtor_scraper,2026-04-28T07:04:06.123328+00:00
+Sarah Morris,Sarah,Morris,sarah.morris@berkshirehathawayhs.com,(317) 693-7950,Berkshire Hathaway,Richmond,VA,10,16,5395409,VA163602,VA,4.7,90,C,realtor_scraper,2026-04-28T07:04:06.123727+00:00
+Sandra Peterson,Sandra,Peterson,sandra.peterson@hotmail.com,(252) 562-8537,Taylor Morrison,Denver,CO,5,15,7835608,CO633686,CO,4.6,63,A,realtor_scraper,2026-04-28T07:04:06.123757+00:00
+Joshua Smith,Joshua,Smith,jsmith@elliman.com,(936) 774-2303,D.R. Horton,Richmond,VA,9,33,4011007,VA296094,VA,3.6,76,C,realtor_scraper,2026-04-28T07:04:06.123769+00:00
+Jennifer Evans,Jennifer,Evans,jevans@coldwellbanker.com,(808) 577-7297,United Real Estate,Dallas-Fort Worth,TX,13,28,8811773,TX236264,TX,3.9,60,A,realtor_scraper,2026-04-28T07:04:06.123779+00:00
+Rachel Howard,Rachel,Howard,rachelh@weichert.com,(913) 768-8561,HomeSmart,Louisville,KY,1,2,427121,KY181004,KY,4.6,54,C,realtor_scraper,2026-04-28T07:04:06.123788+00:00
+Stephanie Gutierrez,Stephanie,Gutierrez,stephanie.gutierrez@weichert.com,(248) 427-3806,Taylor Morrison,Philadelphia,PA,24,44,10047608,PA366555,PA,4.8,88,A,realtor_scraper,2026-04-28T07:04:06.123798+00:00
+Kathleen Hall,Kathleen,Hall,kathleen.hall@realtor.com,(708) 271-7312,Berkshire Hathaway,St. Louis,MO,17,35,4294605,MO923098,MO,4.0,79,B,realtor_scraper,2026-04-28T07:04:06.123807+00:00
+Deborah Harris,Deborah,Harris,harris.deborah@exprealty.com,(901) 573-9285,Berkshire Hathaway,Austin,TX,1,4,347094,TX335779,TX,4.9,85,A,realtor_scraper,2026-04-28T07:04:06.123816+00:00
+Patricia Reed,Patricia,Reed,reed.patricia@remax.net,(731) 516-9404,Century Communities,Orlando,FL,23,16,9127214,FL941499,FL,4.6,87,A,realtor_scraper,2026-04-28T07:04:06.123825+00:00
+Jennifer Kim,Jennifer,Kim,jennifer.kim@exprealty.com,(540) 539-2548,Toll Brothers,San Jose,CA,13,30,13809499,CA254820,CA,4.9,99,B,realtor_scraper,2026-04-28T07:04:06.123834+00:00
+Nicholas Morris,Nicholas,Morris,nmorris@weichert.com,(865) 542-2324,Berkshire Hathaway,Philadelphia,PA,0,4,203037,PA478467,PA,3.8,86,A,realtor_scraper,2026-04-28T07:04:06.123842+00:00
+Kevin Ross,Kevin,Ross,kross@realtor.com,(951) 400-5644,Meritage Homes,Phoenix,AZ,1,1,111273,AZ386679,AZ,3.6,57,A,realtor_scraper,2026-04-28T07:04:06.123860+00:00
+Joseph Ramos,Joseph,Ramos,ramos.joseph@sothebysrealty.com,(276) 558-6847,Pulte Homes,Riverside,CA,13,42,7113665,CA255952,CA,4.2,88,B,realtor_scraper,2026-04-28T07:04:06.123872+00:00
+Brandon Lewis,Brandon,Lewis,blewis@kw.com,(217) 754-3363,RE/MAX,Seattle,WA,25,25,11686692,WA418776,WA,4.1,81,A,realtor_scraper,2026-04-28T07:04:06.123881+00:00
+Paul Cox,Paul,Cox,paul81@realtor.com,(458) 895-3670,Zillow Premier,Salt Lake City,UT,22,40,6819214,UT669197,UT,3.6,76,B,realtor_scraper,2026-04-28T07:04:06.123890+00:00
+Alexander Perez,Alexander,Perez,alexander.perez@weichert.com,(442) 248-5757,The Agency,New Orleans,LA,6,26,3026435,LA106008,LA,4.6,78,C,realtor_scraper,2026-04-28T07:04:06.123899+00:00
+Kimberly Parker,Kimberly,Parker,kimberly41@gmail.com,(209) 511-2786,Compass,Phoenix,AZ,12,23,7147155,AZ703841,AZ,4.4,70,A,realtor_scraper,2026-04-28T07:04:06.123911+00:00
+Catherine Clark,Catherine,Clark,catherine20@sothebysrealty.com,(479) 600-6199,Coldwell Banker,Cleveland,OH,13,16,2247369,OH857334,OH,4.2,62,B,realtor_scraper,2026-04-28T07:04:06.123920+00:00
+Samantha Stewart,Samantha,Stewart,samantha67@realtyonegroup.com,(623) 879-9933,NVR,Portland,OR,12,50,6767534,OR129129,OR,4.9,71,B,realtor_scraper,2026-04-28T07:04:06.123928+00:00
+Tyler Cooper,Tyler,Cooper,tyler76@century21.com,(316) 539-3639,Century 21,Denver,CO,15,11,9586258,CO871143,CO,4.0,75,A,realtor_scraper,2026-04-28T07:04:06.123937+00:00
+Nicholas Roberts,Nicholas,Roberts,roberts.nicholas@century21.com,(805) 688-1451,Nest Seekers,Austin,TX,5,18,5537717,TX727230,TX,4.2,81,A,realtor_scraper,2026-04-28T07:04:06.123946+00:00
+Patrick Harris,Patrick,Harris,patrickh@compass.com,(408) 298-6748,Century Communities,Riverside,CA,9,39,14375194,CA997467,CA,3.7,100,B,realtor_scraper,2026-04-28T07:04:06.123957+00:00
+Jason Ramirez,Jason,Ramirez,jason.ramirez@outlook.com,(714) 266-5310,KB Home,San Antonio,TX,19,26,6608081,TX328545,TX,4.8,88,B,realtor_scraper,2026-04-28T07:04:06.123966+00:00
+Ryan Ruiz,Ryan,Ruiz,ruiz.ryan@berkshirehathawayhs.com,(240) 345-5831,Berkshire Hathaway,Nashville,TN,9,24,3905336,TN302268,TN,3.7,75,A,realtor_scraper,2026-04-28T07:04:06.123974+00:00
+Ryan Price,Ryan,Price,ryanp@remax.net,(906) 553-8800,Taylor Morrison,Cleveland,OH,20,19,13559602,OH589727,OH,3.9,71,B,realtor_scraper,2026-04-28T07:04:06.123983+00:00
+Ronald Price,Ronald,Price,price.ronald@weichert.com,(901) 228-4847,KB Home,Colorado Springs,CO,7,35,3672326,CO240608,CO,3.5,78,C,realtor_scraper,2026-04-28T07:04:06.123991+00:00
+Edward Edwards,Edward,Edwards,edward56@elliman.com,(572) 743-7660,RE/MAX,Seattle,WA,14,30,5678196,WA853395,WA,4.4,76,A,realtor_scraper,2026-04-28T07:04:06.124000+00:00
+Heather King,Heather,King,heather60@remax.net,(619) 619-4691,Better Homes & Gardens,Austin,TX,23,41,13643616,TX879246,TX,4.0,80,A,realtor_scraper,2026-04-28T07:04:06.124012+00:00
+Michael Phillips,Michael,Phillips,phillips.michael@hotmail.com,(254) 740-8909,Realty One Group,New Orleans,LA,4,14,1502130,LA553922,LA,3.9,75,C,realtor_scraper,2026-04-28T07:04:06.124020+00:00
+Kenneth Martin,Kenneth,Martin,kenneth68@realtyonegroup.com,(817) 644-2080,Toll Brothers,Louisville,KY,24,47,4475091,KY539974,KY,4.8,73,C,realtor_scraper,2026-04-28T07:04:06.124029+00:00
+Amanda Reed,Amanda,Reed,amandar@sothebysrealty.com,(725) 713-4966,Compass,Seattle,WA,16,34,8674507,WA373644,WA,3.6,92,A,realtor_scraper,2026-04-28T07:04:06.124037+00:00
+Carolyn Cook,Carolyn,Cook,carolyn.cook@elliman.com,(754) 381-9662,Beazer Homes,Raleigh,NC,15,14,5487266,NC729361,NC,4.7,92,B,realtor_scraper,2026-04-28T07:04:06.124048+00:00
+Angela Gutierrez,Angela,Gutierrez,angela.gutierrez@yahoo.com,(612) 806-4843,Compass,Salt Lake City,UT,22,26,12472171,UT223307,UT,4.6,73,B,realtor_scraper,2026-04-28T07:04:06.124069+00:00
+Frank Green,Frank,Green,frank18@compass.com,(440) 722-6675,LGI Homes,Raleigh,NC,21,39,11796304,NC337106,NC,4.5,79,B,realtor_scraper,2026-04-28T07:04:06.124080+00:00
+David James,David,James,djames@berkshirehathawayhs.com,(956) 452-3885,ERA,Albuquerque,NM,24,30,4410420,NM584703,NM,4.4,73,C,realtor_scraper,2026-04-28T07:04:06.124092+00:00
+John Peterson,John,Peterson,john60@century21.com,(618) 322-7741,NVR,Raleigh,NC,17,13,2145682,NC102786,NC,4.8,95,B,realtor_scraper,2026-04-28T07:04:06.124105+00:00
+Debra Clark,Debra,Clark,dclark@elliman.com,(201) 847-4600,eXp Realty,Dallas-Fort Worth,TX,10,28,8817831,TX313876,TX,3.8,88,A,realtor_scraper,2026-04-28T07:04:06.124117+00:00
+Frank Ortiz,Frank,Ortiz,fortiz@berkshirehathawayhs.com,(669) 243-6029,Ryan Homes,Louisville,KY,8,22,3999078,KY535818,KY,4.7,78,C,realtor_scraper,2026-04-28T07:04:06.124128+00:00
+Richard Murphy,Richard,Murphy,rmurphy@elliman.com,(931) 866-7504,Taylor Morrison,Baton Rouge,LA,0,3,347049,LA847788,LA,4.0,74,C,realtor_scraper,2026-04-28T07:04:06.124140+00:00
+Sharon Kim,Sharon,Kim,kim.sharon@remax.net,(626) 637-3403,Keller Williams,San Jose,CA,4,12,1545462,CA264377,CA,3.9,70,B,realtor_scraper,2026-04-28T07:04:06.124152+00:00
+Angela King,Angela,King,angela.king@berkshirehathawayhs.com,(989) 310-1729,Realty One Group,Baltimore,MD,10,49,4571998,MD558556,MD,4.3,86,B,realtor_scraper,2026-04-28T07:04:06.124163+00:00
+Michael Jones,Michael,Jones,michael26@realtyonegroup.com,(336) 871-7799,LGI Homes,Seattle,WA,4,12,1123459,WA224750,WA,4.4,80,A,realtor_scraper,2026-04-28T07:04:06.124185+00:00
+Rebecca Walker,Rebecca,Walker,rebecca16@kw.com,(757) 860-8025,Berkshire Hathaway,Louisville,KY,6,15,7014493,KY161406,KY,4.0,87,C,realtor_scraper,2026-04-28T07:04:06.124197+00:00
+Linda Carter,Linda,Carter,carter.linda@sothebysrealty.com,(269) 254-8426,Better Homes & Gardens,Albuquerque,NM,12,36,12173582,NM314510,NM,3.9,91,C,realtor_scraper,2026-04-28T07:04:06.124210+00:00
+Gregory Alvarez,Gregory,Alvarez,gregory12@kw.com,(267) 730-5587,RE/MAX,Oklahoma City,OK,6,44,3842013,OK699490,OK,4.4,66,C,realtor_scraper,2026-04-28T07:04:06.124222+00:00
+Emma Price,Emma,Price,emma15@century21.com,(774) 369-2014,Realty One Group,Tampa,FL,13,30,5991014,FL672758,FL,3.5,91,A,realtor_scraper,2026-04-28T07:04:06.124234+00:00
+Jason Jackson,Jason,Jackson,jason.jackson@coldwellbanker.com,(484) 819-5750,Meritage Homes,Baton Rouge,LA,3,12,1698823,LA762416,LA,3.9,70,C,realtor_scraper,2026-04-28T07:04:06.124246+00:00
+Cynthia Adams,Cynthia,Adams,cynthia52@century21.com,(440) 875-9171,Toll Brothers,Cleveland,OH,2,12,1620487,OH365032,OH,3.7,83,B,realtor_scraper,2026-04-28T07:04:06.124257+00:00
+Deborah Rodriguez,Deborah,Rodriguez,deborahr@weichert.com,(989) 671-3259,United Real Estate,Tucson,AZ,15,17,13296217,AZ232204,AZ,4.5,85,C,realtor_scraper,2026-04-28T07:04:06.124269+00:00
+Steven Gray,Steven,Gray,steven.gray@realtyonegroup.com,(303) 480-3961,Century Communities,Colorado Springs,CO,8,40,1800067,CO124604,CO,4.9,77,C,realtor_scraper,2026-04-28T07:04:06.124281+00:00
+Deborah Rogers,Deborah,Rogers,deborah50@realtyonegroup.com,(224) 927-2599,KB Home,San Diego,CA,21,30,1986466,CA288930,CA,4.6,68,A,realtor_scraper,2026-04-28T07:04:06.124292+00:00
+Brian Chavez,Brian,Chavez,bchavez@remax.net,(804) 874-9023,ERA,Houston,TX,23,21,9139851,TX115108,TX,4.3,86,A,realtor_scraper,2026-04-28T07:04:06.124306+00:00
+Justin Johnson,Justin,Johnson,justin.johnson@coldwellbanker.com,(774) 587-5242,Taylor Morrison,Charlotte,NC,13,22,11556622,NC455523,NC,4.7,77,A,realtor_scraper,2026-04-28T07:04:06.124315+00:00
+Justin Anderson,Justin,Anderson,anderson.justin@yahoo.com,(818) 344-5902,NVR,Chicago,IL,24,27,11073681,IL368781,IL,4.7,80,A,realtor_scraper,2026-04-28T07:04:06.124324+00:00
+Anna Bailey,Anna,Bailey,anna46@yahoo.com,(920) 840-9401,Meritage Homes,Albuquerque,NM,17,25,7842096,NM672208,NM,3.8,83,C,realtor_scraper,2026-04-28T07:04:06.124332+00:00
+Kevin Brooks,Kevin,Brooks,kevinb@outlook.com,(337) 866-3361,CalAtlantic Homes,Orlando,FL,13,20,1544033,FL986590,FL,3.6,83,A,realtor_scraper,2026-04-28T07:04:06.124344+00:00
+Andrew Gray,Andrew,Gray,andrew.gray@realtyonegroup.com,(215) 905-7767,Century 21,San Jose,CA,2,11,1135474,CA437005,CA,3.6,67,B,realtor_scraper,2026-04-28T07:04:06.124352+00:00
+Kenneth Reed,Kenneth,Reed,kennethr@realtyonegroup.com,(405) 487-1448,Keller Williams,Boise,ID,3,11,1111471,ID247745,ID,4.2,80,C,realtor_scraper,2026-04-28T07:04:06.124360+00:00
+Dennis Jones,Dennis,Jones,dennisj@elliman.com,(304) 482-7511,LGI Homes,Salt Lake City,UT,22,33,11113243,UT957232,UT,4.0,90,B,realtor_scraper,2026-04-28T07:04:06.124369+00:00
+Rachel Howard,Rachel,Howard,howard.rachel@coldwellbanker.com,(860) 481-2410,Tri Pointe Homes,Charlotte,NC,18,43,5290800,NC292246,NC,3.7,86,A,realtor_scraper,2026-04-28T07:04:06.124377+00:00
+Raymond Baker,Raymond,Baker,baker.raymond@redfin.com,(540) 209-2743,RE/MAX,Cleveland,OH,18,37,2870163,OH796083,OH,4.6,78,B,realtor_scraper,2026-04-28T07:04:06.124385+00:00
+Kathleen Ward,Kathleen,Ward,kward@gmail.com,(951) 859-2123,Lennar,Colorado Springs,CO,16,41,6754476,CO151192,CO,4.4,95,C,realtor_scraper,2026-04-28T07:04:06.124412+00:00
+Kevin Evans,Kevin,Evans,kevin.evans@outlook.com,(310) 669-8211,Coldwell Banker,Nashville,TN,15,41,2285032,TN811439,TN,3.7,85,A,realtor_scraper,2026-04-28T07:04:06.124420+00:00
+Brian Nelson,Brian,Nelson,brian.nelson@redfin.com,(913) 758-4987,Better Homes & Gardens,Salt Lake City,UT,4,14,612682,UT486068,UT,4.5,91,B,realtor_scraper,2026-04-28T07:04:06.124430+00:00
+Shirley Thompson,Shirley,Thompson,shirley.thompson@weichert.com,(443) 296-7330,Century 21,Kansas City,MO,3,12,1680523,MO839903,MO,3.7,87,B,realtor_scraper,2026-04-28T07:04:06.124438+00:00
+David Ortiz,David,Ortiz,david60@compass.com,(414) 415-5770,Keller Williams,Riverside,CA,3,7,1971271,CA212913,CA,4.5,64,B,realtor_scraper,2026-04-28T07:04:06.124447+00:00
+David Alvarez,David,Alvarez,dalvarez@yahoo.com,(267) 953-1359,Tri Pointe Homes,Boise,ID,13,48,5451292,ID602883,ID,4.2,88,C,realtor_scraper,2026-04-28T07:04:06.124455+00:00
+Nicole Harris,Nicole,Harris,nicole.harris@weichert.com,(252) 298-7019,RE/MAX,Miami,FL,16,23,4319537,FL903376,FL,3.7,66,A,realtor_scraper,2026-04-28T07:04:06.124468+00:00
+Lisa Murphy,Lisa,Murphy,murphy.lisa@coldwellbanker.com,(308) 257-4994,Vylla Home,Milwaukee,WI,19,21,12068610,WI457640,WI,4.1,93,C,realtor_scraper,2026-04-28T07:04:06.124477+00:00
+Nicole Cox,Nicole,Cox,ncox@kw.com,(505) 323-1805,Sotheby's,Louisville,KY,14,22,11690099,KY168920,KY,4.8,71,C,realtor_scraper,2026-04-28T07:04:06.124489+00:00
+Debra Hughes,Debra,Hughes,debrah@realtyonegroup.com,(774) 397-7371,Berkshire Hathaway,Denver,CO,5,33,8399208,CO402066,CO,3.7,63,A,realtor_scraper,2026-04-28T07:04:06.124497+00:00
+Andrew Gonzalez,Andrew,Gonzalez,andrewg@gmail.com,(407) 827-6986,The Agency,Los Angeles,CA,11,49,8577669,CA270495,CA,4.6,84,A,realtor_scraper,2026-04-28T07:04:06.124509+00:00
+Brenda Castillo,Brenda,Castillo,brenda.castillo@outlook.com,(352) 326-4483,Sotheby's,Phoenix,AZ,25,25,8088333,AZ309833,AZ,5.0,82,A,realtor_scraper,2026-04-28T07:04:06.124521+00:00
+Jacob Long,Jacob,Long,jlong@elliman.com,(850) 724-8465,Weichert,Raleigh,NC,1,0,262080,NC628470,NC,0.0,51,B,realtor_scraper,2026-04-28T07:04:06.124540+00:00
+Lisa Baker,Lisa,Baker,lisa.baker@berkshirehathawayhs.com,(575) 664-4025,Vylla Home,St. Louis,MO,12,12,14605397,MO479833,MO,3.9,90,B,realtor_scraper,2026-04-28T07:04:06.124559+00:00
+Joshua Carter,Joshua,Carter,joshuac@realtor.com,(361) 523-2029,Century Communities,Atlanta,GA,12,35,11907549,GA669983,GA,4.0,85,A,realtor_scraper,2026-04-28T07:04:06.124572+00:00
+Pamela Carter,Pamela,Carter,pamelac@hotmail.com,(916) 308-3754,Berkshire Hathaway,Albuquerque,NM,11,28,9897598,NM573828,NM,3.6,95,C,realtor_scraper,2026-04-28T07:04:06.124585+00:00
+Nicholas Ramirez,Nicholas,Ramirez,nicholasr@realtyonegroup.com,(512) 373-5949,HomeSmart,San Diego,CA,25,26,11641780,CA369287,CA,4.0,100,A,realtor_scraper,2026-04-28T07:04:06.124597+00:00
+Brian Wood,Brian,Wood,brian64@weichert.com,(510) 685-4270,United Real Estate,Los Angeles,CA,20,45,12191691,CA416332,CA,4.2,100,A,realtor_scraper,2026-04-28T07:04:06.124608+00:00
+Debra Allen,Debra,Allen,allen.debra@gmail.com,(603) 346-4353,Nest Seekers,Orlando,FL,8,24,12481610,FL900791,FL,4.1,78,A,realtor_scraper,2026-04-28T07:04:06.124622+00:00
+Patricia Kim,Patricia,Kim,patricia.kim@coldwellbanker.com,(985) 400-7378,Zillow Premier,Houston,TX,3,4,1718482,TX257261,TX,4.3,76,A,realtor_scraper,2026-04-28T07:04:06.124645+00:00
+Nancy Peterson,Nancy,Peterson,nancy.peterson@weichert.com,(331) 622-9101,Toll Brothers,Virginia Beach,VA,21,46,13973185,VA185381,VA,3.5,73,C,realtor_scraper,2026-04-28T07:04:06.124668+00:00
+George Morris,George,Morris,morris.george@sothebysrealty.com,(606) 872-4164,Weichert,Portland,OR,5,40,8625013,OR917503,OR,3.8,78,B,realtor_scraper,2026-04-28T07:04:06.124677+00:00
+Helen Wood,Helen,Wood,helenw@redfin.com,(308) 465-5055,CalAtlantic Homes,Philadelphia,PA,1,3,129382,PA909575,PA,5.0,69,A,realtor_scraper,2026-04-28T07:04:06.124689+00:00
+Linda Watson,Linda,Watson,lindaw@compass.com,(603) 855-3042,Coldwell Banker,Albuquerque,NM,12,36,6738888,NM501008,NM,3.6,68,C,realtor_scraper,2026-04-28T07:04:06.124698+00:00
+Jack Kim,Jack,Kim,jack.kim@elliman.com,(206) 668-1615,Compass,Raleigh,NC,22,26,5215106,NC403188,NC,4.1,77,B,realtor_scraper,2026-04-28T07:04:06.124708+00:00
+Andrew Flores,Andrew,Flores,andrewf@berkshirehathawayhs.com,(330) 219-9696,CalAtlantic Homes,Charlotte,NC,9,37,2734298,NC441923,NC,4.7,64,A,realtor_scraper,2026-04-28T07:04:06.124717+00:00
+Benjamin Nguyen,Benjamin,Nguyen,benjamin46@gmail.com,(725) 639-1589,Pulte Homes,Philadelphia,PA,5,22,4183892,PA723615,PA,3.7,90,A,realtor_scraper,2026-04-28T07:04:06.124726+00:00
+Sharon Turner,Sharon,Turner,sharon.turner@coldwellbanker.com,(863) 533-6690,Compass,New Orleans,LA,3,3,944239,LA199487,LA,4.8,60,C,realtor_scraper,2026-04-28T07:04:06.124734+00:00
+Frank Campbell,Frank,Campbell,frank96@compass.com,(601) 336-2832,Douglas Elliman,San Diego,CA,24,11,7748379,CA658832,CA,4.0,65,A,realtor_scraper,2026-04-28T07:04:06.124744+00:00
+Jerry Allen,Jerry,Allen,allen.jerry@compass.com,(972) 378-3498,Beazer Homes,Riverside,CA,23,46,10936841,CA503427,CA,4.9,70,B,realtor_scraper,2026-04-28T07:04:06.124752+00:00
+Anna Garcia,Anna,Garcia,garcia.anna@weichert.com,(419) 416-7110,Toll Brothers,Jacksonville,FL,15,44,8641726,FL464026,FL,4.1,66,B,realtor_scraper,2026-04-28T07:04:06.124764+00:00
+Rachel Taylor,Rachel,Taylor,rachel41@elliman.com,(303) 209-5919,Coldwell Banker,San Jose,CA,2,10,868477,CA468908,CA,4.8,60,B,realtor_scraper,2026-04-28T07:04:06.124773+00:00
+Andrew Hall,Andrew,Hall,andrewh@coldwellbanker.com,(702) 571-9360,Ryan Homes,Miami,FL,8,24,7029272,FL135396,FL,3.6,69,A,realtor_scraper,2026-04-28T07:04:06.124781+00:00
+Jerry Sanders,Jerry,Sanders,jerry.sanders@weichert.com,(386) 404-3131,United Real Estate,Virginia Beach,VA,8,28,11926708,VA272545,VA,4.3,100,C,realtor_scraper,2026-04-28T07:04:06.124790+00:00
+Brian Castillo,Brian,Castillo,bcastillo@kw.com,(732) 862-5908,Toll Brothers,New Orleans,LA,4,10,1427740,LA526187,LA,4.2,95,C,realtor_scraper,2026-04-28T07:04:06.124798+00:00
+Kathleen Johnson,Kathleen,Johnson,kjohnson@homesmart.com,(919) 951-9726,Douglas Elliman,Richmond,VA,7,33,9808556,VA125523,VA,3.7,86,C,realtor_scraper,2026-04-28T07:04:06.124807+00:00
+Anthony Wright,Anthony,Wright,anthonyw@coldwellbanker.com,(951) 909-3781,Zillow Premier,Virginia Beach,VA,15,14,12065673,VA859370,VA,3.5,94,C,realtor_scraper,2026-04-28T07:04:06.124816+00:00
+Kathleen Moore,Kathleen,Moore,kathleenm@redfin.com,(360) 256-7028,M/I Homes,Minneapolis,MN,21,48,12713474,MN764734,MN,4.9,74,B,realtor_scraper,2026-04-28T07:04:06.124828+00:00
+Kathleen Diaz,Kathleen,Diaz,kathleend@kw.com,(708) 717-1893,M/I Homes,Baltimore,MD,14,16,11765772,MD466384,MD,4.9,100,B,realtor_scraper,2026-04-28T07:04:06.124836+00:00
+Anna Mitchell,Anna,Mitchell,anna11@realtor.com,(914) 470-6534,Better Homes & Gardens,Baltimore,MD,20,33,6800478,MD346634,MD,4.3,83,B,realtor_scraper,2026-04-28T07:04:06.124845+00:00
+Kevin James,Kevin,James,kevinj@realtyonegroup.com,(970) 962-2711,Beazer Homes,Salt Lake City,UT,11,43,9946939,UT381236,UT,5.0,82,B,realtor_scraper,2026-04-28T07:04:06.124856+00:00
+Justin Jones,Justin,Jones,justin11@gmail.com,(205) 557-7000,KB Home,Denver,CO,5,31,6539578,CO346367,CO,4.2,72,A,realtor_scraper,2026-04-28T07:04:06.124868+00:00
+Ashley Campbell,Ashley,Campbell,ashleyc@coldwellbanker.com,(540) 536-1215,Sotheby's,Baton Rouge,LA,17,47,11659114,LA157768,LA,3.7,86,C,realtor_scraper,2026-04-28T07:04:06.124876+00:00
+Richard Brown,Richard,Brown,richard92@exprealty.com,(916) 349-4618,Compass,Virginia Beach,VA,1,2,239183,VA813391,VA,4.8,64,C,realtor_scraper,2026-04-28T07:04:06.124885+00:00
+Anna Nguyen,Anna,Nguyen,annan@berkshirehathawayhs.com,(586) 308-5975,Meritage Homes,Dallas-Fort Worth,TX,2,3,1212809,TX173632,TX,4.9,62,A,realtor_scraper,2026-04-28T07:04:06.124894+00:00
+Carol Alvarez,Carol,Alvarez,alvarez.carol@yahoo.com,(975) 895-7085,Nest Seekers,Los Angeles,CA,21,42,7677591,CA916335,CA,3.6,70,A,realtor_scraper,2026-04-28T07:04:06.124902+00:00
+Elizabeth Ramirez,Elizabeth,Ramirez,elizabeth44@redfin.com,(505) 898-3278,Nest Seekers,Reno,NV,20,36,6781445,NV596365,NV,4.6,91,C,realtor_scraper,2026-04-28T07:04:06.124911+00:00
+Donna Gray,Donna,Gray,donna.gray@coldwellbanker.com,(262) 717-4750,Realty One Group,Miami,FL,25,18,1939317,FL345235,FL,3.8,94,A,realtor_scraper,2026-04-28T07:04:06.124919+00:00
+Kimberly Perez,Kimberly,Perez,kimberlyp@sothebysrealty.com,(719) 999-6877,LGI Homes,Boston,MA,8,19,12038934,MA342759,MA,4.8,96,A,realtor_scraper,2026-04-28T07:04:06.124928+00:00
+Laura Johnson,Laura,Johnson,laura.johnson@outlook.com,(662) 598-7176,Sotheby's,Detroit,MI,24,43,7757064,MI865747,MI,3.6,85,B,realtor_scraper,2026-04-28T07:04:06.124937+00:00
+Betty Collins,Betty,Collins,collins.betty@gmail.com,(445) 487-5372,Tri Pointe Homes,Baton Rouge,LA,1,1,257221,LA794878,LA,4.0,51,C,realtor_scraper,2026-04-28T07:04:06.124954+00:00
+Joseph Martin,Joseph,Martin,joseph.martin@redfin.com,(405) 885-5379,RE/MAX,Phoenix,AZ,24,29,7362727,AZ919686,AZ,4.5,67,A,realtor_scraper,2026-04-28T07:04:06.124962+00:00
+Susan Brown,Susan,Brown,susan66@berkshirehathawayhs.com,(442) 393-7322,Better Homes & Gardens,Baton Rouge,LA,11,41,9415873,LA645890,LA,4.8,91,C,realtor_scraper,2026-04-28T07:04:06.124971+00:00
+Nicholas Ross,Nicholas,Ross,nicholas16@hotmail.com,(623) 875-8283,Zillow Premier,Nashville,TN,14,13,14662605,TN210244,TN,4.6,70,A,realtor_scraper,2026-04-28T07:04:06.124980+00:00
+Daniel Taylor,Daniel,Taylor,daniel.taylor@gmail.com,(815) 884-4032,CalAtlantic Homes,Austin,TX,21,33,8586507,TX291919,TX,4.3,61,A,realtor_scraper,2026-04-28T07:04:06.124988+00:00
+Nancy Gutierrez,Nancy,Gutierrez,nancyg@elliman.com,(731) 668-3233,LGI Homes,Denver,CO,2,11,1240280,CO603358,CO,4.3,88,A,realtor_scraper,2026-04-28T07:04:06.124997+00:00
+Timothy Garcia,Timothy,Garcia,garcia.timothy@redfin.com,(605) 583-7530,Lennar,Raleigh,NC,12,37,5153671,NC689710,NC,5.0,77,B,realtor_scraper,2026-04-28T07:04:06.125006+00:00
+Katherine Morgan,Katherine,Morgan,katherinem@gmail.com,(339) 982-2524,Realty One Group,Riverside,CA,13,25,4300000,CA771193,CA,4.6,78,B,realtor_scraper,2026-04-28T07:04:06.125014+00:00
+Jerry Johnson,Jerry,Johnson,jerry26@century21.com,(518) 241-5165,Coldwell Banker,Orlando,FL,24,30,3163915,FL404434,FL,4.9,85,A,realtor_scraper,2026-04-28T07:04:06.125023+00:00
+Gregory Thomas,Gregory,Thomas,gregoryt@gmail.com,(337) 489-8688,Beazer Homes,Boston,MA,8,13,1988883,MA755948,MA,4.0,69,A,realtor_scraper,2026-04-28T07:04:06.125032+00:00
+Betty Morgan,Betty,Morgan,bettym@yahoo.com,(669) 324-6036,Lennar,Miami,FL,22,47,5970847,FL936368,FL,4.6,78,A,realtor_scraper,2026-04-28T07:04:06.125043+00:00
+Linda Richardson,Linda,Richardson,lindar@homesmart.com,(813) 241-6494,Berkshire Hathaway,Austin,TX,0,3,41356,TX465152,TX,3.9,79,A,realtor_scraper,2026-04-28T07:04:06.125052+00:00
+Gary Taylor,Gary,Taylor,gary9@yahoo.com,(562) 302-5853,Lennar,Baltimore,MD,3,9,1345403,MD754739,MD,4.9,66,B,realtor_scraper,2026-04-28T07:04:06.125069+00:00
+Lisa Roberts,Lisa,Roberts,lisa91@exprealty.com,(725) 685-3139,Lennar,Dallas-Fort Worth,TX,23,23,14965069,TX197186,TX,3.8,96,A,realtor_scraper,2026-04-28T07:04:06.125077+00:00
+Richard Thomas,Richard,Thomas,thomas.richard@gmail.com,(310) 778-5545,Douglas Elliman,Nashville,TN,21,47,10715690,TN136755,TN,4.4,86,A,realtor_scraper,2026-04-28T07:04:06.125089+00:00
+Carolyn Cox,Carolyn,Cox,carolyn60@exprealty.com,(317) 573-7556,ERA,Chicago,IL,8,35,10078133,IL449301,IL,3.8,79,A,realtor_scraper,2026-04-28T07:04:06.125098+00:00
+Ruth Robinson,Ruth,Robinson,ruthr@remax.net,(206) 551-7572,CalAtlantic Homes,Seattle,WA,23,30,14627349,WA854588,WA,4.2,72,A,realtor_scraper,2026-04-28T07:04:06.125106+00:00
+Ashley Rogers,Ashley,Rogers,ashley41@century21.com,(628) 532-6682,Better Homes & Gardens,Kansas City,MO,10,13,2276860,MO565041,MO,4.7,86,B,realtor_scraper,2026-04-28T07:04:06.125115+00:00
+Gary Gomez,Gary,Gomez,gary.gomez@remax.net,(321) 245-8531,NVR,Raleigh,NC,4,8,679530,NC905549,NC,4.1,67,B,realtor_scraper,2026-04-28T07:04:06.125124+00:00
+Robert Hernandez,Robert,Hernandez,rhernandez@yahoo.com,(618) 255-3064,Ryan Homes,Miami,FL,4,13,1844715,FL138526,FL,3.7,75,A,realtor_scraper,2026-04-28T07:04:06.125132+00:00
+Sharon Morales,Sharon,Morales,smorales@coldwellbanker.com,(608) 522-3720,Pulte Homes,Columbus,OH,14,50,4853506,OH520635,OH,4.9,94,B,realtor_scraper,2026-04-28T07:04:06.125143+00:00
+Donald Hughes,Donald,Hughes,dhughes@hotmail.com,(254) 983-9690,Weichert,Riverside,CA,20,43,6789235,CA680718,CA,4.6,78,B,realtor_scraper,2026-04-28T07:04:06.125152+00:00
+Larry Smith,Larry,Smith,larry36@kw.com,(351) 941-1889,Ryan Homes,Baton Rouge,LA,15,29,5261246,LA145051,LA,4.4,77,C,realtor_scraper,2026-04-28T07:04:06.125161+00:00
+Deborah Garcia,Deborah,Garcia,deborahg@realtyonegroup.com,(774) 238-5600,Toll Brothers,Louisville,KY,1,0,401050,KY567070,KY,0.0,64,C,realtor_scraper,2026-04-28T07:04:06.125169+00:00
+Susan Mendoza,Susan,Mendoza,susan71@compass.com,(910) 259-4882,Better Homes & Gardens,Sacramento,CA,18,26,8613283,CA301064,CA,3.9,91,B,realtor_scraper,2026-04-28T07:04:06.125178+00:00
+Larry Cox,Larry,Cox,larryc@elliman.com,(715) 210-4000,Coldwell Banker,Indianapolis,IN,15,50,8381859,IN124343,IN,4.3,72,B,realtor_scraper,2026-04-28T07:04:06.125188+00:00
+Carol Long,Carol,Long,carol.long@compass.com,(603) 566-9599,M/I Homes,Detroit,MI,10,43,14442619,MI493346,MI,4.2,100,B,realtor_scraper,2026-04-28T07:04:06.125196+00:00
+Anthony Howard,Anthony,Howard,anthony14@homesmart.com,(209) 386-3666,Century 21,Tucson,AZ,9,50,7784225,AZ697306,AZ,4.0,89,C,realtor_scraper,2026-04-28T07:04:06.125208+00:00
+Pamela Nelson,Pamela,Nelson,pnelson@sothebysrealty.com,(959) 489-8273,Compass,Dallas-Fort Worth,TX,1,1,141795,TX676000,TX,4.2,52,A,realtor_scraper,2026-04-28T07:04:06.125216+00:00
+Patricia Wood,Patricia,Wood,patricia46@coldwellbanker.com,(580) 609-2201,Better Homes & Gardens,Boston,MA,3,7,1557891,MA697192,MA,4.7,91,A,realtor_scraper,2026-04-28T07:04:06.125227+00:00
+Ashley Thomas,Ashley,Thomas,ashley83@outlook.com,(217) 308-4938,D.R. Horton,Richmond,VA,3,7,1057768,VA187912,VA,4.4,94,C,realtor_scraper,2026-04-28T07:04:06.125239+00:00
+Elizabeth Sanders,Elizabeth,Sanders,elizabeth76@exprealty.com,(970) 513-1709,D.R. Horton,Boston,MA,15,46,6551314,MA401620,MA,3.5,90,A,realtor_scraper,2026-04-28T07:04:06.125247+00:00
+Samuel Phillips,Samuel,Phillips,phillips.samuel@berkshirehathawayhs.com,(718) 852-9474,CalAtlantic Homes,Dallas-Fort Worth,TX,22,18,9992745,TX709809,TX,4.6,64,A,realtor_scraper,2026-04-28T07:04:06.125256+00:00
+Lisa Green,Lisa,Green,lgreen@remax.net,(984) 820-2640,Realty One Group,Colorado Springs,CO,10,14,13166166,CO793915,CO,4.7,95,C,realtor_scraper,2026-04-28T07:04:06.125264+00:00
+Benjamin Moore,Benjamin,Moore,bmoore@kw.com,(908) 792-6384,KB Home,Memphis,TN,15,40,14586926,TN733913,TN,4.3,75,C,realtor_scraper,2026-04-28T07:04:06.125277+00:00
+Justin Evans,Justin,Evans,jevans@redfin.com,(570) 510-8338,Coldwell Banker,New York,NY,5,14,13905774,NY138949,NY,3.6,83,A,realtor_scraper,2026-04-28T07:04:06.125297+00:00
+Amy Lee,Amy,Lee,amy.lee@realtor.com,(610) 924-8570,United Real Estate,New York,NY,15,38,2752372,NY766050,NY,3.8,73,A,realtor_scraper,2026-04-28T07:04:06.125316+00:00
+Edward Smith,Edward,Smith,edward36@homesmart.com,(863) 203-9988,Toll Brothers,Los Angeles,CA,23,18,12816776,CA166998,CA,4.4,93,A,realtor_scraper,2026-04-28T07:04:06.125329+00:00
+Angela Alvarez,Angela,Alvarez,angelaa@yahoo.com,(904) 463-8692,Berkshire Hathaway,Raleigh,NC,16,23,9405707,NC329199,NC,4.0,76,B,realtor_scraper,2026-04-28T07:04:06.125344+00:00
+Kimberly Lewis,Kimberly,Lewis,kimberlyl@century21.com,(707) 941-2112,RE/MAX,Indianapolis,IN,8,14,6196593,IN238490,IN,4.7,81,B,realtor_scraper,2026-04-28T07:04:06.125358+00:00
+Paul Edwards,Paul,Edwards,paul27@outlook.com,(712) 800-7057,Taylor Morrison,Nashville,TN,4,8,854149,TN940545,TN,5.0,69,A,realtor_scraper,2026-04-28T07:04:06.125377+00:00
+Helen Hall,Helen,Hall,helen.hall@remax.net,(763) 888-7843,Weichert,Tampa,FL,24,45,7519479,FL233078,FL,4.6,73,A,realtor_scraper,2026-04-28T07:04:06.125386+00:00
+Jeffrey Price,Jeffrey,Price,jprice@gmail.com,(272) 589-5888,Better Homes & Gardens,New Orleans,LA,5,20,13722230,LA597141,LA,4.7,71,C,realtor_scraper,2026-04-28T07:04:06.125425+00:00
+Carol Price,Carol,Price,carol.price@compass.com,(208) 534-5720,Realty One Group,San Francisco,CA,0,2,308622,CA570311,CA,4.9,65,A,realtor_scraper,2026-04-28T07:04:06.125443+00:00
+Timothy Murphy,Timothy,Murphy,timothy.murphy@homesmart.com,(564) 812-4098,Taylor Morrison,St. Louis,MO,9,43,2253867,MO547374,MO,4.2,61,B,realtor_scraper,2026-04-28T07:04:06.125459+00:00
+Kathleen Gomez,Kathleen,Gomez,kathleeng@homesmart.com,(361) 623-6574,Coldwell Banker,Sacramento,CA,21,27,8103768,CA516058,CA,4.1,84,B,realtor_scraper,2026-04-28T07:04:06.125469+00:00
+George Clark,George,Clark,george97@coldwellbanker.com,(585) 985-2916,Tri Pointe Homes,Dallas-Fort Worth,TX,1,3,448120,TX128683,TX,4.9,93,A,realtor_scraper,2026-04-28T07:04:06.125478+00:00
+Matthew Davis,Matthew,Davis,matthew.davis@yahoo.com,(779) 589-4992,LGI Homes,Denver,CO,16,46,11989671,CO985828,CO,4.1,100,A,realtor_scraper,2026-04-28T07:04:06.125487+00:00
+Dorothy Gray,Dorothy,Gray,dorothy27@compass.com,(802) 205-7375,KB Home,Baltimore,MD,2,4,924135,MD461381,MD,4.5,87,B,realtor_scraper,2026-04-28T07:04:06.125496+00:00
+Joshua Taylor,Joshua,Taylor,joshuat@redfin.com,(303) 632-4392,Nest Seekers,Salt Lake City,UT,9,22,2483713,UT930771,UT,3.8,88,B,realtor_scraper,2026-04-28T07:04:06.125505+00:00
+Pamela Watson,Pamela,Watson,watson.pamela@hotmail.com,(762) 645-1868,Weichert,Charlotte,NC,2,5,527549,NC340896,NC,4.2,81,A,realtor_scraper,2026-04-28T07:04:06.125520+00:00
+Anna Cruz,Anna,Cruz,acruz@homesmart.com,(925) 293-2436,The Agency,Orlando,FL,5,29,13938587,FL346921,FL,4.5,100,A,realtor_scraper,2026-04-28T07:04:06.125529+00:00
+John Cruz,John,Cruz,johnc@hotmail.com,(606) 373-4312,NVR,Charlotte,NC,20,15,10319599,NC322234,NC,4.8,100,A,realtor_scraper,2026-04-28T07:04:06.125537+00:00
+Amy Harris,Amy,Harris,harris.amy@hotmail.com,(516) 817-2940,Century 21,Cincinnati,OH,16,43,5422820,OH728596,OH,4.7,92,B,realtor_scraper,2026-04-28T07:04:06.125549+00:00
+Cynthia Perez,Cynthia,Perez,cperez@weichert.com,(856) 637-6248,ERA,St. Louis,MO,7,13,2619130,MO828236,MO,4.3,75,B,realtor_scraper,2026-04-28T07:04:06.125578+00:00
+Ashley Brown,Ashley,Brown,abrown@realtyonegroup.com,(385) 867-1727,Meritage Homes,Colorado Springs,CO,19,17,8234734,CO699045,CO,4.7,86,C,realtor_scraper,2026-04-28T07:04:06.125590+00:00
+John Wright,John,Wright,john97@sothebysrealty.com,(334) 873-9646,Ryan Homes,Miami,FL,10,14,14222875,FL369406,FL,4.3,88,A,realtor_scraper,2026-04-28T07:04:06.125599+00:00
+Thomas Hughes,Thomas,Hughes,thomas.hughes@coldwellbanker.com,(972) 705-5117,Century Communities,Philadelphia,PA,19,43,3580510,PA525230,PA,3.5,93,A,realtor_scraper,2026-04-28T07:04:06.125609+00:00
+Nicholas Cooper,Nicholas,Cooper,nicholas6@weichert.com,(347) 606-5318,NVR,Raleigh,NC,10,14,4090786,NC489359,NC,4.1,79,B,realtor_scraper,2026-04-28T07:04:06.125617+00:00
+Steven Chavez,Steven,Chavez,steven29@weichert.com,(628) 781-9851,Meritage Homes,Cincinnati,OH,17,17,3962397,OH642843,OH,4.9,61,B,realtor_scraper,2026-04-28T07:04:06.125626+00:00
+Debra Cox,Debra,Cox,debrac@exprealty.com,(760) 691-1126,Meritage Homes,Indianapolis,IN,12,21,12896378,IN859953,IN,4.8,83,B,realtor_scraper,2026-04-28T07:04:06.125671+00:00
+Betty Hill,Betty,Hill,hill.betty@outlook.com,(570) 773-9244,Beazer Homes,Salt Lake City,UT,18,16,11792083,UT642108,UT,4.9,100,B,realtor_scraper,2026-04-28T07:04:06.125680+00:00
+Gregory Cooper,Gregory,Cooper,gregory.cooper@hotmail.com,(212) 770-6837,Better Homes & Gardens,New York,NY,16,34,6917558,NY944036,NY,4.8,73,A,realtor_scraper,2026-04-28T07:04:06.125688+00:00
+Nancy Kelly,Nancy,Kelly,nancy.kelly@remax.net,(724) 987-3068,Zillow Premier,San Jose,CA,6,21,7355311,CA303974,CA,3.8,77,B,realtor_scraper,2026-04-28T07:04:06.125697+00:00
+Christopher Thomas,Christopher,Thomas,cthomas@realtor.com,(925) 756-9555,Meritage Homes,Charlotte,NC,9,47,13508067,NC350858,NC,3.8,70,A,realtor_scraper,2026-04-28T07:04:06.125706+00:00
+Justin Nelson,Justin,Nelson,jnelson@coldwellbanker.com,(878) 672-8877,Better Homes & Gardens,Jacksonville,FL,19,13,2155948,FL929904,FL,3.6,69,B,realtor_scraper,2026-04-28T07:04:06.125715+00:00
+Kimberly Gonzalez,Kimberly,Gonzalez,kimberlyg@coldwellbanker.com,(931) 434-2626,Ryan Homes,Salt Lake City,UT,8,22,2979681,UT379227,UT,4.5,90,B,realtor_scraper,2026-04-28T07:04:06.125724+00:00
+Rebecca Gomez,Rebecca,Gomez,rgomez@elliman.com,(872) 376-5180,Ryan Homes,Phoenix,AZ,11,28,5752618,AZ121737,AZ,4.2,61,A,realtor_scraper,2026-04-28T07:04:06.125733+00:00
+Gary Miller,Gary,Miller,garym@homesmart.com,(510) 252-1763,Vylla Home,Virginia Beach,VA,0,2,75673,VA351524,VA,4.6,68,C,realtor_scraper,2026-04-28T07:04:06.125750+00:00
+Jennifer Evans,Jennifer,Evans,jennifere@remax.net,(916) 898-2179,Redfin,San Jose,CA,12,43,2491073,CA429293,CA,4.5,70,B,realtor_scraper,2026-04-28T07:04:06.125759+00:00
+Donna Davis,Donna,Davis,ddavis@realtor.com,(971) 984-7621,Sotheby's,St. Louis,MO,16,49,11391535,MO710008,MO,4.1,72,B,realtor_scraper,2026-04-28T07:04:06.125770+00:00
+Samantha Morris,Samantha,Morris,morris.samantha@realtor.com,(720) 754-1355,Taylor Morrison,Oklahoma City,OK,5,35,8350223,OK407913,OK,4.1,91,C,realtor_scraper,2026-04-28T07:04:06.125778+00:00
+Justin Robinson,Justin,Robinson,justinr@exprealty.com,(274) 974-3962,Vylla Home,Reno,NV,23,16,13547505,NV962830,NV,4.7,90,C,realtor_scraper,2026-04-28T07:04:06.125787+00:00
+Kimberly Nelson,Kimberly,Nelson,nelson.kimberly@century21.com,(765) 588-7076,Keller Williams,Cleveland,OH,15,44,14003807,OH477600,OH,4.1,90,B,realtor_scraper,2026-04-28T07:04:06.125795+00:00
+Anna Nguyen,Anna,Nguyen,anguyen@homesmart.com,(224) 909-9547,eXp Realty,Tucson,AZ,23,34,3299252,AZ396176,AZ,4.6,84,C,realtor_scraper,2026-04-28T07:04:06.125804+00:00
+Brenda Walker,Brenda,Walker,walker.brenda@homesmart.com,(534) 867-5712,eXp Realty,Louisville,KY,13,10,5753880,KY269101,KY,3.6,75,C,realtor_scraper,2026-04-28T07:04:06.125812+00:00
+Emily Lewis,Emily,Lewis,lewis.emily@coldwellbanker.com,(564) 987-9716,RE/MAX,San Antonio,TX,24,33,7434262,TX965685,TX,3.7,70,B,realtor_scraper,2026-04-28T07:04:06.125821+00:00
+Emma Thompson,Emma,Thompson,emmat@compass.com,(803) 851-8859,United Real Estate,Philadelphia,PA,16,49,3147394,PA466628,PA,4.7,83,A,realtor_scraper,2026-04-28T07:04:06.125829+00:00
+Dennis Miller,Dennis,Miller,dennism@realtor.com,(423) 758-3998,CalAtlantic Homes,Memphis,TN,13,35,6034746,TN846653,TN,4.7,87,C,realtor_scraper,2026-04-28T07:04:06.125838+00:00
+Gregory Taylor,Gregory,Taylor,gregoryt@homesmart.com,(678) 558-3519,Nest Seekers,Tucson,AZ,23,10,7455926,AZ316889,AZ,3.6,88,C,realtor_scraper,2026-04-28T07:04:06.125846+00:00
+Anthony Lewis,Anthony,Lewis,anthonyl@gmail.com,(434) 768-8444,Realty One Group,Miami,FL,23,31,6379868,FL749975,FL,4.6,84,A,realtor_scraper,2026-04-28T07:04:06.125857+00:00
+Lisa Morris,Lisa,Morris,lisam@outlook.com,(509) 764-3442,Zillow Premier,Miami,FL,6,27,12153261,FL182347,FL,4.1,81,A,realtor_scraper,2026-04-28T07:04:06.125866+00:00
+Alexander Martinez,Alexander,Martinez,alexander64@gmail.com,(319) 579-3133,NVR,Houston,TX,14,35,5826836,TX233933,TX,4.8,84,A,realtor_scraper,2026-04-28T07:04:06.125877+00:00
+Kevin Cook,Kevin,Cook,kevin.cook@sothebysrealty.com,(320) 605-7167,CalAtlantic Homes,Orlando,FL,0,5,184699,FL425296,FL,3.9,91,A,realtor_scraper,2026-04-28T07:04:06.125886+00:00
+Jeffrey Rivera,Jeffrey,Rivera,jeffrey.rivera@homesmart.com,(763) 713-7156,The Agency,Oklahoma City,OK,3,5,1499321,OK277844,OK,3.9,66,C,realtor_scraper,2026-04-28T07:04:06.125894+00:00
+Thomas Adams,Thomas,Adams,thomas.adams@elliman.com,(410) 474-5922,KB Home,San Francisco,CA,3,8,604907,CA872404,CA,4.0,70,A,realtor_scraper,2026-04-28T07:04:06.125903+00:00
+Amanda Kelly,Amanda,Kelly,kelly.amanda@compass.com,(859) 274-7732,RE/MAX,Cleveland,OH,17,26,7475574,OH821311,OH,3.7,68,B,realtor_scraper,2026-04-28T07:04:06.125911+00:00
+Charles Ramirez,Charles,Ramirez,charlesr@weichert.com,(802) 567-7914,Douglas Elliman,Tucson,AZ,2,11,1262328,AZ942446,AZ,4.4,79,C,realtor_scraper,2026-04-28T07:04:06.125919+00:00
+Jack Parker,Jack,Parker,jack.parker@berkshirehathawayhs.com,(458) 833-6335,Vylla Home,Denver,CO,19,31,5645091,CO947546,CO,3.8,83,A,realtor_scraper,2026-04-28T07:04:06.125927+00:00
+Frank Nelson,Frank,Nelson,nelson.frank@kw.com,(507) 396-1986,The Agency,San Diego,CA,6,32,7854217,CA792394,CA,3.7,79,A,realtor_scraper,2026-04-28T07:04:06.125936+00:00
+Deborah Lopez,Deborah,Lopez,deborah.lopez@exprealty.com,(636) 678-4536,Douglas Elliman,Riverside,CA,25,34,10844235,CA194462,CA,3.9,74,B,realtor_scraper,2026-04-28T07:04:06.125948+00:00
+Barbara Gonzalez,Barbara,Gonzalez,barbarag@exprealty.com,(310) 897-4515,M/I Homes,Seattle,WA,1,0,344165,WA400005,WA,0.0,55,A,realtor_scraper,2026-04-28T07:04:06.125967+00:00
+Ryan Young,Ryan,Young,young.ryan@kw.com,(956) 982-7692,Taylor Morrison,Riverside,CA,7,11,2550123,CA592759,CA,3.6,68,B,realtor_scraper,2026-04-28T07:04:06.125986+00:00
+Amanda Garcia,Amanda,Garcia,agarcia@homesmart.com,(469) 512-3571,Meritage Homes,Salt Lake City,UT,1,0,453456,UT623689,UT,0.0,47,B,realtor_scraper,2026-04-28T07:04:06.126000+00:00
+Sharon Wright,Sharon,Wright,wright.sharon@berkshirehathawayhs.com,(669) 895-1555,Lennar,San Francisco,CA,15,43,9880009,CA218268,CA,5.0,83,A,realtor_scraper,2026-04-28T07:04:06.126014+00:00
+Robert Mitchell,Robert,Mitchell,rmitchell@realtyonegroup.com,(314) 365-6471,LGI Homes,Indianapolis,IN,6,24,13878422,IN709943,IN,3.7,75,B,realtor_scraper,2026-04-28T07:04:06.126023+00:00
+Michael Martin,Michael,Martin,mmartin@realtyonegroup.com,(228) 946-9398,M/I Homes,Sacramento,CA,19,45,14236675,CA811523,CA,4.2,82,B,realtor_scraper,2026-04-28T07:04:06.126038+00:00
+Stephanie Howard,Stephanie,Howard,stephanie.howard@remax.net,(551) 851-9397,M/I Homes,Cincinnati,OH,25,45,9806634,OH876043,OH,3.5,72,B,realtor_scraper,2026-04-28T07:04:06.126047+00:00
+Catherine Johnson,Catherine,Johnson,johnson.catherine@realtor.com,(501) 608-3562,Keller Williams,Austin,TX,20,40,4858947,TX868339,TX,4.8,83,A,realtor_scraper,2026-04-28T07:04:06.126069+00:00
+Karen Rogers,Karen,Rogers,rogers.karen@berkshirehathawayhs.com,(770) 736-3973,Meritage Homes,Orlando,FL,9,38,6875186,FL200038,FL,4.7,70,A,realtor_scraper,2026-04-28T07:04:06.126081+00:00
+Charles Wood,Charles,Wood,charlesw@coldwellbanker.com,(919) 374-7137,Realty One Group,Seattle,WA,21,22,14522970,WA672355,WA,4.0,100,A,realtor_scraper,2026-04-28T07:04:06.126097+00:00
+Samuel Ross,Samuel,Ross,sross@outlook.com,(817) 839-1569,Century Communities,St. Louis,MO,1,1,194740,MO287964,MO,4.6,54,B,realtor_scraper,2026-04-28T07:04:06.126109+00:00
+Kenneth Morris,Kenneth,Morris,kenneth.morris@elliman.com,(320) 612-4055,HomeSmart,Indianapolis,IN,23,38,10533155,IN331546,IN,3.8,100,B,realtor_scraper,2026-04-28T07:04:06.126123+00:00
+Kevin Johnson,Kevin,Johnson,kevinj@compass.com,(667) 343-6204,M/I Homes,Portland,OR,13,39,6472009,OR503771,OR,3.9,85,B,realtor_scraper,2026-04-28T07:04:06.126140+00:00
+Anna Jackson,Anna,Jackson,anna.jackson@hotmail.com,(517) 714-4886,United Real Estate,Las Vegas,NV,8,41,8643271,NV176654,NV,4.8,84,A,realtor_scraper,2026-04-28T07:04:06.126152+00:00
+Ronald Smith,Ronald,Smith,ronalds@century21.com,(916) 992-2679,Nest Seekers,Albuquerque,NM,21,29,4132600,NM309631,NM,3.6,79,C,realtor_scraper,2026-04-28T07:04:06.126164+00:00
+Janet Lee,Janet,Lee,lee.janet@gmail.com,(952) 509-9813,LGI Homes,San Francisco,CA,14,46,14419420,CA127098,CA,5.0,83,A,realtor_scraper,2026-04-28T07:04:06.126177+00:00
+Jeffrey Flores,Jeffrey,Flores,flores.jeffrey@gmail.com,(314) 792-6184,Realty One Group,Columbus,OH,16,22,10832623,OH591070,OH,4.9,84,B,realtor_scraper,2026-04-28T07:04:06.126189+00:00
+Anthony Baker,Anthony,Baker,anthony13@compass.com,(316) 215-5531,Lennar,San Francisco,CA,19,46,11068607,CA513844,CA,4.4,89,A,realtor_scraper,2026-04-28T07:04:06.126201+00:00
+Samantha Rivera,Samantha,Rivera,samantha71@yahoo.com,(917) 649-7358,ERA,Philadelphia,PA,19,24,12205701,PA800673,PA,4.1,90,A,realtor_scraper,2026-04-28T07:04:06.126213+00:00
+Michelle Wood,Michelle,Wood,michellew@exprealty.com,(307) 594-8840,M/I Homes,Denver,CO,4,6,1113815,CO649722,CO,3.8,77,A,realtor_scraper,2026-04-28T07:04:06.126231+00:00
+Sarah Martinez,Sarah,Martinez,martinez.sarah@century21.com,(541) 463-2894,Beazer Homes,San Antonio,TX,13,42,11825587,TX480959,TX,4.5,72,B,realtor_scraper,2026-04-28T07:04:06.126244+00:00
+Sarah Baker,Sarah,Baker,sbaker@realtor.com,(615) 230-9255,Redfin,San Diego,CA,22,37,11171636,CA733476,CA,4.0,94,A,realtor_scraper,2026-04-28T07:04:06.126255+00:00
+Ryan Brown,Ryan,Brown,rbrown@remax.net,(610) 874-5580,RE/MAX,Cincinnati,OH,4,6,1917698,OH689728,OH,4.9,65,B,realtor_scraper,2026-04-28T07:04:06.126267+00:00
+Karen Torres,Karen,Torres,karent@sothebysrealty.com,(303) 526-5830,Lennar,New York,NY,4,3,1559374,NY614721,NY,3.8,85,A,realtor_scraper,2026-04-28T07:04:06.126279+00:00
+Nicholas Ruiz,Nicholas,Ruiz,nicholasr@coldwellbanker.com,(541) 336-8209,Ryan Homes,Detroit,MI,24,12,7836113,MI119811,MI,4.5,74,B,realtor_scraper,2026-04-28T07:04:06.126287+00:00
+Kathleen Roberts,Kathleen,Roberts,kathleen22@remax.net,(479) 711-8854,eXp Realty,Tucson,AZ,0,5,424118,AZ791297,AZ,3.8,63,C,realtor_scraper,2026-04-28T07:04:06.126296+00:00
+Maria Robinson,Maria,Robinson,maria94@century21.com,(563) 311-8371,ERA,Salt Lake City,UT,11,33,6092737,UT623197,UT,3.6,91,B,realtor_scraper,2026-04-28T07:04:06.126305+00:00
+Kevin Jackson,Kevin,Jackson,kjackson@remax.net,(424) 984-5142,NVR,Minneapolis,MN,3,14,1513243,MN544034,MN,4.1,86,B,realtor_scraper,2026-04-28T07:04:06.126314+00:00
+Rebecca Sanchez,Rebecca,Sanchez,rsanchez@redfin.com,(832) 792-2499,Douglas Elliman,Richmond,VA,2,10,782262,VA750735,VA,4.1,85,C,realtor_scraper,2026-04-28T07:04:06.126322+00:00
+Dorothy Gonzalez,Dorothy,Gonzalez,dorothyg@kw.com,(954) 750-5284,Compass,Seattle,WA,4,13,1348890,WA221549,WA,3.8,62,A,realtor_scraper,2026-04-28T07:04:06.126335+00:00
+Mark Myers,Mark,Myers,mark.myers@sothebysrealty.com,(681) 898-3051,RE/MAX,Raleigh,NC,11,29,5271891,NC311828,NC,4.5,80,B,realtor_scraper,2026-04-28T07:04:06.126344+00:00
+Sandra Kim,Sandra,Kim,kim.sandra@elliman.com,(320) 976-2280,Taylor Morrison,Salt Lake City,UT,11,34,2750186,UT993002,UT,4.9,81,B,realtor_scraper,2026-04-28T07:04:06.126353+00:00
+Gregory Adams,Gregory,Adams,adams.gregory@remax.net,(303) 212-3180,ERA,Charlotte,NC,6,30,12043700,NC871765,NC,3.6,100,A,realtor_scraper,2026-04-28T07:04:06.126361+00:00
+Brian Torres,Brian,Torres,btorres@realtor.com,(985) 986-8870,Sotheby's,Miami,FL,19,48,9548819,FL551050,FL,4.1,73,A,realtor_scraper,2026-04-28T07:04:06.126372+00:00
+Deborah Phillips,Deborah,Phillips,deborah.phillips@exprealty.com,(470) 766-5955,Pulte Homes,Chicago,IL,24,30,9641824,IL134809,IL,4.9,87,A,realtor_scraper,2026-04-28T07:04:06.126381+00:00
+Brandon Adams,Brandon,Adams,adams.brandon@realtyonegroup.com,(907) 392-8505,LGI Homes,Nashville,TN,15,14,6700525,TN642473,TN,3.9,73,A,realtor_scraper,2026-04-28T07:04:06.126389+00:00
+Brian Diaz,Brian,Diaz,brian.diaz@realtor.com,(937) 980-2910,ERA,Los Angeles,CA,25,43,3971652,CA289852,CA,3.8,88,A,realtor_scraper,2026-04-28T07:04:06.126438+00:00
+Andrew Collins,Andrew,Collins,andrewc@weichert.com,(716) 312-4302,Ryan Homes,Albuquerque,NM,7,40,3279201,NM138596,NM,4.8,77,C,realtor_scraper,2026-04-28T07:04:06.126456+00:00
+Mark Brooks,Mark,Brooks,brooks.mark@hotmail.com,(331) 733-9243,United Real Estate,Jacksonville,FL,12,25,13074275,FL578728,FL,4.1,90,B,realtor_scraper,2026-04-28T07:04:06.126470+00:00
+Ryan Flores,Ryan,Flores,ryanf@redfin.com,(518) 686-4762,D.R. Horton,Cincinnati,OH,23,45,1503212,OH724827,OH,4.7,76,B,realtor_scraper,2026-04-28T07:04:06.126488+00:00
+Mark Rogers,Mark,Rogers,rogers.mark@exprealty.com,(940) 811-7678,RE/MAX,Detroit,MI,16,17,5089423,MI594184,MI,4.7,61,B,realtor_scraper,2026-04-28T07:04:06.126507+00:00
+Steven Gonzalez,Steven,Gonzalez,steven69@coldwellbanker.com,(478) 475-2152,Keller Williams,Cleveland,OH,25,43,12738713,OH520604,OH,3.9,70,B,realtor_scraper,2026-04-28T07:04:06.126525+00:00
+Brandon Green,Brandon,Green,brandong@remax.net,(847) 710-1686,Pulte Homes,Indianapolis,IN,23,18,2696924,IN207447,IN,3.6,66,B,realtor_scraper,2026-04-28T07:04:06.126538+00:00
+Donald Rodriguez,Donald,Rodriguez,drodriguez@hotmail.com,(907) 925-6039,HomeSmart,Denver,CO,23,17,3256015,CO506418,CO,4.6,74,A,realtor_scraper,2026-04-28T07:04:06.126554+00:00
+Betty Robinson,Betty,Robinson,betty63@weichert.com,(812) 233-4087,Ryan Homes,Atlanta,GA,5,19,13451755,GA844966,GA,4.3,92,A,realtor_scraper,2026-04-28T07:04:06.126569+00:00
+Betty Morgan,Betty,Morgan,betty84@elliman.com,(636) 560-4235,D.R. Horton,Tampa,FL,14,26,14988832,FL243725,FL,4.8,86,A,realtor_scraper,2026-04-28T07:04:06.126591+00:00
+Anthony Hall,Anthony,Hall,anthonyh@outlook.com,(818) 489-6832,Douglas Elliman,Riverside,CA,7,28,4175423,CA598314,CA,4.7,92,B,realtor_scraper,2026-04-28T07:04:06.126610+00:00
+John Cox,John,Cox,jcox@sothebysrealty.com,(818) 893-9858,United Real Estate,Columbus,OH,1,5,22120,OH543104,OH,3.5,68,B,realtor_scraper,2026-04-28T07:04:06.126620+00:00
+Brenda Thompson,Brenda,Thompson,brenda.thompson@sothebysrealty.com,(781) 754-3603,RE/MAX,Atlanta,GA,23,11,6667793,GA559736,GA,4.5,86,A,realtor_scraper,2026-04-28T07:04:06.126628+00:00
+Andrew Anderson,Andrew,Anderson,aanderson@homesmart.com,(762) 206-2248,LGI Homes,San Diego,CA,9,33,4024995,CA862394,CA,3.6,83,A,realtor_scraper,2026-04-28T07:04:06.126643+00:00
+Daniel Cook,Daniel,Cook,daniel7@berkshirehathawayhs.com,(575) 636-4654,Taylor Morrison,Louisville,KY,19,27,6605373,KY771367,KY,4.9,92,C,realtor_scraper,2026-04-28T07:04:06.126655+00:00
+Betty Cox,Betty,Cox,bcox@remax.net,(931) 223-8211,Realty One Group,Charlotte,NC,16,42,2110700,NC706105,NC,4.7,78,A,realtor_scraper,2026-04-28T07:04:06.126664+00:00
+Kenneth Allen,Kenneth,Allen,kallen@berkshirehathawayhs.com,(812) 926-5411,Douglas Elliman,San Francisco,CA,15,37,10627585,CA245550,CA,4.5,96,A,realtor_scraper,2026-04-28T07:04:06.126672+00:00
+Mark Bailey,Mark,Bailey,mark.bailey@hotmail.com,(858) 222-6828,CalAtlantic Homes,San Diego,CA,25,17,8875690,CA481724,CA,3.9,83,A,realtor_scraper,2026-04-28T07:04:06.126681+00:00
+Steven Cooper,Steven,Cooper,steven91@gmail.com,(815) 862-4475,Zillow Premier,Boston,MA,2,9,622946,MA810290,MA,4.2,69,A,realtor_scraper,2026-04-28T07:04:06.126690+00:00
+Jerry Cook,Jerry,Cook,jerryc@realtyonegroup.com,(443) 931-2449,KB Home,Riverside,CA,4,11,917444,CA698945,CA,4.2,72,B,realtor_scraper,2026-04-28T07:04:06.126699+00:00
+Christopher Brooks,Christopher,Brooks,brooks.christopher@sothebysrealty.com,(623) 320-9613,Sotheby's,St. Louis,MO,25,14,13429684,MO647416,MO,3.7,81,B,realtor_scraper,2026-04-28T07:04:06.126708+00:00
+Edward Price,Edward,Price,edwardp@yahoo.com,(408) 736-5319,Toll Brothers,Phoenix,AZ,18,30,14730763,AZ388639,AZ,4.3,100,A,realtor_scraper,2026-04-28T07:04:06.126716+00:00
+Thomas Johnson,Thomas,Johnson,tjohnson@century21.com,(737) 309-8271,Lennar,New York,NY,7,47,9028888,NY242655,NY,4.9,69,A,realtor_scraper,2026-04-28T07:04:06.126724+00:00
+Tyler Scott,Tyler,Scott,tyler.scott@exprealty.com,(407) 373-6842,Meritage Homes,Chicago,IL,20,21,4099395,IL879780,IL,4.5,63,A,realtor_scraper,2026-04-28T07:04:06.126736+00:00
+Ronald Lewis,Ronald,Lewis,lewis.ronald@weichert.com,(678) 525-2793,Lennar,Columbus,OH,8,50,8034358,OH164711,OH,3.9,63,B,realtor_scraper,2026-04-28T07:04:06.126748+00:00
+Pamela Ortiz,Pamela,Ortiz,pamelao@compass.com,(484) 453-5011,Century 21,Virginia Beach,VA,12,39,12783215,VA839689,VA,4.5,77,C,realtor_scraper,2026-04-28T07:04:06.126756+00:00
+Betty Sanders,Betty,Sanders,betty11@compass.com,(228) 998-9629,Realty One Group,Detroit,MI,5,27,14572944,MI368436,MI,3.9,100,B,realtor_scraper,2026-04-28T07:04:06.126765+00:00
+Steven Parker,Steven,Parker,steven.parker@yahoo.com,(516) 252-2620,Nest Seekers,Los Angeles,CA,25,23,4747349,CA187811,CA,4.3,82,A,realtor_scraper,2026-04-28T07:04:06.126773+00:00
+Laura Morris,Laura,Morris,lauram@compass.com,(716) 416-5182,Weichert,Cincinnati,OH,8,45,3214463,OH924406,OH,4.8,91,B,realtor_scraper,2026-04-28T07:04:06.126782+00:00
+Michael Robinson,Michael,Robinson,mrobinson@compass.com,(720) 613-3647,HomeSmart,New York,NY,17,48,14662842,NY867606,NY,4.9,100,A,realtor_scraper,2026-04-28T07:04:06.126790+00:00
+Margaret Rivera,Margaret,Rivera,margaret48@weichert.com,(220) 203-7247,Realty One Group,Richmond,VA,9,50,8787346,VA637737,VA,3.5,73,C,realtor_scraper,2026-04-28T07:04:06.126799+00:00
+Shirley Brooks,Shirley,Brooks,sbrooks@century21.com,(435) 508-8788,Zillow Premier,Kansas City,MO,22,11,3091173,MO730316,MO,4.5,73,B,realtor_scraper,2026-04-28T07:04:06.126807+00:00
+Samuel Cruz,Samuel,Cruz,cruz.samuel@gmail.com,(630) 416-3699,Beazer Homes,Detroit,MI,17,20,9917982,MI441401,MI,4.4,83,B,realtor_scraper,2026-04-28T07:04:06.126816+00:00
+Scott Turner,Scott,Turner,scottt@yahoo.com,(562) 653-8310,LGI Homes,Nashville,TN,5,12,10393215,TN770857,TN,4.2,100,A,realtor_scraper,2026-04-28T07:04:06.126827+00:00
+Rebecca Robinson,Rebecca,Robinson,rebeccar@coldwellbanker.com,(904) 607-9445,Tri Pointe Homes,San Antonio,TX,12,48,11743268,TX772739,TX,4.1,79,B,realtor_scraper,2026-04-28T07:04:06.126836+00:00
+Larry Brooks,Larry,Brooks,lbrooks@weichert.com,(724) 584-3215,Better Homes & Gardens,Kansas City,MO,1,3,348371,MO880953,MO,4.2,66,B,realtor_scraper,2026-04-28T07:04:06.126857+00:00
+Tyler Myers,Tyler,Myers,tylerm@outlook.com,(539) 777-7793,D.R. Horton,Colorado Springs,CO,25,35,10339628,CO216037,CO,3.8,100,C,realtor_scraper,2026-04-28T07:04:06.126877+00:00
+Justin Bennett,Justin,Bennett,justinb@realtor.com,(661) 428-6140,Century Communities,Atlanta,GA,7,50,6472444,GA671363,GA,4.8,71,A,realtor_scraper,2026-04-28T07:04:06.126897+00:00
+Linda Reyes,Linda,Reyes,linda82@homesmart.com,(720) 912-1634,Coldwell Banker,Philadelphia,PA,13,13,4558490,PA555613,PA,3.8,76,A,realtor_scraper,2026-04-28T07:04:06.126909+00:00
+Edward Perez,Edward,Perez,edward.perez@elliman.com,(908) 389-1599,Zillow Premier,Dallas-Fort Worth,TX,4,11,965172,TX237396,TX,4.6,64,A,realtor_scraper,2026-04-28T07:04:06.126921+00:00
+Sarah Hill,Sarah,Hill,sarah.hill@berkshirehathawayhs.com,(725) 596-3790,KB Home,Richmond,VA,10,22,7198955,VA247630,VA,3.6,95,C,realtor_scraper,2026-04-28T07:04:06.126932+00:00
+Debra Kelly,Debra,Kelly,dkelly@sothebysrealty.com,(757) 566-4630,Nest Seekers,Jacksonville,FL,12,21,11725382,FL273009,FL,4.7,85,B,realtor_scraper,2026-04-28T07:04:06.126945+00:00
+Charles Ortiz,Charles,Ortiz,cortiz@exprealty.com,(562) 782-4852,Keller Williams,Charlotte,NC,12,22,4749436,NC396124,NC,4.6,91,A,realtor_scraper,2026-04-28T07:04:06.126957+00:00
+Stephen Martinez,Stephen,Martinez,smartinez@redfin.com,(734) 830-3558,United Real Estate,Kansas City,MO,25,22,11909563,MO779508,MO,3.8,100,B,realtor_scraper,2026-04-28T07:04:06.126974+00:00
+Betty Wilson,Betty,Wilson,bwilson@coldwellbanker.com,(412) 300-6840,Pulte Homes,Sacramento,CA,1,2,268511,CA234781,CA,4.9,52,B,realtor_scraper,2026-04-28T07:04:06.126983+00:00
+Janet Murphy,Janet,Murphy,janet38@remax.net,(980) 469-4545,Tri Pointe Homes,Baton Rouge,LA,23,43,6665492,LA707621,LA,4.0,82,C,realtor_scraper,2026-04-28T07:04:06.126992+00:00
+Joshua Roberts,Joshua,Roberts,roberts.joshua@gmail.com,(432) 949-8115,Beazer Homes,Virginia Beach,VA,20,27,12875771,VA418308,VA,4.8,100,C,realtor_scraper,2026-04-28T07:04:06.127000+00:00
+Melissa Clark,Melissa,Clark,melissa.clark@yahoo.com,(201) 287-3377,Nest Seekers,San Francisco,CA,8,16,13333810,CA775009,CA,4.6,76,A,realtor_scraper,2026-04-28T07:04:06.127009+00:00
+Emily Perez,Emily,Perez,eperez@weichert.com,(434) 321-2350,Century Communities,Tucson,AZ,11,17,8865180,AZ434720,AZ,4.4,77,C,realtor_scraper,2026-04-28T07:04:06.127017+00:00
+Nicole Gonzalez,Nicole,Gonzalez,nicole.gonzalez@realtyonegroup.com,(718) 768-3773,Taylor Morrison,Orlando,FL,5,29,6593759,FL836285,FL,4.8,75,A,realtor_scraper,2026-04-28T07:04:06.127025+00:00
+Daniel Torres,Daniel,Torres,daniel76@kw.com,(618) 333-4393,Pulte Homes,Cleveland,OH,18,37,13690561,OH628122,OH,4.4,89,B,realtor_scraper,2026-04-28T07:04:06.127034+00:00
+Richard Rodriguez,Richard,Rodriguez,rodriguez.richard@century21.com,(321) 298-1435,Weichert,San Francisco,CA,11,41,14910534,CA977359,CA,4.2,94,A,realtor_scraper,2026-04-28T07:04:06.127064+00:00
+Patrick Reyes,Patrick,Reyes,patrickr@homesmart.com,(949) 687-4341,Lennar,San Jose,CA,0,0,333806,CA493083,CA,0.0,60,B,realtor_scraper,2026-04-28T07:04:06.127089+00:00
+Ruth Taylor,Ruth,Taylor,rtaylor@coldwellbanker.com,(754) 279-3799,Century Communities,Los Angeles,CA,22,50,2862541,CA798361,CA,4.2,95,A,realtor_scraper,2026-04-28T07:04:06.127109+00:00
+Anna Price,Anna,Price,anna.price@berkshirehathawayhs.com,(603) 291-8495,United Real Estate,Albuquerque,NM,15,49,7047825,NM149644,NM,4.1,91,C,realtor_scraper,2026-04-28T07:04:06.127118+00:00
+Ruth Richardson,Ruth,Richardson,ruthr@century21.com,(684) 671-8465,KB Home,Nashville,TN,16,33,2802035,TN997282,TN,4.9,62,A,realtor_scraper,2026-04-28T07:04:06.127128+00:00
+Joshua King,Joshua,King,king.joshua@weichert.com,(681) 997-9295,Tri Pointe Homes,Richmond,VA,18,10,10169178,VA970206,VA,5.0,100,C,realtor_scraper,2026-04-28T07:04:06.127137+00:00
+Diane Castillo,Diane,Castillo,diane.castillo@gmail.com,(318) 385-6452,Zillow Premier,Memphis,TN,16,28,10913721,TN254583,TN,4.3,96,C,realtor_scraper,2026-04-28T07:04:06.127146+00:00
+Dorothy Allen,Dorothy,Allen,dorothy.allen@sothebysrealty.com,(442) 203-6844,Ryan Homes,St. Louis,MO,10,19,13744817,MO503469,MO,4.9,72,B,realtor_scraper,2026-04-28T07:04:06.127155+00:00
+Scott Watson,Scott,Watson,watson.scott@outlook.com,(575) 665-4329,Meritage Homes,Kansas City,MO,20,31,1756167,MO466919,MO,4.4,95,B,realtor_scraper,2026-04-28T07:04:06.127164+00:00
+Helen Cruz,Helen,Cruz,hcruz@coldwellbanker.com,(361) 565-3881,RE/MAX,Detroit,MI,14,14,11556265,MI694052,MI,4.1,87,B,realtor_scraper,2026-04-28T07:04:06.127172+00:00
+Angela Peterson,Angela,Peterson,peterson.angela@gmail.com,(203) 971-5637,Sotheby's,Salt Lake City,UT,8,24,4542385,UT470785,UT,3.8,76,B,realtor_scraper,2026-04-28T07:04:06.127180+00:00
+Helen Reed,Helen,Reed,helenr@kw.com,(615) 646-7216,Compass,Phoenix,AZ,10,11,2867724,AZ579075,AZ,4.9,88,A,realtor_scraper,2026-04-28T07:04:06.127195+00:00
+Margaret Morales,Margaret,Morales,morales.margaret@redfin.com,(913) 413-4293,Pulte Homes,Tucson,AZ,24,43,12604916,AZ759198,AZ,4.9,89,C,realtor_scraper,2026-04-28T07:04:06.127221+00:00
+Matthew Collins,Matthew,Collins,matthew54@yahoo.com,(252) 899-6937,United Real Estate,Phoenix,AZ,14,45,9131311,AZ119047,AZ,3.7,64,A,realtor_scraper,2026-04-28T07:04:06.127233+00:00
+Jennifer Howard,Jennifer,Howard,jennifer.howard@remax.net,(336) 551-8498,CalAtlantic Homes,Reno,NV,10,21,1839128,NV202418,NV,4.4,95,C,realtor_scraper,2026-04-28T07:04:06.127245+00:00
+Benjamin Young,Benjamin,Young,benjamin52@hotmail.com,(351) 524-7515,Berkshire Hathaway,Boise,ID,24,36,11394650,ID755674,ID,4.0,74,C,realtor_scraper,2026-04-28T07:04:06.127258+00:00
+Nicholas Mendoza,Nicholas,Mendoza,nmendoza@weichert.com,(872) 613-7722,ERA,Albuquerque,NM,10,42,13693627,NM924588,NM,4.6,88,C,realtor_scraper,2026-04-28T07:04:06.127274+00:00
+George Ramirez,George,Ramirez,ramirez.george@remax.net,(313) 516-5591,KB Home,San Jose,CA,9,46,6178215,CA579052,CA,5.0,82,B,realtor_scraper,2026-04-28T07:04:06.127285+00:00
+Michael Taylor,Michael,Taylor,michaelt@coldwellbanker.com,(424) 380-2666,Century 21,Memphis,TN,6,37,11661260,TN499663,TN,4.4,97,C,realtor_scraper,2026-04-28T07:04:06.127296+00:00
+Patricia Perez,Patricia,Perez,patriciap@homesmart.com,(513) 682-8669,Compass,Portland,OR,16,43,13933102,OR828286,OR,5.0,80,B,realtor_scraper,2026-04-28T07:04:06.127307+00:00
+Sandra Rogers,Sandra,Rogers,rogers.sandra@realtor.com,(941) 704-9313,Vylla Home,Jacksonville,FL,11,19,3697620,FL933688,FL,3.7,76,B,realtor_scraper,2026-04-28T07:04:06.127319+00:00
+Richard Jackson,Richard,Jackson,rjackson@hotmail.com,(951) 681-8450,United Real Estate,Los Angeles,CA,6,31,14791191,CA293648,CA,3.9,78,A,realtor_scraper,2026-04-28T07:04:06.127331+00:00
+Melissa Mitchell,Melissa,Mitchell,mitchell.melissa@gmail.com,(508) 520-2802,Compass,Seattle,WA,9,34,8751606,WA918055,WA,4.2,63,A,realtor_scraper,2026-04-28T07:04:06.127348+00:00
+Shirley Mendoza,Shirley,Mendoza,shirley.mendoza@compass.com,(435) 806-5832,Weichert,Milwaukee,WI,6,18,4309700,WI784341,WI,4.7,83,C,realtor_scraper,2026-04-28T07:04:06.127357+00:00
+Linda Perez,Linda,Perez,lperez@redfin.com,(570) 807-1196,Tri Pointe Homes,Charlotte,NC,19,20,13036702,NC247061,NC,4.7,91,A,realtor_scraper,2026-04-28T07:04:06.127365+00:00
+Janet Ward,Janet,Ward,jward@kw.com,(754) 563-2722,The Agency,San Diego,CA,10,49,9497388,CA999720,CA,3.6,94,A,realtor_scraper,2026-04-28T07:04:06.127374+00:00
+Edward Hall,Edward,Hall,edward.hall@elliman.com,(857) 294-5049,Berkshire Hathaway,Orlando,FL,6,50,5788332,FL800628,FL,4.6,79,A,realtor_scraper,2026-04-28T07:04:06.127382+00:00
+Susan Jones,Susan,Jones,susanj@outlook.com,(360) 559-2744,Toll Brothers,Austin,TX,18,23,8634791,TX640348,TX,3.8,72,A,realtor_scraper,2026-04-28T07:04:06.127391+00:00
+Melissa Gonzalez,Melissa,Gonzalez,melissa90@hotmail.com,(331) 854-2719,D.R. Horton,Los Angeles,CA,17,23,9403048,CA149695,CA,3.9,79,A,realtor_scraper,2026-04-28T07:04:06.127416+00:00
+Emily Castillo,Emily,Castillo,emily13@yahoo.com,(605) 300-4013,CalAtlantic Homes,San Antonio,TX,3,4,1577252,TX566099,TX,3.9,63,B,realtor_scraper,2026-04-28T07:04:06.127428+00:00
+Christopher Gutierrez,Christopher,Gutierrez,cgutierrez@outlook.com,(240) 289-7870,RE/MAX,San Diego,CA,17,18,10120699,CA436163,CA,4.2,100,A,realtor_scraper,2026-04-28T07:04:06.127437+00:00
+Nicholas Brown,Nicholas,Brown,nicholasb@realtyonegroup.com,(414) 562-6990,Tri Pointe Homes,Atlanta,GA,24,20,6759250,GA800196,GA,4.4,65,A,realtor_scraper,2026-04-28T07:04:06.127446+00:00
+Brandon Mitchell,Brandon,Mitchell,bmitchell@gmail.com,(534) 523-1790,Better Homes & Gardens,Baton Rouge,LA,8,14,9436846,LA261064,LA,4.6,71,C,realtor_scraper,2026-04-28T07:04:06.127460+00:00
+Maria Mendoza,Maria,Mendoza,mariam@realtyonegroup.com,(815) 611-7869,Taylor Morrison,Seattle,WA,13,17,3707274,WA385039,WA,4.2,81,A,realtor_scraper,2026-04-28T07:04:06.127469+00:00
+Ronald Castillo,Ronald,Castillo,ronaldc@remax.net,(206) 466-2116,CalAtlantic Homes,Indianapolis,IN,7,40,5307169,IN239342,IN,3.5,77,B,realtor_scraper,2026-04-28T07:04:06.127481+00:00
+Alexander Ramos,Alexander,Ramos,alexander29@realtyonegroup.com,(646) 918-7242,Weichert,New York,NY,21,26,2713603,NY619691,NY,3.7,70,A,realtor_scraper,2026-04-28T07:04:06.127490+00:00
+Cynthia Phillips,Cynthia,Phillips,phillips.cynthia@century21.com,(443) 259-5084,HomeSmart,Columbus,OH,19,32,12320200,OH570939,OH,3.6,80,B,realtor_scraper,2026-04-28T07:04:06.127498+00:00
+Jack Sanchez,Jack,Sanchez,jsanchez@compass.com,(315) 677-8108,Douglas Elliman,Chicago,IL,2,6,1715903,IL379920,IL,3.9,70,A,realtor_scraper,2026-04-28T07:04:06.127506+00:00
+Andrew Hughes,Andrew,Hughes,ahughes@realtor.com,(206) 783-4693,D.R. Horton,Houston,TX,11,40,2770797,TX138910,TX,4.3,75,A,realtor_scraper,2026-04-28T07:04:06.127515+00:00
