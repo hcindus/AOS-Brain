@@ -332,7 +332,8 @@ async def update_intelligence(record_id: int, data: dict):
     c = conn.cursor()
     
     # Build update query
-    allowed_fields = ['pos_system', 'pos_confidence', 'replacement_score', 'status']
+    allowed_fields = ['pos_system', 'pos_confidence', 'replacement_score', 'status',
+                      'contact_name', 'contact_title', 'phone', 'email']
     
     updates = []
     params = []
