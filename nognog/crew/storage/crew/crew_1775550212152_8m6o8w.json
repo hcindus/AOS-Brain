@@ -3,7 +3,7 @@
   "name": "Nyx",
   "role": "ENGINEER",
   "level": 5,
-  "xp": 96031,
+  "xp": 96102,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 15,
     "combat": 14
   },
-  "missionsCompleted": 623,
+  "missionsCompleted": 624,
   "discoveries": [
     {
       "name": "Rare Minerals",
@@ -3133,6 +3133,11 @@
       "name": "Derelict Ship",
       "location": "Alpha-1",
       "timestamp": 1777495537482
+    },
+    {
+      "name": "Unknown Signal",
+      "location": "Alpha-1",
+      "timestamp": 1777498177573
     }
   ],
   "status": "ACTIVE",

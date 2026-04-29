@@ -309,6 +309,173 @@ def get_activities():
     
     return jsonify(activities[:20])
 
+@app.route('/api/queue/<email_id>/send', methods=['POST'])
+def send_email_now(email_id):
+    """Send a queued email immediately via Mailgun"""
+    import os
+    import requests
+    from pathlib import Path
+    
+    # Load queue
+    queue_file = DATADEPOT_DIR / 'queue' / 'pending_emails.json'
+    sent_file = DATADEPOT_DIR / 'queue' / 'sent_emails.json'
+    failed_file = DATADEPOT_DIR / 'queue' / 'failed_emails.json'
+    
+    if not queue_file.exists():
+        return jsonify({'error': 'Queue file not found'}), 404
+    
+    with open(queue_file, 'r') as f:
+        queue = json.load(f)
+    
+    # Find email by ID
+    email_to_send = None
+    remaining_queue = []
+    
+    for email in queue:
+        if email.get('id') == email_id:
+            email_to_send = email
+        else:
+            remaining_queue.append(email)
+    
+    if not email_to_send:
+        return jsonify({'error': 'Email not found in queue'}), 404
+    
+    # Check if test mode
+    TEST_MODE = os.getenv('MAILGUN_TEST_MODE', 'True').lower() == 'true'
+    MAILGUN_API_KEY = os.getenv('MAILGUN_API_KEY', '')
+    MAILGUN_DOMAIN = os.getenv('MAILGUN_DOMAIN', 'psdepot.com')
+    
+    if TEST_MODE or not MAILGUN_API_KEY:
+        # Test mode - simulate send
+        email_to_send['sent_at'] = datetime.now().isoformat()
+        email_to_send['test_mode'] = True
+        email_to_send['mailgun_id'] = f'test_{int(datetime.now().timestamp())}'
+        
+        # Add to sent log
+        sent_list = []
+        if sent_file.exists():
+            with open(sent_file, 'r') as f:
+                sent_list = json.load(f)
+        
+        sent_list.append(email_to_send)
+        
+        with open(sent_file, 'w') as f:
+            json.dump(sent_list, f, indent=2)
+        
+        # Update queue
+        with open(queue_file, 'w') as f:
+            json.dump(remaining_queue, f, indent=2)
+        
+        return jsonify({
+            'success': True,
+            'test_mode': True,
+            'message': f'Email to {email_to_send["to_email"]} simulated (TEST MODE)',
+            'email_id': email_id
+        })
+    
+    # Real Mailgun send
+    try:
+        api_url = f"https://api.mailgun.net/v3/{MAILGUN_DOMAIN}/messages"
+        
+        data = {
+            'from': email_to_send.get('from', 'Miles - Performance Supply Depot <miles@psdepot.com>'),
+            'to': f"{email_to_send['to_name']} <{email_to_send['to_email']}>",
+            'bcc': 'info@psdepot.com',
+            'subject': email_to_send.get('subject', 'Performance Supply Depot'),
+            'html': email_to_send.get('html_body', ''),
+            'o:tracking': 'yes',
+            'o:tracking-clicks': 'yes',
+            'v:campaign_id': email_to_send.get('campaign_id', 'default'),
+            'v:template': email_to_send.get('template', 'unknown'),
+        }
+        
+        response = requests.post(
+            api_url,
+            auth=('api', MAILGUN_API_KEY),
+            data=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        result = response.json()
+        
+        # Record as sent
+        email_to_send['sent_at'] = datetime.now().isoformat()
+        email_to_send['mailgun_id'] = result.get('id', 'unknown')
+        
+        sent_list = []
+        if sent_file.exists():
+            with open(sent_file, 'r') as f:
+                sent_list = json.load(f)
+        
+        sent_list.append(email_to_send)
+        
+        with open(sent_file, 'w') as f:
+            json.dump(sent_list, f, indent=2)
+        
+        # Update queue
+        with open(queue_file, 'w') as f:
+            json.dump(remaining_queue, f, indent=2)
+        
+        return jsonify({
+            'success': True,
+            'message': f'Email sent to {email_to_send["to_email"]}',
+            'mailgun_id': result.get('id'),
+            'email_id': email_id
+        })
+        
+    except Exception as e:
+        # Record as failed
+        email_to_send['failed_at'] = datetime.now().isoformat()
+        email_to_send['error'] = str(e)
+        
+        failed_list = []
+        if failed_file.exists():
+            with open(failed_file, 'r') as f:
+                failed_list = json.load(f)
+        
+        failed_list.append(email_to_send)
+        
+        with open(failed_file, 'w') as f:
+            json.dump(failed_list, f, indent=2)
+        
+        # Remove from queue even on failure
+        with open(queue_file, 'w') as f:
+            json.dump(remaining_queue, f, indent=2)
+        
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'email_id': email_id
+        }), 500
+
+@app.route('/api/queue/<email_id>/cancel', methods=['POST'])
+def cancel_queued_email(email_id):
+    """Cancel a queued email"""
+    queue_file = DATADEPOT_DIR / 'queue' / 'pending_emails.json'
+    
+    if not queue_file.exists():
+        return jsonify({'error': 'Queue file not found'}), 404
+    
+    with open(queue_file, 'r') as f:
+        queue = json.load(f)
+    
+    # Find and remove email
+    remaining = [e for e in queue if e.get('id') != email_id]
+    
+    if len(remaining) == len(queue):
+        return jsonify({'error': 'Email not found'}), 404
+    
+    # Update queue
+    with open(queue_file, 'w') as f:
+        json.dump(remaining, f, indent=2)
+    
+    return jsonify({
+        'success': True,
+        'message': f'Email {email_id} cancelled',
+        'remaining_count': len(remaining)
+    })
+
 if __name__ == '__main__':
     # Production: Run with gunicorn
     # gunicorn -w 4 -b 0.0.0.0:8081 depotchaos_api:app
