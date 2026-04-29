@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>California POS Intelligence Report — DataDepot Intelligence</title>
+    <meta name="description" content="Access verified California restaurant and bar data with AI-detected POS systems. Perfect for POS vendors, service technicians, and equipment resellers.">
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2c5282;
+            --accent: #ed8936;
+            --accent-hover: #dd6b20;
+            --success: #48bb78;
+            --bg: #f7fafc;
+            --card: #ffffff;
+            --text: #2d3748;
+            --text-muted: #718096;
+            --border: #e2e8f0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Header */
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 16px 0;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+        }
+        
+        .logo span { color: var(--accent); }
+        
+        .nav-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 600;
+        }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 22px;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 40px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Features */
+        .features {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: var(--primary);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 35px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+        
+        .feature-card p {
+            color: var(--text-muted);
+        }
+        
+        /* Sample Data */
+        .sample-data {
+            background: white;
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .data-preview {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 25px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 14px;
+            color: #d4d4d4;
+            overflow-x: auto;
+            margin-top: 30px;
+        }
+        
+        .data-preview .key { color: #9cdcfe; }
+        .data-preview .string { color: #ce9178; }
+        .data-preview .number { color: #b5cea8; }
+        
+        /* Pricing */
+        .pricing {
+            padding: 80px 0;
+            background: var(--bg);
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .pricing-card.featured {
+            border: 2px solid var(--accent);
+            transform: scale(1.05);
+        }
+        
+        .featured-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .pricing-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .price {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+        
+        .price span {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+        
+        .features-list {
+            list-style: none;
+            margin: 30px 0;
+        }
+        
+        .features-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+        
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 14px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        /* Use Cases */
+        .use-cases {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+        
+        .use-case {
+            padding: 30px;
+            border-left: 4px solid var(--accent);
+            background: var(--bg);
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .use-case h4 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        /* Trust */
+        .trust {
+            padding: 60px 0;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+        }
+        
+        .trust p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 40px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            margin-left: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">DataDepot <span>Intelligence</span></div>
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#sample">Sample Data</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>California POS Intelligence Report</h1>
+            <p>AI-enriched database of 50,000+ California restaurants, bars, and hospitality businesses with detected POS systems, upgrade timelines, and verified contacts.</p>
+            
+            <div class="stats-bar">
+                <div class="stat">
+                    <div class="stat-number">52,847</div>
+                    <div class="stat-label">Active Licenses</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">14,203</div>
+                    <div class="stat-label">POS Systems Detected</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">8,944</div>
+                    <div class="stat-label">High-Value Leads</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">What You Get</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI-Powered POS Detection</h3>
+                    <p>Our AI analyzes Google Business photos, reviews, and websites to identify Square, Toast, Clover, Aloha, Micros, and 40+ other POS systems with 85%+ accuracy.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Replacement Predictions</h3>
+                    <p>Machine learning models predict which businesses are likely upgrading POS systems based on equipment age, transaction volume, and market signals.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">👤</div>
+                    <h3>Verified Contacts</h3>
+                    <p>Decision-maker contact info for owners, GMs, and IT managers. Cross-referenced from LinkedIn, business filings, and direct outreach verification.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Weekly Updates</h3>
+                    <p>New businesses opening, closings, license changes, and equipment detections refreshed every week. Never work with stale data.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📍</div>
+                    <h3>County-Level Granularity</h3>
+                    <p>Filter by county, city, ZIP code, business type, POS system, or license status. Export exactly the leads you need.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Ethical Data Only</h3>
+                    <p>100% public data sources: ABC licenses, business registrations, Google Business, and social media. No scraping of private information.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sample Data -->
+    <section class="sample-data" id="sample">
+        <div class="container">
+            <h2 class="section-title">Sample Record</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 20px;">Every record includes verified business info, AI-enriched POS intelligence, and contact data.</p>
+            
+            <div class="data-preview">
+<span class="key">{</span>
+  <span class="key">"business_name"</span>: <span class="string">"Golden Gate Bistro LLC"</span>,
+  <span class="key">"dba_name"</span>: <span class="string">"Harbor View Restaurant"</span>,
+  <span class="key">"license_number"</span>: <span class="string">"ABC-41-123456"</span>,
+  <span class="key">"license_type"</span>: <span class="string">"41 - On-Sale Beer & Wine"</span>,
+  <span class="key">"status"</span>: <span class="string">"Active"</span>,
+  <span class="key">"address"</span>: <span class="string">"123 Waterfront Ave"</span>,
+  <span class="key">"city"</span>: <span class="string">"San Francisco"</span>,
+  <span class="key">"county"</span>: <span class="string">"San Francisco"</span>,
+  <span class="key">"zip"</span>: <span class="string">"94111"</span>,
+  <span class="key">"phone"</span>: <span class="string">"415-555-0147"</span>,
+  <span class="key">"business_type"</span>: <span class="string">"Restaurant"</span>,
+  <span class="key">"pos_intelligence"</span>: {
+    <span class="key">"detected_system"</span>: <span class="string">"Square POS"</span>,
+    <span class="key">"confidence"</span>: <span class="number">0.92</span>,
+    <span class="key">"detection_method"</span>: <span class="string">"photo_analysis"</span>,
+    <span class="key">"equipment_age"</span>: <span class="string">"3-5 years"</span>,
+    <span class="key">"replacement_likelihood"</span>: <span class="number">0.78</span>,
+    <span class="key">"last_seen"</span>: <span class="string">"2026-04-15"</span>
+  },
+  <span class="key">"contacts"</span>: [
+    {
+      <span class="key">"name"</span>: <span class="string">"Maria Santos"</span>,
+      <span class="key">"title"</span>: <span class="string">"Owner"</span>,
+      <span class="key">"phone"</span>: <span class="string">"415-555-0147"</span>,
+      <span class="key">"source"</span>: <span class="string">"LinkedIn"</span>
+    }
+  ],
+  <span class="key">"data_quality_score"</span>: <span class="number">94</span>
+<span class="key">}</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases -->
+    <section class="use-cases">
+        <div class="container">
+            <h2 class="section-title">Perfect For</h2>
+            
+            <div class="use-cases-grid">
+                <div class="use-case">
+                    <h4>🖥️ POS Vendors & Resellers</h4>
+                    <p>Identify businesses using competing systems approaching end-of-life. Target restaurants with 3+ year old equipment for upgrade campaigns. Prioritize by replacement likelihood score.</p>
+                </div>
+                
+                <div class="use-case">
+                    <h4>🔧 Service Technicians</h4>
+                    <p>Find restaurants needing POS repair, maintenance, or technical support. Build a route-optimized service business with verified contact info and equipment details.</p>
+                </div>
+                
+                <div class="use-case">
+                    <h4>📄 Supplies & Consumables</h4>
+                    <p>Thermal paper, receipt printers, and accessory vendors can target by specific POS system. Know exactly which businesses need your products before they do.</p>
+                </div>
+                
+                <div class="use-case">
+                    <h4>💳 Payment Processors</h4>
+                    <p>See who's processing with competitors. Target Square users for better rates, or identify businesses without integrated payments for your solution.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Simple Pricing</h2>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="price">$97<span>/month</span></div>
+                    <ul class="features-list">
+                        <li>1 County Access</li>
+                        <li>500 Records/Month</li>
+                        <li>Basic POS Detection</li>
+                        <li>CSV Export</li>
+                        <li>Email Support</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Get Started</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="featured-badge">Most Popular</div>
+                    <h3>Professional</h3>
+                    <div class="price">$297<span>/month</span></div>
+                    <ul class="features-list">
+                        <li>5 Counties</li>
+                        <li>2,500 Records/Month</li>
+                        <li>AI POS Detection + Scores</li>
+                        <li>Verified Contacts</li>
+                        <li>Weekly Data Refresh</li>
+                        <li>API Access</li>
+                    </ul>
+                    <a href="#" class="btn">Get Started</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">$997<span>/month</span></div>
+                    <ul class="features-list">
+                        <li>All California Counties</li>
+                        <li>Unlimited Records</li>
+                        <li>Full AI Intelligence</li>
+                        <li>Real-time Updates</li>
+                        <li>Custom Integrations</li>
+                        <li>Dedicated Account Manager</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust -->
+    <section class="trust">
+        <div class="container">
+            <p>"We booked 12 POS demos in our first month using DataDepot. The replacement predictions are scarily accurate." — <strong>Michael R., Toast Sales Rep</strong></p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div>© 2026 DataDepot Intelligence — An AGI Company Subsidiary</div>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Data Ethics</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
