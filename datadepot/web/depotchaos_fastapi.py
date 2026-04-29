@@ -265,7 +265,9 @@ async def update_lead(lead_id: str, data: dict):
     
     # Build update query
     allowed_fields = ['status', 'assigned_agent', 'tier', 'pos_system', 
-                      'email_sent', 'email_opened', 'email_clicked', 'demo_scheduled']
+                      'email_sent', 'email_opened', 'email_clicked', 'demo_scheduled',
+                      'contact_name', 'contact_title', 'phone', 'email', 
+                      'callback_date', 'callback_notes']
     
     updates = []
     params = []
@@ -660,6 +662,51 @@ async def cancel_queued_email(email_id: str):
         'success': True,
         'message': f'Email {email_id} cancelled',
         'remaining_count': len(remaining)
+    }
+
+@app.get("/api/calendar")
+async def get_calendar(year: int = Query(None), month: int = Query(None)):
+    """Get scheduled callbacks for calendar view"""
+    conn = get_db_connection()
+    c = conn.cursor()
+    
+    # Build date filter
+    params = []
+    date_filter = ""
+    if year and month:
+        date_filter = "AND strftime('%Y-%m', callback_date) = ?"
+        params.append(f"{year}-{month:02d}")
+    
+    c.execute(f"""
+        SELECT id, company_name, contact_name, contact_title, phone, email, 
+               callback_date, callback_notes, status
+        FROM leads 
+        WHERE callback_date IS NOT NULL {date_filter}
+        ORDER BY callback_date ASC
+    """, params)
+    
+    callbacks = []
+    for row in c.fetchall():
+        callbacks.append({
+            'lead_id': row[0],
+            'company_name': row[1],
+            'contact_name': row[2],
+            'contact_title': row[3],
+            'phone': row[4],
+            'email': row[5],
+            'callback_date': row[5],
+            'callback_time': row[5][:16] if row[5] else None,  # Extract time portion
+            'callback_notes': row[6],
+            'status': row[7]
+        })
+    
+    conn.close()
+    
+    return {
+        'year': year,
+        'month': month,
+        'total_callbacks': len(callbacks),
+        'callbacks': callbacks
     }
 
 if __name__ == "__main__":
