@@ -21,7 +21,7 @@ from pathlib import Path
 # CONFIGURATION - Multiple Recipients
 # ═══════════════════════════════════════════════════════════════════
 SMTP_HOST = os.getenv("SMTP_HOST", "smtp.hostinger.com")
-SMTP_PORT = int(os.getenv("SMTP_PORT", "465"))
+SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
 SMTP_USER = os.getenv("SMTP_USER", "miles@myl0nr0s.cloud")
 SMTP_PASS = os.getenv("SMTP_PASS", "")  # Set via env var
 
@@ -154,12 +154,18 @@ Full JSON attached. Feed this to Mortimer's brain.
         sespool_attachment.add_header("Content-Disposition", "attachment", filename="sespool_waste.json")
         msg.attach(sespool_attachment)
     
-    # Send email (Hostinger uses SSL on port 465)
+    # Send email (Hostinger: 465=SSL, 587=STARTTLS)
     try:
         context = ssl.create_default_context()
-        with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=context) as server:
-            server.login(SMTP_USER, SMTP_PASS)
-            server.send_message(msg)
+        if SMTP_PORT == 465:
+            with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=context) as server:
+                server.login(SMTP_USER, SMTP_PASS)
+                server.send_message(msg)
+        else:
+            with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
+                server.starttls(context=context)
+                server.login(SMTP_USER, SMTP_PASS)
+                server.send_message(msg)
         
         print(f"✅ Waste emailed to {recipient} at {datetime.now(timezone.utc).isoformat()}")
         return True
