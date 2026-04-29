@@ -267,7 +267,9 @@ async def update_lead(lead_id: str, data: dict):
     allowed_fields = ['status', 'assigned_agent', 'tier', 'pos_system', 
                       'email_sent', 'email_opened', 'email_clicked', 'demo_scheduled',
                       'contact_name', 'contact_title', 'phone', 'email', 
-                      'callback_date', 'callback_notes']
+                      'callback_date', 'callback_notes',
+                      'contact_count', 'abc_converted_at', 'contact_history',
+                      'is_customer', 'customer_since', 'deleted', 'deleted_at']
     
     updates = []
     params = []
@@ -308,6 +310,28 @@ async def update_lead(lead_id: str, data: dict):
     conn.close()
     
     return {'success': True, 'updated': updated}
+
+@app.delete("/api/leads/{lead_id}")
+async def delete_lead(lead_id: str, hard: bool = Query(False)):
+    """Soft or hard delete a lead"""
+    conn = get_db_connection()
+    c = conn.cursor()
+    
+    if hard:
+        # Permanent deletion
+        c.execute("DELETE FROM leads WHERE id = ?", (lead_id,))
+    else:
+        # Soft delete - mark as deleted
+        c.execute(
+            "UPDATE leads SET deleted = 1, deleted_at = CURRENT_TIMESTAMP WHERE id = ?",
+            (lead_id,)
+        )
+    
+    conn.commit()
+    deleted = c.rowcount
+    conn.close()
+    
+    return {'success': True, 'deleted': deleted, 'hard_delete': hard}
 
 @app.get("/api/intelligence/{record_id}")
 async def get_intelligence_detail(record_id: int):
