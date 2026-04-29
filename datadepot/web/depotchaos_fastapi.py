@@ -188,13 +188,78 @@ async def get_lead(lead_id: str):
 
 @app.put("/api/leads/{lead_id}")
 async def update_lead(lead_id: str, data: dict):
-    """Update lead information"""
+    """Update lead information and enrichment data"""
     conn = get_db_connection()
     c = conn.cursor()
     
     # Build update query
-    allowed_fields = ['status', 'assigned_agent', 'notes', 'tier', 'pos_system', 
+    allowed_fields = ['status', 'assigned_agent', 'tier', 'pos_system', 
                       'email_sent', 'email_opened', 'email_clicked', 'demo_scheduled']
+    
+    updates = []
+    params = []
+    
+    for field in allowed_fields:
+        if field in data:
+            updates.append(f"{field} = ?")
+            params.append(data[field])
+    
+    # Handle enrichment_data separately
+    if 'enrichment_data' in data:
+        # Get existing enrichment
+        c.execute("SELECT enrichment_data FROM leads WHERE id = ?", (lead_id,))
+        row = c.fetchone()
+        existing = {}
+        if row and row[0]:
+            try:
+                existing = json.loads(row[0])
+            except:
+                pass
+        
+        # Merge new enrichment
+        try:
+            new_enrichment = json.loads(data['enrichment_data'])
+            existing.update(new_enrichment)
+            updates.append("enrichment_data = ?")
+            params.append(json.dumps(existing))
+        except:
+            pass
+    
+    if updates:
+        params.append(lead_id)
+        sql = f"UPDATE leads SET {', '.join(updates)} WHERE id = ?"
+        c.execute(sql, params)
+        
+    conn.commit()
+    updated = c.rowcount
+    conn.close()
+    
+    return {'success': True, 'updated': updated}
+
+@app.get("/api/intelligence/{record_id}")
+async def get_intelligence_detail(record_id: int):
+    """Get single intelligence record details"""
+    conn = get_db_connection()
+    c = conn.cursor()
+    
+    c.execute("SELECT * FROM datadepot_intelligence WHERE id = ?", (record_id,))
+    row = c.fetchone()
+    
+    conn.close()
+    
+    if row:
+        return row_to_dict(row)
+    else:
+        return JSONResponse(status_code=404, content={'error': 'Record not found'})
+
+@app.put("/api/intelligence/{record_id}")
+async def update_intelligence(record_id: int, data: dict):
+    """Update intelligence record"""
+    conn = get_db_connection()
+    c = conn.cursor()
+    
+    # Build update query
+    allowed_fields = ['pos_system', 'pos_confidence', 'replacement_score', 'status']
     
     updates = []
     params = []
@@ -207,9 +272,9 @@ async def update_lead(lead_id: str, data: dict):
     if not updates:
         return JSONResponse(status_code=400, content={'error': 'No valid fields to update'})
     
-    params.append(lead_id)
+    params.append(record_id)
     
-    sql = f"UPDATE leads SET {', '.join(updates)} WHERE id = ?"
+    sql = f"UPDATE datadepot_intelligence SET {', '.join(updates)} WHERE id = ?"
     c.execute(sql, params)
     
     conn.commit()
