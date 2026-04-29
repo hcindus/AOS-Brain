@@ -325,4 +325,4 @@ async def get_activities():
     return activities[:20]
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8081, log_level="info")
+    uvicorn.run(app, host="0.0.0.0", port=8082, log_level="info")
