@@ -175,6 +175,72 @@ async def get_leads(
         'pages': (total + per_page - 1) // per_page
     }
 
+@app.post("/api/leads")
+async def create_lead(data: dict):
+    """Create a new lead"""
+    import uuid
+    from datetime import datetime
+    
+    conn = get_db_connection()
+    c = conn.cursor()
+    
+    # Generate UUID if not provided
+    lead_id = data.get('id') or str(uuid.uuid4())
+    
+    # Extract fields with defaults
+    company_name = data.get('company_name', '')
+    county = data.get('county') or data.get('city', '')
+    status = data.get('status', 'new')
+    tier = data.get('tier', 'Tier 2')
+    pos_system = data.get('pos_system') or data.get('posSystem')
+    source_type = data.get('source_type') or data.get('source', 'manual_entry')
+    
+    # Build enrichment data from any extra fields
+    enrichment = {}
+    for key in ['contact_name', 'contact_title', 'phone', 'email', 'address', 'city', 'state', 'zip', 'notes']:
+        if key in data and data[key]:
+            enrichment[key] = data[key]
+    
+    # Handle enrichment_data if passed as dict or needs merging
+    if 'enrichment_data' in data and isinstance(data['enrichment_data'], dict):
+        enrichment.update(data['enrichment_data'])
+    elif 'enrichment' in data and isinstance(data['enrichment'], dict):
+        enrichment.update(data['enrichment'])
+    
+    enrichment_json = json.dumps(enrichment) if enrichment else None
+    
+    try:
+        c.execute("""
+            INSERT INTO leads (
+                id, company_name, county, status, tier,
+                pos_system, source_type, enrichment_data, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (
+            lead_id, company_name, county, status, tier,
+            pos_system, source_type, enrichment_json,
+            datetime.now().isoformat()
+        ))
+        conn.commit()
+        conn.close()
+        
+        return {
+            'success': True,
+            'id': lead_id,
+            'message': f'Lead "{company_name}" created successfully'
+        }
+    except sqlite3.IntegrityError as e:
+        conn.close()
+        return JSONResponse(
+            status_code=409,
+            content={'success': False, 'error': 'Lead with this ID already exists', 'detail': str(e)}
+        )
+    except Exception as e:
+        conn.close()
+        return JSONResponse(
+            status_code=500,
+            content={'success': False, 'error': 'Failed to create lead', 'detail': str(e)}
+        )
+
 @app.get("/api/leads/{lead_id}")
 async def get_lead(lead_id: str):
     """Get single lead details with enrichment"""

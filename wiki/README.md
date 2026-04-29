@@ -154,6 +154,31 @@ curl http://localhost:8080/api/triage
 
 ---
 
+## 📧 SMTP Configuration
+
+**Hostinger Email Setup**
+
+| Setting | Value | Notes |
+|---------|-------|-------|
+| **SMTP Server** | `smtp.hostinger.com` | Hostinger Business Email |
+| **Port** | `587` | TLS encrypted |
+| **Username** | `Miles@myl0nr0s.cloud` | System email address |
+| **Rate Limit** | 10 emails/min | Configured for safety |
+| **Hourly Limit** | ~200 emails/hour | Hostinger business tier |
+
+**Environment Variables:**
+```bash
+# Required for email sending
+export HOSTINGER_SMTP_USER="Miles@myl0nr0s.cloud"
+export HOSTINGER_SMTP_PASS="your_password_here"
+```
+
+**Code Location:**
+- SMTP sender: `/root/.openclaw/workspace/datadepot/smtp_sender.py`
+- Queue directory: `/root/.openclaw/workspace/datadepot/queue/`
+
+---
+
 ## 📁 Repository Structure
 
 ```
