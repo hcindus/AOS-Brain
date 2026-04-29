@@ -688,6 +688,7 @@ async def get_calendar(year: int = Query(None), month: int = Query(None)):
     
     callbacks = []
     for row in c.fetchall():
+        cb_date = row[6]
         callbacks.append({
             'lead_id': row[0],
             'company_name': row[1],
@@ -695,10 +696,10 @@ async def get_calendar(year: int = Query(None), month: int = Query(None)):
             'contact_title': row[3],
             'phone': row[4],
             'email': row[5],
-            'callback_date': row[5],
-            'callback_time': row[5][:16] if row[5] else None,  # Extract time portion
-            'callback_notes': row[6],
-            'status': row[7]
+            'callback_date': cb_date,
+            'callback_time': cb_date[11:16] if cb_date else None,  # Extract HH:MM from ISO
+            'callback_notes': row[7],
+            'status': row[8]
         })
     
     conn.close()
