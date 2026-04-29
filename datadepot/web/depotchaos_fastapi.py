@@ -15,7 +15,7 @@ from datetime import datetime
 from typing import Optional
 import uvicorn
 
-app = FastAPI(title="DepotChaos CRM", version="1.0.0")
+app = FastAPI(title="DepotChaos CRM", version="1.1.0")
 
 # Enable CORS
 app.add_middleware(
@@ -38,8 +38,24 @@ def get_db_connection():
     return conn
 
 def row_to_dict(row):
-    """Convert sqlite row to dict"""
-    return {key: row[key] for key in row.keys()}
+    """Convert sqlite row to dict with enrichment parsing"""
+    result = {key: row[key] for key in row.keys()}
+    
+    # Parse enrichment_data JSON if present
+    if result.get('enrichment_data'):
+        try:
+            enrichment = json.loads(result['enrichment_data'])
+            result['enrichment'] = enrichment
+            # Flatten for easier frontend access
+            result['contact_name'] = enrichment.get('contact_name', '')
+            result['contact_title'] = enrichment.get('contact_title', '')
+            result['phone'] = enrichment.get('phone', '')
+            result['email'] = enrichment.get('email', '')
+            result['city'] = enrichment.get('city', '')
+        except:
+            result['enrichment'] = {}
+    
+    return result
 
 # Mount static files
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
@@ -156,7 +172,7 @@ async def get_leads(
 
 @app.get("/api/leads/{lead_id}")
 async def get_lead(lead_id: str):
-    """Get single lead details"""
+    """Get single lead details with enrichment"""
     conn = get_db_connection()
     c = conn.cursor()
     
@@ -166,7 +182,7 @@ async def get_lead(lead_id: str):
     conn.close()
     
     if row:
-        return dict(row)
+        return row_to_dict(row)
     else:
         return JSONResponse(status_code=404, content={'error': 'Lead not found'})
 
