@@ -5,6 +5,7 @@
 **Product:** California Restaurant POS Intelligence Database (100K+ records, AI-enriched)
 **Price Points:** $97 (Starter) / $297 (Pro) / $997 (Enterprise)
 **Stripe:** ✅ Active on psdepot.com
+**Existing Revenue:** psdepot.com: $8,450/month | Cross-sell opportunity: Immediate
 
 ---
 
@@ -33,7 +34,135 @@ Tier 3 - Strategic Prospects:
   - Restaurant chains expanding to CA
   - Equipment leasing companies
   - Insurance companies (restaurant risk data)
+
+---
+
+### CROSS-SELL OPPORTUNITY: PSDEPOT.COM CUSTOMERS
+**Priority: HIGHEST** — Existing customers, established trust, active buyers
+
+#### Customer Segmentation for DataDepot Cross-Sell
+
+**Segment A: POS Hardware Buyers** (Highest Priority)
+- **Identified by:** Purchased Samsung POS systems, scales, or terminals from psdepot.com
+- **Pain Point:** Need leads to sell equipment TO, not just equipment itself
+- **DataDepot Value:** "You bought the POS system—now get the list of 500 restaurants ready to buy it"
+- **Offer:** Bundle deal — 20% off DataDepot when purchased with hardware
+- **Price Point:** Professional ($297/mo) or Enterprise ($997/mo)
+- **Script:** 
+  > "I noticed you bought a Samsung POS system last month. Most of our hardware customers tell us their biggest challenge isn't getting the equipment—it's finding restaurants that actually need it. Our CA POS Intelligence database shows you exactly which restaurants are using 6-year-old Aloha systems and complaining about them on Yelp. Want to see 50 leads from your area?"
+
+**Segment B: Supply Recurring Customers** (High Priority)
+- **Identified by:** Monthly/quarterly paper/ribbon orders, subscription behavior
+- **Pain Point:** Selling consumables is commodity—need competitive edge
+- **DataDepot Value:** "Know which restaurants are switching POS systems BEFORE they need new ribbons"
+- **Offer:** DataDepot Starter included free with $500+ monthly supply orders
+- **Price Point:** Starter ($97/mo) bundled with supplies
+- **Script:**
+  > "You're buying 40 paper rolls a month—that tells me you're servicing serious volume. What if you knew which of your customers are about to switch POS systems? Our intelligence tracks replacement timing. I'll include a free month of DataDepot with your next order so you can see which accounts to protect."
+
+**Segment C: Single-Purchase Prospects** (Medium Priority)
+- **Identified by:** One-time buyers, small orders, no repeat business
+- **Pain Point:** Bought supplies but haven't found growth path
+- **DataDepot Value:** "Turn your supply business into a consulting business"
+- **Offer:** Starter tier at 50% discount for first 3 months
+- **Price Point:** Starter ($97/mo → $48.50/mo)
+- **Script:**
+  > "I see you bought paper rolls in January but haven't been back. Most one-time buyers either found a cheaper supplier or realized they need more than just supplies—they need customers. DataDepot gives you 500 qualified CA restaurant leads per month. Want to try it half-price for 90 days?"
+
+**Segment D: Abandoned Carts / Browse Only** (Low Priority, High Volume)
+- **Identified by:** Visited POS category, added to cart, didn't checkout
+- **Pain Point:** Price sensitivity, decision paralysis
+- **DataDepot Value:** Lower-commitment entry point ($97 vs $500+ hardware)
+- **Offer:** DataDepot Starter as "low-risk trial" before hardware investment
+- **Price Point:** Starter ($97/mo)
+- **Script:**
+  > "You were looking at our Samsung POS systems last week. Smart move to research before buying. Here's a lower-risk way to test the market: our DataDepot Intelligence shows you 500 restaurants actively using outdated POS systems—for $97. Use those leads to pre-sell installations, THEN buy the hardware with confidence."
+
+#### Cross-Sell Campaign Templates
+
+**Email 1: Hardware Buyers (Day 7 post-purchase)**
 ```
+Subject: {{First_Name}}, your Samsung POS system + 500 qualified leads
+
+Hi {{First_Name}},
+
+Thanks for your Samsung POS system order (#{{Order_Number}}).
+
+Hardware is step 1. Step 2 is finding restaurants that actually need it.
+
+Most POS vendors I talk to waste 80% of their time on cold calls to restaurants that:
+→ Just bought a new system last year
+→ Are locked in 3-year contracts
+→ Don't have budget for equipment
+
+We built DataDepot Intelligence to fix that:
+→ 500 CA restaurants with detected POS systems
+→ Replacement likelihood scores (call the 70+ scores first)
+→ Review sentiment analysis ("slow terminal" = hot lead)
+
+Bundle offer: Add DataDepot Professional for $237/month (20% off) when you bundle with your hardware.
+
+Want to see 50 sample leads from {{City}} before you decide?
+https://psdepot.com/datadepot-crossell?id={{Customer_ID}}
+
+-Miles
+PS: This offer expires in 7 days.
+```
+
+**Email 2: Supply Customers (Monthly newsletter insertion)**
+```
+**NEW: Know Which Restaurants Are Switching POS Systems**
+
+Your competitors know. Now you can too.
+
+DataDepot Intelligence tracks 75,000+ California restaurants:
+✓ Detected POS systems from photos (Toast, Square, Aloha, etc.)
+✓ Equipment age estimates
+✓ Replacement timing scores
+✓ Owner/GM contact info
+
+Free with your next $500+ supply order: 1 month of DataDepot Starter ($97 value).
+
+Add to cart: [DataDepot Starter - FREE with supplies]
+```
+
+**Email 3: Win-Back for One-Time Buyers**
+```
+Subject: {{First_Name}}, where'd you go?
+
+Hi {{First_Name}},
+
+You bought paper rolls from us {{Months_Ago}}. Haven't seen you since.
+
+Not mad—just curious. Did you:
+→ Find cheaper supplies elsewhere?
+→ Stop servicing restaurants?
+→ Realize you need MORE than just supplies?
+
+If it's #3, I have something for you.
+
+DataDepot Intelligence: 500 qualified CA restaurant leads per month with POS system intelligence attached. Know who's using outdated equipment before you spend $500 on supplies they don't need.
+
+Half-price for 90 days: $48.50/month (normally $97).
+
+Return code: COMEBACK50
+https://psdepot.com/datadepot-winback?code=COMEBACK50
+
+-Miles
+```
+
+#### Cross-Sell Metrics to Track
+| Segment | Customers | Conversion Target | Revenue Impact |
+|---------|-----------|-------------------|----------------|
+| POS Hardware Buyers | ~50 | 30% (15) | $4,455/mo (15 × $297) |
+| Supply Recurring | ~200 | 15% (30) | $2,910/mo (30 × $97) |
+| One-Time Buyers | ~500 | 5% (25) | $1,213/mo (25 × $48.50) |
+| Abandoned Carts | ~1000 | 2% (20) | $1,940/mo (20 × $97) |
+| **TOTAL** | **~1,750** | **~5% overall** | **$10,518/mo** |
+
+**Note:** Cross-sell revenue ($10,518/mo) exceeds cold outbound revenue ($1,000/mo) in Year 1. Prioritize existing customers.
+
+---
 
 #### Lead Sourcing Checklist
 - [ ] Google Maps: "POS systems San Francisco" → 50 companies
@@ -475,6 +604,51 @@ Announcement: "We're expanding! Current customers get early access to new states
 
 ---
 
+## Weekly Cross-Sell Sprint Schedule (PSDEPOT.COM CUSTOMERS)
+**Priority: HIGHER than cold outbound** — 10x revenue potential
+
+### Monday (30 min)
+- [ ] Export psdepot.com customer list from last 30 days
+- [ ] Segment by purchase type: POS hardware / Supplies / Browse only
+- [ ] Queue cross-sell emails by segment
+- [ ] Target: 50 cross-sell emails sent
+
+### Tuesday (1 hour)
+- [ ] **Hardware Buyers:** Direct phone outreach (priority list)
+- [ ] **Supply Subscribers:** Bundle offer via email/phone
+- [ ] **One-Time Buyers:** Win-back campaign with discount code
+- [ ] Track responses, note objections
+
+### Wednesday (1 hour)
+- [ ] Follow-up on opened emails (no response)
+- [ ] Demo calls for interested cross-sell prospects
+- [ ] Process bundle orders (DataDepot + supplies/hardware)
+- [ ] Update CRM with cross-sell status
+
+### Thursday (30 min)
+- [ ] **Abandoned Cart Recovery:** DataDepot as lower-commitment alternative
+- [ ] Social proof: Share early DataDepot wins in newsletter
+- [ ] Target: 20 abandoned cart emails sent
+
+### Friday (30 min)
+- [ ] Cross-sell metrics review
+- [ ] Segment performance: Which group converts best?
+- [ ] Refine offers based on response data
+- [ ] Plan next week's cross-sell targeting
+
+**Weekly Cross-Sell Targets:**
+| Segment | Emails | Target Conv. | Revenue Impact |
+|---------|--------|--------------|----------------|
+| POS Hardware Buyers | 20 | 30% (6) | $1,782/mo |
+| Supply Recurring | 50 | 15% (8) | $776/mo |
+| One-Time Buyers | 50 | 5% (3) | $146/mo |
+| Abandoned Carts | 20 | 2% (1) | $97/mo |
+| **TOTAL** | **140** | **~12%** | **$2,801/mo** |
+
+**Note:** 1 week of cross-sell = 2.8 months of cold outbound revenue. Prioritize accordingly.
+
+---
+
 ## Metrics & KPIs
 
 ### Leading Indicators (Daily)
@@ -495,7 +669,7 @@ Announcement: "We're expanding! Current customers get early access to new states
 | Churn rate | <5%/month | Stripe |
 | NPS score | >50 | Survey |
 
-### Monthly Goals
+### Monthly Goals (COLD OUTBOUND ONLY)
 | Month | New Customers | MRR | Cumulative MRR |
 |-------|---------------|-----|------------------|
 | 1 | 5 | $1,500 | $1,500 |
@@ -504,6 +678,18 @@ Announcement: "We're expanding! Current customers get early access to new states
 | 4 | 20 | $5,000 | $12,750 |
 | 5 | 25 | $6,250 | $19,000 |
 | 6 | 30 | $7,500 | $26,500 |
+
+### Monthly Goals (CROSS-SELL + COLD OUTBOUND)
+| Month | Cross-Sell | Cold Outbound | Total MRR | Cumulative |
+|-------|------------|---------------|-----------|------------|
+| 1 | 15 customers ($2,800) | 5 ($1,500) | $4,300 | $4,300 |
+| 2 | 20 customers ($3,500) | 10 ($2,500) | $6,000 | $10,300 |
+| 3 | 25 customers ($4,200) | 15 ($3,750) | $7,950 | $18,250 |
+| 4 | 30 customers ($5,000) | 20 ($5,000) | $10,000 | $28,250 |
+| 5 | 35 customers ($5,800) | 25 ($6,250) | $12,050 | $40,300 |
+| 6 | 40 customers ($6,500) | 30 ($7,500) | $14,000 | $54,300 |
+
+**Key Insight:** Cross-sell accelerates MRR by 2-3x vs cold outbound alone.
 
 ---
 
