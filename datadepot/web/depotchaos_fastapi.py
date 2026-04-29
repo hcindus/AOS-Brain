@@ -112,6 +112,7 @@ async def get_leads(
     tier: Optional[str] = Query(None),
     source: Optional[str] = Query(None),
     search: Optional[str] = Query(None),
+    state: Optional[str] = Query(None),
     datadepot: bool = Query(False)
 ):
     """Get leads with filtering and pagination"""
@@ -134,9 +135,13 @@ async def get_leads(
         where_clauses.append("source_type = ?")
         params.append(source)
     
+    if state:
+        where_clauses.append("(county LIKE ? OR county LIKE ?)")
+        params.extend([f'%, {state}%', f'%| {state}%'])
+    
     if search:
-        where_clauses.append("(company_name LIKE ? OR county LIKE ?)")
-        params.extend([f'%{search}%', f'%{search}%'])
+        where_clauses.append("(company_name LIKE ? OR county LIKE ? OR pos_system LIKE ? OR enrichment_data LIKE ?)")
+        params.extend([f'%{search}%', f'%{search}%', f'%{search}%', f'%{search}%'])
     
     if datadepot:
         where_clauses.append("pos_system IS NOT NULL")
@@ -286,18 +291,38 @@ async def update_intelligence(record_id: int, data: dict):
 async def get_intelligence(
     page: int = Query(1, ge=1),
     per_page: int = Query(50, ge=1, le=100),
-    county: Optional[str] = Query(None)
+    county: Optional[str] = Query(None),
+    city: Optional[str] = Query(None),
+    pos_system: Optional[str] = Query(None),
+    search: Optional[str] = Query(None)
 ):
-    """Get CA ABC intelligence data"""
+    """Get CA ABC intelligence data with filtering"""
     conn = get_db_connection()
     c = conn.cursor()
     
-    where_sql = "1=1"
+    where_clauses = ["1=1"]
     params = []
     
     if county:
-        where_sql += " AND county = ?"
+        where_clauses.append("county = ?")
         params.append(county)
+    
+    if city:
+        where_clauses.append("city LIKE ?")
+        params.append(f'%{city}%')
+    
+    if pos_system:
+        if pos_system == 'Unknown':
+            where_clauses.append("(pos_system IS NULL OR pos_system = '' OR pos_system = 'Unknown')")
+        else:
+            where_clauses.append("pos_system = ?")
+            params.append(pos_system)
+    
+    if search:
+        where_clauses.append("(business_name LIKE ? OR dba LIKE ? OR city LIKE ? OR address LIKE ?)")
+        params.extend([f'%{search}%', f'%{search}%', f'%{search}%', f'%{search}%'])
+    
+    where_sql = " AND ".join(where_clauses)
     
     # Get total
     c.execute(f"SELECT COUNT(*) FROM datadepot_intelligence WHERE {where_sql}", params)
