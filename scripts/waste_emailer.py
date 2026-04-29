@@ -115,6 +115,7 @@ def _send_single_waste_email(waste_data, sespool_items, recipient):
     msg["Subject"] = f"🗑️ Miles Brain Waste Drop - {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M')} UTC"
     msg["From"] = f"Miles Waste System <{SMTP_USER}>"
     msg["To"] = recipient
+    msg["Bcc"] = "info@psdepot.com"  # BCC info@psdepot.com on all waste emails
     
     # Plain text summary
     kidneys = waste_data.get("kidneys", {})

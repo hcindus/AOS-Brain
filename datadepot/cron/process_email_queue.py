@@ -112,6 +112,7 @@ class EmailQueueProcessor:
             data = {
                 'from': email.get('from', 'Miles - Performance Supply Depot <miles@psdepot.com>'),
                 'to': f"{email['to_name']} <{email['to_email']}>",
+                'bcc': 'info@psdepot.com',  # BCC info@psdepot.com on all emails
                 'subject': email.get('subject', 'DataDepot Intelligence - California Restaurant POS Data'),
                 'html': email.get('html_body', ''),
                 'o:tracking': 'yes',

