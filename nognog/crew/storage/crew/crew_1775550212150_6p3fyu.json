@@ -3,7 +3,7 @@
   "name": "Vex",
   "role": "PILOT",
   "level": 5,
-  "xp": 91379,
+  "xp": 91499,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 10,
     "combat": 10
   },
-  "missionsCompleted": 573,
+  "missionsCompleted": 575,
   "discoveries": [
     {
       "name": "Anomalous Planet",
@@ -2883,6 +2883,16 @@
       "name": "Nebula Cloud",
       "location": "Alpha-1",
       "timestamp": 1777431215106
+    },
+    {
+      "name": "Unknown Signal",
+      "location": "Alpha-1",
+      "timestamp": 1777433525243
+    },
+    {
+      "name": "Unknown Signal",
+      "location": "Alpha-1",
+      "timestamp": 1777433795248
     }
   ],
   "status": "ACTIVE",
