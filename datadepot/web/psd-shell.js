@@ -592,8 +592,10 @@
         // Inject styles
         injectStyles();
         
-        // Capture original body content
-        const originalContent = document.body.innerHTML;
+        // Capture original body content BEFORE removing scripts
+        const originalBody = document.body;
+        const scripts = Array.from(originalBody.querySelectorAll('script'));
+        const originalContent = originalBody.innerHTML;
         
         // Build and inject shell
         document.body.innerHTML = buildShell();
@@ -603,6 +605,18 @@
         if (contentSlot) {
             contentSlot.innerHTML = originalContent;
         }
+        
+        // Re-execute scripts in the content slot
+        const newScripts = contentSlot.querySelectorAll('script');
+        newScripts.forEach(oldScript => {
+            const newScript = document.createElement('script');
+            if (oldScript.src) {
+                newScript.src = oldScript.src;
+            } else {
+                newScript.textContent = oldScript.textContent;
+            }
+            oldScript.parentNode.replaceChild(newScript, oldScript);
+        });
         
         // Setup interactions
         setupInteractions();
