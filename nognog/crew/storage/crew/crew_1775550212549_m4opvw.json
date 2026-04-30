@@ -3,7 +3,7 @@
   "name": "Luna",
   "role": "COMBAT",
   "level": 5,
-  "xp": 101521,
+  "xp": 101574,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 24,
     "combat": 15
   },
-  "missionsCompleted": 681,
+  "missionsCompleted": 682,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -3423,6 +3423,11 @@
       "name": "Unknown Signal",
       "location": "Alpha-1",
       "timestamp": 1777570899991
+    },
+    {
+      "name": "Hidden Base",
+      "location": "Alpha-1",
+      "timestamp": 1777575580152
     }
   ],
   "status": "ACTIVE",
