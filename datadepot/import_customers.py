@@ -310,26 +310,39 @@ class CustomerImporter:
         print(f"  ✅ Imported {self.stats['imported'] - imported_before} from Spot On Targets")
     
     def process_prime_accounts(self, df):
-        """Process Prime sheet"""
+        """Process Prime sheet - header is in row 1, data starts row 2"""
         print(f"\n📊 Processing Prime accounts ({len(df)} rows)...")
         
         imported_before = self.stats['imported']
         
-        # Skip header row
-        for idx, row in df.iloc[1:].iterrows():
+        # Skip first 2 rows (empty header + column headers)
+        for idx, row in df.iloc[2:].iterrows():
             try:
-                if pd.isna(row.get('Unnamed: 4')):
+                # Column mapping based on Prime sheet structure
+                business = str(row.iloc[4]).strip() if pd.notna(row.iloc[4]) else None  # Name column
+                if not business or business == 'nan' or business == '':
                     continue
                 
-                business = str(row.get('Unnamed: 4')).strip()
-                system = str(row.get('Unnamed: 2')).strip() if pd.notna(row.get('Unnamed: 2')) else None
-                contact = str(row.get('Unnamed: 5')).strip() if pd.notna(row.get('Unnamed: 5')) else None
-                phone = self.normalize_phone(row.get('Unnamed: 6'))
+                system = str(row.iloc[1]).strip() if pd.notna(row.iloc[1]) else None  # type column
+                am_code = str(row.iloc[2]).strip() if pd.notna(row.iloc[2]) else None  # AM initials
+                ws = str(row.iloc[3]).strip() if pd.notna(row.iloc[3]) else None  # WS
                 
-                street = str(row.get('Unnamed: 9')).strip() if pd.notna(row.get('Unnamed: 9')) else None
-                city = str(row.get('Unnamed: 10')).strip() if pd.notna(row.get('Unnamed: 10')) else None
-                state = str(row.get('Unnamed: 11')).strip() if pd.notna(row.get('Unnamed: 11')) else None
-                zipcode = str(row.get('Unnamed: 12')).strip() if pd.notna(row.get('Unnamed: 12')) else None
+                contact = str(row.iloc[5]).strip() if pd.notna(row.iloc[5]) else None  # Phone (contact name)
+                phone = self.normalize_phone(row.iloc[6])  # Cell
+                phone2 = self.normalize_phone(row.iloc[7]) if len(row) > 7 else None  # Extra phone
+                
+                # Address columns
+                street = str(row.iloc[11]).strip() if pd.notna(row.iloc[11]) else None  # STREET
+                city = str(row.iloc[12]).strip() if pd.notna(row.iloc[12]) else None   # CITY
+                state = str(row.iloc[13]).strip() if pd.notna(row.iloc[13]) else None   # ST
+                zipcode = str(row.iloc[14]).strip() if pd.notna(row.iloc[14]) else None # ZIP
+                
+                # Email might be in column 15
+                email = str(row.iloc[15]).strip() if len(row) > 15 and pd.notna(row.iloc[15]) else None
+                
+                # Skip if missing critical data
+                if not business:
+                    continue
                 
                 # Check duplicates
                 dup_id, dup_type = self.check_duplicate(business, city, street)
@@ -338,14 +351,15 @@ class CustomerImporter:
                     self.stats['duplicates'] += 1
                     continue
                 
+                # Insert customer
                 self.cursor.execute('''
                     INSERT INTO psd_customers 
-                    (business_name, contact_name, phone, street_address, city, state, zipcode,
-                     system_type, category, source_sheet, import_date)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    (business_name, contact_name, phone, phone2, email, street_address, 
+                     city, state, zipcode, system_type, category, source_sheet, import_date)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ''', (
-                    business, contact, phone, street, city, state, zipcode,
-                    system, 'Prime', 'Prime',
+                    business, contact, phone, phone2, email, street,
+                    city, state, zipcode, system, 'Prime', 'Prime',
                     datetime.now().isoformat()
                 ))
                 
@@ -354,6 +368,8 @@ class CustomerImporter:
                 
             except Exception as e:
                 self.stats['errors'] += 1
+                if self.stats['errors'] < 5:  # Only print first few errors
+                    print(f"  ⚠️  Error on row {idx}: {e}")
         
         self.conn.commit()
         print(f"  ✅ Imported {self.stats['imported'] - imported_before} from Prime")
