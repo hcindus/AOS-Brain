@@ -19,6 +19,7 @@
                 href: 'psd_dashboard.html',
                 children: [
                     { id: 'overview', label: 'Overview', href: 'psd_dashboard.html' },
+                    { id: 'performance', label: 'Performance', href: 'psd_performance.html' },
                     { id: 'customers', label: 'Customers', href: 'psd_dashboard.html#customers' },
                     { id: 'contacts', label: 'Contacts', href: 'psd_dashboard.html#contacts' },
                     { id: 'forecast', label: 'Forecast', href: 'psd_dashboard.html#forecast' }
