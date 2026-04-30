@@ -1001,14 +1001,26 @@
             document.getElementById('customerPagination').innerHTML = '';
         }
 
-        // ===== HELPERS =====
+        // ===== TIER SYSTEM =====
+        const TIER_MAPPING = {
+            'PPCL': { class: 'tier-bronze', name: 'Bronze', level: 2 },
+            'Prime': { class: 'tier-silver', name: 'Silver', level: 3 },
+            'Spot On Target': { class: 'tier-gold', name: 'Gold', level: 4 },
+            'Top 165': { class: 'tier-platinum', name: 'Platinum', level: 5 }
+        };
+
         function getTierClass(category) {
-            if (!category) return '';
-            if (category.includes('Top 165')) return 'tier-top165';
-            if (category.includes('Spot On')) return 'tier-spoton';
-            if (category.includes('Prime')) return 'tier-prime';
-            if (category.includes('PPCL')) return 'tier-ppcl';
-            return '';
+            if (!category) return 'tier-stone';
+            return TIER_MAPPING[category]?.class || 'tier-stone';
+        }
+
+        function getTierName(category) {
+            if (!category) return 'Stone';
+            return TIER_MAPPING[category]?.name || 'Stone';
+        }
+
+        function getTierLevel(category) {
+            return TIER_MAPPING[category]?.level || 1;
         }
 
         function escapeHtml(text) {
