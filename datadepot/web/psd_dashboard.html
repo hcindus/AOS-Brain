@@ -494,8 +494,10 @@
     </div>
 
     <script>
-        // API Base URL
-        const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:8081' : '';
+        // API Base URL - use psd-api proxy when served from psdepot.com
+        const API_BASE = window.location.hostname === 'localhost' 
+            ? 'http://localhost:8081' 
+            : (window.location.hostname.includes('psdepot.com') ? '/psd-api' : '');
         
         // State
         let customersData = [];
