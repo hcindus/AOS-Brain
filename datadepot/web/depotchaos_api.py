@@ -87,10 +87,15 @@ def get_leads():
     source = request.args.get('source', '')
     search = request.args.get('search', '')
     datadepot_only = request.args.get('datadepot', 'false').lower() == 'true'
+    show_deleted = request.args.get('deleted', 'false').lower() == 'true'
     
     # Build query
     where_clauses = []
     params = []
+    
+    # Filter deleted unless explicitly requested
+    if not show_deleted:
+        where_clauses.append("deleted = 0 OR deleted IS NULL")
     
     if status:
         where_clauses.append("status = ?")
@@ -166,7 +171,10 @@ def update_lead(lead_id):
     
     # Build update query
     allowed_fields = ['status', 'assigned_agent', 'notes', 'tier', 'pos_system', 
-                      'email_sent', 'email_opened', 'email_clicked', 'demo_scheduled']
+                      'email_sent', 'email_opened', 'email_clicked', 'demo_scheduled',
+                      'contact_name', 'contact_title', 'phone', 'email', 'pos_confidence',
+                      'equipment_age', 'replacement_score', 'review_sentiment', 'pos_mentions',
+                      'callback_date', 'callback_notes', 'enrichment_data', 'assigned_dept']
     
     updates = []
     params = []
@@ -188,6 +196,47 @@ def update_lead(lead_id):
     conn.close()
     
     return jsonify({'success': True, 'updated': c.rowcount})
+
+@app.route('/api/leads/<lead_id>', methods=['DELETE'])
+def delete_lead(lead_id):
+    """Soft delete a lead"""
+    conn = get_db_connection()
+    c = conn.cursor()
+    
+    # Soft delete - set deleted flag and timestamp
+    c.execute("""
+        UPDATE leads 
+        SET deleted = 1, deleted_at = CURRENT_TIMESTAMP 
+        WHERE id = ? AND deleted = 0
+    """, (lead_id,))
+    
+    conn.commit()
+    conn.close()
+    
+    if c.rowcount > 0:
+        return jsonify({'success': True, 'message': 'Lead soft-deleted'})
+    else:
+        return jsonify({'error': 'Lead not found or already deleted'}), 404
+
+@app.route('/api/leads/<lead_id>/restore', methods=['POST'])
+def restore_lead(lead_id):
+    """Restore a soft-deleted lead"""
+    conn = get_db_connection()
+    c = conn.cursor()
+    
+    c.execute("""
+        UPDATE leads 
+        SET deleted = 0, deleted_at = NULL 
+        WHERE id = ? AND deleted = 1
+    """, (lead_id,))
+    
+    conn.commit()
+    conn.close()
+    
+    if c.rowcount > 0:
+        return jsonify({'success': True, 'message': 'Lead restored'})
+    else:
+        return jsonify({'error': 'Lead not found or not deleted'}), 404
 
 @app.route('/api/intelligence', methods=['GET'])
 def get_intelligence():
@@ -229,6 +278,22 @@ def get_intelligence():
         'page': page,
         'per_page': per_page
     })
+
+@app.route('/api/intelligence/<record_id>', methods=['DELETE'])
+def delete_intelligence(record_id):
+    """Delete an intelligence record"""
+    conn = get_db_connection()
+    c = conn.cursor()
+    
+    c.execute("DELETE FROM datadepot_intelligence WHERE id = ?", (record_id,))
+    
+    conn.commit()
+    conn.close()
+    
+    if c.rowcount > 0:
+        return jsonify({'success': True, 'message': 'Intelligence record deleted'})
+    else:
+        return jsonify({'error': 'Record not found'}), 404
 
 @app.route('/api/counties', methods=['GET'])
 def get_counties():
