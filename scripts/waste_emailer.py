@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-WASTE EMAILER v1.1
+WASTE EMAILER v1.2
 Packages Miles' brain waste and emails it to configured recipients.
 Runs every time kidneys flush (or on cron schedule).
 """
@@ -18,12 +18,32 @@ from email.mime.application import MIMEApplication
 from pathlib import Path
 
 # ═══════════════════════════════════════════════════════════════════
+# LOAD ENVIRONMENT FROM SECRETS FILE
+# ═══════════════════════════════════════════════════════════════════
+def load_env_file(filepath):
+    """Load environment variables from a .env file."""
+    if not os.path.exists(filepath):
+        return
+    with open(filepath, 'r') as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith('#'):
+                continue
+            if '=' in line:
+                key, value = line.split('=', 1)
+                os.environ[key.strip()] = value.strip()
+
+# Try to load SMTP credentials from secrets file
+env_file = '/root/.openclaw/workspace/aocros/secrets/smtp.env'
+load_env_file(env_file)
+
+# ═══════════════════════════════════════════════════════════════════
 # CONFIGURATION - Multiple Recipients
 # ═══════════════════════════════════════════════════════════════════
-SMTP_HOST = os.getenv("SMTP_HOST", "smtp.hostinger.com")
-SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
-SMTP_USER = os.getenv("SMTP_USER", "miles@myl0nr0s.cloud")
-SMTP_PASS = os.getenv("SMTP_PASS", "")  # Set via env var
+SMTP_HOST = os.getenv("SMTP_HOST", os.getenv("HOSTINGER_SMTP_SERVER", "smtp.hostinger.com"))
+SMTP_PORT = int(os.getenv("SMTP_PORT", os.getenv("HOSTINGER_SMTP_PORT", "587")))
+SMTP_USER = os.getenv("SMTP_USER", os.getenv("HOSTINGER_SMTP_USER", "miles@myl0nr0s.cloud"))
+SMTP_PASS = os.getenv("SMTP_PASS", os.getenv("HOSTINGER_SMTP_PASS", ""))  # Set via env var
 
 # Multiple waste recipients
 WASTE_RECIPIENTS = [
@@ -189,7 +209,7 @@ Full JSON attached. Feed this to Mortimer's brain.
 
 def main():
     print("=" * 60)
-    print("MILES WASTE EMAILER v1.1")
+    print("MILES WASTE EMAILER v1.2")
     print(f"Recipients: {', '.join(WASTE_RECIPIENTS)}")
     print("=" * 60)
     
