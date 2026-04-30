@@ -119,7 +119,7 @@ class CustomerImporter:
         self.cursor.execute('''
             SELECT id, business_name, city, street_address, phone 
             FROM psd_customers 
-            WHERE UPPER(REPLACE(REPLACE(business_name, ' ', ''), '''', '')) = ?
+            WHERE UPPER(REPLACE(REPLACE(business_name, ' ', ''), "'", '')) = ?
             AND UPPER(city) = UPPER(?)
         ''', (norm_name, city))
         
@@ -133,7 +133,7 @@ class CustomerImporter:
             self.cursor.execute('''
                 SELECT id, business_name, city, street_address 
                 FROM psd_customers 
-                WHERE UPPER(REPLACE(REPLACE(business_name, ' ', ''), '''', '')) = ?
+                WHERE UPPER(REPLACE(REPLACE(business_name, ' ', ''), "'", '')) = ?
                 AND UPPER(city) != UPPER(?)
             ''', (norm_name, city))
             
