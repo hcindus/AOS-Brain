@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customers - Performance Supply Depot</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="psd-shell.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 30px; }
+        .filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .filter-group label {
+            font-size: 12px;
+            color: #a0a0a0;
+            text-transform: uppercase;
+        }
+        select, input {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            font-size: 14px;
+            min-width: 150px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background: #e94560;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn:hover { background: #d63d56; }
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+        .card h3 {
+            color: #e94560;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        th {
+            background: rgba(233, 69, 96, 0.2);
+            color: #e94560;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 11px;
+        }
+        tr:hover { background: rgba(255, 255, 255, 0.03); }
+        .tier-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .tier-stone { background: linear-gradient(135deg, #A0826D, #8B7355); color: #fff; }
+        .tier-bronze { background: linear-gradient(135deg, #E69138, #CD7F32); color: #1a1a2e; }
+        .tier-silver { background: linear-gradient(135deg, #E8E8E8, #C0C0C0); color: #1a1a2e; }
+        .tier-gold { background: linear-gradient(135deg, #FFD700, #FFAA00); color: #1a1a2e; }
+        .tier-platinum { background: linear-gradient(135deg, #F5F5F5, #E5E4E2); color: #1a1a2e; }
+        .tier-diamond { background: linear-gradient(135deg, #E0FFFF, #B9F2FF); color: #1a1a2e; }
+        .geo-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(15, 52, 96, 0.3);
+            border-radius: 8px;
+        }
+        .geo-item {
+            padding: 8px 16px;
+            background: rgba(233, 69, 96, 0.2);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .geo-item:hover { background: rgba(233, 69, 96, 0.4); }
+        .geo-item.active { background: #e94560; }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+        .pagination button {
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            cursor: pointer;
+        }
+        .pagination button.active { background: #e94560; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h3>🌍 Geographic Drill-Down</h3>
+            <div class="geo-nav" id="geoNav">
+                <div class="geo-item active" data-level="country">🇺🇸 United States</div>
+                <div class="geo-item" data-level="state">📍 All States</div>
+                <div class="geo-item" data-level="county">🏛️ All Counties</div>
+                <div class="geo-item" data-level="city">🏙️ All Cities</div>
+            </div>
+            <div id="geoContent">Loading geographic data...</div>
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label>Search</label>
+                <input type="text" id="searchInput" placeholder="Business name...">
+            </div>
+            <div class="filter-group">
+                <label>Tier</label>
+                <select id="tierFilter">
+                    <option value="">All Tiers</option>
+                    <option value="diamond">💎 Diamond</option>
+                    <option value="platinum">🏆 Platinum</option>
+                    <option value="gold">🥇 Gold</option>
+                    <option value="silver">🥈 Silver</option>
+                    <option value="bronze">🥉 Bronze</option>
+                    <option value="stone">🪨 Stone</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>State</label>
+                <select id="stateFilter">
+                    <option value="">All States</option>
+                    <option value="CA">California</option>
+                    <option value="TX">Texas</option>
+                    <option value="FL">Florida</option>
+                    <option value="NY">New York</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>City</label>
+                <select id="cityFilter">
+                    <option value="">All Cities</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>&nbsp;</label>
+                <button class="btn" onclick="loadCustomers()">🔍 Search</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>👥 Customer List</h3>
+            <table id="customerTable">
+                <thead>
+                    <tr>
+                        <th>Business</th>
+                        <th>Tier</th>
+                        <th>System</th>
+                        <th>Contact</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="customerTableBody">
+                    <tr><td colspan="7" style="text-align: center; padding: 40px;">Loading customers...</td></tr>
+                </tbody>
+            </table>
+            <div class="pagination" id="pagination"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.hostname === 'localhost' 
+            ? 'http://localhost:8081' 
+            : (window.location.hostname.includes('psdepot.com') ? '/psd-api' : '');
+        
+        const TIER_MAP = {
+            'PPCL': 'bronze',
+            'Prime': 'silver',
+            'Spot On Target': 'gold',
+            'Top 165': 'platinum'
+        };
+
+        const TIER_ICONS = {
+            'stone': '🪨',
+            'bronze': '🥉',
+            'silver': '🥈',
+            'gold': '🥇',
+            'platinum': '🏆',
+            'diamond': '💎'
+        };
+
+        let currentPage = 1;
+        let geoData = {};
+
+        async function fetchAPI(endpoint) {
+            const response = await fetch(`${API_BASE}${endpoint}`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return await response.json();
+        }
+
+        function getTierClass(category) {
+            return 'tier-' + (TIER_MAP[category] || 'stone');
+        }
+
+        function getTierName(category) {
+            const tier = TIER_MAP[category] || 'stone';
+            return TIER_ICONS[tier] + ' ' + tier.charAt(0).toUpperCase() + tier.slice(1);
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '-';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        async function loadCustomers(page = 1) {
+            currentPage = page;
+            const tbody = document.getElementById('customerTableBody');
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px;">Loading...</td></tr>';
+
+            try {
+                const search = document.getElementById('searchInput')?.value || '';
+                const tier = document.getElementById('tierFilter')?.value || '';
+                const state = document.getElementById('stateFilter')?.value || '';
+                
+                // Build URL with filters
+                let url = `/customers?skip=${(page-1)*50}&limit=50`;
+                if (search) url += `&search=${encodeURIComponent(search)}`;
+                if (state) url += `&state=${encodeURIComponent(state)}`;
+                
+                const data = await fetchAPI(url);
+                let customers = data.customers || [];
+                
+                // Filter out summary rows and apply tier filter
+                customers = customers.filter(c => 
+                    c.business_name && 
+                    !c.business_name.includes('RUNNING TOTAL') &&
+                    !c.business_name.includes('***')
+                );
+                
+                if (tier) {
+                    customers = customers.filter(c => TIER_MAP[c.category] === tier);
+                }
+                
+                if (customers.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: #a0a0a0;">No customers found</td></tr>';
+                    return;
+                }
+                
+                tbody.innerHTML = customers.map(cust => `
+                    <tr>
+                        <td><strong>${escapeHtml(cust.business_name)}</strong></td>
+                        <td><span class="tier-badge ${getTierClass(cust.category)}">${getTierName(cust.category)}</span></td>
+                        <td>${escapeHtml(cust.system_type || '-')}</td>
+                        <td>${escapeHtml(cust.contact_name || '-')}</td>
+                        <td>${escapeHtml(cust.city || '-')}</td>
+                        <td>${escapeHtml(cust.state || '-')}</td>
+                        <td><a href="psd_customer.html?id=${cust.id}" class="btn" style="padding: 5px 12px; font-size: 11px;">📂 View</a></td>
+                    </tr>
+                `).join('');
+                
+                renderPagination(data.total || 0, 50, page);
+                
+            } catch (e) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 40px; color: #f87171;">Error loading customers: ${e.message}</td></tr>`;
+            }
+        }
+
+        function renderPagination(total, perPage, currentPage) {
+            const totalPages = Math.ceil(total / perPage);
+            const container = document.getElementById('pagination');
+            
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+            
+            let html = '';
+            for (let i = 1; i <= totalPages && i <= 10; i++) {
+                html += `<button class="${i === currentPage ? 'active' : ''}" onclick="loadCustomers(${i})">${i}</button>`;
+            }
+            container.innerHTML = html;
+        }
+
+        // Geographic drill-down
+        document.querySelectorAll('.geo-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.geo-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                loadGeoData(item.dataset.level);
+            });
+        });
+
+        async function loadGeoData(level) {
+            const content = document.getElementById('geoContent');
+            
+            try {
+                const data = await fetchAPI('/dashboard/city-distribution?limit=50');
+                const cities = data.data || [];
+                
+                if (level === 'country') {
+                    content.innerHTML = `
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+                            <div class="geo-item" style="background: rgba(74, 222, 128, 0.2);">
+                                <strong>🇺🇸 United States</strong><br>
+                                <small>4,530 customers</small>
+                            </div>
+                        </div>
+                    `;
+                } else if (level === 'state') {
+                    const states = {};
+                    cities.forEach(c => {
+                        if (c.state) states[c.state] = (states[c.state] || 0) + c.count;
+                    });
+                    
+                    content.innerHTML = `
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+                            ${Object.entries(states).sort((a,b) => b[1] - a[1]).map(([state, count]) => `
+                                <div class="geo-item" onclick="filterByState('${state}')">
+                                    <strong>${state}</strong><br>
+                                    <small>${count} customers</small>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                } else if (level === 'city') {
+                    content.innerHTML = `
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px;">
+                            ${cities.slice(0, 30).map(c => `
+                                <div class="geo-item" onclick="filterByCity('${c.city}')">
+                                    <strong>${c.city}</strong><br>
+                                    <small>${c.count} customers</small>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+            } catch (e) {
+                content.innerHTML = 'Error loading geographic data';
+            }
+        }
+
+        function filterByState(state) {
+            document.getElementById('stateFilter').value = state;
+            loadCustomers(1);
+        }
+
+        function filterByCity(city) {
+            // Add city filter and reload
+            loadCustomers(1);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCustomers();
+            loadGeoData('country');
+        });
+    </script>
+</body>
+</html>
