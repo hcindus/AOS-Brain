@@ -21,7 +21,7 @@ class HostingerEmailSender:
         self.smtp_port = 587  # TLS
         
         # Credentials from environment or config
-        self.username = os.getenv("HOSTINGER_SMTP_USER", "Miles@myl0nr0s.cloud")
+        self.username = os.getenv("HOSTINGER_SMTP_USER", "miles@myl0nr0s.cloud")
         self.password = os.getenv("HOSTINGER_SMTP_PASS", "")
         
         # Paths
