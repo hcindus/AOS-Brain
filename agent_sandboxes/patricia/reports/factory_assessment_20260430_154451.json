@@ -1,0 +1,382 @@
+{
+  "report_type": "Six Sigma Quality Assessment",
+  "generated_by": "Patricia",
+  "timestamp": "2026-04-30T15:44:51.691379",
+  "metrics": {
+    "total_orders": 44,
+    "active_orders": 0,
+    "avg_cycle_time_days": 1.47,
+    "defects_detected": 39,
+    "dpmo": 886363.64,
+    "sigma_level": 0,
+    "target_sigma": 6.0,
+    "improvement_gap": 6.0
+  },
+  "defects": [
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-CREAM-BUILD-001",
+      "product": "CREAM Mobile App - Android",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:21:54",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-CREAM-RN-001",
+      "product": "CREAM React Native - Cross Platform",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:22:38",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-DEPOTCHAOS-MACOS-001",
+      "product": "DepotChaos macOS App",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:24:05",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-DEPOTCHAOS-IOS-001",
+      "product": "DepotChaos iOS App",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:24:05",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-DEPOTCHAOS-WEB-001",
+      "product": "DepotChaos Web PWA",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:27:41",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-DEPOTCHAOS-FLUTTER-001",
+      "product": "DepotChaos Flutter",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:27:41",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-DEPOTCHAOS-MACOS-NATIVE-001",
+      "product": "DepotChaos macOS Native (Swift)",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:27:41",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-MILKMAN-2D-001",
+      "product": "Milkman Game - 2D Version",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:31:11",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-MILKMAN-3D-001",
+      "product": "Milkman Game - 3D Version",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:31:11",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-LECHE-2D-001",
+      "product": "Leche Game - 2D Version",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:31:11",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-LECHE-3D-001",
+      "product": "Leche Game - 3D Version",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:31:11",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-NOGNOG-2D-001",
+      "product": "N og nog - 2D Version",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:31:11",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-DAVERSE-UNITY-001",
+      "product": "DaVerse - Unity Version",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:31:57",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-DAVERSE-UNREAL-001",
+      "product": "DaVerse - Unreal Engine Version",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:31:57",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-DAVERSE-2D-001",
+      "product": "DaVerse - 2D Companion",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:31:57",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-MILKMAN-SCRIPT-001",
+      "product": "Milkman Season 1 - Script Finalization",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:42:56",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-LECHE-SCRIPT-001",
+      "product": "Leche Season 1 - Script Creation",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:42:56",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-HAUNTED-SCRIPT-001",
+      "product": "Haunted Holler - Master Consolidation",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:42:56",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-PROJECT5912-001",
+      "product": "Project 5912: The Memosyne Incident - Final Polish",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:44:11",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-SCRAPER-MONITOR-001",
+      "product": "Scraper Monitoring - Continuous",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:47:30",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-LEAD-ENRICHMENT-001",
+      "product": "Lead Enrichment Pipeline",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:47:30",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "STALLED_ORDER",
+      "order_id": "DF-20260419-DEPOTCHAOS-INTEGRATION-001",
+      "product": "DepotChaos Database Integration",
+      "current_status": "queued",
+      "last_update": "2026-04-19 03:47:30",
+      "severity": "HIGH",
+      "recommendation": "Escalate or auto-advance"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-CREAM-BUILD-001",
+      "product": "CREAM Mobile App - Android",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:21:54",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-CREAM-RN-001",
+      "product": "CREAM React Native - Cross Platform",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:22:38",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-DEPOTCHAOS-MACOS-001",
+      "product": "DepotChaos macOS App",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:24:05",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-DEPOTCHAOS-IOS-001",
+      "product": "DepotChaos iOS App",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:24:05",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-DEPOTCHAOS-WEB-001",
+      "product": "DepotChaos Web PWA",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:27:41",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-DEPOTCHAOS-FLUTTER-001",
+      "product": "DepotChaos Flutter",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:27:41",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-MILKMAN-2D-001",
+      "product": "Milkman Game - 2D Version",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:31:11",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-MILKMAN-3D-001",
+      "product": "Milkman Game - 3D Version",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:31:11",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-LECHE-2D-001",
+      "product": "Leche Game - 2D Version",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:31:11",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-LECHE-3D-001",
+      "product": "Leche Game - 3D Version",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:31:11",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-DAVERSE-UNITY-001",
+      "product": "DaVerse - Unity Version",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:31:57",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-DAVERSE-UNREAL-001",
+      "product": "DaVerse - Unreal Engine Version",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:31:57",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-MILKMAN-SCRIPT-001",
+      "product": "Milkman Season 1 - Script Finalization",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:42:56",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-LECHE-SCRIPT-001",
+      "product": "Leche Season 1 - Script Creation",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:42:56",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-SCRAPER-MONITOR-001",
+      "product": "Scraper Monitoring - Continuous",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:47:30",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-LEAD-ENRICHMENT-001",
+      "product": "Lead Enrichment Pipeline",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:47:30",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "DF-20260419-DEPOTCHAOS-INTEGRATION-001",
+      "product": "DepotChaos Database Integration",
+      "priority": "high",
+      "queued_since": "2026-04-19 03:47:30",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "HIGH",
+      "action": "Implement auto-advance for stalled orders",
+      "impact": "Clear 22 stalled orders",
+      "owner": "Pipeline Automation"
+    },
+    {
+      "priority": "MEDIUM",
+      "action": "Review high-priority queue processing",
+      "impact": "Accelerate 17 urgent orders",
+      "owner": "Production Manager"
+    }
+  ]
+}
