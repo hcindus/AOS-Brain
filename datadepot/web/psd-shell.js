@@ -592,9 +592,9 @@
         // Inject styles
         injectStyles();
         
-        // Capture original body content BEFORE removing scripts
+        // Capture original body content
         const originalBody = document.body;
-        const scripts = Array.from(originalBody.querySelectorAll('script'));
+        const originalScripts = Array.from(originalBody.querySelectorAll('script'));
         const originalContent = originalBody.innerHTML;
         
         // Build and inject shell
@@ -604,19 +604,26 @@
         const contentSlot = document.getElementById('psd-page-content');
         if (contentSlot) {
             contentSlot.innerHTML = originalContent;
+            
+            // Re-execute inline scripts in content slot
+            const scripts = contentSlot.querySelectorAll('script');
+            scripts.forEach(oldScript => {
+                const newScript = document.createElement('script');
+                // Copy attributes
+                Array.from(oldScript.attributes).forEach(attr => {
+                    newScript.setAttribute(attr.name, attr.value);
+                });
+                if (oldScript.src) {
+                    newScript.src = oldScript.src;
+                } else {
+                    newScript.textContent = oldScript.textContent;
+                }
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+            });
+            
+            // Dispatch event to notify scripts that shell is ready
+            document.dispatchEvent(new Event('psd-shell-ready'));
         }
-        
-        // Re-execute scripts in the content slot
-        const newScripts = contentSlot.querySelectorAll('script');
-        newScripts.forEach(oldScript => {
-            const newScript = document.createElement('script');
-            if (oldScript.src) {
-                newScript.src = oldScript.src;
-            } else {
-                newScript.textContent = oldScript.textContent;
-            }
-            oldScript.parentNode.replaceChild(newScript, oldScript);
-        });
         
         // Setup interactions
         setupInteractions();
