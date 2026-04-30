@@ -3,7 +3,7 @@
   "name": "Jax",
   "role": "SCIENTIST",
   "level": 5,
-  "xp": 101783,
+  "xp": 101853,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 21,
     "combat": 23
   },
-  "missionsCompleted": 676,
+  "missionsCompleted": 677,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -3398,6 +3398,11 @@
       "name": "Anomalous Planet",
       "location": "Alpha-1",
       "timestamp": 1777590100743
+    },
+    {
+      "name": "Derelict Ship",
+      "location": "Alpha-1",
+      "timestamp": 1777591300816
     }
   ],
   "status": "ACTIVE",
