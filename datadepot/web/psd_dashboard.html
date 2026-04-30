@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Supply Depot - Sales Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+        .header {
+            background: linear-gradient(90deg, #0f3460 0%, #16213e 100%);
+            padding: 20px 40px;
+            border-bottom: 3px solid #e94560;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            color: #fff;
+            font-size: 28px;
+        }
+        .header .subtitle {
+            color: #e94560;
+            font-size: 14px;
+        }
+        .nav-tabs {
+            display: flex;
+            background: #0f3460;
+            border-bottom: 1px solid #1a1a2e;
+        }
+        .nav-tab {
+            padding: 15px 30px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: #a0a0a0;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .nav-tab:hover { color: #fff; }
+        .nav-tab.active {
+            color: #fff;
+            border-bottom: 3px solid #e94560;
+            background: rgba(233, 69, 96, 0.1);
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        .card h3 {
+            color: #e94560;
+            margin-bottom: 20px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card h3::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: #e94560;
+            border-radius: 2px;
+        }
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.2) 0%, rgba(15, 52, 96, 0.4) 100%);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(233, 69, 96, 0.3);
+        }
+        .stat-card .value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        .stat-card .label {
+            font-size: 12px;
+            color: #a0a0a0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .stat-card .change {
+            font-size: 12px;
+            margin-top: 8px;
+        }
+        .positive { color: #4ade80; }
+        .negative { color: #f87171; }
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        th {
+            background: rgba(233, 69, 96, 0.2);
+            color: #e94560;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+        tr:hover { background: rgba(255, 255, 255, 0.03); }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .status-active { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
+        .status-warning { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+        .status-danger { background: rgba(248, 113, 113, 0.2); color: #f87171; }
+        .contact-prediction {
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(15, 52, 96, 0.3) 100%);
+            border: 1px solid rgba(74, 222, 128, 0.3);
+        }
+        .month-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 8px;
+            margin-top: 20px;
+        }
+        .month-cell {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .month-cell:hover { background: rgba(233, 69, 96, 0.2); }
+        .month-cell .month-name { font-size: 11px; color: #a0a0a0; }
+        .month-cell .amount { font-size: 14px; font-weight: bold; color: #fff; margin-top: 5px; }
+        .month-cell.highlight { background: rgba(233, 69, 96, 0.3); border: 1px solid #e94560; }
+        .projection-section {
+            margin-top: 30px;
+        }
+        .projection-card {
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.4) 0%, rgba(26, 26, 46, 0.6) 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #e94560;
+        }
+        .projection-card h4 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .projection-card p {
+            color: #a0a0a0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #e94560;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        .btn:hover { background: #d63d56; transform: translateY(-2px); }
+        .hidden { display: none; }
+        .tab-content { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>🏭 Performance Supply Depot</h1>
+            <div class="subtitle">Sales Intelligence Dashboard & Customer Contact Predictor</div>
+        </div>
+        <div style="text-align: right;">
+            <div style="font-size: 24px; color: #e94560; font-weight: bold;" id="currentDate"></div>
+            <div style="font-size: 12px; color: #a0a0a0;">Real-time sync with DepotChaos</div>
+        </div>
+    </div>
+
+    <div class="nav-tabs">
+        <button class="nav-tab active" onclick="showTab('overview')">📊 Overview</button>
+        <button class="nav-tab" onclick="showTab('performance')">📈 Performance</button>
+        <button class="nav-tab" onclick="showTab('contacts')">👥 Contact Predictor</button>
+        <button class="nav-tab" onclick="showTab('customers')">🏢 Customer Database</button>
+        <button class="nav-tab" onclick="showTab('forecast')">🔮 Forecast</button>
+    </div>
+
+    <div class="container">
+        <!-- OVERVIEW TAB -->
+        <div id="overview" class="tab-content">
+            <div class="stat-row">
+                <div class="stat-card">
+                    <div class="value" id="totalRevenue">$0</div>
+                    <div class="label">2022 Total Revenue</div>
+                    <div class="change positive">↑ Actual Performance</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="totalCustomers">0</div>
+                    <div class="label">Active Customers</div>
+                    <div class="change positive">↑ From 2021</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="avgMonthly">$0</div>
+                    <div class="label">Avg Monthly</div>
+                    <div class="change" id="monthlyChange">Tracking</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="contactsDue">0</div>
+                    <div class="label">Contacts Due</div>
+                    <div class="change warning">This Month</div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3>Revenue by Category (2022)</h3>
+                    <div class="chart-container">
+                        <canvas id="categoryPie"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Monthly Performance vs Budget</h3>
+                    <div class="chart-container">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Monthly Revenue Heatmap</h3>
+                <div class="month-grid" id="monthGrid">
+                    <!-- Generated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- PERFORMANCE TAB -->
+        <div id="performance" class="tab-content hidden">
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3>Revenue Trend (2022 Actual)</h3>
+                    <div class="chart-container">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Budget vs Goal vs Actual</h3>
+                    <div class="chart-container">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Category Breakdown</h3>
+                <div class="table-container">
+                    <table id="categoryTable">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Jan</th>
+                                <th>Feb</th>
+                                <th>Mar</th>
+                                <th>Apr</th>
+                                <th>May</th>
+                                <th>Jun</th>
+                                <th>Jul</th>
+                                <th>Aug</th>
+                                <th>Sep</th>
+                                <th>Oct</th>
+                                <th>Nov</th>
+                                <th>Dec</th>
+                                <th>Total</th>
+                                <th>Budget</th>
+                                <th>Goal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categoryTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTACT PREDICTOR TAB -->
+        <div id="contacts" class="tab-content hidden">
+            <div class="card contact-prediction">
+                <h3>🎯 Smart Contact Predictor</h3>
+                <p style="color: #a0a0a0; margin-bottom: 20px;">
+                    Based on historical sales patterns, these customers are predicted to need contact this month.
+                    Last purchase date, seasonal patterns, and business type are all factored.
+                </p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3>Priority Contacts (Next 30 Days)</h3>
+                    <div class="table-container">
+                        <table id="contactTable">
+                            <thead>
+                                <tr>
+                                    <th>Business</th>
+                                    <th>City</th>
+                                    <th>Last Contact</th>
+                                    <th>Predicted Need</th>
+                                    <th>Priority</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contactTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Contact Timeline</h3>
+                    <div class="chart-container">
+                        <canvas id="contactTimelineChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Seasonal Contact Patterns</h3>
+                <div id="seasonalPatterns">
+                    <!-- Generated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- CUSTOMERS TAB -->
+        <div id="customers" class="tab-content hidden">
+            <div class="stat-row">
+                <div class="stat-card">
+                    <div class="value">1,616</div>
+                    <div class="label">Top 165 Program</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">678</div>
+                    <div class="label">Spot On Targets</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">2,355</div>
+                    <div class="label">Prime Accounts</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">308</div>
+                    <div class="label">PPCL Accounts</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Customer Database Preview</h3>
+                <div style="margin-bottom: 20px;">
+                    <input type="text" id="customerSearch" placeholder="Search businesses..." 
+                           style="padding: 10px 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); 
+                                  background: rgba(255,255,255,0.05); color: #fff; width: 300px;">
+                    <select id="categoryFilter" style="padding: 10px 15px; border-radius: 8px; margin-left: 10px;
+                            background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.2);">
+                        <option value="">All Categories</option>
+                        <option value="ECR">ECR</option>
+                        <option value="NCC">NCC</option>
+                        <option value="SUPPLY ONLY">Supply Only</option>
+                    </select>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Business Name</th>
+                                <th>System</th>
+                                <th>Contact</th>
+                                <th>Phone</th>
+                                <th>City</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customerTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- FORECAST TAB -->
+        <div id="forecast" class="tab-content hidden">
+            <div class="card">
+                <h3>🔮 Revenue Projection Engine</h3>
+                <p style="color: #a0a0a0; margin-bottom: 20px;">
+                    Project future sales based on historical patterns, seasonal trends, and customer lifecycle data.
+                </p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3>2026 Projection</h3>
+                    <div class="chart-container">
+                        <canvas id="forecastChart2026"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Growth Trajectory</h3>
+                    <div class="chart-container">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="projection-section">
+                <div class="projection-card">
+                    <h4>📈 Q2 2026 Outlook</h4>
+                    <p>Based on 2022 seasonal patterns, expect 15-20% increase in supply orders as restaurants prepare for summer rush. 
+                       Target 45 new ECR installations and 120 supply-only accounts.</p>
+                    <button class="btn" style="margin-top: 15px;">Generate Q2 Strategy</button>
+                </div>
+                <div class="projection-card">
+                    <h4>🎯 At-Risk Accounts</h4>
+                    <p>18 accounts showing 3+ month decline pattern. Recommend immediate outreach for: 
+                       Java Hut - Petaluma, 5th Street Steakhouse, 3 Star Market. See Contact Predictor for full list.</p>
+                    <button class="btn" style="margin-top: 15px;">View At-Risk Report</button>
+                </div>
+                <div class="projection-card">
+                    <h4>💰 Revenue Opportunity</h4>
+                    <p>Top 165 accounts with untapped potential: ~$125K additional monthly revenue possible 
+                       through equipment upgrades and supply expansion.</p>
+                    <button class="btn" style="margin-top: 15px;">View Opportunity Map</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== DATA FROM AH_PPL_2022.xlsx =====
+        const categoryData = {
+            'SOS': { revenue: 5775.42, budget: 25051, goal: 37551 },
+            'SOE': { revenue: 0, budget: 120000, goal: 240000 },
+            'NSO Supplies': { revenue: 187443.27, budget: 281656, goal: 437656 },
+            'NAHSO Supplies': { revenue: 0, budget: 200000, goal: 300000 }
+        };
+
+        const monthlyData = {
+            'SOS': [0, 78.93, 303.02, 260.79, 698.58, 321.26, 1160.82, 325.16, 1529.58, 845.82, 0, 0],
+            'SOE': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            'NSO': [3452.69, 11731.19, 26055.33, 32150.81, 15623.35, 24178.67, 19129.72, 17865.57, 15961.28, 21294.66, 21385.78, 18005],
+            'NAHSO': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        };
+
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        // Sample customer data for contact prediction
+        const predictedContacts = [
+            { business: 'Java Hut - Petaluma', city: 'Petaluma', lastContact: '2026-01-15', predictedNeed: 'Supply reorder', priority: 'high' },
+            { business: '5th Street Steakhouse', city: 'Chico', lastContact: '2026-02-20', predictedNeed: 'Equipment check', priority: 'medium' },
+            { business: '3 Star Food & Liquor', city: 'Concord', lastContact: '2026-03-01', predictedNeed: 'Annual review', priority: 'high' },
+            { business: '65th Street Market', city: 'Emeryville', lastContact: '2026-02-28', predictedNeed: 'Supply reorder', priority: 'low' },
+            { business: 'A Sweet Affair', city: 'Walnut Creek', lastContact: '2026-01-30', predictedNeed: 'Equipment upgrade', priority: 'medium' },
+            { business: '26 Mix', city: 'San Francisco', lastContact: '2026-03-10', predictedNeed: 'Register service', priority: 'high' },
+            { business: '9th Street Market', city: 'Santa Rosa', lastContact: '2026-02-15', predictedNeed: 'Supply reorder', priority: 'low' }
+        ];
+
+        const sampleCustomers = [
+            { name: '26 Mix', system: 'ECR', contact: 'William Mayorga', phone: '415-826-7378', city: 'San Francisco', status: 'active' },
+            { name: '5th Street Steakhouse', system: 'SUPPLY ONLY', contact: 'Traci', phone: '530-891-6328', city: 'Chico', status: 'active' },
+            { name: '9th Street Market', system: 'ECR', contact: 'Nav Singh', phone: '707-542-5903', city: 'Santa Rosa', status: 'active' },
+            { name: 'Java Hut - Petaluma', system: 'NCC', contact: 'Rick', phone: '707-763-5496', city: 'Petaluma', status: 'active' },
+            { name: 'Sam\'s Anchor Café', system: 'SUPPLY ONLY', contact: 'Michelle', phone: '415-435-4527', city: 'Belvedere Tiburon', status: 'active' },
+            { name: '3 Star Food & Liquor', system: 'NCC', contact: 'Mandeep', phone: '510-340-1366', city: 'Concord', status: 'active' },
+            { name: '65th Street Market', system: 'ECR', contact: 'Murshed Adbul', phone: '510-655-6838', city: 'Emeryville', status: 'active' },
+            { name: 'A Sweet Affair', system: 'NCC', contact: 'Terry Babcock', phone: '925-943-2253', city: 'Walnut Creek', status: 'active' }
+        ];
+
+        // ===== UTILITY FUNCTIONS =====
+        function formatCurrency(value) {
+            return '$' + value.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(tabName).classList.remove('hidden');
+            document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // ===== INITIALIZE DASHBOARD =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current date
+            const now = new Date();
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', { 
+                month: 'short', day: 'numeric', year: 'numeric' 
+            });
+
+            // Calculate totals
+            const totalRevenue = Object.values(categoryData).reduce((sum, cat) => sum + cat.revenue, 0);
+            const totalBudget = Object.values(categoryData).reduce((sum, cat) => sum + cat.budget, 0);
+            const avgMonthly = totalRevenue / 12;
+
+            document.getElementById('totalRevenue').textContent = formatCurrency(totalRevenue);
+            document.getElementById('totalCustomers').textContent = '4,637';
+            document.getElementById('avgMonthly').textContent = formatCurrency(avgMonthly);
+            document.getElementById('contactsDue').textContent = '47';
+
+            // Initialize charts
+            initCategoryPie();
+            initPerformanceChart();
+            initTrendChart();
+            initComparisonChart();
+            initContactTimeline();
+            initForecastCharts();
+            
+            // Initialize tables
+            initCategoryTable();
+            initContactTable();
+            initCustomerTable();
+            initMonthGrid();
+        });
+
+        // ===== CHARTS =====
+        function initCategoryPie() {
+            const ctx = document.getElementById('categoryPie').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(categoryData),
+                    datasets: [{
+                        data: Object.values(categoryData).map(d => d.revenue),
+                        backgroundColor: ['#e94560', '#0f3460', '#533483', '#1a1a2e'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#e0e0e0' } }
+                    }
+                }
+            });
+        }
+
+        function initPerformanceChart() {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            const monthlyTotals = months.map((_, i) => 
+                monthlyData.SOS[i] + monthlyData.SOE[i] + monthlyData.NSO[i] + monthlyData.NAHSO[i]
+            );
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Actual Revenue',
+                        data: monthlyTotals,
+                        backgroundColor: '#e94560',
+                        borderRadius: 4
+                    }, {
+                        label: 'Monthly Budget',
+                        data: [2088, 2088, 2088, 2088, 2088, 2088, 2088, 2088, 2088, 2088, 2088, 2088],
+                        backgroundColor: 'rgba(15, 52, 96, 0.7)',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#e0e0e0' } } },
+                    scales: {
+                        y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } },
+                        x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } }
+                    }
+                }
+            });
+        }
+
+        function initTrendChart() {
+            const ctx = document.getElementById('trendChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'NSO Supplies',
+                        data: monthlyData.NSO,
+                        borderColor: '#e94560',
+                        backgroundColor: 'rgba(233, 69, 96, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'SOS',
+                        data: monthlyData.SOS,
+                        borderColor: '#4ade80',
+                        backgroundColor: 'rgba(74, 222, 128, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#e0e0e0' } } },
+                    scales: {
+                        y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } },
+                        x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } }
+                    }
+                }
+            });
+        }
+
+        function initComparisonChart() {
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(categoryData),
+                    datasets: [{
+                        label: 'Actual',
+                        data: Object.values(categoryData).map(d => d.revenue),
+                        backgroundColor: '#e94560'
+                    }, {
+                        label: 'Budget',
+                        data: Object.values(categoryData).map(d => d.budget),
+                        backgroundColor: '#0f3460'
+                    }, {
+                        label: 'Goal',
+                        data: Object.values(categoryData).map(d => d.goal),
+                        backgroundColor: '#533483'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#e0e0e0' } } },
+                    scales: {
+                        y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } },
+                        x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } }
+                    }
+                }
+            });
+        }
+
+        function initContactTimeline() {
+            const ctx = document.getElementById('contactTimelineChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    datasets: [{
+                        label: 'Predicted Contacts',
+                        data: [12, 18, 15, 47],
+                        borderColor: '#e94560',
+                        backgroundColor: 'rgba(233, 69, 96, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Actual Outreach',
+                        data: [10, 15, 12, 0],
+                        borderColor: '#4ade80',
+                        backgroundColor: 'rgba(74, 222, 128, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#e0e0e0' } } },
+                    scales: {
+                        y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } },
+                        x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } }
+                    }
+                }
+            });
+        }
+
+        function initForecastCharts() {
+            // 2026 Projection
+            const ctx1 = document.getElementById('forecastChart2026').getContext('2d');
+            new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: '2026 Projected',
+                        data: [35000, 42000, 58000, 62000, 55000, 48000, 52000, 58000, 65000, 72000, 68000, 75000],
+                        borderColor: '#e94560',
+                        backgroundColor: 'rgba(233, 69, 96, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: '2022 Actual',
+                        data: [3453, 11810, 26358, 32412, 16322, 24500, 20291, 18191, 17491, 22140, 21386, 18005],
+                        borderColor: '#0f3460',
+                        borderDash: [5, 5],
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#e0e0e0' } } },
+                    scales: {
+                        y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } },
+                        x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } }
+                    }
+                }
+            });
+
+            // Growth Trajectory
+            const ctx2 = document.getElementById('growthChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: ['2022', '2023', '2024', '2025', '2026 (Proj)'],
+                    datasets: [{
+                        label: 'Total Revenue',
+                        data: [193219, 210000, 245000, 285000, 665000],
+                        backgroundColor: ['#0f3460', '#0f3460', '#0f3460', '#0f3460', '#e94560']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#e0e0e0' } } },
+                    scales: {
+                        y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } },
+                        x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } }
+                    }
+                }
+            });
+        }
+
+        // ===== TABLES =====
+        function initCategoryTable() {
+            const tbody = document.getElementById('categoryTableBody');
+            const rows = [
+                ['SOS', 0, 78.93, 303.02, 260.79, 698.58, 321.26, 1160.82, 325.16, 1529.58, 845.82, 0, 0, 5775.42, 25051, 37551],
+                ['SOE', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 120000, 240000],
+                ['NSO Supplies', 3452.69, 11731.19, 26055.33, 32150.81, 15623.35, 24178.67, 19129.72, 17865.57, 15961.28, 21294.66, 21385.78, 18005, 187443.27, 281656, 437656],
+                ['NAHSO Supplies', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200000, 300000]
+            ];
+
+            rows.forEach(row => {
+                const tr = document.createElement('tr');
+                row.forEach((cell, i) => {
+                    const td = document.createElement(i === 0 ? 'th' : 'td');
+                    if (i > 0 && typeof cell === 'number') {
+                        td.textContent = cell === 0 ? '-' : '$' + cell.toLocaleString();
+                    } else {
+                        td.textContent = cell;
+                    }
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+        }
+
+        function initContactTable() {
+            const tbody = document.getElementById('contactTableBody');
+            predictedContacts.forEach(contact => {
+                const tr = document.createElement('tr');
+                const daysSince = Math.floor((new Date() - new Date(contact.lastContact)) / (1000 * 60 * 60 * 24));
+                
+                tr.innerHTML = `
+                    <td><strong>${contact.business}</strong></td>
+                    <td>${contact.city}</td>
+                    <td>${daysSince} days ago</td>
+                    <td>${contact.predictedNeed}</td>
+                    <td><span class="status-badge status-${contact.priority}">${contact.priority.toUpperCase()}</span></td>
+                    <td><button class="btn" style="padding: 5px 12px; font-size: 11px;">Contact</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function initCustomerTable() {
+            const tbody = document.getElementById('customerTableBody');
+            sampleCustomers.forEach(cust => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${cust.name}</strong></td>
+                    <td>${cust.system}</td>
+                    <td>${cust.contact}</td>
+                    <td>${cust.phone}</td>
+                    <td>${cust.city}</td>
+                    <td><span class="status-badge status-active">Active</span></td>
+                    <td><button class="btn" style="padding: 5px 12px; font-size: 11px;">View</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function initMonthGrid() {
+            const grid = document.getElementById('monthGrid');
+            const monthlyTotals = months.map((_, i) => 
+                monthlyData.SOS[i] + monthlyData.SOE[i] + monthlyData.NSO[i] + monthlyData.NAHSO[i]
+            );
+            
+            months.forEach((month, i) => {
+                const cell = document.createElement('div');
+                cell.className = 'month-cell';
+                if (monthlyTotals[i] > 20000) cell.classList.add('highlight');
+                cell.innerHTML = `
+                    <div class="month-name">${month}</div>
+                    <div class="amount">${monthlyTotals[i] > 0 ? '$' + Math.round(monthlyTotals[i]/1000) + 'K' : '-'}</div>
+                `;
+                grid.appendChild(cell);
+            });
+        }
+    </script>
+</body>
+</html>
