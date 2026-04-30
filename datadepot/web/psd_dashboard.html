@@ -545,9 +545,9 @@
         async function loadOverviewData() {
             try {
                 const [overview, systems, monthly] = await Promise.all([
-                    fetchAPI('/api/dashboard/overview'),
-                    fetchAPI('/api/dashboard/system-distribution'),
-                    fetchAPI('/api/dashboard/monthly-revenue?year=2025')
+                    fetchAPI('/dashboard/overview'),
+                    fetchAPI('/dashboard/system-distribution'),
+                    fetchAPI('/dashboard/monthly-revenue?year=2025')
                 ]);
                 
                 dashboardData.overview = overview;
@@ -581,10 +581,10 @@
         async function loadPerformanceData() {
             try {
                 const [overview, revenueCat, trends, systems] = await Promise.all([
-                    fetchAPI('/api/dashboard/overview'),
-                    fetchAPI('/api/dashboard/revenue-by-category?year=2025'),
-                    fetchAPI('/api/dashboard/trends'),
-                    fetchAPI('/api/dashboard/system-distribution')
+                    fetchAPI('/dashboard/overview'),
+                    fetchAPI('/dashboard/revenue-by-category?year=2025'),
+                    fetchAPI('/dashboard/trends'),
+                    fetchAPI('/dashboard/system-distribution')
                 ]);
                 
                 const totalRev = Object.values(revenueCat.data || {}).reduce((a, b) => a + b.revenue, 0);
@@ -628,9 +628,9 @@
         async function loadForecastData() {
             try {
                 const [forecast, revenueCat, cityData] = await Promise.all([
-                    fetchAPI('/api/forecast/2026'),
-                    fetchAPI('/api/dashboard/revenue-by-category?year=2025'),
-                    fetchAPI('/api/dashboard/city-distribution?limit=15')
+                    fetchAPI('/forecast/2026'),
+                    fetchAPI('/dashboard/revenue-by-category?year=2025'),
+                    fetchAPI('/dashboard/city-distribution?limit=15')
                 ]);
                 
                 document.getElementById('forecastSummary').textContent = 
@@ -680,8 +680,8 @@
         async function loadContactsData() {
             try {
                 const [customers, systems] = await Promise.all([
-                    fetchAPI('/api/customers?limit=50'),
-                    fetchAPI('/api/dashboard/system-distribution')
+                    fetchAPI('/customers?limit=50'),
+                    fetchAPI('/dashboard/system-distribution')
                 ]);
                 
                 const contacts = customers.customers?.slice(0, 20) || [];

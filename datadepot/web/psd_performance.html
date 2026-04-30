@@ -299,11 +299,11 @@
         async function loadPerformanceData() {
             try {
                 const [overview, systems, revenue, monthly, cities] = await Promise.all([
-                    fetchAPI('/api/dashboard/overview'),
-                    fetchAPI('/api/dashboard/system-distribution'),
-                    fetchAPI('/api/dashboard/revenue-by-category?year=2025'),
-                    fetchAPI('/api/dashboard/monthly-revenue?year=2025'),
-                    fetchAPI('/api/dashboard/city-distribution?limit=15')
+                    fetchAPI('/dashboard/overview'),
+                    fetchAPI('/dashboard/system-distribution'),
+                    fetchAPI('/dashboard/revenue-by-category?year=2025'),
+                    fetchAPI('/dashboard/monthly-revenue?year=2025'),
+                    fetchAPI('/dashboard/city-distribution?limit=15')
                 ]);
 
                 const revMap = {};

@@ -238,7 +238,7 @@
             }
 
             try {
-                const data = await fetchAPI(`/api/customers/${customerId}`);
+                const data = await fetchAPI(`/customers/${customerId}`);
                 customerData = data;
                 
                 document.getElementById('loading').style.display = 'none';
