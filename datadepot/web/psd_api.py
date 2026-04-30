@@ -256,6 +256,92 @@ def predicted_contacts(days: int = 30):
         "period_days": days
     }
 
+@app.get("/api/dashboard/system-distribution")
+def system_distribution():
+    """Get customer distribution by POS system type"""
+    conn = get_db()
+    cursor = conn.cursor()
+    
+    cursor.execute("""
+        SELECT system_type, COUNT(*) as count 
+        FROM psd_customers 
+        WHERE system_type IS NOT NULL AND system_type != ''
+        GROUP BY system_type 
+        ORDER BY count DESC
+    """)
+    
+    result = [
+        {"system": row['system_type'], "count": row['count']}
+        for row in cursor.fetchall()
+    ]
+    
+    conn.close()
+    return {"data": result}
+
+@app.get("/api/dashboard/city-distribution")
+def city_distribution(limit: int = 20):
+    """Get customer distribution by city"""
+    conn = get_db()
+    cursor = conn.cursor()
+    
+    cursor.execute("""
+        SELECT city, COUNT(*) as count 
+        FROM psd_customers 
+        WHERE city IS NOT NULL AND city != ''
+        GROUP BY city 
+        ORDER BY count DESC
+        LIMIT ?
+    """, (limit,))
+    
+    result = [
+        {"city": row['city'], "count": row['count']}
+        for row in cursor.fetchall()
+    ]
+    
+    conn.close()
+    return {"data": result}
+
+@app.get("/api/dashboard/trends")
+def trends(year: int = Query(None)):
+    """Get category trends over years"""
+    conn = get_db()
+    cursor = conn.cursor()
+    
+    if year:
+        cursor.execute("""
+            SELECT c.category, SUM(s.amount) as revenue, COUNT(*) as customers
+            FROM psd_customers c
+            JOIN psd_customer_sales s ON c.id = s.customer_id
+            WHERE s.year = ?
+            GROUP BY c.category
+        """, (year,))
+        
+        result = {
+            row['category']: {
+                'revenue': round(row['revenue'], 2),
+                'customers': row['customers']
+            }
+            for row in cursor.fetchall()
+        }
+    else:
+        cursor.execute("""
+            SELECT s.year, c.category, SUM(s.amount) as revenue
+            FROM psd_customers c
+            JOIN psd_customer_sales s ON c.id = s.customer_id
+            GROUP BY s.year, c.category
+            ORDER BY s.year DESC
+        """)
+        
+        result = {}
+        for row in cursor.fetchall():
+            year = str(row['year'])
+            if year not in result:
+                result[year] = {}
+            result[year][row['category']] = round(row['revenue'], 2)
+    
+    conn.close()
+    return {"data": result}
+
 @app.get("/api/forecast/2026")
 def forecast_2026():
     """Generate 2026 revenue forecast based on 2022 data"""

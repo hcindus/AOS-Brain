@@ -21,14 +21,8 @@
             justify-content: space-between;
             align-items: center;
         }
-        .header h1 {
-            color: #fff;
-            font-size: 28px;
-        }
-        .header .subtitle {
-            color: #e94560;
-            font-size: 14px;
-        }
+        .header h1 { color: #fff; font-size: 28px; }
+        .header .subtitle { color: #e94560; font-size: 14px; }
         .nav-tabs {
             display: flex;
             background: #0f3460;
@@ -49,11 +43,7 @@
             border-bottom: 3px solid #e94560;
             background: rgba(233, 69, 96, 0.1);
         }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 30px;
-        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 30px; }
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -107,20 +97,11 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .stat-card .change {
-            font-size: 12px;
-            margin-top: 8px;
-        }
+        .stat-card .change { font-size: 12px; margin-top: 8px; }
         .positive { color: #4ade80; }
         .negative { color: #f87171; }
-        .chart-container {
-            position: relative;
-            height: 300px;
-        }
-        .table-container {
-            overflow-x: auto;
-            margin-top: 20px;
-        }
+        .chart-container { position: relative; height: 300px; }
+        .table-container { overflow-x: auto; margin-top: 20px; }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -140,56 +121,9 @@
             letter-spacing: 1px;
         }
         tr:hover { background: rgba(255, 255, 255, 0.03); }
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-        .status-active { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
-        .status-warning { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
-        .status-danger { background: rgba(248, 113, 113, 0.2); color: #f87171; }
         .contact-prediction {
             background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(15, 52, 96, 0.3) 100%);
             border: 1px solid rgba(74, 222, 128, 0.3);
-        }
-        .month-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 8px;
-            margin-top: 20px;
-        }
-        .month-cell {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 15px 5px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .month-cell:hover { background: rgba(233, 69, 96, 0.2); }
-        .month-cell .month-name { font-size: 11px; color: #a0a0a0; }
-        .month-cell .amount { font-size: 14px; font-weight: bold; color: #fff; margin-top: 5px; }
-        .month-cell.highlight { background: rgba(233, 69, 96, 0.3); border: 1px solid #e94560; }
-        .projection-section {
-            margin-top: 30px;
-        }
-        .projection-card {
-            background: linear-gradient(135deg, rgba(15, 52, 96, 0.4) 0%, rgba(26, 26, 46, 0.6) 100%);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-left: 4px solid #e94560;
-        }
-        .projection-card h4 {
-            color: #fff;
-            margin-bottom: 10px;
-        }
-        .projection-card p {
-            color: #a0a0a0;
-            font-size: 14px;
-            line-height: 1.6;
         }
         .btn {
             display: inline-block;
@@ -208,9 +142,7 @@
             background: rgba(15, 52, 96, 0.6);
             border: 1px solid rgba(233, 69, 96, 0.3);
         }
-        .btn-secondary:hover {
-            background: rgba(233, 69, 96, 0.3);
-        }
+        .btn-secondary:hover { background: rgba(233, 69, 96, 0.3); }
         .hidden { display: none; }
         .tab-content { animation: fadeIn 0.3s ease-in; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -227,6 +159,17 @@
         .tier-spoton { background: linear-gradient(135deg, #00b4d8, #0077b6); color: #fff; }
         .tier-prime { background: linear-gradient(135deg, #9d4edd, #7b2cbf); color: #fff; }
         .tier-ppcl { background: linear-gradient(135deg, #e63946, #d62828); color: #fff; }
+        .projection-section { margin-top: 30px; }
+        .projection-card {
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.4) 0%, rgba(26, 26, 46, 0.6) 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #e94560;
+        }
+        .projection-card h4 { color: #fff; margin-bottom: 10px; }
+        .projection-card p { color: #a0a0a0; font-size: 14px; line-height: 1.6; }
+        .revenue-display { font-size: 18px; color: #4ade80; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -238,16 +181,17 @@
         <div style="text-align: right;">
             <div style="font-size: 24px; color: #e94560; font-weight: bold;" id="currentDate"></div>
             <div style="font-size: 12px; color: #a0a0a0;">Real-time sync with DepotChaos</div>
+            <div style="font-size: 14px; color: #4ade80; margin-top: 5px;" id="totalRevenueDisplay"></div>
             <button class="btn btn-secondary" onclick="refreshData()" style="margin-top: 10px;">🔄 Refresh</button>
         </div>
     </div>
 
     <div class="nav-tabs">
-        <button class="nav-tab active" onclick="showTab('overview')">📊 Overview</button>
-        <button class="nav-tab" onclick="showTab('performance')">📈 Performance</button>
-        <button class="nav-tab" onclick="showTab('contacts')">👥 Contact Predictor</button>
-        <button class="nav-tab" onclick="showTab('customers')">🏢 Customer Database</button>
-        <button class="nav-tab" onclick="showTab('forecast')">🔮 Forecast</button>
+        <button class="nav-tab active" onclick="switchTab('overview')">📊 Overview</button>
+        <button class="nav-tab" onclick="switchTab('performance')">📈 Performance</button>
+        <button class="nav-tab" onclick="switchTab('contacts')">👥 Contact Predictor</button>
+        <button class="nav-tab" onclick="switchTab('customers')">🏢 Customer Database</button>
+        <button class="nav-tab" onclick="switchTab('forecast')">🔮 Forecast</button>
     </div>
 
     <div class="container">
@@ -292,7 +236,7 @@
             </div>
 
             <div class="card">
-                <h3>Quick Stats</h3>
+                <h3>Quick Stats - System Breakdown</h3>
                 <div class="stat-row" style="margin-top: 20px;">
                     <div class="stat-card" style="background: rgba(0, 180, 216, 0.2); border-color: #00b4d8;">
                         <div class="value" id="ppclCount">-</div>
@@ -312,10 +256,51 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card">
+                <h3>📅 Monthly Revenue (2025)</h3>
+                <div class="chart-container" style="height: 350px;">
+                    <canvas id="monthlyRevenueChart"></canvas>
+                </div>
+            </div>
         </div>
 
         <!-- PERFORMANCE TAB -->
         <div id="performance" class="tab-content hidden">
+            <div class="stat-row">
+                <div class="stat-card">
+                    <div class="value" id="perfTotalRev">-</div>
+                    <div class="label">Total Revenue 2025</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="perfAvgRev">-</div>
+                    <div class="label">Avg Monthly</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="perfTopCat">-</div>
+                    <div class="label">Top Category</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="perfTopSys">-</div>
+                    <div class="label">Top System</div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3>Revenue by Category</h3>
+                    <div class="chart-container">
+                        <canvas id="revenueByCategoryChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Revenue by System Type</h3>
+                    <div class="chart-container">
+                        <canvas id="revenueBySystemChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
             <div class="card">
                 <h3>Customer Categories Breakdown</h3>
                 <div class="table-container">
@@ -325,7 +310,7 @@
                                 <th>Category</th>
                                 <th>Total Accounts</th>
                                 <th>% of Total</th>
-                                <th>Top Systems</th>
+                                <th>2025 Revenue</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -344,7 +329,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <h3>System Type Trends</h3>
+                    <h3>System Type Trends (YoY)</h3>
                     <div class="chart-container">
                         <canvas id="trendChart"></canvas>
                     </div>
@@ -447,7 +432,7 @@
         <!-- FORECAST TAB -->
         <div id="forecast" class="tab-content hidden">
             <div class="card">
-                <h3>🔮 Customer Analytics</h3>
+                <h3>🔮 Customer Analytics & Revenue Forecast</h3>
                 <p style="color: #a0a0a0; margin-bottom: 20px;">
                     Insights and projections based on customer database analysis.
                 </p>
@@ -455,10 +440,11 @@
 
             <div class="dashboard-grid">
                 <div class="card">
-                    <h3>Category Growth Potential</h3>
+                    <h3>Revenue Forecast 2026</h3>
                     <div class="chart-container">
                         <canvas id="forecastChart"></canvas>
                     </div>
+                    <div class="revenue-display" id="forecastSummary"></div>
                 </div>
                 <div class="card">
                     <h3>System Migration Trends</h3>
@@ -468,59 +454,77 @@
                 </div>
             </div>
 
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3>Category Revenue Growth</h3>
+                    <div class="chart-container">
+                        <canvas id="categoryGrowthChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Revenue by City (Top 15)</h3>
+                    <div class="chart-container">
+                        <canvas id="cityRevenueChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
             <div class="projection-section">
                 <div class="projection-card">
                     <h4>📈 Top 165 Program Outlook</h4>
                     <p>Priority accounts with highest engagement potential. Focus outreach on equipment upgrades and supply consolidation.</p>
-                    <button class="btn" style="margin-top: 15px;" onclick="showTab('customers'); document.getElementById('categoryFilter').value='Top 165'; loadCustomerData();">View Top 165</button>
+                    <div class="revenue-display" id="top165Revenue"></div>
+                    <button class="btn" style="margin-top: 15px;" onclick="filterByCategory('Top 165')">View Top 165</button>
                 </div>
                 <div class="projection-card">
                     <h4>🎯 Spot On Targets</h4>
                     <p>High-potential accounts showing interest in modern POS solutions. Recommend TOAST and SQUARE demonstrations.</p>
-                    <button class="btn" style="margin-top: 15px;" onclick="showTab('customers'); document.getElementById('categoryFilter').value='Spot On Target'; loadCustomerData();">View Spot On</button>
+                    <div class="revenue-display" id="spotOnRevenue"></div>
+                    <button class="btn" style="margin-top: 15px;" onclick="filterByCategory('Spot On Target')">View Spot On</button>
                 </div>
                 <div class="projection-card">
-                    <h4>💰 Revenue Opportunity</h4>
+                    <h4>💰 Prime Accounts Opportunity</h4>
                     <p>Prime accounts with untapped potential: equipment upgrades, supply expansion, and service contracts.</p>
-                    <button class="btn" style="margin-top: 15px;" onclick="showTab('customers'); document.getElementById('categoryFilter').value='Prime'; loadCustomerData();">View Prime</button>
+                    <div class="revenue-display" id="primeRevenue"></div>
+                    <button class="btn" style="margin-top: 15px;" onclick="filterByCategory('Prime')">View Prime</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // API Base URL - adjust if needed
+        // API Base URL
         const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:8081' : '';
         
         // State
         let customersData = [];
         let currentPage = 1;
         let charts = {};
+        let dashboardData = {};
 
         // ===== UTILITY FUNCTIONS =====
         function formatCurrency(value) {
+            if (!value) return '$0';
             return '$' + value.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
         }
 
-        function showTab(tabName) {
+        function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.getElementById(tabName).classList.remove('hidden');
             document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
             event.target.classList.add('active');
             
-            // Load data for specific tabs
-            if (tabName === 'customers' && customersData.length === 0) {
-                loadCustomerData();
-            }
-            if (tabName === 'overview') {
-                loadOverviewData();
-            }
-            if (tabName === 'contacts') {
-                loadContactsData();
-            }
-            if (tabName === 'performance') {
-                loadPerformanceData();
-            }
+            if (tabName === 'customers') loadCustomerData();
+            if (tabName === 'overview') loadOverviewData();
+            if (tabName === 'contacts') loadContactsData();
+            if (tabName === 'performance') loadPerformanceData();
+            if (tabName === 'forecast') loadForecastData();
+        }
+
+        function filterByCategory(category) {
+            switchTab('customers');
+            document.getElementById('categoryFilter').value = category;
+            loadCustomerData();
         }
 
         async function fetchAPI(endpoint) {
@@ -537,26 +541,112 @@
         // ===== DATA LOADING =====
         async function loadOverviewData() {
             try {
-                const data = await fetchAPI('/api/dashboard/overview');
+                const [overview, systems, monthly] = await Promise.all([
+                    fetchAPI('/api/dashboard/overview'),
+                    fetchAPI('/api/dashboard/system-distribution'),
+                    fetchAPI('/api/dashboard/monthly-revenue?year=2025')
+                ]);
                 
-                document.getElementById('totalCustomers').textContent = data.total_customers?.toLocaleString() || '-';
-                document.getElementById('top165Count').textContent = data.by_category?.['Top 165']?.toLocaleString() || '-';
-                document.getElementById('spotOnCount').textContent = data.by_category?.['Spot On Target']?.toLocaleString() || '-';
-                document.getElementById('primeCount').textContent = data.by_category?.['Prime']?.toLocaleString() || '-';
-                document.getElementById('ppclCount').textContent = data.by_category?.['PPCL']?.toLocaleString() || '-';
+                dashboardData.overview = overview;
+                dashboardData.systems = systems;
                 
-                // System counts (placeholder - would come from API)
-                document.getElementById('ecrCount').textContent = '1,247';
-                document.getElementById('nccCount').textContent = '892';
-                document.getElementById('supplyOnlyCount').textContent = '634';
+                // Update stats
+                document.getElementById('totalCustomers').textContent = overview.total_customers?.toLocaleString() || '-';
+                document.getElementById('top165Count').textContent = overview.by_category?.['Top 165']?.toLocaleString() || '-';
+                document.getElementById('spotOnCount').textContent = overview.by_category?.['Spot On Target']?.toLocaleString() || '-';
+                document.getElementById('primeCount').textContent = overview.by_category?.['Prime']?.toLocaleString() || '-';
+                document.getElementById('ppclCount').textContent = overview.by_category?.['PPCL']?.toLocaleString() || '-';
+                document.getElementById('totalRevenueDisplay').textContent = `Total 2025 Revenue: ${formatCurrency(overview.total_revenue_2022)}`;
+                
+                // System counts from API
+                const sysMap = {};
+                systems.data?.forEach(s => { sysMap[s.system] = s.count; });
+                document.getElementById('ecrCount').textContent = (sysMap['ECR'] || 0).toLocaleString();
+                document.getElementById('nccCount').textContent = (sysMap['NCC'] || 0).toLocaleString();
+                document.getElementById('supplyOnlyCount').textContent = (sysMap['SUPPLY ONLY'] || 0).toLocaleString();
                 
                 // Update charts
-                updateCategoryChart(data.by_category || {});
+                updateCategoryChart(overview.by_category || {});
+                updatePosChart(systems.data || []);
+                updateMonthlyRevenueChart(monthly.data || []);
                 
             } catch (e) {
                 console.error('Failed to load overview:', e);
-                // Show fallback data
-                document.getElementById('totalCustomers').textContent = '4,530';
+            }
+        }
+
+        async function loadPerformanceData() {
+            try {
+                const [overview, revenueCat, trends, systems] = await Promise.all([
+                    fetchAPI('/api/dashboard/overview'),
+                    fetchAPI('/api/dashboard/revenue-by-category?year=2025'),
+                    fetchAPI('/api/dashboard/trends'),
+                    fetchAPI('/api/dashboard/system-distribution')
+                ]);
+                
+                const totalRev = Object.values(revenueCat.data || {}).reduce((a, b) => a + b.revenue, 0);
+                const topCat = Object.entries(overview.by_category || {}).sort((a, b) => b[1] - a[1])[0];
+                const topSys = systems.data?.sort((a, b) => b.count - a.count)[0];
+                
+                document.getElementById('perfTotalRev').textContent = formatCurrency(totalRev);
+                document.getElementById('perfAvgRev').textContent = formatCurrency(totalRev / 12);
+                document.getElementById('perfTopCat').textContent = topCat?.[0] || '-';
+                document.getElementById('perfTopSys').textContent = topSys?.system || '-';
+                
+                // Performance table
+                const total = overview.total_customers;
+                const tbody = document.getElementById('performanceTableBody');
+                const revByCat = {};
+                revenueCat.data?.forEach(r => { revByCat[r.category] = r.revenue; });
+                
+                tbody.innerHTML = Object.entries(overview.by_category || {})
+                    .sort((a, b) => b[1] - a[1])
+                    .map(([cat, count]) => {
+                        const pct = ((count / total) * 100).toFixed(1);
+                        return `<tr>
+                            <td><strong>${escapeHtml(cat)}</strong></td>
+                            <td>${count.toLocaleString()}</td>
+                            <td>${pct}%</td>
+                            <td>${formatCurrency(revByCat[cat] || 0)}</td>
+                            <td><button class="btn" style="padding: 5px 12px; font-size: 11px;" onclick="filterByCategory('${escapeHtml(cat)}')">View</button></td>
+                        </tr>`;
+                    }).join('');
+                
+                updateRevenueByCategoryChart(revenueCat.data || []);
+                updateRevenueBySystemChart(systems.data || []);
+                updateGeoChart();
+                updateTrendChart(trends.data || {});
+                
+            } catch (e) {
+                console.error('Failed to load performance data:', e);
+            }
+        }
+
+        async function loadForecastData() {
+            try {
+                const [forecast, revenueCat, cityData] = await Promise.all([
+                    fetchAPI('/api/forecast/2026'),
+                    fetchAPI('/api/dashboard/revenue-by-category?year=2025'),
+                    fetchAPI('/api/dashboard/city-distribution?limit=15')
+                ]);
+                
+                document.getElementById('forecastSummary').textContent = 
+                    `2026 Projected: ${formatCurrency(forecast.total_2026_projected)} (${forecast.assumed_growth_rate} growth)`;
+                
+                // Update projection cards
+                const revByCat = {};
+                revenueCat.data?.forEach(r => { revByCat[r.category] = r.revenue; });
+                document.getElementById('top165Revenue').textContent = `2025 Revenue: ${formatCurrency(revByCat['Top 165'] || 0)}`;
+                document.getElementById('spotOnRevenue').textContent = `2025 Revenue: ${formatCurrency(revByCat['Spot On Target'] || 0)}`;
+                document.getElementById('primeRevenue').textContent = `2025 Revenue: ${formatCurrency(revByCat['Prime'] || 0)}`;
+                
+                updateForecastChart(forecast.projection || []);
+                updateMigrationChart();
+                updateCategoryGrowthChart(revenueCat.data || []);
+                updateCityRevenueChart(cityData.data || []);
+                
+            } catch (e) {
+                console.error('Failed to load forecast data:', e);
             }
         }
 
@@ -580,60 +670,37 @@
                 
             } catch (e) {
                 console.error('Failed to load customers:', e);
-                // Load from static data as fallback
                 loadStaticCustomers();
             }
         }
 
         async function loadContactsData() {
             try {
-                const data = await fetchAPI('/api/customers?limit=50');
-                const contacts = data.customers?.slice(0, 20) || [];
+                const [customers, systems] = await Promise.all([
+                    fetchAPI('/api/customers?limit=50'),
+                    fetchAPI('/api/dashboard/system-distribution')
+                ]);
+                
+                const contacts = customers.customers?.slice(0, 20) || [];
                 renderContactTable(contacts);
+                updateContactCategoryChart(contacts);
             } catch (e) {
                 console.error('Failed to load contacts:', e);
-                loadStaticContacts();
-            }
-        }
-
-        async function loadPerformanceData() {
-            try {
-                const data = await fetchAPI('/api/customers?limit=1000');
-                const customers = data.customers || [];
-                
-                // Calculate category breakdown
-                const categories = {};
-                const systems = {};
-                const cities = {};
-                
-                customers.forEach(c => {
-                    const cat = c.category || 'Unknown';
-                    const sys = c.system_type || 'Unknown';
-                    const city = c.city || 'Unknown';
-                    
-                    categories[cat] = (categories[cat] || 0) + 1;
-                    systems[sys] = (systems[sys] || 0) + 1;
-                    cities[city] = (cities[city] || 0) + 1;
-                });
-                
-                renderPerformanceTable(categories, systems);
-                
-            } catch (e) {
-                console.error('Failed to load performance data:', e);
             }
         }
 
         function refreshData() {
             loadOverviewData();
-            if (!document.getElementById('customers').classList.contains('hidden')) {
-                loadCustomerData(1);
-            }
+            const visibleTab = document.querySelector('.tab-content:not(.hidden)').id;
+            if (visibleTab === 'customers') loadCustomerData(1);
+            if (visibleTab === 'contacts') loadContactsData();
+            if (visibleTab === 'performance') loadPerformanceData();
+            if (visibleTab === 'forecast') loadForecastData();
         }
 
         // ===== RENDER FUNCTIONS =====
         function renderCustomerTable(customers) {
             const tbody = document.getElementById('customerTableBody');
-            
             if (customers.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: #a0a0a0;">No customers found</td></tr>';
                 return;
@@ -641,77 +708,35 @@
             
             tbody.innerHTML = customers.map(cust => {
                 const tierClass = getTierClass(cust.category);
-                return `
-                    <tr>
-                        <td><strong>${escapeHtml(cust.business_name)}</strong></td>
-                        <td><span class="tier-badge ${tierClass}">${escapeHtml(cust.category || '-')}</span></td>
-                        <td>${escapeHtml(cust.system_type || '-')}</td>
-                        <td>${escapeHtml(cust.contact_name || '-')}</td>
-                        <td>${escapeHtml(cust.phone || '-')}</td>
-                        <td>${escapeHtml(cust.city || '-')}</td>
-                        <td>
-                            <a href="/depotchaos/#/customer/${cust.id}" class="btn" style="padding: 5px 12px; font-size: 11px;" target="_blank">
-                                📂 Open in DepotChaos
-                            </a>
-                        </td>
-                    </tr>
-                `;
+                return `<tr>
+                    <td><strong>${escapeHtml(cust.business_name)}</strong></td>
+                    <td><span class="tier-badge ${tierClass}">${escapeHtml(cust.category || '-')}</span></td>
+                    <td>${escapeHtml(cust.system_type || '-')}</td>
+                    <td>${escapeHtml(cust.contact_name || '-')}</td>
+                    <td>${escapeHtml(cust.phone || '-')}</td>
+                    <td>${escapeHtml(cust.city || '-')}</td>
+                    <td>
+                        <a href="psd_customer.html?id=${cust.id}" class="btn" style="padding: 5px 12px; font-size: 11px;">📂 View</a>
+                    </td>
+                </tr>`;
             }).join('');
         }
 
         function renderContactTable(contacts) {
             const tbody = document.getElementById('contactTableBody');
-            
             if (contacts.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #a0a0a0;">No contacts due</td></tr>';
                 return;
             }
             
-            tbody.innerHTML = contacts.slice(0, 20).map(cust => `
-                <tr>
-                    <td><strong>${escapeHtml(cust.business_name)}</strong></td>
-                    <td>${escapeHtml(cust.contact_name || '-')}</td>
-                    <td>${escapeHtml(cust.phone || '-')}</td>
-                    <td>${escapeHtml(cust.city || '-')}</td>
-                    <td><span class="tier-badge ${getTierClass(cust.category)}">${escapeHtml(cust.category || '-')}</span></td>
-                    <td>
-                        <a href="/depotchaos/#/customer/${cust.id}" class="btn" style="padding: 5px 12px; font-size: 11px;" target="_blank">
-                            📂 Open
-                        </a>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function renderPerformanceTable(categories, systems) {
-            const tbody = document.getElementById('performanceTableBody');
-            const total = Object.values(categories).reduce((a, b) => a + b, 0);
-            
-            const rows = Object.entries(categories).map(([cat, count]) => {
-                const pct = ((count / total) * 100).toFixed(1);
-                const topSystems = Object.entries(systems)
-                    .sort((a, b) => b[1] - a[1])
-                    .slice(0, 3)
-                    .map(([s]) => s)
-                    .join(', ');
-                
-                return `
-                    <tr>
-                        <td><strong>${escapeHtml(cat)}</strong></td>
-                        <td>${count.toLocaleString()}</td>
-                        <td>${pct}%</td>
-                        <td>${escapeHtml(topSystems)}</td>
-                        <td>
-                            <button class="btn" style="padding: 5px 12px; font-size: 11px;" 
-                                    onclick="showTab('customers'); document.getElementById('categoryFilter').value='${escapeHtml(cat)}'; loadCustomerData();">
-                                View
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            });
-            
-            tbody.innerHTML = rows.join('');
+            tbody.innerHTML = contacts.map(cust => `<tr>
+                <td><strong>${escapeHtml(cust.business_name)}</strong></td>
+                <td>${escapeHtml(cust.contact_name || '-')}</td>
+                <td>${escapeHtml(cust.phone || '-')}</td>
+                <td>${escapeHtml(cust.city || '-')}</td>
+                <td><span class="tier-badge ${getTierClass(cust.category)}">${escapeHtml(cust.category || '-')}</span></td>
+                <td><a href="psd_customer.html?id=${cust.id}" class="btn" style="padding: 5px 12px; font-size: 11px;">📂 View</a></td>
+            </tr>`).join('');
         }
 
         function renderPagination(total, perPage, currentPage, callback) {
@@ -723,52 +748,239 @@
                 return;
             }
             
-            let html = '';
+            let html = `<button class="btn btn-secondary" ${currentPage === 1 ? 'disabled' : ''} onclick="${currentPage > 1 ? 'loadCustomerData(' + (currentPage - 1) + ')' : ''}">← Prev</button>`;
             
-            // Previous
-            html += `<button class="btn btn-secondary" ${currentPage === 1 ? 'disabled' : ''} onclick="${currentPage > 1 ? callback.name + '(' + (currentPage - 1) + ')' : ''}">← Prev</button>`;
-            
-            // Page numbers
-            for (let i = 1; i <= totalPages && i <= 10; i++) {
-                const active = i === currentPage ? 'active' : '';
-                html += `<button class="btn ${active ? '' : 'btn-secondary'}" style="min-width: 40px;" onclick="${callback.name}(${i})">${i}</button>`;
+            for (let i = Math.max(1, currentPage - 4); i <= Math.min(totalPages, currentPage + 5); i++) {
+                html += `<button class="btn ${i === currentPage ? '' : 'btn-secondary'}" style="min-width: 40px;" onclick="loadCustomerData(${i})">${i}</button>`;
             }
             
-            // Next
-            html += `<button class="btn btn-secondary" ${currentPage === totalPages ? 'disabled' : ''} onclick="${currentPage < totalPages ? callback.name + '(' + (currentPage + 1) + ')' : ''}">Next →</button>`;
-            
+            html += `<button class="btn btn-secondary" ${currentPage === totalPages ? 'disabled' : ''} onclick="${currentPage < totalPages ? 'loadCustomerData(' + (currentPage + 1) + ')' : ''}">Next →</button>`;
             container.innerHTML = html;
         }
 
-        // ===== CHARTS =====
+        // ===== CHART FUNCTIONS =====
         function updateCategoryChart(byCategory) {
             const ctx = document.getElementById('categoryPie');
             if (!ctx) return;
-            
-            // Destroy existing chart
             if (charts.categoryPie) charts.categoryPie.destroy();
             
             const labels = Object.keys(byCategory);
             const data = Object.values(byCategory);
-            const colors = ['#ffd700', '#00b4d8', '#9d4edd', '#e63946', '#4ade80', '#e94560', '#6366f1'];
+            const colors = ['#ffd700', '#00b4d8', '#9d4edd', '#e63946', '#4ade80'];
             
             charts.categoryPie = new Chart(ctx, {
                 type: 'doughnut',
+                data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 0 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#e0e0e0' } } } }
+            });
+        }
+
+        function updatePosChart(systems) {
+            const ctx = document.getElementById('posChart');
+            if (!ctx) return;
+            if (charts.pos) charts.pos.destroy();
+            
+            const topSystems = systems.slice(0, 10);
+            const labels = topSystems.map(s => s.system);
+            const data = topSystems.map(s => s.count);
+            const colors = ['#6366f1', '#8b5cf6', '#ec4899', '#f43f5e', '#f97316', '#eab308', '#22c55e', '#14b8a6', '#06b6d4', '#3b82f6'];
+            
+            charts.pos = new Chart(ctx, {
+                type: 'bar',
+                data: { labels, datasets: [{ data, backgroundColor: colors, borderRadius: 4 }] },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } }, x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } } }
+                }
+            });
+        }
+
+        function updateMonthlyRevenueChart(monthlyData) {
+            const ctx = document.getElementById('monthlyRevenueChart');
+            if (!ctx) return;
+            if (charts.monthly) charts.monthly.destroy();
+            
+            const labels = monthlyData.map(d => d.month);
+            const data = monthlyData.map(d => d.revenue);
+            
+            charts.monthly = new Chart(ctx, {
+                type: 'line',
                 data: {
-                    labels: labels,
+                    labels,
                     datasets: [{
-                        data: data,
-                        backgroundColor: colors,
-                        borderWidth: 0
+                        label: 'Revenue',
+                        data,
+                        borderColor: '#e94560',
+                        backgroundColor: 'rgba(233, 69, 96, 0.1)',
+                        fill: true,
+                        tension: 0.4
                     }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom', labels: { color: '#e0e0e0' } }
-                    }
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0', callback: v => formatCurrency(v) } }, x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } } }
                 }
+            });
+        }
+
+        function updateRevenueByCategoryChart(data) {
+            const ctx = document.getElementById('revenueByCategoryChart');
+            if (!ctx) return;
+            if (charts.revCategory) charts.revCategory.destroy();
+            
+            const sorted = data.sort((a, b) => b.revenue - a.revenue);
+            const colors = ['#ffd700', '#00b4d8', '#9d4edd', '#e63946'];
+            
+            charts.revCategory = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: sorted.map(d => d.category),
+                    datasets: [{ data: sorted.map(d => d.revenue), backgroundColor: colors, borderWidth: 0 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: '#e0e0e0' } } } }
+            });
+        }
+
+        function updateRevenueBySystemChart(systems) {
+            const ctx = document.getElementById('revenueBySystemChart');
+            if (!ctx) return;
+            if (charts.revSystem) charts.revSystem.destroy();
+            
+            const topSystems = systems.slice(0, 8);
+            
+            charts.revSystem = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: topSystems.map(s => s.system),
+                    datasets: [{ data: topSystems.map(s => s.count), borderWidth: 0 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: '#e0a0a0' } } } }
+            });
+        }
+
+        function updateGeoChart() {
+            // Placeholder for geographic distribution
+            const ctx = document.getElementById('geoChart');
+            if (!ctx) return;
+            if (charts.geo) charts.geo.destroy();
+            
+            charts.geo = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['San Francisco', 'Los Angeles', 'San Diego', 'Oakland', 'San Jose', 'Sacramento', 'Fresno', 'Other'],
+                    datasets: [{ data: [450, 380, 320, 280, 250, 180, 120, 550], backgroundColor: '#e94560', borderRadius: 4 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } }, x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } } } }
+            });
+        }
+
+        function updateTrendChart(trends) {
+            const ctx = document.getElementById('trendChart');
+            if (!ctx) return;
+            if (charts.trend) charts.trend.destroy();
+            
+            const years = Object.keys(trends).sort();
+            const categories = ['Top 165', 'Spot On Target', 'Prime', 'PPCL'];
+            const colors = ['#ffd700', '#00b4d8', '#9d4edd', '#e63946'];
+            
+            const datasets = categories.map((cat, idx) => ({
+                label: cat,
+                data: years.map(y => trends[y]?.[cat] || 0),
+                borderColor: colors[idx],
+                fill: false
+            }));
+            
+            charts.trend = new Chart(ctx, {
+                type: 'line',
+                data: { labels: years, datasets },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#e0e0e0' } } }, scales: { y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0', callback: v => formatCurrency(v) } }, x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } } } }
+            });
+        }
+
+        function updateForecastChart(projection) {
+            const ctx = document.getElementById('forecastChart');
+            if (!ctx) return;
+            if (charts.forecast) charts.forecast.destroy();
+            
+            const labels = projection.map(p => p.month);
+            const actual = projection.map(p => p['2022_actual']);
+            const projected = projection.map(p => p['2026_projected']);
+            
+            charts.forecast = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [
+                        { label: '2022 Actual', data: actual, backgroundColor: '#6366f1', borderRadius: 4 },
+                        { label: '2026 Projected', data: projected, backgroundColor: '#4ade80', borderRadius: 4 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#e0e0e0' } } }, scales: { y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0', callback: v => formatCurrency(v) } }, x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } } } }
+            });
+        }
+
+        function updateMigrationChart() {
+            // Placeholder for system migration trends
+            const ctx = document.getElementById('migrationChart');
+            if (!ctx) return;
+            if (charts.migration) charts.migration.destroy();
+            
+            charts.migration = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['ECR→TOAST', 'NCC→TOAST', 'ECR→SQUARE', 'SUPPLY→ECR', 'ALOHA→TOAST', 'NCC→CLOVER'],
+                    datasets: [{ label: 'Account Migrations', data: [45, 32, 28, 67, 23, 19], backgroundColor: ['#22c55e', '#22c55e', '#22c55e', '#eab308', '#22c55e', '#22c55e'], borderRadius: 4 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } }, x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } } } }
+            });
+        }
+
+        function updateCategoryGrowthChart(data) {
+            const ctx = document.getElementById('categoryGrowthChart');
+            if (!ctx) return;
+            if (charts.catGrowth) charts.catGrowth.destroy();
+            
+            const sorted = data.sort((a, b) => b.revenue - a.revenue);
+            
+            charts.catGrowth = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: sorted.map(d => d.category),
+                    datasets: [{ data: sorted.map(d => d.revenue), backgroundColor: ['#ffd700', '#00b4d8', '#9d4edd', '#e63946'], borderRadius: 4 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0', callback: v => formatCurrency(v) } }, x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } } } }
+            });
+        }
+
+        function updateCityRevenueChart(cityData) {
+            const ctx = document.getElementById('cityRevenueChart');
+            if (!ctx) return;
+            if (charts.cityRev) charts.cityRev.destroy();
+            
+            charts.cityRev = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: cityData.slice(0, 15).map(c => c.city),
+                    datasets: [{ data: cityData.slice(0, 15).map(c => c.count), backgroundColor: '#8b5cf6', borderRadius: 4 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } }, x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a0a0a0' } } } }
+            });
+        }
+
+        function updateContactCategoryChart(contacts) {
+            const ctx = document.getElementById('contactCategoryChart');
+            if (!ctx) return;
+            if (charts.contactCat) charts.contactCat.destroy();
+            
+            const cats = {};
+            contacts.forEach(c => { cats[c.category || 'Unknown'] = (cats[c.category || 'Unknown'] || 0) + 1; });
+            
+            charts.contactCat = new Chart(ctx, {
+                type: 'doughnut',
+                data: { labels: Object.keys(cats), datasets: [{ data: Object.values(cats), borderWidth: 0 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#e0e0e0' } } } }
             });
         }
 
@@ -779,24 +991,11 @@
                 { id: 2, business_name: '5th Street Steakhouse', system_type: 'SUPPLY ONLY', contact_name: 'Traci', phone: '530-891-6328', city: 'Chico', category: 'Top 165' },
                 { id: 3, business_name: '9th Street Market', system_type: 'ECR', contact_name: 'Nav Singh', phone: '707-542-5903', city: 'Santa Rosa', category: 'Top 165' },
                 { id: 4, business_name: 'a Mano', system_type: 'ALOHA', contact_name: 'Rodrigo', phone: '415-506-7401', city: 'San Francisco', category: 'Top 165' },
-                { id: 5, business_name: 'Alley & Vine', system_type: 'TOAST', contact_name: 'Casey', phone: '510-227-5006', city: 'Alameda', category: 'Top 165' },
-                { id: 6, business_name: 'Anaheim White House', system_type: 'SUPPLY ONLY', contact_name: '-', phone: '-', city: 'Anaheim', category: 'Top 165' },
-                { id: 7, business_name: 'Andi\'s Market', system_type: 'NCC', contact_name: '-', phone: '-', city: '-', category: 'Top 165' },
-                { id: 8, business_name: 'Angela\'s Kitchen', system_type: 'SUPPLY ONLY', contact_name: '-', phone: '-', city: '-', category: 'Top 165' }
+                { id: 5, business_name: 'Alley & Vine', system_type: 'TOAST', contact_name: 'Casey', phone: '510-227-5006', city: 'Alameda', category: 'Top 165' }
             ];
-            
             customersData = staticCustomers;
             renderCustomerTable(staticCustomers);
             document.getElementById('customerPagination').innerHTML = '';
-        }
-
-        function loadStaticContacts() {
-            const staticContacts = [
-                { id: 1, business_name: '26 Mix', contact_name: 'William Mayorga', phone: '415-826-7378', city: 'San Francisco', category: 'Top 165' },
-                { id: 2, business_name: '5th Street Steakhouse', contact_name: 'Traci', phone: '530-891-6328', city: 'Chico', category: 'Top 165' },
-                { id: 3, business_name: '9th Street Market', contact_name: 'Nav Singh', phone: '707-542-5903', city: 'Santa Rosa', category: 'Top 165' }
-            ];
-            renderContactTable(staticContacts);
         }
 
         // ===== HELPERS =====
@@ -818,13 +1017,7 @@
 
         // ===== INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', function() {
-            // Set current date
-            const now = new Date();
-            document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', { 
-                month: 'short', day: 'numeric', year: 'numeric' 
-            });
-
-            // Load initial data
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
             loadOverviewData();
         });
     </script>
