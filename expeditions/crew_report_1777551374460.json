@@ -1,0 +1,71 @@
+{
+  "timestamp": "2026-04-30T12:16:14.460Z",
+  "summary": {
+    "total": 5,
+    "active": 5
+  },
+  "members": [
+    {
+      "name": "Vex",
+      "role": "PILOT",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 96766,
+      "status": "ACTIVE",
+      "missions": 602,
+      "discoveries": 602
+    },
+    {
+      "name": "Nyx",
+      "role": "ENGINEER",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 98716,
+      "status": "ACTIVE",
+      "missions": 641,
+      "discoveries": 641
+    },
+    {
+      "name": "Jax",
+      "role": "SCIENTIST",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 100066,
+      "status": "ACTIVE",
+      "missions": 668,
+      "discoveries": 668
+    },
+    {
+      "name": "Luna",
+      "role": "COMBAT",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 100216,
+      "status": "ACTIVE",
+      "missions": 671,
+      "discoveries": 671
+    },
+    {
+      "name": "Aria",
+      "role": "MEDIC",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 100316,
+      "status": "ACTIVE",
+      "missions": 673,
+      "discoveries": 673
+    }
+  ],
+  "highlights": [
+    "Vex discovered Anomalous Planet",
+    "Nyx discovered Ancient Ruins",
+    "Jax discovered Alien Artifact",
+    "Luna discovered Anomalous Planet",
+    "Aria discovered Derelict Ship"
+  ]
+}
