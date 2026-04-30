@@ -3,7 +3,7 @@
   "name": "Nyx",
   "role": "ENGINEER",
   "level": 5,
-  "xp": 96618,
+  "xp": 96688,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 15,
     "combat": 14
   },
-  "missionsCompleted": 627,
+  "missionsCompleted": 628,
   "discoveries": [
     {
       "name": "Rare Minerals",
@@ -3153,6 +3153,11 @@
       "name": "Derelict Ship",
       "location": "Alpha-1",
       "timestamp": 1777506187819
+    },
+    {
+      "name": "Nebula Cloud",
+      "location": "Alpha-1",
+      "timestamp": 1777510028108
     }
   ],
   "status": "ACTIVE",
