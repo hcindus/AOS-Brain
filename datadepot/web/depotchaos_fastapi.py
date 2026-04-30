@@ -333,6 +333,23 @@ async def delete_lead(lead_id: str, hard: bool = Query(False)):
     
     return {'success': True, 'deleted': deleted, 'hard_delete': hard}
 
+@app.delete("/api/intelligence/{record_id}")
+async def delete_intelligence_record(record_id: int):
+    """Delete an intelligence record"""
+    conn = get_db_connection()
+    c = conn.cursor()
+    
+    c.execute("DELETE FROM datadepot_intelligence WHERE id = ?", (record_id,))
+    
+    conn.commit()
+    deleted = c.rowcount
+    conn.close()
+    
+    if deleted > 0:
+        return {'success': True, 'deleted': deleted, 'message': 'Record deleted'}
+    else:
+        return JSONResponse(status_code=404, content={'error': 'Record not found'})
+
 @app.get("/api/intelligence/{record_id}")
 async def get_intelligence_detail(record_id: int):
     """Get single intelligence record details"""
