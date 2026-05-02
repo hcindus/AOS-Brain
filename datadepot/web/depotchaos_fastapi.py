@@ -75,29 +75,29 @@ async def get_stats():
     
     stats = {}
     
-    # Total leads
-    c.execute("SELECT COUNT(*) FROM leads")
+    # Total leads (exclude deleted)
+    c.execute("SELECT COUNT(*) FROM leads WHERE deleted = 0")
     stats['total_leads'] = c.fetchone()[0]
     
-    # DataDepot-specific leads (those with POS data)
-    c.execute("SELECT COUNT(*) FROM leads WHERE pos_system IS NOT NULL")
+    # DataDepot-specific leads (exclude deleted)
+    c.execute("SELECT COUNT(*) FROM leads WHERE pos_system IS NOT NULL AND deleted = 0")
     stats['datadepot_leads'] = c.fetchone()[0]
     
-    # By status
-    c.execute("SELECT status, COUNT(*) FROM leads GROUP BY status")
+    # By status (exclude deleted)
+    c.execute("SELECT status, COUNT(*) FROM leads WHERE deleted = 0 GROUP BY status")
     stats['by_status'] = dict(c.fetchall())
     
-    # By tier
-    c.execute("SELECT tier, COUNT(*) FROM leads WHERE tier IS NOT NULL GROUP BY tier")
+    # By tier (exclude deleted)
+    c.execute("SELECT tier, COUNT(*) FROM leads WHERE tier IS NOT NULL AND deleted = 0 GROUP BY tier")
     stats['by_tier'] = dict(c.fetchall())
     
     # Intelligence records
     c.execute("SELECT COUNT(*) FROM datadepot_intelligence")
     stats['intelligence_records'] = c.fetchone()[0]
     
-    # Today's activity
+    # Today's activity (exclude deleted)
     today = datetime.now().strftime('%Y-%m-%d')
-    c.execute("SELECT COUNT(*) FROM leads WHERE DATE(created_at) = ?", (today,))
+    c.execute("SELECT COUNT(*) FROM leads WHERE DATE(created_at) = ? AND deleted = 0", (today,))
     stats['new_today'] = c.fetchone()[0]
     
     conn.close()
@@ -120,9 +120,9 @@ async def get_leads(
     c = conn.cursor()
     
     # Build query
-    where_clauses = []
+    where_clauses = ["deleted = 0"]  # Exclude soft-deleted records by default
     params = []
-    
+
     if status:
         where_clauses.append("status = ?")
         params.append(status)
@@ -247,7 +247,7 @@ async def get_lead(lead_id: str):
     conn = get_db_connection()
     c = conn.cursor()
     
-    c.execute("SELECT * FROM leads WHERE id = ?", (lead_id,))
+    c.execute("SELECT * FROM leads WHERE id = ? AND deleted = 0", (lead_id,))
     row = c.fetchone()
     
     conn.close()
@@ -464,8 +464,8 @@ async def get_counties():
     conn = get_db_connection()
     c = conn.cursor()
     
-    # From leads
-    c.execute("SELECT county, COUNT(*) FROM leads WHERE county IS NOT NULL GROUP BY county ORDER BY COUNT(*) DESC")
+    # From leads (exclude deleted)
+    c.execute("SELECT county, COUNT(*) FROM leads WHERE county IS NOT NULL AND deleted = 0 GROUP BY county ORDER BY COUNT(*) DESC")
     lead_counties = dict(c.fetchall())
     
     # From intelligence
@@ -488,7 +488,7 @@ async def get_pos_systems():
     c.execute("""
         SELECT pos_system, COUNT(*), AVG(replacement_score) 
         FROM leads 
-        WHERE pos_system IS NOT NULL 
+        WHERE pos_system IS NOT NULL AND deleted = 0
         GROUP BY pos_system
     """)
     
