@@ -510,12 +510,14 @@ async def get_email_queue():
     with open(queue_file, 'r') as f:
         queue = json.load(f)
     
-    # Ensure all emails have IDs
+    # Ensure all emails have IDs and status
     for email in queue:
         if 'id' not in email:
             email['id'] = str(uuid.uuid4())
+        if 'status' not in email:
+            email['status'] = 'pending'  # Default status
     
-    # Save back with IDs
+    # Save back with IDs and status
     with open(queue_file, 'w') as f:
         json.dump(queue, f, indent=2)
     
