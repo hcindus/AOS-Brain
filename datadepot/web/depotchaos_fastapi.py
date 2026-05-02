@@ -501,21 +501,58 @@ async def get_pos_systems():
 @app.get("/api/queue")
 async def get_email_queue():
     """Get pending email queue"""
+    import uuid
     queue_file = DATADEPOT_DIR / 'queue' / 'pending_emails.json'
     
     if not queue_file.exists():
-        return {'queue': [], 'total': 0, 'ready_to_send': 0}
+        return {'queue': [], 'total': 0, 'ready_to_send': 0, 'scheduled': 0, 'sent_today': 0}
     
     with open(queue_file, 'r') as f:
         queue = json.load(f)
     
+    # Ensure all emails have IDs
+    for email in queue:
+        if 'id' not in email:
+            email['id'] = str(uuid.uuid4())
+    
+    # Save back with IDs
+    with open(queue_file, 'w') as f:
+        json.dump(queue, f, indent=2)
+    
     now = datetime.now()
-    ready = [e for e in queue if datetime.fromisoformat(e['scheduled_time'].replace('Z', '+00:00').replace('+00:00', '')) <= now]
+    ready = []
+    scheduled = []
+    
+    for e in queue:
+        scheduled_time = e.get('scheduled_time', '')
+        if scheduled_time:
+            try:
+                # Parse ISO format
+                sched = datetime.fromisoformat(scheduled_time.replace('Z', '+00:00').replace('+00:00', ''))
+                if sched <= now:
+                    ready.append(e)
+                else:
+                    scheduled.append(e)
+            except:
+                ready.append(e)  # If can't parse, treat as ready
+        else:
+            ready.append(e)
+    
+    # Count sent today
+    sent_today = 0
+    sent_file = DATADEPOT_DIR / 'queue' / 'sent_emails.json'
+    if sent_file.exists():
+        with open(sent_file, 'r') as f:
+            sent = json.load(f)
+        today = now.strftime('%Y-%m-%d')
+        sent_today = len([s for s in sent if s.get('sent_at', '').startswith(today)])
     
     return {
         'queue': queue,
         'total': len(queue),
-        'ready_to_send': len(ready)
+        'ready_to_send': len(ready),
+        'scheduled': len(scheduled),
+        'sent_today': sent_today
     }
 
 @app.get("/api/activities")
@@ -545,6 +582,7 @@ async def send_email_now(email_id: str):
     """Send a queued email immediately via Mailgun"""
     import os
     import requests
+    import uuid
     
     # Load queue
     queue_file = DATADEPOT_DIR / 'queue' / 'pending_emails.json'
@@ -557,18 +595,24 @@ async def send_email_now(email_id: str):
     with open(queue_file, 'r') as f:
         queue = json.load(f)
     
-    # Find email by ID
+    # Find email by ID - generate IDs if missing
     email_to_send = None
     remaining_queue = []
     
     for email in queue:
+        if 'id' not in email:
+            email['id'] = str(uuid.uuid4())
         if email.get('id') == email_id:
             email_to_send = email
         else:
             remaining_queue.append(email)
     
     if not email_to_send:
-        return JSONResponse(status_code=404, content={'error': 'Email not found in queue'})
+        return JSONResponse(status_code=404, content={'error': 'Email not found in queue', 'email_id': email_id})
+    
+    # Update queue with IDs
+    with open(queue_file, 'w') as f:
+        json.dump(queue, f, indent=2)
     
     # Check if test mode
     TEST_MODE = os.getenv('MAILGUN_TEST_MODE', 'True').lower() == 'true'
@@ -682,6 +726,7 @@ async def send_email_now(email_id: str):
 @app.post("/api/queue/{email_id}/cancel")
 async def cancel_queued_email(email_id: str):
     """Cancel a queued email"""
+    import uuid
     queue_file = DATADEPOT_DIR / 'queue' / 'pending_emails.json'
     
     if not queue_file.exists():
@@ -690,11 +735,20 @@ async def cancel_queued_email(email_id: str):
     with open(queue_file, 'r') as f:
         queue = json.load(f)
     
-    # Find and remove email
-    remaining = [e for e in queue if e.get('id') != email_id]
+    # Find and remove email - ensure all have IDs
+    remaining = []
+    found = False
     
-    if len(remaining) == len(queue):
-        return JSONResponse(status_code=404, content={'error': 'Email not found'})
+    for email in queue:
+        if 'id' not in email:
+            email['id'] = str(uuid.uuid4())
+        if email.get('id') == email_id:
+            found = True
+        else:
+            remaining.append(email)
+    
+    if not found:
+        return JSONResponse(status_code=404, content={'error': 'Email not found', 'email_id': email_id})
     
     # Update queue
     with open(queue_file, 'w') as f:
@@ -751,6 +805,227 @@ async def get_calendar(year: int = Query(None), month: int = Query(None)):
         'total_callbacks': len(callbacks),
         'callbacks': callbacks
     }
+
+# ===== ENRICHMENT API ENDPOINTS (DepotChaos vendors) =====
+
+DEPOT_CHAOS_DB = "/root/.openclaw/workspace/DepotChaos/depot_chaos.db"
+YELP_CACHE_FILE = "/root/.openclaw/workspace/DepotChaos/yelp_cache.json"
+
+def get_depot_chaos_db():
+    """Get DepotChaos database connection"""
+    conn = sqlite3.connect(DEPOT_CHAOS_DB)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+@app.get("/api/enrichment")
+async def get_enrichment_data(
+    page: int = Query(1, ge=1),
+    per_page: int = Query(25, ge=1, le=100),
+    search: Optional[str] = Query(None),
+    city: Optional[str] = Query(None),
+    state: Optional[str] = Query(None),
+    status: Optional[str] = Query(None)
+):
+    """Get vendor enrichment data from DepotChaos"""
+    conn = get_depot_chaos_db()
+    c = conn.cursor()
+    
+    # Build query
+    where_clauses = []
+    params = []
+    
+    if search:
+        where_clauses.append("(name LIKE ? OR dba_name LIKE ? OR contact_name LIKE ? OR phone LIKE ?)")
+        params.extend([f'%{search}%', f'%{search}%', f'%{search}%', f'%{search}%'])
+    
+    if city:
+        where_clauses.append("city = ?")
+        params.append(city)
+    
+    if state:
+        where_clauses.append("state = ?")
+        params.append(state)
+    
+    if status:
+        if status == 'enriched':
+            where_clauses.append("notes LIKE '%Yelp Enriched%'")
+        elif status == 'active':
+            where_clauses.append("status = 'active'")
+        elif status == 'contacted':
+            where_clauses.append("last_contact_at IS NOT NULL")
+    
+    where_sql = " AND ".join(where_clauses) if where_clauses else "1=1"
+    
+    # Get total count
+    c.execute(f"SELECT COUNT(*) FROM vendors WHERE {where_sql}", params)
+    total = c.fetchone()[0]
+    
+    # Get enriched count
+    c.execute("SELECT COUNT(*) FROM vendors WHERE notes LIKE '%Yelp Enriched%'")
+    enriched_count = c.fetchone()[0]
+    
+    # Get with phone count
+    c.execute("SELECT COUNT(*) FROM vendors WHERE phone IS NOT NULL AND phone != ''")
+    with_phone = c.fetchone()[0]
+    
+    # Get distinct cities for filter
+    c.execute("SELECT DISTINCT city FROM vendors WHERE city IS NOT NULL ORDER BY city")
+    cities = [row[0] for row in c.fetchall()]
+    
+    # Get paginated results
+    offset = (page - 1) * per_page
+    c.execute(f"""
+        SELECT * FROM vendors 
+        WHERE {where_sql}
+        ORDER BY imported_at DESC
+        LIMIT ? OFFSET ?
+    """, params + [per_page, offset])
+    
+    vendors = [dict(row) for row in c.fetchall()]
+    
+    conn.close()
+    
+    return {
+        'vendors': vendors,
+        'total': total,
+        'enriched_count': enriched_count,
+        'with_phone': with_phone,
+        'cities': cities,
+        'page': page,
+        'per_page': per_page
+    }
+
+@app.get("/api/enrichment/{vendor_id}")
+async def get_vendor_detail(vendor_id: int):
+    """Get single vendor details"""
+    conn = get_depot_chaos_db()
+    c = conn.cursor()
+    
+    c.execute("SELECT * FROM vendors WHERE id = ?", (vendor_id,))
+    row = c.fetchone()
+    
+    conn.close()
+    
+    if row:
+        return dict(row)
+    else:
+        return JSONResponse(status_code=404, content={'error': 'Vendor not found'})
+
+@app.post("/api/enrichment/{vendor_id}/run")
+async def run_single_enrichment(vendor_id: int):
+    """Run Yelp enrichment for a single vendor"""
+    import subprocess
+    import sys
+    
+    # Get vendor info
+    conn = get_depot_chaos_db()
+    c = conn.cursor()
+    c.execute("SELECT name, city, state FROM vendors WHERE id = ?", (vendor_id,))
+    vendor = c.fetchone()
+    conn.close()
+    
+    if not vendor:
+        return JSONResponse(status_code=404, content={'error': 'Vendor not found'})
+    
+    # Run enrichment script for single vendor
+    try:
+        result = subprocess.run([
+            sys.executable, 
+            '/root/.openclaw/workspace/DepotChaos/yelp_enrichment.py',
+            '--single', str(vendor_id)
+        ], capture_output=True, text=True, timeout=60)
+        
+        if result.returncode == 0:
+            return {
+                'success': True,
+                'message': f'Enriched: {vendor[0]}',
+                'vendor_id': vendor_id
+            }
+        else:
+            return {
+                'success': False,
+                'message': 'Not found on Yelp or enrichment failed',
+                'vendor_id': vendor_id
+            }
+    except Exception as e:
+        return JSONResponse(status_code=500, content={
+            'success': False,
+            'error': str(e),
+            'vendor_id': vendor_id
+        })
+
+@app.post("/api/enrichment/run")
+async def run_batch_enrichment(batch_size: int = Query(50, ge=1, le=100)):
+    """Run Yelp enrichment batch"""
+    import subprocess
+    import sys
+    
+    try:
+        result = subprocess.run([
+            sys.executable,
+            '/root/.openclaw/workspace/DepotChaos/yelp_enrichment.py',
+            '--batch-size', str(batch_size)
+        ], capture_output=True, text=True, timeout=300)
+        
+        # Parse output for counts
+        output = result.stdout
+        enriched = 0
+        not_found = 0
+        
+        for line in output.split('\n'):
+            if 'Enriched:' in line:
+                try:
+                    enriched = int(line.split(':')[1].strip())
+                except:
+                    pass
+            if 'Not found:' in line:
+                try:
+                    not_found = int(line.split(':')[1].strip())
+                except:
+                    pass
+        
+        return {
+            'success': True,
+            'enriched': enriched,
+            'not_found': not_found,
+            'message': f'Enrichment complete: {enriched} enriched, {not_found} not found'
+        }
+    except Exception as e:
+        return JSONResponse(status_code=500, content={
+            'success': False,
+            'error': str(e)
+        })
+
+@app.put("/api/enrichment/{vendor_id}")
+async def update_vendor(vendor_id: int, data: dict):
+    """Update vendor information"""
+    conn = get_depot_chaos_db()
+    c = conn.cursor()
+    
+    allowed_fields = ['name', 'dba_name', 'contact_name', 'phone', 'email', 
+                      'address', 'city', 'state', 'zip', 'vendor_type', 
+                      'status', 'territory', 'notes']
+    
+    updates = []
+    params = []
+    
+    for field in allowed_fields:
+        if field in data:
+            updates.append(f"{field} = ?")
+            params.append(data[field])
+    
+    if not updates:
+        return JSONResponse(status_code=400, content={'error': 'No valid fields to update'})
+    
+    params.append(vendor_id)
+    sql = f"UPDATE vendors SET {', '.join(updates)} WHERE id = ?"
+    c.execute(sql, params)
+    
+    conn.commit()
+    updated = c.rowcount
+    conn.close()
+    
+    return {'success': True, 'updated': updated, 'vendor_id': vendor_id}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8082, log_level="info")

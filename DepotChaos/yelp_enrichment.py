@@ -229,5 +229,37 @@ class YelpEnricher:
         return self.enriched_count
 
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description='Yelp Enrichment Tool')
+    parser.add_argument('--single', type=int, help='Enrich single vendor by ID')
+    parser.add_argument('--batch-size', type=int, default=100, help='Number of vendors to process')
+    args = parser.parse_args()
+    
     enricher = YelpEnricher()
-    enricher.run(batch_size=100)
+    
+    if args.single:
+        # Single vendor mode
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, name, city, state FROM vendors WHERE id = ?", (args.single,))
+        row = cursor.fetchone()
+        conn.close()
+        
+        if row:
+            vendor = {'id': row[0], 'name': row[1], 'city': row[2] or '', 'state': row[3] or ''}
+            enricher.log(f"🔍 Single enrichment: {vendor['name']}")
+            yelp_data = enricher.search_yelp(vendor['name'], vendor['city'], vendor['state'])
+            if yelp_data:
+                enricher.update_vendor(vendor['id'], yelp_data)
+                enricher.log(f"✅ Enriched: {yelp_data.get('name')}")
+                enricher.save_cache()
+                exit(0)
+            else:
+                enricher.log(f"⚠️ Not found")
+                exit(1)
+        else:
+            enricher.log(f"❌ Vendor {args.single} not found")
+            exit(1)
+    else:
+        # Batch mode
+        enricher.run(batch_size=args.batch_size)
