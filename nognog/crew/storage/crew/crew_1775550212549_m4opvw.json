@@ -3,7 +3,7 @@
   "name": "Luna",
   "role": "COMBAT",
   "level": 5,
-  "xp": 108021,
+  "xp": 108141,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 24,
     "combat": 15
   },
-  "missionsCompleted": 720,
+  "missionsCompleted": 722,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -3618,6 +3618,16 @@
       "name": "Ancient Ruins",
       "location": "Alpha-1",
       "timestamp": 1777709984247
+    },
+    {
+      "name": "Unknown Signal",
+      "location": "Alpha-1",
+      "timestamp": 1777712054277
+    },
+    {
+      "name": "Ancient Ruins",
+      "location": "Alpha-1",
+      "timestamp": 1777712234276
     }
   ],
   "status": "ACTIVE",
