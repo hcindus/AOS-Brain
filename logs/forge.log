@@ -63343,3 +63343,61 @@ Error: write EPIPE
 [forge] Chat: marcus: Tick 153996.
 [forge] Chat: julia: Tick 153996.
 [forge] Chat: julius: Standing by.
+[forge] Starting autonomous agent...
+[forge] Waiting for spawn...
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:25565
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 25565
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:25565
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 25565
+    }
+  ]
+}
+[forge] Error: 
+[forge] Disconnected
+[forge] Starting autonomous agent...
+[forge] Waiting for spawn...
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:25565
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 25565
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:25565
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 25565
+    }
+  ]
+}
+[forge] Error: 
+[forge] Disconnected

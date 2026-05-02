@@ -62482,3 +62482,42 @@ Error: read ECONNRESET
 [chelios] Chat: marcus: Tick 153996.
 [chelios] Chat: julia: Tick 153996.
 [chelios] Chat: julius: Standing by.
+[chelios] Starting autonomous agent...
+[chelios] Waiting for spawn...
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:25565
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 25565
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:25565
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 25565
+    }
+  ]
+}
+[chelios] Error: 
+[chelios] Disconnected
+[chelios] Starting autonomous agent...
+[chelios] Waiting for spawn...
+[chelios] ✅ Spawned in world at (-1339.3810856328546, -51, -24.677745331923273)
+[chelios] Connecting to Brain at ws://localhost:8767
+[chelios] ✅ Brain connected
+[chelios] Brain command: registered
+[chelios] Chat: aurora: Agent aurora online!
+[chelios] Chat: patricia2: Agent patricia2 online!
+[chelios] Chat: chelios2: Agent chelios2 online!
+[chelios] Chat: forge2: Agent forge2 online!

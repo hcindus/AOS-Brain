@@ -61849,3 +61849,39 @@ Error: write EPIPE
 [chelios2] Chat: marcus: Tick 153996.
 [chelios2] Chat: julia: Tick 153996.
 [chelios2] Chat: julius: Standing by.
+[chelios2] Starting autonomous agent...
+[chelios2] Waiting for spawn...
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:25565
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 25565
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:25565
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 25565
+    }
+  ]
+}
+[chelios2] Error: 
+[chelios2] Disconnected
+[chelios2] Starting autonomous agent...
+[chelios2] Waiting for spawn...
+[chelios2] ✅ Spawned in world at (-181.30000001192093, 60, -325.69999998807907)
+[chelios2] Connecting to Brain at ws://localhost:8767
+[chelios2] ✅ Brain connected
+[chelios2] Brain command: registered
+[chelios2] Chat: forge2: Agent forge2 online!
