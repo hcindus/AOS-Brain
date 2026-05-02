@@ -55,6 +55,12 @@ python3 /root/.openclaw/workspace/AGI_COMPANY/shared/tools/imap_checker.py
 ## Files to Check Daily
 - `/root/.openclaw/workspace/data/email_action_items.json`
 - IMAP inbox for new unread messages
+- `/root/.openclaw/workspace/memory/pending_tasks.md` - Check for ACM API credentials
+
+## Active Pending Tasks
+1. **ACM Technologies API Credentials** - Awaiting secure note retrieval from Captain
+   - Check for email with credentials
+   - File location: `AGI_COMPANY/subsidiaries/ACM_TECH/`
 
 ## Last Updated
-2026-04-02 03:29 UTC
+2026-05-02 17:51 UTC
