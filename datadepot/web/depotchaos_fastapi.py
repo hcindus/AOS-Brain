@@ -855,6 +855,9 @@ async def get_enrichment_data(
             where_clauses.append("status = 'active'")
         elif status == 'contacted':
             where_clauses.append("last_contact_at IS NOT NULL")
+    else:
+        # Default: exclude promoted vendors
+        where_clauses.append("status != 'promoted'")
     
     where_sql = " AND ".join(where_clauses) if where_clauses else "1=1"
     
@@ -1028,6 +1031,46 @@ async def update_vendor(vendor_id: int, data: dict):
     conn.close()
     
     return {'success': True, 'updated': updated, 'vendor_id': vendor_id}
+
+@app.delete("/api/enrichment/{vendor_id}")
+async def delete_vendor(vendor_id: int):
+    """Delete a vendor from DepotChaos"""
+    conn = get_depot_chaos_db()
+    c = conn.cursor()
+    
+    c.execute("DELETE FROM vendors WHERE id = ?", (vendor_id,))
+    deleted = c.rowcount
+    
+    conn.commit()
+    conn.close()
+    
+    if deleted:
+        return {'success': True, 'message': f'Vendor {vendor_id} deleted', 'vendor_id': vendor_id}
+    else:
+        return JSONResponse(status_code=404, content={'error': 'Vendor not found'})
+
+@app.post("/api/enrichment/{vendor_id}/promote")
+async def promote_vendor_to_lead(vendor_id: int, data: dict):
+    """Mark vendor as promoted to lead (hide from enrichment list)"""
+    conn = get_depot_chaos_db()
+    c = conn.cursor()
+    
+    # Update vendor status to 'promoted' and add to notes
+    c.execute("""
+        UPDATE vendors 
+        SET status = 'promoted', 
+            notes = COALESCE(notes, '') || ' | Promoted to Lead: ' || ?
+        WHERE id = ?
+    """, (datetime.now().isoformat(), vendor_id))
+    
+    conn.commit()
+    updated = c.rowcount
+    conn.close()
+    
+    if updated:
+        return {'success': True, 'message': f'Vendor {vendor_id} promoted to lead', 'vendor_id': vendor_id}
+    else:
+        return JSONResponse(status_code=404, content={'error': 'Vendor not found'})
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8082, log_level="info")
