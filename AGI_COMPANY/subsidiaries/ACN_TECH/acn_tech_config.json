@@ -1,0 +1,46 @@
+{
+  "name": "ACN-Tech Ribbon & Toner Automation",
+  "website": "https://acn-tech.com",
+  "description": "Automated order processing for ribbons and toner with Performance Supply Depot pricing",
+  "version": "1.0.0",
+  "created": "2026-05-02",
+  "automation": {
+    "enabled": true,
+    "check_interval_minutes": 60,
+    "auto_order": false,
+    "notify_only": true
+  },
+  "credentials": {
+    "username": "",
+    "password": "",
+    "api_key": "",
+    "note": "Add credentials when available"
+  },
+  "products": {
+    "ribbons": [
+      {"sku": "ERC-32", "name": "Epson ERC-32 Ribbon", "category": "ribbon"},
+      {"sku": "ERC-38", "name": "Epson ERC-38 Ribbon", "category": "ribbon"},
+      {"sku": "ERC-30", "name": "Epson ERC-30/34/38 Ribbon", "category": "ribbon"},
+      {"sku": "ERC-23", "name": "Epson ERC-23 Ribbon", "category": "ribbon"},
+      {"sku": "ERC-09", "name": "Epson ERC-09 Ribbon", "category": "ribbon"}
+    ],
+    "toner": [
+      {"sku": "TN-450", "name": "Brother TN-450 Toner", "category": "toner"},
+      {"sku": "TN-660", "name": "Brother TN-660 Toner", "category": "toner"},
+      {"sku": "CF283A", "name": "HP 83A Toner", "category": "toner"},
+      {"sku": "CF280A", "name": "HP 80A Toner", "category": "toner"},
+      {"sku": "CE285A", "name": "HP 85A Toner", "category": "toner"}
+    ]
+  },
+  "pricing": {
+    "markup_percent": 25,
+    "min_margin_percent": 15,
+    "competitive_check": true,
+    "psdepot_sync": true
+  },
+  "notifications": {
+    "telegram": true,
+    "email": true,
+    "telegram_chat_id": "1611228942"
+  }
+}
