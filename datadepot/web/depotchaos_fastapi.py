@@ -808,12 +808,12 @@ async def get_calendar(year: int = Query(None), month: int = Query(None)):
 
 # ===== ENRICHMENT API ENDPOINTS (DepotChaos vendors) =====
 
-DEPOT_CHAOS_DB = "/root/.openclaw/workspace/DepotChaos/depot_chaos.db"
+VENDOR_DB = "/root/.openclaw/workspace/DepotChaos/depot_chaos.db"
 YELP_CACHE_FILE = "/root/.openclaw/workspace/DepotChaos/yelp_cache.json"
 
 def get_depot_chaos_db():
     """Get DepotChaos database connection"""
-    conn = sqlite3.connect(DEPOT_CHAOS_DB)
+    conn = sqlite3.connect(VENDOR_DB)
     conn.row_factory = sqlite3.Row
     return conn
 
