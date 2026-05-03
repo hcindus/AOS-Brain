@@ -3,7 +3,7 @@
   "name": "Luna",
   "role": "COMBAT",
   "level": 5,
-  "xp": 114391,
+  "xp": 114454,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 24,
     "combat": 15
   },
-  "missionsCompleted": 766,
+  "missionsCompleted": 767,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -3848,6 +3848,11 @@
       "name": "Alien Artifact",
       "location": "Alpha-1",
       "timestamp": 1777831606200
+    },
+    {
+      "name": "Derelict Ship",
+      "location": "Alpha-1",
+      "timestamp": 1777834186233
     }
   ],
   "status": "ACTIVE",
