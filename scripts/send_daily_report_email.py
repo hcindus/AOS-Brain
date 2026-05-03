@@ -38,7 +38,7 @@ msg['Subject'] = f"📊 Daily Queue Status Report - {REPORT_DATE}"
 msg['From'] = FROM_EMAIL
 msg['To'] = TO_EMAIL
 
-    msg["Bcc"] = "info@psdepot.com"
+msg["Bcc"] = "info@psdepot.com"
 # Attach report as plain text
 text_part = MIMEText(report_content, 'plain', 'utf-8')
 msg.attach(text_part)
