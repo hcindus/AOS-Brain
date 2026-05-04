@@ -1,0 +1,49 @@
+{
+  "queue_name": "LinkedIn Outreach Week of May 5-11",
+  "created": "2026-05-04T16:25:00Z",
+  "agent": "Pulp",
+  "execution_schedule": [
+    {
+      "day": "Tuesday May 6",
+      "batch": 1,
+      "count": 15,
+      "action": "connection_request",
+      "target": "Tier 1 prospects - San Diego",
+      "message": "Hi {{First_Name}}, I help POS vendors in {{City}} find restaurants ready for system upgrades. Would love to connect.",
+      "status": "queued"
+    },
+    {
+      "day": "Wednesday May 7",
+      "batch": 2,
+      "count": 15,
+      "action": "follow_up_dm",
+      "target": "April 29 connection requests accepted",
+      "message": "Thanks for connecting, {{First_Name}}. Quick question — how are you currently sourcing restaurant leads in {{City}}?",
+      "status": "queued"
+    },
+    {
+      "day": "Thursday May 8",
+      "batch": 3,
+      "count": 20,
+      "action": "connection_request",
+      "target": "Tier 1 prospects - LA Metro",
+      "message": "Hi {{First_Name}}, saw {{Company}} specializes in {{POS_Focus}}. I have intel on CA restaurants using competitor systems. Worth a connect?",
+      "status": "queued"
+    },
+    {
+      "day": "Friday May 9",
+      "batch": 4,
+      "count": 10,
+      "action": "value_dm",
+      "target": "Engaged connections",
+      "message": "{{First_Name}}, sending you that sample data we discussed. 50 {{County}} restaurants with {{Competitor_System}} systems detected. Check your email.",
+      "status": "queued"
+    }
+  ],
+  "total_outreach": 60,
+  "expected_metrics": {
+    "accept_rate": "15-20%",
+    "reply_rate": "5-8%",
+    "demo_bookings": "2-3"
+  }
+}

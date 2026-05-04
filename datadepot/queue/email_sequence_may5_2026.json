@@ -1,0 +1,76 @@
+{
+  "queue_name": "Email Sequence Week of May 5-11",
+  "created": "2026-05-04T16:25:00Z",
+  "agent": "Pulp",
+  "execution_schedule": [
+    {
+      "day": "Tuesday May 6",
+      "batch": 1,
+      "count": 25,
+      "template": "email_2_value.txt",
+      "target": "April 29 cohort - Email 1 recipients",
+      "focus": "San Diego + Orange County Tier 1",
+      "send_time": "09:00 PST",
+      "status": "queued"
+    },
+    {
+      "day": "Wednesday May 7",
+      "batch": 2,
+      "count": 25,
+      "template": "email_2_value.txt",
+      "target": "April 29 cohort - Email 1 recipients",
+      "focus": "LA Metro Tier 1",
+      "send_time": "09:00 PST",
+      "status": "queued"
+    },
+    {
+      "day": "Thursday May 8",
+      "batch": 3,
+      "count": 25,
+      "template": "email_2_value.txt",
+      "target": "April 29 cohort - Email 1 recipients",
+      "focus": "Bay Area + Central Valley Tier 1",
+      "send_time": "09:00 PST",
+      "status": "queued"
+    },
+    {
+      "day": "Friday May 9",
+      "batch": 4,
+      "count": 20,
+      "template": "email_2_value.txt",
+      "target": "LinkedIn DM recipients from April 29",
+      "focus": "Multi-channel follow-up",
+      "send_time": "10:00 PST",
+      "status": "queued"
+    },
+    {
+      "day": "Monday May 12",
+      "batch": 5,
+      "count": 25,
+      "template": "email_3_close.txt",
+      "target": "Non-responders from Email 2",
+      "focus": "Urgency + cost-per-lead pitch",
+      "send_time": "09:00 PST",
+      "status": "planned"
+    },
+    {
+      "day": "Tuesday May 13",
+      "batch": 6,
+      "count": 25,
+      "template": "email_3_close.txt",
+      "target": "Non-responders from Email 2",
+      "focus": "Final sequence attempt",
+      "send_time": "09:00 PST",
+      "status": "planned"
+    }
+  ],
+  "total_emails": 145,
+  "target_prospects": 95,
+  "expected_metrics": {
+    "open_rate": "35-45%",
+    "reply_rate": "8-12%",
+    "demo_bookings": "6-10",
+    "conversions": "2-3"
+  },
+  "notes": "Email 2 focuses on free sample offer. Email 3 adds urgency with Friday expiration. All sequences personalized with {{County}} and {{Competitor_System}} variables."
+}

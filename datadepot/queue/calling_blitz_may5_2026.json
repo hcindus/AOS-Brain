@@ -1,0 +1,74 @@
+{
+  "queue_name": "Cold Calling Blitz May 5-11",
+  "created": "2026-05-04T16:25:00Z",
+  "agent": "Pulp",
+  "execution_schedule": [
+    {
+      "day": "Wednesday May 7",
+      "blitz_name": "San Diego Blitz",
+      "count": 25,
+      "territory": "San Diego Metro",
+      "time_block": "09:00-12:00 PST",
+      "script": "san_diego_blitz",
+      "focus": "Toast + Clover partners, high priority scores",
+      "goal": "5 conversations, 2 demos booked",
+      "status": "queued"
+    },
+    {
+      "day": "Thursday May 8",
+      "blitz_name": "LA Metro Blitz",
+      "count": 25,
+      "territory": "Los Angeles Metro",
+      "time_block": "09:00-12:00 PST",
+      "script": "la_metro_blitz",
+      "focus": "Square specialists, high volume",
+      "goal": "5 conversations, 2 demos booked",
+      "status": "queued"
+    },
+    {
+      "day": "Friday May 9",
+      "blitz_name": "Follow-up Calls",
+      "count": 15,
+      "territory": "Mixed (engaged prospects)",
+      "time_block": "10:00-12:00 PST",
+      "script": "context_specific",
+      "focus": "Prospects who opened emails or accepted LinkedIn",
+      "goal": "3 conversations, 1-2 demos",
+      "status": "queued"
+    },
+    {
+      "day": "Monday May 12",
+      "blitz_name": "Bay Area Blitz",
+      "count": 30,
+      "territory": "San Francisco Bay Area",
+      "time_block": "09:00-12:30 PST",
+      "script": "bay_area_blitz",
+      "focus": "Toast specialists, tech-forward pitch",
+      "goal": "6 conversations, 3 demos booked",
+      "status": "planned"
+    },
+    {
+      "day": "Tuesday May 13",
+      "blitz_name": "Orange County Blitz",
+      "count": 30,
+      "territory": "Orange County",
+      "time_block": "09:00-12:30 PST",
+      "script": "orange_county_blitz",
+      "focus": "Clover partners, affluent market",
+      "goal": "6 conversations, 3 demos booked",
+      "status": "planned"
+    }
+  ],
+  "total_calls": 125,
+  "expected_metrics": {
+    "connect_rate": "8-12%",
+    "conversation_rate": "5-8%",
+    "demo_booking_rate": "2-3%",
+    "total_demos": "8-12"
+  },
+  "scripts": {
+    "san_diego_blitz": "Hi {{First_Name}}, this is Miles with DataDepot Intelligence. We're tracking 8,200 restaurants in San Diego County — {{Company}} came up as a top Toast partner. I'm calling because we just identified 23 restaurants in your area using 5+ year old Aloha systems with negative reviews. Want the list?",
+    "la_metro_blitz": "Hi {{First_Name}}, Miles here from DataDepot. You specialize in Square installations, right? We've got intelligence on 18,500 LA restaurants — including which ones are complaining about their current POS on Yelp. Worth a 2-minute conversation?",
+    "bay_area_blitz": "Hi {{First_Name}}, this is Miles with DataDepot. Saw {{Company}} does Toast installations. Question: How do you find restaurants that are actually ready to switch? We've got detected POS data on 5,100 SF restaurants. Can I send you 50 sample leads?"
+  }
+}
