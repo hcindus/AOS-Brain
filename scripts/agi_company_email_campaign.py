@@ -908,6 +908,7 @@ Sales Consultant | AOS"""
         except Exception as e:
             print(f"SMTP check error: {e}")
             return False
+            return False
     
     def retry_queue(self):
         """Try to send one pending email if rate limit cleared"""
