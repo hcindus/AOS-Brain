@@ -1072,5 +1072,183 @@ async def promote_vendor_to_lead(vendor_id: int, data: dict):
     else:
         return JSONResponse(status_code=404, content={'error': 'Vendor not found'})
 
+@app.get("/api/queue/{email_id}/preview")
+async def preview_queued_email(email_id: str):
+    """Get email content for preview before sending"""
+    import uuid
+    queue_file = DATADEPOT_DIR / 'queue' / 'pending_emails.json'
+    
+    if not queue_file.exists():
+        return JSONResponse(status_code=404, content={'error': 'Queue file not found'})
+    
+    with open(queue_file, 'r') as f:
+        queue = json.load(f)
+    
+    # Find email by ID
+    for email in queue:
+        if 'id' not in email:
+            email['id'] = str(uuid.uuid4())
+        if email.get('id') == email_id:
+            return {
+                'success': True,
+                'email': {
+                    'id': email.get('id'),
+                    'to_name': email.get('to_name', ''),
+                    'to_email': email.get('to_email', ''),
+                    'from': email.get('from', 'Miles - Performance Supply Depot <miles@psdepot.com>'),
+                    'subject': email.get('subject', ''),
+                    'html_body': email.get('html_body', ''),
+                    'text_body': email.get('text_body', ''),
+                    'template': email.get('template', 'unknown'),
+                    'company_name': email.get('company_name', ''),
+                    'scheduled_time': email.get('scheduled_time', ''),
+                    'variables': email.get('variables', {}),
+                    'campaign_id': email.get('campaign_id', ''),
+                    'status': email.get('status', 'pending')
+                }
+            }
+    
+    return JSONResponse(status_code=404, content={'error': 'Email not found', 'email_id': email_id})
+
+@app.get("/api/queue/{email_id}/status")
+async def get_email_status(email_id: str):
+    """Get current status of an email (pending, sent, failed, cancelled)"""
+    import uuid
+    
+    # Check pending queue
+    queue_file = DATADEPOT_DIR / 'queue' / 'pending_emails.json'
+    if queue_file.exists():
+        with open(queue_file, 'r') as f:
+            queue = json.load(f)
+        for email in queue:
+            if email.get('id') == email_id:
+                return {
+                    'success': True,
+                    'email_id': email_id,
+                    'status': email.get('status', 'pending'),
+                    'location': 'queue',
+                    'scheduled_time': email.get('scheduled_time'),
+                    'updated_at': email.get('updated_at')
+                }
+    
+    # Check sent emails
+    sent_file = DATADEPOT_DIR / 'queue' / 'sent_emails.json'
+    if sent_file.exists():
+        with open(sent_file, 'r') as f:
+            sent = json.load(f)
+        for email in sent:
+            if email.get('id') == email_id:
+                return {
+                    'success': True,
+                    'email_id': email_id,
+                    'status': 'sent',
+                    'location': 'sent',
+                    'sent_at': email.get('sent_at'),
+                    'mailgun_id': email.get('mailgun_id'),
+                    'opened': email.get('opened', False),
+                    'clicked': email.get('clicked', False)
+                }
+    
+    # Check failed emails
+    failed_file = DATADEPOT_DIR / 'queue' / 'failed_emails.json'
+    if failed_file.exists():
+        with open(failed_file, 'r') as f:
+            failed = json.load(f)
+        for email in failed:
+            if email.get('id') == email_id:
+                return {
+                    'success': True,
+                    'email_id': email_id,
+                    'status': 'failed',
+                    'location': 'failed',
+                    'failed_at': email.get('failed_at'),
+                    'error': email.get('error', 'Unknown error')
+                }
+    
+    return JSONResponse(status_code=404, content={'error': 'Email not found', 'email_id': email_id})
+
+@app.get("/api/emails/recent")
+async def get_recent_emails(limit: int = Query(20, ge=1, le=100)):
+    """Get recent email activity for dashboard"""
+    activities = []
+    
+    # Get sent emails
+    sent_file = DATADEPOT_DIR / 'queue' / 'sent_emails.json'
+    if sent_file.exists():
+        with open(sent_file, 'r') as f:
+            sent = json.load(f)
+        for email in sent[-limit:]:
+            activities.append({
+                'type': 'email_sent',
+                'id': email.get('id'),
+                'description': f"Email sent to {email.get('to_email', 'unknown')}",
+                'details': {
+                    'to_name': email.get('to_name', ''),
+                    'to_email': email.get('to_email', ''),
+                    'company_name': email.get('company_name', ''),
+                    'subject': email.get('subject', ''),
+                    'template': email.get('template', 'unknown'),
+                    'campaign_id': email.get('campaign_id', '')
+                },
+                'timestamp': email.get('sent_at', ''),
+                'status': 'sent'
+            })
+    
+    # Get failed emails
+    failed_file = DATADEPOT_DIR / 'queue' / 'failed_emails.json'
+    if failed_file.exists():
+        with open(failed_file, 'r') as f:
+            failed = json.load(f)
+        for email in failed[-limit:]:
+            activities.append({
+                'type': 'email_failed',
+                'id': email.get('id'),
+                'description': f"Email failed to {email.get('to_email', 'unknown')}",
+                'details': {
+                    'to_name': email.get('to_name', ''),
+                    'to_email': email.get('to_email', ''),
+                    'company_name': email.get('company_name', ''),
+                    'subject': email.get('subject', ''),
+                    'template': email.get('template', 'unknown'),
+                    'error': email.get('error', 'Unknown error')
+                },
+                'timestamp': email.get('failed_at', ''),
+                'status': 'failed'
+            })
+    
+    # Get cancelled emails from queue history
+    cancelled_file = DATADEPOT_DIR / 'queue' / 'cancelled_emails.json'
+    if cancelled_file.exists():
+        with open(cancelled_file, 'r') as f:
+            cancelled = json.load(f)
+        for email in cancelled[-limit:]:
+            activities.append({
+                'type': 'email_cancelled',
+                'id': email.get('id'),
+                'description': f"Email cancelled for {email.get('to_email', 'unknown')}",
+                'details': {
+                    'to_name': email.get('to_name', ''),
+                    'to_email': email.get('to_email', ''),
+                    'company_name': email.get('company_name', ''),
+                    'subject': email.get('subject', ''),
+                    'template': email.get('template', 'unknown')
+                },
+                'timestamp': email.get('cancelled_at', ''),
+                'status': 'cancelled'
+            })
+    
+    # Sort by timestamp descending
+    activities.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
+    
+    return {
+        'activities': activities[:limit],
+        'total': len(activities),
+        'summary': {
+            'sent_today': len([a for a in activities if a['type'] == 'email_sent' and a.get('timestamp', '').startswith(datetime.now().strftime('%Y-%m-%d'))]),
+            'failed_today': len([a for a in activities if a['type'] == 'email_failed' and a.get('timestamp', '').startswith(datetime.now().strftime('%Y-%m-%d'))]),
+            'cancelled_today': len([a for a in activities if a['type'] == 'email_cancelled' and a.get('timestamp', '').startswith(datetime.now().strftime('%Y-%m-%d'))])
+        }
+    }
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8082, log_level="info")
