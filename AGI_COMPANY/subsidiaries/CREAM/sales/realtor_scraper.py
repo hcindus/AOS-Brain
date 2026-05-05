@@ -261,7 +261,7 @@ def generate_agent(metro=None):
 
 
 def generate_agents(count, metro_filter=None, state_filter=None, priority_filter=None):
-    """Generate multiple agent records"""
+    """Generate multiple agent records with controlled distributions"""
     agents = []
     
     # Filter metros if requested
@@ -276,9 +276,68 @@ def generate_agents(count, metro_filter=None, state_filter=None, priority_filter
     if not metros:
         metros = METRO_AREAS
     
-    for _ in range(count):
-        metro = random.choice(metros)
-        agents.append(generate_agent(metro))
+    # Separate metros by priority
+    priority_a_metros = [m for m in metros if m["priority"] == "A"]
+    priority_b_metros = [m for m in metros if m["priority"] == "B"]
+    priority_c_metros = [m for m in metros if m["priority"] == "C"]
+    
+    # Calculate counts based on requirements:
+    # Priority distribution: A (40%), B (35%), C (25%)
+    # Experience mix: Senior 50%, Mid 25%, New 25%
+    target_a = int(count * 0.40)
+    target_b = int(count * 0.35)
+    target_c = count - target_a - target_b  # Remainder to ensure exact count
+    
+    target_senior = int(count * 0.50)
+    target_mid = int(count * 0.25)
+    target_new = count - target_senior - target_mid
+    
+    # Distribute experience across priorities proportionally
+    def get_experience_targets(priority_count):
+        senior = int(priority_count * 0.50)
+        mid = int(priority_count * 0.25)
+        new = priority_count - senior - mid
+        return senior, mid, new
+    
+    a_senior, a_mid, a_new = get_experience_targets(target_a)
+    b_senior, b_mid, b_new = get_experience_targets(target_b)
+    c_senior, c_mid, c_new = get_experience_targets(target_c)
+    
+    # Generate agents by priority and experience
+    for priority_metros, priority, senior_count, mid_count, new_count in [
+        (priority_a_metros, "A", a_senior, a_mid, a_new),
+        (priority_b_metros, "B", b_senior, b_mid, b_new),
+        (priority_c_metros, "C", c_senior, c_mid, c_new)
+    ]:
+        if not priority_metros:
+            priority_metros = metros
+        
+        # Generate senior agents (6+ years)
+        for _ in range(senior_count):
+            metro = random.choice(priority_metros)
+            agent = generate_agent(metro)
+            agent["years_experience"] = random.randint(6, 25)
+            agent["priority"] = priority
+            agents.append(agent)
+        
+        # Generate mid agents (3-5 years)
+        for _ in range(mid_count):
+            metro = random.choice(priority_metros)
+            agent = generate_agent(metro)
+            agent["years_experience"] = random.randint(3, 5)
+            agent["priority"] = priority
+            agents.append(agent)
+        
+        # Generate new agents (0-2 years)
+        for _ in range(new_count):
+            metro = random.choice(priority_metros)
+            agent = generate_agent(metro)
+            agent["years_experience"] = random.randint(0, 2)
+            agent["priority"] = priority
+            agents.append(agent)
+    
+    # Shuffle to randomize order
+    random.shuffle(agents)
     
     return agents
 
