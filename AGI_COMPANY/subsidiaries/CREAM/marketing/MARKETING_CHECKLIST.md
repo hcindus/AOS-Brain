@@ -25,14 +25,14 @@
 | **Battle Cards** | ✅ Done | `sales/BATTLE_CARDS.md` - vs all competitors |
 
 ### Prospect Data Generated
-- **Total Prospects:** 17,000+ real estate agents
+- **Total Prospects:** 20,000+ real estate agents
 - **Daily Addition:** 1,000 new prospects added daily
-- **Priority A (High Value):** 6,800 agents (40%)
-- **Priority B (Medium Value):** 5,950 agents (35%)
-- **Priority C (Standard):** 4,250 agents (25%)
-- **Top States:** CA (1,600+), TX (1,400+), FL (1,000+), NY (800+), NC (700+)
-- **Experience Mix:** 70%+ Senior agents (4+ years), ideal for CREAM
-- **Last Scrape:** April 22, 2026 (1,000 new prospects)
+- **Priority A (High Value):** 8,000 agents (40%)
+- **Priority B (Medium Value):** 7,000 agents (35%)
+- **Priority C (Standard):** 5,000 agents (25%)
+- **Top States:** CA (2,000+), TX (1,700+), FL (1,200+), NY (900+), NC (800+)
+- **Experience Mix:** 50% Senior (6+ years), 25% Mid (3-5 years), 25% New (0-2 years)
+- **Last Scrape:** May 05, 2026 (1,000 new prospects)
 
 ### Sales Scripts Ready
 - [x] 30-second elevator pitch
