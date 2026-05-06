@@ -3,7 +3,7 @@
   "name": "Aria",
   "role": "MEDIC",
   "level": 5,
-  "xp": 126896,
+  "xp": 126967,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 17,
     "combat": 23
   },
-  "missionsCompleted": 840,
+  "missionsCompleted": 841,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -4218,6 +4218,11 @@
       "name": "Derelict Ship",
       "location": "Alpha-1",
       "timestamp": 1778090720796
+    },
+    {
+      "name": "Anomalous Planet",
+      "location": "Alpha-1",
+      "timestamp": 1778098460927
     }
   ],
   "status": "ACTIVE",
