@@ -5,25 +5,29 @@ import { prisma } from '@/lib/prisma'
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
-    const query = searchParams.get('q')
-    const limit = parseInt(searchParams.get('limit') ?? '20')
-    const offset = parseInt(searchParams.get('offset') ?? '0')
+    const search = searchParams.get('q') || searchParams.get('search')
+    const page = parseInt(searchParams.get('page') || '1')
+    const limit = parseInt(searchParams.get('limit') || '20')
 
     const where: any = {}
-    if (query) {
+    
+    if (search) {
       where.OR = [
-        { name: { contains: query, mode: 'insensitive' } },
-        { phone: { contains: query } },
-        { loyaltyCardNo: { contains: query, mode: 'insensitive' } },
+        { name: { contains: search, mode: 'insensitive' } },
+        { phone: { contains: search, mode: 'insensitive' } },
+        { loyaltyCardNo: { contains: search, mode: 'insensitive' } },
       ]
     }
 
     const [customers, total] = await Promise.all([
       prisma.customer.findMany({
         where,
+        include: {
+          storeCredit: true,
+        },
         orderBy: { name: 'asc' },
+        skip: (page - 1) * limit,
         take: limit,
-        skip: offset,
       }),
       prisma.customer.count({ where }),
     ])
@@ -31,18 +35,18 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       success: true,
       data: customers,
-      meta: { limit, offset, total },
+      meta: { page, limit, total },
     })
   } catch (error) {
     console.error('List customers error:', error)
     return NextResponse.json(
-      { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to list customers' } },
+      { success: false, error: { code: 'INTERNAL_ERROR', message: 'An error occurred' } },
       { status: 500 }
     )
   }
 }
 
-// POST /api/customers - Create customer
+// POST /api/customers - Create new customer
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -56,28 +60,30 @@ export async function POST(request: NextRequest) {
     }
 
     // Generate loyalty card number if not provided
-    const cardNo = loyaltyCardNo || `LC${Date.now().toString(36).toUpperCase()}`
+    const cardNo = loyaltyCardNo || `LOYAL${Date.now().toString(36).toUpperCase()}`
 
     const customer = await prisma.customer.create({
       data: {
         name,
-        phone: phone || null,
+        phone,
         loyaltyCardNo: cardNo,
-        loyaltyPoints: 0,
+      },
+      include: {
+        storeCredit: true,
       },
     })
 
-    return NextResponse.json({ success: true, data: customer }, { status: 201 })
+    return NextResponse.json({ success: true, data: customer })
   } catch (error: any) {
-    console.error('Create customer error:', error)
     if (error.code === 'P2002') {
       return NextResponse.json(
-        { success: false, error: { code: 'CONFLICT', message: 'Loyalty card number already exists' } },
-        { status: 409 }
+        { success: false, error: { code: 'DUPLICATE_ERROR', message: 'Loyalty card number already exists' } },
+        { status: 400 }
       )
     }
+    console.error('Create customer error:', error)
     return NextResponse.json(
-      { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to create customer' } },
+      { success: false, error: { code: 'INTERNAL_ERROR', message: 'An error occurred' } },
       { status: 500 }
     )
   }

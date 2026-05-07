@@ -5,53 +5,78 @@ import { createSession } from '@/lib/auth'
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
-    const { pin } = body
+    const { clerkId, pin } = await request.json()
 
-    if (!pin || typeof pin !== 'string' || pin.length !== 4) {
+    if (!clerkId || !pin) {
       return NextResponse.json(
-        { success: false, error: { code: 'VALIDATION_ERROR', message: 'PIN must be 4 digits' } },
+        { success: false, error: { code: 'MISSING_CREDENTIALS', message: 'Clerk ID and PIN are required' } },
         { status: 400 }
       )
     }
 
-    // Find clerk by PIN (we need to check all since PINs are hashed)
-    const clerks = await prisma.clerk.findMany({
-      where: { active: true },
+    const clerk = await prisma.clerk.findUnique({
+      where: { id: clerkId },
     })
-
-    const clerk = clerks.find((c) => bcrypt.compareSync(pin, c.pin))
 
     if (!clerk) {
       return NextResponse.json(
-        { success: false, error: { code: 'AUTH_INVALID_PIN', message: 'Invalid PIN' } },
+        { success: false, error: { code: 'INVALID_CREDENTIALS', message: 'Invalid clerk ID or PIN' } },
+        { status: 401 }
+      )
+    }
+
+    if (!clerk.active) {
+      return NextResponse.json(
+        { success: false, error: { code: 'ACCOUNT_INACTIVE', message: 'Account is inactive' } },
+        { status: 403 }
+      )
+    }
+
+    const isPinValid = await bcrypt.compare(pin, clerk.pin)
+
+    if (!isPinValid) {
+      return NextResponse.json(
+        { success: false, error: { code: 'INVALID_CREDENTIALS', message: 'Invalid clerk ID or PIN' } },
         { status: 401 }
       )
     }
 
     // Create session
-    const session = { id: clerk.id, name: clerk.name, role: clerk.role }
+    const session = {
+      id: clerk.id,
+      name: clerk.name,
+      role: clerk.role as 'Admin' | 'Manager' | 'Clerk',
+    }
+
     const token = createSession(session)
+
+    // Log the login
+    await prisma.sessionLog.create({
+      data: {
+        clerkId: clerk.id,
+        action: 'login',
+        details: JSON.stringify({ ipAddress: request.ip ?? 'unknown' }),
+      },
+    })
 
     // Set cookie
     const response = NextResponse.json({
       success: true,
-      data: { clerk: { id: clerk.id, name: clerk.name, role: clerk.role } },
+      data: { clerk: session },
     })
 
     response.cookies.set('rs79_session', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      maxAge: 12 * 60 * 60, // 12 hours
-      path: '/',
+      maxAge: 60 * 60 * 12, // 12 hours
     })
 
     return response
   } catch (error) {
     console.error('Login error:', error)
     return NextResponse.json(
-      { success: false, error: { code: 'INTERNAL_ERROR', message: 'Login failed' } },
+      { success: false, error: { code: 'INTERNAL_ERROR', message: 'An error occurred during login' } },
       { status: 500 }
     )
   }

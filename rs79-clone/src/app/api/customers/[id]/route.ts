@@ -10,6 +10,9 @@ export async function GET(
 
     const customer = await prisma.customer.findUnique({
       where: { id },
+      include: {
+        storeCredit: true,
+      },
     })
 
     if (!customer) {

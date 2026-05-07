@@ -1,33 +1,25 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth'
 
-/**
- * GET /api/auth/session
- * Returns current session data
- * Used by AuthProvider to check auth status
- */
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const session = await getSession()
-    
+
     if (!session) {
-      return NextResponse.json({
-        success: true,
-        data: { session: null },
-      })
+      return NextResponse.json(
+        { success: false, error: { code: 'SESSION_INVALID', message: 'No active session' } },
+        { status: 401 }
+      )
     }
 
     return NextResponse.json({
       success: true,
-      data: { session },
+      data: { clerk: session },
     })
   } catch (error) {
-    console.error('Session error:', error)
+    console.error('Session check error:', error)
     return NextResponse.json(
-      { 
-        success: false, 
-        error: { code: 'INTERNAL_ERROR', message: 'Failed to get session' } 
-      },
+      { success: false, error: { code: 'INTERNAL_ERROR', message: 'An error occurred' } },
       { status: 500 }
     )
   }

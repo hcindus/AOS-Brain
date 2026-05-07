@@ -1,67 +1,86 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { getSession } from '@/lib/auth'
 
-// GET /api/items - List/search items
+// GET /api/items - List all items
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
-    const query = searchParams.get('q')
     const category = searchParams.get('category')
-    const active = searchParams.get('active')
-    const limit = parseInt(searchParams.get('limit') ?? '50')
-    const offset = parseInt(searchParams.get('offset') ?? '0')
+    const search = searchParams.get('search')
+    const activeOnly = searchParams.get('active') !== 'false'
 
     const where: any = {}
-    if (query) {
+    
+    if (category) {
+      where.category = category
+    }
+    
+    if (search) {
       where.OR = [
-        { name: { contains: query, mode: 'insensitive' } },
-        { sku: { contains: query, mode: 'insensitive' } },
+        { name: { contains: search, mode: 'insensitive' } },
+        { sku: { contains: search, mode: 'insensitive' } },
+        { barcode: { contains: search, mode: 'insensitive' } },
       ]
     }
-    if (category) where.category = category
-    if (active !== null) where.active = active === 'true'
+    
+    if (activeOnly) {
+      where.active = true
+    }
 
-    const [items, total] = await Promise.all([
-      prisma.item.findMany({
-        where,
-        orderBy: { name: 'asc' },
-        take: limit,
-        skip: offset,
-      }),
-      prisma.item.count({ where }),
-    ])
+    const items = await prisma.item.findMany({
+      where,
+      orderBy: { category: 'asc' },
+    })
+
+    // Get unique categories
+    const categories = await prisma.item.findMany({
+      where: activeOnly ? { active: true } : {},
+      select: { category: true },
+      distinct: ['category'],
+    })
 
     return NextResponse.json({
       success: true,
-      data: items,
-      meta: { limit, offset, total },
+      data: {
+        items,
+        categories: categories.map(c => c.category),
+      },
     })
   } catch (error) {
     console.error('List items error:', error)
     return NextResponse.json(
-      { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to list items' } },
+      { success: false, error: { code: 'INTERNAL_ERROR', message: 'An error occurred' } },
       { status: 500 }
     )
   }
 }
 
-// POST /api/items - Create item (admin only)
+// POST /api/items - Create new item (Admin/Manager only)
 export async function POST(request: NextRequest) {
   try {
-    const role = request.headers.get('x-clerk-role')
-    if (role !== 'Admin' && role !== 'Manager') {
+    const session = await getSession()
+    
+    if (!session) {
       return NextResponse.json(
-        { success: false, error: { code: 'FORBIDDEN', message: 'Admin or Manager access required' } },
+        { success: false, error: { code: 'UNAUTHORIZED', message: 'Not authenticated' } },
+        { status: 401 }
+      )
+    }
+
+    if (session.role === 'Clerk') {
+      return NextResponse.json(
+        { success: false, error: { code: 'FORBIDDEN', message: 'Insufficient permissions' } },
         { status: 403 }
       )
     }
 
     const body = await request.json()
-    const { sku, name, price, category, active = true } = body
+    const { sku, name, price, category, stockQty, description, barcode } = body
 
-    if (!sku || !name || price === undefined || !category) {
+    if (!sku || !name || !price || !category) {
       return NextResponse.json(
-        { success: false, error: { code: 'VALIDATION_ERROR', message: 'SKU, name, price, and category required' } },
+        { success: false, error: { code: 'VALIDATION_ERROR', message: 'Missing required fields' } },
         { status: 400 }
       )
     }
@@ -72,21 +91,18 @@ export async function POST(request: NextRequest) {
         name,
         price: parseFloat(price),
         category,
-        active,
+        stockQty: parseInt(stockQty) || 0,
+        description,
+        barcode,
+        active: true,
       },
     })
 
-    return NextResponse.json({ success: true, data: item }, { status: 201 })
-  } catch (error: any) {
+    return NextResponse.json({ success: true, data: { item } })
+  } catch (error) {
     console.error('Create item error:', error)
-    if (error.code === 'P2002') {
-      return NextResponse.json(
-        { success: false, error: { code: 'CONFLICT', message: 'SKU already exists' } },
-        { status: 409 }
-      )
-    }
     return NextResponse.json(
-      { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to create item' } },
+      { success: false, error: { code: 'INTERNAL_ERROR', message: 'An error occurred' } },
       { status: 500 }
     )
   }

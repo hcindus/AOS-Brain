@@ -137,6 +137,47 @@ body {
   gap: 0.75rem;
 }
 
+/* Dark theme colors for login page */
+.bg-slate-900 {
+  background-color: #0f172a;
+}
+
+.bg-slate-800 {
+  background-color: #1e293b;
+}
+
+.bg-slate-700 {
+  background-color: #334155;
+}
+
+.bg-slate-600 {
+  background-color: #475569;
+}
+
+.border-slate-700 {
+  border-color: #334155;
+}
+
+.border-slate-600 {
+  border-color: #475569;
+}
+
+.border-slate-500 {
+  border-color: #64748b;
+}
+
+.text-slate-400 {
+  color: #94a3b8;
+}
+
+.text-slate-300 {
+  color: #cbd5e1;
+}
+
+.text-slate-500 {
+  color: #64748b;
+}
+
 /* Prevent text selection on interactive elements */
 .no-select {
   user-select: none;

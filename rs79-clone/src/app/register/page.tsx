@@ -1,234 +1,266 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { CategorySidebar } from '@/components/pos/CategorySidebar'
-import { ItemGrid } from '@/components/pos/ItemGrid'
-import { CartPanel } from '@/components/pos/CartPanel'
-import type { Item, CartItem } from '@/types'
-
-interface Clerk {
-  id: string
-  name: string
-  role: string
-}
+import type { Item, CartItem, CurrencyCode, Customer } from '@/types'
+import { CURRENCIES } from '@/lib/currency'
 
 export default function RegisterPage() {
-  const router = useRouter()
   const [items, setItems] = useState<Item[]>([])
+  const [categories, setCategories] = useState<string[]>([])
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
   const [cart, setCart] = useState<CartItem[]>([])
-  const [categories, setCategories] = useState<{ id: string; name: string; icon: string }[]>([])
-  const [activeCategory, setActiveCategory] = useState<string | null>(null)
-  const [clerk, setClerk] = useState<Clerk | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [currency, setCurrency] = useState<CurrencyCode>('USD')
+  const [customer, setCustomer] = useState<Customer | null>(null)
+  const [showPayment, setShowPayment] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const router = useRouter()
 
-  // Calculate totals
-  const subtotal = cart.reduce((sum, item) => sum + item.lineTotal, 0)
-  const tax = subtotal * 0.10 // 10% tax
-  const total = subtotal + tax
-
-  // Fetch items and verify session
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        // Get items
-        const itemsRes = await fetch('/api/items?limit=100')
-        const itemsData = await itemsRes.json()
-
-        if (itemsData.success) {
-          setItems(itemsData.data)
-          
-          // Extract unique categories
-          const categoryMap = new Map<string, { id: string; name: string; icon: string }>()
-          itemsData.data.forEach((item: Item) => {
-            if (!categoryMap.has(item.category)) {
-              categoryMap.set(item.category, {
-                id: item.category,
-                name: item.category.charAt(0).toUpperCase() + item.category.slice(1),
-                icon: getCategoryIcon(item.category),
-              })
-            }
-          })
-          setCategories(Array.from(categoryMap.values()))
+    // Check session
+    fetch('/api/auth/session')
+      .then(res => {
+        if (!res.ok) {
+          router.push('/login')
+        } else {
+          loadItems()
         }
+      })
+  }, [router])
 
-        // Get session clerk info from cookie
-        const sessionResponse = await fetch('/api/clerks')
-        const sessionData = await sessionResponse.json()
-        
-        // For MVP, default to first active clerk or Admin
-        setClerk({ id: 'admin', name: 'Admin', role: 'Admin' })
-      } catch (error) {
-        console.error('Failed to load data:', error)
-      } finally {
-        setIsLoading(false)
+  const loadItems = async () => {
+    try {
+      const res = await fetch('/api/items')
+      const data = await res.json()
+      if (data.success) {
+        setItems(data.data.items)
+        setCategories(data.data.categories)
+        setSelectedCategory(data.data.categories[0] || null)
       }
+    } finally {
+      setLoading(false)
     }
-
-    loadData()
-  }, [])
-
-  const getCategoryIcon = (category: string): string => {
-    const iconMap: Record<string, string> = {
-      drinks: 'Coffee',
-      bakery: 'Cake',
-      food: 'Utensils',
-      dessert: 'IceCream',
-      retail: 'ShoppingBag',
-      alcohol: 'Beer',
-      general: 'Package',
-    }
-    return iconMap[category] || 'Grid3X3'
   }
 
-  const filteredItems = activeCategory
-    ? items.filter((item) => item.category === activeCategory)
-    : items
+  const filteredItems = items.filter(item => {
+    const matchesCategory = selectedCategory ? item.category === selectedCategory : true
+    const matchesSearch = searchQuery
+      ? item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.sku.toLowerCase().includes(searchQuery.toLowerCase())
+      : true
+    return matchesCategory && matchesSearch && item.active
+  })
 
-  const handleAddToCart = useCallback((item: Item) => {
-    setCart((prev) => {
-      const existing = prev.find((i) => i.itemId === item.id)
+  const addToCart = (item: Item) => {
+    setCart(prev => {
+      const existing = prev.find(ci => ci.item.id === item.id)
       if (existing) {
-        return prev.map((i) =>
-          i.itemId === item.id
-            ? { ...i, qty: i.qty + 1, lineTotal: i.price * (i.qty + 1) }
-            : i
+        return prev.map(ci =>
+          ci.item.id === item.id ? { ...ci, qty: ci.qty + 1 } : ci
         )
       }
-      return [
-        ...prev,
-        {
-          itemId: item.id,
-          name: item.name,
-          price: item.price,
-          qty: 1,
-          lineTotal: item.price,
-        },
-      ]
+      return [...prev, { item, qty: 1 }]
     })
-  }, [])
+  }
 
-  const handleUpdateQty = useCallback((itemId: string, qty: number) => {
-    if (qty <= 0) {
-      setCart((prev) => prev.filter((i) => i.itemId !== itemId))
-    } else {
-      setCart((prev) =>
-        prev.map((i) =>
-          i.itemId === itemId
-            ? { ...i, qty, lineTotal: i.price * qty }
-            : i
-        )
-      )
-    }
-  }, [])
-
-  const handleRemoveItem = useCallback((itemId: string) => {
-    setCart((prev) => prev.filter((i) => i.itemId !== itemId))
-  }, [])
-
-  const handleClearCart = useCallback(() => {
-    setCart([])
-  }, [])
-
-  const handleCheckout = useCallback(() => {
-    if (cart.length === 0) return
-    
-    // For MVP, just create a simple order
-    const orderData = {
-      items: cart.map((item) => ({
-        itemId: item.itemId,
-        name: item.name,
-        price: item.price,
-        qty: item.qty,
-      })),
-      payments: [
-        {
-          type: 'cash',
-          amount: total,
-          tendered: total,
-        },
-      ],
-    }
-
-    fetch('/api/orders', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(orderData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          alert(`Order #${data.data.transactionNo} created successfully!`)
-          handleClearCart()
-        } else {
-          alert('Failed to create order: ' + data.error?.message)
+  const updateQty = (itemId: string, delta: number) => {
+    setCart(prev => {
+      return prev.map(ci => {
+        if (ci.item.id === itemId) {
+          const newQty = Math.max(0, ci.qty + delta)
+          return { ...ci, qty: newQty }
         }
-      })
-      .catch((err) => {
-        console.error('Checkout error:', err)
-        alert('Checkout failed')
-      })
-  }, [cart, total])
+        return ci
+      }).filter(ci => ci.qty > 0)
+    })
+  }
 
-  if (isLoading) {
+  const removeFromCart = (itemId: string) => {
+    setCart(prev => prev.filter(ci => ci.item.id !== itemId))
+  }
+
+  const subtotal = cart.reduce((sum, ci) => sum + ci.item.price * ci.qty, 0)
+  const tax = subtotal * 0.08
+  const total = subtotal + tax
+
+  const symbol = CURRENCIES[currency]?.symbol || '$'
+
+  if (loading) {
     return (
-      <div className="min-h-screen bg-surface-secondary flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-text-secondary">Loading POS...</p>
-        </div>
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="text-white">Loading...</div>
       </div>
     )
   }
 
   return (
-    <div className="h-screen flex overflow-hidden bg-surface-secondary">
-      {/* Left Section: Categories + Items */}
-      <div className="flex flex-1 min-w-0">
-        <CategorySidebar
-          categories={categories}
-          activeCategory={activeCategory}
-          onSelectCategory={setActiveCategory}
-        />
-        <div className="flex-1 flex flex-col">
-          {/* Header */}
-          <div className="h-16 bg-white border-b border-surface-tertiary flex items-center justify-between px-6">
-            <h1 className="text-xl font-bold text-text-primary">RS-79 Register</h1>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-text-secondary">
-                Clerk: <span className="font-medium text-text-primary">{clerk?.name || 'Unknown'}</span>
-              </span>
-              <button
-                onClick={() => router.push('/login')}
-                className="text-sm text-primary hover:text-primary-dark font-medium"
-              >
-                Logout
-              </button>
-            </div>
+    <div className="min-h-screen bg-gray-900 flex">
+      {/* Left Panel: Items */}
+      <div className="flex-1 flex flex-col">
+        {/* Header */}
+        <div className="h-16 bg-gray-800 border-b border-gray-700 flex items-center px-4 justify-between">
+          <div className="flex items-center gap-4">
+            <select
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value as CurrencyCode)}
+              className="bg-gray-700 text-white px-3 py-2 rounded-lg border border-gray-600"
+            >
+              <option value="USD">USD ($)</option>
+              <option value="EUR">EUR (€)</option>
+              <option value="JPY">JPY (¥)</option>
+              <option value="GBP">GBP (£)</option>
+            </select>
+            <input
+              type="text"
+              placeholder="Search items..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="bg-gray-700 text-white px-4 py-2 rounded-lg border border-gray-600 w-64"
+            />
           </div>
-          {/* Items Grid */}
-          <ItemGrid
-            items={filteredItems}
-            onAddToCart={handleAddToCart}
-            currency="USD"
-          />
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setShowPayment(true)}
+              disabled={cart.length === 0}
+              className="bg-green-600 hover:bg-green-700 disabled:bg-gray-700 disabled:text-gray-500 text-white px-6 py-2 rounded-lg font-semibold transition-colors"
+            >
+              Pay {symbol}{total.toFixed(2)}
+            </button>
+          </div>
+        </div>
+
+        {/* Categories */}
+        <div className="h-12 bg-gray-800 border-b border-gray-700 flex items-center px-4 gap-2 overflow-x-auto">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+                selectedCategory === cat
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+          <button
+            onClick={() => setSelectedCategory(null)}
+            className={`px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+              selectedCategory === null
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            }`}
+          >
+            All
+          </button>
+        </div>
+
+        {/* Items Grid */}
+        <div className="flex-1 p-4 overflow-auto">
+          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+            {filteredItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => addToCart(item)}
+                className="bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-xl p-4 text-left transition-colors group"
+              >
+                <p className="text-white font-medium truncate group-hover:text-blue-400">{item.name}</p>
+                <p className="text-gray-400 text-sm mt-1">{item.sku}</p>
+                <p className="text-green-400 font-semibold mt-2">
+                  {symbol}{item.price.toFixed(2)}
+                </p>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Right Section: Cart */}
-      <div className="w-[420px] flex-shrink-0">
-        <CartPanel
-          items={cart}
-          onUpdateQty={handleUpdateQty}
-          onRemoveItem={handleRemoveItem}
-          onClearCart={handleClearCart}
-          onCheckout={handleCheckout}
-          clerkName={clerk?.name || 'Unknown'}
-          subtotal={subtotal}
-          tax={tax}
-          total={total}
-          currency="USD"
-        />
+      {/* Right Panel: Cart */}
+      <div className="w-96 bg-gray-800 border-l border-gray-700 flex flex-col">
+        {/* Cart Header */}
+        <div className="h-16 border-b border-gray-700 flex items-center px-4 justify-between">
+          <h2 className="text-white font-semibold">Current Order</h2>
+          <button
+            onClick={() => setCart([])}
+            disabled={cart.length === 0}
+            className="text-red-400 hover:text-red-300 text-sm disabled:text-gray-600"
+          >
+            Clear
+          </button>
+        </div>
+
+        {/* Cart Items */}
+        <div className="flex-1 overflow-auto p-4">
+          {cart.length === 0 ? (
+            <div className="text-center text-gray-500 mt-8">
+              <p>Cart is empty</p>
+              <p className="text-sm mt-2">Click items to add</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {cart.map(({ item, qty }) => (
+                <div key={item.id} className="bg-gray-700 rounded-lg p-3">
+                  <div className="flex justify-between items-start">
+                    <div className="flex-1">
+                      <p className="text-white font-medium">{item.name}</p>
+                      <p className="text-gray-400 text-sm">{symbol}{item.price.toFixed(2)} each</p>
+                    </div>
+                    <button
+                      onClick={() => removeFromCart(item.id)}
+                      className="text-red-400 hover:text-red-300 px-2"
+                    >
+                      ×
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between mt-2">
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => updateQty(item.id, -1)}
+                        className="w-8 h-8 bg-gray-600 hover:bg-gray-500 rounded text-white"
+                      >-</button>
+                      <span className="text-white w-8 text-center">{qty}</span>
+                      <button
+                        onClick={() => updateQty(item.id, 1)}
+                        className="w-8 h-8 bg-gray-600 hover:bg-gray-500 rounded text-white"
+                      >+</button>
+                    </div>
+                    <span className="text-green-400 font-semibold">
+                      {symbol}{(item.price * qty).toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Cart Totals */}
+        <div className="border-t border-gray-700 p-4">
+          <div className="space-y-2 mb-4">
+            <div className="flex justify-between text-gray-400">
+              <span>Subtotal</span>
+              <span>{symbol}{subtotal.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between text-gray-400">
+              <span>Tax (8%)</span>
+              <span>{symbol}{tax.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between text-white text-xl font-bold pt-2 border-t border-gray-600">
+              <span>Total</span>
+              <span>{symbol}{total.toFixed(2)}</span>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setShowPayment(true)}
+            disabled={cart.length === 0}
+            className="w-full h-14 bg-green-600 hover:bg-green-700 disabled:bg-gray-700 disabled:text-gray-500 text-white text-lg font-semibold rounded-xl transition-colors"
+          >
+            Process Payment
+          </button>
+        </div>
       </div>
     </div>
   )
