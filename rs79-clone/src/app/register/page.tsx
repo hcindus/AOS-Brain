@@ -11,11 +11,22 @@ import { PaymentModal } from '@/components/pos/PaymentModal'
 import { CustomerSearch } from '@/components/pos/CustomerSearch'
 import { HoldOrderModal } from '@/components/pos/HoldOrderModal'
 import { RecallOrderPanel } from '@/components/pos/RecallOrderPanel'
+import { calculateCartTax, TaxConfig, TaxMode, CartTaxResult } from '@/lib/tax'
 
 interface Category {
   id: string
   name: string
   icon?: string
+}
+
+interface StoreSettings {
+  taxMode: TaxMode
+  taxConfig: TaxConfig
+  currency: string
+}
+
+interface CartItemWithCategory extends CartItem {
+  category: string
 }
 
 export default function RegisterPage() {
@@ -24,9 +35,16 @@ export default function RegisterPage() {
   const [items, setItems] = useState<Item[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [cart, setCart] = useState<CartItem[]>([])
+  const [cart, setCart] = useState<CartItemWithCategory[]>([])
   const [customer, setCustomer] = useState<Customer | null>(null)
-  const [currency, setCurrency] = useState<string>('USD')
+  const [settings, setSettings] = useState<StoreSettings | null>(null)
+  const [cartTax, setCartTax] = useState<CartTaxResult>({
+    subtotal: 0,
+    tax: 0,
+    total: 0,
+    mode: 'exclusive',
+    breakdown: []
+  })
   const [showPayment, setShowPayment] = useState(false)
   const [showCustomerSearch, setShowCustomerSearch] = useState(false)
   const [showHoldModal, setShowHoldModal] = useState(false)
@@ -55,8 +73,13 @@ export default function RegisterPage() {
   useEffect(() => {
     const init = async () => {
       try {
-        const sessionRes = await fetch('/api/auth/session')
+        const [sessionRes, settingsRes] = await Promise.all([
+          fetch('/api/auth/session'),
+          fetch('/api/settings')
+        ])
+        
         const sessionData = await sessionRes.json()
+        const settingsData = await settingsRes.json()
         
         if (!sessionData.success) {
           router.push('/login')
@@ -64,6 +87,22 @@ export default function RegisterPage() {
         }
         
         setClerk(sessionData.data.clerk)
+        
+        if (settingsData.success) {
+          setSettings({
+            taxMode: settingsData.data.taxMode || 'exclusive',
+            taxConfig: settingsData.data.taxConfig || { mode: 'exclusive', rates: [{ name: 'Standard', rate: 0.10 }], defaultRate: 0.10, roundTo: 0.01 },
+            currency: settingsData.data.currency || 'USD'
+          })
+        } else {
+          // Fallback defaults
+          setSettings({
+            taxMode: 'exclusive',
+            taxConfig: { mode: 'exclusive', rates: [{ name: 'Standard', rate: 0.10 }], defaultRate: 0.10, roundTo: 0.01 },
+            currency: 'USD'
+          })
+        }
+        
         await loadItems()
         await loadCategories()
       } catch (error) {
@@ -75,6 +114,17 @@ export default function RegisterPage() {
     }
     init()
   }, [router])
+
+  // Recalculate tax whenever cart changes
+  useEffect(() => {
+    if (!settings) return
+    
+    const taxResult = calculateCartTax(
+      cart.map(item => ({ price: item.price, qty: item.qty, category: item.category })),
+      settings.taxConfig
+    )
+    setCartTax(taxResult)
+  }, [cart, settings])
 
   const loadItems = async () => {
     try {
@@ -139,7 +189,8 @@ export default function RegisterPage() {
         name: item.name,
         price: item.price,
         qty: 1,
-        lineTotal: item.price
+        lineTotal: item.price,
+        category: item.category
       }]
     })
   }, [])
@@ -167,16 +218,12 @@ export default function RegisterPage() {
     setAmountPaid(0)
   }, [])
 
-  const subtotal = cart.reduce((sum, ci) => sum + ci.lineTotal, 0)
-  const tax = subtotal * 0.1 // 10% tax
-  const total = subtotal + tax
-
   const handleCheckout = () => {
     setShowPayment(true)
   }
 
   const handlePayment = async (payment: PaymentInput) => {
-    if (!clerk) return
+    if (!clerk || !settings) return
 
     try {
       let orderId = currentOrderId
@@ -190,11 +237,17 @@ export default function RegisterPage() {
           body: JSON.stringify({
             clerkId: clerk.id,
             customerId: customer?.id,
-            items: cart,
-            subtotal,
-            tax,
-            total,
-            currency,
+            items: cart.map(item => ({
+              itemId: item.itemId,
+              name: item.name,
+              price: item.price,
+              qty: item.qty,
+              lineTotal: item.lineTotal
+            })),
+            subtotal: cartTax.subtotal,
+            tax: cartTax.tax,
+            total: cartTax.total,
+            currency: settings.currency,
             currencyRate: 1,
           }),
         })
@@ -223,7 +276,7 @@ export default function RegisterPage() {
       setAmountPaid(prev => prev + paymentAmountUsd)
 
       // Check if fully paid
-      if (amountPaid + paymentAmountUsd >= total) {
+      if (amountPaid + paymentAmountUsd >= cartTax.total) {
         // Complete order
         await fetch(`/api/orders/${orderId}`, {
           method: 'PATCH',
@@ -242,7 +295,7 @@ export default function RegisterPage() {
   }
 
   const handleHoldOrder = async (data: { holdName: string; notes?: string }) => {
-    if (!clerk || cart.length === 0) return
+    if (!clerk || cart.length === 0 || !settings) return
 
     try {
       const res = await fetch('/api/orders/hold', {
@@ -252,9 +305,9 @@ export default function RegisterPage() {
           clerkId: clerk.id,
           customerId: customer?.id,
           items: cart,
-          subtotal,
-          tax,
-          total,
+          subtotal: cartTax.subtotal,
+          tax: cartTax.tax,
+          total: cartTax.total,
           holdName: data.holdName,
           notes: data.notes,
         }),
@@ -281,12 +334,15 @@ export default function RegisterPage() {
       
       if (data.success && data.data.heldOrder) {
         const heldOrder = data.data.heldOrder
+        // Note: held orders lose category info - we'll need to lookup items
+        // For now, assign 'general' as fallback
         setCart(heldOrder.items.map((item: any) => ({
           itemId: item.itemId,
           name: item.name,
           price: item.price,
           qty: item.qty,
           lineTotal: item.lineTotal,
+          category: 'general'
         })))
         if (heldOrder.customerId) {
           // Fetch customer details
@@ -303,17 +359,12 @@ export default function RegisterPage() {
     }
   }
 
-  const handleRecallOrder = async (orderId: string) => {
-    // Legacy handler - keeping for compatibility
-    await handleRecallOrderByTicket(parseInt(orderId))
-  }
-
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' })
     router.push('/login')
   }
 
-  if (loading) {
+  if (loading || !settings) {
     return (
       <div className="h-screen flex items-center justify-center bg-surface-secondary">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
@@ -347,7 +398,8 @@ export default function RegisterPage() {
           <ItemGrid
             items={filteredItems}
             onAddToCart={addToCart}
-            currency={currency}
+            currency={settings.currency}
+            taxMode={settings.taxMode}
           />
         </div>
 
@@ -362,10 +414,12 @@ export default function RegisterPage() {
           onAddCustomer={() => setShowCustomerSearch(true)}
           customer={customer}
           clerkName={clerk.name}
-          subtotal={subtotal}
-          tax={tax}
-          total={total}
-          currency={currency}
+          subtotal={cartTax.subtotal}
+          tax={cartTax.tax}
+          total={cartTax.total}
+          currency={settings.currency}
+          taxMode={settings.taxMode}
+          taxBreakdown={cartTax.breakdown}
           isCollapsed={cartCollapsed}
           onToggleCollapse={() => setCartCollapsed(!cartCollapsed)}
         />
@@ -381,9 +435,10 @@ export default function RegisterPage() {
             clearCart()
             setShowPayment(false)
           }}
-          total={total}
+          total={cartTax.total}
           amountPaid={amountPaid}
-          currency={currency}
+          currency={settings.currency}
+          taxMode={settings.taxMode}
         />
       )}
 

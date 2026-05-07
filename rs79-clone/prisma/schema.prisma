@@ -126,6 +126,8 @@ model Item {
   name          String
   price         Float
   category      String
+  taxCategory   String? @default("standard") // standard, reduced, zero, exempt
+  taxRate       Float?  // Override rate if needed
   stockQty      Int     @default(0)
   lowStock      Int     @default(10)
   description   String?
@@ -197,4 +199,17 @@ model SessionLog {
   @@index([action])
   @@index([createdAt])
   @@index([ipAddress])
+}
+
+// Store Settings for tax, currency, receipt config
+model StoreSettings {
+  id            String   @id @default(cuid())
+  taxMode       String   @default("exclusive") // exclusive, inclusive
+  taxConfig     String?  // JSON: rates array
+  currency      String   @default("USD")
+  receiptHeader String?
+  receiptFooter String?
+  updatedAt     DateTime @updatedAt
+
+  @@index([taxMode])
 }

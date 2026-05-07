@@ -19,6 +19,8 @@ interface CartPanelProps {
   tax: number
   total: number
   currency: string
+  taxMode?: 'exclusive' | 'inclusive'
+  taxBreakdown?: { rate: number; name: string; amount: number }[]
   isCollapsed?: boolean
   onToggleCollapse?: () => void
 }
@@ -37,6 +39,8 @@ export function CartPanel({
   tax,
   total,
   currency,
+  taxMode = 'exclusive',
+  taxBreakdown,
   isCollapsed = false,
   onToggleCollapse,
 }: CartPanelProps) {
@@ -174,18 +178,39 @@ export function CartPanel({
       {/* Totals */}
       <div className="p-4 border-t border-surface-tertiary bg-surface-secondary">
         <div className="space-y-2 mb-4">
+          {/* Subtotal - show net amount */}
           <div className="flex justify-between text-text-secondary">
-            <span>Subtotal</span>
+            <span>{taxMode === 'inclusive' ? 'Subtotal (excl. tax)' : 'Subtotal'}</span>
             <span>{currency} {subtotal.toFixed(2)}</span>
           </div>
-          <div className="flex justify-between text-text-secondary">
-            <span>Tax (10%)</span>
-            <span>{currency} {tax.toFixed(2)}</span>
-          </div>
+          
+          {/* Tax breakdown */}
+          {taxBreakdown && taxBreakdown.length > 0 ? (
+            taxBreakdown.map((b, i) => (
+              <div key={i} className="flex justify-between text-text-secondary">
+                <span>Tax ({b.name})</span>
+                <span>{currency} {b.amount.toFixed(2)}</span>
+              </div>
+            ))
+          ) : tax > 0 ? (
+            <div className="flex justify-between text-text-secondary">
+              <span>Tax</span>
+              <span>{currency} {tax.toFixed(2)}</span>
+            </div>
+          ) : null}
+          
+          {/* Total */}
           <div className="flex justify-between text-xl font-bold text-text-primary pt-2 border-t border-surface-tertiary">
-            <span>Total</span>
+            <span>{taxMode === 'inclusive' ? 'Total (incl. tax)' : 'Total'}</span>
             <span>{currency} {total.toFixed(2)}</span>
           </div>
+          
+          {/* Tax mode indicator */}
+          {taxMode === 'inclusive' && (
+            <p className="text-xs text-text-muted text-right">
+              Prices include tax
+            </p>
+          )}
         </div>
 
         <div className="grid grid-cols-2 gap-3">

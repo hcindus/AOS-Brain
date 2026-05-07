@@ -121,6 +121,8 @@ export interface Item {
   name: string
   price: number
   category: string
+  taxCategory?: string // standard, reduced, zero, exempt
+  taxRate?: number     // Override rate
   description?: string
   barcode?: string
   stockQty: number
