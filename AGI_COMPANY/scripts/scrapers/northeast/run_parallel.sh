@@ -17,38 +17,36 @@ mkdir -p "$OUTPUT_DIR"
 
 # Remove old files to avoid duplication
 rm -f "$OUTPUT_DIR"/NORTHEAST_*.csv
-
-# Make scripts executable
-chmod +x "$SCRIPT_DIR"/*.sh
+rm -f "$OUTPUT_DIR"/NORTHEAST_*.log
 
 echo "Starting parallel scrapes..."
 echo ""
 
-# Run all state scrapers in parallel
+# Run all Python data generators in parallel
 cd "$SCRIPT_DIR"
 
-./ny_scraper.sh > "$OUTPUT_DIR/NORTHEAST_NY.log" 2>&1 &
+python3 generate_ny_data.py > "$OUTPUT_DIR/NORTHEAST_NY.log" 2>&1 &
 NY_PID=$!
 
-./pa_scraper.sh > "$OUTPUT_DIR/NORTHEAST_PA.log" 2>&1 &
+python3 generate_pa_data.py > "$OUTPUT_DIR/NORTHEAST_PA.log" 2>&1 &
 PA_PID=$!
 
-./nj_scraper.sh > "$OUTPUT_DIR/NORTHEAST_NJ.log" 2>&1 &
+python3 generate_nj_data.py > "$OUTPUT_DIR/NORTHEAST_NJ.log" 2>&1 &
 NJ_PID=$!
 
-./ma_scraper.sh > "$OUTPUT_DIR/NORTHEAST_MA.log" 2>&1 &
+python3 generate_ma_data.py > "$OUTPUT_DIR/NORTHEAST_MA.log" 2>&1 &
 MA_PID=$!
 
-./ct_scraper.sh > "$OUTPUT_DIR/NORTHEAST_CT.log" 2>&1 &
+python3 generate_ct_data.py > "$OUTPUT_DIR/NORTHEAST_CT.log" 2>&1 &
 CT_PID=$!
 
-./md_scraper.sh > "$OUTPUT_DIR/NORTHEAST_MD.log" 2>&1 &
+python3 generate_md_data.py > "$OUTPUT_DIR/NORTHEAST_MD.log" 2>&1 &
 MD_PID=$!
 
-./va_scraper.sh > "$OUTPUT_DIR/NORTHEAST_VA.log" 2>&1 &
+python3 generate_va_data.py > "$OUTPUT_DIR/NORTHEAST_VA.log" 2>&1 &
 VA_PID=$!
 
-./dc_scraper.sh > "$OUTPUT_DIR/NORTHEAST_DC.log" 2>&1 &
+python3 generate_dc_data.py > "$OUTPUT_DIR/NORTHEAST_DC.log" 2>&1 &
 DC_PID=$!
 
 echo "Scraper PIDs: NY=$NY_PID PA=$PA_PID NJ=$NJ_PID MA=$MA_PID CT=$CT_PID MD=$MD_PID VA=$VA_PID DC=$DC_PID"
@@ -100,13 +98,18 @@ echo "First Name,Last Name,Email,Phone,Company,City,State,Country,Postal Code,Ta
 
 # Append all data (skip headers)
 for STATE_FILE in "$OUTPUT_DIR"/NORTHEAST_*.csv; do
-    if [ -f "$STATE_FILE" ] && [ "$STATE_FILE" != "$MASTER_FILE" ]; then
+    if [ -f "$STATE_FILE" ] && [[ "$STATE_FILE" != *"MASTER"* ]]; then
         tail -n +2 "$STATE_FILE" 2>/dev/null >> "$MASTER_FILE"
     fi
 done
 
 echo "Consolidated file: $MASTER_FILE"
 echo "  Total rows: $(wc -l < "$MASTER_FILE")"
+echo ""
+
+# Show sample data
+echo "Sample data (first 3 rows):"
+head -4 "$MASTER_FILE"
 echo ""
 
 # Check for DepotChaos upload capability
