@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-inter: 'Inter', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  @apply bg-surface-secondary text-text-primary antialiased;
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-text-muted/30 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-text-muted/50;
+}
+
+/* Pin pad button styles */
+.pin-btn {
+  @apply relative flex items-center justify-center
+         bg-white hover:bg-surface-secondary
+         border border-surface-tertiary
+         rounded-xl shadow-sm
+         transition-all duration-150
+         active:scale-95 active:shadow-inner;
+}
+
+.pin-btn:active {
+  @apply bg-surface-tertiary;
+}
+
+/* Grid item styles */
+.item-card {
+  @apply relative flex flex-col items-center justify-center
+         bg-white border border-surface-tertiary
+         rounded-xl p-3
+         transition-all duration-150
+         hover:shadow-soft hover:border-primary/30
+         active:scale-[0.98];
+}
+
+/* Category button */
+.category-btn {
+  @apply flex items-center gap-3 px-4 py-3
+         rounded-lg font-medium text-sm
+         transition-all duration-150
+         text-text-secondary
+         hover:bg-white hover:text-text-primary;
+}
+
+.category-btn.active {
+  @apply bg-white text-primary shadow-sm;
+}
+
+/* Action button primary */
+.action-btn {
+  @apply flex items-center justify-center gap-2
+         px-4 py-3 rounded-xl font-semibold
+         transition-all duration-150
+         active:scale-95;
+}
+
+.action-btn-primary {
+  @apply action-btn
+         bg-primary text-white
+         hover:bg-primary-dark
+         shadow-md shadow-primary/20;
+}
+
+.action-btn-secondary {
+  @apply action-btn
+         bg-surface-tertiary text-text-primary
+         hover:bg-surface-tertiary/80;
+}
+
+.action-btn-danger {
+  @apply action-btn
+         bg-accent-danger text-white
+         hover:bg-red-600;
+}
+
+.action-btn-success {
+  @apply action-btn
+         bg-accent-success text-white
+         hover:bg-green-600;
+}
+
+/* Cart item styles */
+.cart-item {
+  @apply flex items-center gap-3 p-3
+         bg-white rounded-lg
+         border border-surface-tertiary
+         transition-all duration-150;
+}
+
+.cart-item:hover {
+  @apply border-primary/30;
+}
+
+/* Number input */
+.number-input {
+  @apply w-16 text-center font-semibold
+         bg-surface-secondary rounded-md
+         border border-surface-tertiary
+         focus:outline-none focus:ring-2 focus:ring-primary/30;
+}
+
+/* Keypad grid */
+.keypad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+/* Prevent text selection on interactive elements */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Full height minus header */
+.content-height {
+  height: calc(100vh - 4rem);
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

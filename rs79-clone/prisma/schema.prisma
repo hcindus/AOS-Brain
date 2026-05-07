@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Clerk {
+  id        String   @id @default(cuid())
+  name      String
+  role      String   // Admin, Manager, Clerk
+  pin       String   // Hashed PIN (4 digits)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  
+  orders Order[]
+}
+
+model Customer {
+  id             String   @id @default(cuid())
+  name           String
+  phone          String?
+  loyaltyCardNo  String   @unique
+  loyaltyPoints  Int      @default(0)
+  createdAt      DateTime @default(now())
+  
+  orders Order[]
+}
+
+model Order {
+  id            String   @id @default(cuid())
+  transactionNo Int      @unique @default(autoincrement())
+  clerkId       String
+  customerId    String?
+  
+  subtotal      Float
+  tax           Float
+  total         Float
+  currency      String   @default("USD")
+  currencyRate  Float    @default(1)
+  
+  paymentType   String   // cash, card, crypto, storecredit, giftcard, check, split
+  tendered      Float?
+  change        Float?
+  
+  status        String   @default("completed") // completed, pending, cancelled
+  kdsStatus     String   @default("new") // new, done
+  holdName      String?
+  notes         String?
+  
+  amountPaid    Float
+  balanceDue    Float
+  
+  loyaltyEarned Int      @default(0)
+  loyaltyRedeemed Int    @default(0)
+  discountUsd   Float    @default(0)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  clerk     Clerk      @relation(fields: [clerkId], references: [id])
+  customer  Customer?  @relation(fields: [customerId], references: [id])
+  items     OrderItem[]
+  payments  Payment[]
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  itemId    String
+  name      String
+  price     Float
+  qty       Float   @default(1)
+  lineTotal Float
+  
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Payment {
+  id            String  @id @default(cuid())
+  orderId       String
+  type          String  // cash, card, crypto, storecredit, giftcard, check
+  amountUsd     Float
+  amountNative  Float
+  currency      String  @default("USD")
+  currencyRate  Float   @default(1)
+  reference     String?
+  meta          String? // JSON string
+  createdAt     DateTime @default(now())
+  
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Item {
+  id            String  @id @default(cuid())
+  sku           String  @unique
+  name          String
+  price         Float
+  category      String
+  active        Boolean @default(true)
+  createdAt     DateTime @default(now())
+}

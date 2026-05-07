@@ -1,0 +1,51 @@
+# RS-79 POS System - SystemD Service Unit
+# Install: sudo cp rs79.service /etc/systemd/system/
+# Enable: sudo systemctl enable rs79
+# Start: sudo systemctl start rs79
+
+[Unit]
+Description=RS-79 POS System
+Documentation=https://github.com/agi-company/rs79-clone
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User=rs79
+Group=rs79
+WorkingDirectory=/opt/rs79
+
+# Load environment from file
+EnvironmentFile=/opt/rs79/.env
+
+# Node.js application
+ExecStart=/usr/bin/node server.js
+ExecReload=/bin/kill -HUP $MAINPID
+
+# Restart configuration
+Restart=on-failure
+RestartSec=5
+StartLimitInterval=60s
+StartLimitBurst=3
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/rs79/logs /opt/rs79/prisma /opt/rs79/public/uploads
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+
+# Resource limits
+LimitNOFILE=65535
+MemoryMax=1G
+CPUQuota=200%
+
+# Logging
+StandardOutput=append:/var/log/rs79/app.log
+StandardError=append:/var/log/rs79/error.log
+SyslogIdentifier=rs79
+
+[Install]
+WantedBy=multi-user.target

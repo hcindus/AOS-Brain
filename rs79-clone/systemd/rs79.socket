@@ -1,0 +1,16 @@
+# RS-79 POS System - SystemD Socket Activation (optional)
+# Allows systemd to handle socket binding before the app starts
+# Install alongside rs79.service for socket activation
+
+[Unit]
+Description=RS-79 POS System Socket
+
+[Socket]
+ListenStream=3000
+ListenStream=/run/rs79/rs79.sock
+SocketMode=0660
+SocketUser=rs79
+SocketGroup=www-data
+
+[Install]
+WantedBy=sockets.target
