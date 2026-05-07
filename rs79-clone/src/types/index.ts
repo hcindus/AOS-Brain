@@ -5,10 +5,15 @@ export * from './clerk'
 export type PaymentType = 'cash' | 'card' | 'crypto' | 'storecredit' | 'giftcard' | 'check'
 
 export interface PaymentInput {
-  type: PaymentType
+  type: PaymentType | 'split'
   amount: number
   reference?: string
   giftCardCode?: string
+  currency?: string
+  currencyRate?: number
+  checkNumber?: string
+  walletAddress?: string
+  storeCreditAmount?: number
 }
 
 export interface Payment {
@@ -67,8 +72,15 @@ export interface Order {
   updatedAt: Date
   items?: OrderItem[]
   payments?: Payment[]
-  clerk?: Clerk
+  clerk?: ClerkInfo
   customer?: Customer
+}
+
+// Clerk Info (simplified reference)
+export interface ClerkInfo {
+  id: string
+  name: string
+  role: string
 }
 
 // Customer Types

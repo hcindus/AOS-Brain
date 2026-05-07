@@ -29,7 +29,7 @@ interface CategorySidebarProps {
   onToggleCollapse?: () => void
 }
 
-const iconMap: Record<string, React.ComponentType<{ size?: number }>> = {
+const iconMap: Record<string, React.ComponentType<{ size?: number | string }>> = {
   'all': LayoutGrid,
   'food': UtensilsCrossed,
   'drinks': Coffee,
@@ -41,7 +41,7 @@ const iconMap: Record<string, React.ComponentType<{ size?: number }>> = {
   'general': Package,
 }
 
-function getIcon(iconName?: string): React.ComponentType<{ size?: number }> {
+function getIcon(iconName?: string): React.ComponentType<{ size?: number | string }> {
   return iconName && iconMap[iconName] ? iconMap[iconName] : Grid3X3
 }
 

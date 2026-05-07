@@ -112,7 +112,7 @@ export function CardPayment({ balanceDue, currency, onSubmit, onCancel, onTermin
           {terminalStatus === 'processing' && (
             <>
               <div className="w-16 h-16 mx-auto mb-4 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
-              <p className="text-lg font-medium text-text-primary">Processing card payment...\u003c/p>
+              <p className="text-lg font-medium text-text-primary">Processing card payment...</p>
               <p className="text-sm text-text-secondary mt-2">Please follow prompts on terminal</p>
             </>
           )}

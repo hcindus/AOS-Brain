@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import type { Item, CartItem, Customer, Clerk } from '@/types'
+import type { Item, CartItem, Customer, Clerk, PaymentInput } from '@/types'
 import { POSHeader } from '@/components/pos/POSHeader'
 import { CategorySidebar } from '@/components/pos/CategorySidebar'
 import { ItemGrid } from '@/components/pos/ItemGrid'
@@ -175,16 +175,12 @@ export default function RegisterPage() {
     setShowPayment(true)
   }
 
-  const handlePayment = async (payment: {
-    type: string
-    amountUsd: number
-    currency: string
-    reference?: string
-  }) => {
+  const handlePayment = async (payment: PaymentInput) => {
     if (!clerk) return
 
     try {
       let orderId = currentOrderId
+      const paymentAmountUsd = payment.amount
 
       // Create order if doesn't exist
       if (!orderId) {
@@ -215,8 +211,8 @@ export default function RegisterPage() {
         body: JSON.stringify({
           clerkId: clerk.id,
           type: payment.type,
-          amountUsd: payment.amountUsd,
-          currency: payment.currency,
+          amountUsd: paymentAmountUsd,
+          currency: payment.currency || 'USD',
           reference: payment.reference,
         }),
       })
@@ -224,10 +220,10 @@ export default function RegisterPage() {
       const paymentData = await paymentRes.json()
       if (!paymentData.success) throw new Error(paymentData.error?.message)
 
-      setAmountPaid(prev => prev + payment.amountUsd)
+      setAmountPaid(prev => prev + paymentAmountUsd)
 
       // Check if fully paid
-      if (amountPaid + payment.amountUsd >= total) {
+      if (amountPaid + paymentAmountUsd >= total) {
         // Complete order
         await fetch(`/api/orders/${orderId}`, {
           method: 'PATCH',
@@ -245,7 +241,7 @@ export default function RegisterPage() {
     }
   }
 
-  const handleHoldOrder = async (holdName: string) => {
+  const handleHoldOrder = async (data: { holdName: string; notes?: string }) => {
     if (!clerk || cart.length === 0) return
 
     try {
@@ -259,12 +255,13 @@ export default function RegisterPage() {
           subtotal,
           tax,
           total,
-          holdName,
+          holdName: data.holdName,
+          notes: data.notes,
         }),
       })
       
-      const data = await res.json()
-      if (data.success) {
+      const resData = await res.json()
+      if (resData.success) {
         clearCart()
         setShowHoldModal(false)
       }
@@ -273,29 +270,42 @@ export default function RegisterPage() {
     }
   }
 
-  const handleRecallOrder = async (orderId: string) => {
+  const handleRecallOrderByTicket = async (ticketNumber: number) => {
     try {
-      const res = await fetch(`/api/orders/recall/${orderId}`)
+      const res = await fetch(`/api/held-orders`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'recall', ticketNumber }),
+      })
       const data = await res.json()
       
-      if (data.success && data.data.order) {
-        const order = data.data.order
-        setCurrentOrderId(order.id)
-        setCart(order.items.map((item: any) => ({
+      if (data.success && data.data.heldOrder) {
+        const heldOrder = data.data.heldOrder
+        setCart(heldOrder.items.map((item: any) => ({
           itemId: item.itemId,
           name: item.name,
           price: item.price,
           qty: item.qty,
           lineTotal: item.lineTotal,
         })))
-        if (order.customer) {
-          setCustomer(order.customer)
+        if (heldOrder.customerId) {
+          // Fetch customer details
+          const custRes = await fetch(`/api/customers/${heldOrder.customerId}`)
+          const custData = await custRes.json()
+          if (custData.success) {
+            setCustomer(custData.data.customer)
+          }
         }
         setShowRecallPanel(false)
       }
     } catch (error) {
       console.error('Recall order error:', error)
     }
+  }
+
+  const handleRecallOrder = async (orderId: string) => {
+    // Legacy handler - keeping for compatibility
+    await handleRecallOrderByTicket(parseInt(orderId))
   }
 
   const handleLogout = async () => {
@@ -386,18 +396,23 @@ export default function RegisterPage() {
 
       {showHoldModal && (
         <HoldOrderModal
+          isOpen={showHoldModal}
           onHold={handleHoldOrder}
           onClose={() => setShowHoldModal(false)}
-          itemCount={cart.reduce((sum, ci) => sum + ci.qty, 0)}
-          total={total}
-          currency={currency}
+          defaultName={`Order ${new Date().toLocaleTimeString()}`}
         />
       )}
 
       {showRecallPanel && (
         <RecallOrderPanel
-          orders={[]}
-          onRecall={handleRecallOrder}
+          isOpen={showRecallPanel}
+          onRecall={async (ticketNumber: number) => {
+            await handleRecallOrderByTicket(ticketNumber)
+            return { id: `HOLD-${ticketNumber}`, holdName: '', items: [], subtotal: 0, total: 0, clerkName: '', createdAt: '', expiresAt: '', clerkId: '' }
+          }}
+          onCancel={async () => {}}
+          heldOrders={[]}
+          onRefresh={() => {}}
           onClose={() => setShowRecallPanel(false)}
         />
       )}

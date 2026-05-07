@@ -3,12 +3,12 @@
 import { useState, useMemo, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import { X, DollarSign, CreditCard, Bitcoin, Gift, Building2, Wallet, Check, ChevronRight, ChevronLeft } from 'lucide-react'
-import type { PaymentType, Payment } from '@/types'
+import type { PaymentType, PaymentInput } from '@/types'
 
 interface PaymentModalProps {
   isOpen: boolean
   onClose: () => void
-  onSubmit: (payment: Payment) => void
+  onSubmit: (payment: PaymentInput) => void
   onCompleteOrder: () => void
   total: number
   amountPaid: number
@@ -59,12 +59,10 @@ export function PaymentModal({
   const handleSubmit = () => {
     if (numericAmount <= 0) return
 
-    const payment: Payment = {
+    const payment: PaymentInput = {
       type: selectedMethod,
-      amountUsd: amountInUsd,
-      amountNative: numericAmount,
+      amount: numericAmount,
       currency: selectedCurrency,
-      currencyRate,
       reference: reference || undefined,
     }
 

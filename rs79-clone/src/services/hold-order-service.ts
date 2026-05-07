@@ -408,7 +408,7 @@ export async function cleanupExpiredHolds(): Promise<number> {
   const now = new Date()
   let cleaned = 0
 
-  for (const [id, heldOrder] of heldOrders.entries()) {
+  for (const [id, heldOrder] of Array.from(heldOrders.entries())) {
     if (heldOrder.expiresAt < now) {
       heldOrders.delete(id)
       
