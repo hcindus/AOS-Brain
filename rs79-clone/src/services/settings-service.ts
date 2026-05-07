@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/db'
 import { TaxConfig, parseTaxConfig, DEFAULT_TAX_CONFIG } from '@/lib/tax'
+import { Prisma } from '@prisma/client'
 
 export interface StoreSettings {
   taxMode: 'exclusive' | 'inclusive'
@@ -20,20 +21,19 @@ export async function getStoreSettings(): Promise<StoreSettings> {
     const settings = await prisma.storeSettings.findFirst()
     
     if (!settings) {
-      // Create default settings
-      await prisma.storeSettings.create({
-        data: {
-          taxMode: DEFAULT_SETTINGS.taxMode,
-          taxConfig: JSON.stringify(DEFAULT_SETTINGS.taxConfig),
-          currency: DEFAULT_SETTINGS.currency,
-        } as any
-      })
+      // Create default settings without receipt fields initially
+      const createData: Prisma.StoreSettingsCreateInput = {
+        taxMode: DEFAULT_SETTINGS.taxMode,
+        taxConfig: JSON.stringify(DEFAULT_SETTINGS.taxConfig),
+        currency: DEFAULT_SETTINGS.currency,
+      }
+      await prisma.storeSettings.create({ data: createData })
       return DEFAULT_SETTINGS
     }
     
     return {
       taxMode: settings.taxMode as 'exclusive' | 'inclusive',
-      taxConfig: parseTaxConfig(settings.taxConfig),
+      taxConfig: parseTaxConfig(settings.taxConfig ?? undefined),
       currency: settings.currency,
       receiptHeader: settings.receiptHeader ?? undefined,
       receiptFooter: settings.receiptFooter ?? undefined,
@@ -50,23 +50,29 @@ export async function updateStoreSettings(
   try {
     const existing = await prisma.storeSettings.findFirst()
     
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const updatePayload: any = { updatedAt: new Date() }
-    
-    if (settings.taxMode) updatePayload.taxMode = settings.taxMode
-    if (settings.taxConfig) updatePayload.taxConfig = JSON.stringify(settings.taxConfig)
-    if (settings.currency) updatePayload.currency = settings.currency
-    if (settings.receiptHeader !== undefined) updatePayload.receiptHeader = settings.receiptHeader || undefined
-    if (settings.receiptFooter !== undefined) updatePayload.receiptFooter = settings.receiptFooter || undefined
-    
     if (existing) {
+      // Update existing - build partial update
+      const updateData: Prisma.StoreSettingsUpdateInput = {
+        updatedAt: new Date(),
+      }
+      
+      if (settings.taxMode) updateData.taxMode = settings.taxMode
+      if (settings.taxConfig) updateData.taxConfig = JSON.stringify(settings.taxConfig)
+      if (settings.currency) updateData.currency = settings.currency
+      if (settings.receiptHeader !== undefined) {
+        updateData.receiptHeader = settings.receiptHeader || undefined
+      }
+      if (settings.receiptFooter !== undefined) {
+        updateData.receiptFooter = settings.receiptFooter || undefined
+      }
+      
       await prisma.storeSettings.update({
         where: { id: existing.id },
-        data: updatePayload,
+        data: updateData,
       })
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const createPayload: any = {
+      // Create new
+      const createData: Prisma.StoreSettingsCreateInput = {
         taxMode: settings.taxMode ?? DEFAULT_SETTINGS.taxMode,
         taxConfig: settings.taxConfig 
           ? JSON.stringify(settings.taxConfig) 
@@ -75,13 +81,13 @@ export async function updateStoreSettings(
       }
       
       if (settings.receiptHeader !== undefined) {
-        createPayload.receiptHeader = settings.receiptHeader || undefined
+        createData.receiptHeader = settings.receiptHeader || undefined
       }
       if (settings.receiptFooter !== undefined) {
-        createPayload.receiptFooter = settings.receiptFooter || undefined
+        createData.receiptFooter = settings.receiptFooter || undefined
       }
       
-      await prisma.storeSettings.create({ data: createPayload })
+      await prisma.storeSettings.create({ data: createData })
     }
     
     return { success: true }
