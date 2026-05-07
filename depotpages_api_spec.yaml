@@ -1,0 +1,1734 @@
+openapi: 3.0.3
+info:
+  title: DepotPages Business Directory API
+  description: |
+    Public business directory API with verification, competitive intelligence, 
+    and data freshness tracking. Supports business discovery, claimed listing management,
+    and integration hooks for in-house systems.
+  version: 1.0.0
+  contact:
+    name: DepotPages API Support
+    email: api@depotpages.com
+  license:
+    name: Commercial
+    url: https://depotpages.com/terms
+
+servers:
+  - url: https://api.depotpages.com/v1
+    description: Production server
+  - url: https://staging-api.depotpages.com/v1
+    description: Staging server
+  - url: http://localhost:8080/v1
+    description: Local development
+
+security:
+  - ApiKeyAuth: []
+  - BearerAuth: []
+
+paths:
+  # ============================================
+  # BUSINESS LISTINGS
+  # ============================================
+  
+  /businesses:
+    get:
+      summary: Search and list businesses
+      description: |
+        Search businesses with filters for region, category, rating, and verification status.
+        Supports pagination and sorting.
+      operationId: listBusinesses
+      tags:
+        - Businesses
+      parameters:
+        - name: q
+          in: query
+          description: Search query string
+          schema:
+            type: string
+            example: "coffee shop"
+        - name: region
+          in: query
+          description: Region ID or slug
+          schema:
+            type: string
+            example: "new-york-ny"
+        - name: category
+          in: query
+          description: Category ID or slug
+          schema:
+            type: string
+            example: "restaurants"
+        - name: lat
+          in: query
+          description: Latitude for geo search
+          schema:
+            type: number
+            format: float
+            example: 40.7128
+        - name: lng
+          in: query
+          description: Longitude for geo search
+          schema:
+            type: number
+            format: float
+            example: -74.0060
+        - name: radius
+          in: query
+          description: Search radius in miles (default 10)
+          schema:
+            type: integer
+            default: 10
+            example: 5
+        - name: min_rating
+          in: query
+          description: Minimum review rating (0-5)
+          schema:
+            type: number
+            minimum: 0
+            maximum: 5
+            example: 4.0
+        - name: verification_status
+          in: query
+          description: Filter by verification status
+          schema:
+            type: string
+            enum: [unclaimed, claimed_pending, claimed_verified, premium_verified]
+        - name: has_competitors
+          in: query
+          description: Filter businesses with competitive intelligence data
+          schema:
+            type: boolean
+        - name: freshness_score_min
+          in: query
+          description: Minimum data freshness score (0-100)
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 100
+            example: 80
+        - name: sort
+          in: query
+          description: Sort order
+          schema:
+            type: string
+            enum: [relevance, rating, name, distance, freshness, newest]
+            default: relevance
+        - name: page
+          in: query
+          description: Page number (1-based)
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          description: Items per page (max 100)
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+    
+    post:
+      summary: Create a new business listing
+      description: |
+        Create a new business listing. Requires authenticated access.
+        Initial status will be 'pending_review' unless user has elevated permissions.
+      operationId: createBusiness
+      tags:
+        - Businesses
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusinessCreateRequest'
+      responses:
+        '201':
+          description: Business created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessDetailResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /businesses/{id}:
+    get:
+      summary: Get business details
+      description: |
+        Retrieve detailed information about a specific business including
+        verification status, review scores, and data freshness metrics.
+      operationId: getBusiness
+      tags:
+        - Businesses
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Business ID or UUID
+          schema:
+            type: string
+        - name: include
+          in: query
+          description: Additional data to include
+          schema:
+            type: array
+            items:
+              type: string
+              enum: [competitors, categories, update_history, service_providers]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessDetailResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+    
+    patch:
+      summary: Update business listing
+      description: |
+        Update business information. Updates to claimed businesses may
+        require verification or approval depending on verification status.
+      operationId: updateBusiness
+      tags:
+        - Businesses
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusinessUpdateRequest'
+      responses:
+        '200':
+          description: Business updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessDetailResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    
+    delete:
+      summary: Delete business listing
+      description: |
+        Soft-delete a business listing. Requires admin permissions
+        or ownership of the listing.
+      operationId: deleteBusiness
+      tags:
+        - Businesses
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Business deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /businesses/{id}/competitors:
+    get:
+      summary: Get business competitors
+      description: |
+        Retrieve competitive intelligence data showing businesses
+        that compete with or service the same categories.
+      operationId: getBusinessCompetitors
+      tags:
+        - Competitive Intelligence
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Maximum number of competitors to return
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetitorListResponse'
+
+  /businesses/{id}/service-providers:
+    get:
+      summary: Get service providers
+      description: |
+        Retrieve businesses that provide services to this business
+        (suppliers, partners, vendors).
+      operationId: getServiceProviders
+      tags:
+        - Competitive Intelligence
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: relationship_type
+          in: query
+          description: Filter by relationship type
+          schema:
+            type: string
+            enum: [supplier, partner, customer, all]
+            default: all
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProviderListResponse'
+
+  # ============================================
+  # VERIFICATION & CLAIMING
+  # ============================================
+
+  /businesses/{id}/claim:
+    post:
+      summary: Initiate business claim
+      description: |
+        Start the process of claiming a business listing.
+        Sends verification to the business contact email/phone.
+      operationId: claimBusiness
+      tags:
+        - Verification
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClaimRequest'
+      responses:
+        '202':
+          description: Claim initiated, verification pending
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClaimResponse'
+
+  /businesses/{id}/verify:
+    post:
+      summary: Verify business claim
+      description: |
+        Complete verification of a business claim using
+        verification code sent via email or phone.
+      operationId: verifyBusinessClaim
+      tags:
+        - Verification
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyRequest'
+      responses:
+        '200':
+          description: Verification successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerificationSuccessResponse'
+
+  /businesses/{id}/verification-status:
+    get:
+      summary: Get verification status
+      description: |
+        Check the current verification status of a business
+        and view verification history.
+      operationId: getVerificationStatus
+      tags:
+        - Verification
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Verification status retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerificationStatusResponse'
+
+  # ============================================
+  # CATEGORIES
+  # ============================================
+
+  /categories:
+    get:
+      summary: List all categories
+      description: |
+        Retrieve the complete category taxonomy. Supports filtering
+        by parent category to build hierarchical navigation.
+      operationId: listCategories
+      tags:
+        - Categories
+      parameters:
+        - name: parent_id
+          in: query
+          description: Filter by parent category ID
+          schema:
+            type: integer
+        - name: level
+          in: query
+          description: Filter by category level (1=primary, 2=secondary, etc.)
+          schema:
+            type: integer
+        - name: include_inactive
+          in: query
+          description: Include inactive categories
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryListResponse'
+
+  /categories/{id}:
+    get:
+      summary: Get category details
+      description: |
+        Retrieve detailed information about a specific category
+        including business counts and subcategories.
+      operationId: getCategory
+      tags:
+        - Categories
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Category ID or slug
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryDetailResponse'
+
+  /categories/{id}/businesses:
+    get:
+      summary: Get businesses in category
+      description: |
+        List all businesses categorized under this category.
+        Supports all standard business filtering options.
+      operationId: getCategoryBusinesses
+      tags:
+        - Categories
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: include_subcategories
+          in: query
+          description: Include businesses from subcategories
+          schema:
+            type: boolean
+            default: true
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessListResponse'
+
+  # ============================================
+  # DATA FRESHNESS & UPDATES
+  # ============================================
+
+  /businesses/{id}/freshness:
+    get:
+      summary: Get data freshness metrics
+      description: |
+        Retrieve detailed freshness metrics including staleness
+        indicators and scheduled update information.
+      operationId: getDataFreshness
+      tags:
+        - Data Freshness
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataFreshnessResponse'
+
+  /businesses/{id}/update-history:
+    get:
+      summary: Get update history
+      description: |
+        Retrieve complete audit log of all updates to this
+        business listing with timestamps and sources.
+      operationId: getUpdateHistory
+      tags:
+        - Data Freshness
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: from_date
+          in: query
+          description: Filter updates from this date
+          schema:
+            type: string
+            format: date
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateHistoryResponse'
+
+  /businesses/stale-data:
+    get:
+      summary: List stale data
+      description: |
+        Admin endpoint to retrieve businesses with stale data
+        requiring updates. Supports filtering by staleness level.
+      operationId: listStaleData
+      tags:
+        - Data Freshness
+        - Admin
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: freshness_threshold
+          in: query
+          description: Maximum freshness score to include
+          schema:
+            type: integer
+            default: 50
+        - name: update_status
+          in: query
+          description: Filter by update status
+          schema:
+            type: string
+            enum: [overdue, due_soon, current]
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaleDataResponse'
+
+  # ============================================
+  # INTEGRATION HOOKS (IN-HOUSE API)
+  # ============================================
+
+  /integrations/categories/export:
+    get:
+      summary: Export categories for integration
+      description: |
+        Retrieve complete category taxonomy formatted for
+        import into in-house systems. Supports various export formats.
+      operationId: exportCategories
+      tags:
+        - Integrations
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: format
+          in: query
+          description: Export format
+          schema:
+            type: string
+            enum: [json, csv, xml]
+            default: json
+        - name: include_metadata
+          in: query
+          description: Include NAICS, SIC codes and metadata
+          schema:
+            type: boolean
+            default: true
+        - name: last_synced
+          in: query
+          description: Only return categories updated since this timestamp
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryExportResponse'
+            text/csv:
+              schema:
+                type: string
+
+  /integrations/businesses/export:
+    get:
+      summary: Export business data
+      description: |
+        Export business data for integration with in-house systems.
+        Supports incremental sync and field selection.
+      operationId: exportBusinesses
+      tags:
+        - Integrations
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: format
+          in: query
+          description: Export format
+          schema:
+            type: string
+            enum: [json, csv, ndjson]
+            default: json
+        - name: fields
+          in: query
+          description: Comma-separated list of fields to include
+          schema:
+            type: string
+            example: "id,name,phone,address,categories"
+        - name: category
+          in: query
+          description: Filter by category ID
+          schema:
+            type: string
+        - name: region
+          in: query
+          description: Filter by region ID
+          schema:
+            type: string
+        - name: updated_since
+          in: query
+          description: Only businesses updated since this timestamp
+          schema:
+            type: string
+            format: date-time
+        - name: verification_status
+          in: query
+          description: Filter by verification status
+          schema:
+            type: string
+            enum: [unclaimed, claimed_pending, claimed_verified, premium_verified]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessExportResponse'
+            text/csv:
+              schema:
+                type: string
+
+  /integrations/webhooks:
+    post:
+      summary: Register webhook
+      description: |
+        Register a webhook endpoint to receive real-time
+        updates when business data changes.
+      operationId: registerWebhook
+      tags:
+        - Integrations
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookRegistrationRequest'
+      responses:
+        '201':
+          description: Webhook registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookRegistrationResponse'
+
+  /integrations/api-key:
+    post:
+      summary: Generate API key
+      description: |
+        Generate a new API key for integration access.
+        Requires authenticated account with appropriate permissions.
+      operationId: generateApiKey
+      tags:
+        - Integrations
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiKeyRequest'
+      responses:
+        '201':
+          description: API key generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeyResponse'
+
+  # ============================================
+  # REGIONS
+  # ============================================
+
+  /regions:
+    get:
+      summary: List regions
+      description: |
+        Retrieve geographic regions for filtering businesses.
+        Supports hierarchical navigation.
+      operationId: listRegions
+      tags:
+        - Regions
+      parameters:
+        - name: type
+          in: query
+          description: Filter by region type
+          schema:
+            type: string
+            enum: [country, state, province, county, city, metro, zip]
+        - name: parent_id
+          in: query
+          description: Filter by parent region
+          schema:
+            type: integer
+        - name: query
+          in: query
+          description: Search by region name
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionListResponse'
+
+  /regions/{id}/businesses:
+    get:
+      summary: Get businesses in region
+      description: |
+        List businesses located within a specific region.
+      operationId: getRegionBusinesses
+      tags:
+        - Regions
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: category
+          in: query
+          description: Filter by category
+          schema:
+            type: string
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessListResponse'
+
+  # ============================================
+  # SEARCH
+  # ============================================
+
+  /search:
+    get:
+      summary: Universal search
+      description: |
+        Search across businesses, categories, and regions
+        with relevance scoring.
+      operationId: universalSearch
+      tags:
+        - Search
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: Search query
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: Entity types to search
+          schema:
+            type: array
+            items:
+              type: string
+              enum: [business, category, region]
+            default: [business, category, region]
+        - name: region
+          in: query
+          description: Limit search to region
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+
+  /search/autocomplete:
+    get:
+      summary: Autocomplete suggestions
+      description: |
+        Get autocomplete suggestions for search queries
+        based on business names, categories, and regions.
+      operationId: autocompleteSearch
+      tags:
+        - Search
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: Partial search query
+          schema:
+            type: string
+            minLength: 2
+        - name: limit
+          in: query
+          description: Maximum suggestions
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutocompleteResponse'
+
+components:
+  # ============================================
+  # SECURITY SCHEMES
+  # ============================================
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key for integration access
+    
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for user authentication
+
+  # ============================================
+  # PARAMETERS
+  # ============================================
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number (1-based)
+      schema:
+        type: integer
+        default: 1
+    
+    LimitParam:
+      name: limit
+      in: query
+      description: Items per page
+      schema:
+        type: integer
+        default: 20
+        maximum: 100
+
+  # ============================================
+  # SCHEMAS
+  # ============================================
+  schemas:
+    # ---------------- Business Schemas ----------------
+    Business:
+      type: object
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        legal_name:
+          type: string
+        slug:
+          type: string
+        description:
+          type: string
+        tagline:
+          type: string
+        status:
+          type: string
+          enum: [active, inactive, suspended, closed, pending_review]
+        verification_status:
+          type: string
+          enum: [unclaimed, claimed_pending, claimed_verified, premium_verified]
+        claimed_at:
+          type: string
+          format: date-time
+        phone_primary:
+          type: string
+        phone_secondary:
+          type: string
+        email:
+          type: string
+        website:
+          type: string
+        address:
+          type: object
+          properties:
+            street:
+              type: string
+            suite:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            zip:
+              type: string
+            country:
+              type: string
+        coordinates:
+          type: object
+          properties:
+            lat:
+              type: number
+            lng:
+              type: number
+        year_founded:
+          type: integer
+        employee_count:
+          type: string
+        business_type:
+          type: string
+        external_ids:
+          type: object
+          properties:
+            duns:
+              type: string
+            naics:
+              type: string
+            sic:
+              type: string
+            google_place_id:
+              type: string
+        reviews:
+          type: object
+          properties:
+            total_count:
+              type: integer
+            google_count:
+              type: integer
+            yelp_count:
+              type: integer
+            weighted_score:
+              type: number
+            google_score:
+              type: number
+            yelp_score:
+              type: number
+            last_synced:
+              type: string
+              format: date-time
+        data_freshness:
+          type: object
+          properties:
+            score:
+              type: integer
+            last_verified:
+              type: string
+              format: date-time
+            next_scheduled_update:
+              type: string
+              format: date-time
+            update_frequency:
+              type: string
+            is_stale:
+              type: boolean
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategorySummary'
+        hours:
+          type: object
+        photos:
+          type: array
+          items:
+            type: object
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    BusinessCreateRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          maxLength: 500
+        legal_name:
+          type: string
+        description:
+          type: string
+        phone_primary:
+          type: string
+        email:
+          type: string
+        website:
+          type: string
+        address:
+          type: object
+          properties:
+            street:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            zip:
+              type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        categories:
+          type: array
+          items:
+            type: integer
+
+    BusinessUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        phone_primary:
+          type: string
+        email:
+          type: string
+        website:
+          type: string
+        address:
+          type: object
+        hours:
+          type: object
+        photos:
+          type: array
+
+    BusinessListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Business'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        meta:
+          type: object
+          properties:
+            total_count:
+              type: integer
+            region:
+              type: string
+            category:
+              type: string
+
+    BusinessDetailResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Business'
+        included:
+          type: object
+          properties:
+            competitors:
+              type: array
+              items:
+                $ref: '#/components/schemas/CompetitorSummary'
+            service_providers:
+              type: array
+              items:
+                $ref: '#/components/schemas/ServiceProviderSummary'
+
+    # ---------------- Category Schemas ----------------
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+        slug:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        parent_id:
+          type: integer
+          nullable: true
+        level:
+          type: integer
+        naics_code:
+          type: string
+        sic_code:
+          type: string
+        icon_url:
+          type: string
+        sort_order:
+          type: integer
+        is_active:
+          type: boolean
+        subcategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategorySummary'
+        business_count:
+          type: integer
+        metadata:
+          type: object
+
+    CategorySummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        slug:
+          type: string
+        name:
+          type: string
+        is_primary:
+          type: boolean
+
+    CategoryListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+
+    CategoryDetailResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Category'
+
+    CategoryExportResponse:
+      type: object
+      properties:
+        export_id:
+          type: string
+        generated_at:
+          type: string
+          format: date-time
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+
+    # ---------------- Competitive Intelligence ----------------
+    CompetitorSummary:
+      type: object
+      properties:
+        business_id:
+          type: integer
+        name:
+          type: string
+        relationship_strength:
+          type: integer
+        shared_categories:
+          type: array
+          items:
+            type: string
+        distance_miles:
+          type: number
+
+    CompetitorListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompetitorSummary'
+        meta:
+          type: object
+          properties:
+            total_competitors:
+              type: integer
+            primary_category:
+              type: string
+
+    ServiceProviderSummary:
+      type: object
+      properties:
+        business_id:
+          type: integer
+        name:
+          type: string
+        relationship_type:
+          type: string
+        service_categories:
+          type: array
+          items:
+            type: string
+        is_verified:
+          type: boolean
+
+    ServiceProviderListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceProviderSummary'
+
+    # ---------------- Verification Schemas ----------------
+    ClaimRequest:
+      type: object
+      required:
+        - contact_email
+        - contact_phone
+      properties:
+        contact_email:
+          type: string
+          format: email
+        contact_phone:
+          type: string
+        verification_method:
+          type: string
+          enum: [email, phone, both]
+          default: email
+        documents:
+          type: array
+          items:
+            type: string
+            description: URLs to verification documents
+
+    ClaimResponse:
+      type: object
+      properties:
+        claim_id:
+          type: integer
+        status:
+          type: string
+          enum: [pending, verification_sent, expired]
+        verification_method:
+          type: string
+        expires_at:
+          type: string
+          format: date-time
+        message:
+          type: string
+
+    VerifyRequest:
+      type: object
+      required:
+        - verification_code
+      properties:
+        verification_code:
+          type: string
+          minLength: 6
+          maxLength: 10
+
+    VerificationSuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [verified, pending_review]
+        message:
+          type: string
+        business:
+          $ref: '#/components/schemas/Business'
+
+    VerificationStatusResponse:
+      type: object
+      properties:
+        business_id:
+          type: integer
+        current_status:
+          type: string
+        claim_history:
+          type: array
+          items:
+            type: object
+            properties:
+              claimed_at:
+                type: string
+                format: date-time
+              verified_at:
+                type: string
+                format: date-time
+              verification_method:
+                type: string
+              verified_by:
+                type: string
+
+    # ---------------- Data Freshness Schemas ----------------
+    DataFreshnessResponse:
+      type: object
+      properties:
+        business_id:
+          type: integer
+        freshness_score:
+          type: integer
+          description: 0-100 score
+        last_verified:
+          type: string
+          format: date-time
+        next_scheduled_update:
+          type: string
+          format: date-time
+        update_frequency:
+          type: string
+          enum: [daily, weekly, monthly, quarterly, manual]
+        staleness_indicators:
+          type: array
+          items:
+            type: string
+        is_stale:
+          type: boolean
+        days_since_update:
+          type: integer
+
+    UpdateHistoryResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              field_name:
+                type: string
+              old_value:
+                type: string
+              new_value:
+                type: string
+              update_type:
+                type: string
+              update_source:
+                type: string
+              performed_at:
+                type: string
+                format: date-time
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+
+    StaleDataResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              business_id:
+                type: integer
+              name:
+                type: string
+              freshness_score:
+                type: integer
+              last_verified:
+                type: string
+                format: date-time
+              update_status:
+                type: string
+                enum: [overdue, due_soon, current]
+        meta:
+          type: object
+          properties:
+            total_stale:
+              type: integer
+            freshness_threshold:
+              type: integer
+
+    # ---------------- Integration Schemas ----------------
+    BusinessExportResponse:
+      type: object
+      properties:
+        export_id:
+          type: string
+        generated_at:
+          type: string
+          format: date-time
+        total_records:
+          type: integer
+        businesses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Business'
+
+    WebhookRegistrationRequest:
+      type: object
+      required:
+        - url
+        - events
+      properties:
+        url:
+          type: string
+          format: uri
+        events:
+          type: array
+          items:
+            type: string
+            enum: [business.created, business.updated, business.deleted, business.claimed, category.updated]
+        secret:
+          type: string
+          description: Optional secret for webhook signature verification
+
+    WebhookRegistrationResponse:
+      type: object
+      properties:
+        webhook_id:
+          type: string
+        url:
+          type: string
+        events:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum: [active, pending_verification]
+        created_at:
+          type: string
+          format: date-time
+
+    ApiKeyRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Name for the API key
+        permissions:
+          type: array
+          items:
+            type: string
+            enum: [read:public, read:private, write:basic, write:full, admin]
+        expires_in_days:
+          type: integer
+          default: 365
+
+    ApiKeyResponse:
+      type: object
+      properties:
+        api_key:
+          type: string
+          description: The API key (shown only once)
+        name:
+          type: string
+        prefix:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        expires_at:
+          type: string
+          format: date-time
+        rate_limit:
+          type: object
+          properties:
+            requests:
+              type: integer
+            window:
+              type: string
+
+    # ---------------- Region Schemas ----------------
+    Region:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        type:
+          type: string
+          enum: [country, state, province, county, city, metro, zip]
+        parent_id:
+          type: integer
+        country_code:
+          type: string
+        coordinates:
+          type: object
+          properties:
+            lat:
+              type: number
+            lng:
+              type: number
+        business_count:
+          type: integer
+
+    RegionListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
+
+    # ---------------- Search Schemas ----------------
+    SearchResponse:
+      type: object
+      properties:
+        query:
+          type: string
+        results:
+          type: object
+          properties:
+            businesses:
+              type: array
+              items:
+                $ref: '#/components/schemas/Business'
+            categories:
+              type: array
+              items:
+                $ref: '#/components/schemas/Category'
+            regions:
+              type: array
+              items:
+                $ref: '#/components/schemas/Region'
+        total_count:
+          type: integer
+
+    AutocompleteResponse:
+      type: object
+      properties:
+        query:
+          type: string
+        suggestions:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                enum: [business, category, region]
+              id:
+                type: integer
+              name:
+                type: string
+              highlight:
+                type: string
+
+    # ---------------- Common Schemas ----------------
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        limit:
+          type: integer
+        total_pages:
+          type: integer
+        total_count:
+          type: integer
+        has_next:
+          type: boolean
+        has_prev:
+          type: boolean
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: object
+
+  # ============================================
+  # RESPONSES
+  # ============================================
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: BAD_REQUEST
+              message: Invalid parameters provided
+              details:
+                field: "latitude"
+                issue: "must be between -90 and 90"
+
+    Unauthorized:
+      description: Unauthorized - Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: UNAUTHORIZED
+              message: API key is missing or invalid
+
+    Forbidden:
+      description: Forbidden - Insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: FORBIDDEN
+              message: You do not have permission to modify this resource
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: NOT_FOUND
+              message: Business not found
+
+    RateLimited:
+      description: Too many requests
+      headers:
+        X-RateLimit-Limit:
+          schema:
+            type: integer
+          description: Request limit per window
+        X-RateLimit-Remaining:
+          schema:
+            type: integer
+          description: Remaining requests in current window
+        X-RateLimit-Reset:
+          schema:
+            type: integer
+          description: Unix timestamp when limit resets
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: RATE_LIMITED
+              message: API rate limit exceeded. Try again in 60 seconds.

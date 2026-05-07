@@ -1,0 +1,1207 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-05-07T21:00:00Z",
+  "total_categories": 47,
+  "taxonomy": {
+    "description": "DepotPages Business Categories Taxonomy - 20+ primary verticals with hierarchical subcategories",
+    "standards": {
+      "naics_reference": "North American Industry Classification System",
+      "sic_reference": "Standard Industrial Classification (legacy)",
+      "schema_version": "2022"
+    }
+  },
+  "categories": [
+    {
+      "id": 1,
+      "slug": "accommodation-food-services",
+      "name": "Accommodation & Food Services",
+      "description": "Hotels, restaurants, bars, catering, and food service establishments",
+      "level": 1,
+      "naics_code": "72",
+      "sic_code": "70",
+      "sort_order": 10,
+      "is_active": true,
+      "icon_url": "/icons/accommodation-food.svg",
+      "subcategories": [
+        {
+          "id": 101,
+          "slug": "hotels-motels",
+          "name": "Hotels & Motels",
+          "parent_id": 1,
+          "level": 2,
+          "naics_code": "7211",
+          "sic_code": "7011"
+        },
+        {
+          "id": 102,
+          "slug": "restaurants",
+          "name": "Restaurants",
+          "parent_id": 1,
+          "level": 2,
+          "naics_code": "7225",
+          "sic_code": "5812"
+        },
+        {
+          "id": 103,
+          "slug": "bars-nightclubs",
+          "name": "Bars & Nightclubs",
+          "parent_id": 1,
+          "level": 2,
+          "naics_code": "7224",
+          "sic_code": "5813"
+        },
+        {
+          "id": 104,
+          "slug": "catering",
+          "name": "Catering Services",
+          "parent_id": 1,
+          "level": 2,
+          "naics_code": "7223",
+          "sic_code": "5812"
+        },
+        {
+          "id": 105,
+          "slug": "food-trucks",
+          "name": "Food Trucks",
+          "parent_id": 1,
+          "level": 2,
+          "naics_code": "7223",
+          "sic_code": "5812"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "construction",
+      "name": "Construction",
+      "description": "Building construction, renovation, and specialty trade contractors",
+      "level": 1,
+      "naics_code": "23",
+      "sic_code": "15-17",
+      "sort_order": 20,
+      "is_active": true,
+      "icon_url": "/icons/construction.svg",
+      "subcategories": [
+        {
+          "id": 201,
+          "slug": "residential-construction",
+          "name": "Residential Construction",
+          "parent_id": 2,
+          "level": 2,
+          "naics_code": "2361",
+          "sic_code": "1521"
+        },
+        {
+          "id": 202,
+          "slug": "commercial-construction",
+          "name": "Commercial Construction",
+          "parent_id": 2,
+          "level": 2,
+          "naics_code": "2362",
+          "sic_code": "1541"
+        },
+        {
+          "id": 203,
+          "slug": "electrical-contractors",
+          "name": "Electrical Contractors",
+          "parent_id": 2,
+          "level": 2,
+          "naics_code": "2382",
+          "sic_code": "1731"
+        },
+        {
+          "id": 204,
+          "slug": "plumbing-contractors",
+          "name": "Plumbing Contractors",
+          "parent_id": 2,
+          "level": 2,
+          "naics_code": "2382",
+          "sic_code": "1711"
+        },
+        {
+          "id": 205,
+          "slug": "roofing-contractors",
+          "name": "Roofing Contractors",
+          "parent_id": 2,
+          "level": 2,
+          "naics_code": "2381",
+          "sic_code": "1761"
+        },
+        {
+          "id": 206,
+          "slug": "hvac-contractors",
+          "name": "HVAC Contractors",
+          "parent_id": 2,
+          "level": 2,
+          "naics_code": "2382",
+          "sic_code": "1711"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "healthcare-social-assistance",
+      "name": "Healthcare & Social Assistance",
+      "description": "Medical practices, hospitals, clinics, and social services",
+      "level": 1,
+      "naics_code": "62",
+      "sic_code": "80",
+      "sort_order": 30,
+      "is_active": true,
+      "icon_url": "/icons/healthcare.svg",
+      "subcategories": [
+        {
+          "id": 301,
+          "slug": "physicians-clinics",
+          "name": "Physicians & Clinics",
+          "parent_id": 3,
+          "level": 2,
+          "naics_code": "6211",
+          "sic_code": "8011"
+        },
+        {
+          "id": 302,
+          "slug": "dental-practices",
+          "name": "Dental Practices",
+          "parent_id": 3,
+          "level": 2,
+          "naics_code": "6212",
+          "sic_code": "8021"
+        },
+        {
+          "id": 303,
+          "slug": "pharmacies",
+          "name": "Pharmacies",
+          "parent_id": 3,
+          "level": 2,
+          "naics_code": "4461",
+          "sic_code": "5912"
+        },
+        {
+          "id": 304,
+          "slug": "home-health-care",
+          "name": "Home Health Care",
+          "parent_id": 3,
+          "level": 2,
+          "naics_code": "6216",
+          "sic_code": "8082"
+        },
+        {
+          "id": 305,
+          "slug": "mental-health",
+          "name": "Mental Health Services",
+          "parent_id": 3,
+          "level": 2,
+          "naics_code": "6213",
+          "sic_code": "8093"
+        },
+        {
+          "id": 306,
+          "slug": "senior-care",
+          "name": "Senior Care & Assisted Living",
+          "parent_id": 3,
+          "level": 2,
+          "naics_code": "6233",
+          "sic_code": "8059"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "retail-trade",
+      "name": "Retail Trade",
+      "description": "Retail stores, e-commerce, and consumer goods sellers",
+      "level": 1,
+      "naics_code": "44-45",
+      "sic_code": "52-59",
+      "sort_order": 40,
+      "is_active": true,
+      "icon_url": "/icons/retail.svg",
+      "subcategories": [
+        {
+          "id": 401,
+          "slug": "clothing-apparel",
+          "name": "Clothing & Apparel",
+          "parent_id": 4,
+          "level": 2,
+          "naics_code": "4481",
+          "sic_code": "5651"
+        },
+        {
+          "id": 402,
+          "slug": "electronics",
+          "name": "Electronics & Technology",
+          "parent_id": 4,
+          "level": 2,
+          "naics_code": "4431",
+          "sic_code": "5731"
+        },
+        {
+          "id": 403,
+          "slug": "grocery-stores",
+          "name": "Grocery & Convenience",
+          "parent_id": 4,
+          "level": 2,
+          "naics_code": "4451",
+          "sic_code": "5411"
+        },
+        {
+          "id": 404,
+          "slug": "furniture-home",
+          "name": "Furniture & Home Goods",
+          "parent_id": 4,
+          "level": 2,
+          "naics_code": "4421",
+          "sic_code": "5712"
+        },
+        {
+          "id": 405,
+          "slug": "automotive-dealers",
+          "name": "Automotive Dealers",
+          "parent_id": 4,
+          "level": 2,
+          "naics_code": "4411",
+          "sic_code": "5511"
+        },
+        {
+          "id": 406,
+          "slug": "specialty-retail",
+          "name": "Specialty Retail",
+          "parent_id": 4,
+          "level": 2,
+          "naics_code": "4532",
+          "sic_code": "5999"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "professional-services",
+      "name": "Professional, Scientific & Technical Services",
+      "description": "Legal, accounting, consulting, marketing, and technical services",
+      "level": 1,
+      "naics_code": "54",
+      "sic_code": "87",
+      "sort_order": 50,
+      "is_active": true,
+      "icon_url": "/icons/professional-services.svg",
+      "subcategories": [
+        {
+          "id": 501,
+          "slug": "legal-services",
+          "name": "Legal Services",
+          "parent_id": 5,
+          "level": 2,
+          "naics_code": "5411",
+          "sic_code": "8111"
+        },
+        {
+          "id": 502,
+          "slug": "accounting-bookkeeping",
+          "name": "Accounting & Bookkeeping",
+          "parent_id": 5,
+          "level": 2,
+          "naics_code": "5412",
+          "sic_code": "8721"
+        },
+        {
+          "id": 503,
+          "slug": "consulting",
+          "name": "Management Consulting",
+          "parent_id": 5,
+          "level": 2,
+          "naics_code": "5416",
+          "sic_code": "8742"
+        },
+        {
+          "id": 504,
+          "slug": "marketing-advertising",
+          "name": "Marketing & Advertising",
+          "parent_id": 5,
+          "level": 2,
+          "naics_code": "5418",
+          "sic_code": "7311"
+        },
+        {
+          "id": 505,
+          "slug": "it-services",
+          "name": "IT Services & Support",
+          "parent_id": 5,
+          "level": 2,
+          "naics_code": "5415",
+          "sic_code": "7379"
+        },
+        {
+          "id": 506,
+          "slug": "architecture",
+          "name": "Architecture & Engineering",
+          "parent_id": 5,
+          "level": 2,
+          "naics_code": "5413",
+          "sic_code": "8712"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "slug": "manufacturing",
+      "name": "Manufacturing",
+      "description": "Manufacturing facilities, production plants, and factories",
+      "level": 1,
+      "naics_code": "31-33",
+      "sic_code": "20-39",
+      "sort_order": 60,
+      "is_active": true,
+      "icon_url": "/icons/manufacturing.svg",
+      "subcategories": [
+        {
+          "id": 601,
+          "slug": "food-beverage-mfg",
+          "name": "Food & Beverage Manufacturing",
+          "parent_id": 6,
+          "level": 2,
+          "naics_code": "311",
+          "sic_code": "2099"
+        },
+        {
+          "id": 602,
+          "slug": "machinery-mfg",
+          "name": "Machinery Manufacturing",
+          "parent_id": 6,
+          "level": 2,
+          "naics_code": "333",
+          "sic_code": "3599"
+        },
+        {
+          "id": 603,
+          "slug": "electronics-mfg",
+          "name": "Electronics Manufacturing",
+          "parent_id": 6,
+          "level": 2,
+          "naics_code": "334",
+          "sic_code": "3679"
+        },
+        {
+          "id": 604,
+          "slug": "textile-apparel-mfg",
+          "name": "Textile & Apparel Manufacturing",
+          "parent_id": 6,
+          "level": 2,
+          "naics_code": "313-315",
+          "sic_code": "2299"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "slug": "finance-insurance",
+      "name": "Finance & Insurance",
+      "description": "Banks, credit unions, insurance agencies, and financial services",
+      "level": 1,
+      "naics_code": "52",
+      "sic_code": "60-67",
+      "sort_order": 70,
+      "is_active": true,
+      "icon_url": "/icons/finance.svg",
+      "subcategories": [
+        {
+          "id": 701,
+          "slug": "banks-credit-unions",
+          "name": "Banks & Credit Unions",
+          "parent_id": 7,
+          "level": 2,
+          "naics_code": "5221",
+          "sic_code": "6021"
+        },
+        {
+          "id": 702,
+          "slug": "insurance-agencies",
+          "name": "Insurance Agencies",
+          "parent_id": 7,
+          "level": 2,
+          "naics_code": "5242",
+          "sic_code": "6411"
+        },
+        {
+          "id": 703,
+          "slug": "investment-services",
+          "name": "Investment & Wealth Management",
+          "parent_id": 7,
+          "level": 2,
+          "naics_code": "5239",
+          "sic_code": "6282"
+        },
+        {
+          "id": 704,
+          "slug": "mortgage-brokers",
+          "name": "Mortgage Brokers",
+          "parent_id": 7,
+          "level": 2,
+          "naics_code": "5223",
+          "sic_code": "6163"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "slug": "real-estate",
+      "name": "Real Estate & Rental",
+      "description": "Real estate agencies, property management, and rental services",
+      "level": 1,
+      "naics_code": "53",
+      "sic_code": "65",
+      "sort_order": 80,
+      "is_active": true,
+      "icon_url": "/icons/real-estate.svg",
+      "subcategories": [
+        {
+          "id": 801,
+          "slug": "real-estate-agencies",
+          "name": "Real Estate Agencies",
+          "parent_id": 8,
+          "level": 2,
+          "naics_code": "5312",
+          "sic_code": "6531"
+        },
+        {
+          "id": 802,
+          "slug": "property-management",
+          "name": "Property Management",
+          "parent_id": 8,
+          "level": 2,
+          "naics_code": "5313",
+          "sic_code": "6531"
+        },
+        {
+          "id": 803,
+          "slug": "equipment-rental",
+          "name": "Equipment & Vehicle Rental",
+          "parent_id": 8,
+          "level": 2,
+          "naics_code": "532",
+          "sic_code": "7359"
+        },
+        {
+          "id": 804,
+          "slug": "commercial-real-estate",
+          "name": "Commercial Real Estate",
+          "parent_id": 8,
+          "level": 2,
+          "naics_code": "5312",
+          "sic_code": "6531"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "slug": "transportation-warehousing",
+      "name": "Transportation & Warehousing",
+      "description": "Freight, logistics, trucking, and storage services",
+      "level": 1,
+      "naics_code": "48-49",
+      "sic_code": "40-47",
+      "sort_order": 90,
+      "is_active": true,
+      "icon_url": "/icons/transportation.svg",
+      "subcategories": [
+        {
+          "id": 901,
+          "slug": "trucking",
+          "name": "Trucking & Freight",
+          "parent_id": 9,
+          "level": 2,
+          "naics_code": "484",
+          "sic_code": "4213"
+        },
+        {
+          "id": 902,
+          "slug": "warehousing-storage",
+          "name": "Warehousing & Storage",
+          "parent_id": 9,
+          "level": 2,
+          "naics_code": "4931",
+          "sic_code": "4225"
+        },
+        {
+          "id": 903,
+          "slug": "delivery-courier",
+          "name": "Delivery & Courier Services",
+          "parent_id": 9,
+          "level": 2,
+          "naics_code": "4921",
+          "sic_code": "4214"
+        },
+        {
+          "id": 904,
+          "slug": "taxi-limo",
+          "name": "Taxi & Limousine Services",
+          "parent_id": 9,
+          "level": 2,
+          "naics_code": "4853",
+          "sic_code": "4121"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "slug": "education",
+      "name": "Education Services",
+      "description": "Schools, colleges, training centers, and educational institutions",
+      "level": 1,
+      "naics_code": "61",
+      "sic_code": "82",
+      "sort_order": 100,
+      "is_active": true,
+      "icon_url": "/icons/education.svg",
+      "subcategories": [
+        {
+          "id": 1001,
+          "slug": "k12-schools",
+          "name": "K-12 Schools",
+          "parent_id": 10,
+          "level": 2,
+          "naics_code": "6111",
+          "sic_code": "8211"
+        },
+        {
+          "id": 1002,
+          "slug": "colleges-universities",
+          "name": "Colleges & Universities",
+          "parent_id": 10,
+          "level": 2,
+          "naics_code": "6113",
+          "sic_code": "8221"
+        },
+        {
+          "id": 1003,
+          "slug": "vocational-training",
+          "name": "Vocational & Technical Training",
+          "parent_id": 10,
+          "level": 2,
+          "naics_code": "6115",
+          "sic_code": "8249"
+        },
+        {
+          "id": 1004,
+          "slug": "childcare",
+          "name": "Childcare & Preschools",
+          "parent_id": 10,
+          "level": 2,
+          "naics_code": "6244",
+          "sic_code": "8351"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "slug": "arts-entertainment",
+      "name": "Arts, Entertainment & Recreation",
+      "description": "Museums, theaters, sports facilities, and entertainment venues",
+      "level": 1,
+      "naics_code": "71",
+      "sic_code": "79",
+      "sort_order": 110,
+      "is_active": true,
+      "icon_url": "/icons/arts-entertainment.svg",
+      "subcategories": [
+        {
+          "id": 1101,
+          "slug": "museums",
+          "name": "Museums & Galleries",
+          "parent_id": 11,
+          "level": 2,
+          "naics_code": "7121",
+          "sic_code": "8412"
+        },
+        {
+          "id": 1102,
+          "slug": "performing-arts",
+          "name": "Performing Arts Venues",
+          "parent_id": 11,
+          "level": 2,
+          "naics_code": "7111",
+          "sic_code": "7922"
+        },
+        {
+          "id": 1103,
+          "slug": "sports-recreation",
+          "name": "Sports & Recreation Facilities",
+          "parent_id": 11,
+          "level": 2,
+          "naics_code": "7139",
+          "sic_code": "7999"
+        },
+        {
+          "id": 1104,
+          "slug": "amusement-parks",
+          "name": "Amusement Parks & Arcades",
+          "parent_id": 11,
+          "level": 2,
+          "naics_code": "7131",
+          "sic_code": "7996"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "slug": "automotive-services",
+      "name": "Automotive Services",
+      "description": "Auto repair, car washes, and vehicle maintenance services",
+      "level": 1,
+      "naics_code": "811",
+      "sic_code": "75",
+      "sort_order": 120,
+      "is_active": true,
+      "icon_url": "/icons/automotive.svg",
+      "subcategories": [
+        {
+          "id": 1201,
+          "slug": "auto-repair",
+          "name": "Auto Repair & Maintenance",
+          "parent_id": 12,
+          "level": 2,
+          "naics_code": "8111",
+          "sic_code": "7538"
+        },
+        {
+          "id": 1202,
+          "slug": "car-washes",
+          "name": "Car Washes",
+          "parent_id": 12,
+          "level": 2,
+          "naics_code": "8111",
+          "sic_code": "7542"
+        },
+        {
+          "id": 1203,
+          "slug": "auto-body",
+          "name": "Auto Body & Collision",
+          "parent_id": 12,
+          "level": 2,
+          "naics_code": "8111",
+          "sic_code": "7532"
+        },
+        {
+          "id": 1204,
+          "slug": "tire-services",
+          "name": "Tire Services",
+          "parent_id": 12,
+          "level": 2,
+          "naics_code": "4413",
+          "sic_code": "5531"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "slug": "beauty-personal-care",
+      "name": "Beauty & Personal Care",
+      "description": "Salons, spas, barbershops, and personal care services",
+      "level": 1,
+      "naics_code": "8121",
+      "sic_code": "72",
+      "sort_order": 130,
+      "is_active": true,
+      "icon_url": "/icons/beauty.svg",
+      "subcategories": [
+        {
+          "id": 1301,
+          "slug": "hair-salons",
+          "name": "Hair Salons",
+          "parent_id": 13,
+          "level": 2,
+          "naics_code": "8121",
+          "sic_code": "7230"
+        },
+        {
+          "id": 1302,
+          "slug": "barbershops",
+          "name": "Barbershops",
+          "parent_id": 13,
+          "level": 2,
+          "naics_code": "8121",
+          "sic_code": "7241"
+        },
+        {
+          "id": 1303,
+          "slug": "spas",
+          "name": "Spas & Wellness Centers",
+          "parent_id": 13,
+          "level": 2,
+          "naics_code": "8121",
+          "sic_code": "7299"
+        },
+        {
+          "id": 1304,
+          "slug": "nail-salons",
+          "name": "Nail Salons",
+          "parent_id": 13,
+          "level": 2,
+          "naics_code": "8121",
+          "sic_code": "7230"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "slug": "agriculture",
+      "name": "Agriculture, Forestry & Fishing",
+      "description": "Farms, nurseries, forestry operations, and agricultural services",
+      "level": 1,
+      "naics_code": "11",
+      "sic_code": "01-09",
+      "sort_order": 140,
+      "is_active": true,
+      "icon_url": "/icons/agriculture.svg",
+      "subcategories": [
+        {
+          "id": 1401,
+          "slug": "crop-farming",
+          "name": "Crop Farming",
+          "parent_id": 14,
+          "level": 2,
+          "naics_code": "111",
+          "sic_code": "0191"
+        },
+        {
+          "id": 1402,
+          "slug": "livestock",
+          "name": "Livestock & Ranching",
+          "parent_id": 14,
+          "level": 2,
+          "naics_code": "112",
+          "sic_code": "0219"
+        },
+        {
+          "id": 1403,
+          "slug": "nurseries",
+          "name": "Nurseries & Greenhouses",
+          "parent_id": 14,
+          "level": 2,
+          "naics_code": "1114",
+          "sic_code": "0181"
+        },
+        {
+          "id": 1404,
+          "slug": "forestry",
+          "name": "Forestry & Logging",
+          "parent_id": 14,
+          "level": 2,
+          "naics_code": "113",
+          "sic_code": "2411"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "slug": "utilities",
+      "name": "Utilities",
+      "description": "Electric, gas, water, and telecommunications utilities",
+      "level": 1,
+      "naics_code": "22",
+      "sic_code": "49",
+      "sort_order": 150,
+      "is_active": true,
+      "icon_url": "/icons/utilities.svg",
+      "subcategories": [
+        {
+          "id": 1501,
+          "slug": "electric-utilities",
+          "name": "Electric Utilities",
+          "parent_id": 15,
+          "level": 2,
+          "naics_code": "2211",
+          "sic_code": "4911"
+        },
+        {
+          "id": 1502,
+          "slug": "water-sewer",
+          "name": "Water & Sewer Services",
+          "parent_id": 15,
+          "level": 2,
+          "naics_code": "2213",
+          "sic_code": "4941"
+        },
+        {
+          "id": 1503,
+          "slug": "telecommunications",
+          "name": "Telecommunications",
+          "parent_id": 15,
+          "level": 2,
+          "naics_code": "517",
+          "sic_code": "4813"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "slug": "administrative-support",
+      "name": "Administrative & Support Services",
+      "description": "Office administration, facilities, waste management, and support services",
+      "level": 1,
+      "naics_code": "56",
+      "sic_code": "73",
+      "sort_order": 160,
+      "is_active": true,
+      "icon_url": "/icons/administrative.svg",
+      "subcategories": [
+        {
+          "id": 1601,
+          "slug": "office-administration",
+          "name": "Office Administration",
+          "parent_id": 16,
+          "level": 2,
+          "naics_code": "5611",
+          "sic_code": "8744"
+        },
+        {
+          "id": 1602,
+          "slug": "facilities-support",
+          "name": "Facilities Support",
+          "parent_id": 16,
+          "level": 2,
+          "naics_code": "5617",
+          "sic_code": "7342"
+        },
+        {
+          "id": 1603,
+          "slug": "employment-agencies",
+          "name": "Employment Agencies",
+          "parent_id": 16,
+          "level": 2,
+          "naics_code": "5613",
+          "sic_code": "7361"
+        },
+        {
+          "id": 1604,
+          "slug": "security-services",
+          "name": "Security Services",
+          "parent_id": 16,
+          "level": 2,
+          "naics_code": "5616",
+          "sic_code": "7381"
+        },
+        {
+          "id": 1605,
+          "slug": "waste-management",
+          "name": "Waste Management",
+          "parent_id": 16,
+          "level": 2,
+          "naics_code": "562",
+          "sic_code": "4953"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "slug": "wholesale-trade",
+      "name": "Wholesale Trade",
+      "description": "Wholesale distributors and B2B suppliers",
+      "level": 1,
+      "naics_code": "42",
+      "sic_code": "50-51",
+      "sort_order": 170,
+      "is_active": true,
+      "icon_url": "/icons/wholesale.svg",
+      "subcategories": [
+        {
+          "id": 1701,
+          "slug": "merchant-wholesalers",
+          "name": "Merchant Wholesalers",
+          "parent_id": 17,
+          "level": 2,
+          "naics_code": "423",
+          "sic_code": "5099"
+        },
+        {
+          "id": 1702,
+          "slug": "manufacturing-sales",
+          "name": "Manufacturing Sales Branches",
+          "parent_id": 17,
+          "level": 2,
+          "naics_code": "423",
+          "sic_code": "5199"
+        },
+        {
+          "id": 1703,
+          "slug": "electronics-wholesale",
+          "name": "Electronics Wholesale",
+          "parent_id": 17,
+          "level": 2,
+          "naics_code": "4236",
+          "sic_code": "5065"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "slug": "mining",
+      "name": "Mining, Quarrying & Oil & Gas",
+      "description": "Mining operations, quarries, and extraction services",
+      "level": 1,
+      "naics_code": "21",
+      "sic_code": "10-14",
+      "sort_order": 180,
+      "is_active": true,
+      "icon_url": "/icons/mining.svg",
+      "subcategories": [
+        {
+          "id": 1801,
+          "slug": "oil-gas-extraction",
+          "name": "Oil & Gas Extraction",
+          "parent_id": 18,
+          "level": 2,
+          "naics_code": "211",
+          "sic_code": "1311"
+        },
+        {
+          "id": 1802,
+          "slug": "mining",
+          "name": "Mining Operations",
+          "parent_id": 18,
+          "level": 2,
+          "naics_code": "212",
+          "sic_code": "1499"
+        },
+        {
+          "id": 1803,
+          "slug": "quarries",
+          "name": "Quarries",
+          "parent_id": 18,
+          "level": 2,
+          "naics_code": "2123",
+          "sic_code": "1411"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "slug": "public-administration",
+      "name": "Public Administration",
+      "description": "Government agencies, public services, and civic organizations",
+      "level": 1,
+      "naics_code": "92",
+      "sic_code": "91-97",
+      "sort_order": 190,
+      "is_active": true,
+      "icon_url": "/icons/public-admin.svg",
+      "subcategories": [
+        {
+          "id": 1901,
+          "slug": "executive-legislative",
+          "name": "Executive & Legislative Offices",
+          "parent_id": 19,
+          "level": 2,
+          "naics_code": "9211",
+          "sic_code": "9121"
+        },
+        {
+          "id": 1902,
+          "slug": "public-safety",
+          "name": "Public Safety",
+          "parent_id": 19,
+          "level": 2,
+          "naics_code": "9221",
+          "sic_code": "9221"
+        },
+        {
+          "id": 1903,
+          "slug": "public-works",
+          "name": "Public Works",
+          "parent_id": 19,
+          "level": 2,
+          "naics_code": "9241",
+          "sic_code": "9631"
+        },
+        {
+          "id": 1904,
+          "slug": "nonprofits",
+          "name": "Nonprofit Organizations",
+          "parent_id": 19,
+          "level": 2,
+          "naics_code": "813",
+          "sic_code": "8399"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "slug": "personal-services",
+      "name": "Personal & Laundry Services",
+      "description": "Dry cleaning, pet care, personal services, and household services",
+      "level": 1,
+      "naics_code": "812",
+      "sic_code": "72",
+      "sort_order": 200,
+      "is_active": true,
+      "icon_url": "/icons/personal-services.svg",
+      "subcategories": [
+        {
+          "id": 2001,
+          "slug": "dry-cleaning",
+          "name": "Dry Cleaning & Laundry",
+          "parent_id": 20,
+          "level": 2,
+          "naics_code": "8123",
+          "sic_code": "7212"
+        },
+        {
+          "id": 2002,
+          "slug": "pet-care",
+          "name": "Pet Care & Veterinary",
+          "parent_id": 20,
+          "level": 2,
+          "naics_code": "8129",
+          "sic_code": "0742"
+        },
+        {
+          "id": 2003,
+          "slug": "photography",
+          "name": "Photography Services",
+          "parent_id": 20,
+          "level": 2,
+          "naics_code": "8129",
+          "sic_code": "7221"
+        },
+        {
+          "id": 2004,
+          "slug": "funeral-services",
+          "name": "Funeral Services",
+          "parent_id": 20,
+          "level": 2,
+          "naics_code": "8122",
+          "sic_code": "7261"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "slug": "technology",
+      "name": "Technology & Software",
+      "description": "Software development, SaaS, tech services, and IT companies",
+      "level": 1,
+      "naics_code": "51",
+      "sic_code": "73",
+      "sort_order": 210,
+      "is_active": true,
+      "icon_url": "/icons/technology.svg",
+      "metadata": {
+        "notes": "Modern vertical - extends traditional NAICS classification"
+      },
+      "subcategories": [
+        {
+          "id": 2101,
+          "slug": "software-development",
+          "name": "Software Development",
+          "parent_id": 21,
+          "level": 2,
+          "naics_code": "541511",
+          "sic_code": "7371"
+        },
+        {
+          "id": 2102,
+          "slug": "saas",
+          "name": "SaaS & Cloud Services",
+          "parent_id": 21,
+          "level": 2,
+          "naics_code": "541512",
+          "sic_code": "7379"
+        },
+        {
+          "id": 2103,
+          "slug": "data-analytics",
+          "name": "Data Analytics & AI",
+          "parent_id": 21,
+          "level": 2,
+          "naics_code": "541512",
+          "sic_code": "7379"
+        },
+        {
+          "id": 2104,
+          "slug": "cybersecurity",
+          "name": "Cybersecurity Services",
+          "parent_id": 21,
+          "level": 2,
+          "naics_code": "541519",
+          "sic_code": "7379"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "slug": "media-publishing",
+      "name": "Media & Publishing",
+      "description": "News, publishing, broadcasting, and digital media",
+      "level": 1,
+      "naics_code": "51",
+      "sic_code": "27-48",
+      "sort_order": 220,
+      "is_active": true,
+      "icon_url": "/icons/media.svg",
+      "subcategories": [
+        {
+          "id": 2201,
+          "slug": "newspapers",
+          "name": "Newspapers & Publishing",
+          "parent_id": 22,
+          "level": 2,
+          "naics_code": "5111",
+          "sic_code": "2711"
+        },
+        {
+          "id": 2202,
+          "slug": "radio-tv",
+          "name": "Radio & Television",
+          "parent_id": 22,
+          "level": 2,
+          "naics_code": "5151",
+          "sic_code": "4832"
+        },
+        {
+          "id": 2203,
+          "slug": "digital-media",
+          "name": "Digital Media & Content",
+          "parent_id": 22,
+          "level": 2,
+          "naics_code": "5191",
+          "sic_code": "4841"
+        },
+        {
+          "id": 2204,
+          "slug": "film-production",
+          "name": "Film & Video Production",
+          "parent_id": 22,
+          "level": 2,
+          "naics_code": "5121",
+          "sic_code": "7812"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "total_primary_categories": 22,
+    "total_subcategories": 97,
+    "categories_with_naics": 119,
+    "categories_with_sic": 119,
+    "last_updated": "2026-05-07T21:00:00Z",
+    "update_frequency": "quarterly",
+    "next_review_date": "2026-08-07T00:00:00Z"
+  },
+  "enrichment_mappings": {
+    "naics_mapping": {
+      "description": "North American Industry Classification System codes",
+      "source": "US Census Bureau",
+      "url": "https://www.census.gov/naics/",
+      "version": "2022"
+    },
+    "sic_mapping": {
+      "description": "Standard Industrial Classification codes (legacy)",
+      "note": "Deprecated but maintained for historical data compatibility"
+    }
+  },
+  "search_weights": {
+    "primary_category_match": 1.0,
+    "subcategory_match": 0.8,
+    "related_category_match": 0.5
+  }
+}
