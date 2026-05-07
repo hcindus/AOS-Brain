@@ -1,6 +1,8 @@
 import { prisma } from './prisma'
 import type { CurrencyCode } from '@/types'
 
+export type { CurrencyCode }
+
 export const CURRENCIES: Record<CurrencyCode, { symbol: string; name: string }> = {
   USD: { symbol: '$', name: 'US Dollar' },
   EUR: { symbol: '€', name: 'Euro' },
@@ -60,4 +62,11 @@ export function parseCurrencyInput(input: string, currency: CurrencyCode): numbe
 
 export function getSupportedCurrencies(): CurrencyCode[] {
   return Object.keys(CURRENCIES) as CurrencyCode[]
+}
+
+// Alias for backward compatibility
+export const convert = convertAmount
+export const convertToUsd = (amount: number, from: CurrencyCode, rate: number): number => {
+  if (from === 'USD') return amount
+  return amount / rate
 }

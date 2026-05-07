@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { convert, convertToUsd, convertFromUsd, CURRENCIES, CurrencyCode } from '@/lib/currency'
+import { convertAmount, getExchangeRate, CURRENCIES } from '@/lib/currency'
+import { prisma } from '@/lib/prisma'
+import type { CurrencyCode } from '@/types'
 
 // GET /api/currency/convert?from=USD&to=EUR&amount=100 - Real-time conversion
 export async function GET(request: NextRequest) {
@@ -30,8 +32,18 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    const convertedAmount = convert(amount, from, to)
-    const rate = CURRENCIES[to].rateToUsd / CURRENCIES[from].rateToUsd
+    // Get exchange rate from database
+    const rateRecord = await prisma.exchangeRate.findUnique({
+      where: {
+        fromCurrency_toCurrency: {
+          fromCurrency: from,
+          toCurrency: to,
+        },
+      },
+    })
+
+    const rate = rateRecord?.rate ?? 1
+    const convertedAmount = convertAmount(amount, from, to, rate)
 
     return NextResponse.json({
       success: true,
@@ -84,8 +96,20 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Get exchange rate
+    const rateRecord = await prisma.exchangeRate.findUnique({
+      where: {
+        fromCurrency_toCurrency: {
+          fromCurrency: from,
+          toCurrency: to,
+        },
+      },
+    })
+
+    const rate = rateRecord?.rate ?? 1
+
     const results = amounts.map(amount => {
-      const convertedAmount = convert(amount, from as CurrencyCode, to as CurrencyCode)
+      const convertedAmount = convertAmount(amount, from as CurrencyCode, to as CurrencyCode, rate)
       return {
         original: amount,
         converted: convertedAmount,
@@ -102,7 +126,7 @@ export async function POST(request: NextRequest) {
         from,
         to,
         results,
-        rate: CURRENCIES[to as CurrencyCode].rateToUsd / CURRENCIES[from as CurrencyCode].rateToUsd,
+        rate,
         timestamp: new Date().toISOString(),
       },
     })

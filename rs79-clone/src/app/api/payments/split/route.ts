@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { convertToUsd } from '@/lib/currency'
 
 export interface SplitPaymentEntry {
   type: 'cash' | 'card' | 'crypto' | 'storecredit' | 'giftcard' | 'check'
@@ -62,7 +61,7 @@ export async function POST(request: NextRequest) {
       // Convert to USD
       const amountUsd = currency === 'USD' 
         ? amount 
-        : convertToUsd(amount, currency as any)
+        : amount / currencyRate
       
       totalPaid += amountUsd
       usedCurrencies.add(currency)
@@ -79,7 +78,7 @@ export async function POST(request: NextRequest) {
       if (type === 'cash' && tendered && tendered > amount) {
         const tenderedUsd = currency === 'USD'
           ? tendered
-          : convertToUsd(tendered, currency as any)
+          : tendered / currencyRate
         calculatedEntry.change = tenderedUsd - amountUsd
       }
 

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/prisma'
 import { createSession } from '@/lib/auth'
+import { ClerkRole } from '@/types/clerk'
 
 export async function POST(request: NextRequest) {
   try {
@@ -45,7 +46,7 @@ export async function POST(request: NextRequest) {
     const session = {
       id: clerk.id,
       name: clerk.name,
-      role: clerk.role as 'Admin' | 'Manager' | 'Clerk',
+      role: clerk.role as ClerkRole,
     }
 
     const token = createSession(session)

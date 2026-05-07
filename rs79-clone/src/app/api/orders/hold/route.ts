@@ -1,131 +1,129 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { getSession } from '@/lib/auth'
 
-// GET /api/orders/hold - List held orders
-export async function GET(request: NextRequest) {
-  try {
-    const heldOrders = await prisma.order.findMany({
-      where: { status: 'pending' },
-      include: {
-        items: {
-          select: {
-            itemId: true,
-            name: true,
-            price: true,
-            qty: true,
-            lineTotal: true,
-          }
-        },
-        customer: {
-          select: {
-            id: true,
-            name: true,
-          }
-        }
-      },
-      orderBy: { createdAt: 'desc' },
-    })
-
-    const formattedOrders = heldOrders.map(order => ({
-      id: order.id,
-      holdName: order.holdName || 'Unnamed Order',
-      items: order.items,
-      subtotal: order.subtotal,
-      tax: order.tax,
-      total: order.total,
-      customerId: order.customerId,
-      customerName: order.customer?.name,
-      createdAt: order.createdAt.toISOString(),
-    }))
-
-    return NextResponse.json({
-      success: true,
-      data: formattedOrders,
-    })
-  } catch (error) {
-    console.error('List held orders error:', error)
-    return NextResponse.json(
-      { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to list held orders' } },
-      { status: 500 }
-    )
-  }
-}
-
-// POST /api/orders/hold - Create a held order
+// POST /api/orders/hold - Hold an order for later
 export async function POST(request: NextRequest) {
   try {
-    const clerkId = request.headers.get('x-clerk-id')
-    if (!clerkId) {
+    const session = await getSession()
+    if (!session) {
       return NextResponse.json(
-        { success: false, error: { code: 'AUTH_REQUIRED', message: 'Authentication required' } },
+        { success: false, error: { code: 'UNAUTHORIZED', message: 'Not authenticated' } },
         { status: 401 }
       )
     }
 
     const body = await request.json()
-    const { name, items, subtotal, tax, total, customerId } = body
+    const {
+      items,
+      customerId,
+      currency = 'USD',
+      currencyRate = 1,
+      holdName,
+      notes,
+    } = body
 
-    if (!name || !items || items.length === 0) {
+    if (!items || !Array.isArray(items) || items.length === 0) {
       return NextResponse.json(
-        { success: false, error: { code: 'VALIDATION_ERROR', message: 'Name and items required' } },
+        { success: false, error: { code: 'VALIDATION_ERROR', message: 'Order must have at least one item' } },
         { status: 400 }
       )
     }
 
+    // Calculate totals
+    const subtotal = items.reduce((sum: number, item: any) => sum + (item.lineTotal || item.price * item.qty), 0)
+    const tax = subtotal * 0.1 // 10% tax
+    const total = subtotal + tax
+
     // Get next transaction number
     const lastOrder = await prisma.order.findFirst({
       orderBy: { transactionNo: 'desc' },
-      select: { transactionNo: true },
     })
-    const transactionNo = (lastOrder?.transactionNo ?? 0) + 1
+    const transactionNo = (lastOrder?.transactionNo || 1000) + 1
 
     // Create held order
     const order = await prisma.order.create({
       data: {
-        clerkId,
-        customerId: customerId || null,
         transactionNo,
+        clerkId: session.id,
+        customerId,
         subtotal,
         tax,
         total,
-        currency: 'USD',
-        currencyRate: 1,
+        currency,
+        currencyRate,
         paymentType: 'pending',
-        tendered: 0,
-        change: 0,
-        amountPaid: 0,
-        balanceDue: total,
         status: 'pending',
         kdsStatus: 'new',
-        holdName: name,
+        holdName: holdName || `Hold #${transactionNo}`,
+        notes,
+        amountPaid: 0,
+        balanceDue: total,
         items: {
           create: items.map((item: any) => ({
-            itemId: item.itemId,
+            itemId: item.itemId || item.id,
             name: item.name,
             price: item.price,
             qty: item.qty,
-            lineTotal: item.lineTotal,
+            lineTotal: item.lineTotal || item.price * item.qty,
           })),
         },
       },
       include: {
         items: true,
-        customer: { select: { id: true, name: true } },
+        clerk: { select: { name: true } },
+        customer: true,
       },
     })
 
-    return NextResponse.json({
-      success: true,
+    // Log the hold
+    await prisma.sessionLog.create({
       data: {
-        id: order.id,
-        holdName: order.holdName,
-        createdAt: order.createdAt,
+        clerkId: session.id,
+        action: 'order_held',
+        details: JSON.stringify({ orderId: order.id, holdName, total }),
       },
-    }, { status: 201 })
+    })
+
+    return NextResponse.json({ success: true, data: { order } })
   } catch (error) {
-    console.error('Create held order error:', error)
+    console.error('Hold order error:', error)
     return NextResponse.json(
-      { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to hold order' } },
+      { success: false, error: { code: 'INTERNAL_ERROR', message: 'An error occurred' } },
+      { status: 500 }
+    )
+  }
+}
+
+// GET /api/orders/hold - List held orders
+export async function GET(request: NextRequest) {
+  try {
+    const session = await getSession()
+    if (!session) {
+      return NextResponse.json(
+        { success: false, error: { code: 'UNAUTHORIZED', message: 'Not authenticated' } },
+        { status: 401 }
+      )
+    }
+
+    const heldOrders = await prisma.order.findMany({
+      where: {
+        status: 'pending',
+        holdName: { not: null },
+      },
+      include: {
+        items: true,
+        clerk: { select: { id: true, name: true } },
+        customer: { select: { id: true, name: true, loyaltyCardNo: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+    })
+
+    return NextResponse.json({ success: true, data: { orders: heldOrders } })
+  } catch (error) {
+    console.error('List held orders error:', error)
+    return NextResponse.json(
+      { success: false, error: { code: 'INTERNAL_ERROR', message: 'An error occurred' } },
       { status: 500 }
     )
   }

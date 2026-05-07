@@ -1,87 +1,104 @@
 'use client'
 
 import { useState } from 'react'
-import { X, Save } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 interface HoldOrderModalProps {
-  onHold: (name: string) => void
+  isOpen: boolean
   onClose: () => void
-  itemCount: number
-  total: number
-  currency: string
+  onHold: (data: { holdName: string; notes?: string }) => void
+  defaultName?: string
 }
 
-export function HoldOrderModal({ onHold, onClose, itemCount, total, currency }: HoldOrderModalProps) {
-  const [name, setName] = useState('')
+export function HoldOrderModal({ isOpen, onClose, onHold, defaultName }: HoldOrderModalProps) {
+  const [holdName, setHoldName] = useState(defaultName || '')
+  const [notes, setNotes] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  if (!isOpen) return null
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!name.trim()) return
-    
+    if (!holdName.trim()) return
+
     setIsSubmitting(true)
     try {
-      await onHold(name.trim())
+      await onHold({ holdName: holdName.trim(), notes: notes.trim() || undefined })
+      setHoldName('')
+      setNotes('')
+      onClose()
     } finally {
       setIsSubmitting(false)
     }
   }
 
+  const quickNames = ['Bar', 'Table 1', 'Table 2', 'Table 3', 'Drive-Thru', 'Phone Order']
+
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-xl font-bold text-text-primary">Hold Order</h2>
-            <p className="text-sm text-text-secondary">Save this cart for later</p>
-          </div>
-          <button
-            onClick={onClose}
-            className="p-2 text-text-secondary hover:text-text-primary hover:bg-surface-secondary rounded-lg transition-colors"
-          >
-            <X size={20} />
-          </button>
-        </div>
-
-        <div className="mb-6 p-4 bg-surface-secondary rounded-xl">
-          <div className="flex justify-between text-sm mb-2">
-            <span className="text-text-secondary">Items:</span>
-            <span className="font-medium text-text-primary">{itemCount}</span>
-          </div>
-          <div className="flex justify-between text-lg font-bold">
-            <span className="text-text-primary">Total:</span>
-            <span className="text-accent-success">{currency}{total.toFixed(2)}</span>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl">
+        <div className="p-6 border-b">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-bold text-text-primary">Hold Order</h2>
+            <button onClick={onClose} className="text-text-secondary hover:text-text-primary">✕</button>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <label className="block text-sm font-medium text-text-primary mb-2">
-            Order Name (e.g., "Table 5", "John's Order")
-          </label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter order name..."
-            className="w-full px-4 py-3 border border-surface-tertiary rounded-xl text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent mb-6"
-            autoFocus
-          />
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-text-primary">Hold Name / Ticket</label>
+            <input
+              type="text"
+              value={holdName}
+              onChange={(e) => setHoldName(e.target.value)}
+              placeholder="e.g., Table 5, John, Bar"
+              className="w-full px-4 py-3 border border-surface-tertiary rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"
+              autoFocus
+            />
+            <div className="flex flex-wrap gap-2">
+              {quickNames.map((name) => (
+                <button
+                  key={name}
+                  type="button"
+                  onClick={() => setHoldName(name)}
+                  className="px-3 py-1 text-sm bg-surface-secondary text-text-primary rounded-full hover:bg-surface-tertiary transition-colors"
+                >
+                  {name}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-text-primary">Notes (Optional)</label>
+            <textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="Any special instructions..."
+              rows={3}
+              className="w-full px-4 py-3 border border-surface-tertiary rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none resize-none"
+            />
+          </div>
 
           <div className="flex gap-3">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 px-4 rounded-xl font-medium bg-surface-secondary text-text-primary hover:bg-surface-tertiary transition-colors"
+              className="flex-1 py-3 border border-surface-tertiary text-text-primary font-semibold rounded-xl hover:bg-surface-secondary transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              disabled={!name.trim() || isSubmitting}
-              className="flex-1 py-3 px-4 rounded-xl font-bold bg-primary text-white hover:bg-primary-dark disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+              disabled={!holdName.trim() || isSubmitting}
+              className={cn(
+                'flex-1 py-3 font-semibold rounded-xl transition-colors',
+                holdName.trim() && !isSubmitting
+                  ? 'bg-primary text-white hover:bg-primary-dark'
+                  : 'bg-surface-tertiary text-text-muted cursor-not-allowed'
+              )}
             >
-              <Save size={18} />
-              {isSubmitting ? 'Saving...' : 'Hold Order'}
+              {isSubmitting ? 'Holding...' : 'Hold Order'}
             </button>
           </div>
         </form>

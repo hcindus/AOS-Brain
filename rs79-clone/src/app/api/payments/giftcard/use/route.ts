@@ -1,13 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { getSession } from '@/lib/auth'
 
-// POST /api/payments/giftcard/use - Apply gift card to order
+// POST /api/payments/giftcard/use - Use gift card for payment
 export async function POST(request: NextRequest) {
   try {
+    const session = await getSession()
+    if (!session) {
+      return NextResponse.json(
+        { success: false, error: { code: 'UNAUTHORIZED', message: 'Not authenticated' } },
+        { status: 401 }
+      )
+    }
+
     const body = await request.json()
     const { code, amount, orderId } = body
 
-    if (!code || typeof code !== 'string') {
+    if (!code) {
       return NextResponse.json(
         { success: false, error: { code: 'VALIDATION_ERROR', message: 'Gift card code is required' } },
         { status: 400 }
@@ -16,72 +25,83 @@ export async function POST(request: NextRequest) {
 
     if (!amount || amount <= 0) {
       return NextResponse.json(
-        { success: false, error: { code: 'VALIDATION_ERROR', message: 'Amount must be greater than 0' } },
+        { success: false, error: { code: 'VALIDATION_ERROR', message: 'Valid amount is required' } },
         { status: 400 }
       )
     }
 
-    // Normalize the code
-    const normalizedCode = code.toUpperCase().replace(/\s/g, '')
-
-    // Verify the gift card first
-    const verifyResponse = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/payments/giftcard/verify`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code: normalizedCode }),
+    const giftCard = await prisma.giftCard.findUnique({
+      where: { code: code.trim().toUpperCase() },
     })
 
-    if (!verifyResponse.ok) {
-      const error = await verifyResponse.json()
-      return NextResponse.json(error, { status: verifyResponse.status })
+    if (!giftCard) {
+      return NextResponse.json(
+        { success: false, error: { code: 'NOT_FOUND', message: 'Gift card not found' } },
+        { status: 404 }
+      )
     }
 
-    const { data: giftCardInfo } = await verifyResponse.json()
+    if (!giftCard.isActive) {
+      return NextResponse.json(
+        { success: false, error: { code: 'INVALID_CARD', message: 'Gift card is inactive' } },
+        { status: 400 }
+      )
+    }
 
-    // Check if amount exceeds balance
-    if (amount > giftCardInfo.balance) {
+    if (giftCard.expiresAt && new Date() > giftCard.expiresAt) {
+      return NextResponse.json(
+        { success: false, error: { code: 'EXPIRED', message: 'Gift card has expired' } },
+        { status: 400 }
+      )
+    }
+
+    if (giftCard.balance < amount) {
       return NextResponse.json(
         { 
           success: false, 
           error: { 
-            code: 'INSUFFICIENT_BALANCE', 
-            message: `Amount ($${amount.toFixed(2)}) exceeds available balance ($${giftCardInfo.balance.toFixed(2)})` 
+            code: 'INSUFFICIENT_FUNDS', 
+            message: `Insufficient balance. Available: $${giftCard.balance.toFixed(2)}, Requested: $${amount.toFixed(2)}` 
           } 
         },
         { status: 400 }
       )
     }
 
-    // Calculate remaining balance after use
-    const newBalance = giftCardInfo.balance - amount
+    // Deduct from gift card
+    const updatedCard = await prisma.giftCard.update({
+      where: { id: giftCard.id },
+      data: {
+        balance: { decrement: amount },
+      },
+    })
 
-    // In a real implementation, update the gift card balance in database
-    // For customer store credit, update loyalty points
-    if (giftCardInfo.customerId) {
-      const pointsToDeduct = Math.ceil(amount * 100) // Convert dollars back to points
-      await prisma.customer.update({
-        where: { id: giftCardInfo.customerId },
-        data: {
-          loyaltyPoints: { decrement: pointsToDeduct },
-        },
-      })
-    }
+    // Log the usage
+    await prisma.sessionLog.create({
+      data: {
+        clerkId: session.id,
+        action: 'giftcard_used',
+        details: JSON.stringify({
+          code: giftCard.code,
+          amount,
+          remainingBalance: updatedCard.balance,
+          orderId,
+        }),
+      },
+    })
 
     return NextResponse.json({
       success: true,
       data: {
-        code: normalizedCode,
-        amountApplied: amount,
-        previousBalance: giftCardInfo.balance,
-        newBalance,
-        transactionId: `TXN-${Date.now()}`,
-        timestamp: new Date().toISOString(),
+        code: updatedCard.code,
+        amountUsed: amount,
+        remainingBalance: updatedCard.balance,
       },
     })
   } catch (error) {
-    console.error('Gift card use error:', error)
+    console.error('Use gift card error:', error)
     return NextResponse.json(
-      { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to apply gift card' } },
+      { success: false, error: { code: 'INTERNAL_ERROR', message: 'An error occurred' } },
       { status: 500 }
     )
   }

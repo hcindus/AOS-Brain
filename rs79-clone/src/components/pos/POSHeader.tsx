@@ -49,13 +49,11 @@ export function POSHeader({
       </div>
 
       <div className="flex items-center gap-4">
-        <{/* Time Display */}
         <div className="hidden md:flex items-center gap-2 text-text-secondary">
           <Clock size={16} />
           <span className="text-sm font-medium">{currentTime || '--:--'}</span>
         </div>
 
-        <{/* Notifications */}
         <button
           onClick={() => {}}
           className="relative p-2 text-text-secondary hover:text-text-primary hover:bg-surface-secondary rounded-lg transition-colors"
@@ -64,7 +62,6 @@ export function POSHeader({
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-accent-danger rounded-full"></span>
         </button>
 
-        <{/* Clerk Info */}
         <div className="flex items-center gap-3 pl-4 border-l border-surface-tertiary">
           <div className="hidden sm:block text-right">
             <p className="font-semibold text-text-primary text-sm">{clerk.name}</p>
