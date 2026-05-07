@@ -43,3 +43,30 @@ export function hasPermission(session: ClerkSession | null, requiredRoles: Clerk
   if (!session) return false
   return requiredRoles.includes(session.role)
 }
+
+// Helper for API routes - requires auth and returns response if not authenticated
+export async function requireAuth(req: NextRequest, allowedRoles: ClerkRole[] = ['Admin', 'Manager']): Promise<{ success: boolean; response?: NextResponse; session?: ClerkSession }> {
+  const session = await authenticateRequest(req)
+  
+  if (!session) {
+    return {
+      success: false,
+      response: NextResponse.json(
+        { success: false, error: { code: 'UNAUTHORIZED', message: 'Authentication required' } },
+        { status: 401 }
+      )
+    }
+  }
+  
+  if (!hasPermission(session, allowedRoles)) {
+    return {
+      success: false,
+      response: NextResponse.json(
+        { success: false, error: { code: 'FORBIDDEN', message: 'Insufficient permissions' } },
+        { status: 403 }
+      )
+    }
+  }
+  
+  return { success: true, session }
+}

@@ -13,6 +13,7 @@ interface PaymentModalProps {
   total: number
   amountPaid: number
   currency: string
+  taxMode?: 'exclusive' | 'inclusive'
   availableCurrencies?: { code: string; name: string; rate: number }[]
 }
 

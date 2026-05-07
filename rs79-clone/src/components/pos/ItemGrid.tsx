@@ -9,9 +9,10 @@ interface ItemGridProps {
   onAddToCart: (item: Item) => void
   onItemClick?: (item: Item) => void
   currency: string
+  taxMode?: 'exclusive' | 'inclusive'
 }
 
-export function ItemGrid({ items, onAddToCart, onItemClick, currency }: ItemGridProps) {
+export function ItemGrid({ items, onAddToCart, onItemClick, currency, taxMode = 'exclusive' }: ItemGridProps) {
   if (items.length === 0) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center text-text-muted p-8">
@@ -65,6 +66,9 @@ export function ItemGrid({ items, onAddToCart, onItemClick, currency }: ItemGrid
                   <span className="font-bold text-accent-success">
                     {currency}{item.price.toFixed(2)}
                   </span>
+                  {taxMode === 'inclusive' && (
+                    <span className="text-xs text-text-muted">inc.</span>
+                  )}
                 </div>
                 <p className="text-xs text-text-muted mt-1">{item.sku}</p>
               </div>
