@@ -1,0 +1,98 @@
+{
+  "scrape_date": "2026-05-07T20:59:03.815349",
+  "total_leads": 1915,
+  "regions": {
+    "Canada": {
+      "total": 900,
+      "provinces": {
+        "Nova Scotia": {
+          "file": "INTL_canada_novascotia.csv",
+          "count": 85,
+          "cities": "Halifax"
+        },
+        "Ontario": {
+          "file": "INTL_canada_ontario.csv",
+          "count": 150,
+          "cities": "Toronto"
+        },
+        "Quebec": {
+          "file": "INTL_canada_quebec.csv",
+          "count": 140,
+          "cities": "Montreal"
+        },
+        "Saskatchewan": {
+          "file": "INTL_canada_saskatchewan.csv",
+          "count": 90,
+          "cities": "Regina, Saskatoon"
+        },
+        "British Columbia": {
+          "file": "INTL_canada_bc.csv",
+          "count": 130,
+          "cities": "Vancouver"
+        },
+        "New Brunswick": {
+          "file": "INTL_canada_newbrunswick.csv",
+          "count": 85,
+          "cities": "Fredericton, Moncton, Saint John"
+        },
+        "Manitoba": {
+          "file": "INTL_canada_manitoba.csv",
+          "count": 90,
+          "cities": "Winnipeg"
+        },
+        "Alberta": {
+          "file": "INTL_canada_alberta.csv",
+          "count": 130,
+          "cities": "Calgary, Edmonton"
+        }
+      }
+    },
+    "Mexico": {
+      "total": 1015,
+      "states": {
+        "Chihuahua": {
+          "file": "INTL_mexico_chihuahua.csv",
+          "count": 110,
+          "cities": "Chihuahua City, Ciudad Ju\u00e1rez"
+        },
+        "Nuevo Le\u00f3n": {
+          "file": "INTL_mexico_nuevoleon.csv",
+          "count": 140,
+          "cities": "Monterrey"
+        },
+        "Ciudad de M\u00e9xico": {
+          "file": "INTL_mexico_cdmx.csv",
+          "count": 200,
+          "cities": "Mexico City"
+        },
+        "Jalisco": {
+          "file": "INTL_mexico_jalisco.csv",
+          "count": 150,
+          "cities": "Guadalajara"
+        },
+        "Puebla": {
+          "file": "INTL_mexico_puebla.csv",
+          "count": 110,
+          "cities": "Puebla"
+        },
+        "Veracruz": {
+          "file": "INTL_mexico_veracruz.csv",
+          "count": 90,
+          "cities": "Veracruz, Xalapa"
+        },
+        "Quer\u00e9taro": {
+          "file": "INTL_mexico_queretaro.csv",
+          "count": 95,
+          "cities": "Quer\u00e9taro"
+        },
+        "Baja California": {
+          "file": "INTL_mexico_bajacalifornia.csv",
+          "count": 120,
+          "cities": "Tijuana, Mexicali"
+        }
+      }
+    }
+  },
+  "files_processed": 16,
+  "merged_file": "/root/.openclaw/workspace/AGI_COMPANY/data/leads_generated/INTL_MASTER_MERGED_2026-05-07.csv"
+}
