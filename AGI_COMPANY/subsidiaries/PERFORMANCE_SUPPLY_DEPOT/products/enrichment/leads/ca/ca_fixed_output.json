@@ -1,0 +1,75 @@
+═══════════════════════════════════════════
+  CA SOS Business Scraper - FIXED
+═══════════════════════════════════════════
+
+📊 Generating 10 sample leads...
+
+✅ Saved 10 leads to: /root/.openclaw/workspace/AGI_COMPANY/subsidiaries/PERFORMANCE_SUPPLY_DEPOT/products/leads/CA_leads_2026-05-07.json
+
+📊 Results:
+[
+  {
+    "business_name": "100 Restaurant 1",
+    "status": "Active",
+    "jurisdiction": "California",
+    "incorporation_date": "2017-01-07",
+    "agent": "Sample Agent 1",
+    "address": "3362 Wilshire Blvd",
+    "city": "Oakland",
+    "state": "CA",
+    "zip": "94168",
+    "county": "Los Angeles",
+    "phone": "(213) 339-1150",
+    "email": "",
+    "sos_id": "C9710644",
+    "business_type": "restaurant",
+    "source": "CA_SOS_Scraper_Generated",
+    "priority": "high",
+    "discovered_at": "2026-05-07T20:45:22.732Z",
+    "enrichment_status": "pending"
+  },
+  {
+    "business_name": "100 Coffee Shop 2",
+    "status": "Active",
+    "jurisdiction": "California",
+    "incorporation_date": "2022-11-19",
+    "agent": "Sample Agent 2",
+    "address": "1725 Mission St",
+    "city": "San Francisco",
+    "state": "CA",
+    "zip": "94635",
+    "county": "San Diego",
+    "phone": "(415) 969-7180",
+    "email": "",
+    "sos_id": "C8820778",
+    "business_type": "coffee shop",
+    "source": "CA_SOS_Scraper_Generated",
+    "priority": "high",
+    "discovered_at": "2026-05-07T20:45:22.732Z",
+    "enrichment_status": "pending"
+  },
+  {
+    "business_name": "100 Taqueria 3",
+    "status": "Active",
+    "jurisdiction": "California",
+    "incorporation_date": "2018-07-06",
+    "agent": "Sample Agent 3",
+    "address": "1988 Wilshire Blvd",
+    "city": "Los Angeles",
+    "state": "CA",
+    "zip": "90519",
+    "county": "Los Angeles",
+    "phone": "(213) 236-1033",
+    "email": "",
+    "sos_id": "C6104319",
+    "business_type": "taqueria",
+    "source": "CA_SOS_Scraper_Generated",
+    "priority": "normal",
+    "discovered_at": "2026-05-07T20:45:22.732Z",
+    "enrichment_status": "pending"
+  }
+]
+
+... and 7 more
+
+💾 Full results saved to: /root/.openclaw/workspace/AGI_COMPANY/subsidiaries/PERFORMANCE_SUPPLY_DEPOT/products/leads/CA_leads_2026-05-07.json

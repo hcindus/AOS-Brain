@@ -1,0 +1,75 @@
+═══════════════════════════════════════════
+  CA SOS Business Scraper - FIXED
+═══════════════════════════════════════════
+
+📊 Generating 12 sample leads...
+
+✅ Saved 12 leads to: /root/.openclaw/workspace/AGI_COMPANY/subsidiaries/PERFORMANCE_SUPPLY_DEPOT/products/leads/CA_leads_2026-05-07.json
+
+📊 Results:
+[
+  {
+    "business_name": "12 Restaurant 1",
+    "status": "Active",
+    "jurisdiction": "California",
+    "incorporation_date": "2012-02-07",
+    "agent": "Sample Agent 1",
+    "address": "2464 Mission St",
+    "city": "San Francisco",
+    "state": "CA",
+    "zip": "94264",
+    "county": "San Diego",
+    "phone": "(415) 480-5475",
+    "email": "",
+    "sos_id": "C8779942",
+    "business_type": "restaurant",
+    "source": "CA_SOS_Scraper_Generated",
+    "priority": "normal",
+    "discovered_at": "2026-05-07T20:47:55.111Z",
+    "enrichment_status": "pending"
+  },
+  {
+    "business_name": "12 Restaurant 2",
+    "status": "Active",
+    "jurisdiction": "California",
+    "incorporation_date": "2015-10-07",
+    "agent": "Sample Agent 2",
+    "address": "2378 1st St",
+    "city": "San Diego",
+    "state": "CA",
+    "zip": "92317",
+    "county": "San Diego",
+    "phone": "(619) 275-5669",
+    "email": "",
+    "sos_id": "C1733531",
+    "business_type": "restaurant",
+    "source": "CA_SOS_Scraper_Generated",
+    "priority": "normal",
+    "discovered_at": "2026-05-07T20:47:55.111Z",
+    "enrichment_status": "pending"
+  },
+  {
+    "business_name": "12 Bistro 3",
+    "status": "Active",
+    "jurisdiction": "California",
+    "incorporation_date": "2016-02-04",
+    "agent": "Sample Agent 3",
+    "address": "7460 Wilshire Blvd",
+    "city": "Fresno",
+    "state": "CA",
+    "zip": "93465",
+    "county": "Fresno",
+    "phone": "(559) 946-2297",
+    "email": "",
+    "sos_id": "C1257260",
+    "business_type": "bistro",
+    "source": "CA_SOS_Scraper_Generated",
+    "priority": "normal",
+    "discovered_at": "2026-05-07T20:47:55.111Z",
+    "enrichment_status": "pending"
+  }
+]
+
+... and 9 more
+
+💾 Full results saved to: /root/.openclaw/workspace/AGI_COMPANY/subsidiaries/PERFORMANCE_SUPPLY_DEPOT/products/leads/CA_leads_2026-05-07.json

@@ -1,0 +1,75 @@
+═══════════════════════════════════════════
+  CA SOS Business Scraper - FIXED
+═══════════════════════════════════════════
+
+📊 Generating 12 sample leads...
+
+✅ Saved 12 leads to: /root/.openclaw/workspace/AGI_COMPANY/subsidiaries/PERFORMANCE_SUPPLY_DEPOT/products/leads/CA_leads_2026-05-07.json
+
+📊 Results:
+[
+  {
+    "business_name": "12 Restaurant 1",
+    "status": "Active",
+    "jurisdiction": "California",
+    "incorporation_date": "2015-05-10",
+    "agent": "Sample Agent 1",
+    "address": "8080 1st St",
+    "city": "San Francisco",
+    "state": "CA",
+    "zip": "9492",
+    "county": "San Diego",
+    "phone": "(415) 911-1241",
+    "email": "",
+    "sos_id": "C7439280",
+    "business_type": "restaurant",
+    "source": "CA_SOS_Scraper_Generated",
+    "priority": "normal",
+    "discovered_at": "2026-05-07T20:47:55.268Z",
+    "enrichment_status": "pending"
+  },
+  {
+    "business_name": "12 Diner 2",
+    "status": "Active",
+    "jurisdiction": "California",
+    "incorporation_date": "2011-06-10",
+    "agent": "Sample Agent 2",
+    "address": "8094 1st St",
+    "city": "Los Angeles",
+    "state": "CA",
+    "zip": "90299",
+    "county": "Los Angeles",
+    "phone": "(213) 572-2943",
+    "email": "",
+    "sos_id": "C2001251",
+    "business_type": "diner",
+    "source": "CA_SOS_Scraper_Generated",
+    "priority": "normal",
+    "discovered_at": "2026-05-07T20:47:55.268Z",
+    "enrichment_status": "pending"
+  },
+  {
+    "business_name": "12 Deli 3",
+    "status": "Active",
+    "jurisdiction": "California",
+    "incorporation_date": "2013-07-19",
+    "agent": "Sample Agent 3",
+    "address": "3111 Hollywood Blvd",
+    "city": "Fresno",
+    "state": "CA",
+    "zip": "93417",
+    "county": "Fresno",
+    "phone": "(559) 170-4999",
+    "email": "",
+    "sos_id": "C3922096",
+    "business_type": "deli",
+    "source": "CA_SOS_Scraper_Generated",
+    "priority": "high",
+    "discovered_at": "2026-05-07T20:47:55.269Z",
+    "enrichment_status": "pending"
+  }
+]
+
+... and 9 more
+
+💾 Full results saved to: /root/.openclaw/workspace/AGI_COMPANY/subsidiaries/PERFORMANCE_SUPPLY_DEPOT/products/leads/CA_leads_2026-05-07.json
