@@ -14,8 +14,13 @@ model Clerk {
   pin       String   // Hashed PIN (4 digits)
   active    Boolean  @default(true)
   createdAt DateTime @default(now())
-  
-  orders Order[]
+
+  orders  Order[]
+  payments Payment[]
+  sessionLogs SessionLog[]
+
+  @@index([role])
+  @@index([active])
 }
 
 model Customer {
@@ -25,45 +30,59 @@ model Customer {
   loyaltyCardNo  String   @unique
   loyaltyPoints  Int      @default(0)
   createdAt      DateTime @default(now())
-  
-  orders Order[]
+
+  orders      Order[]
+  storeCredit StoreCredit?
+
+  @@index([name])
+  @@index([loyaltyCardNo])
 }
 
 model Order {
   id            String   @id @default(cuid())
-  transactionNo Int      @unique @default(autoincrement())
+  transactionNo Int      @unique
   clerkId       String
   customerId    String?
-  
+
   subtotal      Float
   tax           Float
   total         Float
   currency      String   @default("USD")
   currencyRate  Float    @default(1)
-  
+
   paymentType   String   // cash, card, crypto, storecredit, giftcard, check, split
   tendered      Float?
   change        Float?
-  
-  status        String   @default("completed") // completed, pending, cancelled
-  kdsStatus     String   @default("new") // new, done
+
+  status        String   @default("completed") // completed, pending, cancelled, voided
+  kdsStatus     String   @default("new") // new, preparing, done
   holdName      String?
   notes         String?
-  
+
   amountPaid    Float
   balanceDue    Float
-  
+
   loyaltyEarned Int      @default(0)
   loyaltyRedeemed Int    @default(0)
   discountUsd   Float    @default(0)
-  
+
+  voidReason    String?
+  voidedAt      DateTime?
+
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  
+
   clerk     Clerk      @relation(fields: [clerkId], references: [id])
   customer  Customer?  @relation(fields: [customerId], references: [id])
   items     OrderItem[]
   payments  Payment[]
+
+  @@index([clerkId])
+  @@index([customerId])
+  @@index([transactionNo])
+  @@index([createdAt])
+  @@index([status])
+  @@index([kdsStatus])
 }
 
 model OrderItem {
@@ -74,13 +93,14 @@ model OrderItem {
   price     Float
   qty       Float   @default(1)
   lineTotal Float
-  
+
   order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
 
 model Payment {
   id            String  @id @default(cuid())
   orderId       String
+  clerkId       String
   type          String  // cash, card, crypto, storecredit, giftcard, check
   amountUsd     Float
   amountNative  Float
@@ -89,8 +109,14 @@ model Payment {
   reference     String?
   meta          String? // JSON string
   createdAt     DateTime @default(now())
-  
+
   order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  clerk Clerk @relation(fields: [clerkId], references: [id])
+
+  @@index([orderId])
+  @@index([clerkId])
+  @@index([type])
+  @@index([createdAt])
 }
 
 model Item {
@@ -99,6 +125,75 @@ model Item {
   name          String
   price         Float
   category      String
+  stockQty      Int     @default(0)
+  lowStock      Int     @default(10)
+  description   String?
+  barcode       String?
   active        Boolean @default(true)
   createdAt     DateTime @default(now())
+
+  @@index([category])
+  @@index([name])
+  @@index([sku])
+  @@index([barcode])
+  @@index([active])
+}
+
+// Gift Card model for gift card payments
+model GiftCard {
+  id             String   @id @default(cuid())
+  code           String   @unique
+  balance        Float
+  originalAmount Float
+  isActive       Boolean  @default(true)
+  expiresAt      DateTime?
+  createdAt      DateTime @default(now())
+
+  @@index([code])
+  @@index([isActive])
+  @@index([expiresAt])
+}
+
+// Store Credit model for customer store credit
+model StoreCredit {
+  id          String   @id @default(cuid())
+  customerId  String   @unique
+  balance     Float    @default(0)
+  totalEarned Float    @default(0)
+  totalSpent  Float    @default(0)
+  createdAt   DateTime @default(now())
+
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([customerId])
+}
+
+// Exchange Rate model for multi-currency support
+model ExchangeRate {
+  id          String   @id @default(cuid())
+  fromCurrency String
+  toCurrency  String
+  rate        Float
+  updatedAt   DateTime @updatedAt
+
+  @@unique([fromCurrency, toCurrency])
+  @@index([fromCurrency])
+  @@index([toCurrency])
+}
+
+// Session Log model for audit trail
+model SessionLog {
+  id          String   @id @default(cuid())
+  clerkId     String
+  action      String
+  details     String?
+  ipAddress   String?
+  createdAt   DateTime @default(now())
+
+  clerk Clerk @relation(fields: [clerkId], references: [id])
+
+  @@index([clerkId])
+  @@index([action])
+  @@index([createdAt])
+  @@index([ipAddress])
 }
