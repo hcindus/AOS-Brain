@@ -3,7 +3,7 @@
   "name": "Jax",
   "role": "SCIENTIST",
   "level": 5,
-  "xp": 127642,
+  "xp": 127798,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 21,
     "combat": 23
   },
-  "missionsCompleted": 840,
+  "missionsCompleted": 843,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -4218,6 +4218,21 @@
       "name": "Anomalous Planet",
       "location": "Alpha-1",
       "timestamp": 1778115381394
+    },
+    {
+      "name": "Rare Minerals",
+      "location": "Alpha-1",
+      "timestamp": 1778120721510
+    },
+    {
+      "name": "Hidden Base",
+      "location": "Alpha-1",
+      "timestamp": 1778120751495
+    },
+    {
+      "name": "Rare Minerals",
+      "location": "Alpha-1",
+      "timestamp": 1778120841496
     }
   ],
   "status": "ACTIVE",
