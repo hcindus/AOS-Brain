@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken'
 import { cookies } from 'next/headers'
-import { NextRequest } from 'next/server'
-import type { ClerkSession, ClerkRole } from '@/types/clerk'
+import { NextRequest, NextResponse } from 'next/server'
+import { ClerkRole } from '@/types/clerk'
+import type { ClerkSession } from '@/types/clerk'
 
 const JWT_SECRET = process.env.JWT_SECRET || 'rs79-dev-secret-change-in-production'
 
@@ -45,7 +46,10 @@ export function hasPermission(session: ClerkSession | null, requiredRoles: Clerk
 }
 
 // Helper for API routes - requires auth and returns response if not authenticated
-export async function requireAuth(req: NextRequest, allowedRoles: ClerkRole[] = ['Admin', 'Manager']): Promise<{ success: boolean; response?: NextResponse; session?: ClerkSession }> {
+export async function requireAuth(
+  req: NextRequest, 
+  allowedRoles: ClerkRole[] = [ClerkRole.Admin, ClerkRole.Manager]
+): Promise<{ success: boolean; response?: NextResponse; session?: ClerkSession }> {
   const session = await authenticateRequest(req)
   
   if (!session) {
