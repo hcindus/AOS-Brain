@@ -3,7 +3,7 @@
   "name": "Nyx",
   "role": "ENGINEER",
   "level": 5,
-  "xp": 131458,
+  "xp": 131522,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 15,
     "combat": 14
   },
-  "missionsCompleted": 861,
+  "missionsCompleted": 862,
   "discoveries": [
     {
       "name": "Rare Minerals",
@@ -4323,6 +4323,11 @@
       "name": "Hidden Base",
       "location": "Alpha-1",
       "timestamp": 1778199413192
+    },
+    {
+      "name": "Alien Artifact",
+      "location": "Alpha-1",
+      "timestamp": 1778203703253
     }
   ],
   "status": "ACTIVE",
