@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Secure Login</title>
+    <link rel="stylesheet" href="assets/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>📝 Create Account</h1>
+                <p class="subtitle">Secure registration with breach detection</p>
+            </div>
+
+            <form id="register-form" class="auth-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required 
+                           autocomplete="email" placeholder="you@company.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-input">
+                        <input type="password" id="password" name="password" required
+                               minlength="8" autocomplete="new-password" placeholder="••••••••">
+                        <button type="button" class="toggle-password" data-target="password">👁️</button>
+                    </div>
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="strength-bar"></div>
+                    </div>
+                    <p class="help-text">Use 8+ characters. Avoid common words.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirmPassword" required
+                           autocomplete="new-password" placeholder="••••••••">
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox">
+                        <input type="checkbox" id="terms" required>
+                        <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="register-btn">
+                    <span class="btn-text">Create Account</span>
+                    <span class="btn-loading hidden">⏳</span>
+                </button>
+            </form>
+
+            <div id="error-message" class="alert alert-error hidden"></div>
+            <div id="success-message" class="alert alert-success hidden"></div>
+
+            <div class="auth-links">
+                <p>Already have an account? <a href="index.html">Sign in</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/auth.js"></script>
+    <script>
+        // Password strength indicator
+        document.getElementById('password').addEventListener('input', (e) => {
+            const password = e.target.value;
+            const bar = document.getElementById('strength-bar');
+            
+            // Simple strength check
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (password.length >= 12) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            
+            bar.className = 'password-strength-bar';
+            if (strength <= 2) bar.classList.add('weak');
+            else if (strength <= 4) bar.classList.add('medium');
+            else bar.classList.add('strong');
+        });
+
+        // Handle registration
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('register-btn');
+            const btnText = btn.querySelector('.btn-text');
+            const btnLoading = btn.querySelector('.btn-loading');
+            const errorDiv = document.getElementById('error-message');
+            const successDiv = document.getElementById('success-message');
+            
+            btn.disabled = true;
+            btnText.classList.add('hidden');
+            btnLoading.classList.remove('hidden');
+            errorDiv.classList.add('hidden');
+            successDiv.classList.add('hidden');
+
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            if (password !== confirmPassword) {
+                errorDiv.textContent = 'Passwords do not match';
+                errorDiv.classList.remove('hidden');
+                btn.disabled = false;
+                btnText.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+                return;
+            }
+
+            try {
+                const result = await AuthAPI.register({
+                    email: document.getElementById('email').value,
+                    password: password
+                });
+                
+                if (result.success) {
+                    successDiv.textContent = 'Registration successful! Redirecting to login...';
+                    successDiv.classList.remove('hidden');
+                    setTimeout(() => {
+                        window.location.href = '/index.html';
+                    }, 2000);
+                } else {
+                    throw new Error(result.error || 'Registration failed');
+                }
+            } catch (err) {
+                errorDiv.textContent = err.message;
+                errorDiv.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btnText.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+            }
+        });
+
+        // Password toggle
+        document.querySelectorAll('.toggle-password').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = document.getElementById(btn.dataset.target);
+                target.type = target.type === 'password' ? 'text' : 'password';
+                btn.textContent = target.type === 'password' ? '👁️' : '🙈';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Login - AGI Company</title>
+    <link rel="stylesheet" href="assets/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>🔐 Secure Login</h1>
+                <p class="subtitle">Protected by Argon2id + MFA</p>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required 
+                           autocomplete="email" placeholder="you@company.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-input">
+                        <input type="password" id="password" name="password" required
+                               autocomplete="current-password" placeholder="••••••••">
+                        <button type="button" class="toggle-password" data-target="password">👁️</button>
+                    </div>
+                </div>
+
+                <!-- MFA Code (hidden initially) -->
+                <div class="form-group hidden" id="mfa-group">
+                    <label for="mfa-code">MFA Code</label>
+                    <input type="text" id="mfa-code" name="mfaCode" 
+                           maxlength="6" placeholder="000000">
+                    <p class="help-text">Enter the 6-digit code from your authenticator app</p>
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox">
+                        <input type="checkbox" id="remember-me">
+                        <span>Remember this device</span>
+                    </label>
+                    <a href="forgot-password.html" class="forgot-link">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="login-btn">
+                    <span class="btn-text">Sign In</span>
+                    <span class="btn-loading hidden">⏳</span>
+                </button>
+
+                <div class="auth-links">
+                    <p>Don't have an account? <a href="register.html">Sign up</a></p>
+                </div>
+            </form>
+
+            <!-- Error Message -->
+            <div id="error-message" class="alert alert-error hidden"></div>
+
+            <!-- Security Info -->
+            <div class="security-info">
+                <p>🔒 Secured with:</p>
+                <ul>
+                    <li>Argon2id password hashing</li>
+                    <li>Breach-checked passwords</li>
+                    <li>Rate-limited login attempts</li>
+                    <li>TOTP MFA support</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/auth.js"></script>
+    <script>
+        // Handle login form
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('login-btn');
+            const btnText = btn.querySelector('.btn-text');
+            const btnLoading = btn.querySelector('.btn-loading');
+            const errorDiv = document.getElementById('error-message');
+            
+            // Show loading
+            btn.disabled = true;
+            btnText.classList.add('hidden');
+            btnLoading.classList.remove('hidden');
+            errorDiv.classList.add('hidden');
+            
+            try {
+                const result = await AuthAPI.login({
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value,
+                    mfaCode: document.getElementById('mfa-code').value || undefined
+                });
+                
+                if (result.success) {
+                    // Store tokens
+                    localStorage.setItem('accessToken', result.accessToken);
+                    localStorage.setItem('user', JSON.stringify(result.user));
+                    
+                    // Show alerts if suspicious activity detected
+                    if (result.alerts) {
+                        console.warn('Security alerts:', result.alerts);
+                    }
+                    
+                    // Redirect to dashboard
+                    window.location.href = '/dashboard.html';
+                } else if (result.requiresMFA) {
+                    // Show MFA input
+                    document.getElementById('mfa-group').classList.remove('hidden');
+                    document.getElementById('mfa-code').focus();
+                    btnText.textContent = 'Verify MFA';
+                } else {
+                    throw new Error(result.error || 'Login failed');
+                }
+            } catch (err) {
+                errorDiv.textContent = err.message;
+                errorDiv.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btnText.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+            }
+        });
+        
+        // Password toggle
+        document.querySelectorAll('.toggle-password').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = document.getElementById(btn.dataset.target);
+                target.type = target.type === 'password' ? 'text' : 'password';
+                btn.textContent = target.type === 'password' ? '👁️' : '🙈';
+            });
+        });
+    </script>
+</body>
+</html>
