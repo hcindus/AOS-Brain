@@ -10,6 +10,7 @@ const passwordResetRoutes = require('./routes/password-reset');
 const { setCsrfToken, apiLimiter } = require('./middleware/rateLimit');
 const { securityHeaders } = require('./middleware/security');
 const { csrfLimiter } = require('./middleware/additionalRateLimits');
+const { initializeSecurityGuardian, securityStatusRoute, securityLoggingMiddleware } = require('./middleware/security-guardian');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -37,20 +38,6 @@ app.use(helmet({
     },
     referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
 }));
-    contentSecurityPolicy: {
-        directives: {
-            defaultSrc: ["'self'"],
-            styleSrc: ["'self'", "'unsafe-inline'"],
-            scriptSrc: ["'self'"],
-            imgSrc: ["'self'", "data:", "blob:"],
-        },
-    },
-    hsts: {
-        maxAge: 31536000, // 1 year
-        includeSubDomains: true,
-        preload: true
-    }
-}));
 
 // CORS
 app.use(cors({
@@ -65,6 +52,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// Security guardian logging
+app.use(securityLoggingMiddleware);
+
 // Rate limiting for all API routes
 app.use('/api', apiLimiter);
 
@@ -77,6 +67,9 @@ app.get('/api/csrf-token', csrfLimiter, setCsrfToken, (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/auth', passwordResetRoutes);
 
+// Security guardian status endpoint
+app.get('/api/security/status', securityStatusRoute);
+
 // Health check
 app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
@@ -87,7 +80,7 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 
 // SPA fallback
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/index.html'));
+    res.sendFile(path.join(__dirname, '../frontend/index.html')));
 });
 
 // Error handler
@@ -96,10 +89,22 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: 'Internal server error' });
 });
 
-app.listen(PORT, () => {
-    console.log(`🔐 Secure Auth Server running on port ${PORT}`);
-    console.log(`📁 Database: ${process.env.DATABASE_URL || './data/auth.db'}`);
-    console.log(`🌐 Frontend: ${process.env.FRONTEND_URL || 'http://localhost:8080'}`);
+// Initialize security guardian and start server
+async function startServer() {
+    // Initialize Sentinel-Dusty Fusion
+    await initializeSecurityGuardian();
+    
+    app.listen(PORT, () => {
+        console.log(`🔐 Secure Auth Server running on port ${PORT}`);
+        console.log(`🛡️  Sentinel-Dusty Fusion: ACTIVE`);
+        console.log(`📁 Database: ${process.env.DATABASE_URL || './data/auth.db'}`);
+        console.log(`🌐 Frontend: ${process.env.FRONTEND_URL || 'http://localhost:8080'}`);
+    });
+}
+
+startServer().catch(err => {
+    console.error('Failed to start server:', err);
+    process.exit(1);
 });
 
 module.exports = app;

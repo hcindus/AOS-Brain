@@ -8,6 +8,7 @@
     "dev": "nodemon backend/server.js",
     "start": "node backend/server.js",
     "test": "jest",
+    "security-test": "node scripts/security-test.js",
     "db:migrate": "node database/migrate.js",
     "db:seed": "node database/seed.js"
   },
@@ -27,7 +28,9 @@
     "dotenv": "^16.4.5",
     "axios": "^1.6.7",
     "crypto-js": "^4.2.0",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "nodemailer": "^6.9.7",
+    "colors": "^1.4.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.3",

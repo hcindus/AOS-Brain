@@ -24,8 +24,8 @@ router.post('/register',
     [
         body('email').isEmail().normalizeEmail(),
         body('password')
-            .isLength({ min: 8 })
-            .withMessage('Password must be at least 8 characters')
+            .isLength({ min: 8, max: 128 })
+            .withMessage('Password must be between 8 and 128 characters')
     ],
     async (req, res) => {
         try {
@@ -85,7 +85,9 @@ router.post('/login',
     csrfProtection,
     [
         body('email').isEmail().normalizeEmail(),
-        body('password').exists()
+        body('password')
+            .isLength({ min: 1, max: 128 })
+            .withMessage('Invalid credentials')
     ],
     async (req, res) => {
         try {
@@ -220,9 +222,9 @@ router.post('/mfa/setup', authenticateToken, csrfProtection, async (req, res) =>
         await logAuditEvent(req.userId, 'MFA_SETUP', 'SUCCESS', req);
 
         res.json({
-            secret: secret.base32, // For manual entry
+            // Never expose the raw secret - only QR code
             qrCode: qrCodeUrl,
-            backupCodes: [] // TODO: Generate backup codes
+            manualEntryKey: secret.base32.slice(0, 4) + '****...' // Show only first 4 chars
         });
     } catch (err) {
         console.error('MFA setup error:', err);
