@@ -44,7 +44,9 @@ async function generateRefreshToken(userId, deviceFingerprint, ipAddress, userAg
  */
 function verifyAccessToken(token) {
     try {
-        return jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+        return jwt.verify(token, process.env.JWT_ACCESS_SECRET, {
+            algorithms: ['HS256']  // Explicitly allow only HS256 - prevents alg:none attacks
+        });
     } catch (err) {
         return null;
     }

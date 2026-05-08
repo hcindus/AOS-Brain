@@ -8,12 +8,35 @@ const path = require('path');
 const authRoutes = require('./routes/auth');
 const passwordResetRoutes = require('./routes/password-reset');
 const { setCsrfToken, apiLimiter } = require('./middleware/rateLimit');
+const { securityHeaders } = require('./middleware/security');
+const { csrfLimiter } = require('./middleware/additionalRateLimits');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Security headers
+// Security headers (custom + helmet)
+app.use(securityHeaders);
 app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            styleSrc: ["'self'", "'unsafe-inline'"],
+            scriptSrc: ["'self'"],
+            imgSrc: ["'self'", "data:", "blob:"],
+            connectSrc: ["'self'"],
+            fontSrc: ["'self'"],
+            objectSrc: ["'none'"],
+            mediaSrc: ["'self'"],
+            frameSrc: ["'none'"],
+        },
+    },
+    hsts: {
+        maxAge: 31536000,
+        includeSubDomains: true,
+        preload: true
+    },
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
+}));
     contentSecurityPolicy: {
         directives: {
             defaultSrc: ["'self'"],
@@ -45,8 +68,8 @@ app.use(cookieParser());
 // Rate limiting for all API routes
 app.use('/api', apiLimiter);
 
-// CSRF token endpoint
-app.get('/api/csrf-token', setCsrfToken, (req, res) => {
+// CSRF token endpoint (with rate limiting)
+app.get('/api/csrf-token', csrfLimiter, setCsrfToken, (req, res) => {
     res.json({ csrfToken: req.cookies.csrfToken });
 });
 

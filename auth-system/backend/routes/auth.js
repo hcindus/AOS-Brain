@@ -8,6 +8,7 @@ const { generateAccessToken, generateRefreshToken, revokeRefreshToken, revokeAll
 const { logAuditEvent, detectSuspiciousActivity } = require('../utils/audit');
 const { checkPasswordBreach } = require('../utils/breachCheck');
 const { loginLimiter, registerLimiter, passwordResetLimiter } = require('../middleware/rateLimit');
+const { refreshLimiter } = require('../middleware/additionalRateLimits');
 const { authenticateToken, authenticateRefreshToken, csrfProtection } = require('../middleware/auth');
 const { sendWelcomeEmail, sendSecurityAlert } = require('../utils/email');
 
@@ -292,7 +293,7 @@ router.post('/logout', authenticateToken, async (req, res) => {
  * POST /api/auth/refresh
  * Refresh access token
  */
-router.post('/refresh', authenticateRefreshToken, async (req, res) => {
+router.post('/refresh', refreshLimiter, authenticateRefreshToken, async (req, res) => {
     try {
         // Revoke old refresh token
         await revokeRefreshToken(req.refreshToken);
