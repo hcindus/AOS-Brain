@@ -3,7 +3,7 @@
   "name": "Jax",
   "role": "SCIENTIST",
   "level": 5,
-  "xp": 131492,
+  "xp": 131562,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 21,
     "combat": 23
   },
-  "missionsCompleted": 861,
+  "missionsCompleted": 862,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -4323,6 +4323,11 @@
       "name": "Nebula Cloud",
       "location": "Alpha-1",
       "timestamp": 1778203013249
+    },
+    {
+      "name": "Unknown Signal",
+      "location": "Alpha-1",
+      "timestamp": 1778204993284
     }
   ],
   "status": "ACTIVE",
