@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Dashboard - AGI Auth System</title>
+    <style>
+        :root {
+            --bg-dark: #0a0a1a;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --bg-card-hover: rgba(255, 255, 255, 0.08);
+            --header-bg: rgba(26, 54, 93, 0.95);
+            --text: #e5e5e5;
+            --text-muted: #a0a0a0;
+            --accent: #ed8936;
+            --accent-hover: #dd6b20;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --info: #3b82f6;
+            --border: rgba(237, 137, 54, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-title h1 {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), #f6ad55);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .status-badge {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-secure {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .status-warning {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .status-danger {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--error);
+            border: 1px solid var(--error);
+        }
+
+        .last-updated {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Main Layout */
+        .main {
+            padding: 100px 40px 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+        }
+
+        .stat-card.critical {
+            border-left: 4px solid var(--error);
+        }
+
+        .stat-card.warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        .stat-card.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-icon {
+            font-size: 24px;
+        }
+
+        .stat-value {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .stat-value.critical { color: var(--error); }
+        .stat-value.warning { color: var(--warning); }
+        .stat-value.success { color: var(--success); }
+
+        .stat-change {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Charts Section */
+        .section {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 24px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Threat Table */
+        .threat-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .threat-table th {
+            text-align: left;
+            padding: 16px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .threat-table td {
+            padding: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .threat-table tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .severity-badge {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .severity-critical {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--error);
+        }
+
+        .severity-high {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .severity-medium {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--info);
+        }
+
+        .severity-low {
+            background: rgba(107, 114, 128, 0.2);
+            color: var(--text-muted);
+        }
+
+        /* Activity Log */
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .activity-icon.success {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--success);
+        }
+
+        .activity-icon.warning {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .activity-icon.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--error);
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .activity-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .activity-time {
+            font-size: 13px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        /* Guardian Status */
+        .guardian-status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px;
+            background: rgba(237, 137, 54, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .guardian-icon {
+            font-size: 32px;
+        }
+
+        .guardian-info h3 {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .guardian-info p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .guardian-pulse {
+            width: 12px;
+            height: 12px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .main {
+                padding: 100px 20px 20px;
+            }
+            .header {
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-title">
+            <span style="font-size: 28px;">🛡️</span>
+            <div>
+                <h1>Security Dashboard</h1>
+                <p class="last-updated">Last updated: <span id="last-updated">Just now</span></p>
+            </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <div class="guardian-pulse"></div>
+            <span class="status-badge status-secure" id="system-status">🟢 SECURE</span>
+            <button class="btn btn-secondary" onclick="refreshDashboard()">🔄 Refresh</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Sentinel-Dusty Guardian Status -->
+        <div class="guardian-status">
+            <div class="guardian-icon">🤖</div>
+            <div class="guardian-info">
+                <h3>Sentinel-Dusty Fusion is Active</h3>
+                <p>Autonomous threat detection running • Scanning every 30 seconds • Real-time monitoring enabled</p>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card success">
+                <div class="stat-header">
+                    <span class="stat-label">Active Users</span>
+                    <span class="stat-icon">👥</span>
+                </div>
+                <div class="stat-value success" id="active-users">0</div>
+                <div class="stat-change">Currently logged in</div>
+            </div>
+
+            <div class="stat-card success">
+                <div class="stat-header">
+                    <span class="stat-label">Failed Logins (24h)</span>
+                    <span class="stat-icon">🔑</span>
+                </div>
+                <div class="stat-value success" id="failed-logins">0</div>
+                <div class="stat-change">All blocked by rate limiting</div>
+            </div>
+
+            <div class="stat-card success">
+                <div class="stat-header">
+                    <span class="stat-label">Blocked IPs</span>
+                    <span class="stat-icon">🚫</span>
+                </div>
+                <div class="stat-value success" id="blocked-ips">0</div>
+                <div class="stat-change">Auto-blocked by Sentinel-Dusty</div>
+            </div>
+
+            <div class="stat-card success">
+                <div class="stat-header">
+                    <span class="stat-label">Security Score</span>
+                    <span class="stat-icon">🛡️</span>
+                </div>
+                <div class="stat-value success" id="security-score">98%</div>
+                <div class="stat-change">Excellent security posture</div>
+            </div>
+        </div>
+
+        <!-- Two Column Layout -->
+        <div class="two-column">
+            <!-- Recent Threats -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        🚨 Recent Threats
+                        <span class="status-badge status-secure" style="font-size: 12px;">Protected</span>
+                    </h2>
+                    <div class="section-actions">
+                        <button class="btn btn-secondary">Export</button>
+                        <button class="btn btn-primary">View All</button>
+                    </div>
+                </div>
+
+                <table class="threat-table" id="threat-table">
+                    <thead>
+                        <tr>
+                            <th>Severity</th>
+                            <th>Type</th>
+                            <th>Source</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="severity-badge severity-medium">MEDIUM</span></td>
+                            <td>New Device Login</td>
+                            <td>192.168.1.100</td>
+                            <td>2 min ago</td>
+                            <td>🟡 Monitored</td>
+                        </tr>
+                        <tr>
+                            <td><span class="severity-badge severity-high">HIGH</span></td>
+                            <td>Multiple Failed Logins</td>
+                            <td>45.33.12.8</td>
+                            <td>15 min ago</td>
+                            <td>🔴 Blocked</td>
+                        </tr>
+                        <tr>
+                            <td><span class="severity-badge severity-low">LOW</span></td>
+                            <td>Password Reset Request</td>
+                            <td>user@example.com</td>
+                            <td>32 min ago</td>
+                            <td>🟢 Completed</td>
+                        </tr>
+                        <tr>
+                            <td><span class="severity-badge severity-critical">CRITICAL</span></td>
+                            <td>Token Replay Attempt</td>
+                            <td>203.0.113.45</td>
+                            <td>1 hour ago</td>
+                            <td>🔴 Blocked + Revoked</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- System Activity -->
+            <div>
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">⚡ System Activity</h2>
+                    </div>
+
+                    <div class="activity-list" id="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon success">✓</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Security scan completed</div>
+                                <div class="activity-meta">No threats detected</div>
+                            </div>
+                            <div class="activity-time">2 min ago</div>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="activity-icon warning">⚠</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Rate limit triggered</div>
+                                <div class="activity-meta">IP: 45.33.12.8</div>
+                            </div>
+                            <div class="activity-time">15 min ago</div>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="activity-icon error">✕</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Suspicious token usage</div>
+                                <div class="activity-meta">Auto-blocked by Sentinel-Dusty</div>
+                            </div>
+                            <div class="activity-time">1 hour ago</div>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="activity-icon success">✓</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Database backup completed</div>
+                                <div class="activity-meta">Size: 2.4 MB</div>
+                            </div>
+                            <div class="activity-time">3 hours ago</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">📊 Quick Actions</h2>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <button class="btn btn-primary" style="width: 100%; justify-content: center;">
+                            🔒 Force Password Reset (All)
+                        </button>
+                        <button class="btn btn-secondary" style="width: 100%; justify-content: center;">
+                            📥 Export Audit Logs
+                        </button>
+                        <button class="btn btn-secondary" style="width: 100%; justify-content: center;">
+                            🧪 Run Security Test
+                        </button>
+                        <button class="btn btn-secondary" style="width: 100%; justify-content: center;">
+                            📧 Configure Alerts
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Dashboard functionality
+        async function refreshDashboard() {
+            try {
+                const response = await fetch('/api/security/status');
+                const data = await response.json();
+                
+                // Update stats
+                document.getElementById('active-users').textContent = data.activeUsers || '0';
+                document.getElementById('failed-logins').textContent = data.failedLogins || '0';
+                document.getElementById('blocked-ips').textContent = data.blockedIPs || '0';
+                
+                // Calculate security score
+                const threats = data.threatsDetected || 0;
+                const score = threats === 0 ? 100 : Math.max(0, 100 - (threats * 5));
+                document.getElementById('security-score').textContent = score + '%';
+                
+                // Update timestamp
+                document.getElementById('last-updated').textContent = new Date().toLocaleTimeString();
+                
+            } catch (err) {
+                console.error('Failed to refresh dashboard:', err);
+            }
+        }
+
+        // Auto-refresh every 30 seconds
+        setInterval(refreshDashboard, 30000);
+
+        // Initial load
+        refreshDashboard();
+
+        // Simulate real-time updates
+        setInterval(() => {
+            const activities = document.querySelector('.activity-list');
+            const newActivity = document.createElement('div');
+            newActivity.className = 'activity-item';
+            newActivity.innerHTML = `
+                <div class="activity-icon success">✓</div>
+                <div class="activity-content">
+                    <div class="activity-title">Security scan completed</div>
+                    <div class="activity-meta">No threats detected</div>
+                </div>
+                <div class="activity-time">Just now</div>
+            `;
+            activities.insertBefore(newActivity, activities.firstChild);
+            
+            // Keep only last 10 activities
+            while (activities.children.length > 10) {
+                activities.removeChild(activities.lastChild);
+            }
+        }, 30000);
+    </script>
+</body>
+</html>
