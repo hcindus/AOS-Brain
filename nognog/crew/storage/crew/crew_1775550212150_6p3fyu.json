@@ -3,7 +3,7 @@
   "name": "Vex",
   "role": "PILOT",
   "level": 5,
-  "xp": 136381,
+  "xp": 136451,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 10,
     "combat": 10
   },
-  "missionsCompleted": 869,
+  "missionsCompleted": 870,
   "discoveries": [
     {
       "name": "Anomalous Planet",
@@ -4363,6 +4363,11 @@
       "name": "Unknown Signal",
       "location": "Alpha-1",
       "timestamp": 1778337235681
+    },
+    {
+      "name": "Derelict Ship",
+      "location": "Alpha-1",
+      "timestamp": 1778339515701
     }
   ],
   "status": "ACTIVE",
