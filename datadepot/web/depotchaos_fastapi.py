@@ -113,7 +113,9 @@ async def get_leads(
     source: Optional[str] = Query(None),
     search: Optional[str] = Query(None),
     state: Optional[str] = Query(None),
-    datadepot: bool = Query(False)
+    datadepot: bool = Query(False),
+    sort_by: Optional[str] = Query(None),
+    sort_dir: Optional[str] = Query("asc")
 ):
     """Get leads with filtering and pagination"""
     conn = get_db_connection()
@@ -153,12 +155,20 @@ async def get_leads(
     c.execute(count_sql, params)
     total = c.fetchone()[0]
     
+    # Build ORDER BY clause
+    allowed_sort_fields = ['business_name', 'company_name', 'county', 'city', 'state', 'status', 'tier', 'pos_system', 'replacement_score', 'created_at', 'contact_name']
+    order_by = "created_at DESC"  # default
+    if sort_by and sort_by in allowed_sort_fields:
+        direction = "DESC" if sort_dir and sort_dir.lower() == "desc" else "ASC"
+        # Handle NULLs - put them at the end
+        order_by = f"{sort_by} IS NULL, {sort_by} {direction}"
+    
     # Get paginated results
     offset = (page - 1) * per_page
     query_sql = f"""
         SELECT * FROM leads 
         WHERE {where_sql}
-        ORDER BY created_at DESC
+        ORDER BY {order_by}
         LIMIT ? OFFSET ?
     """
     c.execute(query_sql, params + [per_page, offset])
