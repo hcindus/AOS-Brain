@@ -720,7 +720,7 @@
             tbody.innerHTML = customers.map(cust => {
                 const tierClass = getTierClass(cust.category);
                 return `<tr>
-                    <td><strong>${escapeHtml(cust.business_name)}</strong></td>
+                    <td><strong>${escapeHtml(cust.business_name || cust.name || '-')}</strong></td>
                     <td><span class="tier-badge ${tierClass}">${escapeHtml(cust.category || '-')}</span></td>
                     <td>${escapeHtml(cust.system_type || '-')}</td>
                     <td>${escapeHtml(cust.contact_name || '-')}</td>
