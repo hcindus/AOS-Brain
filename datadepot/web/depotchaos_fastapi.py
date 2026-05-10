@@ -138,8 +138,8 @@ async def get_leads(
         params.append(source)
     
     if state:
-        where_clauses.append("(county LIKE ? OR county LIKE ?)")
-        params.extend([f'%, {state}%', f'%| {state}%'])
+        where_clauses.append("(state = ? OR county LIKE ?)")
+        params.extend([state, f'%{state}%'])
     
     if search:
         where_clauses.append("(business_name LIKE ? OR company_name LIKE ? OR county LIKE ? OR pos_system LIKE ? OR enrichment_data LIKE ?)")
