@@ -138,8 +138,15 @@ async def get_leads(
         params.append(source)
     
     if state:
-        where_clauses.append("(state = ? OR county LIKE ?)")
-        params.extend([state, f'%{state}%'])
+        # Support multiple states separated by comma (e.g., "CA,TX,AZ")
+        states = [s.strip() for s in state.split(',')]
+        if len(states) == 1:
+            where_clauses.append("(state = ? OR county LIKE ?)")
+            params.extend([state, f'%{state}%'])
+        else:
+            placeholders = ','.join(['?' for _ in states])
+            where_clauses.append(f"(state IN ({placeholders}) OR county LIKE ?)")
+            params.extend(states + [f'%{state}%'])
     
     if search:
         where_clauses.append("(business_name LIKE ? OR company_name LIKE ? OR county LIKE ? OR pos_system LIKE ? OR enrichment_data LIKE ?)")
@@ -155,13 +162,30 @@ async def get_leads(
     c.execute(count_sql, params)
     total = c.fetchone()[0]
     
-    # Build ORDER BY clause
+    # Build ORDER BY clause - support both frontend and legacy field names
     allowed_sort_fields = ['business_name', 'company_name', 'county', 'city', 'state', 'status', 'tier', 'pos_system', 'replacement_score', 'created_at', 'contact_name']
     order_by = "created_at DESC"  # default
+    
+    # Map frontend field names to DB columns
+    field_map = {
+        'business_name': 'business_name',
+        'company_name': 'company_name',
+        'state': 'state',
+        'status': 'status',
+        'tier': 'tier',
+        'replacement_score': 'replacement_score',
+        'county': 'county',
+        'city': 'city',
+        'pos_system': 'pos_system',
+        'created_at': 'created_at',
+        'contact_name': 'contact_name'
+    }
+    
     if sort_by and sort_by in allowed_sort_fields:
         direction = "DESC" if sort_dir and sort_dir.lower() == "desc" else "ASC"
+        db_field = field_map.get(sort_by, sort_by)
         # Handle NULLs - put them at the end
-        order_by = f"{sort_by} IS NULL, {sort_by} {direction}"
+        order_by = f"{db_field} IS NULL, {db_field} {direction}"
     
     # Get paginated results
     offset = (page - 1) * per_page
@@ -194,20 +218,34 @@ async def create_lead(data: dict):
     conn = get_db_connection()
     c = conn.cursor()
     
-    # Generate UUID if not provided
-    lead_id = data.get('id') or str(uuid.uuid4())
-    
-    # Extract fields with defaults
-    company_name = data.get('company_name', '')
+    # Extract fields with defaults - support both business_name and company_name
+    business_name = data.get('business_name') or data.get('company_name', '')
+    company_name = business_name  # Keep both fields in sync
     county = data.get('county') or data.get('city', '')
+    city = data.get('city', '')
+    state = data.get('state', '')
+    zip_code = data.get('zip', '')
     status = data.get('status', 'new')
     tier = data.get('tier', 'Tier 2')
-    pos_system = data.get('pos_system') or data.get('posSystem')
+    pos_system = data.get('pos_system') or data.get('posSystem', '')
     source_type = data.get('source_type') or data.get('source', 'manual_entry')
+    
+    # Contact fields
+    contact_name = data.get('contact_name', '')
+    contact_title = data.get('contact_title', '')
+    phone = data.get('phone', '')
+    email = data.get('email', '')
+    
+    # Scoring fields
+    replacement_score = data.get('replacement_score')
+    pos_confidence = data.get('pos_confidence')
+    equipment_age = data.get('equipment_age', '')
+    review_sentiment = data.get('review_sentiment', '')
+    pos_mentions = data.get('pos_mentions')
     
     # Build enrichment data from any extra fields
     enrichment = {}
-    for key in ['contact_name', 'contact_title', 'phone', 'email', 'address', 'city', 'state', 'zip', 'notes']:
+    for key in ['address', 'notes', 'source_id', 'converted_at']:
         if key in data and data[key]:
             enrichment[key] = data[key]
     
@@ -219,30 +257,50 @@ async def create_lead(data: dict):
     
     enrichment_json = json.dumps(enrichment) if enrichment else None
     
+    # Generate ID - use AUTOINCREMENT for proper counting
+    lead_id = data.get('id')
+    if not lead_id:
+        # Let SQLite auto-generate the ID
+        c.execute("SELECT MAX(id) + 1 FROM leads")
+        result = c.fetchone()[0]
+        lead_id = result if result else 1
+    
     try:
         c.execute("""
             INSERT INTO leads (
-                id, company_name, county, status, tier,
-                pos_system, source_type, enrichment_data, created_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                id, business_name, company_name, county, city, state, zip,
+                contact_name, contact_title, phone, email,
+                status, tier, pos_system, pos_confidence, equipment_age,
+                replacement_score, review_sentiment, pos_mentions,
+                source_type, enrichment_data, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
-            lead_id, company_name, county, status, tier,
-            pos_system, source_type, enrichment_json,
+            lead_id, business_name, company_name, county, city, state, zip_code,
+            contact_name, contact_title, phone, email,
+            status, tier, pos_system, pos_confidence, equipment_age,
+            replacement_score, review_sentiment, pos_mentions,
+            source_type, enrichment_json,
             datetime.now().isoformat()
         ))
         conn.commit()
+        
+        # Get the new lead count for confirmation
+        c.execute("SELECT COUNT(*) FROM leads WHERE deleted = 0")
+        new_total = c.fetchone()[0]
+        
         conn.close()
         
         return {
             'success': True,
             'id': lead_id,
-            'message': f'Lead "{company_name}" created successfully'
+            'total_leads': new_total,
+            'message': f'Lead "{business_name}" created successfully'
         }
     except sqlite3.IntegrityError as e:
         conn.close()
         return JSONResponse(
             status_code=409,
-            content={'success': False, 'error': 'Lead with this ID already exists', 'detail': str(e)}
+            content={'success': False, 'error': 'Lead with this name/city/state already exists', 'detail': str(e)}
         )
     except Exception as e:
         conn.close()
