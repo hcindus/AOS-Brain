@@ -310,22 +310,23 @@
                 revenue.data?.forEach(r => { revMap[r.category] = r.revenue; });
                 const totalRev = Object.values(revMap).reduce((a, b) => a + b, 0);
 
-                // Update stats
+                // Update stats - use by_tier for tier counts, fallback to by_category for legacy
+                const tierData = overview.by_tier || {};
                 document.getElementById('totalCustomers').textContent = overview.total_customers?.toLocaleString() || '-';
-                document.getElementById('top165Count').textContent = (overview.by_category?.['Top 165'] || 0).toLocaleString();
-                document.getElementById('spotOnCount').textContent = (overview.by_category?.['Spot On Target'] || 0).toLocaleString();
-                document.getElementById('primeCount').textContent = (overview.by_category?.['Prime'] || 0).toLocaleString();
-                document.getElementById('ppclCount').textContent = (overview.by_category?.['PPCL'] || 0).toLocaleString();
+                document.getElementById('top165Count').textContent = (tierData['Top 165'] || 0).toLocaleString();
+                document.getElementById('spotOnCount').textContent = (tierData['Spot On Target'] || 0).toLocaleString();
+                document.getElementById('primeCount').textContent = (tierData['Prime'] || 0).toLocaleString();
+                document.getElementById('ppclCount').textContent = (tierData['PPCL'] || 0).toLocaleString();
                 document.getElementById('totalRevenue').textContent = formatCurrency(totalRev);
 
-                // Update charts
-                updateCategoryChart(overview.by_category || {});
+                // Update charts - use tier data for category chart
+                updateCategoryChart(overview.by_tier || {});
                 updatePosChart(systems.data || []);
                 updateTrendChart(monthly.data || []);
                 updateCityChart(cities.data || []);
 
                 // Update tables
-                renderBreakdownTable(overview.by_category || {}, revMap, overview.total_customers, cities.data);
+                renderBreakdownTable(overview.by_category || {}, revMap, overview.total_customers, cities.data, overview.by_tier);
                 renderSystemTable(systems.data || [], overview.total_customers);
 
             } catch (e) {
@@ -398,23 +399,38 @@
             });
         }
 
-        function renderBreakdownTable(categories, revMap, total, cities) {
+        function renderBreakdownTable(categories, revMap, total, cities, tierData) {
             const tbody = document.getElementById('breakdownTableBody');
             const topCity = cities?.[0]?.city || 'San Francisco';
+            
+            // Use tier data if available, otherwise fall back to categories
+            const displayData = tierData || categories;
+            
+            // Define tier order for sorting
+            const tierOrder = ['Top 165', 'Spot On Target', 'Prime', 'PPCL', 'Stone'];
+            
+            const rows = Object.entries(displayData)
+                .sort((a, b) => {
+                    const idxA = tierOrder.indexOf(a[0]);
+                    const idxB = tierOrder.indexOf(b[0]);
+                    if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+                    if (idxA !== -1) return -1;
+                    if (idxB !== -1) return 1;
+                    return b[1] - a[1];
+                })
+                .map(([cat, count]) => {
+                    const pct = ((count / total) * 100).toFixed(1);
+                    const tierClass = getTierClass(cat);
+                    return `<tr>
+                        <td><span class="tier-badge ${tierClass}">${escapeHtml(cat)}</span></td>
+                        <td>${count.toLocaleString()}</td>
+                        <td>${pct}%</td>
+                        <td>${formatCurrencyFull(revMap[cat] || 0)}</td>
+                        <td>${escapeHtml(topCity)}</td>
+                    </tr>`;
+                });
 
-            const rows = Object.entries(categories).sort((a, b) => b[1] - a[1]).map(([cat, count]) => {
-                const pct = ((count / total) * 100).toFixed(1);
-                const tierClass = getTierClass(cat);
-                return `<tr>
-                    <td><span class="tier-badge ${tierClass}">${escapeHtml(cat)}</span></td>
-                    <td>${count.toLocaleString()}</td>
-                    <td>${pct}%</td>
-                    <td>${formatCurrencyFull(revMap[cat] || 0)}</td>
-                    <td>${escapeHtml(topCity)}</td>
-                </tr>`;
-            });
-
-            tbody.innerHTML = rows.join('');
+            tbody.innerHTML = rows.join('') || '<tr><td colspan="5">No tier data available</td></tr>';
         }
 
         function renderSystemTable(systems, total) {
