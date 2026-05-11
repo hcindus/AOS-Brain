@@ -39,7 +39,7 @@ server {
 
     # ReggieStarr POS API - Proxy to localhost:5000
     location / {
-        proxy_pass http://127.0.0.1:5000;
+        proxy_pass http://127.0.0.1:5001;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -68,6 +68,6 @@ server {
     # Health check endpoint
     location /health {
         access_log off;
-        proxy_pass http://127.0.0.1:5000/health;
+        proxy_pass http://127.0.0.1:5001/health;
     }
 }
