@@ -3,7 +3,7 @@
   "name": "Luna",
   "role": "COMBAT",
   "level": 5,
-  "xp": 146463,
+  "xp": 146528,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 24,
     "combat": 15
   },
-  "missionsCompleted": 982,
+  "missionsCompleted": 983,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -4928,6 +4928,11 @@
       "name": "Space Anomaly",
       "location": "Alpha-1",
       "timestamp": 1778468998117
+    },
+    {
+      "name": "Rare Minerals",
+      "location": "Alpha-1",
+      "timestamp": 1778472568178
     }
   ],
   "status": "ACTIVE",
