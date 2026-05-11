@@ -1,21 +1,7 @@
 {
-  "last_run_date": "2026-05-10",
-  "total_prospects_generated": 1000,
-  "priority_a_count": 400,
-  "priority_b_count": 350,
-  "priority_c_count": 250,
-  "cumulative_total": 24000,
-  "database_stats": {
-    "total_prospects": 24000,
-    "daily_generation": 1000,
-    "files_count": 24,
-    "date_range": "2026-03-31 to 2026-05-10"
-  },
-  "run_history": [
-    {"date": "2026-05-05", "count": 1000, "priority_a": 400, "priority_b": 350, "priority_c": 250},
-    {"date": "2026-05-06", "count": 1000, "priority_a": 400, "priority_b": 350, "priority_c": 250},
-    {"date": "2026-05-08", "count": 1000, "priority_a": 400, "priority_b": 350, "priority_c": 250},
-    {"date": "2026-05-09", "count": 1000, "priority_a": 400, "priority_b": 350, "priority_c": 250},
-    {"date": "2026-05-10", "count": 1000, "priority_a": 400, "priority_b": 350, "priority_c": 250}
-  ]
+  "total_prospects": 21000,
+  "generated_today": 1000,
+  "last_updated": "2026-05-11T07:04:24+00:00",
+  "previous_count": 20000,
+  "file_location": "/root/.openclaw/workspace/AGI_COMPANY/subsidiaries/CREAM/sales/prospects/prospects_2026-05-11.json"
 }
