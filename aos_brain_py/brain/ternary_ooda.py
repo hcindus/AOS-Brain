@@ -17,18 +17,18 @@ from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
 
 # Lazy imports - only load when needed to avoid startup hangs
-def get_numpy():
-    import numpy as np
-    return np
-
-def get_cortical_sheet():
-    from core.cortical_sheet import CorticalSheet
-    return CorticalSheet
+import numpy as np
 
 from substrate.graph_store import GraphStore, Node
 
 # Import only what we need immediately
 from brain.cortex import QMDAwareCortex
+
+# Try to import CorticalSheet
+try:
+    from core.cortical_sheet import TernaryCorticalSheet3D as CorticalSheet
+except ImportError:
+    CorticalSheet = None
 
 
 @dataclass
@@ -131,8 +131,13 @@ class TernaryOodaBrain:
             mid_term_limit: Max episodic buffer size
         """
         # Core components
-        self.cortical = CorticalSheet()
-        self.lexicon = TracrayLexicon()
+        self.cortical = CorticalSheet() if CorticalSheet else None
+        self.lexicon = None
+        try:
+            from core.tracray_lexicon import TracrayLexicon
+            self.lexicon = TracrayLexicon()
+        except ImportError:
+            pass
         self.substrate = GraphStore()
         self.cortex = QMDAwareCortex(model_path=model_path, use_qwen=use_qwen)
         
@@ -195,7 +200,7 @@ class TernaryOodaBrain:
             self.last_thought = thought
             return thought
     
-    def _observe(self, observation: Observation) -> np.ndarray:
+    def _observe(self, observation: Observation):
         """Encode observation to cortical pattern."""
         import numpy as np
         
@@ -213,12 +218,14 @@ class TernaryOodaBrain:
         pattern[z, y, x] = 1.0
         
         # Propagate waves through cortical sheet
-        evolved = self.cortical.evolve(pattern, steps=3)
+        if self.cortical:
+            evolved = self.cortical.evolve(pattern, steps=3)
+        else:
+            evolved = pattern
         
         return evolved
     
-    def _orient(self, sensory_pattern: np.ndarray, 
-                observation: Observation) -> Dict:
+    def _orient(self, sensory_pattern, observation):
         """
         Orient: Query memory layers, build context.
         
@@ -273,7 +280,7 @@ class TernaryOodaBrain:
         
         return context
     
-    def _decide(self, context: Dict, sensory_pattern: np.ndarray) -> Decision:
+    def _decide(self, context, sensory_pattern):
         """
         Decide: Apply ternary logic to select action.
         """
@@ -469,7 +476,9 @@ class TernaryOodaBrain:
                 "mid_term": len(self.mid_term),
                 "long_term": self.substrate.get_stats(),
             },
-            "cortical": self.cortical.get_wave_stats(),
+            "cortical": self.cortical.summarize().to_dict() if self.cortical else {},
+            "cortical_active": self.cortical is not None,
+            "lexicon": "active" if self.lexicon else "inactive",
         }
 
 
