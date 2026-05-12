@@ -4,6 +4,9 @@
  * Connects to Sentinel-Dusty Auth Service (port 3000)
  */
 
+// DEMO MODE: Set to false for production
+const DEMO_MODE = true;
+
 const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:3000/api'
     : '/api';
@@ -214,6 +217,29 @@ const AuthAPI = {
      * Register new user with company details
      */
     async register({ email, password, firstName, lastName, company, newsletter = false }) {
+        // DEMO MODE: Auto-create demo user
+        if (DEMO_MODE) {
+            console.log('DEMO MODE: Registering demo user');
+            const demoUser = {
+                id: 'demo-user-' + Date.now(),
+                email: email,
+                name: `${firstName} ${lastName}`,
+                company: company,
+                role: 'user'
+            };
+            const demoToken = 'demo-jwt-token-' + Date.now();
+            storeTokens(demoToken, demoToken, 3600, false);
+            sessionStorage.setItem('psd_user', JSON.stringify(demoUser));
+            return {
+                success: true,
+                message: 'Account created successfully (Demo Mode)',
+                user: demoUser,
+                accessToken: demoToken,
+                refreshToken: demoToken,
+                expiresIn: 3600
+            };
+        }
+        
         return apiRequest('/auth/register', {
             method: 'POST',
             body: JSON.stringify({
@@ -231,6 +257,30 @@ const AuthAPI = {
      * Login user
      */
     async login({ email, password, rememberMe = false }) {
+        // DEMO MODE: Allow any email/password
+        if (DEMO_MODE) {
+            console.log('DEMO MODE: Logging in as demo user');
+            const demoUser = {
+                id: 'demo-user-001',
+                email: email || 'demo@psdepot.com',
+                name: 'Demo User',
+                company: 'Performance Supply Depot',
+                role: 'admin'
+            };
+            const demoToken = 'demo-jwt-token-' + Date.now();
+            storeTokens(demoToken, demoToken, 3600, rememberMe);
+            const storage = rememberMe ? localStorage : sessionStorage;
+            storage.setItem('psd_user', JSON.stringify(demoUser));
+            storage.setItem('psd_rememberMe', rememberMe ? 'true' : 'false');
+            return {
+                success: true,
+                user: demoUser,
+                accessToken: demoToken,
+                refreshToken: demoToken,
+                expiresIn: 3600
+            };
+        }
+        
         const result = await apiRequest('/auth/login', {
             method: 'POST',
             body: JSON.stringify({ email, password, rememberMe })
