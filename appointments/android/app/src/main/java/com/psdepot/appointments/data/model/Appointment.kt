@@ -16,7 +16,11 @@ data class Appointment(
     val googleEventId: String? = null,
     val reminderSent: Boolean = false,
     val leadInfo: LeadInfo? = null
-)
+) {
+    // Extension helper for LocalDate extraction
+    fun getScheduledDate(): java.time.LocalDate = scheduledAt.toLocalDate()
+    fun getScheduledTime(): java.time.LocalTime = scheduledAt.toLocalTime()
+}
 
 enum class AppointmentStatus {
     CONFIRMED,
@@ -33,7 +37,11 @@ data class LeadInfo(
     val email: String? = null,
     val county: String? = null,
     val state: String? = null
-)
+) {
+    fun toDisplayName(): String {
+        return contactName ?: companyName ?: "Unknown"
+    }
+}
 
 data class AvailabilitySlot(
     val id: Int,

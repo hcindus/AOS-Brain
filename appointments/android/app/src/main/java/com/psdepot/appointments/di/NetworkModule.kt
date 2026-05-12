@@ -21,8 +21,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
     
-    private const val BASE_URL = "https://psdepot.com/appointments/"
-    // For local development: "http://10.0.2.2:8083/"
+        // Production: "https://psdepot.com/appointments/"
+    // Development (Android Emulator): "http://10.0.2.2:8083/"
+    private const val BASE_URL = "http://10.0.2.2:8083/"
     
     @Provides
     @Singleton

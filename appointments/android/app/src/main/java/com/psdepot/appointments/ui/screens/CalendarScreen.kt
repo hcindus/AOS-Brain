@@ -117,6 +117,13 @@ fun CalendarScreen(
     }
 }
 
+enum class AppointmentStatus {
+    CONFIRMED,
+    COMPLETED,
+    CANCELLED,
+    NO_SHOW
+}
+
 @Composable
 fun WeekNavigationBar(
     weekDays: List<LocalDate>,

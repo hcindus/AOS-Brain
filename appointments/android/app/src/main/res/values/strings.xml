@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PSD Appointments</string>
+    
+    <!-- Auth -->
+    <string name="login_title">Sign In</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="biometric_sign_in">Sign in with Biometrics</string>
+    <string name="invalid_credentials">Invalid email or password</string>
+    
+    <!-- Calendar -->
+    <string name="calendar_title">Calendar</string>
+    <string name="today">Today</string>
+    <string name="new_booking">New Booking</string>
+    <string name="search_leads">Search Leads</string>
+    <string name="available">Available</string>
+    <string name="blocked">Blocked</string>
+    <string name="booked">Booked</string>
+    
+    <!-- Booking -->
+    <string name="booking_title">New Booking</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="customer_email">Email</string>
+    <string name="customer_phone">Phone</string>
+    <string name="service_type">Service Type</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="duration">Duration</string>
+    <string name="notes">Notes</string>
+    <string name="create_booking">Create Booking</string>
+    <string name="booking_success">Booking created successfully</string>
+    
+    <!-- Appointments -->
+    <string name="appointments_title">My Appointments</string>
+    <string name="filter_all">All</string>
+    <string name="filter_confirmed">Confirmed</string>
+    <string name="filter_completed">Completed</string>
+    <string name="filter_cancelled">Cancelled</string>
+    <string name="filter_upcoming">Upcoming</string>
+    <string name="filter_past">Past</string>
+    <string name="no_appointments">No appointments found</string>
+    <string name="mark_complete">Mark Complete</string>
+    <string name="cancel_appointment">Cancel</string>
+    
+    <!-- Leads -->
+    <string name="search_leads_hint">Search by name, company, email...</string>
+    <string name="no_leads_found">No leads found</string>
+    <string name="recent_searches">Recent Searches</string>
+    <string name="search_results">Search Results</string>
+    
+    <!-- Notification -->
+    <string name="appointment_reminder">Appointment Reminder</string>
+    <string name="appointment_updated">Appointment Updated</string>
+    <string name="appointment_cancelled">Appointment Cancelled</string>
+</resources>
