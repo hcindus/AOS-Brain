@@ -149,8 +149,8 @@ async def get_leads(
             params.extend(states + [f'%{state}%'])
     
     if search:
-        where_clauses.append("(business_name LIKE ? OR company_name LIKE ? OR county LIKE ? OR pos_system LIKE ? OR enrichment_data LIKE ?)")
-        params.extend([f'%{search}%', f'%{search}%', f'%{search}%', f'%{search}%', f'%{search}%'])
+        where_clauses.append("(business_name LIKE ? OR company_name LIKE ? OR county LIKE ? OR pos_system LIKE ? OR enrichment_data LIKE ? OR contact_name LIKE ?)")
+        params.extend([f'%{search}%', f'%{search}%', f'%{search}%', f'%{search}%', f'%{search}%', f'%{search}%'])
     
     if datadepot:
         where_clauses.append("pos_system IS NOT NULL")
