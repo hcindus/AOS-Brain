@@ -95,14 +95,24 @@ def dashboard_overview():
     # Map tier IDs to display names for frontend compatibility
     tier_name_map = {
         'diamond': 'Top 165',
-        'platinum': 'Top 165',
+        'platinum': 'Top 165', 
         'gold': 'Spot On Target',
         'silver': 'Prime',
         'bronze': 'PPCL',
         'stone': 'Stone',
+        'emerald': 'Emerald',
+        'ruby': 'Ruby',
+        # Handle case variations
+        'Diamond': 'Top 165',
+        'Platinum': 'Top 165',
+        'Gold': 'Spot On Target', 
+        'Silver': 'Prime',
+        'Bronze': 'PPCL',
+        'Stone': 'Stone',
         'PPCL': 'PPCL',
         'Prime': 'Prime',
-        'Stone': 'Stone'
+        'Top 165': 'Top 165',
+        'Spot On Target': 'Spot On Target'
     }
     by_tier = {}
     for tier_id, count in by_tier_raw.items():
