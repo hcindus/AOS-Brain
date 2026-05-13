@@ -310,7 +310,7 @@
                 revenue.data?.forEach(r => { revMap[r.category] = r.revenue; });
                 const totalRev = Object.values(revMap).reduce((a, b) => a + b, 0);
 
-                // Update stats - use by_tier for tier counts, fallback to by_category for legacy
+                // Update stats - use by_tier for tier counts
                 const tierData = overview.by_tier || {};
                 document.getElementById('totalCustomers').textContent = overview.total_customers?.toLocaleString() || '-';
                 document.getElementById('top165Count').textContent = (tierData['Top 165'] || 0).toLocaleString();

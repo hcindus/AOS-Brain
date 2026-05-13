@@ -561,12 +561,12 @@
                 dashboardData.overview = overview;
                 dashboardData.systems = systems;
                 
-                // Update stats
+                // Update stats - show 0 for missing tiers instead of "-"
                 document.getElementById('totalCustomers').textContent = overview.total_customers?.toLocaleString() || '-';
-                document.getElementById('top165Count').textContent = overview.by_tier?.['Top 165']?.toLocaleString() || '-';
-                document.getElementById('spotOnCount').textContent = overview.by_tier?.['Spot On Target']?.toLocaleString() || '-';
-                document.getElementById('primeCount').textContent = overview.by_tier?.['Prime']?.toLocaleString() || '-';
-                document.getElementById('ppclCount').textContent = overview.by_tier?.['PPCL']?.toLocaleString() || '-';
+                document.getElementById('top165Count').textContent = (overview.by_tier?.['Top 165'] || 0).toLocaleString();
+                document.getElementById('spotOnCount').textContent = (overview.by_tier?.['Spot On Target'] || 0).toLocaleString();
+                document.getElementById('primeCount').textContent = (overview.by_tier?.['Prime'] || 0).toLocaleString();
+                document.getElementById('ppclCount').textContent = (overview.by_tier?.['PPCL'] || 0).toLocaleString();
                 document.getElementById('totalRevenueDisplay').textContent = `Total 2025 Revenue: ${formatCurrency(overview.total_revenue_2022)}`;
                 
                 // System counts from API
@@ -644,12 +644,14 @@
                 document.getElementById('forecastSummary').textContent = 
                     `2026 Projected: ${formatCurrency(forecast.total_2026_projected)} (${forecast.assumed_growth_rate} growth)`;
                 
-                // Update projection cards
-                const revByCat = {};
-                revenueCat.data?.forEach(r => { revByCat[r.category] = r.revenue; });
-                document.getElementById('top165Revenue').textContent = `2025 Revenue: ${formatCurrency(revByCat['Top 165'] || 0)}`;
-                document.getElementById('spotOnRevenue').textContent = `2025 Revenue: ${formatCurrency(revByCat['Spot On Target'] || 0)}`;
-                document.getElementById('primeRevenue').textContent = `2025 Revenue: ${formatCurrency(revByCat['Prime'] || 0)}`;
+                // Update projection cards - use tier data for revenue
+                const revByTier = {};
+                // Note: revenue by tier would need separate calculation from sales data
+                // For now, show tier counts
+                const tierCounts = overview.by_tier || {};
+                document.getElementById('top165Revenue').textContent = `Accounts: ${tierCounts['Top 165'] || 0}`;
+                document.getElementById('spotOnRevenue').textContent = `Accounts: ${tierCounts['Spot On Target'] || 0}`;
+                document.getElementById('primeRevenue').textContent = `Accounts: ${tierCounts['Prime'] || 0}`;
                 
                 updateForecastChart(forecast.projection || []);
                 updateMigrationChart();
