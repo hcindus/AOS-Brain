@@ -99,7 +99,10 @@ def dashboard_overview():
         'gold': 'Spot On Target',
         'silver': 'Prime',
         'bronze': 'PPCL',
-        'stone': 'Stone'
+        'stone': 'Stone',
+        'PPCL': 'PPCL',
+        'Prime': 'Prime',
+        'Stone': 'Stone'
     }
     by_tier = {}
     for tier_id, count in by_tier_raw.items():
