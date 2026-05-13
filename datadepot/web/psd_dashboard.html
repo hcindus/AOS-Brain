@@ -563,10 +563,10 @@
                 
                 // Update stats
                 document.getElementById('totalCustomers').textContent = overview.total_customers?.toLocaleString() || '-';
-                document.getElementById('top165Count').textContent = overview.by_category?.['Top 165']?.toLocaleString() || '-';
-                document.getElementById('spotOnCount').textContent = overview.by_category?.['Spot On Target']?.toLocaleString() || '-';
-                document.getElementById('primeCount').textContent = overview.by_category?.['Prime']?.toLocaleString() || '-';
-                document.getElementById('ppclCount').textContent = overview.by_category?.['PPCL']?.toLocaleString() || '-';
+                document.getElementById('top165Count').textContent = overview.by_tier?.['Top 165']?.toLocaleString() || '-';
+                document.getElementById('spotOnCount').textContent = overview.by_tier?.['Spot On Target']?.toLocaleString() || '-';
+                document.getElementById('primeCount').textContent = overview.by_tier?.['Prime']?.toLocaleString() || '-';
+                document.getElementById('ppclCount').textContent = overview.by_tier?.['PPCL']?.toLocaleString() || '-';
                 document.getElementById('totalRevenueDisplay').textContent = `Total 2025 Revenue: ${formatCurrency(overview.total_revenue_2022)}`;
                 
                 // System counts from API
