@@ -1,49 +1,222 @@
 #!/bin/bash
-# VERSION: 2.0.0
-# UPDATED: 2026-04-22 07:20 UTC
-# CHANGELOG: v2.0 - Simplified: systemd manages restarts, this only monitors
-#
-# AOS Brain Health Monitor v2.0
-# Reports brain status - systemd handles actual process management
+# AOS Keepalive Control System
+# Master control for agent keepalive functions
+# Usage: ./aos_keepalive.sh [status|start|stop|restart] [agent_name|all]
 
-LOG_FILE="/var/log/aos/brain_keepalive.log"
-mkdir -p /var/log/aos
+CONFIG_DIR="/root/.openclaw/workspace/config/keepalive"
+LOG_FILE="/var/log/aos/keepalive.log"
+PID_DIR="/var/run/aos_keepalive"
+
+# Create directories
+mkdir -p "$CONFIG_DIR" "$PID_DIR"
+
+# Agent registry
+ declare -A AGENTS
+AGENTS[forge]="/root/.openclaw/workspace/agent_sandboxes/forge/forge_keepalive.sh"
+AGENTS[patricia]="/root/.openclaw/workspace/agent_sandboxes/patricia/patricia_keepalive.sh"
+AGENTS[chelios]="/root/.openclaw/workspace/agent_sandboxes/chelios/chelios_keepalive.sh"
+AGENTS[miles]="/root/.openclaw/workspace/scripts/miles_keepalive.sh"
+AGENTS[mortimer]="/root/.openclaw/workspace/scripts/mortimer_keepalive.sh"
+AGENTS[brain]="/root/.openclaw/workspace/scripts/brain_keepalive.sh"
 
 log() {
-    echo "[$(date -u '+%Y-%m-%d %H:%M:%S UTC')] $1" | tee -a "$LOG_FILE"
+    echo "[$(date -Iseconds)] $1" | tee -a "$LOG_FILE"
 }
 
-log "=== AOS Brain Health Monitor ==="
-
-# 1. Check Complete Brain v4.5 - MONITOR ONLY (systemd managed)
-BRAIN_PID=$(pgrep -o -f "complete_brain_v45\.py")
-if [ -n "$BRAIN_PID" ]; then
-    BRAIN_UPTIME=$(ps -p "$BRAIN_PID" -o etime= 2>/dev/null | xargs)
-    log "✅ Complete Brain v4.5: RUNNING (PID $BRAIN_PID, uptime: $BRAIN_UPTIME)"
+show_status() {
+    log "=== AOS Keepalive Status ==="
+    log ""
     
-    # Socket health check (informational only)
-    if [ -S "/tmp/aos_brain.sock" ]; then
-        SOCKET_RESP=$(echo '{"cmd":"ping"}' | timeout 2 nc -U /tmp/aos_brain.sock 2>/dev/null)
-        if [ -n "$SOCKET_RESP" ]; then
-            log "✅ Brain socket: RESPONSIVE"
+    for agent in "${!AGENTS[@]}"; do
+        config_file="$CONFIG_DIR/${agent}.conf"
+        pid_file="$PID_DIR/${agent}.pid"
+        
+        if [ -f "$config_file" ]; then
+            status=$(cat "$config_file" 2>/dev/null || echo "disabled")
         else
-            log "⚠️ Brain socket: UNRESPONSIVE (service may need restart via systemd)"
+            status="disabled"
         fi
-    else
-        log "⚠️ Brain socket: NOT FOUND"
+        
+        if [ -f "$pid_file" ] && kill -0 "$(cat "$pid_file")" 2>/dev/null; then
+            pid_status="running (PID: $(cat "$pid_file"))"
+        else
+            pid_status="stopped"
+        fi
+        
+        log "  $agent: $status | $pid_status"
+    done
+    log ""
+}
+
+start_agent() {
+    agent=$1
+    script="${AGENTS[$agent]}"
+    config_file="$CONFIG_DIR/${agent}.conf"
+    pid_file="$PID_DIR/${agent}.pid"
+    
+    if [ -z "$script" ]; then
+        log "ERROR: Unknown agent: $agent"
+        return 1
     fi
-else
-    log "❌ Complete Brain v4.5: NOT RUNNING"
-    log "   systemd will auto-restart: systemctl restart aos-brain-v4"
-fi
+    
+    # Check if enabled
+    if [ ! -f "$config_file" ] || [ "$(cat "$config_file")" != "enabled" ]; then
+        log "Agent $agent is DISABLED. Enable first with: ./aos_keepalive.sh enable $agent"
+        return 1
+    fi
+    
+    # Check if already running
+    if [ -f "$pid_file" ] && kill -0 "$(cat "$pid_file")" 2>/dev/null; then
+        log "Agent $agent is already running (PID: $(cat "$pid_file"))"
+        return 0
+    fi
+    
+    # Create keepalive script if doesn't exist
+    if [ ! -f "$script" ]; then
+        create_keepalive_script "$agent" "$script"
+    fi
+    
+    # Start the agent
+    nohup bash "$script" >/dev/null 2>&1 &
+echo $! > "$pid_file"
+    log "Started $agent keepalive (PID: $(cat "$pid_file"))"
+}
 
-# 2. BHSI - MONITOR ONLY (systemd managed)
-BHSI_PID=$(pgrep -o -f "bhsi_v4_brain_connector")
-if [ -n "$BHSI_PID" ]; then
-    BHSI_UPTIME=$(ps -p "$BHSI_PID" -o etime= 2>/dev/null | xargs)
-    log "✅ BHSI v4: RUNNING (PID $BHSI_PID, uptime: $BHSI_UPTIME)"
-else
-    log "⚠️ BHSI v4: NOT RUNNING - systemd will auto-restart"
-fi
+stop_agent() {
+    agent=$1
+    pid_file="$PID_DIR/${agent}.pid"
+    
+    if [ -f "$pid_file" ]; then
+        pid=$(cat "$pid_file")
+        if kill -0 "$pid" 2>/dev/null; then
+            kill "$pid" 2>/dev/null
+            log "Stopped $agent keepalive (PID: $pid)"
+        fi
+        rm -f "$pid_file"
+    else
+        log "Agent $agent is not running"
+    fi
+}
 
-log "=== Monitor Complete ==="
+enable_agent() {
+    agent=$1
+    config_file="$CONFIG_DIR/${agent}.conf"
+    echo "enabled" > "$config_file"
+    log "Enabled keepalive for $agent"
+}
+
+disable_agent() {
+    agent=$1
+    config_file="$CONFIG_DIR/${agent}.conf"
+    echo "disabled" > "$config_file"
+    log "Disabled keepalive for $agent"
+}
+
+create_keepalive_script() {
+    agent=$1
+    script_path=$2
+    
+    mkdir -p "$(dirname "$script_path")"
+    
+    cat > "$script_path" << EOF
+#!/bin/bash
+# Keepalive script for $agent
+# Auto-generated by aos_keepalive.sh
+
+LOG_FILE="/var/log/aos/keepalive_${agent}.log"
+INTERVAL=300  # 5 minutes
+
+while true; do
+    echo "[\$(date -Iseconds)] $agent keepalive ping" >> \$LOG_FILE
+    
+    # Agent-specific keepalive logic
+    case "$agent" in
+        forge)
+            # Check factory controller
+            pgrep -f "forge_factory_controller.py" >/dev/null || echo "WARNING: Forge controller not running" >> \$LOG_FILE
+            ;;
+        patricia)
+            pgrep -f "patricia_factory_controller.py" >/dev/null || echo "WARNING: Patricia controller not running" >> \$LOG_FILE
+            ;;
+        chelios)
+            pgrep -f "chelios_security_controller.py" >/dev/null || echo "WARNING: Chelios controller not running" >> \$LOG_FILE
+            ;;
+        brain)
+            echo '{"cmd":"status"}' | nc -U /tmp/aos_brain.sock >/dev/null 2>&1 || echo "WARNING: Brain socket not responding" >> \$LOG_FILE
+            ;;
+        *)
+            # Generic keepalive
+            ;;
+    esac
+    
+    sleep \$INTERVAL
+done
+EOF
+    
+    chmod +x "$script_path"
+}
+
+# Main command handler
+case "${1:-status}" in
+    status)
+        show_status
+        ;;
+    start)
+        if [ -z "${2:-}" ] || [ "$2" == "all" ]; then
+            for agent in "${!AGENTS[@]}"; do
+                start_agent "$agent"
+            done
+        else
+            start_agent "$2"
+        fi
+        ;;
+    stop)
+        if [ -z "${2:-}" ] || [ "$2" == "all" ]; then
+            for agent in "${!AGENTS[@]}"; do
+                stop_agent "$agent"
+            done
+        else
+            stop_agent "$2"
+        fi
+        ;;
+    restart)
+        if [ -z "${2:-}" ] || [ "$2" == "all" ]; then
+            for agent in "${!AGENTS[@]}"; do
+                stop_agent "$agent"
+                sleep 1
+                start_agent "$agent"
+            done
+        else
+            stop_agent "$2"
+            sleep 1
+            start_agent "$2"
+        fi
+        ;;
+    enable)
+        if [ -z "${2:-}" ]; then
+            log "Usage: $0 enable <agent>"
+            exit 1
+        fi
+        enable_agent "$2"
+        ;;
+    disable)
+        if [ -z "${2:-}" ]; then
+            log "Usage: $0 disable <agent>"
+            exit 1
+        fi
+        disable_agent "$2"
+        ;;
+    *)
+        echo "Usage: $0 [status|start|stop|restart|enable|disable] [agent|all]"
+        echo ""
+        echo "Agents: ${!AGENTS[@]}"
+        echo ""
+        echo "Examples:"
+        echo "  $0 status              Show all agent statuses"
+        echo "  $0 enable forge       Enable keepalive for Forge"
+        echo "  $0 start forge         Start keepalive for Forge"
+        echo "  $0 stop all            Stop all keepalives"
+        echo "  $0 restart all         Restart all keepalives"
+        exit 1
+        ;;
+esac
