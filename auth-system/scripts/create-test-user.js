@@ -19,7 +19,9 @@ const TEST_USER = {
     company: 'Performance Supply Depot'
 };
 
-function hashPassword(password) {
+// PBKDF2 password hashing (matches the auth system pattern if it was using this)
+// But the actual auth system uses Argon2, so we need to note that this is for compatibility mode
+async function hashPasswordPBKDF2(password) {
     const salt = crypto.randomBytes(16).toString('hex');
     const hash = crypto.pbkdf2Sync(password, salt, 100000, 64, 'sha512').toString('hex');
     return `${salt}:${hash}`;
@@ -29,12 +31,7 @@ function generateUUID() {
     return crypto.randomUUID();
 }
 
-async function createTestUser() {
-    console.log('🧪 Creating test user for PSD Appointments...');
-    console.log('');
-    
-    const db = new sqlite3.Database(DB_PATH);
-    
+function initDatabase(db) {
     return new Promise((resolve, reject) => {
         db.serialize(() => {
             // Create users table
@@ -89,127 +86,103 @@ async function createTestUser() {
                     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
                 )
-            `);
-
-            // Check if test user exists
-            db.get('SELECT id FROM users WHERE email = ?', [TEST_USER.email], (err, row) => {
-                if (err) {
-                    reject(err);
-                    return;
-                }
-                
-                if (row) {
-                    console.log('⚠️  Test user already exists');
-                    console.log('');
-                    console.log('✅ Test User Credentials (EXISTING):');
-                    console.log('   Email:    test@psdepot.com');
-                    console.log('   Password: TestPass123!');
-                    console.log('');
-                    resolve();
-                    return;
-                }
-
-                // Create test user
-                const userId = generateUUID();
-                const passwordHash = hashPassword(TEST_USER.password);
-                
-                db.run(`
-                    INSERT INTO users (id, email, password_hash, first_name, last_name, company, email_verified)
-                    VALUES (?, ?, ?, ?, ?, ?, ?)
-                `, [userId, TEST_USER.email, passwordHash, TEST_USER.firstName, TEST_USER.lastName, TEST_USER.company, 1], function(err) {
-                    if (err) {
-                        reject(err);
-                        return;
-                    }
-                    
-                    console.log('✅ Test user created successfully!');
-                    console.log('');
-                    console.log('═══════════════════════════════════════════');
-                    console.log('           TEST USER CREDENTIALS           ');
-                    console.log('═══════════════════════════════════════════');
-                    console.log('');
-                    console.log('   📧 Email:    test@psdepot.com');
-                    console.log('   🔑 Password: TestPass123!');
-                    console.log('   🏢 Company:  Performance Supply Depot');
-                    console.log('');
-                    console.log('═══════════════════════════════════════════');
-                    console.log('');
-                    console.log('📝 Login URL: https://psdepot.com/appointments/web/login.html');
-                    console.log('');
-                    resolve();
-                });
+            `, (err) => {
+                if (err) reject(err);
+                else resolve();
             });
         });
     });
-    
-    await new Promise(resolve => setTimeout(resolve, 100));
 }
 
-// Also create a "backdoor" admin user for development
-async function createAdminUser() {
-    const db = new sqlite3.Database(DB_PATH);
+async function createUserWithArgon2(db, user) {
+    const argon2 = require('argon2');
     
-    const ADMIN_USER = {
-        email: 'admin@psdepot.com',
-        password: 'AdminPass456!',
-        firstName: 'Admin',
-        lastName: 'User',
-        company: 'Performance Supply Depot'
-    };
-    
-    return new Promise((resolve, reject) => {
-        db.get('SELECT id FROM users WHERE email = ?', [ADMIN_USER.email], (err, row) => {
-            if (err) {
-                reject(err);
-                return;
-            }
-            
-            if (row) {
-                console.log('⚠️  Admin user already exists');
-                resolve();
-                return;
-            }
-
-            const userId = generateUUID();
-            const passwordHash = hashPassword(ADMIN_USER.password);
+    return new Promise(async (resolve, reject) => {
+        const userId = generateUUID();
+        
+        try {
+            const passwordHash = await argon2.hash(user.password + (process.env.BCRYPT_PEPPER || ''), {
+                type: argon2.argon2id,
+                memoryCost: 19456,
+                timeCost: 2,
+                parallelism: 1,
+                hashLength: 32
+            });
             
             db.run(`
                 INSERT INTO users (id, email, password_hash, first_name, last_name, company, email_verified)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
-            `, [userId, ADMIN_USER.email, passwordHash, ADMIN_USER.firstName, ADMIN_USER.lastName, ADMIN_USER.company, 1], function(err) {
+            `, [userId, user.email, passwordHash, user.firstName, user.lastName, user.company, 1], function(err) {
                 if (err) {
-                    reject(err);
-                    return;
+                    if (err.message.includes('UNIQUE constraint failed')) {
+                        resolve({ exists: true });
+                    } else {
+                        reject(err);
+                    }
+                } else {
+                    resolve({ exists: false, id: userId });
                 }
-                
-                console.log('✅ Admin user created successfully!');
-                console.log('');
-                console.log('═══════════════════════════════════════════');
-                console.log('           ADMIN USER CREDENTIALS          ');
-                console.log('═══════════════════════════════════════════');
-                console.log('');
-                console.log('   📧 Email:    admin@psdepot.com');
-                console.log('   🔑 Password: AdminPass456!');
-                console.log('   🏢 Company:  Performance Supply Depot');
-                console.log('');
-                console.log('═══════════════════════════════════════════');
-                resolve();
             });
-        });
+        } catch (err) {
+            reject(err);
+        }
     });
 }
 
-createTestUser()
-    .then(() => createAdminUser())
-    .then(() => {
+async function main() {
+    console.log('🧪 Creating test users for PSD Appointments...\n');
+    
+    const db = new sqlite3.Database(DB_PATH);
+    
+    try {
+        await initDatabase(db);
+        
+        // Create test user with Argon2
+        const testResult = await createUserWithArgon2(db, TEST_USER);
+        if (testResult.exists) {
+            console.log('⚠️  Test user already exists (test@psdepot.com)\n');
+        } else {
+            console.log('✅ Test user created successfully!\n');
+        }
+        
+        // Create admin user
+        const ADMIN_USER = {
+            email: 'admin@psdepot.com',
+            password: 'AdminPass456!',
+            firstName: 'Admin',
+            lastName: 'User',
+            company: 'Performance Supply Depot'
+        };
+        
+        const adminResult = await createUserWithArgon2(db, ADMIN_USER);
+        if (adminResult.exists) {
+            console.log('⚠️  Admin user already exists (admin@psdepot.com)\n');
+        } else {
+            console.log('✅ Admin user created successfully!\n');
+        }
+        
+        console.log('═══════════════════════════════════════════════════════════');
+        console.log('                    TEST CREDENTIALS                        ');
+        console.log('═══════════════════════════════════════════════════════════\n');
+        
+        console.log('   📧 Test Email:     test@psdepot.com');
+        console.log('   🔑 Test Password:  TestPass123!');
         console.log('');
-        console.log('🎉 All test users created!');
+        console.log('   📧 Admin Email:    admin@psdepot.com');
+        console.log('   🔑 Admin Password: AdminPass456!');
         console.log('');
-        console.log('💡 To start the auth server, run:');
-        console.log('   cd /root/.openclaw/workspace/auth-system && npm start');
-        process.exit(0);
-    })
-    .catch(err => {
+        console.log('   🏢 Company:        Performance Supply Depot');
+        console.log('   ✅ Status:         Email verified\n');
+        
+        console.log('═══════════════════════════════════════════════════════════\n');
+        console.log('📝 Login URL: https://psdepot.com/appointments/web/login.html\n');
+        
+    } catch (err) {
         console.error('❌ Error:', err);
         process.exit(1);
-    });
+    } finally {
+        db.close();
+    }
+}
+
+main();
