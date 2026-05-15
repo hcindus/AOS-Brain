@@ -3,7 +3,7 @@
   "name": "Jax",
   "role": "SCIENTIST",
   "level": 5,
-  "xp": 163378,
+  "xp": 163446,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 21,
     "combat": 23
   },
-  "missionsCompleted": 1048,
+  "missionsCompleted": 1049,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -5258,6 +5258,11 @@
       "name": "Hidden Base",
       "location": "Alpha-1",
       "timestamp": 1778877187357
+    },
+    {
+      "name": "Ancient Ruins",
+      "location": "Alpha-1",
+      "timestamp": 1778880787439
     }
   ],
   "status": "ACTIVE",
