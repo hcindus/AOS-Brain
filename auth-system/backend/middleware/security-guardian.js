@@ -3,7 +3,7 @@
  * Integrates Sentinel-Dusty Fusion into the Auth System
  */
 
-const SentinelDustyFusion = require('./sentinel-dusty-fusion');
+const SentinelDustyFusion = require('../../sentinel-dusty-fusion');
 
 let guardian = null;
 

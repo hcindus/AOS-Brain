@@ -5,7 +5,8 @@ const User = require('../../database/models/User');
 const { hashPassword, generateSecureToken, hashToken } = require('../utils/crypto');
 const { logAuditEvent } = require('../utils/audit');
 const { revokeAllUserSessions } = require('../utils/tokens');
-const { passwordResetLimiter, csrfProtection } = require('../middleware/rateLimit');
+const { passwordResetLimiter } = require('../middleware/rateLimit');
+const { csrfProtection } = require('../middleware/auth');
 const { sendPasswordResetEmail } = require('../utils/email');
 
 const router = express.Router();

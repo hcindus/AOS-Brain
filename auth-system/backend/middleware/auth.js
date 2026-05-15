@@ -83,8 +83,9 @@ function csrfProtection(req, res, next) {
  * Generate and set CSRF token cookie
  */
 function setCsrfToken(req, res, next) {
-    if (!req.cookies?.csrfToken) {
-        const token = require('crypto').randomBytes(32).toString('hex');
+    let token = req.cookies?.csrfToken;
+    if (!token) {
+        token = require('crypto').randomBytes(32).toString('hex');
         res.cookie('csrfToken', token, {
             httpOnly: false, // Must be accessible by JavaScript
             secure: process.env.NODE_ENV === 'production',
@@ -92,6 +93,7 @@ function setCsrfToken(req, res, next) {
             maxAge: 24 * 60 * 60 * 1000 // 24 hours
         });
     }
+    req.csrfToken = token;
     next();
 }
 
