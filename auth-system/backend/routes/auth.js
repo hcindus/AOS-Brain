@@ -66,6 +66,7 @@ router.post('/register',
             await logAuditEvent(user.id, 'REGISTER', 'SUCCESS', req, { email });
 
             res.status(201).json({
+                success: true,
                 message: 'Registration successful. Please check your email to verify your account.',
                 userId: user.id
             });
@@ -187,6 +188,7 @@ router.post('/login',
             });
 
             res.json({
+                success: true,
                 accessToken,
                 user: {
                     id: user.id,
