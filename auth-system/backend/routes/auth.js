@@ -226,6 +226,7 @@ router.post('/mfa/setup', authenticateToken, csrfProtection, async (req, res) =>
         await logAuditEvent(req.userId, 'MFA_SETUP', 'SUCCESS', req);
 
         res.json({
+            success: true,
             // Never expose the raw secret - only QR code
             qrCode: qrCodeUrl,
             manualEntryKey: secret.base32.slice(0, 4) + '****...' // Show only first 4 chars
@@ -265,7 +266,7 @@ router.post('/mfa/verify', authenticateToken, csrfProtection, async (req, res) =
 
         await logAuditEvent(req.userId, 'MFA_ENABLE', 'SUCCESS', req);
 
-        res.json({ message: 'MFA enabled successfully' });
+        res.json({ success: true, message: 'MFA enabled successfully' });
     } catch (err) {
         console.error('MFA verify error:', err);
         res.status(500).json({ error: 'Verification failed' });
@@ -288,7 +289,7 @@ router.post('/logout', authenticateToken, async (req, res) => {
         
         await logAuditEvent(req.userId, 'LOGOUT', 'SUCCESS', req);
         
-        res.json({ message: 'Logged out successfully' });
+        res.json({ success: true, message: 'Logged out successfully' });
     } catch (err) {
         console.error('Logout error:', err);
         res.status(500).json({ error: 'Logout failed' });
@@ -324,7 +325,10 @@ router.post('/refresh', refreshLimiter, authenticateRefreshToken, async (req, re
         });
 
         res.json({
+            success: true,
             accessToken,
+            refreshToken: newRefreshToken,
+            expiresIn: 900,
             user: {
                 id: req.userId,
                 email: req.userEmail,
