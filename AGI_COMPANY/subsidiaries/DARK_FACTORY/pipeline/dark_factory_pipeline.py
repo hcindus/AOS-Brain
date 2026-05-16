@@ -4,6 +4,7 @@ Dark Factory Pipeline Manager
 Ongoing production pipeline with THIS integration and automated processing
 """
 
+import os
 import sqlite3
 import json
 import time
@@ -14,14 +15,26 @@ from pathlib import Path
 from typing import Dict, List, Optional
 import logging
 
-# Setup logging
+# Setup logging - works in both CI and local environments
+log_dir = os.environ.get('DF_LOG_DIR', '/var/log/dark_factory')
+log_file = os.path.join(log_dir, 'pipeline.log')
+
+# Try to ensure log directory exists, fallback to local if needed
+try:
+    os.makedirs(log_dir, exist_ok=True)
+    handlers = [logging.FileHandler(log_file), logging.StreamHandler()]
+except (OSError, PermissionError):
+    # CI or restricted environment - use local logs in the repo
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    local_log = os.path.join(script_dir, 'logs', 'pipeline.log')
+    os.makedirs(os.path.dirname(local_log), exist_ok=True)
+    handlers = [logging.FileHandler(local_log), logging.StreamHandler()]
+    log_file = local_log
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s | %(levelname)s | %(message)s',
-    handlers=[
-        logging.FileHandler('/var/log/dark_factory/pipeline.log'),
-        logging.StreamHandler()
-    ]
+    handlers=handlers
 )
 logger = logging.getLogger('DarkFactoryPipeline')
 
