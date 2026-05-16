@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2563eb">
+    <title>{{ client.name }} - Client Outreach</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="manifest" href="/static/manifest.json">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="app-header">
+            <button class="menu-btn" onclick="history.back()">←</button>
+            <h1>Client Details</h1>
+            <button class="menu-btn" onclick="toggleEditMode()">✎</button>
+        </header>
+
+        <!-- Detail Header -->
+        <div class="detail-header">
+            <h2>{{ client.name }}</h2>
+            <div class="client-meta" style="margin-top: 0.5rem;">
+                <span class="badge badge-tier-{{ client.tier.lower().replace(' ', '-') }}">{{ client.tier }}</span>
+                <span class="badge badge-status-{{ client.status }}">{{ client.status }}</span>
+            </div>
+        </div>
+
+        <main class="main-content" style="padding-top: 0;">
+            <!-- Contact Info -->
+            <div class="detail-section">
+                <h3>Contact Information</h3>
+                <div class="detail-row">
+                    <span class="detail-label">Email</span>
+                    <span class="detail-value">{{ client.email or 'N/A' }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Phone</span>
+                    <span class="detail-value">{{ client.phone or 'N/A' }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Company</span>
+                    <span class="detail-value">{{ client.company or 'N/A' }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Location</span>
+                    <span class="detail-value">{{ client.city or 'N/A' }}, {{ client.state }}</span>
+                </div>
+            </div>
+
+            <!-- Business Info -->
+            <div class="detail-section">
+                <h3>Business Details</h3>
+                <div class="detail-row">
+                    <span class="detail-label">Type</span>
+                    <span class="detail-value">{{ client.business_type or 'Restaurant' }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">POS System</span>
+                    <span class="detail-value">{{ client.pos_system or 'Unknown' }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Replacement Score</span>
+                    <span class="detail-value">{{ client.replacement_score or 'N/A' }}/100</span>
+                </div>
+            </div>
+
+            <!-- Contact Schedule -->
+            <div class="detail-section">
+                <h3>Contact Schedule</h3>
+                <div class="detail-row">
+                    <span class="detail-label">Last Contact</span>
+                    <span class="detail-value">{{ client.last_contact or 'Never' }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Next Contact</span>
+                    <span class="detail-value" style="color: {{ '#dc2626' if client.next_contact and client.next_contact <= '2026-05-16' else 'inherit' }}">
+                        {{ client.next_contact or 'Not scheduled' }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div class="detail-section">
+                <h3>Notes</h3>
+                <div class="detail-row">
+                    <p style="line-height: 1.6;">{{ client.notes or 'No notes added.' }}</p>
+                </div>
+            </div>
+
+            <!-- Activity Log -->
+            <div class="detail-section">
+                <h3>Activity Log</h3>
+                <div id="activity-list">
+                    <p class="loading">Loading activities...</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Action Bar -->
+        <div class="action-bar">
+            <button class="btn-secondary" onclick="deleteClient()">Delete</button>
+            <button class="btn-primary" onclick="addActivity()">+ Activity</button>
+        </div>
+
+        <!-- Add Activity Modal -->
+        <div id="activity-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Add Activity</h2>
+                    <button class="close-btn" onclick="closeActivityModal()">×</button>
+                </div>
+                <form onsubmit="submitActivity(event)">
+                    <div class="form-group">
+                        <label>Activity Type</label>
+                        <select name="type" required>
+                            <option value="call">Call</option>
+                            <option value="email_sent">Email Sent</option>
+                            <option value="demo_scheduled">Demo Scheduled</option>
+                            <option value="meeting">Meeting</option>
+                            <option value="note">Note</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="description" rows="3" placeholder="What happened?" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeActivityModal()">Cancel</button>
+                        <button type="submit" class="btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="toast" class="toast"></div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+    <script>
+        const clientId = {{ client.id }};
+
+        async function loadActivities() {
+            const container = document.getElementById('activity-list');
+            try {
+                const response = await fetch(`/api/clients/${clientId}/activities`);
+                const activities = await response.json();
+                
+                if (activities.length === 0) {
+                    container.innerHTML = '<p class="empty-state">No activities yet</p>';
+                    return;
+                }
+                
+                container.innerHTML = activities.map(a => `
+                    <div class="activity-item">
+                        <div class="activity-type">${a.type}</div>
+                        <div class="activity-desc">${a.description || 'No description'}</div>
+                        <div class="activity-time">${new Date(a.created_at).toLocaleString()}</div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                container.innerHTML = '<p class="loading">Failed to load activities</p>';
+            }
+        }
+
+        function addActivity() {
+            document.getElementById('activity-modal').classList.add('show');
+        }
+
+        function closeActivityModal() {
+            document.getElementById('activity-modal').classList.remove('show');
+        }
+
+        async function submitActivity(event) {
+            event.preventDefault();
+            const form = event.target;
+            const data = Object.fromEntries(new FormData(form));
+            
+            try {
+                const response = await fetch(`/api/clients/${clientId}/activities?activity_type=${data.type}&description=${encodeURIComponent(data.description)}`, {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    showToast('Activity added!', 'success');
+                    closeActivityModal();
+                    loadActivities();
+                }
+            } catch (err) {
+                showToast('Failed to add activity', 'error');
+            }
+        }
+
+        async function deleteClient() {
+            if (!confirm('Delete this client? This cannot be undone.')) return;
+            
+            try {
+                const response = await fetch(`/api/clients/${clientId}`, { method: 'DELETE' });
+                if (response.ok) {
+                    showToast('Client deleted', 'success');
+                    setTimeout(() => window.location.href = '/clients', 500);
+                }
+            } catch (err) {
+                showToast('Failed to delete', 'error');
+            }
+        }
+
+        function toggleEditMode() {
+            showToast('Edit mode - coming soon', 'success');
+        }
+
+        loadActivities();
+    </script>
+</body>
+</html>
