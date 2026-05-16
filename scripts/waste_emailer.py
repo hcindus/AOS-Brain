@@ -48,6 +48,9 @@ SMTP_PASS = os.getenv("SMTP_PASS", os.getenv("HOSTINGER_SMTP_PASS", ""))  # Set 
 # Multiple waste recipients
 WASTE_RECIPIENTS = [
     "antonio.hudnall@gmail.com",  # Captain
+]
+
+BCC_RECIPIENTS = [
     "mortimer@myl0nr0s.cloud",    # Mortimer
 ]
 
@@ -135,6 +138,7 @@ def _send_single_waste_email(waste_data, sespool_items, recipient):
     msg["Subject"] = f"🗑️ Miles Brain Waste Drop - {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M')} UTC"
     msg["From"] = f"Miles Waste System <{SMTP_USER}>"
     msg["To"] = recipient
+    msg["Bcc"] = ", ".join(BCC_RECIPIENTS)
     
     # Plain text summary
     kidneys = waste_data.get("kidneys", {})
