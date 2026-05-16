@@ -32,7 +32,7 @@ APPOINTMENTS_DB = "/root/.openclaw/workspace/appointments/data/appointments.db"
 DEPOT_CHAOS_DB = "/root/.openclaw/workspace/data/depot_chaos/unified.db"
 
 # Auth service URL (Sentinel-Dusty)
-AUTH_SERVICE_URL = "http://localhost:3000/api/auth"
+AUTH_SERVICE_URL = "http://localhost:3001/api"
 
 security = HTTPBearer()
 
@@ -128,18 +128,16 @@ def init_database():
     conn.close()
 
 async def verify_token(credentials: HTTPAuthorizationCredentials) -> dict:
-    """Verify JWT token with Sentinel-Dusty auth service"""
+    """Verify JWT token - accepts demo tokens for now"""
     token = credentials.credentials
     
-    # In production, call Sentinel-Dusty verify endpoint
-    # For now, decode and validate structure
-    try:
-        import jwt
-        # Verify token with auth service secret
-        # This is a placeholder - actual implementation calls auth service
+    # Accept any token starting with "demo-token-"
+    if token.startswith("demo-token-"):
         return {"userId": "demo_user", "email": "demo@psdepot.com"}
-    except Exception as e:
-        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    # In production, validate against Sentinel-Dusty auth service
+    # For now, accept any token as demo
+    return {"userId": "demo_user", "email": "demo@psdepot.com"}
 
 # ===== API ENDPOINTS =====
 
@@ -147,6 +145,41 @@ async def verify_token(credentials: HTTPAuthorizationCredentials) -> dict:
 async def health_check():
     """Health check endpoint"""
     return {"status": "healthy", "service": "appointments", "version": "1.0.0"}
+
+@app.post("/api/v1/auth/login")
+async def auth_login(data: dict):
+    """Login endpoint - simple demo mode for now"""
+    email = data.get('email')
+    password = data.get('password')
+    device_fingerprint = data.get('deviceFingerprint', 'unknown')
+    
+    if not email or not password:
+        raise HTTPException(status_code=400, detail="Email and password required")
+    
+    # For now, accept any credentials (demo mode)
+    # In production, this would validate against Sentinel-Dusty auth service
+    import uuid
+    access_token = "demo-token-" + str(uuid.uuid4())[:8]
+    
+    # Create mobile session
+    conn = get_db_connection()
+    c = conn.cursor()
+    session_id = str(uuid.uuid4())
+    c.execute("""
+        INSERT INTO mobile_sessions (id, user_id, device_fingerprint, 
+            access_token, refresh_token, expires_at)
+        VALUES (?, ?, ?, ?, ?, datetime('now', '+24 hours'))
+    """, (session_id, email, device_fingerprint, access_token, "demo-refresh"))
+    conn.commit()
+    conn.close()
+    
+    return {
+        "access_token": access_token,
+        "refresh_token": "demo-refresh-token",
+        "user": {"email": email, "name": email.split('@')[0]},
+        "expires_in": 86400,
+        "demo_mode": True
+    }
 
 @app.get("/api/v1/availability")
 async def get_availability(
@@ -455,6 +488,50 @@ async def search_leads(
         return {"leads": leads, "count": len(leads)}
     except Exception as e:
         return {"leads": [], "count": 0, "error": str(e)}
+
+@app.get("/api/v1/admin/seed-availability")
+async def seed_availability():
+    """Seed initial availability slots - publicly accessible for setup"""
+    conn = get_db_connection()
+    c = conn.cursor()
+    
+    # Generate slots for next 30 days (weekdays only, 9am-5pm)
+    from datetime import datetime, timedelta
+    
+    today = datetime.now().date()
+    created_count = 0
+    
+    for i in range(30):
+        slot_date = today + timedelta(days=i)
+        # Skip weekends
+        if slot_date.weekday() >= 5:  # Saturday = 5, Sunday = 6
+            continue
+            
+        # Create slots every hour from 9am to 5pm
+        for hour in range(9, 17):
+            slot_time = f"{hour:02d}:00"
+            
+            # Check if slot already exists
+            c.execute("""
+                SELECT id FROM availability_slots 
+                WHERE slot_date = ? AND slot_time = ?
+            """, (slot_date.isoformat(), slot_time))
+            
+            if not c.fetchone():
+                c.execute("""
+                    INSERT INTO availability_slots (slot_date, slot_time, duration_minutes, is_available)
+                    VALUES (?, ?, 60, 1)
+                """, (slot_date.isoformat(), slot_time))
+                created_count += 1
+    
+    conn.commit()
+    conn.close()
+    
+    return {
+        "success": True,
+        "slots_created": created_count,
+        "message": f"Created {created_count} availability slots for the next 30 days (weekdays only)"
+    }
 
 if __name__ == "__main__":
     init_database()
