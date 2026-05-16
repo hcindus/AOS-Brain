@@ -190,6 +190,8 @@ router.post('/login',
             res.json({
                 success: true,
                 accessToken,
+                refreshToken,
+                expiresIn: 900, // 15 minutes in seconds (matches JWT_ACCESS_EXPIRY)
                 user: {
                     id: user.id,
                     email: user.email,
