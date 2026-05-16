@@ -341,4 +341,29 @@ router.post('/refresh', refreshLimiter, authenticateRefreshToken, async (req, re
     }
 });
 
+/**
+ * POST /api/auth/verify
+ * Verify if a token is valid (for frontend token checks)
+ */
+router.post('/verify', async (req, res) => {
+    try {
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+        
+        if (!token) {
+            return res.json({ valid: false });
+        }
+        
+        const decoded = verifyAccessToken(token);
+        
+        if (!decoded) {
+            return res.json({ valid: false });
+        }
+        
+        res.json({ valid: true, userId: decoded.userId, email: decoded.email });
+    } catch (err) {
+        res.json({ valid: false });
+    }
+});
+
 module.exports = router;
