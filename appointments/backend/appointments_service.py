@@ -242,12 +242,15 @@ async def create_booking(
     duration = data.get('duration_minutes', 60)
     notes = data.get('notes', '')
     
-    # Check slot availability
+    # Check slot availability - extract date and time from ISO format
+    date_part = scheduled_at.split('T')[0] if 'T' in scheduled_at else scheduled_at.split(' ')[0]
+    time_part = scheduled_at.split('T')[1][:5] if 'T' in scheduled_at else scheduled_at.split(' ')[1][:5]
+    
     c.execute("""
         SELECT id FROM availability_slots 
-        WHERE slot_date = date(?) AND slot_time = time(?)
+        WHERE slot_date = ? AND slot_time = ?
         AND is_available = 1
-    """, (scheduled_at, scheduled_at))
+    """, (date_part, time_part))
     
     if not c.fetchone():
         conn.close()
@@ -266,8 +269,8 @@ async def create_booking(
     c.execute("""
         UPDATE availability_slots 
         SET is_available = 0, appointment_id = ?
-        WHERE slot_date = date(?) AND slot_time = time(?)
-    """, (appt_id, scheduled_at, scheduled_at))
+        WHERE slot_date = ? AND slot_time = ?
+    """, (appt_id, date_part, time_part))
     
     # Queue for Google Calendar sync
     c.execute("""
