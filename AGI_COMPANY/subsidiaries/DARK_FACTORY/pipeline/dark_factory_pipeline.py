@@ -28,7 +28,7 @@ logger = logging.getLogger('DarkFactoryPipeline')
 class DarkFactoryPipeline:
     """Manages the ongoing Dark Factory production pipeline"""
     
-    VERSION = "1.0.0"
+    VERSION = "1.1.0"
     DB_PATH = "/root/.openclaw/workspace/data/factory/dark_factory.db"
     
     # Production stages
@@ -264,6 +264,184 @@ class DarkFactoryPipeline:
         except Exception as e:
             logger.debug(f"Patricia notification skipped: {e}")
     
+    def bubblewrap_build(self, project_path: str, output_name: str, 
+                        package_name: str = "com.agicorp.app",
+                        shortcuts: List[Dict] = None) -> Dict:
+        """
+        Build Android APK from PWA using Bubblewrap CLI
+        
+        Args:
+            project_path: Path to PWA manifest.json directory
+            output_name: Output APK name (without extension)
+            package_name: Android package ID
+            shortcuts: List of app shortcuts
+            
+        Returns:
+            Dict with build status, paths, and metadata
+        """
+        import shutil
+        
+        result = {
+            "status": "failed",
+            "order_id": None,
+            "apk_path": None,
+            "aab_path": None,
+            "keystore_path": None,
+            "errors": []
+        }
+        
+        # Check for bubblewrap CLI
+        bubblewrap = shutil.which("bubblewrap") or "npx @bubblewrap/cli"
+        
+        try:
+            # Create order for tracking
+            order_id = self.add_order(
+                product_name=f"{output_name} (Bubblewrap APK)",
+                product_type="mobile_android",
+                priority="high",
+                metadata={
+                    "build_type": "bubblewrap",
+                    "project_path": project_path,
+                    "package_name": package_name
+                }
+            )
+            result["order_id"] = order_id
+            
+            logger.info(f"🛠️ Starting Bubblewrap build: {output_name}")
+            self.advance_order(order_id)
+            
+            # Check if manifest.json exists
+            manifest_path = Path(project_path) / "manifest.json"
+            if not manifest_path.exists():
+                # Create a basic manifest if missing
+                logger.warning(f"No manifest.json found at {manifest_path}, creating default")
+                default_manifest = {
+                    "name": output_name,
+                    "short_name": output_name[:12],
+                    "start_url": "/",
+                    "display": "standalone",
+                    "theme_color": "#2563eb",
+                    "background_color": "#ffffff"
+                }
+                with open(manifest_path, 'w') as f:
+                    json.dump(default_manifest, f, indent=2)
+            
+            # Run bubblewrap init
+            logger.info(f"📦 Initializing Bubblewrap project...")
+            init_result = subprocess.run(
+                [bubblewrap, "init", "--manifest", str(manifest_path), 
+                 "--directory", f"/tmp/bubblewrap/{output_name}"],
+                capture_output=True,
+                text=True,
+                timeout=120
+            )
+            
+            if init_result.returncode != 0:
+                result["errors"].append(f"Init failed: {init_result.stderr}")
+                logger.error(f"❌ Bubblewrap init failed: {init_result.stderr}")
+                return result
+            
+            self.advance_order(order_id)
+            
+            # Build APK
+            logger.info(f"🔨 Building APK...")
+            build_dir = f"/tmp/bubblewrap/{output_name}"
+            build_result = subprocess.run(
+                [bubblewrap, "build"],
+                cwd=build_dir,
+                capture_output=True,
+                text=True,
+                timeout=300
+            )
+            
+            if build_result.returncode != 0:
+                result["errors"].append(f"Build failed: {build_result.stderr}")
+                logger.error(f"❌ Bubblewrap build failed: {build_result.stderr}")
+                return result
+            
+            self.advance_order(order_id)
+            
+            # Find output files
+            build_path = Path(build_dir)
+            apk_files = list(build_path.glob("*.apk"))
+            aab_files = list(build_path.glob("*.aab"))
+            
+            # Move to factory output
+            output_dir = "/root/.openclaw/workspace/data/factory/output"
+            Path(output_dir).mkdir(parents=True, exist_ok=True)
+            
+            if apk_files:
+                dest_apk = f"{output_dir}/{output_name}.apk"
+                shutil.copy(apk_files[0], dest_apk)
+                result["apk_path"] = dest_apk
+                logger.info(f"✅ APK created: {dest_apk}")
+            
+            if aab_files:
+                dest_aab = f"{output_dir}/{output_name}.aab"
+                shutil.copy(aab_files[0], dest_aab)
+                result["aab_path"] = dest_aab
+                logger.info(f"✅ AAB created: {dest_aab}")
+            
+            # Copy keystore for future updates
+            keystore_files = list(build_path.glob("*.keystore")) + list(build_path.glob("*.jks"))
+            if keystore_files:
+                dest_key = f"{output_dir}/{output_name}.keystore"
+                shutil.copy(keystore_files[0], dest_key)
+                result["keystore_path"] = dest_key
+            
+            result["status"] = "success"
+            self.advance_order(order_id)
+            
+            logger.info(f"🎉 Bubblewrap build complete: {output_name}")
+            
+        except subprocess.TimeoutExpired:
+            result["errors"].append("Build timed out after 5 minutes")
+            logger.error("⏱️ Bubblewrap build timed out")
+        except Exception as e:
+            result["errors"].append(str(e))
+            logger.error(f"❌ Bubblewrap build error: {e}")
+        
+        return result
+    
+    def check_bubblewrap(self) -> Dict:
+        """Check if Bubblewrap CLI is available and install if needed"""
+        import shutil
+        
+        result = {
+            "installed": False,
+            "version": None,
+            "path": None
+        }
+        
+        # Check for npx
+        npx = shutil.which("npx")
+        if not npx:
+            result["error"] = "npx not found - install Node.js"
+            return result
+        
+        # Check for bubblewrap
+        try:
+            check = subprocess.run(
+                ["npx", "@bubblewrap/cli", "--version"],
+                capture_output=True,
+                text=True,
+                timeout=30
+            )
+            if check.returncode == 0:
+                result["installed"] = True
+                result["version"] = check.stdout.strip()
+                result["path"] = "npx @bubblewrap/cli"
+                logger.info(f"✅ Bubblewrap available: {result['version']}")
+            else:
+                logger.info("ℹ️ Bubblewrap not cached, will install on first use")
+                result["installed"] = True  # npx will install it
+                result["path"] = "npx @bubblewrap/cli"
+        except Exception as e:
+            result["error"] = str(e)
+            logger.error(f"❌ Bubblewrap check failed: {e}")
+        
+        return result
+    
     def sync_to_github(self, message: str = "Pipeline update"):
         """Sync state to GitHub"""
         try:
@@ -389,7 +567,7 @@ def main():
     import argparse
     parser = argparse.ArgumentParser(description='Dark Factory Pipeline')
     parser.add_argument('command', choices=[
-        'status', 'queue', 'add', 'advance', 'tick', 'report', 'run'
+        'status', 'queue', 'add', 'advance', 'tick', 'report', 'run', 'bubblewrap', 'check-bubblewrap'
     ])
     parser.add_argument('--product', '-p', help='Product name')
     parser.add_argument('--type', '-t', help='Product type')
@@ -400,6 +578,8 @@ def main():
     parser.add_argument('--order-id', '-o', help='Order ID to advance')
     parser.add_argument('--interval', '-i', type=int, default=300,
                        help='Tick interval in seconds')
+    parser.add_argument('--output', help='Output name for bubblewrap builds')
+    parser.add_argument('--package', help='Android package name for bubblewrap')
     
     args = parser.parse_args()
     
@@ -442,6 +622,22 @@ def main():
     
     elif args.command == 'run':
         pipeline.run_continuous(args.interval)
+    
+    elif args.command == 'check-bubblewrap':
+        status = pipeline.check_bubblewrap()
+        print(json.dumps(status, indent=2))
+    
+    elif args.command == 'bubblewrap':
+        if not args.product:
+            print("Error: --product (project path) required")
+            print("Example: python3 dark_factory_pipeline.py bubblewrap --product /path/to/pwa --type ClientOutreach")
+            return
+        result = pipeline.bubblewrap_build(
+            project_path=args.product,
+            output_name=args.output or args.type or "app",
+            package_name=args.package or args.client or "com.agicorp.app"
+        )
+        print(json.dumps(result, indent=2))
 
 
 if __name__ == "__main__":
