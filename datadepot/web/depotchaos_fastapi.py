@@ -844,7 +844,7 @@ async def get_calendar(year: int = Query(None), month: int = Query(None)):
         params.append(f"{year}-{month:02d}")
     
     c.execute(f"""
-        SELECT id, company_name, contact_name, contact_title, phone, email, 
+        SELECT id, business_name, company_name, contact_name, contact_title, phone, email, 
                callback_date, callback_notes, status
         FROM leads 
         WHERE callback_date IS NOT NULL {date_filter}
@@ -853,18 +853,20 @@ async def get_calendar(year: int = Query(None), month: int = Query(None)):
     
     callbacks = []
     for row in c.fetchall():
-        cb_date = row[6]
+        cb_date = row[7]
+        # Use business_name as primary, fall back to company_name
+        business_name = row[1] or row[2] or 'Unknown Business'
         callbacks.append({
             'lead_id': row[0],
-            'company_name': row[1],
-            'contact_name': row[2],
-            'contact_title': row[3],
-            'phone': row[4],
-            'email': row[5],
+            'company_name': business_name,
+            'contact_name': row[3],
+            'contact_title': row[4],
+            'phone': row[5],
+            'email': row[6],
             'callback_date': cb_date,
             'callback_time': cb_date[11:16] if cb_date else None,  # Extract HH:MM from ISO
-            'callback_notes': row[7],
-            'status': row[8]
+            'callback_notes': row[8],
+            'status': row[9]
         })
     
     conn.close()
