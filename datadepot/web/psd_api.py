@@ -30,6 +30,16 @@ def get_db():
     conn.row_factory = sqlite3.Row
     return conn
 
+def fix_customer_row(row):
+    """Map old schema (name) to new schema (business_name)"""
+    if row is None:
+        return None
+    d = dict(row)
+    # Map 'name' to 'business_name' for compatibility
+    if 'name' in d and 'business_name' not in d:
+        d['business_name'] = d.pop('name')
+    return d
+
 @app.get("/")
 def root():
     return {"service": "DepotChaos API", "status": "running", "version": "1.0.0"}
@@ -48,9 +58,12 @@ def dashboard_overview():
     cursor.execute("SELECT COUNT(*) as active FROM psd_customers WHERE status = 'active'")
     active_customers = cursor.fetchone()['active']
     
-    # Total revenue from sales table
-    cursor.execute("SELECT COALESCE(SUM(amount), 0) as total FROM psd_customer_sales WHERE year = 2022")
+    # Total revenue from sales table (use 2025 if available, fallback to 2022)
+    cursor.execute("SELECT COALESCE(SUM(amount), 0) as total FROM psd_customer_sales WHERE year = 2025")
     total_revenue = cursor.fetchone()['total']
+    if total_revenue == 0:
+        cursor.execute("SELECT COALESCE(SUM(amount), 0) as total FROM psd_customer_sales WHERE year = 2022")
+        total_revenue = cursor.fetchone()['total']
     
     # Average monthly revenue
     cursor.execute("SELECT AVG(amount) as avg FROM psd_customer_sales")
@@ -77,6 +90,7 @@ def dashboard_overview():
         "total_customers": total_customers,
         "active_customers": active_customers,
         "total_revenue_2022": round(total_revenue, 2),
+        "total_revenue_2025": round(total_revenue, 2),
         "avg_monthly_revenue": round(avg_monthly, 2),
         "contacts_due": contacts_due,
         "by_category": by_category,
@@ -155,14 +169,14 @@ def list_customers(
         params.append(category)
     
     if search:
-        query += " AND business_name LIKE ?"
+        query += " AND name LIKE ?"
         params.append(f"%{search}%")
     
-    query += " ORDER BY business_name LIMIT ? OFFSET ?"
+    query += " ORDER BY name LIMIT ? OFFSET ?"
     params.extend([limit, skip])
     
     cursor.execute(query, params)
-    customers = [dict(row) for row in cursor.fetchall()]
+    customers = [fix_customer_row(row) for row in cursor.fetchall()]
     
     # Get total count
     count_query = "SELECT COUNT(*) as total FROM psd_customers WHERE 1=1"
@@ -171,7 +185,7 @@ def list_customers(
         count_query += " AND category = ?"
         count_params.append(category)
     if search:
-        count_query += " AND business_name LIKE ?"
+        count_query += " AND name LIKE ?"
         count_params.append(f"%{search}%")
     
     cursor.execute(count_query, count_params)
@@ -198,6 +212,8 @@ def get_customer(customer_id: int):
     if not customer:
         raise HTTPException(status_code=404, detail="Customer not found")
     
+    customer = fix_customer_row(customer)
+    
     cursor.execute("""
         SELECT year, month, amount FROM psd_customer_sales
         WHERE customer_id = ? ORDER BY year DESC, month
@@ -222,10 +238,8 @@ def predicted_contacts(days: int = 30):
     cursor.execute("""
         SELECT 
             id,
-            business_name,
+            name as business_name,
             city,
-            contact_name,
-            phone,
             last_contact,
             system_type,
             category,
@@ -246,7 +260,7 @@ def predicted_contacts(days: int = 30):
         LIMIT 100
     """, (cutoff_date, cutoff_date))
     
-    contacts = [dict(row) for row in cursor.fetchall()]
+    contacts = [fix_customer_row(row) for row in cursor.fetchall()]
     
     conn.close()
     
