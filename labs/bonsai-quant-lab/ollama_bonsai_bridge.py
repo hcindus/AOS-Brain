@@ -58,12 +58,17 @@ class BridgeHandler(BaseHTTPRequestHandler):
             self._send_error(400, "Invalid JSON")
             return
         
-        # Route based on model name
+        # Route based on model name (strip :latest suffix for matching)
         model = data.get('model', '')
+        model_clean = model.split(':')[0].lower()  # Remove :latest, :q4_0, etc.
         
-        if any(bonsai in model.lower() for bonsai in BONSAI_MODELS.keys()):
+        print(f"[Bridge] Request for model: {model} (clean: {model_clean})")
+        
+        if any(bonsai in model_clean for bonsai in BONSAI_MODELS.keys()):
+            print(f"[Bridge] Routing to PrismML: {model}")
             self._handle_bonsai(data)
         else:
+            print(f"[Bridge] Routing to Ollama: {model}")
             self._forward_to_ollama_post(data)
     
     def _handle_bonsai(self, data):
