@@ -17,17 +17,24 @@ Evening push completed successfully. Two commits were needed due to active crew 
 
 ## Files Changed
 
-All 5 crew member storage files in `nognog/crew/storage/crew/`:
+**Commit 1 & 2:** 5 crew member storage files in `nognog/crew/storage/crew/`:
 - `crew_1775550212150_6p3fyu.json` (Vex - PILOT)
 - `crew_1775550212152_8m6o8w.json`
 - `crew_1775550212250_smucjt.json`
 - `crew_1775550212549_m4opvw.json`
 - `crew_1775550212551_emebru.json`
 
+**Commit 3:** Additional files:
+- `data/factory/dark_factory.db` - Factory database updates
+- `agent_sandboxes/patricia/reports/factory_assessment_20260518_160457.json` - Patricia's evening assessment
+- `daily_reports/git_push_2026-05-18_evening.md` - This report
+
 ## Changes Summary
-- **+10 insertions, -10 deletions**
+- **+431 insertions, -5 deletions** (across 3 commits)
 - Activity: XP gains from crew missions
 - Vex (PILOT) gained 3 XP: 173758 → 173761
+- Factory DB: Dark Factory metrics updated
+- New: Patricia's factory assessment report
 
 ## Status
 
