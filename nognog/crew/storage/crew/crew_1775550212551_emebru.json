@@ -3,7 +3,7 @@
   "name": "Aria",
   "role": "MEDIC",
   "level": 5,
-  "xp": 175687,
+  "xp": 175757,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 17,
     "combat": 23
   },
-  "missionsCompleted": 1165,
+  "missionsCompleted": 1166,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -5843,6 +5843,11 @@
       "name": "Space Anomaly",
       "location": "Alpha-1",
       "timestamp": 1779073391233
+    },
+    {
+      "name": "Space Anomaly",
+      "location": "Alpha-1",
+      "timestamp": 1779075131272
     }
   ],
   "status": "ACTIVE",
