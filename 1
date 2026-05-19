@@ -1,20 +1,18 @@
-error: externally-managed-environment
+Failed to get unit for PID 2: PID 2 does not belong to any loaded unit.
+● depotchaos.service - DepotChaos CRM Web Interface
+     Loaded: loaded (/etc/systemd/system/depotchaos.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-05-19 07:51:50 UTC; 29s ago
+   Main PID: 3568943 (python3)
+      Tasks: 6 (limit: 19144)
+     Memory: 35.8M (peak: 36.0M)
+        CPU: 10.958s
+     CGroup: /system.slice/depotchaos.service
+             └─3568943 /usr/bin/python3 /root/.openclaw/workspace/datadepot/web/depotchaos_fastapi.py
 
-× This environment is externally managed
-╰─> To install Python packages system-wide, try apt install
-    python3-xyz, where xyz is the package you are trying to
-    install.
-    
-    If you wish to install a non-Debian-packaged Python package,
-    create a virtual environment using python3 -m venv path/to/venv.
-    Then use path/to/venv/bin/python and path/to/venv/bin/pip. Make
-    sure you have python3-full installed.
-    
-    If you wish to install a non-Debian packaged Python application,
-    it may be easiest to use pipx install xyz, which will manage a
-    virtual environment for you. Make sure you have pipx installed.
-    
-    See /usr/share/doc/python3.12/README.venv for more information.
-
-note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
-hint: See PEP 668 for the detailed specification.
+May 19 07:51:50 Miles systemd[1]: Started depotchaos.service - DepotChaos CRM Web Interface.
+May 19 07:52:19 Miles depotchaos[3568943]: INFO:     Started server process [3568943]
+May 19 07:52:19 Miles depotchaos[3568943]: INFO:     Waiting for application startup.
+May 19 07:52:19 Miles depotchaos[3568943]: INFO:     Application startup complete.
+May 19 07:52:20 Miles depotchaos[3568943]: ERROR:    [Errno 98] error while attempting to bind on address ('0.0.0.0', 8082): address already in use
+May 19 07:52:20 Miles depotchaos[3568943]: INFO:     Waiting for application shutdown.
+May 19 07:52:20 Miles depotchaos[3568943]: INFO:     Application shutdown complete.
