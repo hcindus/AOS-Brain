@@ -1,0 +1,37 @@
+{
+  "date": "2026-05-11T09:02:00.000000",
+  "competitors": [
+    {
+      "name": "WebstaurantStore",
+      "url": "https://www.webstaurantstore.com",
+      "price": "$42.99/case (3 1/8 x 230 50 rolls)",
+      "product": "Lavex Thermal Receipt Paper 3 1/8 x 230",
+      "shipping": "Free on $50+",
+      "status": "active_monitoring"
+    },
+    {
+      "name": "Amazon (Business)",
+      "url": "https://www.amazon.com",
+      "price": "$38.49 - $52.99/case",
+      "product": "Thermal Receipt Paper 3 1/8 x 230 (50 rolls)",
+      "shipping": "Prime eligible",
+      "status": "active_monitoring"
+    },
+    {
+      "name": "Sam's Club",
+      "url": "https://www.samsclub.com",
+      "price": "$45.98/case",
+      "product": "PMC Thermal Receipt Paper 3 1/8 x 230",
+      "shipping": "Club member only",
+      "status": "active_monitoring"
+    },
+    {
+      "name": "Staples",
+      "url": "https://www.staples.com",
+      "price": "$59.99/case",
+      "product": "Staples Thermal Receipt Paper 3 1/8 x 230",
+      "shipping": "Free delivery",
+      "status": "active_monitoring"
+    }
+  ]
+}
