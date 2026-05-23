@@ -7,6 +7,18 @@
 
 ---
 
+## [1.1.0] - 2026-05-23
+### Security Layer Added
+- **Created**: RLS policies, triggers, ETL framework
+- **Files**: `rls_triggers.sql` (10,983 bytes)
+- **Features**:
+  - Row Level Security (user isolation)
+  - ETL role with bypass privileges
+  - Auto-encryption triggers
+  - Audit logging triggers
+  - Staging table pattern
+  - ETL helper functions
+
 ## [1.0.0] - 2026-05-23
 ### Schema - Initial Release
 - **Created**: Unified lifecycle database schema
