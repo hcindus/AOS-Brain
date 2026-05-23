@@ -3,7 +3,7 @@
   "name": "Luna",
   "role": "COMBAT",
   "level": 5,
-  "xp": 199584,
+  "xp": 199655,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 24,
     "combat": 15
   },
-  "missionsCompleted": 1318,
+  "missionsCompleted": 1319,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -6608,6 +6608,11 @@
       "name": "Space Anomaly",
       "location": "Alpha-1",
       "timestamp": 1779561275125
+    },
+    {
+      "name": "Hidden Base",
+      "location": "Alpha-1",
+      "timestamp": 1779562685155
     }
   ],
   "status": "ACTIVE",
