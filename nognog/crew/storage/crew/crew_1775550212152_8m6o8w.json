@@ -3,7 +3,7 @@
   "name": "Nyx",
   "role": "ENGINEER",
   "level": 5,
-  "xp": 199146,
+  "xp": 199216,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 15,
     "combat": 14
   },
-  "missionsCompleted": 1308,
+  "missionsCompleted": 1309,
   "discoveries": [
     {
       "name": "Rare Minerals",
@@ -6558,6 +6558,11 @@
       "name": "Alien Artifact",
       "location": "Alpha-1",
       "timestamp": 1779563975213
+    },
+    {
+      "name": "Ancient Ruins",
+      "location": "Alpha-1",
+      "timestamp": 1779564515225
     }
   ],
   "status": "ACTIVE",
