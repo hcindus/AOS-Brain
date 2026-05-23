@@ -62,6 +62,13 @@ identity (spine)
 
 ## Connectors
 
+### [ssa-1.0.0] - SSA MySocialSecurity Connector
+**Status**: In Development  
+**Priority**: P1  
+**Stages**: `01_BIRTH_IDENTITY`, `04_EMPLOYMENT`  
+**Data Points**: Lifetime earnings, benefit estimates, SSN verification  
+**Challenge**: Requires MFA, strong anti-bot measures
+
 ### [acr-1.0.0] - AnnualCreditReport Connector
 **Status**: In Development  
 **Priority**: P0 (Highest value/effort ratio)  
