@@ -3,7 +3,7 @@
   "name": "Nyx",
   "role": "ENGINEER",
   "level": 5,
-  "xp": 202034,
+  "xp": 202101,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 15,
     "combat": 14
   },
-  "missionsCompleted": 1327,
+  "missionsCompleted": 1328,
   "discoveries": [
     {
       "name": "Rare Minerals",
@@ -6653,6 +6653,11 @@
       "name": "Rare Minerals",
       "location": "Alpha-1",
       "timestamp": 1779616267011
+    },
+    {
+      "name": "Anomalous Planet",
+      "location": "Alpha-1",
+      "timestamp": 1779622657138
     }
   ],
   "status": "ACTIVE",
