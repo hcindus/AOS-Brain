@@ -102914,3 +102914,87 @@ AggregateError [ECONNREFUSED]:
 [forge] Chat: titus: Tick 118968.
 [forge] Chat: marcus: Standing by.
 [forge] Chat: livia: Tick 118896.
+[forge] Chat: julia: Standing by.
+[forge] Chat: julius: Standing by.
+[forge] Chat: titus: Reporting in.
+[forge] Starting autonomous agent...
+[forge] Waiting for spawn...
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20) {
+  errno: -104,
+  code: 'ECONNRESET',
+  syscall: 'read'
+}
+[forge] Error: read ECONNRESET
+[forge] Disconnected
+[forge] ✅ Spawned in world at (-181.69999998807907, 60, -325.30000001192093)
+[forge] Connecting to Brain at ws://localhost:8767
+[forge] ✅ Brain connected
+[forge] Brain command: registered
+[forge] Chat: patricia: Agent patricia online!
+[forge] Chat: marcus: Tick 119088.
+[forge] Chat: chelios: Agent chelios online!
+[forge] Chat: aurora: Agent aurora online!
+[forge] Chat: livia: All systems nominal.
+[forge] Chat: patricia2: Agent patricia2 online!
+[forge] Chat: chelios2: Agent chelios2 online!
+[forge] Chat: forge2: Agent forge2 online!
+[forge] Chat: julia: Tick 119100.
+[forge] Starting autonomous agent...
+[forge] Waiting for spawn...
+[forge] Disconnected
+[forge] ✅ Spawned in world at (-181.69999998807907, 60, -325.30000001192093)
+[forge] Connecting to Brain at ws://localhost:8767
+[forge] ✅ Brain connected
+[forge] Brain command: registered
+[forge] Chat: patricia: Agent patricia online!
+[forge] Chat: chelios: Agent chelios online!
+[forge] Chat: julius: Reporting in.
+[forge] Chat: aurora: Agent aurora online!
+[forge] Chat: titus: Standing by.
+[forge] Chat: patricia2: Agent patricia2 online!
+[forge] Chat: chelios2: Agent chelios2 online!
+[forge] Chat: forge2: Agent forge2 online!
+[forge] Chat: marcus: All systems nominal.
+[forge] Chat: livia: Tick 118920.
+[forge] Chat: julia: All systems nominal.
+[forge] Chat: julius: All systems nominal.
+[forge] Chat: titus: Standing by.
+[forge] Chat: marcus: Tick 119112.
+[forge] Chat: livia: All systems nominal.
+[forge] Chat: julia: Reporting in.
+[forge] Chat: julius: All systems nominal.
+[forge] Chat: titus: All systems nominal.
+[forge] Chat: marcus: Reporting in.
+[forge] Chat: livia: All systems nominal.
+[forge] Chat: julia: All systems nominal.
+[forge] Chat: julius: All systems nominal.
+[forge] Chat: titus: All systems nominal.
+[forge] Chat: marcus: Tick 119136.
+[forge] Chat: livia: Standing by.
+[forge] Chat: julia: All systems nominal.
+[forge] Chat: julius: Standing by.
+[forge] Chat: titus: Tick 119040.
+[forge] Chat: marcus: All systems nominal.
+[forge] Chat: livia: All systems nominal.
+[forge] Chat: julia: Reporting in.
+[forge] Chat: julius: Standing by.
+[forge] Chat: titus: Reporting in.
+[forge] Chat: marcus: All systems nominal.
+[forge] Chat: livia: Standing by.
+[forge] Chat: julia: Reporting in.
+[forge] Chat: julius: Standing by.
+[forge] Chat: titus: Tick 119064.
+[forge] Chat: marcus: Reporting in.
+[forge] Chat: livia: All systems nominal.
+[forge] Chat: julia: Standing by.
+[forge] Chat: julius: Reporting in.
+[forge] Chat: titus: Reporting in.
+[forge] Chat: marcus: Standing by.
+[forge] Chat: livia: All systems nominal.
+[forge] Chat: julia: Reporting in.
+[forge] Chat: julius: All systems nominal.
+[forge] Chat: titus: Tick 119088.
+[forge] Chat: marcus: Tick 119196.
+[forge] Chat: livia: Reporting in.
+[forge] Chat: julia: All systems nominal.
