@@ -3,7 +3,7 @@
   "name": "Vex",
   "role": "PILOT",
   "level": 5,
-  "xp": 208999,
+  "xp": 209069,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 10,
     "combat": 10
   },
-  "missionsCompleted": 1344,
+  "missionsCompleted": 1345,
   "discoveries": [
     {
       "name": "Anomalous Planet",
@@ -6738,6 +6738,11 @@
       "name": "Alien Artifact",
       "location": "Alpha-1",
       "timestamp": 1779805573120
+    },
+    {
+      "name": "Nebula Cloud",
+      "location": "Alpha-1",
+      "timestamp": 1779806113132
     }
   ],
   "status": "ACTIVE",
