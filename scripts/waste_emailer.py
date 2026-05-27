@@ -12,7 +12,7 @@ import os
 import sys
 from datetime import datetime, timezone
 from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMimeMultipart
+from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 from pathlib import Path
 
