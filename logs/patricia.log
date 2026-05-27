@@ -110047,3 +110047,123 @@ Error: client timed out after 30000 milliseconds
     at process.processTimers (node:internal/timers:521:7)
 [patricia] Error: client timed out after 30000 milliseconds
 [patricia] Disconnected
+[patricia] Starting autonomous agent...
+[patricia] Waiting for spawn...
+AggregateError [ETIMEDOUT]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  code: 'ETIMEDOUT',
+  [errors]: [
+    Error: connect ETIMEDOUT ::1:25565
+        at createConnectionError (node:net:1678:14)
+        at Timeout.internalConnectMultipleTimeout (node:net:1737:38)
+        at listOnTimeout (node:internal/timers:587:11)
+        at process.processTimers (node:internal/timers:521:7) {
+      errno: -110,
+      code: 'ETIMEDOUT',
+      syscall: 'connect',
+      address: '::1',
+      port: 25565
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:25565
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 25565
+    }
+  ]
+}
+[patricia] Error: 
+[patricia] Disconnected
+[patricia] Starting autonomous agent...
+[patricia] Waiting for spawn...
+AggregateError [ETIMEDOUT]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  code: 'ETIMEDOUT',
+  [errors]: [
+    Error: connect ETIMEDOUT ::1:25565
+        at createConnectionError (node:net:1678:14)
+        at Timeout.internalConnectMultipleTimeout (node:net:1737:38)
+        at listOnTimeout (node:internal/timers:587:11)
+        at process.processTimers (node:internal/timers:521:7) {
+      errno: -110,
+      code: 'ETIMEDOUT',
+      syscall: 'connect',
+      address: '::1',
+      port: 25565
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:25565
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 25565
+    }
+  ]
+}
+[patricia] Error: 
+[patricia] Disconnected
+[patricia] Starting autonomous agent...
+[patricia] Waiting for spawn...
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:25565
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 25565
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:25565
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 25565
+    }
+  ]
+}
+[patricia] Error: 
+[patricia] Disconnected
+[patricia] Starting autonomous agent...
+[patricia] Waiting for spawn...
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:25565
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 25565
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:25565
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 25565
+    }
+  ]
+}
+[patricia] Error: 
+[patricia] Disconnected
