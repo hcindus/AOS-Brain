@@ -7,13 +7,13 @@ echo "======================================"
 echo ""
 
 # Verify Mortimer is available
-if ! ollama list | grep -q "antoniohudnall/Mortimer"; then
+if ! ollama list | grep -q "antoniohudnall/Mort_II"; then
     echo "❌ Error: Mortimer model not found."
-    echo "   Run: ollama pull antoniohudnall/Mortimer:latest"
+    echo "   Run: ollama pull antoniohudnall/Mort_II:latest"
     exit 1
 fi
 
-echo "✅ Mortimer model verified: antoniohudnall/Mortimer:latest"
+echo "✅ Mortimer model verified: antoniohudnall/Mort_II:latest"
 echo ""
 
 # Create memory directories for today's date
@@ -26,13 +26,13 @@ for agent in pulp jane hume clippy-42; do
 # $agent - Activation Log
 **Date:** ${TODAY}
 **Time:** $(date +%H:%M:%S) UTC
-**Model:** antoniohudnall/Mortimer:latest
+**Model:** antoniohudnall/Mort_II:latest
 **Runtime:** Local (Ollama)
 **Status:** ACTIVATED
 
 ## Configuration
 - Backend: Ollama
-- Model: antoniohudnall/Mortimer:latest
+- Model: antoniohudnall/Mort_II:latest
 - Temperature: 0.7
 - Max Tokens: 2048
 
@@ -53,7 +53,7 @@ echo "   🤝📈 Jane (Senior Sales Rep) - Enterprise Tier"
 echo "   🗺️📍 Hume (Regional Manager) - Professional Tier"
 echo "   📝📎 Clippy-42 (Assistant) - Starter Tier"
 echo ""
-echo "🧠 Model: antoniohudnall/Mortimer:latest"
+echo "🧠 Model: antoniohudnall/Mort_II:latest"
 echo "💰 Cost: $0/month (local runtime)"
 echo "💵 Monthly Savings: ~$1,500-2,000"
 echo ""

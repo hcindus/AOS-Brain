@@ -9,12 +9,12 @@ echo ""
 # Check Mortimer model
 echo "🧠 Model Status:"
 echo "---------------"
-if ollama list | grep -q "antoniohudnall/Mortimer"; then
+if ollama list | grep -q "antoniohudnall/Mort_II"; then
     echo "✅ Mortimer model: AVAILABLE"
-    ollama list | grep "antoniohudnall/Mortimer" | awk '{print "   Model:", $1, "| Size:", $3, "| Modified:", $4, $5}'
+    ollama list | grep "antoniohudnall/Mort_II" | awk '{print "   Model:", $1, "| Size:", $3, "| Modified:", $4, $5}'
 else
     echo "❌ Mortimer model: NOT FOUND"
-    echo "   Run: ollama pull antoniohudnall/Mortimer:latest"
+    echo "   Run: ollama pull antoniohudnall/Mort_II:latest"
 fi
 echo ""
 
@@ -76,7 +76,7 @@ echo "=========================="
 echo "📊 Summary"
 echo "=========================="
 echo "Model Runtime: LOCAL (Ollama)"
-echo "Primary Model: antoniohudnall/Mortimer:latest"
+echo "Primary Model: antoniohudnall/Mort_II:latest"
 echo "Cost Model: $0/month for 4 sales agents"
 echo ""
 echo "To activate: ./start_sales_team.sh"

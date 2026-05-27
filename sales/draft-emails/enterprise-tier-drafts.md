@@ -172,6 +172,142 @@ Jane
 
 ---
 
+## FORTUNE 1000 TARGETS - PERSONALIZED EMAILS
+
+### Email 6: Splunk - Data-Driven Workforce Analytics
+
+**To:** hello@splunk.com  
+**Decision Maker:** Gary Steele, CEO  
+**Subject:** Splunk's 7,000 employees — time for workforce observability?
+
+**Draft:**
+
+Hi Gary,
+
+Splunk processes petabytes of machine data daily to help companies understand their systems.
+
+Quick question: How are you monitoring your most complex system — your 7,000 employees?
+
+**The gap I see:**
+- You have real-time visibility into infrastructure, but not workforce
+- Compliance tracking spread across systems (no single source of truth)
+- Desk assignments, check-ins, coordination — still manual
+- 7,000 employees = massive coordination overhead
+
+**Jordan — our AGI Office Manager — brings Splunk-level observability to your workforce:**
+
+- Real-time employee check-in/check-out (no manual tracking)
+- Compliance completion dashboards (94% average completion rate)
+- Automated task distribution based on capacity
+- Weekly executive reports with workforce analytics
+
+**The ROI:**
+- Traditional office management for 7,000 employees: ~$2M+/year
+- Jordan Enterprise ($1,999/month): $24K/year
+- **Potential savings: $1.9M+ annually**
+
+You've built the standard for data observability. Shouldn't your operations be equally data-driven?
+
+30-day trial available. Worth a conversation?
+
+Best,
+Jane
+Performance Supply Depot
+
+---
+
+### Email 7: Databricks - AI-Native Operations
+
+**To:** hello@databricks.com  
+**Decision Maker:** Ali Ghodsi, CEO  
+**Subject:** Databricks' 6,000 employees — managed by AGI
+
+**Draft:**
+
+Hi Ali,
+
+Databricks is building the future of AI and data intelligence with 6,000 employees.
+
+Here's the irony: Most AI companies still manage their people with spreadsheets and manual processes.
+
+**Shouldn't an AI company use AI for operations?**
+
+**Jordan — our AGI Office Manager:**
+- Autonomous employee coordination (30-5000+ employees)
+- Real-time compliance tracking
+- Automated desk/resource assignment
+- Executive dashboards with workforce intelligence
+
+**Built for AI-native companies like yours:**
+- API-first architecture
+- Integrates with Slack, email, calendar systems
+- Scales automatically as you grow
+- Enterprise-grade security (SOC 2, GDPR compliant)
+
+**The numbers:**
+- Traditional operations overhead for 6,000: ~$1.8M/year
+- Jordan Enterprise: $24K/year
+- **Savings: $1.7M+ annually**
+
+You build the tools that power AI. Jordan powers the operations behind it.
+
+15-minute demo this week?
+
+Best,
+Jane
+Performance Supply Depot
+
+P.S. — Jordan runs on Databricks infrastructure. Full circle.
+
+---
+
+### Email 8: HubSpot - Operational Excellence
+
+**To:** hello@hubspot.com  
+**Decision Maker:** Yamini Rangan, CEO  
+**Subject:** HubSpot's 7,000 employees — practicing what you preach
+
+**Draft:**
+
+Hi Yamini,
+
+HubSpot helps 194,000+ customers grow better with inbound methodology and operational excellence.
+
+With 7,000 employees, I'm curious: How are you managing your own internal operations?
+
+**The challenge at scale:**
+- Hybrid workforce coordination
+- Compliance tracking across global offices
+- Resource allocation without visibility
+- Growing headcount = growing overhead
+
+**Jordan — AGI Office Manager — brings HubSpot-level automation to your operations:**
+
+✓ Daily check-in/check-out (automated)
+✓ Compliance tracking with real-time dashboards
+✓ Resource optimization based on utilization
+✓ Weekly executive reports delivered automatically
+
+**Built for scaling companies:**
+- Grew from 50 to 7,000+? Jordan scales with you
+- No additional headcount needed
+- Implementation: 48 hours, not 48 weeks
+
+**ROI for HubSpot:**
+- Replace $1.5M+ in operations overhead
+- Jordan Enterprise: $24K/year
+- **Redirect $1.4M+ to growth initiatives**
+
+You teach operational excellence to the world. Let me show you the next level.
+
+Demo this week?
+
+Best,
+Jane
+Performance Supply Depot
+
+---
+
 ## Sample Target Companies (Enterprise Tier)
 
 | Company | Employees | Email | Priority |
