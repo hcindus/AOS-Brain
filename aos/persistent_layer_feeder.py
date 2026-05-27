@@ -21,6 +21,7 @@ def send(cmd, params=None):
             request["params"] = params
         
         sock.sendall(json.dumps(request).encode() + b'\n')
+        sock.shutdown(socket.SHUT_WR)
         
         response = b''
         while True:
