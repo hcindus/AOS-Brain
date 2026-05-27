@@ -77,15 +77,22 @@ def main():
     
     # Check current status
     status = send("status")
+    if 'error' in status:
+        print(f"Error: {status['error']}")
+        return
     if 'consciousness' not in status:
         print("Error: Cannot connect to brain")
+        print(f"Response keys: {list(status.keys())[:10]}")
         return
+    
+
     
     c = status['consciousness']
     sub_before = c['subconscious']['active_items']
     unc_before = c['unconscious']['active_items']
+    unc_capacity = c['unconscious']['capacity']
     
-    print(f"Before: Subconscious {sub_before}/100, Unconscious {unc_before}/1000")
+    print(f"Before: Subconscious {sub_before}/{c['subconscious']['capacity']}, Unconscious {unc_before}/{unc_capacity}")
     
     # Refresh if needed
     if sub_before < 10:
@@ -120,15 +127,20 @@ def main():
             })
             time.sleep(0.1)
     
-    # Check after
+    # Check after (with delay for server to process)
+    time.sleep(0.3)
     status = send("status")
+    if 'consciousness' not in status:
+        print("Warning: Could not retrieve final status")
+        print("\n✅ Feeder completed")
+        return
     c = status['consciousness']
     sub_after = c['subconscious']['active_items']
     unc_after = c['unconscious']['active_items']
     
-    print(f"After:  Subconscious {sub_after}/100, Unconscious {unc_after}/1000")
-    print(f"\nSubconscious: {(sub_after/100)*100:.1f}%")
-    print(f"Unconscious:  {(unc_after/1000)*100:.1f}%")
+    print(f"After:  Subconscious {sub_after}/{c['subconscious']['capacity']}, Unconscious {unc_after}/{unc_capacity}")
+    print(f"\nSubconscious: {(sub_after/c['subconscious']['capacity'])*100:.1f}%")
+    print(f"Unconscious:  {(unc_after/unc_capacity)*100:.1f}%")
     
     if sub_after >= 10 and unc_after >= 15:
         print("\n✅ Layers healthy and active")
