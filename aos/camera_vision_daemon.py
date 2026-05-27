@@ -215,13 +215,13 @@ class CameraVisionDaemon:
             # Fiery red/orange
             for y in range(480):
                 fire = int(100 + 155 * np.sin((y + tick * 5) / 50))
-                draw.line([(0, y), (640, y)], fill=(fire, fire // 2, 20)])
+                draw.line([(0, y), (640, y)], fill=(fire, fire // 2, 20))
             
         elif scene_mode == 2:
             # Green forest
             for x in range(640):
                 tree = int(30 + 100 * abs(np.sin((x + tick) / 40)))
-                draw.line([(x, 0), (x, 480)], fill=(20, 60 + tree, 20)])
+                draw.line([(x, 0), (x, 480)], fill=(20, 60 + tree, 20))
             
         elif scene_mode == 3:
             # Bright white/light
