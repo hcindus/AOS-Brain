@@ -1,0 +1,71 @@
+{
+  "timestamp": "2026-05-29T15:54:01.168Z",
+  "summary": {
+    "total": 5,
+    "active": 5
+  },
+  "members": [
+    {
+      "name": "Vex",
+      "role": "PILOT",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 222581,
+      "status": "ACTIVE",
+      "missions": 1440,
+      "discoveries": 1440
+    },
+    {
+      "name": "Nyx",
+      "role": "ENGINEER",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 224381,
+      "status": "ACTIVE",
+      "missions": 1476,
+      "discoveries": 1476
+    },
+    {
+      "name": "Jax",
+      "role": "SCIENTIST",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 222531,
+      "status": "ACTIVE",
+      "missions": 1439,
+      "discoveries": 1439
+    },
+    {
+      "name": "Luna",
+      "role": "COMBAT",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 223531,
+      "status": "ACTIVE",
+      "missions": 1459,
+      "discoveries": 1459
+    },
+    {
+      "name": "Aria",
+      "role": "MEDIC",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 226181,
+      "status": "ACTIVE",
+      "missions": 1512,
+      "discoveries": 1512
+    }
+  ],
+  "highlights": [
+    "Vex discovered Hidden Base",
+    "Nyx discovered Unknown Signal",
+    "Jax discovered Hidden Base",
+    "Luna discovered Derelict Ship",
+    "Aria discovered Hidden Base"
+  ]
+}
