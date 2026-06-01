@@ -11,9 +11,10 @@ import time
 import random
 
 def send(cmd, params=None):
+    import errno
     try:
         sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        sock.settimeout(5)
+        sock.settimeout(3)
         sock.connect('/tmp/aos_brain.sock')
         
         request = {"cmd": cmd}
@@ -25,13 +26,22 @@ def send(cmd, params=None):
         
         response = b''
         while True:
-            chunk = sock.recv(4096)
-            if not chunk:
+            try:
+                chunk = sock.recv(4096)
+                if not chunk:
+                    break
+                response += chunk
+            except socket.timeout:
                 break
-            response += chunk
         
         sock.close()
-        return json.loads(response.decode())
+        if response:
+            return json.loads(response.decode())
+        return {"error": "No response from brain"}
+    except OSError as e:
+        if e.errno == errno.EAGAIN or e.errno == errno.EWOULDBLOCK:
+            return {"error": "Brain socket busy (EAGAIN)"}
+        return {"error": str(e)}
     except Exception as e:
         return {"error": str(e)}
 
