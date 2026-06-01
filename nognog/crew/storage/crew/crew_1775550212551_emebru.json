@@ -3,7 +3,7 @@
   "name": "Aria",
   "role": "MEDIC",
   "level": 5,
-  "xp": 240717,
+  "xp": 240827,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 17,
     "combat": 23
   },
-  "missionsCompleted": 1615,
+  "missionsCompleted": 1616,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -8093,6 +8093,11 @@
       "name": "Hidden Base",
       "location": "Alpha-1",
       "timestamp": 1780351633670
+    },
+    {
+      "name": "Unknown Signal",
+      "location": "Alpha-1",
+      "timestamp": 1780354219568
     }
   ],
   "status": "ACTIVE",
