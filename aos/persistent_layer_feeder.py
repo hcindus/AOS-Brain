@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-PERSISTENT LAYER FEEDER v1.0
+PERSISTENT LAYER FEEDER v1.1
 Maintains subconscious and unconscious activation
 Run periodically via cron or service
 """
@@ -9,35 +9,51 @@ import socket
 import json
 import time
 import random
+import struct
 
 def send(cmd, params=None):
     import errno
     try:
         sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        sock.settimeout(3)
+        sock.settimeout(5)
         sock.connect('/tmp/aos_brain.sock')
         
         request = {"cmd": cmd}
         if params:
             request["params"] = params
         
-        sock.sendall(json.dumps(request).encode() + b'\n')
-        sock.shutdown(socket.SHUT_WR)
+        msg = json.dumps(request).encode()
+        # Use length-prefixed message if the brain expects it
+        sock.sendall(msg + b'\n')
         
+        # Wait for response with timeout
+        sock.settimeout(5)
         response = b''
-        while True:
+        start_time = time.time()
+        while time.time() - start_time < 5:
             try:
                 chunk = sock.recv(4096)
                 if not chunk:
                     break
                 response += chunk
+                # Check if we have valid JSON
+                try:
+                    json.loads(response.decode())
+                    break
+                except:
+                    continue
             except socket.timeout:
                 break
         
         sock.close()
         if response:
-            return json.loads(response.decode())
+            try:
+                return json.loads(response.decode())
+            except:
+                return {"error": f"Invalid JSON: {response[:100]}"}
         return {"error": "No response from brain"}
+    except socket.timeout:
+        return {"error": "Connection timed out"}
     except OSError as e:
         if e.errno == errno.EAGAIN or e.errno == errno.EWOULDBLOCK:
             return {"error": "Brain socket busy (EAGAIN)"}
@@ -82,80 +98,92 @@ IDENTITY_ANCHORS = [
 
 def main():
     print("=" * 70)
-    print("PERSISTENT LAYER FEEDER v1.0")
+    print("PERSISTENT LAYER FEEDER v1.1")
     print("=" * 70)
     
     # Check current status
     status = send("status")
     if 'error' in status:
-        print(f"Error: {status['error']}")
+        print(f"Error connecting to brain: {status['error']}")
+        print("\n⚠️  Brain may be processing - will retry on next run")
         return
+    
     if 'consciousness' not in status:
-        print("Error: Cannot connect to brain")
+        print(f"Error: Unexpected response format")
         print(f"Response keys: {list(status.keys())[:10]}")
         return
     
-
-    
     c = status['consciousness']
-    sub_before = c['subconscious']['active_items']
-    unc_before = c['unconscious']['active_items']
-    unc_capacity = c['unconscious']['capacity']
+    sub_before = c.get('subconscious', {}).get('active_items', 0)
+    sub_capacity = c.get('subconscious', {}).get('capacity', 100)
+    unc_before = c.get('unconscious', {}).get('active_items', 0)
+    unc_capacity = c.get('unconscious', {}).get('capacity', 100)
     
-    print(f"Before: Subconscious {sub_before}/{c['subconscious']['capacity']}, Unconscious {unc_before}/{unc_capacity}")
+    print(f"Before: Subconscious {sub_before}/{sub_capacity}, Unconscious {unc_before}/{unc_capacity}")
+    
+    refreshed = []
     
     # Refresh if needed
     if sub_before < 10:
         print("\nRefreshing subconscious...")
         for content, intensity in SUBCONSCIOUS_REFRESH:
-            send("add_to_layer", {
+            result = send("add_to_layer", {
                 "layer": "subconscious",
                 "content": content,
                 "intensity": intensity + random.uniform(-0.05, 0.05),
                 "associations": ["pattern", "refresh"]
             })
-            time.sleep(0.1)
+            if 'error' not in result:
+                refreshed.append(f"sub:{content[:20]}")
+            time.sleep(0.05)
     
     if unc_before < 15:
         print("Refreshing unconscious...")
         for content, intensity in UNCONSCIOUS_REFRESH:
-            send("add_to_layer", {
+            result = send("add_to_layer", {
                 "layer": "unconscious",
                 "content": content,
                 "intensity": intensity + random.uniform(-0.05, 0.05),
                 "associations": ["abstraction", "refresh"]
             })
-            time.sleep(0.1)
+            if 'error' not in result:
+                refreshed.append(f"unc:{content[:20]}")
+            time.sleep(0.05)
         
         # Identity anchors
         for content, intensity in IDENTITY_ANCHORS:
-            send("add_to_layer", {
+            result = send("add_to_layer", {
                 "layer": "unconscious",
                 "content": content,
                 "intensity": intensity,
                 "associations": ["identity", "anchor"]
             })
-            time.sleep(0.1)
+            if 'error' not in result:
+                refreshed.append(f"id:{content[:20]}")
+            time.sleep(0.05)
     
     # Check after (with delay for server to process)
-    time.sleep(0.3)
+    time.sleep(0.2)
     status = send("status")
     if 'consciousness' not in status:
         print("Warning: Could not retrieve final status")
-        print("\n✅ Feeder completed")
+        print(f"\n✅ Feeder completed - {len(refreshed)} items refreshed")
         return
-    c = status['consciousness']
-    sub_after = c['subconscious']['active_items']
-    unc_after = c['unconscious']['active_items']
     
-    print(f"After:  Subconscious {sub_after}/{c['subconscious']['capacity']}, Unconscious {unc_after}/{unc_capacity}")
-    print(f"\nSubconscious: {(sub_after/c['subconscious']['capacity'])*100:.1f}%")
+    c = status['consciousness']
+    sub_after = c.get('subconscious', {}).get('active_items', 0)
+    unc_after = c.get('unconscious', {}).get('active_items', 0)
+    
+    print(f"After:  Subconscious {sub_after}/{sub_capacity}, Unconscious {unc_after}/{unc_capacity}")
+    print(f"\nSubconscious: {(sub_after/sub_capacity)*100:.1f}%")
     print(f"Unconscious:  {(unc_after/unc_capacity)*100:.1f}%")
     
     if sub_after >= 10 and unc_after >= 15:
         print("\n✅ Layers healthy and active")
     else:
         print("\n⚠️  Layers need attention")
+    
+    print(f"Items refreshed this run: {len(refreshed)}")
 
 if __name__ == "__main__":
     main()
