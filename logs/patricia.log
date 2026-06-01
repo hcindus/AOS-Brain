@@ -110167,3 +110167,16 @@ AggregateError [ECONNREFUSED]:
 }
 [patricia] Error: 
 [patricia] Disconnected
+[patricia] Starting autonomous agent...
+[patricia] Waiting for spawn...
+[patricia] Starting autonomous agent...
+[patricia] Waiting for spawn...
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20) {
+  errno: -104,
+  code: 'ECONNRESET',
+  syscall: 'read'
+}
+[patricia] Error: read ECONNRESET
+[patricia] Disconnected
+[patricia] Disconnected

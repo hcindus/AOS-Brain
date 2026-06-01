@@ -109878,3 +109878,16 @@ AggregateError [ECONNREFUSED]:
 }
 [chelios] Error: 
 [chelios] Disconnected
+[chelios] Starting autonomous agent...
+[chelios] Waiting for spawn...
+[chelios] Starting autonomous agent...
+[chelios] Waiting for spawn...
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20) {
+  errno: -104,
+  code: 'ECONNRESET',
+  syscall: 'read'
+}
+[chelios] Error: read ECONNRESET
+[chelios] Disconnected
+[chelios] Disconnected

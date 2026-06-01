@@ -109312,3 +109312,16 @@ AggregateError [ECONNREFUSED]:
 }
 [forge2] Error: 
 [forge2] Disconnected
+[forge2] Starting autonomous agent...
+[forge2] Waiting for spawn...
+[forge2] Starting autonomous agent...
+[forge2] Waiting for spawn...
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20) {
+  errno: -104,
+  code: 'ECONNRESET',
+  syscall: 'read'
+}
+[forge2] Error: read ECONNRESET
+[forge2] Disconnected
+[forge2] Disconnected
