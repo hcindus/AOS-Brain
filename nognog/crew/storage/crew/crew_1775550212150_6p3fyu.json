@@ -3,7 +3,7 @@
   "name": "Vex",
   "role": "PILOT",
   "level": 5,
-  "xp": 234895,
+  "xp": 235119,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 10,
     "combat": 10
   },
-  "missionsCompleted": 1524,
+  "missionsCompleted": 1526,
   "discoveries": [
     {
       "name": "Anomalous Planet",
@@ -7638,6 +7638,16 @@
       "name": "Ancient Ruins",
       "location": "Alpha-1",
       "timestamp": 1780309966971
+    },
+    {
+      "name": "Derelict Ship",
+      "location": "Alpha-1",
+      "timestamp": 1780315144968
+    },
+    {
+      "name": "Ancient Ruins",
+      "location": "Alpha-1",
+      "timestamp": 1780315806271
     }
   ],
   "status": "ACTIVE",
