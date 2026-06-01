@@ -8,14 +8,14 @@ echo "======================================"
 # Verify Mortimer is available
 if ! ollama list | grep -q "antoniohudnall/Mortimer"; then
     echo "❌ Error: Mortimer model not found. Please install first:"
-    echo "   ollama pull antoniohudnall/Mortimer:latest"
+    echo "   ollama pull antoniohudnall/Mort_II:latest"
     exit 1
 fi
 
 echo "✅ Mortimer model verified"
 
 # Set environment for local runtime
-export AOS_MODEL=ollama/antoniohudnall/Mortimer:latest
+export AOS_MODEL=ollama/antoniohudnall/Mort_II:latest
 export AOS_RUNTIME=local
 export OLLAMA_HOST=http://localhost:11434
 

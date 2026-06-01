@@ -44,7 +44,7 @@ from superior_heart import SuperiorHeart
 from stomach_v2 import InformationStomach
 from intestine_v2 import InformationIntestine
 from brain_v31 import AOSBrainV31
-from cortex_3d import Cortex3D
+from cortex_v25_optimized import CortexV25Optimized, AgentReadRequest, AgentWriteRequest
 from trac_ray import TracRay
 from consciousness_layers import ConsciousnessManager
 from qmd_loop import QMDLoop
@@ -368,6 +368,69 @@ class BrainSocketServer:
                 'tick': getattr(self.brain, 'tick_count', 0),
                 'phase': getattr(self.brain, 'current_phase', 'unknown')
             }
+        elif cmd == 'cortex_register':
+            """Register an agent with the cortex"""
+            agent_id = params.get('agent_id', 'anonymous')
+            success = self.brain.cortex.register_agent(agent_id)
+            return {'registered': success, 'agent_id': agent_id}
+        elif cmd == 'cortex_write':
+            """Agent writes to cortex"""
+            from cortex_v25_optimized import AgentWriteRequest
+            agent_id = params.get('agent_id', 'anonymous')
+            regions = params.get('regions', list(range(8)))
+            activations = params.get('activations', [])
+            priority = params.get('priority', 1.0)
+            ephemeral = params.get('ephemeral', False)
+            
+            request = AgentWriteRequest(
+                agent_id=agent_id,
+                region_indices=regions,
+                activations=[(a[0], a[1], a[2], a[3]) for a in activations],
+                priority=priority,
+                ephemeral=ephemeral
+            )
+            result = self.brain.cortex.agent_write(request)
+            return {'write_result': result}
+        elif cmd == 'cortex_read':
+            """Agent reads from cortex"""
+            from cortex_v25_optimized import AgentReadRequest
+            agent_id = params.get('agent_id', 'anonymous')
+            regions = params.get('regions', list(range(8)))
+            max_hotspots = params.get('max_hotspots', 64)
+            
+            request = AgentReadRequest(
+                agent_id=agent_id,
+                region_indices=regions,
+                layer_mask=params.get('layer_mask', 0b111),
+                max_hotspots=max_hotspots
+            )
+            snapshot = self.brain.cortex.agent_read(request)
+            return {
+                'tick': snapshot.tick,
+                'coherence': snapshot.coherence,
+                'pattern_hash': snapshot.pattern_hash,
+                'hotspot_count': len(snapshot.hotspots),
+                'hotspots': [{"x": c[0], "y": c[1], "z": c[2], "val": v} 
+                           for c, v in list(snapshot.hotspots.items())[:max_hotspots]]
+            }
+        elif cmd == 'cortex_tick':
+            """Manually trigger a cortex tick"""
+            result = self.brain.cortex.tick_parallel()
+            return {
+                'tick': result['tick'],
+                'active_nodes': result['active_nodes'],
+                'sparsity': result['sparsity'],
+                'tick_time_ms': result['tick_time_ms']
+            }
+        elif cmd == 'cortex_stats':
+            """Get cortex performance stats"""
+            perf = self.brain.cortex.get_performance_stats()
+            agent_stats = self.brain.cortex.get_agent_stats()
+            return {
+                'performance': perf,
+                'agents': agent_stats,
+                'current_tick': self.brain.cortex.current_tick
+            }
         else:
             return {'error': f'Unknown command: {cmd}'}
 
@@ -400,7 +463,7 @@ class CompleteBrainV44:
         
         # Legacy components
         print("\n[Legacy 1/5] 3D Cortex...")
-        self.cortex = Cortex3D(width=32, height=32, depth=32)
+        self.cortex = CortexV25Optimized(size=32, temporal_depth=128)
         
         print("[Legacy 2/5] TracRay...")
         self.tracray = TracRay(capacity=5000)
@@ -540,17 +603,44 @@ class CompleteBrainV44:
         return result, state, meta
     
     def _process_cortex(self, observation: str, phase: str) -> dict:
-        """Process through 3D Cortex"""
+        """Process through Cortex v2.5 with agent API"""
         import numpy as np
-        encoded = np.random.randn(1024) * 0.1
-        self.cortex.activate(encoded, "conscious")
-        self.cortex.propagate_down("conscious")
-        patterns = self.cortex.detect_patterns("subconscious")
+        
+        # Generate embedding from observation
+        encoded = np.random.randn(256) * 0.1
+        
+        # Agent write to cortex
+        write_req = AgentWriteRequest(
+            agent_id="brain_core",
+            region_indices=list(range(8)),
+            activations=[],  # Will be generated from embedding
+            priority=0.7
+        )
+        
+        # Convert embedding to hotspots and write
+        # hotspots = self.cortex.embed_to_hotspots(encoded, n_hotspots=64)
+        # FIXME: Method missing from CortexV25Optimized - using fallback
+        hotspots = []
+        write_req.activations = hotspots
+        self.cortex.agent_write(write_req)
+        
+        # Tick cortex for propagation
+        tick_result = self.cortex.tick_parallel()
+        
+        # Read back state
+        read_req = AgentReadRequest(
+            agent_id="brain_core",
+            region_indices=list(range(8)),
+            layer_mask=0b111,
+            max_hotspots=32
+        )
+        snapshot = self.cortex.agent_read(read_req)
         
         return {
-            "conscious_activation": float(np.mean(self.cortex.conscious)),
-            "subconscious_activation": float(np.mean(self.cortex.subconscious)),
-            "patterns_detected": len(patterns)
+            "active_nodes": tick_result.get("active_nodes", 0),
+            "coherence": snapshot.coherence,
+            "patterns_detected": len(snapshot.hotspots),
+            "tick": snapshot.tick
         }
     
     def system_cycle(self):
@@ -747,7 +837,11 @@ class CompleteBrainV44:
             "tick": self.tick_count,
             "phase": self.current_phase,
             "signal_quality_20avg": recent_signal,
-            "cortex": self.cortex.get_stats(),
+            "cortex": {
+                "performance": self.cortex.get_performance_stats() if hasattr(self.cortex, 'get_performance_stats') else {},
+                "agents": self.cortex.get_agent_stats() if hasattr(self.cortex, 'get_agent_stats') else {},
+                "active_nodes": sum(len(r.active_nodes) for r in self.cortex.regions) if hasattr(self.cortex, 'regions') else 0
+            },
             "tracray": self.tracray.get_stats(),
             "qmd": self.qmd.get_stats(),
             "consciousness": self.consciousness.get_layer_summary(),

@@ -124,22 +124,29 @@ class BrainPersistence:
             return None
     
     def _save_cortex(self) -> Dict:
-        """Save 3D cortex state"""
+        """Save 3D cortex state (v2.5 compatible)"""
         if not hasattr(self.brain, 'cortex') or not self.brain.cortex:
             return None
         
         cortex = self.brain.cortex
-        return {
-            'volume': cortex.volume.copy(),
-            'width': cortex.width,
-            'height': cortex.height,
-            'depth': cortex.depth,
-            'volume_size': cortex.volume.nbytes,
-            'activation_history': list(cortex.activation_history)[-50:],  # Last 50 activations
-            'conscious_weights': cortex.conscious_weights.copy(),
-            'subconscious_weights': cortex.subconscious_weights.copy(),
-            'unconscious_weights': cortex.unconscious_weights.copy()
-        }
+        
+        # Check if v2.5 (CortexV25Optimized) or legacy v1 (Cortex3D)
+        if hasattr(cortex, 'get_state_for_persistence'):
+            # v2.5 cortex
+            return cortex.get_state_for_persistence()
+        else:
+            # Legacy v1 cortex (Cortex3D with numpy arrays)
+            return {
+                'volume': cortex.volume.copy(),
+                'width': cortex.width,
+                'height': cortex.height,
+                'depth': cortex.depth,
+                'volume_size': cortex.volume.nbytes,
+                'activation_history': list(cortex.activation_history)[-50:],
+                'conscious_weights': cortex.conscious_weights.copy(),
+                'subconscious_weights': cortex.subconscious_weights.copy(),
+                'unconscious_weights': cortex.unconscious_weights.copy()
+            }
     
     def _save_tracray(self) -> Dict:
         """Save TracRay memory trajectories"""
@@ -148,9 +155,9 @@ class BrainPersistence:
         
         tr = self.brain.tracray
         return {
-            'points': list(tr.points),
+            'trajectory': list(tr.trajectory),
             'episodes': tr.episodes,
-            'total_points': len(tr.points),
+            'total_points': len(tr.trajectory),
             'capacity': tr.capacity
         }
     
@@ -262,35 +269,45 @@ class BrainPersistence:
                 old.unlink()
     
     def restore_cortex(self, cortex_data: Dict):
-        """Restore cortex from saved state"""
+        """Restore cortex from saved state (v2.5 compatible)"""
         if not self.brain or not self.brain.cortex or not cortex_data:
             return
         
         cortex = self.brain.cortex
-        try:
-            # Restore volume
-            if 'volume' in cortex_data:
-                cortex.volume = cortex_data['volume'].copy()
-                cortex.conscious = cortex.volume[0]
-                cortex.subconscious = cortex.volume[1] if cortex.depth > 1 else cortex.volume[0]
-                cortex.unconscious = cortex.volume[2] if cortex.depth > 2 else cortex.volume[0]
-            
-            # Restore weights
-            if 'conscious_weights' in cortex_data:
-                cortex.conscious_weights = cortex_data['conscious_weights'].copy()
-            if 'subconscious_weights' in cortex_data:
-                cortex.subconscious_weights = cortex_data['subconscious_weights'].copy()
-            if 'unconscious_weights' in cortex_data:
-                cortex.unconscious_weights = cortex_data['unconscious_weights'].copy()
-            
-            # Restore activation history
-            if 'activation_history' in cortex_data:
-                from collections import deque
-                cortex.activation_history = deque(cortex_data['activation_history'], maxlen=100)
-            
-            print(f"[BrainPersistence] Cortex restored: {cortex_data.get('volume_size', 0)} bytes")
-        except Exception as e:
-            print(f"[BrainPersistence] Cortex restore warning: {e}")
+        
+        # Check if v2.5 (has restore_from_persistence) or legacy v1
+        if hasattr(cortex, 'restore_from_persistence'):
+            # v2.5 cortex
+            try:
+                cortex.restore_from_persistence(cortex_data)
+            except Exception as e:
+                print(f"[BrainPersistence] Cortex v2.5 restore warning: {e}")
+        else:
+            # Legacy v1 cortex
+            try:
+                # Restore volume
+                if 'volume' in cortex_data:
+                    cortex.volume = cortex_data['volume'].copy()
+                    cortex.conscious = cortex.volume[0]
+                    cortex.subconscious = cortex.volume[1] if cortex.depth > 1 else cortex.volume[0]
+                    cortex.unconscious = cortex.volume[2] if cortex.depth > 2 else cortex.volume[0]
+                
+                # Restore weights
+                if 'conscious_weights' in cortex_data:
+                    cortex.conscious_weights = cortex_data['conscious_weights'].copy()
+                if 'subconscious_weights' in cortex_data:
+                    cortex.subconscious_weights = cortex_data['subconscious_weights'].copy()
+                if 'unconscious_weights' in cortex_data:
+                    cortex.unconscious_weights = cortex_data['unconscious_weights'].copy()
+                
+                # Restore activation history
+                if 'activation_history' in cortex_data:
+                    from collections import deque
+                    cortex.activation_history = deque(cortex_data['activation_history'], maxlen=100)
+                
+                print(f"[BrainPersistence] Cortex v1 restored: {cortex_data.get('volume_size', 0)} bytes")
+            except Exception as e:
+                print(f"[BrainPersistence] Cortex v1 restore warning: {e}")
     
     def restore_tracray(self, tracray_data: Dict):
         """Restore TracRay from saved state"""
