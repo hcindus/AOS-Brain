@@ -472,9 +472,11 @@ async def get_intelligence(
     county: Optional[str] = Query(None),
     city: Optional[str] = Query(None),
     pos_system: Optional[str] = Query(None),
-    search: Optional[str] = Query(None)
+    search: Optional[str] = Query(None),
+    sort_by: Optional[str] = Query(None),
+    sort_order: Optional[str] = Query('asc')
 ):
-    """Get CA ABC intelligence data with filtering"""
+    """Get CA ABC intelligence data with filtering and sorting"""
     conn = get_db_connection()
     c = conn.cursor()
     
@@ -497,7 +499,7 @@ async def get_intelligence(
             params.append(pos_system)
     
     if search:
-        where_clauses.append("(business_name LIKE ? OR dba LIKE ? OR city LIKE ? OR address LIKE ?)")
+        where_clauses.append("(business_name LIKE ? OR city LIKE ? OR address LIKE ? OR owner_name LIKE ?)")
         params.extend([f'%{search}%', f'%{search}%', f'%{search}%', f'%{search}%'])
     
     where_sql = " AND ".join(where_clauses)
@@ -506,16 +508,62 @@ async def get_intelligence(
     c.execute(f"SELECT COUNT(*) FROM datadepot_intelligence WHERE {where_sql}", params)
     total = c.fetchone()[0]
     
+    # Determine sort order
+    valid_sort_fields = ['business_name', 'city', 'state', 'county', 'phone', 'owner_name', 
+                         'license_status', 'pos_system', 'replacement_score', 'issue_date']
+    
+    if sort_by and sort_by in valid_sort_fields:
+        order_direction = 'DESC' if sort_order.lower() == 'desc' else 'ASC'
+        # Handle NULL values - put them at the end
+        order_by = f"{sort_by} IS NULL, {sort_by} {order_direction}"
+    else:
+        # Default sort
+        order_by = "replacement_score DESC, county"
+    
     # Get data
     offset = (page - 1) * per_page
     c.execute(f"""
         SELECT * FROM datadepot_intelligence
         WHERE {where_sql}
-        ORDER BY replacement_score DESC, county
+        ORDER BY {order_by}
         LIMIT ? OFFSET ?
     """, params + [per_page, offset])
     
     records = [dict(row) for row in c.fetchall()]
+    
+    # Parse JSON data field to extract actual business info
+    for record in records:
+        if record.get('data'):
+            try:
+                data_json = json.loads(record['data'])
+                # Extract actual business name from license data
+                if 'owner_name' in data_json:
+                    record['owner_name'] = data_json['owner_name']
+                if 'address' in data_json:
+                    record['address'] = data_json['address']
+                if 'city' in data_json:
+                    record['city'] = data_json['city']
+                if 'state' in data_json:
+                    record['state'] = data_json['state']
+                if 'zip' in data_json:
+                    record['zip'] = data_json['zip']
+                if 'phone' in data_json:
+                    record['phone'] = data_json['phone']
+                if 'issue_date' in data_json:
+                    record['issue_date'] = data_json['issue_date']
+                if 'expiration_date' in data_json:
+                    record['expiration_date'] = data_json['expiration_date']
+                if 'license_type_name' in data_json:
+                    record['license_type_name'] = data_json['license_type_name']
+                if 'status' in data_json:
+                    record['license_status'] = data_json['status']
+                # Use DBA if available, otherwise keep original business_name
+                if 'dba' in data_json and data_json['dba']:
+                    record['business_name'] = data_json['dba']
+                elif 'business_name' in data_json and data_json['business_name']:
+                    record['business_name'] = data_json['business_name']
+            except json.JSONDecodeError:
+                pass  # Keep original if JSON parsing fails
     
     conn.close()
     
