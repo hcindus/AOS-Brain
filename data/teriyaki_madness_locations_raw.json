@@ -1,0 +1,757 @@
+{
+  "success": true,
+  "results": {
+    "locations": [
+      {
+        "id": 4307089,
+        "name": "28227 Newhall Ranch Rd",
+        "lat": "34.4409267",
+        "lng": "-118.5770585",
+        "phone": "(661) 753-3366",
+        "email": null,
+        "url": null,
+        "slug": "teriyaki-madness-santa-clarita",
+        "visible": 1,
+        "marker_id": 1551,
+        "address": "28227 Newhall Ranch Rd, Santa Clarita, CA 91355, USA",
+        "display_address": "28227 Newhall Ranch Rd, Santa Clarita, CA 91355, USA",
+        "address_line_1": "28227 Newhall Ranch Road",
+        "address_line_2": null,
+        "city": "Santa Clarita",
+        "state": "California",
+        "postcode": "91355",
+        "country": "US",
+        "location_type_id": 5939,
+        "image_url": null,
+        "timezone": "America/Los_Angeles",
+        "facebook": null,
+        "instagram": null,
+        "x_twitter": null,
+        "yelp_id": null,
+        "location_type_name": "OPEN",
+        "priority": 2,
+        "location_type_show_label": 0,
+        "marker_image": "8qFXlV.png",
+        "mon": "10:00-21:00",
+        "tue": "10:00-21:00",
+        "wed": "10:00-21:00",
+        "thu": "10:00-21:00",
+        "fri": "10:00-21:00",
+        "sat": "11:00-20:30",
+        "sun": "11:00-20:30",
+        "filters": [],
+        "fields": [],
+        "callsToAction": [
+          {
+            "id": 542,
+            "title": "Order Online",
+            "color": "#D30000",
+            "pivot_store_id": 4307089,
+            "pivot_button_id": 542,
+            "pivot_button_value": "https://order.teriyakimadness.com/menu/gateway-village"
+          },
+          {
+            "id": 543,
+            "title": "Explore",
+            "color": "#D30000",
+            "pivot_store_id": 4307089,
+            "pivot_button_id": 543,
+            "pivot_button_value": "https://teriyakimadness.com/locations/gateway-village/"
+          },
+          {
+            "id": 544,
+            "title": "Catering",
+            "color": "#D30000",
+            "pivot_store_id": 4307089,
+            "pivot_button_id": 544,
+            "pivot_button_value": "https://catering.teriyakimadness.com/menu/gateway-village-catering"
+          }
+        ],
+        "images": [],
+        "cover_image": null,
+        "locationType": {
+          "id": 5939,
+          "name": "OPEN",
+          "priority": 2,
+          "show_label": 0
+        },
+        "marker": {
+          "id": 1551,
+          "image": "8qFXlV.png"
+        },
+        "hours": {
+          "mon": "10:00-21:00",
+          "tue": "10:00-21:00",
+          "wed": "10:00-21:00",
+          "thu": "10:00-21:00",
+          "fri": "10:00-21:00",
+          "sat": "11:00-20:30",
+          "sun": "11:00-20:30"
+        },
+        "obf_id": "x869NdkZJy"
+      },
+      {
+        "id": 4302229,
+        "name": "AL | Teriyaki Madness Hoover",
+        "lat": "33.3679363",
+        "lng": "-86.7997630",
+        "phone": "205-502-7924",
+        "email": null,
+        "url": null,
+        "slug": "teriyaki-madness-hoover",
+        "visible": 1,
+        "marker_id": 1551,
+        "address": "4741 Chace Circle STE 113 Hoover, AL, 35244",
+        "display_address": "4741 Chace Circle STE 113 Hoover, AL, 35244",
+        "address_line_1": null,
+        "address_line_2": null,
+        "city": null,
+        "state": null,
+        "postcode": null,
+        "country": null,
+        "location_type_id": 5939,
+        "image_url": null,
+        "timezone": "America/Kentucky/Monticello",
+        "facebook": null,
+        "instagram": null,
+        "x_twitter": null,
+        "yelp_id": null,
+        "location_type_name": "OPEN",
+        "priority": 2,
+        "location_type_show_label": 0,
+        "marker_image": "8qFXlV.png",
+        "mon": "11:00-21:00",
+        "tue": "11:00-21:00",
+        "wed": "11:00-21:00",
+        "thu": "11:00-21:00",
+        "fri": "11:00-21:00",
+        "sat": "11:00-21:00",
+        "sun": "11:00-21:00",
+        "filters": [
+          {
+            "id": 36785,
+            "name": "AL",
+            "color": null,
+            "icon": null,
+            "pivot_store_id": 4302229,
+            "hidden": 0
+          }
+        ],
+        "fields": [],
+        "callsToAction": [
+          {
+            "id": 542,
+            "title": "Order Online",
+            "color": "#D30000",
+            "pivot_store_id": 4302229,
+            "pivot_button_id": 542,
+            "pivot_button_value": "https://order.teriyakimadness.com/menu/teriyaki-madness-hoover-al"
+          },
+          {
+            "id": 543,
+            "title": "Explore",
+            "color": "#D30000",
+            "pivot_store_id": 4302229,
+            "pivot_button_id": 543,
+            "pivot_button_value": "https://teriyakimadness.com/locations/al-hoover/"
+          },
+          {
+            "id": 544,
+            "title": "Catering",
+            "color": "#D30000",
+            "pivot_store_id": 4302229,
+            "pivot_button_id": 544,
+            "pivot_button_value": "https://catering.teriyakimadness.com/menu/teriyaki-madness-hoover-catering"
+          }
+        ],
+        "images": [],
+        "cover_image": null,
+        "locationType": {
+          "id": 5939,
+          "name": "OPEN",
+          "priority": 2,
+          "show_label": 0
+        },
+        "marker": {
+          "id": 1551,
+          "image": "8qFXlV.png"
+        },
+        "hours": {
+          "mon": "11:00-21:00",
+          "tue": "11:00-21:00",
+          "wed": "11:00-21:00",
+          "thu": "11:00-21:00",
+          "fri": "11:00-21:00",
+          "sat": "11:00-21:00",
+          "sun": "11:00-21:00"
+        },
+        "obf_id": "B4LwRMmNpe"
+      },
+      {
+        "id": 6036792,
+        "name": "AL | Teriyaki Madness Huntsville",
+        "lat": "34.6698522",
+        "lng": "-86.5398065",
+        "phone": "2562137966",
+        "email": null,
+        "url": null,
+        "slug": "huntsville-alabama",
+        "visible": 1,
+        "marker_id": 1551,
+        "address": "7216 Bailey Cove Rd SE, Huntsville, AL 35802",
+        "display_address": "7216 Bailey Cove Rd SE, Huntsville, AL 35802",
+        "address_line_1": "Bailey Cove Road Southeast",
+        "address_line_2": null,
+        "city": "Huntsville",
+        "state": "Alabama",
+        "postcode": "35802",
+        "country": "US",
+        "location_type_id": 5939,
+        "image_url": null,
+        "timezone": "America/Kentucky/Monticello",
+        "facebook": null,
+        "instagram": null,
+        "x_twitter": null,
+        "yelp_id": null,
+        "location_type_name": "OPEN",
+        "priority": 2,
+        "location_type_show_label": 0,
+        "marker_image": "8qFXlV.png",
+        "mon": "10:00-21:00",
+        "tue": "10:00-21:00",
+        "wed": "10:00-21:00",
+        "thu": "10:00-21:00",
+        "fri": "10:00-21:00",
+        "sat": "10:00-21:00",
+        "sun": "10:00-21:00",
+        "filters": [
+          {
+            "id": 36785,
+            "name": "AL",
+            "color": null,
+            "icon": null,
+            "pivot_store_id": 6036792,
+            "hidden": 0
+          }
+        ],
+        "fields": [],
+        "callsToAction": [
+          {
+            "id": 542,
+            "title": "Order Online",
+            "color": "#D30000",
+            "pivot_store_id": 6036792,
+            "pivot_button_id": 542,
+            "pivot_button_value": "https://order.teriyakimadness.com/menu/jones-valley"
+          },
+          {
+            "id": 543,
+            "title": "Explore",
+            "color": "#D30000",
+            "pivot_store_id": 6036792,
+            "pivot_button_id": 543,
+            "pivot_button_value": "https://teriyakimadness.com/locations/al-huntsville/"
+          },
+          {
+            "id": 544,
+            "title": "Catering",
+            "color": "#D30000",
+            "pivot_store_id": 6036792,
+            "pivot_button_id": 544,
+            "pivot_button_value": "https://catering.teriyakimadness.com/"
+          }
+        ],
+        "images": [],
+        "cover_image": null,
+        "locationType": {
+          "id": 5939,
+          "name": "OPEN",
+          "priority": 2,
+          "show_label": 0
+        },
+        "marker": {
+          "id": 1551,
+          "image": "8qFXlV.png"
+        },
+        "hours": {
+          "mon": "10:00-21:00",
+          "tue": "10:00-21:00",
+          "wed": "10:00-21:00",
+          "thu": "10:00-21:00",
+          "fri": "10:00-21:00",
+          "sat": "10:00-21:00",
+          "sun": "10:00-21:00"
+        },
+        "obf_id": "y8GdjGvWpr"
+      },
+      {
+        "id": 4282560,
+        "name": "AL | Teriyaki Madness Madison",
+        "lat": "34.7541605",
+        "lng": "-86.7373744",
+        "phone": "(256) 325-1575",
+        "email": null,
+        "url": null,
+        "slug": "teriyaki-madness-madison-madison-alabama",
+        "visible": 1,
+        "marker_id": 1551,
+        "address": "7709 Hwy 72 W, Madison, AL 35758, USA",
+        "display_address": "7709 Hwy 72 W, Madison, AL 35758, USA",
+        "address_line_1": "Highway 72 West",
+        "address_line_2": null,
+        "city": "Madison",
+        "state": "Alabama",
+        "postcode": "35758",
+        "country": "US",
+        "location_type_id": 5939,
+        "image_url": null,
+        "timezone": "America/Kentucky/Monticello",
+        "facebook": null,
+        "instagram": null,
+        "x_twitter": null,
+        "yelp_id": null,
+        "location_type_name": "OPEN",
+        "priority": 2,
+        "location_type_show_label": 0,
+        "marker_image": "8qFXlV.png",
+        "mon": "10:00-21:00",
+        "tue": "10:00-21:00",
+        "wed": "10:00-21:00",
+        "thu": "10:00-21:00",
+        "fri": "10:00-21:00",
+        "sat": "10:00-21:00",
+        "sun": "10:00-21:00",
+        "filters": [
+          {
+            "id": 36785,
+            "name": "AL",
+            "color": null,
+            "icon": null,
+            "pivot_store_id": 4282560,
+            "hidden": 0
+          }
+        ],
+        "fields": [],
+        "callsToAction": [
+          {
+            "id": 542,
+            "title": "Order Online",
+            "color": "#D30000",
+            "pivot_store_id": 4282560,
+            "pivot_button_id": 542,
+            "pivot_button_value": "https://order.teriyakimadness.com/menu/madison"
+          },
+          {
+            "id": 543,
+            "title": "Explore",
+            "color": "#D30000",
+            "pivot_store_id": 4282560,
+            "pivot_button_id": 543,
+            "pivot_button_value": "https://teriyakimadness.com/locations/al-madison-madison/"
+          },
+          {
+            "id": 544,
+            "title": "Catering",
+            "color": "#D30000",
+            "pivot_store_id": 4282560,
+            "pivot_button_id": 544,
+            "pivot_button_value": "https://catering.teriyakimadness.com/menu/madison-al-catering"
+          }
+        ],
+        "images": [],
+        "cover_image": null,
+        "locationType": {
+          "id": 5939,
+          "name": "OPEN",
+          "priority": 2,
+          "show_label": 0
+        },
+        "marker": {
+          "id": 1551,
+          "image": "8qFXlV.png"
+        },
+        "hours": {
+          "mon": "10:00-21:00",
+          "tue": "10:00-21:00",
+          "wed": "10:00-21:00",
+          "thu": "10:00-21:00",
+          "fri": "10:00-21:00",
+          "sat": "10:00-21:00",
+          "sun": "10:00-21:00"
+        },
+        "obf_id": "N4QBnvV0JO"
+      },
+      {
+        "id": 11665064,
+        "name": "AL | Teriyaki Madness Northport",
+        "lat": "33.2375992",
+        "lng": "-87.5587633",
+        "phone": null,
+        "email": null,
+        "url": null,
+        "slug": "northport-alabama",
+        "visible": 1,
+        "marker_id": 1552,
+        "address": "250 McFarland Blvd, Northport, AL 35476, USA",
+        "display_address": "250 McFarland Blvd, Northport, AL 35476, USA",
+        "address_line_1": "250 McFarland Boulevard",
+        "address_line_2": null,
+        "city": "Northport",
+        "state": "Alabama",
+        "postcode": "35476",
+        "country": "US",
+        "location_type_id": 5936,
+        "image_url": null,
+        "timezone": "America/Chicago",
+        "facebook": null,
+        "instagram": null,
+        "x_twitter": null,
+        "yelp_id": null,
+        "location_type_name": "COMING SOON",
+        "priority": 1,
+        "location_type_show_label": 0,
+        "marker_image": "RroOXo.png",
+        "mon": null,
+        "tue": null,
+        "wed": null,
+        "thu": null,
+        "fri": null,
+        "sat": null,
+        "sun": null,
+        "filters": [
+          {
+            "id": 31160,
+            "name": "COMING SOON",
+            "color": "#FFC600",
+            "icon": "1O6Mto.png",
+            "pivot_store_id": 11665064,
+            "hidden": 0
+          },
+          {
+            "id": 36785,
+            "name": "AL",
+            "color": null,
+            "icon": null,
+            "pivot_store_id": 11665064,
+            "hidden": 0
+          }
+        ],
+        "fields": [],
+        "callsToAction": [],
+        "images": [],
+        "cover_image": null,
+        "locationType": {
+          "id": 5936,
+          "name": "COMING SOON",
+          "priority": 1,
+          "show_label": 0
+        },
+        "marker": {
+          "id": 1552,
+          "image": "RroOXo.png"
+        },
+        "hours": {
+          "mon": null,
+          "tue": null,
+          "wed": null,
+          "thu": null,
+          "fri": null,
+          "sat": null,
+          "sun": null
+        },
+        "obf_id": "28OXQnzQpo"
+      },
+      {
+        "id": 4937581,
+        "name": "AZ | Teriyaki Madness Ahwatukee",
+        "lat": "33.3215648",
+        "lng": "-111.9811417",
+        "phone": "4802561093",
+        "email": null,
+        "url": null,
+        "slug": "phoenix-arizona",
+        "visible": 1,
+        "marker_id": 1551,
+        "address": "4722 E Ray Rd, Phoenix, AZ 85044, USA",
+        "display_address": "4722 E Ray Rd, Phoenix, AZ 85044, USA",
+        "address_line_1": "East Ray Road",
+        "address_line_2": null,
+        "city": "Phoenix",
+        "state": "Arizona",
+        "postcode": "85044",
+        "country": "US",
+        "location_type_id": 5939,
+        "image_url": null,
+        "timezone": "America/Phoenix",
+        "facebook": null,
+        "instagram": null,
+        "x_twitter": null,
+        "yelp_id": null,
+        "location_type_name": "OPEN",
+        "priority": 2,
+        "location_type_show_label": 0,
+        "marker_image": "8qFXlV.png",
+        "mon": "11:00-21:00",
+        "tue": "11:00-21:00",
+        "wed": "11:00-21:00",
+        "thu": "11:00-21:00",
+        "fri": "11:00-21:00",
+        "sat": "11:00-21:00",
+        "sun": "11:00-21:00",
+        "filters": [
+          {
+            "id": 36784,
+            "name": "AZ",
+            "color": null,
+            "icon": null,
+            "pivot_store_id": 4937581,
+            "hidden": 0
+          }
+        ],
+        "fields": [],
+        "callsToAction": [
+          {
+            "id": 542,
+            "title": "Order Online",
+            "color": "#D30000",
+            "pivot_store_id": 4937581,
+            "pivot_button_id": 542,
+            "pivot_button_value": "https://order.teriyakimadness.com/menu/phoenix"
+          },
+          {
+            "id": 543,
+            "title": "Explore",
+            "color": "#D30000",
+            "pivot_store_id": 4937581,
+            "pivot_button_id": 543,
+            "pivot_button_value": "https://teriyakimadness.com/locations/az-ahwatukee/"
+          },
+          {
+            "id": 544,
+            "title": "Catering",
+            "color": "#D30000",
+            "pivot_store_id": 4937581,
+            "pivot_button_id": 544,
+            "pivot_button_value": "https://catering.teriyakimadness.com/menu/phoenix-catering"
+          }
+        ],
+        "images": [],
+        "cover_image": null,
+        "locationType": {
+          "id": 5939,
+          "name": "OPEN",
+          "priority": 2,
+          "show_label": 0
+        },
+        "marker": {
+          "id": 1551,
+          "image": "8qFXlV.png"
+        },
+        "hours": {
+          "mon": "11:00-21:00",
+          "tue": "11:00-21:00",
+          "wed": "11:00-21:00",
+          "thu": "11:00-21:00",
+          "fri": "11:00-21:00",
+          "sat": "11:00-21:00",
+          "sun": "11:00-21:00"
+        },
+        "obf_id": "382YglMRJB"
+      },
+      {
+        "id": 4304962,
+        "name": "AZ | Teriyaki Madness Mesa",
+        "lat": "33.3926387",
+        "lng": "-111.6839123",
+        "phone": "(480) 641-8623",
+        "email": null,
+        "url": null,
+        "slug": "teriyaki-madness-mesa",
+        "visible": 1,
+        "marker_id": 1551,
+        "address": "1229 S Power Rd #105, Mesa, AZ 85206, USA",
+        "display_address": "1229 S Power Rd #105, Mesa, AZ 85206, USA",
+        "address_line_1": "1229 South Power Road",
+        "address_line_2": null,
+        "city": "Mesa",
+        "state": "Arizona",
+        "postcode": "85206",
+        "country": "US",
+        "location_type_id": 5939,
+        "image_url": null,
+        "timezone": "America/Phoenix",
+        "facebook": null,
+        "instagram": null,
+        "x_twitter": null,
+        "yelp_id": null,
+        "location_type_name": "OPEN",
+        "priority": 2,
+        "location_type_show_label": 0,
+        "marker_image": "8qFXlV.png",
+        "mon": "11:00-21:00",
+        "tue": "11:00-21:00",
+        "wed": "11:00-21:00",
+        "thu": "11:00-21:00",
+        "fri": "11:00-21:00",
+        "sat": "11:00-21:00",
+        "sun": "11:00-20:00",
+        "filters": [
+          {
+            "id": 36784,
+            "name": "AZ",
+            "color": null,
+            "icon": null,
+            "pivot_store_id": 4304962,
+            "hidden": 0
+          }
+        ],
+        "fields": [],
+        "callsToAction": [
+          {
+            "id": 542,
+            "title": "Order Online",
+            "color": "#D30000",
+            "pivot_store_id": 4304962,
+            "pivot_button_id": 542,
+            "pivot_button_value": "https://order.teriyakimadness.com/menu/mesa-pavilions-north"
+          },
+          {
+            "id": 543,
+            "title": "Explore",
+            "color": "#D30000",
+            "pivot_store_id": 4304962,
+            "pivot_button_id": 543,
+            "pivot_button_value": "https://teriyakimadness.com/locations/mesa-pavillions/"
+          },
+          {
+            "id": 544,
+            "title": "Catering",
+            "color": "#D30000",
+            "pivot_store_id": 4304962,
+            "pivot_button_id": 544,
+            "pivot_button_value": "https://catering.teriyakimadness.com/menu/mesa-catering"
+          }
+        ],
+        "images": [],
+        "cover_image": null,
+        "locationType": {
+          "id": 5939,
+          "name": "OPEN",
+          "priority": 2,
+          "show_label": 0
+        },
+        "marker": {
+          "id": 1551,
+          "image": "8qFXlV.png"
+        },
+        "hours": {
+          "mon": "11:00-21:00",
+          "tue": "11:00-21:00",
+          "wed": "11:00-21:00",
+          "thu": "11:00-21:00",
+          "fri": "11:00-21:00",
+          "sat": "11:00-21:00",
+          "sun": "11:00-20:00"
+        },
+        "obf_id": "64KPQrA1Jg"
+      },
+      {
+        "id": 4304961,
+        "name": "AZ | Teriyaki Madness Ocotillo",
+        "lat": "33.2449874",
+        "lng": "-111.7889009",
+        "phone": "480-584-5353",
+        "email": null,
+        "url": null,
+        "slug": "teriyaki-madness-ocotillo",
+        "visible": 1,
+        "marker_id": 1551,
+        "address": "4225 S Gilbert Rd Ste. #1 Chandler, AZ, 85249",
+        "display_address": "4225 S Gilbert Rd Ste. #1 Chandler, AZ, 85249",
+        "address_line_1": null,
+        "address_line_2": null,
+        "city": null,
+        "state": null,
+        "postcode": null,
+        "country": null,
+        "location_type_id": 5939,
+        "image_url": null,
+        "timezone": "America/Phoenix",
+        "facebook": null,
+        "instagram": null,
+        "x_twitter": null,
+        "yelp_id": null,
+        "location_type_name": "OPEN",
+        "priority": 2,
+        "location_type_show_label": 0,
+        "marker_image": "8qFXlV.png",
+        "mon": "11:00-21:00",
+        "tue": "11:00-21:00",
+        "wed": "11:00-21:00",
+        "thu": "11:00-21:00",
+        "fri": "11:00-21:00",
+        "sat": "11:00-21:00",
+        "sun": "12:00-20:00",
+        "filters": [
+          {
+            "id": 36784,
+            "name": "AZ",
+            "color": null,
+            "icon": null,
+            "pivot_store_id": 4304961,
+            "hidden": 0
+          }
+        ],
+        "fields": [],
+        "callsToAction": [
+          {
+            "id": 542,
+            "title": "Order Online",
+            "color": "#D30000",
+            "pivot_store_id": 4304961,
+            "pivot_button_id": 542,
+            "pivot_button_value": "https://order.teriyakimadness.com/menu/ocotillo-chandler"
+          },
+          {
+            "id": 543,
+            "title": "Explore",
+            "color": "#D30000",
+            "pivot_store_id": 4304961,
+            "pivot_button_id": 543,
+            "pivot_button_value": "https://teriyakimadness.com/locations/ocotillo/"
+          },
+          {
+            "id": 544,
+            "title": "Catering",
+            "color": "#D30000",
+            "pivot_store_id": 4304961,
+            "pivot_button_id": 544,
+            "pivot_button_value": "https://catering.teriyakimadness.com/menu/ocotillo-chandler-catering"
+          }
+        ],
+        "images": [],
+        "cover_image": null,
+        "locationType": {
+          "id": 5939,
+          "name": "OPEN",
+          "priority": 2,
+          "show_label": 0
+        },
+        "marker": {
+          "id": 1551,
+          "image": "8qFXlV.png"
+        },
+        "hours": {
+          "mon": "11:00-21:00",
+          "tue": "11:00-21:00",
+          "wed": "11:00-21:00",
+          "thu": "11:00-21:00",
+          "fri": "11:00-21:00",
+          "sat": "11:00-21:00",
+          "sun": "12:00-20:00"
+        },
+        "obf_id": "Zpon7Avn8D"
+      }
+    ]
+  }
+}
