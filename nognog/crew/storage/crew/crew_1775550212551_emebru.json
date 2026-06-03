@@ -3,7 +3,7 @@
   "name": "Aria",
   "role": "MEDIC",
   "level": 5,
-  "xp": 246900,
+  "xp": 247110,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 17,
     "combat": 23
   },
-  "missionsCompleted": 1653,
+  "missionsCompleted": 1656,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -8283,6 +8283,21 @@
       "name": "Derelict Ship",
       "location": "Alpha-1",
       "timestamp": 1780477951271
+    },
+    {
+      "name": "Rare Minerals",
+      "location": "Alpha-1",
+      "timestamp": 1780482435271
+    },
+    {
+      "name": "Unknown Signal",
+      "location": "Alpha-1",
+      "timestamp": 1780482496970
+    },
+    {
+      "name": "Unknown Signal",
+      "location": "Alpha-1",
+      "timestamp": 1780482976370
     }
   ],
   "status": "ACTIVE",
