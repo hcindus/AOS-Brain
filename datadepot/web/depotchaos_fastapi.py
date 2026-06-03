@@ -1169,26 +1169,136 @@ async def delete_vendor(vendor_id: int):
 
 @app.post("/api/enrichment/{vendor_id}/promote")
 async def promote_vendor_to_lead(vendor_id: int, data: dict):
-    """Mark vendor as promoted to lead (hide from enrichment list)"""
-    conn = get_depot_chaos_db()
-    c = conn.cursor()
+    """
+    Promote enriched vendor to lead in unified database.
+    If lead already exists, updates it with enriched data.
+    Only marks vendor as promoted after successful lead creation/update.
+    """
+    # Get vendor data first
+    vendor_conn = get_depot_chaos_db()
+    vc = vendor_conn.cursor()
+    vc.execute("SELECT * FROM vendors WHERE id = ?", (vendor_id,))
+    vendor_row = vc.fetchone()
+    vendor_conn.close()
     
-    # Update vendor status to 'promoted' and add to notes
-    c.execute("""
+    if not vendor_row:
+        return JSONResponse(status_code=404, content={'error': 'Vendor not found'})
+    
+    vendor = dict(vendor_row)
+    
+    # Check if lead already exists in unified database
+    lead_conn = get_db_connection()
+    lc = lead_conn.cursor()
+    
+    business_name = vendor.get('name', '')
+    city = vendor.get('city', '')
+    state = vendor.get('state', '')
+    
+    lc.execute("""
+        SELECT id FROM leads 
+        WHERE business_name = ? AND city = ? AND state = ? AND deleted = 0
+    """, (business_name, city, state))
+    existing_lead = lc.fetchone()
+    
+    # Build enrichment data from vendor
+    enrichment = {
+        'dba': vendor.get('dba_name'),
+        'address': vendor.get('address'),
+        'zip': vendor.get('zip'),
+        'vendor_id': vendor_id,
+        'vendor_notes': vendor.get('notes'),
+        'original_source': 'DepotChaos',
+        'promoted_at': datetime.now().isoformat()
+    }
+    
+    if existing_lead:
+        # Update existing lead with enriched data
+        lead_id = existing_lead[0]
+        
+        # Merge new enrichment with existing
+        lc.execute("SELECT enrichment_data FROM leads WHERE id = ?", (lead_id,))
+        existing_enrichment_row = lc.fetchone()
+        existing_enrichment = {}
+        if existing_enrichment_row and existing_enrichment_row[0]:
+            try:
+                existing_enrichment = json.loads(existing_enrichment_row[0])
+            except:
+                pass
+        
+        # Update with new data (new data takes precedence)
+        existing_enrichment.update(enrichment)
+        existing_enrichment['enrichment_history'] = existing_enrichment.get('enrichment_history', []) + [{
+            'source': 'DepotChaos',
+            'timestamp': datetime.now().isoformat(),
+            'vendor_id': vendor_id
+        }]
+        
+        # Update the lead
+        updates = {
+            'phone': vendor.get('phone') or existing_enrichment.get('phone'),
+            'email': vendor.get('email') or existing_enrichment.get('email'),
+            'contact_name': vendor.get('contact_name') or existing_enrichment.get('contact_name'),
+            'enrichment_data': json.dumps(existing_enrichment),
+            'source_type': 'DepotChaos_Enriched',
+        }
+        
+        update_sql = "UPDATE leads SET " + ", ".join([f"{k} = ?" for k in updates.keys()]) + " WHERE id = ?"
+        update_values = list(updates.values()) + [lead_id]
+        lc.execute(update_sql, update_values)
+        
+        lead_conn.commit()
+        action = 'updated'
+        result_id = lead_id
+    else:
+        # Create new lead
+        lead_data = {
+            'business_name': business_name,
+            'company_name': business_name,
+            'county': city,
+            'city': city,
+            'state': state,
+            'zip': vendor.get('zip', ''),
+            'contact_name': vendor.get('contact_name', ''),
+            'phone': vendor.get('phone', ''),
+            'email': vendor.get('email', ''),
+            'status': 'new',
+            'tier': 'Tier 2',
+            'source_type': 'DepotChaos_Enriched',
+            'pos_system': '',
+            'enrichment_data': json.dumps(enrichment),
+            'created_at': datetime.now().isoformat()
+        }
+        
+        columns = list(lead_data.keys())
+        placeholders = ', '.join(['?' for _ in columns])
+        sql = f"INSERT INTO leads ({', '.join(columns)}) VALUES ({placeholders})"
+        lc.execute(sql, list(lead_data.values()))
+        
+        result_id = lc.lastrowid
+        lead_conn.commit()
+        action = 'created'
+    
+    lead_conn.close()
+    
+    # Only mark vendor as promoted AFTER successful lead creation/update
+    vendor_conn = get_depot_chaos_db()
+    vc = vendor_conn.cursor()
+    vc.execute("""
         UPDATE vendors 
         SET status = 'promoted', 
-            notes = COALESCE(notes, '') || ' | Promoted to Lead: ' || ?
+            notes = COALESCE(notes, '') || ' | Promoted to Lead: ' || ? || ' (Lead ID: ' || ? || ')'
         WHERE id = ?
-    """, (datetime.now().isoformat(), vendor_id))
+    """, (datetime.now().isoformat(), str(result_id), vendor_id))
+    vendor_conn.commit()
+    vendor_conn.close()
     
-    conn.commit()
-    updated = c.rowcount
-    conn.close()
-    
-    if updated:
-        return {'success': True, 'message': f'Vendor {vendor_id} promoted to lead', 'vendor_id': vendor_id}
-    else:
-        return JSONResponse(status_code=404, content={'error': 'Vendor not found'})
+    return {
+        'success': True,
+        'message': f'Lead "{business_name}" {action} successfully',
+        'vendor_id': vendor_id,
+        'lead_id': result_id,
+        'action': action
+    }
 
 @app.get("/api/queue/{email_id}/preview")
 async def preview_queued_email(email_id: str):
