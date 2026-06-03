@@ -16,8 +16,12 @@ import csv
 import json
 import argparse
 import random
+import sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
+
+# Database configuration
+DB_PATH = "/root/.openclaw/workspace/data/depot_chaos/unified.db"
 
 # Configuration
 OUTPUT_DIR = Path(__file__).parent / "../leads"
@@ -179,6 +183,55 @@ def save_leads_csv(leads, filename=None):
     return output_path
 
 
+def upload_to_database(leads):
+    """Upload leads to unified.db database"""
+    if not leads:
+        print("No leads to upload")
+        return 0
+    
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    
+    uploaded = 0
+    batch_id = datetime.now(timezone.utc).isoformat()
+    
+    for lead in leads:
+        try:
+            lead_id = lead.get('id') or f"TX-{lead.get('city', 'TX')}-{datetime.now().timestamp()}"
+            
+            cursor.execute('''
+                INSERT OR REPLACE INTO leads 
+                (business_name, contact_name, email, phone, address, city, county, state, 
+                 zip, country, business_type, priority, source, scraped_at, notes, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                lead.get('business_name') or lead.get('company_name'),
+                lead.get('contact_name'),
+                lead.get('email'),
+                lead.get('phone'),
+                lead.get('address'),
+                lead.get('city'),
+                lead.get('county'),
+                lead.get('state', 'TX'),
+                lead.get('zip', lead.get('postal')),
+                'US',
+                lead.get('business_type'),
+                lead.get('priority', 'C'),
+                'TX_Scraper',
+                lead.get('scraped_at') or datetime.now(timezone.utc).isoformat(),
+                lead.get('notes', ''),
+                datetime.now(timezone.utc).isoformat()
+            ))
+            uploaded += 1
+        except Exception as e:
+            print(f"   ⚠️ Error uploading lead: {e}")
+    
+    conn.commit()
+    conn.close()
+    print(f"📤 Uploaded {uploaded} leads to unified.db")
+    return uploaded
+
+
 def scrape_city(city_name, count=50, business_type=None):
     """Scrape leads for a specific city"""
     city_data = next((c for c in TX_CITIES if c["name"].lower() == city_name.lower()), None)
@@ -252,6 +305,9 @@ def main():
             save_leads_json(leads)
         if args.format in ('csv', 'both'):
             save_leads_csv(leads)
+        
+        # Upload to unified.db
+        upload_to_database(leads)
         
         # Print summary
         print("\n📊 SUMMARY:")

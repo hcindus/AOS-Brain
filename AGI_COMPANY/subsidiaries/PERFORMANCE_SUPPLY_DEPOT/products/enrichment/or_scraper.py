@@ -8,9 +8,11 @@ import csv
 import json
 import time
 import random
+import sqlite3
 from datetime import datetime
 from pathlib import Path
 
+DB_PATH = "/root/.openclaw/workspace/data/depot_chaos/unified.db"
 OUTPUT_DIR = Path("/root/.openclaw/workspace/AGI_COMPANY/subsidiaries/PERFORMANCE_SUPPLY_DEPOT/products/enrichment/leads/or")
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -51,6 +53,42 @@ class OregonScraper:
             
         print(f"   ✓ Found {len(self.leads)} leads")
         
+    def upload_to_database(self):
+        """Upload leads to unified.db"""
+        if not self.leads:
+            print("No leads to upload")
+            return 0
+            
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        uploaded = 0
+        
+        for i, lead in enumerate(self.leads):
+            try:
+                cursor.execute('''
+                    INSERT OR REPLACE INTO leads 
+                    (business_name, phone, city, state, business_type, source, scraped_at, created_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ''', (
+                    lead.get('business_name'),
+                    lead.get('phone'),
+                    lead.get('city'),
+                    lead.get('state', 'OR'),
+                    lead.get('business_type'),
+                    'OR_Scraper',
+                    lead.get('scraped_at'),
+                    datetime.now().isoformat()
+                ))
+                uploaded += 1
+            except Exception as e:
+                print(f"   ⚠️ Error: {e}")
+        
+        conn.commit()
+        conn.close()
+        print(f"📤 Uploaded {uploaded} leads to unified.db")
+        return uploaded
+        
     def save_to_csv(self, filename="or_leads.csv"):
         """Save leads to CSV"""
         if not self.leads:
@@ -74,6 +112,7 @@ class OregonScraper:
             self.scrape_city(city)
             
         self.save_to_csv()
+        self.upload_to_database()
         
         print(f"\n✅ Oregon scraping complete!")
         print(f"   Total leads: {len(self.leads)}")

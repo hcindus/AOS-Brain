@@ -106,7 +106,7 @@ WEST_REGION_STATES = {
 }
 
 TEMPLATE_SCRAPER = '/root/.openclaw/workspace/AGI_COMPANY/subsidiaries/DATADEPOT_INTELLIGENCE/scrapers/us_state_scraper.py'
-DB_PATH = '/root/.openclaw/workspace/AGI_COMPANY/subsidiaries/DATADEPOT_INTELLIGENCE/database/datadepot.db'
+DB_PATH = '/root/.openclaw/workspace/data/depot_chaos/unified.db'
 
 
 def run_dedicated_scraper(state_code, config):

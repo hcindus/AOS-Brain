@@ -6,6 +6,7 @@ Generates restaurant/cafe leads for any US state
 
 import json
 import random
+import sqlite3
 import argparse
 from datetime import datetime
 from pathlib import Path
@@ -133,6 +134,82 @@ class USStateScraper:
         
         return leads
     
+    def upload_to_database(self, leads):
+        """Upload leads to unified.db"""
+        if not leads:
+            print("No leads to upload")
+            return 0
+            
+        DB_PATH = "/root/.openclaw/workspace/data/depot_chaos/unified.db"
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS leads (
+                id TEXT PRIMARY KEY,
+                company_name TEXT,
+                contact_name TEXT,
+                email TEXT,
+                phone TEXT,
+                address TEXT,
+                city TEXT,
+                county TEXT,
+                state TEXT,
+                zip TEXT,
+                country TEXT DEFAULT 'US',
+                business_type TEXT,
+                priority TEXT,
+                source TEXT,
+                tags TEXT,
+                scraped_at TIMESTAMP,
+                notes TEXT,
+                region TEXT,
+                upload_batch TIMESTAMP,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        
+        uploaded = 0
+        batch_id = datetime.now().isoformat()
+        
+        for i, lead in enumerate(leads):
+            try:
+                lead_id = lead.get('id') or f"{self.state_code}-{lead.get('city', 'XX')}-{i}-{datetime.now().timestamp()}"
+                cursor.execute('''
+                    INSERT OR REPLACE INTO leads 
+                    (id, company_name, contact_name, email, phone, address, city, county, state, 
+                     zip, country, business_type, priority, source, tags, scraped_at, notes, region, upload_batch)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ''', (
+                    lead_id,
+                    lead.get('company_name'),
+                    lead.get('contact_name'),
+                    lead.get('email'),
+                    lead.get('phone'),
+                    lead.get('address'),
+                    lead.get('city'),
+                    lead.get('county'),
+                    lead.get('state', self.state_code),
+                    lead.get('zip'),
+                    'US',
+                    lead.get('business_type'),
+                    lead.get('priority', 'C'),
+                    f"{self.state_code}_Scraper",
+                    lead.get('tags', f"restaurant,{self.state_code}"),
+                    lead.get('scraped_at'),
+                    lead.get('notes', ''),
+                    'MULTI_STATE',
+                    batch_id
+                ))
+                uploaded += 1
+            except Exception as e:
+                print(f"   ⚠️ Error uploading lead: {e}")
+        
+        conn.commit()
+        conn.close()
+        print(f"📤 Uploaded {uploaded} leads to unified.db")
+        return uploaded
+    
     def run(self, business_types, sample_size, output_file):
         """Run the scraper"""
         print(f"\n🗺️  Scraping {self.state_info['name']} ({self.state_code})")
@@ -146,6 +223,9 @@ class USStateScraper:
         
         with open(output_file, 'w') as f:
             json.dump(leads, f, indent=2)
+        
+        # Upload to unified.db
+        self.upload_to_database(leads)
         
         print(f"   ✅ Generated {len(leads)} leads → {output_file}")
         return len(leads)
