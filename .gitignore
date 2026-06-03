@@ -42,3 +42,8 @@ logs/*.log
 AOS/
 labs/bonsai-quant-lab/models/Bonsai-8B-Q1_0.gguf
 labs/bonsai-quant-lab/models/.cache/huggingface/download/*.gguf.metadata
+
+# Skip slow directories for git status
+cream-web/node_modules/
+AGI_COMPANY_WEBSITE_REBUILD/
+expeditions/2026-06-01/
