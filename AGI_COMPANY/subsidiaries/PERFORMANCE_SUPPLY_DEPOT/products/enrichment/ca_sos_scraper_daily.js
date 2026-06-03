@@ -1,4 +1,4 @@
-#!/usr/bin/env node3
+#!/usr/bin/env node
 /**
  * CA SOS Scraper - Daily Lead Pull
  * 
