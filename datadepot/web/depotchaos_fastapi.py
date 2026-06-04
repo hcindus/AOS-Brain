@@ -8,12 +8,25 @@ from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
+from pydantic import BaseModel
 import sqlite3
 import json
 from pathlib import Path
 from datetime import datetime
 from typing import Optional
+import uuid
 import uvicorn
+
+# Pydantic model for email queue requests
+class QueueEmailRequest(BaseModel):
+    recipient_email: str
+    subject: str
+    body: str
+    lead_id: Optional[int] = None
+    scheduled_time: Optional[str] = None
+    campaign: Optional[str] = None
+    from_name: Optional[str] = "Miles"
+    from_email: Optional[str] = "miles@myl0nr0s.cloud"
 
 app = FastAPI(title="DepotChaos CRM", version="1.1.0")
 
@@ -613,6 +626,53 @@ async def get_pos_systems():
     conn.close()
     
     return systems
+
+@app.post("/api/queue")
+async def add_email_to_queue(request: QueueEmailRequest):
+    """Add a new email to the queue"""
+    queue_file = DATADEPOT_DIR / 'queue' / 'pending_emails.json'
+    
+    # Ensure queue directory exists
+    queue_file.parent.mkdir(parents=True, exist_ok=True)
+    
+    # Load existing queue or create new
+    queue = []
+    if queue_file.exists():
+        try:
+            with open(queue_file, 'r') as f:
+                queue = json.load(f)
+        except:
+            queue = []
+    
+    # Create email entry
+    email_id = str(uuid.uuid4())
+    email_entry = {
+        'id': email_id,
+        'to_email': request.recipient_email,
+        'subject': request.subject,
+        'body': request.body,
+        'lead_id': request.lead_id,
+        'campaign_id': request.campaign or 'outreach',
+        'scheduled_time': request.scheduled_time,
+        'from_name': request.from_name,
+        'from_email': request.from_email,
+        'status': 'pending',
+        'created_at': datetime.now().isoformat()
+    }
+    
+    # Add to queue
+    queue.append(email_entry)
+    
+    # Save queue
+    with open(queue_file, 'w') as f:
+        json.dump(queue, f, indent=2)
+    
+    return {
+        'success': True,
+        'email_id': email_id,
+        'message': 'Email added to queue',
+        'queue_position': len(queue)
+    }
 
 @app.get("/api/queue")
 async def get_email_queue():
