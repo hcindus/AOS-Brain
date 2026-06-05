@@ -8,7 +8,7 @@
 let stripe = null;
 let cardElement = null;
 let paymentConfig = {
-    publishableKey: 'pk_live_51PJRYHJ5gaWR1O3EzQ06hJVs0alMQTJPDaqfNGifgamojdIoW6460nUpZI4WIGZckAVsZoRqOfVfofTwYWeQAClc00Jq5nJLow', // Live key
+    publishableKey: 'pk_live_51PJRYHJ5gaWR1O3EOTLRzEZ7NxK2pDIeoLxaZDwFu7xnPgRSZfMkI6Dc6UivWzgS6ZC4EonbeY2gD1gEoceTZNKx00zs00oHeB', // Live key
     shippingRate: 15.56
 };
 

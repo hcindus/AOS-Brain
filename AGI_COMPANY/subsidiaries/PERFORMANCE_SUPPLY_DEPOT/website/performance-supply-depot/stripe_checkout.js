@@ -3,7 +3,7 @@
  * Real payment processing with Stripe
  */
 
-const STRIPE_PUBLISHABLE_KEY = 'pk_live_51PJRYHJ5gaWR1O3EzQ06hJVs0alMQTJPDaqfNGifgamojdIoW6460nUpZI4WIGZckAVsZoRqOfVfofTwYWeQAClc00Jq5nJLow'; // Live key
+const STRIPE_PUBLISHABLE_KEY = 'pk_live_51PJRYHJ5gaWR1O3EOTLRzEZ7NxK2pDIeoLxaZDwFu7xnPgRSZfMkI6Dc6UivWzgS6ZC4EonbeY2gD1gEoceTZNKx00zs00oHeB'; // Live key
 const API_BASE_URL = 'https://myl0nr0s.cloud/api'; // Your backend API
 
 let stripe;
