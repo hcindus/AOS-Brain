@@ -8,7 +8,7 @@
 let stripe = null;
 let cardElement = null;
 let paymentConfig = {
-    publishableKey: 'pk_test_TYooMQauvdEDq54NiTphI7jx', // Test key - replace with live
+    publishableKey: 'pk_live_51PJRYHJ5gaWR1O3EzQ06hJVs0alMQTJPDaqfNGifgamojdIoW6460nUpZI4WIGZckAVsZoRqOfVfofTwYWeQAClc00Jq5nJLow', // Live key
     shippingRate: 15.56
 };
 
