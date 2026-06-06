@@ -3,7 +3,7 @@
   "name": "Aria",
   "role": "MEDIC",
   "level": 5,
-  "xp": 259211,
+  "xp": 259320,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 17,
     "combat": 23
   },
-  "missionsCompleted": 1729,
+  "missionsCompleted": 1730,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -8663,6 +8663,11 @@
       "name": "Anomalous Planet",
       "location": "Alpha-1",
       "timestamp": 1780736059268
+    },
+    {
+      "name": "Hidden Base",
+      "location": "Alpha-1",
+      "timestamp": 1780737928771
     }
   ],
   "status": "ACTIVE",
