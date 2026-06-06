@@ -44,9 +44,10 @@ SMTP_PORT = int(os.getenv("SMTP_PORT", os.getenv("HOSTINGER_SMTP_PORT", "587")))
 SMTP_USER = os.getenv("SMTP_USER", os.getenv("HOSTINGER_SMTP_USER", "miles@myl0nr0s.cloud"))
 SMTP_PASS = os.getenv("SMTP_PASS", os.getenv("HOSTINGER_SMTP_PASS", ""))  # Set via env var
 
-# UPDATED: Only Mortimer receives waste emails
+# UPDATED: Mortimer and Captain receive waste emails
 WASTE_RECIPIENTS = [
-    "mortimer@myl0nr0s.cloud",  # ONLY Mortimer - no more Captain or info@psdepot.com
+    "mortimer@myl0nr0s.cloud",
+    "Antonio.hudnall@gmail.com",  # Captain
 ]
 
 # ═══════════════════════════════════════════════════════════════════
