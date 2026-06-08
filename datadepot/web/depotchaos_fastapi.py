@@ -1386,7 +1386,7 @@ async def preview_queued_email(email_id: str):
                     'from': email.get('from', 'Miles - Performance Supply Depot <miles@psdepot.com>'),
                     'subject': email.get('subject', ''),
                     'html_body': email.get('html_body', ''),
-                    'text_body': email.get('text_body', ''),
+                    'text_body': email.get('text_body') or email.get('body', ''),
                     'template': email.get('template', 'unknown'),
                     'company_name': email.get('company_name', ''),
                     'scheduled_time': email.get('scheduled_time', ''),
