@@ -37,6 +37,9 @@ archive/backups/
 logs/*.log
 *.pid
 *.sock
+*.db-shm
+*.db-wal
+*.db-journal
 
 # Duplicate folder (previously committed)
 AOS/
