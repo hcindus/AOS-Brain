@@ -830,7 +830,7 @@ async def send_email_now(email_id: str):
         api_url = f"https://api.mailgun.net/v3/{MAILGUN_DOMAIN}/messages"
         
         data = {
-            'from': email_to_send.get('from', 'Miles - Performance Supply Depot <miles@psdepot.com>'),
+            'from': email_to_send.get('from', 'Miles - Performance Supply Depot <info@psdepot.com>'),
             'to': f"{email_to_send['to_name']} <{email_to_send['to_email']}>",
             'bcc': 'info@psdepot.com',
             'subject': email_to_send.get('subject', 'Performance Supply Depot'),
@@ -1383,7 +1383,7 @@ async def preview_queued_email(email_id: str):
                     'id': email.get('id'),
                     'to_name': email.get('to_name', ''),
                     'to_email': email.get('to_email', ''),
-                    'from': email.get('from', 'Miles - Performance Supply Depot <miles@psdepot.com>'),
+                    'from': email.get('from', 'Miles - Performance Supply Depot <info@psdepot.com>'),
                     'subject': email.get('subject', ''),
                     'html_body': email.get('html_body', ''),
                     'text_body': email.get('text_body') or email.get('body', ''),

@@ -103,7 +103,7 @@ class FollowUpQueueManager:
             "campaign_id": f"psdepot_outreach_2026_q2",
             "prospect_company": prospect.get('Company', ''),
             "scheduled_time": scheduled_date.isoformat(),
-            "from": "Miles - Performance Supply Depot <miles@psdepot.com>",
+            "from": "Miles - Performance Supply Depot <info@psdepot.com>",
             "created_at": datetime.now().isoformat(),
             "sequence_day": day,
             "original_contact_date": prospect.get('Last_Contact', ''),

@@ -110,7 +110,7 @@ class EmailQueueProcessor:
             api_url = f"https://api.mailgun.net/v3/{MAILGUN_DOMAIN}/messages"
             
             data = {
-                'from': email.get('from', 'Miles - Performance Supply Depot <miles@psdepot.com>'),
+                'from': email.get('from', 'Miles - Performance Supply Depot <info@psdepot.com>'),
                 'to': f"{email['to_name']} <{email['to_email']}>",
                 'bcc': 'info@psdepot.com',  # BCC info@psdepot.com on all emails
                 'subject': email.get('subject', 'DataDepot Intelligence - California Restaurant POS Data'),

@@ -73,7 +73,7 @@ MAILGUN_DOMAIN = os.getenv('MAILGUN_DOMAIN', 'psdepot.com')
 MAILGUN_API_URL = f"https://api.mailgun.net/v3/{MAILGUN_DOMAIN}"
 
 # From email address
-FROM_EMAIL = "miles@psdepot.com"
+FROM_EMAIL = "info@psdepot.com"
 FROM_NAME = "Miles - Performance Supply Depot"
 
 # Send limits (per day/hour to avoid throttling)

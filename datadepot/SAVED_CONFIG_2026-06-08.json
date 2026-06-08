@@ -1,0 +1,39 @@
+{
+  "version": "1.0.0",
+  "saved_at": "2026-06-08T10:30:00Z",
+  "saved_by": "Miles",
+  "email_settings": {
+    "from_email": "info@psdepot.com",
+    "previous_from_email": "miles@psdepot.com",
+    "migration_date": "2026-06-08",
+    "bcc_email": "info@psdepot.com",
+    "reply_email": "miles@myl0nr0s.cloud",
+    "mailgun_domain": "psdepot.com",
+    "test_mode": true
+  },
+  "files_updated": [
+    "queue_followups.py",
+    "outreach_launcher.py",
+    "queue/followup_queue_20260429.json",
+    "queue/sent_emails.json",
+    "web/depotchaos_fastapi.py",
+    "web/depotchaos_api.py",
+    "cron/process_email_queue.py",
+    "cron/stripe_enrichment.py",
+    "MAILGUN_INTEGRATION.md",
+    "crm/weekly_report_20260518.md"
+  ],
+  "queue_files": [
+    "pending_emails.json",
+    "calling_blitz_may5_2026.json",
+    "email_sequence_may5_2026.json",
+    "linkedin_sequence_may5_2026.json",
+    "followup_queue_20260429.json",
+    "sent_emails.json"
+  ],
+  "cron_jobs": {
+    "process_email_queue": "0 * * * *",
+    "stripe_enrichment": "0 2 * * *"
+  },
+  "status": "complete"
+}

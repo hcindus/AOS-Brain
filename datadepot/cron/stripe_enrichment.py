@@ -116,7 +116,7 @@ def queue_sequence(customer, segment_info):
         'created_at': datetime.now().isoformat(),
         'subject': None,  # Will be extracted from template
         'html_body': None,  # Will be rendered at send time
-        'from': 'Miles - Performance Supply Depot <miles@psdepot.com>',
+        'from': 'Miles - Performance Supply Depot <info@psdepot.com>',
         'merge_data': {
             '{{Customer_ID}}': customer['id'],
             '{{Email}}': customer['email'],

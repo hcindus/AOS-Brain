@@ -5,12 +5,11 @@ Import CA ABC licenses from daily collection to DepotChaos unified database
 
 import sqlite3
 import json
-import uuid
 from datetime import datetime
 from pathlib import Path
 
 DB_PATH = "/root/.openclaw/workspace/data/depot_chaos/unified.db"
-ENRICHMENT_FILE = "/root/.openclaw/workspace/datadepot/data/enriched_2026-05-05.json"
+ENRICHMENT_FILE = "/root/.openclaw/workspace/datadepot/data/enriched_2026-06-01.json"
 
 def import_abc_licenses():
     # Load enrichment data
@@ -70,18 +69,16 @@ def import_abc_licenses():
         priority = lic.get('lead_priority', 'C')
         tier = f"Tier {priority}"
         
-        # Insert into database - match actual schema
-        lead_id = str(uuid.uuid4())
+        # Insert into database - use integer ID (auto-increment) instead of UUID
         created_at = datetime.now().isoformat()
         
         c.execute("""
             INSERT INTO leads (
-                id, company_name, county, status, tier,
+                business_name, county, status, tier,
                 pos_system, replacement_score, source_type,
                 assigned_agent, enrichment_data, created_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
-            lead_id,
             company,
             lic.get('county', lic.get('city', '')),
             'new',

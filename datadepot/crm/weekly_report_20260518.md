@@ -213,7 +213,7 @@ outreach sequences. Not your problem, but you deserved better.
 I'm making it right:
 → Free 100-record sample (normally 50) from {{County}}
 → Priority access to new features launching this month
-→ Direct line: miles@psdepot.com (my actual inbox)
+→ Direct line: info@psdepot.com (my actual inbox)
 
 If you're still exploring POS intelligence options, I'd love
 to show you what we've built. If you've moved on, I understand.
