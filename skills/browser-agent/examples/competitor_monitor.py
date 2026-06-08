@@ -12,8 +12,6 @@ from pathlib import Path
 import sys
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from browser_agent import BrowserAgent
-
 COMPETITORS = [
     {
         "name": "WebstaurantStore",
@@ -31,24 +29,33 @@ COMPETITORS = [
 
 def monitor_competitors():
     """Monitor competitor prices and save report"""
+    from playwright.sync_api import sync_playwright
+    
     report = {
         "date": datetime.now().isoformat(),
         "competitors": []
     }
     
-    with BrowserAgent(headless=True) as agent:
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        context = browser.new_context(
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+        )
+        
         for comp in COMPETITORS:
             print(f"🔍 Checking {comp['name']}...")
             
             try:
+                page = context.new_page()
+                
                 # Navigate directly to search results
                 search_url = comp.get('search_url', comp['url'])
-                agent.navigate(search_url, wait_until="domcontentloaded")
-                agent.wait_for_timeout(3000)
+                page.goto(search_url, wait_until="domcontentloaded", timeout=30000)
+                page.wait_for_timeout(3000)
                 
                 # Take screenshot for debugging
                 screenshot_path = f"/tmp/{comp['name'].lower()}_debug.png"
-                agent.screenshot(screenshot_path)
+                page.screenshot(path=screenshot_path)
                 
                 # Extract price - try multiple selectors
                 price = None
@@ -64,16 +71,19 @@ def monitor_competitors():
                 
                 for selector in price_selectors:
                     try:
-                        price = agent.get_text(selector)
-                        if price and "$" in price:
-                            break
+                        element = page.locator(selector).first
+                        if element.count() > 0:
+                            price_text = element.text_content()
+                            if price_text and "$" in price_text:
+                                price = price_text.strip()
+                                break
                     except:
                         continue
                 
                 # Extract product name
                 product_name = None
                 try:
-                    product_name = agent.get_text("h1, h2, .product-title, [data-testid='title']")
+                    product_name = page.locator("h1, h2, .product-title, [data-testid='title']").first.text_content()
                 except:
                     pass
                 
@@ -87,6 +97,7 @@ def monitor_competitors():
                 })
                 
                 print(f"✅ {comp['name']}: {price or 'No price found'}")
+                page.close()
                 
             except Exception as e:
                 report["competitors"].append({
@@ -96,6 +107,8 @@ def monitor_competitors():
                     "error": str(e)
                 })
                 print(f"❌ {comp['name']}: {e}")
+        
+        browser.close()
     
     # Save report
     output_dir = Path("/root/.openclaw/workspace/data/competitor_reports")
