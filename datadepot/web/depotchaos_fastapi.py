@@ -16,6 +16,10 @@ from datetime import datetime
 from typing import Optional
 import uuid
 import uvicorn
+import smtplib
+import ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 # Pydantic model for email queue requests
 class QueueEmailRequest(BaseModel):
@@ -792,16 +796,19 @@ async def send_email_now(email_id: str):
     with open(queue_file, 'w') as f:
         json.dump(queue, f, indent=2)
     
-    # Check if test mode
-    TEST_MODE = os.getenv('MAILGUN_TEST_MODE', 'True').lower() == 'true'
-    MAILGUN_API_KEY = os.getenv('MAILGUN_API_KEY', '')
-    MAILGUN_DOMAIN = os.getenv('MAILGUN_DOMAIN', 'psdepot.com')
+    # SMTP Configuration for Hostinger
+    SMTP_SERVER = os.getenv('SMTP_SERVER', 'smtp.hostinger.com')
+    SMTP_PORT = int(os.getenv('SMTP_PORT', '587'))
+    SMTP_USER = os.getenv('SMTP_USER', 'miles@myl0nr0s.cloud')
+    SMTP_PASS = os.getenv('SMTP_PASS', '')
+    SMTP_FROM_EMAIL = os.getenv('SMTP_FROM_EMAIL', 'info@psdepot.com')
+    TEST_MODE = os.getenv('SMTP_TEST_MODE', 'True').lower() == 'true'
     
-    if TEST_MODE or not MAILGUN_API_KEY:
+    if TEST_MODE or not SMTP_PASS:
         # Test mode - simulate send
         email_to_send['sent_at'] = datetime.now().isoformat()
         email_to_send['test_mode'] = True
-        email_to_send['mailgun_id'] = f'test_{int(datetime.now().timestamp())}'
+        email_to_send['message_id'] = f'test_{int(datetime.now().timestamp())}'
         
         # Add to sent log
         sent_list = []
@@ -825,35 +832,39 @@ async def send_email_now(email_id: str):
             'email_id': email_id
         }
     
-    # Real Mailgun send
+    # Real SMTP send via Hostinger
     try:
-        api_url = f"https://api.mailgun.net/v3/{MAILGUN_DOMAIN}/messages"
+        # Create message
+        msg = MIMEMultipart('alternative')
+        msg['Subject'] = email_to_send.get('subject', 'Performance Supply Depot')
+        msg['From'] = email_to_send.get('from', f'Miles - Performance Supply Depot <{SMTP_FROM_EMAIL}>')
+        msg['To'] = email_to_send['to_email']
+        msg['Bcc'] = 'info@psdepot.com'
         
-        data = {
-            'from': email_to_send.get('from', 'Miles - Performance Supply Depot <info@psdepot.com>'),
-            'to': f"{email_to_send['to_name']} <{email_to_send['to_email']}>",
-            'bcc': 'info@psdepot.com',
-            'subject': email_to_send.get('subject', 'Performance Supply Depot'),
-            'html': email_to_send.get('html_body', ''),
-            'o:tracking': 'yes',
-            'o:tracking-clicks': 'yes',
-            'v:campaign_id': email_to_send.get('campaign_id', 'default'),
-            'v:template': email_to_send.get('template', 'unknown'),
-        }
+        # Add message ID for tracking
+        message_id = f"<{uuid.uuid4()}@psdepot.com>"
+        msg['Message-ID'] = message_id
+        msg['X-Campaign-ID'] = email_to_send.get('campaign_id', 'default')
+        msg['X-Template'] = email_to_send.get('template', 'unknown')
         
-        response = requests.post(
-            api_url,
-            auth=('api', MAILGUN_API_KEY),
-            data=data,
-            timeout=30
-        )
+        # Attach HTML body
+        html_body = email_to_send.get('html_body', '')
+        if not html_body:
+            # Convert plain text to HTML if no HTML body
+            html_body = f"<html><body><pre>{email_to_send.get('body', '')}</pre></body></html>"
         
-        response.raise_for_status()
-        result = response.json()
+        msg.attach(MIMEText(html_body, 'html'))
+        
+        # Send via SMTP
+        context = ssl.create_default_context()
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls(context=context)
+            server.login(SMTP_USER, SMTP_PASS)
+            server.send_message(msg)
         
         # Record as sent
         email_to_send['sent_at'] = datetime.now().isoformat()
-        email_to_send['mailgun_id'] = result.get('id', 'unknown')
+        email_to_send['message_id'] = message_id
         
         sent_list = []
         if sent_file.exists():
