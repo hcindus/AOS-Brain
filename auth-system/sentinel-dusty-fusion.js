@@ -103,12 +103,19 @@ class SentinelDustyFusion {
      * Start continuous monitoring (Dusty's "continuous scan")
      */
     startMonitoring() {
+        console.log('🔄 Starting security monitoring...');
         this.scanIntervalId = setInterval(() => {
-            this.performSecurityScan();
+            this.performSecurityScan().catch(err => {
+                console.error('Security scan error:', err.message);
+            });
         }, this.scanInterval);
         
         // Also scan on-demand events
-        this.eventWatcher = this.watchRealTimeEvents();
+        try {
+            this.eventWatcher = this.watchRealTimeEvents();
+        } catch (err) {
+            console.error('Event watcher error:', err.message);
+        }
     }
 
     /**

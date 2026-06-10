@@ -16,13 +16,20 @@ async function initializeSecurityGuardian() {
         return guardian;
     }
     
-    guardian = new SentinelDustyFusion();
-    await guardian.initialize();
-    
-    // Expose API endpoint for security status
-    console.log('🔗 Security Guardian integrated with Auth System');
-    
-    return guardian;
+    try {
+        guardian = new SentinelDustyFusion();
+        await guardian.initialize();
+        
+        // Expose API endpoint for security status
+        console.log('🔗 Security Guardian integrated with Auth System');
+        
+        return guardian;
+    } catch (err) {
+        console.error('⚠️  Failed to initialize Security Guardian:', err.message);
+        console.log('   Running without real-time threat monitoring');
+        guardian = null;
+        return null;
+    }
 }
 
 /**

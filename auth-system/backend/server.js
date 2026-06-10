@@ -92,8 +92,19 @@ app.use((err, req, res, next) => {
 
 // Initialize security guardian and start server
 async function startServer() {
-    // Initialize Sentinel-Dusty Fusion
-    await initializeSecurityGuardian();
+    console.log('🚀 Starting server initialization...');
+    console.log(`📁 Database path: ${process.env.DATABASE_URL || './data/auth.db'}`);
+    console.log(`🌐 Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:8080'}`);
+    console.log(`🔌 Port: ${PORT}`);
+    
+    try {
+        // Initialize Sentinel-Dusty Fusion
+        await initializeSecurityGuardian();
+        console.log('✅ Security Guardian initialized');
+    } catch (err) {
+        console.error('⚠️  Security Guardian initialization failed:', err.message);
+        console.log('   Continuing without guardian...');
+    }
     
     app.listen(PORT, () => {
         console.log(`🔐 Secure Auth Server running on port ${PORT}`);
