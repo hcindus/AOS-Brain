@@ -49,6 +49,7 @@ from trac_ray import TracRay
 from consciousness_layers import ConsciousnessManager
 from qmd_loop import QMDLoop
 from memory_bridge_v4 import MemoryBridge
+from brain_security_v1 import BrainSecurityLayer
 from voice_manager import VoiceInterface
 from vision_manager import VisionInterface
 from thyroid_v12 import AOSThyroidV12, ThyroidState
@@ -61,11 +62,17 @@ from ternary_interfaces import HeartBeatInput, BrainInput, HeartState
 
 
 class BrainSocketServer:
-    """Unix socket server for diagnostic interface"""
+    """Security-hardened Unix socket server for diagnostic interface"""
     
     def __init__(self, brain, socket_path='/tmp/aos_brain.sock'):
         self.brain = brain
         self.socket_path = socket_path
+        self.security = BrainSecurityLayer(
+            max_commands_per_minute=60,
+            max_restricted_per_minute=10,
+            max_violations_before_block=5,
+            block_duration_seconds=300.0
+        )
         self.running = False
         self.server_thread = None
         
@@ -76,11 +83,11 @@ class BrainSocketServer:
                 pass
     
     def start(self):
-        """Start the socket server in a thread"""
+        """Start the secure socket server in a thread"""
         self.running = True
         self.server_thread = threading.Thread(target=self._serve, daemon=True)
         self.server_thread.start()
-        print(f"[Socket Server] Started on {self.socket_path}")
+        print(f"[Secure Socket Server] Started on {self.socket_path}")
     
     def stop(self):
         """Stop the socket server"""
@@ -92,7 +99,7 @@ class BrainSocketServer:
                 pass
     
     def _serve(self):
-        """Serve socket requests"""
+        """Serve socket requests with security filtering"""
         try:
             sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
             sock.bind(self.socket_path)
@@ -102,19 +109,20 @@ class BrainSocketServer:
             while self.running:
                 try:
                     conn, addr = sock.accept()
-                    self._handle_connection(conn)
+                    client_id = self.security.get_client_id(addr)
+                    self._handle_connection(conn, client_id)
                 except socket.timeout:
                     continue
                 except Exception as e:
                     if self.running:
-                        print(f"[Socket Server] Error: {e}")
+                        print(f"[Secure Socket Server] Error: {e}")
         except Exception as e:
-            print(f"[Socket Server] Fatal error: {e}")
+            print(f"[Secure Socket Server] Fatal error: {e}")
         finally:
             sock.close()
     
-    def _handle_connection(self, conn):
-        """Handle a single connection"""
+    def _handle_connection(self, conn, client_id: str):
+        """Handle a single secure connection"""
         try:
             conn.settimeout(5.0)
             
@@ -132,16 +140,91 @@ class BrainSocketServer:
             
             request = json.loads(data.decode().strip())
             cmd = request.get('cmd')
-            response = self._execute_command(cmd, request.get('params', {}))
+            params = request.get('params', {})
+            
+            # SECURITY CHECK
+            is_allowed, level, reason = self.security.validate_command(cmd, params, client_id)
+            
+            if not is_allowed:
+                response = {
+                    'error': 'SECURITY_VIOLATION',
+                    'reason': reason,
+                    'command': cmd
+                }
+                conn.sendall(json.dumps(response).encode())
+                return
+            
+            # For FILTERED commands, run content through Liver
+            if level.name == 'FILTERED':
+                content_fields = self._extract_content_fields(params)
+                for field, content in content_fields.items():
+                    is_clean, filtered, meta = self._filter_content(content)
+                    if not is_clean:
+                        response = {
+                            'error': 'CONTENT_REJECTED',
+                            'reason': filtered,
+                            'field': field,
+                            'liver_metadata': meta
+                        }
+                        conn.sendall(json.dumps(response).encode())
+                        return
+                    # Replace with filtered content
+                    params = self._update_content_field(params, field, filtered)
+            
+            # Execute the command
+            response = self._execute_command(cmd, params)
+            
+            # Record successful execution
+            self.security.record_command(client_id, cmd)
+            
             conn.sendall(json.dumps(response).encode())
             
+        except json.JSONDecodeError as e:
+            response = {'error': 'INVALID_JSON', 'details': str(e)}
+            conn.sendall(json.dumps(response).encode())
         except Exception as e:
+            response = {'error': 'INTERNAL_ERROR', 'details': str(e)}
             try:
-                conn.sendall(json.dumps({'error': str(e)}).encode())
+                conn.sendall(json.dumps(response).encode())
             except:
                 pass
         finally:
             conn.close()
+    
+    def _extract_content_fields(self, params: dict) -> dict:
+        """Extract fields that need content filtering"""
+        content_fields = {}
+        if 'content' in params:
+            content_fields['content'] = params['content']
+        if 'message' in params:
+            content_fields['message'] = params['message']
+        if 'observation' in params:
+            content_fields['observation'] = params['observation']
+        return content_fields
+    
+    def _update_content_field(self, params: dict, field: str, value: str) -> dict:
+        """Update a content field in params"""
+        params = params.copy()
+        if field in params:
+            params[field] = value
+        return params
+    
+    def _filter_content(self, content: str) -> tuple:
+        """Filter content through Liver"""
+        sample = BloodSample(
+            source='security_filter',
+            content=content,
+            timestamp=time.time(),
+            flow_rate=1.0
+        )
+        state, result, meta = self.brain.liver.process(sample)
+        
+        if state.name == 'TOXIC':
+            return False, "Content flagged as TOXIC by Liver", meta
+        elif state.name == 'PURIFY':
+            return True, result if result else content, meta
+        else:
+            return True, content, meta
     
     def _execute_command(self, cmd: str, params: dict) -> dict:
         """Execute a brain command"""
@@ -431,6 +514,11 @@ class BrainSocketServer:
                 'agents': agent_stats,
                 'current_tick': self.brain.cortex.current_tick
             }
+        elif cmd == 'security':
+            """Get security layer status"""
+            if hasattr(self.brain.socket_server, 'security'):
+                return self.brain.socket_server.security.get_security_status()
+            return {'error': 'Security layer not available'}
         else:
             return {'error': f'Unknown command: {cmd}'}
 
@@ -854,7 +942,8 @@ class CompleteBrainV44:
                 "stats": self.router.get_stats() if self.router else None
             },
             "components_active": 15,
-            "pipeline": "Lungs → Liver → Brain → Kidneys"
+            "pipeline": "Lungs → Liver → Brain → Kidneys",
+            "security": self.socket_server.security.get_security_status() if hasattr(self.socket_server, 'security') else None
         }
     
     def run(self):
