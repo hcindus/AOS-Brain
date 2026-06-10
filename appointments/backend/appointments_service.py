@@ -492,7 +492,7 @@ async def search_leads(
     except Exception as e:
         return {"leads": [], "count": 0, "error": str(e)}
 
-@app.get("/api/v1/admin/seed-availability")
+@app.get("/v1/admin/seed-availability")
 async def seed_availability():
     """Seed initial availability slots - publicly accessible for setup"""
     conn = get_db_connection()
