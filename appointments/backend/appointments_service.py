@@ -146,7 +146,7 @@ async def health_check():
     """Health check endpoint"""
     return {"status": "healthy", "service": "appointments", "version": "1.0.0"}
 
-@app.post("/api/v1/auth/login")
+@app.post("/v1/auth/login")
 async def auth_login(data: dict):
     """Login endpoint - simple demo mode for now"""
     email = data.get('email')
@@ -181,7 +181,7 @@ async def auth_login(data: dict):
         "demo_mode": True
     }
 
-@app.get("/api/v1/availability")
+@app.get("/v1/availability")
 async def get_availability(
     date: Optional[str] = Query(None),
     days: int = Query(7, ge=1, le=30),
@@ -218,7 +218,7 @@ async def get_availability(
         "days_requested": days
     }
 
-@app.post("/api/v1/bookings")
+@app.post("/v1/bookings")
 async def create_booking(
     data: dict,
     credentials: HTTPAuthorizationCredentials = Depends(security)
@@ -287,7 +287,7 @@ async def create_booking(
         "message": f"Appointment booked for {customer_name}"
     }
 
-@app.get("/api/v1/bookings")
+@app.get("/v1/bookings")
 async def get_bookings(
     page: int = Query(1, ge=1),
     per_page: int = Query(50, ge=1, le=100),
@@ -343,7 +343,7 @@ async def get_bookings(
         "pages": (total + per_page - 1) // per_page
     }
 
-@app.get("/api/v1/bookings/{appointment_id}")
+@app.get("/v1/bookings/{appointment_id}")
 async def get_booking_detail(
     appointment_id: str,
     credentials: HTTPAuthorizationCredentials = Depends(security)
@@ -383,7 +383,7 @@ async def get_booking_detail(
     conn.close()
     return appointment
 
-@app.put("/api/v1/bookings/{appointment_id}")
+@app.put("/v1/bookings/{appointment_id}")
 async def update_booking(
     appointment_id: str,
     data: dict,
@@ -428,7 +428,7 @@ async def update_booking(
     
     return {"success": True, "updated": updated}
 
-@app.delete("/api/v1/bookings/{appointment_id}")
+@app.delete("/v1/bookings/{appointment_id}")
 async def cancel_booking(
     appointment_id: str,
     credentials: HTTPAuthorizationCredentials = Depends(security)
@@ -463,7 +463,7 @@ async def cancel_booking(
     
     return {"success": True, "deleted": deleted}
 
-@app.get("/api/v1/leads/search")
+@app.get("/v1/leads/search")
 async def search_leads(
     q: str = Query(..., min_length=2),
     credentials: HTTPAuthorizationCredentials = Depends(security)
