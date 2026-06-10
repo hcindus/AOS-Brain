@@ -13,7 +13,7 @@
 **$699** One-Time Investment  
 **$99/Year** Updates & Support
 
-**📊 Trusted by 40,000+ Realtor Prospects Nationwide**
+**📊 Trusted by 41,000+ Realtor Prospects Nationwide**
 
 ---
 
@@ -344,4 +344,4 @@ See CREAM in action (15 minutes)
 - **1,000 new prospects added daily**
 - Priority A markets: NY, LA, Chicago, Dallas, Houston, Atlanta, Phoenix, Miami, Seattle, Denver
 - Filtered by transaction volume, experience, and CREAM fit score
-- Updated: June 08, 2026
+- Updated: June 10, 2026
