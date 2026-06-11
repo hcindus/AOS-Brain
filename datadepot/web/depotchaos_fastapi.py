@@ -777,13 +777,15 @@ async def send_email_now(email_id: str):
     with open(queue_file, 'r') as f:
         queue = json.load(f)
     
-    # Find email by ID - generate IDs if missing
+    # Find email by ID - generate stable IDs if missing (hash of content)
     email_to_send = None
     remaining_queue = []
-    
+    import hashlib
     for email in queue:
         if 'id' not in email:
-            email['id'] = str(uuid.uuid4())
+            # Create stable ID from lead_id + to_email hash
+            id_string = f"{email.get('lead_id', '0')}-{email.get('to_email', '')}-{email.get('campaign_id', '')}"
+            email['id'] = hashlib.md5(id_string.encode()).hexdigest()[:16]
         if email.get('id') == email_id:
             email_to_send = email
         else:
@@ -1385,10 +1387,12 @@ async def preview_queued_email(email_id: str):
     with open(queue_file, 'r') as f:
         queue = json.load(f)
     
-    # Find email by ID
+    # Find email by ID - generate stable IDs if missing
+    import hashlib
     for email in queue:
         if 'id' not in email:
-            email['id'] = str(uuid.uuid4())
+            id_string = f"{email.get('lead_id', '0')}-{email.get('to_email', '')}-{email.get('campaign_id', '')}"
+            email['id'] = hashlib.md5(id_string.encode()).hexdigest()[:16]
         if email.get('id') == email_id:
             return {
                 'success': True,
