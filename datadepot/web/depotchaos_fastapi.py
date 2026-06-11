@@ -729,12 +729,22 @@ async def get_email_queue():
         today = now.strftime('%Y-%m-%d')
         sent_today = len([s for s in sent if s.get('sent_at', '').startswith(today)])
     
+    # Count failed today
+    failed_today = 0
+    failed_file = DATADEPOT_DIR / 'queue' / 'failed_emails.json'
+    if failed_file.exists():
+        with open(failed_file, 'r') as f:
+            failed = json.load(f)
+        today = now.strftime('%Y-%m-%d')
+        failed_today = len([s for s in failed if s.get('failed_at', '').startswith(today)])
+    
     return {
         'queue': queue,
         'total': len(queue),
         'ready_to_send': len(ready),
         'scheduled': len(scheduled),
-        'sent_today': sent_today
+        'sent_today': sent_today,
+        'failed_today': failed_today
     }
 
 @app.get("/api/activities")
@@ -749,10 +759,22 @@ async def get_activities():
             sent = json.load(f)
             activities.extend([{
                 'type': 'email_sent',
-                'description': f"Email sent to {e['to_email']}",
+                'description': f"Email sent to {e.get('to_email', 'unknown')}",
                 'timestamp': e.get('sent_at', ''),
                 'campaign': e.get('campaign_id', '')
             } for e in sent[-10:]])
+    
+    # Check recent email failures
+    failed_file = DATADEPOT_DIR / 'queue' / 'failed_emails.json'
+    if failed_file.exists():
+        with open(failed_file, 'r') as f:
+            failed = json.load(f)
+            activities.extend([{
+                'type': 'email_failed',
+                'description': f"Email failed to {e.get('to_email', 'unknown')}",
+                'timestamp': e.get('failed_at', ''),
+                'campaign': e.get('campaign_id', '')
+            } for e in failed[-10:]])
     
     # Sort by timestamp
     activities.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
@@ -887,7 +909,7 @@ async def send_email_now(email_id: str):
         return {
             'success': True,
             'message': f'Email sent to {email_to_send["to_email"]}',
-            'mailgun_id': result.get('id'),
+            'message_id': message_id,
             'email_id': email_id
         }
         
