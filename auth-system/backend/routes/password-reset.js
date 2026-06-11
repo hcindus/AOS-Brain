@@ -5,7 +5,8 @@ const User = require('../../database/models/User');
 const { hashPassword, generateSecureToken, hashToken } = require('../utils/crypto');
 const { logAuditEvent } = require('../utils/audit');
 const { revokeAllUserSessions } = require('../utils/tokens');
-const { passwordResetLimiter, csrfProtection } = require('../middleware/rateLimit');
+const { passwordResetLimiter } = require('../middleware/rateLimit');
+const { csrfProtection } = require('../middleware/auth');
 const { sendPasswordResetEmail } = require('../utils/email');
 
 const router = express.Router();
@@ -69,6 +70,7 @@ router.post('/password-reset/request',
                 if (emailResult.test) {
                     console.log('🔑 Reset token:', token);
                     return res.json({
+                        success: true,
                         message: 'If an account exists with this email, a reset link has been sent.',
                         devToken: token,
                         previewUrl: emailResult.previewUrl
@@ -82,6 +84,7 @@ router.post('/password-reset/request',
             await logAuditEvent(user.id, 'PASSWORD_RESET_REQUEST', 'SUCCESS', req);
 
             res.json({
+                success: true,
                 message: 'If an account exists with this email, a reset link has been sent.'
             });
         } catch (err) {
@@ -208,6 +211,7 @@ router.post('/password-reset/confirm',
             await logAuditEvent(resetRecord.user_id, 'PASSWORD_RESET_CONFIRM', 'SUCCESS', req);
 
             res.json({ 
+                success: true,
                 message: 'Password reset successful. Please log in with your new password.' 
             });
         } catch (err) {

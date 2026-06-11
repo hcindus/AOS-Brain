@@ -1,0 +1,202 @@
+{
+  "tier_1_critical": [
+    {
+      "category": "Engineering & Technology",
+      "priority": 1,
+      "focus": [
+        "Mechanical design",
+        "Manufacturing",
+        "Materials science",
+        "Robotics"
+      ],
+      "sources": [
+        {
+          "title": "The Elements of Mechanical Engineering",
+          "author": "Various",
+          "id": "TBD"
+        },
+        {
+          "title": "Mechanical Movements and Novelties of Construction",
+          "author": "Gardner D. Hiscox",
+          "id": "TBD"
+        },
+        {
+          "title": "Kinematics of Machinery",
+          "author": "Franz Reuleaux",
+          "id": "TBD"
+        }
+      ]
+    },
+    {
+      "category": "Philosophy & Ethics",
+      "priority": 1,
+      "focus": [
+        "AI ethics",
+        "Governance",
+        "Constraints",
+        "Prime Directives"
+      ],
+      "sources": [
+        {
+          "title": "The Republic",
+          "author": "Plato",
+          "id": "150"
+        },
+        {
+          "title": "Nicomachean Ethics",
+          "author": "Aristotle",
+          "id": "8438"
+        },
+        {
+          "title": "Frankenstein",
+          "author": "Mary Shelley",
+          "id": "84"
+        },
+        {
+          "title": "Utilitarianism",
+          "author": "John Stuart Mill",
+          "id": "11224"
+        }
+      ]
+    },
+    {
+      "category": "Business/Management",
+      "priority": 1,
+      "focus": [
+        "Operations",
+        "Leadership",
+        "Organization"
+      ],
+      "sources": [
+        {
+          "title": "The Art of War",
+          "author": "Sun Tzu",
+          "id": "132"
+        },
+        {
+          "title": "The Practice of Management",
+          "author": "Peter Drucker",
+          "id": "TBD"
+        }
+      ]
+    },
+    {
+      "category": "Mathematics",
+      "priority": 1,
+      "focus": [
+        "Fractals",
+        "Topology",
+        "Systems"
+      ],
+      "sources": [
+        {
+          "title": "Flatland",
+          "author": "Edwin Abbott",
+          "id": "201"
+        },
+        {
+          "title": "The Mathematical Principles of Natural Philosophy",
+          "author": "Isaac Newton",
+          "id": "28233"
+        }
+      ]
+    },
+    {
+      "category": "Science - Biology",
+      "priority": 1,
+      "focus": [
+        "Immune system",
+        "Neural networks",
+        "Biomimicry"
+      ],
+      "sources": [
+        {
+          "title": "On the Origin of Species",
+          "author": "Charles Darwin",
+          "id": "1228"
+        },
+        {
+          "title": "The Expression of the Emotions in Man and Animals",
+          "author": "Charles Darwin",
+          "id": "1227"
+        }
+      ]
+    },
+    {
+      "category": "Science - Physics",
+      "priority": 1,
+      "focus": [
+        "Mechanics",
+        "Thermodynamics",
+        "Power systems"
+      ],
+      "sources": [
+        {
+          "title": "The Experimental Physics",
+          "author": "Various",
+          "id": "TBD"
+        }
+      ]
+    },
+    {
+      "category": "Psychiatry/Psychology",
+      "priority": 1,
+      "focus": [
+        "Behavior",
+        "Motivation",
+        "Cognition"
+      ],
+      "sources": [
+        {
+          "title": "The Interpretation of Dreams",
+          "author": "Sigmund Freud",
+          "id": "66048"
+        }
+      ]
+    }
+  ],
+  "tier_2_foundation": [
+    {
+      "category": "Economics",
+      "priority": 2,
+      "focus": [
+        "Markets",
+        "Resources",
+        "Value"
+      ],
+      "sources": [
+        {
+          "title": "The Wealth of Nations",
+          "author": "Adam Smith",
+          "id": "3300"
+        }
+      ]
+    },
+    {
+      "category": "Science-Fiction & Fantasy",
+      "priority": 2,
+      "focus": [
+        "AI themes",
+        "Utopia/Dystopia",
+        "Future tech"
+      ],
+      "sources": [
+        {
+          "title": "The Time Machine",
+          "author": "H.G. Wells",
+          "id": "35"
+        },
+        {
+          "title": "The War of the Worlds",
+          "author": "H.G. Wells",
+          "id": "36"
+        },
+        {
+          "title": "R.U.R. (Rossum's Universal Robots)",
+          "author": "Karel \u010capek",
+          "id": "TBD"
+        }
+      ]
+    }
+  ]
+}

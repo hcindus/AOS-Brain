@@ -1,0 +1,52 @@
+{
+  "report_type": "Six Sigma Quality Assessment",
+  "generated_by": "Patricia",
+  "timestamp": "2026-05-31T23:49:53.270988",
+  "metrics": {
+    "total_orders": 47,
+    "active_orders": 0,
+    "avg_cycle_time_days": 1.47,
+    "defects_detected": 3,
+    "dpmo": 63829.79,
+    "sigma_level": 5.36,
+    "target_sigma": 6.0,
+    "improvement_gap": 0.64
+  },
+  "defects": [
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "REGGIESTARR-001",
+      "product": "ReggieStarr Android App",
+      "priority": "high",
+      "queued_since": "2026-05-26 00:46:34.414721",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "CREAM-001",
+      "product": "Cream Mobile App",
+      "priority": "high",
+      "queued_since": "2026-05-26 00:46:34.418186",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    },
+    {
+      "type": "HIGH_PRIORITY_DELAY",
+      "order_id": "NOGNOG-003",
+      "product": "N'og nog v3 Universal Explorer",
+      "priority": "high",
+      "queued_since": "2026-05-26 00:46:34.418210",
+      "severity": "MEDIUM",
+      "recommendation": "Prioritize processing"
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "MEDIUM",
+      "action": "Review high-priority queue processing",
+      "impact": "Accelerate 3 urgent orders",
+      "owner": "Production Manager"
+    }
+  ]
+}

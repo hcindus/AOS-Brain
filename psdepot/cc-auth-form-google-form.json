@@ -1,0 +1,200 @@
+{
+  "metadata": {
+    "title": "Credit Card Authorization Form - Performance Supply Depot LLC",
+    "description": "Secure authorization to keep credit card on file for purchases and recurring orders. A PDF copy will be emailed upon submission.",
+    "documentTitle": "CC Auth Form"
+  },
+  "settings": {
+    "collectEmail": false,
+    "responseReceipt": false,
+    "confirmationMessage": "Thank you! Your authorization has been submitted. A PDF copy will be emailed to you and Performance Supply Depot within 5 minutes."
+  },
+  "items": [
+    {
+      "type": "SECTION_HEADER",
+      "title": "Section 1 — Business Information",
+      "description": "The business authorizing the credit card on file"
+    },
+    {
+      "type": "TEXT",
+      "title": "Business Name",
+      "helpText": "Legal business name",
+      "required": true
+    },
+    {
+      "type": "TEXT",
+      "title": "Business Street Address",
+      "helpText": "Full street address",
+      "required": true
+    },
+    {
+      "type": "TEXT",
+      "title": "Business City, State, ZIP",
+      "helpText": "Example: Tampa, FL 33601",
+      "required": true
+    },
+    {
+      "type": "TEXT",
+      "title": "Business Phone Number",
+      "helpText": "Best contact number for this business",
+      "required": true
+    },
+    {
+      "type": "TEXT",
+      "title": "Business Email Address",
+      "helpText": "Receipts and confirmations will be sent here",
+      "required": true
+    },
+    {
+      "type": "SECTION_HEADER",
+      "title": "Section 2 — Authorized Cardholder Information",
+      "description": "The person authorizing this card for use"
+    },
+    {
+      "type": "TEXT",
+      "title": "Cardholder Full Name",
+      "helpText": "As it appears on the credit card",
+      "required": true
+    },
+    {
+      "type": "TEXT",
+      "title": "Cardholder Billing Address",
+      "helpText": "Street address on file with the card issuer",
+      "required": true
+    },
+    {
+      "type": "TEXT",
+      "title": "Billing ZIP Code",
+      "helpText": "5-digit ZIP for billing address",
+      "required": true,
+      "validation": {
+        "type": "NUMBER",
+        "min": 10000,
+        "max": 99999
+      }
+    },
+    {
+      "type": "TEXT",
+      "title": "Cardholder Phone Number",
+      "helpText": "Mobile preferred for verification",
+      "required": true
+    },
+    {
+      "type": "TEXT",
+      "title": "Cardholder Email Address",
+      "helpText": "PDF copy will be sent here",
+      "required": true
+    },
+    {
+      "type": "SECTION_HEADER",
+      "title": "Section 3 — Credit Card Information",
+      "description": "The card to be kept on file"
+    },
+    {
+      "type": "TEXT",
+      "title": "Credit Card Number",
+      "helpText": "Visa, Mastercard, AmEx, or Discover",
+      "required": true,
+      "validation": {
+        "type": "REGEX",
+        "pattern": "^[0-9]{15,16}$",
+        "message": "Please enter a valid 15 or 16 digit credit card number (numbers only)"
+      }
+    },
+    {
+      "type": "TEXT",
+      "title": "Expiration Date (MM/YY)",
+      "helpText": "Format: MM/YY",
+      "required": true,
+      "validation": {
+        "type": "REGEX",
+        "pattern": "^(0[1-9]|1[0-2])\\/([0-9]{2})$",
+        "message": "Please use format MM/YY"
+      }
+    },
+    {
+      "type": "TEXT",
+      "title": "CVV / Security Code",
+      "helpText": "3 digits (back of card) or 4 digits (front of AmEx)",
+      "required": true,
+      "validation": {
+        "type": "REGEX",
+        "pattern": "^[0-9]{3,4}$",
+        "message": "CVV must be 3 or 4 digits"
+      }
+    },
+    {
+      "type": "TEXT",
+      "title": "Billing ZIP Code (Credit Card)",
+      "helpText": "5-digit ZIP on file with your bank",
+      "required": true,
+      "validation": {
+        "type": "NUMBER",
+        "min": 10000,
+        "max": 99999
+      }
+    },
+    {
+      "type": "SECTION_HEADER",
+      "title": "Section 4 — Authorization Agreement",
+      "description": "Required acknowledgment before submission"
+    },
+    {
+      "type": "CHECKBOX",
+      "title": "Authorization Statement (Required)",
+      "helpText": "",
+      "required": true,
+      "options": [
+        {
+          "value": "I hereby authorize Performance Supply Depot LLC to charge the credit card listed above for purchases, invoices, or recurring orders made by my business. I confirm that I am an authorized user of this credit card and that I will not dispute charges provided they correspond to the terms indicated on invoices or order confirmations."
+        },
+        {
+          "value": "I authorize Performance Supply Depot LLC to store this credit card information securely on file for future transactions, recurring orders, or replacement orders requested by my business. This authorization will remain in effect until I provide written notice to revoke it."
+        },
+        {
+          "value": "I understand that a PDF copy of this authorization, including the information I have provided, will be generated and emailed to both myself and Performance Supply Depot LLC for record-keeping purposes."
+        }
+      ]
+    },
+    {
+      "type": "TEXT",
+      "title": "Electronic Signature (Type Your Full Name)",
+      "helpText": "By typing your full name, you agree this constitutes a legal electronic signature",
+      "required": true
+    },
+    {
+      "type": "DATE",
+      "title": "Date",
+      "helpText": "Today's date",
+      "required": true,
+      "includesYear": true
+    },
+    {
+      "type": "SECTION_HEADER",
+      "title": "Section 5 — Optional Attachments",
+      "description": "Supporting documentation (optional but recommended for high-value accounts)"
+    },
+    {
+      "type": "FILE_UPLOAD",
+      "title": "Photo of Credit Card (Optional)",
+      "helpText": "You may cover all but the last 4 digits for security",
+      "required": false,
+      "maxFiles": 1,
+      "allowedTypes": ["IMAGE"]
+    },
+    {
+      "type": "FILE_UPLOAD",
+      "title": "Photo of Driver's License or ID (Optional)",
+      "helpText": "To verify cardholder identity",
+      "required": false,
+      "maxFiles": 1,
+      "allowedTypes": ["IMAGE"]
+    },
+    {
+      "type": "PARAGRAPH_TEXT",
+      "title": "Special Instructions or Notes",
+      "helpText": "Any specific requests, preferred shipping addresses, or other notes",
+      "required": false
+    }
+  ]
+}

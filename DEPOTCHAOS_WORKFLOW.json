@@ -1,0 +1,26 @@
+{
+  "system": "DepotChaos",
+  "version": "1.0",
+  "integration_points": {
+    "perception": "Check DepotChaos for assigned leads/tasks",
+    "cognition": "Query DepotChaos for customer history before decisions",
+    "action": "Log all actions in DepotChaos activity log",
+    "memory": "Store outcomes in DepotChaos database",
+    "reward": "Track performance metrics from DepotChaos reports"
+  },
+  "daily_routine": {
+    "09:00": "Login to DepotChaos, check assignments",
+    "09:30": "Review customer history before outreach",
+    "10:00-16:00": "Work with DepotChaos logging active",
+    "16:30": "Update lead statuses",
+    "17:00": "Submit daily report, log activities"
+  },
+  "mandatory_logging": [
+    "Customer calls",
+    "Email sent/received",
+    "Lead status changes",
+    "Sales closed",
+    "Vendor interactions",
+    "Intelligence gathered"
+  ]
+}

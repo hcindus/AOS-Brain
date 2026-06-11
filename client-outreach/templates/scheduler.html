@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2563eb">
+    <title>Scheduler - Client Outreach</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="manifest" href="/static/manifest.json">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="app-header">
+            <h1>📧 Email Scheduler</h1>
+            <button class="menu-btn" onclick="history.back()">←</button>
+        </header>
+
+        <main class="main-content">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="pending-count">-</div>
+                    <div class="stat-label">Pending</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="sent-count">-</div>
+                    <div class="stat-label">Sent</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="failed-count">-</div>
+                    <div class="stat-label">Failed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="next-send">-</div>
+                    <div class="stat-label">Next Send</div>
+                </div>
+            </div>
+
+            <!-- Quick Schedule -->
+            <div class="section">
+                <h2>⏰ Schedule New Email</h2>
+                <form id="schedule-form" onsubmit="submitSchedule(event)">
+                    <div class="form-group">
+                        <label>Select Client</label>
+                        <select name="client_id" id="client-select" required>
+                            <option value="">Loading clients...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Template</label>
+                        <select name="template" required>
+                            <option value="intro">Introduction</option>
+                            <option value="follow_up">Follow-up</option>
+                            <option value="demo_reminder">Demo Reminder</option>
+                            <option value="proposal">Proposal</option>
+                            <option value="check_in">Check-in</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" name="subject" placeholder="Email subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Scheduled Time</label>
+                        <input type="datetime-local" name="scheduled_at" required>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%; padding: 1rem; border-radius: 0.5rem; border: none;">Schedule Email</button>
+                </form>
+            </div>
+
+            <!-- Queue List -->
+            <div class="section">
+                <h2>📤 Email Queue</h2>
+                <div id="queue-list" class="client-list">
+                    <p class="loading">Loading queue...</p>
+                </div>
+            </div>
+        </main>
+
+        <div id="toast" class="toast"></div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+    <script>
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/email-queue/stats');
+                const stats = await response.json();
+                
+                document.getElementById('pending-count').textContent = stats.pending;
+                document.getElementById('sent-count').textContent = stats.sent;
+                document.getElementById('failed-count').textContent = stats.failed;
+            } catch (err) {
+                console.error('Failed to load stats');
+            }
+        }
+
+        async function loadClients() {
+            try {
+                const response = await fetch('/api/clients?per_page=100');
+                const data = await response.json();
+                
+                const select = document.getElementById('client-select');
+                select.innerHTML = `
+                    <option value="">Select a client...</option>
+                    ${data.clients.map(c => `
+                        <option value="${c.id}">${c.name} - ${c.company || 'No company'}</option>
+                    `).join('')}
+                `;
+            } catch (err) {
+                console.error('Failed to load clients');
+            }
+        }
+
+        async function loadQueue() {
+            const container = document.getElementById('queue-list');
+            container.innerHTML = '<p class="loading">Loading...</p>';
+            
+            try {
+                const response = await fetch('/api/email-queue/pending?limit=20');
+                const emails = await response.json();
+                
+                if (emails.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📭</div>
+                            <p>No pending emails</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = emails.map(email => `
+                    <div class="client-card">
+                        <div class="client-header">
+                            <div>
+                                <div class="client-name">${email.client_name}</div>
+                                <div class="client-company">${email.subject}</div>
+                            </div>
+                        </div>
+                        <div class="client-meta">
+                            <span class="badge badge-status-new">${email.template}</span>
+                            <span class="badge">${new Date(email.scheduled_at).toLocaleString()}</span>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Update next send time
+                if (emails[0]) {
+                    const nextTime = new Date(emails[0].scheduled_at);
+                    const timeStr = nextTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    document.getElementById('next-send').textContent = timeStr;
+                }
+            } catch (err) {
+                container.innerHTML = '<p class="loading">Failed to load queue</p>';
+            }
+        }
+
+        async function submitSchedule(event) {
+            event.preventDefault();
+            const form = event.target;
+            const data = Object.fromEntries(new FormData(form));
+            
+            try {
+                const response = await fetch('/api/email-queue', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        client_id: parseInt(data.client_id),
+                        template: data.template,
+                        subject: data.subject,
+                        scheduled_at: data.scheduled_at
+                    })
+                });
+                
+                if (response.ok) {
+                    showToast('Email scheduled!', 'success');
+                    form.reset();
+                    loadQueue();
+                    loadStats();
+                } else {
+                    const error = await response.json();
+                    showToast(error.detail || 'Failed to schedule', 'error');
+                }
+            } catch (err) {
+                showToast('Network error', 'error');
+            }
+        }
+
+        // Initialize
+        loadStats();
+        loadClients();
+        loadQueue();
+        
+        // Refresh every 30 seconds
+        setInterval(() => {
+            loadStats();
+            loadQueue();
+        }, 30000);
+    </script>
+</body>
+</html>

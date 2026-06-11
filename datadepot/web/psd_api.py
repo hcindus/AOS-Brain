@@ -84,6 +84,37 @@ def dashboard_overview():
     """)
     by_category = {row['category']: row['count'] for row in cursor.fetchall()}
     
+    # Customers by tier (NEW)
+    cursor.execute("""
+        SELECT COALESCE(tier, 'stone') as tier_name, COUNT(*) as count 
+        FROM psd_customers 
+        GROUP BY COALESCE(tier, 'stone')
+    """)
+    by_tier_raw = {row['tier_name']: row['count'] for row in cursor.fetchall()}
+    
+    # Map tier IDs to display names for frontend compatibility
+    tier_name_map = {
+        'diamond': 'Top 165',
+        'platinum': 'Top 165', 
+        'gold': 'Spot On Target',
+        'silver': 'Prime',
+        'bronze': 'PPCL',
+        'copper': 'Copper',
+        'stone': 'Stone',
+        # Handle case variations
+        'Diamond': 'Top 165',
+        'Platinum': 'Top 165',
+        'Gold': 'Spot On Target', 
+        'Silver': 'Prime',
+        'Bronze': 'PPCL',
+        'Copper': 'Copper',
+        'Stone': 'Stone'
+    }
+    by_tier = {}
+    for tier_id, count in by_tier_raw.items():
+        display_name = tier_name_map.get(tier_id, tier_id)
+        by_tier[display_name] = by_tier.get(display_name, 0) + count
+    
     conn.close()
     
     return {
@@ -94,6 +125,7 @@ def dashboard_overview():
         "avg_monthly_revenue": round(avg_monthly, 2),
         "contacts_due": contacts_due,
         "by_category": by_category,
+        "by_tier": by_tier,
         "timestamp": datetime.now().isoformat()
     }
 

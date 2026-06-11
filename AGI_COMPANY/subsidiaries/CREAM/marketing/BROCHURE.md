@@ -13,6 +13,8 @@
 **$699** One-Time Investment  
 **$99/Year** Updates & Support
 
+**📊 Trusted by 32,000+ Realtor Prospects Nationwide**
+
 ---
 
 ## PAGE 2: THE PROBLEM
@@ -338,8 +340,8 @@ See CREAM in action (15 minutes)
 ## SALES INTELLIGENCE
 
 ### Realtor Lead Database
-**24,000+ Qualified Prospects** in our active database
+**35,000+ Qualified Prospects** in our active database
 - **1,000 new prospects added daily**
 - Priority A markets: NY, LA, Chicago, Dallas, Houston, Atlanta, Phoenix, Miami, Seattle, Denver
 - Filtered by transaction volume, experience, and CREAM fit score
-- Updated: May 10, 2026
+- Updated: May 27, 2026

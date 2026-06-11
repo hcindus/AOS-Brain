@@ -1,0 +1,87 @@
+Subject: How to Pull Bonsai Model to Mortimer VPS
+
+Hey Mortimer,
+
+Here's the complete guide to pulling the Bonsai model to your VPS.
+
+=== STEP 1: SSH INTO YOUR VPS ===
+ssh root@<your-vps-ip>
+
+=== STEP 2: VERIFY OLLAMA IS INSTALLED ===
+ollama --version
+# Should show: ollama version is ...
+
+If not installed:
+curl -fsSL https://ollama.com/install.sh | sh
+
+=== STEP 3: PULL THE BONSAI MODEL ===
+
+The Bonsai model is hosted on HuggingFace and available via Ollama's 
+HF.co integration. Run:
+
+ollama pull hf.co/bonsai-ai/Bonsai-8B-GGUF:Q1_0
+
+Or if you want a different quantization:
+- Q2_K: hf.co/bonsai-ai/Bonsai-8B-GGUF:Q2_K
+- Q3_K_M: hf.co/bonsai-ai/Bonsai-8B-GGUF:Q3_K_M
+- Q4_K_M: hf.co/bonsai-ai/Bonsai-8B-GGUF:Q4_K_M
+- Q5_K_M: hf.co/bonsai-ai/Bonsai-8B-GGUF:Q5_K_M
+- Q6_K: hf.co/bonsai-ai/Bonsai-8B-GGUF:Q6_K
+- Q8_0: hf.co/bonsai-ai/Bonsai-8B-GGUF:Q8_0
+
+=== STEP 4: CREATE A CUSTOM MODEL FILE (OPTIONAL) ===
+
+Create a Modelfile:
+
+cat > /root/Modelfile.bonsai << 'EOF'
+FROM hf.co/bonsai-ai/Bonsai-8B-GGUF:Q1_0
+
+SYSTEM """You are Bonsai, a helpful AI assistant."""
+
+PARAMETER temperature 0.7
+PARAMETER top_p 0.9
+PARAMETER top_k 40
+EOF
+
+Then build:
+ollama create bonsai -f /root/Modelfile.bonsai
+
+=== STEP 5: VERIFY INSTALLATION ===
+
+ollama list
+# You should see: bonsai-8b-q1_0:latest
+
+Test it:
+ollama run bonsai-8b-q1_0:latest "Hello, are you working?"
+
+=== MODEL DETAILS ===
+
+- Base Model: Bonsai-8B (fine-tuned Llama-based)
+- Size: ~1.2 GB (Q1_0 quantization)
+- Parameters: 8B
+- Best for: General conversation, coding assistance
+- Speed: Fast on CPU
+
+=== TROUBLESHOOTING ===
+
+1. If pull fails with "unauthorized":
+   - HF.co models are public, no auth needed
+   - Check internet connection: curl https://huggingface.co
+
+2. If OOM (Out of Memory):
+   - Use smaller quantization: Q1_0 or Q2_K
+   - Current Miles VPS has plenty of RAM
+
+3. If model doesn't appear in `ollama list`:
+   - Check pull completed: ollama pull shows 100%
+   - Restart ollama: systemctl restart ollama
+
+=== CURRENT STATUS ON MILES ===
+
+bonsai-8b-q1_0:latest    76a1d68366ef    1.2 GB    About an hour ago
+
+The model is confirmed working and available.
+
+Let me know once you've pulled it!
+
+- Miles

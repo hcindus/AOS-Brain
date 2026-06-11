@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2563eb">
+    <title>Clients - Client Outreach</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="manifest" href="/static/manifest.json">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="app-header">
+            <h1>👥 Clients</h1>
+            <button class="menu-btn" onclick="history.back()">←</button>
+        </header>
+
+        <!-- Search & Filters -->
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search clients..." oninput="filterClients()">
+        </div>
+
+        <div class="filter-tabs">
+            <button class="filter-tab active" onclick="filterBy('all', this)">All</button>
+            <button class="filter-tab" onclick="filterBy('new', this)">New</button>
+            <button class="filter-tab" onclick="filterBy('prospect', this)">Prospects</button>
+            <button class="filter-tab" onclick="filterBy('active', this)">Active</button>
+            <button class="filter-tab" onclick="filterBy('follow-up', this)">Follow-up</button>
+        </div>
+
+        <!-- Client List -->
+        <main class="main-content" style="padding-top: 0;">
+            <div id="clients-list" class="client-list">
+                <p class="loading">Loading clients...</p>
+            </div>
+        </main>
+
+        <!-- Add Button -->
+        <div class="action-bar">
+            <button class="btn-primary" onclick="openAddClient()">+ Add Client</button>
+        </div>
+
+        <!-- Add Client Modal -->
+        <div id="add-client-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Add New Client</h2>
+                    <button class="close-btn" onclick="closeModal()">×</button>
+                </div>
+                <form id="add-client-form" onsubmit="submitClient(event)">
+                    <div class="form-group">
+                        <label>Name *</label>
+                        <input type="text" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label>Company</label>
+                        <input type="text" name="company">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>City</label>
+                            <input type="text" name="city">
+                        </div>
+                        <div class="form-group">
+                            <label>Tier</label>
+                            <select name="tier">
+                                <option value="Stone">Stone</option>
+                                <option value="PPCL">PPCL</option>
+                                <option value="Prime">Prime</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select name="status">
+                            <option value="new">New</option>
+                            <option value="prospect">Prospect</option>
+                            <option value="active">Active</option>
+                            <option value="follow-up">Follow-up</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Next Contact</label>
+                        <input type="date" name="next_contact">
+                    </div>
+                    <div class="form-group">
+                        <label>Notes</label>
+                        <textarea name="notes" rows="2"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+                        <button type="submit" class="btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="toast" class="toast"></div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+    <script>
+        let currentFilter = 'all';
+        let currentSearch = '';
+        let clientsData = [];
+
+        async function loadClients() {
+            const container = document.getElementById('clients-list');
+            container.innerHTML = '<p class="loading">Loading...</p>';
+            
+            try {
+                const response = await fetch('/api/clients?per_page=100');
+                const data = await response.json();
+                clientsData = data.clients;
+                renderClients();
+            } catch (err) {
+                container.innerHTML = '<p class="loading">Failed to load</p>';
+            }
+        }
+
+        function renderClients() {
+            const container = document.getElementById('clients-list');
+            
+            let filtered = clientsData;
+            
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(c => c.status === currentFilter);
+            }
+            
+            if (currentSearch) {
+                const search = currentSearch.toLowerCase();
+                filtered = filtered.filter(c => 
+                    c.name.toLowerCase().includes(search) ||
+                    (c.company && c.company.toLowerCase().includes(search)) ||
+                    (c.email && c.email.toLowerCase().includes(search))
+                );
+            }
+            
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <p>No clients found</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = filtered.map(client => `
+                <div class="client-card" onclick="viewClient(${client.id})">
+                    <div class="client-header">
+                        <div>
+                            <div class="client-name">${client.name}</div>
+                            <div class="client-company">${client.company || 'No company'}</div>
+                        </div>
+                    </div>
+                    <div class="client-meta">
+                        <span class="badge badge-tier-${client.tier.toLowerCase().replace(' ', '-')}">${client.tier}</span>
+                        <span class="badge badge-status-${client.status}">${client.status}</span>
+                        ${client.next_contact ? `<span class="badge">📅 ${client.next_contact}</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterBy(status, btn) {
+            currentFilter = status;
+            document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            renderClients();
+        }
+
+        function filterClients() {
+            currentSearch = document.getElementById('search-input').value;
+            renderClients();
+        }
+
+        // Load on page load
+        loadClients();
+    </script>
+</body>
+</html>

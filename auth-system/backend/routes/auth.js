@@ -4,7 +4,7 @@ const speakeasy = require('speakeasy');
 const QRCode = require('qrcode');
 const User = require('../../database/models/User');
 const { hashPassword, verifyPassword, generateSecureToken, generateDeviceFingerprint, hashToken } = require('../utils/crypto');
-const { generateAccessToken, generateRefreshToken, revokeRefreshToken, revokeAllUserSessions } = require('../utils/tokens');
+const { generateAccessToken, generateRefreshToken, revokeRefreshToken, revokeAllUserSessions, verifyAccessToken } = require('../utils/tokens');
 const { logAuditEvent, detectSuspiciousActivity } = require('../utils/audit');
 const { checkPasswordBreach } = require('../utils/breachCheck');
 const { loginLimiter, registerLimiter, passwordResetLimiter } = require('../middleware/rateLimit');
@@ -66,6 +66,7 @@ router.post('/register',
             await logAuditEvent(user.id, 'REGISTER', 'SUCCESS', req, { email });
 
             res.status(201).json({
+                success: true,
                 message: 'Registration successful. Please check your email to verify your account.',
                 userId: user.id
             });
@@ -187,7 +188,10 @@ router.post('/login',
             });
 
             res.json({
+                success: true,
                 accessToken,
+                refreshToken,
+                expiresIn: 900, // 15 minutes in seconds (matches JWT_ACCESS_EXPIRY)
                 user: {
                     id: user.id,
                     email: user.email,
@@ -222,6 +226,7 @@ router.post('/mfa/setup', authenticateToken, csrfProtection, async (req, res) =>
         await logAuditEvent(req.userId, 'MFA_SETUP', 'SUCCESS', req);
 
         res.json({
+            success: true,
             // Never expose the raw secret - only QR code
             qrCode: qrCodeUrl,
             manualEntryKey: secret.base32.slice(0, 4) + '****...' // Show only first 4 chars
@@ -261,7 +266,7 @@ router.post('/mfa/verify', authenticateToken, csrfProtection, async (req, res) =
 
         await logAuditEvent(req.userId, 'MFA_ENABLE', 'SUCCESS', req);
 
-        res.json({ message: 'MFA enabled successfully' });
+        res.json({ success: true, message: 'MFA enabled successfully' });
     } catch (err) {
         console.error('MFA verify error:', err);
         res.status(500).json({ error: 'Verification failed' });
@@ -284,7 +289,7 @@ router.post('/logout', authenticateToken, async (req, res) => {
         
         await logAuditEvent(req.userId, 'LOGOUT', 'SUCCESS', req);
         
-        res.json({ message: 'Logged out successfully' });
+        res.json({ success: true, message: 'Logged out successfully' });
     } catch (err) {
         console.error('Logout error:', err);
         res.status(500).json({ error: 'Logout failed' });
@@ -320,7 +325,10 @@ router.post('/refresh', refreshLimiter, authenticateRefreshToken, async (req, re
         });
 
         res.json({
+            success: true,
             accessToken,
+            refreshToken: newRefreshToken,
+            expiresIn: 900,
             user: {
                 id: req.userId,
                 email: req.userEmail,
@@ -330,6 +338,31 @@ router.post('/refresh', refreshLimiter, authenticateRefreshToken, async (req, re
     } catch (err) {
         console.error('Token refresh error:', err);
         res.status(500).json({ error: 'Token refresh failed' });
+    }
+});
+
+/**
+ * POST /api/auth/verify
+ * Verify if a token is valid (for frontend token checks)
+ */
+router.post('/verify', async (req, res) => {
+    try {
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+        
+        if (!token) {
+            return res.json({ valid: false });
+        }
+        
+        const decoded = verifyAccessToken(token);
+        
+        if (!decoded) {
+            return res.json({ valid: false });
+        }
+        
+        res.json({ valid: true, userId: decoded.userId, email: decoded.email });
+    } catch (err) {
+        res.json({ valid: false });
     }
 });
 

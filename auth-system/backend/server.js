@@ -7,7 +7,8 @@ const path = require('path');
 
 const authRoutes = require('./routes/auth');
 const passwordResetRoutes = require('./routes/password-reset');
-const { setCsrfToken, apiLimiter } = require('./middleware/rateLimit');
+const { apiLimiter } = require('./middleware/rateLimit');
+const { setCsrfToken } = require('./middleware/auth');
 const { securityHeaders } = require('./middleware/security');
 const { csrfLimiter } = require('./middleware/additionalRateLimits');
 const { initializeSecurityGuardian, securityStatusRoute, securityLoggingMiddleware } = require('./middleware/security-guardian');
@@ -60,7 +61,7 @@ app.use('/api', apiLimiter);
 
 // CSRF token endpoint (with rate limiting)
 app.get('/api/csrf-token', csrfLimiter, setCsrfToken, (req, res) => {
-    res.json({ csrfToken: req.cookies.csrfToken });
+    res.json({ csrfToken: req.csrfToken });
 });
 
 // API routes
@@ -80,7 +81,7 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 
 // SPA fallback
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/index.html')));
+    res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
 // Error handler

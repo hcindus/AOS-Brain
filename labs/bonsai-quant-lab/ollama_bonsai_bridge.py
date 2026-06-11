@@ -23,9 +23,14 @@ from urllib.error import URLError
 BRIDGE_PORT = 11435          # Bridge listens here
 OLLAMA_PORT = 11434          # Real Ollama port
 PRISM_LLAMA = "/tmp/prism-llama.cpp/build/bin/llama-cli"
+# All Bonsai models route to PrismML (1-bit/ternary need special handling)
 BONSAI_MODELS = {
+    # Primary models
     "bonsai-8b-q1_0": "/root/bonsai-8b-q1_0.gguf",
-    "ternary-bonsai-q2:8b": "/root/Ternary-Bonsai-8B-Q2_0.gguf",
+    "bonsai-8b": "/root/bonsai-8b-q1_0.gguf",
+    "ternary-bonsai-q2": "/root/Ternary-Bonsai-8B-Q2_0.gguf",
+    "ternary-bonsai": "/root/Ternary-Bonsai-8B-Q2_0.gguf",
+    # Test/development
     "bonsai-1bit-test": "/tmp/bonsai-test/Bonsai-8B-Q1_0.gguf",
 }
 
@@ -58,12 +63,21 @@ class BridgeHandler(BaseHTTPRequestHandler):
             self._send_error(400, "Invalid JSON")
             return
         
-        # Route based on model name
+        # Route based on model name (strip :latest suffix for matching)
         model = data.get('model', '')
+        model_clean = model.split(':')[0].lower()  # Remove :latest, :q4_0, etc.
         
-        if any(bonsai in model.lower() for bonsai in BONSAI_MODELS.keys()):
+        # Check if it's any Bonsai variant
+        is_bonsai = any(
+            key in model_clean or model_clean in key 
+            for key in BONSAI_MODELS.keys()
+        )
+        
+        if is_bonsai:
+            print(f"[Bridge] Routing to PrismML: {model}")
             self._handle_bonsai(data)
         else:
+            print(f"[Bridge] Routing to Ollama: {model}")
             self._forward_to_ollama_post(data)
     
     def _handle_bonsai(self, data):

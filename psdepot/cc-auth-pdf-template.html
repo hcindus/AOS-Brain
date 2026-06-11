@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Credit Card Authorization - {{businessName}}</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 11pt;
+      line-height: 1.5;
+      color: #333;
+      max-width: 8.5in;
+      margin: 0 auto;
+      padding: 0.5in;
+    }
+    .header {
+      text-align: center;
+      border-bottom: 3px solid #1a5490;
+      padding-bottom: 15px;
+      margin-bottom: 25px;
+    }
+    .header h1 {
+      color: #1a5490;
+      font-size: 20pt;
+      margin: 0 0 5px 0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .header p {
+      color: #666;
+      margin: 0;
+      font-size: 10pt;
+    }
+    .section {
+      margin-bottom: 20px;
+    }
+    .section-title {
+      background: #1a5490;
+      color: white;
+      padding: 8px 12px;
+      font-weight: bold;
+      font-size: 11pt;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .field-row {
+      display: flex;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 4px;
+    }
+    .field-label {
+      width: 35%;
+      font-weight: bold;
+      color: #555;
+      font-size: 9pt;
+      text-transform: uppercase;
+    }
+    .field-value {
+      width: 65%;
+      font-family: 'Courier New', monospace;
+      font-size: 11pt;
+      color: #000;
+    }
+    .cc-number {
+      font-family: 'Courier New', monospace;
+      font-size: 13pt;
+      letter-spacing: 2px;
+      background: #f5f5f5;
+      padding: 8px 12px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .auth-box {
+      border: 2px solid #1a5490;
+      padding: 15px;
+      background: #f8f9fa;
+      margin: 15px 0;
+    }
+    .auth-box ol {
+      margin: 0;
+      padding-left: 20px;
+    }
+    .auth-box li {
+      margin-bottom: 10px;
+      font-size: 10pt;
+      line-height: 1.6;
+    }
+    .signature-block {
+      margin-top: 30px;
+      border-top: 2px solid #333;
+      padding-top: 20px;
+    }
+    .signature-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .signature-line {
+      width: 45%;
+    }
+    .signature-line .line {
+      border-bottom: 1px solid #333;
+      height: 30px;
+      margin-bottom: 5px;
+    }
+    .signature-line .label {
+      font-size: 9pt;
+      color: #666;
+      text-transform: uppercase;
+    }
+    .footer {
+      margin-top: 30px;
+      padding-top: 15px;
+      border-top: 1px solid #ccc;
+      font-size: 8pt;
+      color: #666;
+      text-align: center;
+    }
+    .footer strong {
+      color: #333;
+    }
+    .watermark {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      font-size: 60pt;
+      color: rgba(200, 200, 200, 0.15);
+      font-weight: bold;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .timestamp {
+      text-align: right;
+      font-size: 9pt;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .masked {
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="watermark">AUTHORIZED</div>
+  
+  <div class="timestamp">
+    Form ID: {{formId}} | Submitted: {{timestamp}}
+  </div>
+
+  <div class="header">
+    <h1>Credit Card Authorization Form</h1>
+    <p>Performance Supply Depot LLC</p>
+    <p style="font-size: 9pt; color: #999;">This form authorizes the merchant to keep card information on file</p>
+  </div>
+
+  <!-- Section 1: Business Information -->
+  <div class="section">
+    <div class="section-title">Section 1 — Business Information</div>
+    <div class="field-row">
+      <div class="field-label">Business Name</div>
+      <div class="field-value">{{businessName}}</div>
+    </div>
+    <div class="field-row">
+      <div class="field-label">Business Address</div>
+      <div class="field-value">{{businessAddress}}</div>
+    </div>
+    <div class="field-row">
+      <div class="field-label">City, State, ZIP</div>
+      <div class="field-value">{{businessCityStateZip}}</div>
+    </div>
+    <div class="field-row">
+      <div class="field-label">Phone Number</div>
+      <div class="field-value">{{businessPhone}}</div>
+    </div>
+    <div class="field-row">
+      <div class="field-label">Email Address</div>
+      <div class="field-value">{{businessEmail}}</div>
+    </div>
+  </div>
+
+  <!-- Section 2: Cardholder Information -->
+  <div class="section">
+    <div class="section-title">Section 2 — Authorized Cardholder</div>
+    <div class="field-row">
+      <div class="field-label">Cardholder Name</div>
+      <div class="field-value">{{cardholderName}}</div>
+    </div>
+    <div class="field-row">
+      <div class="field-label">Billing Address</div>
+      <div class="field-value">{{billingAddress}}</div>
+    </div>
+    <div class="field-row">
+      <div class="field-label">Billing ZIP</div>
+      <div class="field-value">{{billingZip}}</div>
+    </div>
+    <div class="field-row">
+      <div class="field-label">Phone</div>
+      <div class="field-value">{{cardholderPhone}}</div>
+    </div>
+    <div class="field-row">
+      <div class="field-label">Email</div>
+      <div class="field-value">{{cardholderEmail}}</div>
+    </div>
+  </div>
+
+  <!-- Section 3: Credit Card Information -->
+  <div class="section">
+    <div class="section-title">Section 3 — Credit Card Details</div>
+    <div class="field-row" style="border-bottom: none;">
+      <div class="field-label">Card Number</div>
+      <div class="field-value">
+        <span class="cc-number">{{cardNumber}}</span>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-label" style="width: 25%;">Expiration</div>
+      <div class="field-value" style="width: 25%;">{{expirationDate}}</div>
+      <div class="field-label" style="width: 25%; text-align: center;">CVV</div>
+      <div class="field-value" style="width: 25%;">{{cvv}}</div>
+    </div>
+    <div class="field-row">
+      <div class="field-label">Billing ZIP (Card)</div>
+      <div class="field-value">{{cardBillingZip}}</div>
+    </div>
+  </div>
+
+  <!-- Section 4: Authorization Statement -->
+  <div class="section">
+    <div class="section-title">Section 4 — Authorization Agreement</div>
+    <div class="auth-box">
+      <ol>
+        <li><strong>Charge Authorization:</strong> I hereby authorize Performance Supply Depot LLC to charge the credit card listed above for purchases, invoices, or recurring orders made by my business. I confirm that I am an authorized user of this credit card and that I will not dispute charges provided they correspond to the terms indicated on invoices or order confirmations.</li>
+        
+        <li><strong>Information Storage:</strong> I authorize Performance Supply Depot LLC to store this credit card information securely on file for future transactions, recurring orders, or replacement orders requested by my business. This authorization will remain in effect until I provide written notice to revoke it.</li>
+        
+        <li><strong>Record Keeping:</strong> I understand that a PDF copy of this authorization, including the information I have provided, will be generated and emailed to both myself and Performance Supply Depot LLC for record-keeping purposes.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Section 5: Signature -->
+  <div class="signature-block">
+    <div class="signature-row">
+      <div class="signature-line">
+        <div class="line">{{signature}}</div>
+        <div class="label">Electronic Signature (Typed Full Name)</div>
+      </div>
+      <div class="signature-line">
+        <div class="line">{{date}}</div>
+        <div class="label">Date</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notes -->
+  {{#if notes}}
+  <div class="section" style="margin-top: 20px; border-top: 1px dashed #ccc; padding-top: 15px;">
+    <div class="field-label">Special Instructions</div>
+    <div class="field-value" style="font-family: inherit; white-space: pre-wrap;">{{notes}}</div>
+  </div>
+  {{/if}}
+
+  <div class="footer">
+    <p><strong>Performance Supply Depot LLC</strong></p>
+    <p>This document constitutes a binding authorization per the Electronic Signatures in Global and National Commerce Act (E-SIGN, 15 U.S.C. § 7001).</p>
+    <p style="margin-top: 10px; font-size: 7pt; color: #999;">
+      Form generated: {{timestamp}} | Form ID: {{formId}}<br>
+      Questions? Contact: info@psdepot.com
+    </p>
+  </div>
+</body>
+</html>
