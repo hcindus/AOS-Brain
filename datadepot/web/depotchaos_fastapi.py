@@ -783,10 +783,33 @@ async def get_activities():
 
 @app.post("/api/queue/{email_id}/send")
 async def send_email_now(email_id: str):
-    """Send a queued email immediately via Mailgun"""
+    """Send a queued email immediately via SMTP with rate limiting"""
     import os
     import requests
     import uuid
+    import time
+    from pathlib import Path
+    
+    # Rate limiting configuration
+    RATE_LIMIT_FILE = Path('/tmp/depotchaos_last_send.txt')
+    MIN_DELAY_SECONDS = 300  # 5 minutes between sends (12 emails/hour max)
+    
+    # Check rate limit
+    now = time.time()
+    if RATE_LIMIT_FILE.exists():
+        try:
+            last_send = float(RATE_LIMIT_FILE.read_text().strip())
+            time_since_last = now - last_send
+            if time_since_last < MIN_DELAY_SECONDS:
+                wait_time = int(MIN_DELAY_SECONDS - time_since_last)
+                return JSONResponse(status_code=429, content={
+                    'success': False,
+                    'error': f'Rate limit: Please wait {wait_time}s before sending another email.',
+                    'retry_after': wait_time,
+                    'email_id': email_id
+                })
+        except (ValueError, IOError):
+            pass  # If file is corrupted, proceed anyway
     
     # Load queue
     queue_file = DATADEPOT_DIR / 'queue' / 'pending_emails.json'
@@ -849,6 +872,9 @@ async def send_email_now(email_id: str):
         with open(queue_file, 'w') as f:
             json.dump(remaining_queue, f, indent=2)
         
+        # Update rate limit tracker
+        RATE_LIMIT_FILE.write_text(str(now))
+        
         return {
             'success': True,
             'test_mode': True,
@@ -905,6 +931,9 @@ async def send_email_now(email_id: str):
         # Update queue
         with open(queue_file, 'w') as f:
             json.dump(remaining_queue, f, indent=2)
+        
+        # Update rate limit tracker on successful send
+        RATE_LIMIT_FILE.write_text(str(time.time()))
         
         return {
             'success': True,
