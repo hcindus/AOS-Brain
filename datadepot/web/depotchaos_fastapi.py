@@ -796,15 +796,15 @@ async def send_email_now(email_id: str):
     with open(queue_file, 'w') as f:
         json.dump(queue, f, indent=2)
     
-    # SMTP Configuration for Hostinger
-    SMTP_SERVER = os.getenv('SMTP_SERVER', 'smtp.hostinger.com')
-    SMTP_PORT = int(os.getenv('SMTP_PORT', '587'))
-    SMTP_USER = os.getenv('SMTP_USER', 'miles@myl0nr0s.cloud')
-    SMTP_PASS = os.getenv('SMTP_PASS', '')
-    SMTP_FROM_EMAIL = os.getenv('SMTP_FROM_EMAIL', 'info@psdepot.com')
-    TEST_MODE = os.getenv('SMTP_TEST_MODE', 'True').lower() == 'true'
+    # SMTP Configuration for Hostinger - HARDCODED FOR LIVE MODE
+    SMTP_SERVER = 'smtp.hostinger.com'
+    SMTP_PORT = 587
+    SMTP_USER = 'miles@myl0nr0s.cloud'
+    SMTP_PASS = 'Myl0n.R0s'
+    SMTP_FROM_EMAIL = 'info@psdepot.com'
+    TEST_MODE = False
     
-    if TEST_MODE or not SMTP_PASS:
+    if not SMTP_PASS:
         # Test mode - simulate send
         email_to_send['sent_at'] = datetime.now().isoformat()
         email_to_send['test_mode'] = True
@@ -837,9 +837,11 @@ async def send_email_now(email_id: str):
         # Create message
         msg = MIMEMultipart('alternative')
         msg['Subject'] = email_to_send.get('subject', 'Performance Supply Depot')
-        msg['From'] = email_to_send.get('from', f'Miles - Performance Supply Depot <{SMTP_FROM_EMAIL}>')
+        # From must match SMTP user for Hostinger - reply-to can be info@psdepot.com
+        msg['From'] = f'Miles - Performance Supply Depot <{SMTP_USER}>'
         msg['To'] = email_to_send['to_email']
         msg['Bcc'] = 'info@psdepot.com'
+        msg['Reply-To'] = 'info@psdepot.com'
         
         # Add message ID for tracking
         message_id = f"<{uuid.uuid4()}@psdepot.com>"
