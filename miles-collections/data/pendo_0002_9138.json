@@ -1,0 +1,27 @@
+{
+  "id": "pendo_0002_9138",
+  "debtor": {
+    "name": "ALBERTO'S MEXICAN FOOD",
+    "email": "albertos@sonomamex.com",
+    "phone": "707-996-2930",
+    "address": "1424 Broadway, Sonoma, CA 95476",
+    "contactName": "Alberto Garcia"
+  },
+  "originalBalance": 3310,
+  "currentBalance": 3310,
+  "daysDelinquent": 0,
+  "invoiceRefs": [],
+  "status": "active",
+  "workflow": "early_stage",
+  "priority": "medium",
+  "createdAt": "2026-06-12T01:51:16.168430",
+  "lastActivity": "2026-06-12T01:51:16.168446",
+  "communications": [],
+  "payments": [],
+  "notes": "Imported from Pendo",
+  "enriched": {
+    "timestamp": "2026-06-12T01:58:38.170Z",
+    "source": "mock_database",
+    "confidence": "high"
+  }
+}

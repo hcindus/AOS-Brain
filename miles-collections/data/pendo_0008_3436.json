@@ -1,0 +1,27 @@
+{
+  "id": "pendo_0008_3436",
+  "debtor": {
+    "name": "WAFFLE CONE SHOP",
+    "email": "billing@waffleconeshop.com",
+    "phone": "707-114-8763",
+    "address": "Sonoma, CA",
+    "contactName": "Accounts Payable"
+  },
+  "originalBalance": 79,
+  "currentBalance": 79,
+  "daysDelinquent": 0,
+  "invoiceRefs": [],
+  "status": "active",
+  "workflow": "early_stage",
+  "priority": "low",
+  "createdAt": "2026-06-12T01:51:16.363934",
+  "lastActivity": "2026-06-12T01:51:16.363951",
+  "communications": [],
+  "payments": [],
+  "notes": "Imported from Pendo",
+  "enriched": {
+    "timestamp": "2026-06-12T01:58:41.769Z",
+    "source": "generated",
+    "confidence": "low"
+  }
+}

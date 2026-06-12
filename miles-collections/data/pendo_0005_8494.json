@@ -1,0 +1,27 @@
+{
+  "id": "pendo_0005_8494",
+  "debtor": {
+    "name": "GUERRA QUALITY MEATS",
+    "email": "orders@guerrameats.com",
+    "phone": "707-938-5211",
+    "address": "481 1st St W, Sonoma, CA 95476",
+    "contactName": "Pablo Guerra"
+  },
+  "originalBalance": 515,
+  "currentBalance": 515,
+  "daysDelinquent": 0,
+  "invoiceRefs": [],
+  "status": "active",
+  "workflow": "early_stage",
+  "priority": "low",
+  "createdAt": "2026-06-12T01:51:16.169259",
+  "lastActivity": "2026-06-12T01:51:16.169268",
+  "communications": [],
+  "payments": [],
+  "notes": "Imported from Pendo",
+  "enriched": {
+    "timestamp": "2026-06-12T01:58:40.066Z",
+    "source": "mock_database",
+    "confidence": "high"
+  }
+}

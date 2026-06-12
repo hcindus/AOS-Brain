@@ -1,0 +1,27 @@
+{
+  "id": "pendo_0010_154",
+  "debtor": {
+    "name": "QUE ONDA TACO BAR",
+    "email": "info@queondataco.com",
+    "phone": "707-938-8811",
+    "address": "139 E Napa St, Sonoma, CA 95476",
+    "contactName": "Ana Lopez"
+  },
+  "originalBalance": 572.08,
+  "currentBalance": 572.08,
+  "daysDelinquent": 0,
+  "invoiceRefs": [],
+  "status": "active",
+  "workflow": "early_stage",
+  "priority": "low",
+  "createdAt": "2026-06-12T01:51:16.364979",
+  "lastActivity": "2026-06-12T01:51:16.364994",
+  "communications": [],
+  "payments": [],
+  "notes": "Imported from Pendo",
+  "enriched": {
+    "timestamp": "2026-06-12T01:58:42.970Z",
+    "source": "mock_database",
+    "confidence": "medium"
+  }
+}

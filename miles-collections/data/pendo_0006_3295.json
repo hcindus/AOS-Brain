@@ -1,0 +1,27 @@
+{
+  "id": "pendo_0006_3295",
+  "debtor": {
+    "name": "A&W ",
+    "email": "billing@aw.com",
+    "phone": "707-124-6778",
+    "address": "Sonoma, CA",
+    "contactName": "Accounts Payable"
+  },
+  "originalBalance": 249,
+  "currentBalance": 249,
+  "daysDelinquent": 0,
+  "invoiceRefs": [],
+  "status": "active",
+  "workflow": "early_stage",
+  "priority": "low",
+  "createdAt": "2026-06-12T01:51:16.362858",
+  "lastActivity": "2026-06-12T01:51:16.362916",
+  "communications": [],
+  "payments": [],
+  "notes": "Imported from Pendo",
+  "enriched": {
+    "timestamp": "2026-06-12T01:58:40.574Z",
+    "source": "generated",
+    "confidence": "low"
+  }
+}

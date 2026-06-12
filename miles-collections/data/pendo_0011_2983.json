@@ -1,0 +1,27 @@
+{
+  "id": "pendo_0011_2983",
+  "debtor": {
+    "name": "CAFÉ LA HAYE",
+    "email": "reservations@cafelahaye.com",
+    "phone": "707-935-5992",
+    "address": "140 E Napa St, Sonoma, CA 95476",
+    "contactName": "Michel LeClair"
+  },
+  "originalBalance": 375,
+  "currentBalance": 375,
+  "daysDelinquent": 0,
+  "invoiceRefs": [],
+  "status": "active",
+  "workflow": "early_stage",
+  "priority": "low",
+  "createdAt": "2026-06-12T01:51:16.365560",
+  "lastActivity": "2026-06-12T01:51:16.365594",
+  "communications": [],
+  "payments": [],
+  "notes": "Imported from Pendo",
+  "enriched": {
+    "timestamp": "2026-06-12T01:58:43.666Z",
+    "source": "mock_database",
+    "confidence": "high"
+  }
+}

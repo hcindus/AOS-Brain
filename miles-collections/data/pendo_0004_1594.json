@@ -1,0 +1,27 @@
+{
+  "id": "pendo_0004_1594",
+  "debtor": {
+    "name": "THREE BROTHERS GRILL",
+    "email": "threebrothers@grill.com",
+    "phone": "707-935-2424",
+    "address": "7200 Sonoma Hwy, Kenwood, CA 95452",
+    "contactName": "David Johnson"
+  },
+  "originalBalance": 5995,
+  "currentBalance": 5995,
+  "daysDelinquent": 0,
+  "invoiceRefs": [],
+  "status": "active",
+  "workflow": "early_stage",
+  "priority": "high",
+  "createdAt": "2026-06-12T01:51:16.169112",
+  "lastActivity": "2026-06-12T01:51:16.169123",
+  "communications": [],
+  "payments": [],
+  "notes": "Imported from Pendo",
+  "enriched": {
+    "timestamp": "2026-06-12T01:58:39.467Z",
+    "source": "mock_database",
+    "confidence": "high"
+  }
+}

@@ -2,8 +2,10 @@
   "id": "acc_1781227956971",
   "debtor": {
     "name": "Demo Account",
-    "email": "demo@example.com",
-    "phone": "555-0000"
+    "email": "billing@demoaccount.com",
+    "phone": "707-139-4586",
+    "address": "Sonoma, CA",
+    "contactName": "Accounts Payable"
   },
   "originalBalance": 5000,
   "currentBalance": 5000,
@@ -16,5 +18,10 @@
   "lastActivity": "2026-06-12T01:32:37.069Z",
   "communications": [],
   "payments": [],
-  "notes": []
+  "notes": [],
+  "enriched": {
+    "timestamp": "2026-06-12T01:58:36.366Z",
+    "source": "generated",
+    "confidence": "low"
+  }
 }

@@ -1,0 +1,27 @@
+{
+  "id": "pendo_0000_2360",
+  "debtor": {
+    "name": "EL AGAVE AZUL",
+    "email": "manager@elagaveazul.com",
+    "phone": "707-938-1828",
+    "address": "13785 Arnold Dr, Glen Ellen, CA 95442",
+    "contactName": "Maria Rodriguez"
+  },
+  "originalBalance": 14090,
+  "currentBalance": 14090,
+  "daysDelinquent": 0,
+  "invoiceRefs": [],
+  "status": "active",
+  "workflow": "early_stage",
+  "priority": "critical",
+  "createdAt": "2026-06-12T01:51:16.166486",
+  "lastActivity": "2026-06-12T01:51:16.167471",
+  "communications": [],
+  "payments": [],
+  "notes": "Imported from Pendo",
+  "enriched": {
+    "timestamp": "2026-06-12T01:58:37.166Z",
+    "source": "mock_database",
+    "confidence": "high"
+  }
+}
