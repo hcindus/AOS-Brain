@@ -10,6 +10,7 @@ import ssl
 import subprocess
 import os
 import sys
+import time
 from datetime import datetime, timezone
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -49,6 +50,37 @@ WASTE_RECIPIENTS = [
     "mortimer@myl0nr0s.cloud",
     "Antonio.hudnall@gmail.com",  # Captain
 ]
+
+# ═══════════════════════════════════════════════════════════════════
+# RATE LIMITING
+# ═══════════════════════════════════════════════════════════════════
+RATE_LIMIT_FILE = Path("/tmp/waste_emailer_last_sent")
+MIN_INTERVAL_SECONDS = 300  # 5 minutes between emails
+
+def check_rate_limit():
+    """Check if enough time has passed since last email."""
+    print(f"🔍 Checking rate limit... (min interval: {MIN_INTERVAL_SECONDS}s)")
+    if RATE_LIMIT_FILE.exists():
+        try:
+            last_sent = RATE_LIMIT_FILE.read_text().strip()
+            last_time = float(last_sent)
+            elapsed = time.time() - last_time
+            print(f"   Last sent: {elapsed:.0f}s ago")
+            if elapsed < MIN_INTERVAL_SECONDS:
+                remaining = MIN_INTERVAL_SECONDS - elapsed
+                print(f"⏳ Rate limit: {remaining:.0f}s remaining before next email")
+                return False
+            else:
+                print(f"✅ Rate limit clear ({elapsed:.0f}s > {MIN_INTERVAL_SECONDS}s)")
+        except (ValueError, OSError) as e:
+            print(f"   Warning: Could not read rate limit file: {e}")
+    else:
+        print(f"   No previous send recorded (first run)")
+    return True
+
+def update_rate_limit():
+    """Update timestamp of last sent email."""
+    RATE_LIMIT_FILE.write_text(str(time.time()))
 
 # ═══════════════════════════════════════════════════════════════════
 # WASTE PACKAGING
@@ -160,6 +192,11 @@ Only Mortimer receives these reports now.
 # ═══════════════════════════════════════════════════════════════════
 
 def main():
+    # Check rate limit first
+    if not check_rate_limit():
+        print("❌ Skipping waste email - rate limit active")
+        sys.exit(0)  # Exit cleanly, not an error
+    
     print("🗑️ Packaging brain waste...")
     waste = package_waste()
     print(f"📦 Waste packaged at {waste['timestamp']}")
@@ -168,6 +205,7 @@ def main():
     success = send_waste_email(waste)
     
     if success:
+        update_rate_limit()
         print("✅ Waste email complete")
     else:
         print("❌ Waste email failed")
