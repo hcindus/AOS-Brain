@@ -87,3 +87,37 @@ systemctl status aos-mission-control
 - 🔄 Photo handling from crew
 
 ---
+
+## PENDING: SendGrid DNS Configuration for DepotChaos
+**Created:** 2026-06-11
+**Status:** AWAITING ACTION (Captain)
+
+### What Needs to Be Done
+Add these DNS records to psdepot.com in Hostinger:
+
+| Type | Host | Value |
+|------|------|-------|
+| CNAME | em8873.psdepot.com | u109143135.wl136.sendgrid.net |
+| CNAME | s1._domainkey.psdepot.com | s1.domainkey.u109143135.wl136.sendgrid.net |
+| CNAME | s2._domainkey.psdepot.com | s2.domainkey.u109143135.wl136.sendgrid.net |
+| TXT | _dmarc.psdepot.com | v=DMARC1; p=none |
+
+### Steps
+1. Go to Hostinger Dashboard → Domains → psdepot.com → DNS Zone
+2. Add the 4 records above
+3. Wait 5-30 minutes for propagation
+4. Verify in SendGrid domain authentication page
+5. Create SendGrid API key (Settings → API Keys)
+6. Provide API key to Miles for DepotChaos configuration
+
+### Why This Matters
+- Enables SendGrid email delivery for DepotChaos CRM
+- Bypasses Hostinger SMTP rate limits
+- Allows sending 100 emails/day free
+- Fixes current email queue blockage (106 emails pending)
+
+### Reference
+Source: Telegram conversation 2026-06-11
+
+---
+*Last Updated: 2026-06-11*
