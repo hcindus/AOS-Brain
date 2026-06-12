@@ -3,7 +3,7 @@
   "name": "Jax",
   "role": "SCIENTIST",
   "level": 5,
-  "xp": 284104,
+  "xp": 284216,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 21,
     "combat": 23
   },
-  "missionsCompleted": 1852,
+  "missionsCompleted": 1853,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -9278,6 +9278,11 @@
       "name": "Nebula Cloud",
       "location": "Alpha-1",
       "timestamp": 1781301386070
+    },
+    {
+      "name": "Alien Artifact",
+      "location": "Alpha-1",
+      "timestamp": 1781302138265
     }
   ],
   "status": "ACTIVE",

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Studio - Media Gallery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a2e;
+            --accent-cyan: #00E0FF;
+            --accent-orange: #FF7A00;
+            --accent-purple: #8B5CF6;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --border-color: #2a2a3e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-cyan);
+            border-radius: 1px;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-tab:hover {
+            border-color: var(--accent-cyan);
+            color: var(--text-primary);
+        }
+
+        .filter-tab.active {
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+            border-color: var(--accent-cyan);
+        }
+
+        .filter-tab .count {
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(0, 224, 255, 0.1);
+            border-color: var(--accent-cyan);
+        }
+
+        .gallery-preview {
+            aspect-ratio: 16/9;
+            background: var(--bg-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-preview.audio {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+        }
+
+        .gallery-preview.video {
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-purple));
+        }
+
+        .gallery-icon {
+            font-size: 3rem;
+            opacity: 0.8;
+        }
+
+        .gallery-info {
+            padding: 1rem;
+        }
+
+        .gallery-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .gallery-meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .gallery-type {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .type-image { background: rgba(0, 224, 255, 0.2); color: var(--accent-cyan); }
+        .type-audio { background: rgba(139, 92, 246, 0.2); color: var(--accent-purple); }
+        .type-video { background: rgba(255, 122, 0, 0.2); color: var(--accent-orange); }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-secondary);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--accent-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 8px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🚀</div>
+            <div class="logo-text">OpenClaw Studio</div>
+        </div>
+        <nav class="nav-links">
+            <a href="#" class="nav-link active">Media Gallery</a>
+            <a href="#" class="nav-link">Memory Vault</a>
+            <a href="#" class="nav-link">Control Room</a>
+            <a href="#" class="nav-link">Live Research</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1 class="page-title">Media Gallery</h1>
+        <p class="page-subtitle">All your agent's creative outputs in one place</p>
+
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-label">Total Files</div>
+                <div class="stat-value" id="stat-total">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Images</div>
+                <div class="stat-value" id="stat-images">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Audio</div>
+                <div class="stat-value" id="stat-audio">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Video</div>
+                <div class="stat-value" id="stat-video">0</div>
+            </div>
+        </div>
+
+        <div class="filter-tabs">
+            <div class="filter-tab active" data-filter="all">
+                <span>All Media</span>
+                <span class="count" id="count-all">0</span>
+            </div>
+            <div class="filter-tab" data-filter="image">
+                <span>🖼️ Images</span>
+                <span class="count" id="count-images">0</span>
+            </div>
+            <div class="filter-tab" data-filter="audio">
+                <span>🎵 Audio</span>
+                <span class="count" id="count-audio">0</span>
+            </div>
+            <div class="filter-tab" data-filter="video">
+                <span>🎬 Video</span>
+                <span class="count" id="count-video">0</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid" id="gallery">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Scanning workspace for media files...</p>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <img id="modal-image" src="" alt="Preview">
+        </div>
+    </div>
+
+    <script>
+        let mediaFiles = [];
+
+        async function loadMediaData() {
+            try {
+                const response = await fetch('media_data.json');
+                const data = await response.json();
+                mediaFiles = data.files || [];
+                updateStats(mediaFiles);
+                renderGallery(mediaFiles);
+            } catch (error) {
+                console.error('Failed to load media data:', error);
+                document.getElementById('gallery').innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <div class="empty-icon">⚠️</div>
+                        <h3>Failed to load media data</h3>
+                        <p>Run <code>python3 scan_media.py</code> to generate media index.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderGallery(files) {
+            const gallery = document.getElementById('gallery');
+            
+            if (files.length === 0) {
+                gallery.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <div class="empty-icon">📂</div>
+                        <h3>No media files found</h3>
+                        <p>Files will appear here when your agent creates images, audio, or video.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            gallery.innerHTML = files.map(file => `
+                <div class="gallery-item" data-type="${file.type}" onclick="openModal('${file.path}')">
+                    <div class="gallery-preview ${file.type}">
+                        ${file.type === 'image' 
+                            ? `<img src="${file.path}" alt="${file.name}" loading="lazy">`
+                            : `<div class="gallery-icon">${file.type === 'audio' ? '🎵' : '🎬'}</div>`
+                        }
+                    </div>
+                    <div class="gallery-info">
+                        <div class="gallery-name">${file.name}</div>
+                        <div class="gallery-meta">
+                            <span>${file.date} • ${file.size}</span>
+                            <span class="gallery-type type-${file.type}">${file.type}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateStats(files) {
+            const total = files.length;
+            const images = files.filter(f => f.type === 'image').length;
+            const audio = files.filter(f => f.type === 'audio').length;
+            const video = files.filter(f => f.type === 'video').length;
+
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-images').textContent = images;
+            document.getElementById('stat-audio').textContent = audio;
+            document.getElementById('stat-video').textContent = video;
+
+            document.getElementById('count-all').textContent = total;
+            document.getElementById('count-images').textContent = images;
+            document.getElementById('count-audio').textContent = audio;
+            document.getElementById('count-video').textContent = video;
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const filter = tab.dataset.filter;
+                const filtered = filter === 'all' 
+                    ? mediaFiles 
+                    : mediaFiles.filter(f => f.type === filter);
+                renderGallery(filtered);
+            });
+        });
+
+        // Modal functionality
+        function openModal(path) {
+            document.getElementById('modal-image').src = path;
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modal')) {
+                closeModal();
+            }
+        });
+
+        // Initialize
+        loadMediaData();
+    </script>
+</body>
+</html>
