@@ -1,0 +1,20 @@
+{
+  "id": "acc_1781227956971",
+  "debtor": {
+    "name": "Demo Account",
+    "email": "demo@example.com",
+    "phone": "555-0000"
+  },
+  "originalBalance": 5000,
+  "currentBalance": 5000,
+  "daysDelinquent": 45,
+  "invoiceRefs": [],
+  "status": "active",
+  "workflow": "mid_stage",
+  "priority": "high",
+  "createdAt": "2026-06-12T01:32:36.972Z",
+  "lastActivity": "2026-06-12T01:32:37.069Z",
+  "communications": [],
+  "payments": [],
+  "notes": []
+}
