@@ -3,7 +3,7 @@
   "name": "Nyx",
   "role": "ENGINEER",
   "level": 5,
-  "xp": 286601,
+  "xp": 286762,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 15,
     "combat": 14
   },
-  "missionsCompleted": 1894,
+  "missionsCompleted": 1896,
   "discoveries": [
     {
       "name": "Rare Minerals",
@@ -9488,6 +9488,16 @@
       "name": "Space Anomaly",
       "location": "Alpha-1",
       "timestamp": 1781303942468
+    },
+    {
+      "name": "Derelict Ship",
+      "location": "Alpha-1",
+      "timestamp": 1781313751169
+    },
+    {
+      "name": "Anomalous Planet",
+      "location": "Alpha-1",
+      "timestamp": 1781314443770
     }
   ],
   "status": "ACTIVE",
