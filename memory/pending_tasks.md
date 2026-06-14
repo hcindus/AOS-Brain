@@ -37,4 +37,28 @@ https://secure-send.acmtech.com/note/5U567H575R4G6Z5g5e6T487Y6Q5C6O4i815O626J5i4
 
 ---
 
+## DNS Records Setup - Hostinger
+**Created:** 2026-06-14  
+**Status:** PENDING CAPTAIN ACTION
+
+### Subdomains for psdepot.com
+| Type | Name | Target | TTL |
+|------|------|--------|-----|
+| CNAME | cream | psdepot.com | 14400 |
+| CNAME | reggiestarr | psdepot.com | 14400 |
+| CNAME | dashboard | psdepot.com | 14400 |
+| CNAME | depotchaos | psdepot.com | 14400 |
+
+### SendGrid Domain Authentication
+| Type | Host | Value |
+|------|------|-------|
+| CNAME | em8873.psdepot.com | u109143135.wl136.sendgrid.net |
+| CNAME | s1._domainkey.psdepot.com | s1.domainkey.u109143135.wl136.sendgrid.net |
+| CNAME | s2._domainkey.psdepot.com | s2.domainkey.u109143135.wl136.sendgrid.net |
+| TXT | _dmarc.psdepot.com | v=DMARC1; p=none |
+
+**Action Required:** Add these records in Hostinger Dashboard → Domains → psdepot.com → DNS Zone Editor
+
+---
+
 **Daily Check:** Review inbox for credentials from Captain
