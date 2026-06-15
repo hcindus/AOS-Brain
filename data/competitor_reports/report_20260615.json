@@ -1,0 +1,19 @@
+{
+  "date": "2026-06-15T09:06:32.264253",
+  "competitors": [
+    {
+      "name": "WebstaurantStore",
+      "price": null,
+      "status": "error",
+      "error": "Page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://www.webstaurantstore.com/\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+      "name": "Amazon",
+      "url": "https://www.amazon.com",
+      "price": null,
+      "product": null,
+      "screenshot": "/tmp/amazon_debug.png",
+      "status": "no_price_found"
+    }
+  ]
+}
