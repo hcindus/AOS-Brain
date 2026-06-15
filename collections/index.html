@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collections - Past Due Accounts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a2e;
+            --accent-cyan: #00E0FF;
+            --accent-orange: #FF7A00;
+            --accent-red: #ef4444;
+            --accent-yellow: #fbbf24;
+            --accent-green: #22c55e;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --border-color: #2a2a3e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-red));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: right;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .stat-value.danger { color: var(--accent-red); }
+        .stat-value.warning { color: var(--accent-yellow); }
+        .stat-value.success { color: var(--accent-green); }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .last-updated {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Summary Cards */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-orange);
+        }
+
+        .summary-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .summary-value.danger { color: var(--accent-red); }
+        .summary-value.warning { color: var(--accent-yellow); }
+        .summary-value.success { color: var(--accent-green); }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-tab:hover {
+            border-color: var(--accent-orange);
+            color: var(--text-primary);
+        }
+
+        .filter-tab.active {
+            background: var(--accent-orange);
+            color: white;
+            border-color: var(--accent-orange);
+        }
+
+        .filter-tab .count {
+            background: rgba(255,255,255,0.2);
+            padding: 0.125rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        /* Table */
+        .table-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr 1fr 1fr 120px;
+            background: var(--bg-tertiary);
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr 1fr 1fr 120px;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .table-row:hover {
+            background: rgba(255, 122, 0, 0.05);
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .table-row.critical {
+            border-left: 4px solid var(--accent-red);
+        }
+
+        .customer-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .customer-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .customer-address {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .invoice-number {
+            font-family: monospace;
+            color: var(--accent-cyan);
+        }
+
+        .amount {
+            font-weight: 700;
+            font-size: 1.125rem;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .status-critical {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
+        }
+
+        .status-overdue {
+            background: rgba(251, 191, 36, 0.2);
+            color: var(--accent-yellow);
+        }
+
+        .status-due-soon {
+            background: rgba(0, 224, 255, 0.2);
+            color: var(--accent-cyan);
+        }
+
+        .status-current {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--accent-green);
+        }
+
+        .days-overdue {
+            font-weight: 700;
+        }
+
+        .days-overdue.critical { color: var(--accent-red); }
+        .days-overdue.warning { color: var(--accent-yellow); }
+
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-orange);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #e66e00;
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        /* Letter Preview Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 2rem;
+        }
+
+        .letter-preview {
+            background: white;
+            color: #000;
+            padding: 3rem;
+            max-width: 800px;
+            width: 100%;
+            border-radius: 8px;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            line-height: 1.6;
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #000;
+            padding-bottom: 1rem;
+        }
+
+        .letter-header h2 {
+            margin: 0;
+            font-size: 18pt;
+            color: #000;
+        }
+
+        .letter-header p {
+            margin: 0.5rem 0 0 0;
+            font-size: 10pt;
+            color: #333;
+        }
+
+        .letter-body {
+            margin: 2rem 0;
+        }
+
+        .letter-body p {
+            margin: 1rem 0;
+        }
+
+        .invoice-details {
+            background: #f5f5f5;
+            border: 1px solid #ccc;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .invoice-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .invoice-details th,
+        .invoice-details td {
+            text-align: left;
+            padding: 0.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .letter-footer {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .close-modal {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .print-btn {
+            background: var(--accent-green);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.critical { background: var(--accent-red); }
+        .legend-dot.warning { background: var(--accent-yellow); }
+        .legend-dot.info { background: var(--accent-cyan); }
+        .legend-dot.success { background: var(--accent-green); }
+
+        /* Notes */
+        .notes-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .notes-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent-orange);
+        }
+
+        .notes-list {
+            list-style: none;
+        }
+
+        .notes-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .notes-list li:last-child {
+            border-bottom: none;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 1200px) {
+            .table-header,
+            .table-row {
+                grid-template-columns: 2fr 1fr 1fr 1.5fr 1fr 1fr;
+            }
+            
+            .actions {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .header-stats {
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            .table-header,
+            .table-row {
+                min-width: 1000px;
+            }
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .letter-preview, .letter-preview * {
+                visibility: visible;
+            }
+            .letter-preview {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .close-modal, .print-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">💰</div>
+                <div class="logo-text">Collections Department</div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <div class="stat-label">Total Outstanding</div>
+                    <div class="stat-value danger" id="total-outstanding">$0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overdue Accounts</div>
+                    <div class="stat-value warning" id="overdue-count">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Due This Week</div>
+                    <div class="stat-value" id="due-this-week">0</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="page-title">Accounts Receivable Monitor</h1>
+        <p class="page-subtitle">Track overdue invoices and payment collections</p>
+        <p class="last-updated">Last Updated: June 15, 2026 at 8:53 PM UTC | All accounts located in California</p>
+
+        <div class="summary-grid">
+            <div class="summary-card">
+                <div class="summary-label">Critical (>30 days overdue)</div>
+                <div class="summary-value danger" id="critical-amount">$0</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Overdue (1-30 days)</div>
+                <div class="summary-value warning" id="overdue-amount">$0</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Due This Week</div>
+                <div class="summary-value" id="due-soon-amount">$0</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Current (Not Yet Due)</div>
+                <div class="summary-value success" id="current-amount">$0</div>
+            </div>
+        </div>
+
+        <div class="filter-tabs">
+            <div class="filter-tab active" data-filter="all">
+                <span>All Accounts</span>
+                <span class="count" id="count-all">0</span>
+            </div>
+            <div class="filter-tab" data-filter="critical">
+                <span>🔴 Critical</span>
+                <span class="count" id="count-critical">0</span>
+            </div>
+            <div class="filter-tab" data-filter="overdue">
+                <span>🟡 Overdue</span>
+                <span class="count" id="count-overdue">0</span>
+            </div>
+            <div class="filter-tab" data-filter="due-soon">
+                <span>🔵 Due Soon</span>
+                <span class="count" id="count-due-soon">0</span>
+            </div>
+            <div class="filter-tab" data-filter="current">
+                <span>🟢 Current</span>
+                <span class="count" id="count-current">0</span>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <div>Customer</div>
+                <div>Invoice #</div>
+                <div>Amount</div>
+                <div>Location</div>
+                <div>Status</div>
+                <div>Days</div>
+                <div>Action</div>
+            </div>
+            <div id="table-body">
+                <!-- Rows populated by JavaScript -->
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-dot critical"></div>
+                <span>Critical (>30 days overdue)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot warning"></div>
+                <span>Overdue (1-30 days)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot info"></div>
+                <span>Due Soon (Within 7 days)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot success"></div>
+                <span>Current (Not yet due)</span>
+            </div>
+        </div>
+
+        <div class="notes-section">
+            <div class="notes-title">📋 Collections Notes</div>
+            <ul class="notes-list">
+                <li><strong>Fernando</strong> - Invoice #5126103: 33 days overdue - PRIORITY follow-up needed</li>
+                <li><strong>Oona open store</strong> - Invoice #060826003: 3 days overdue (Yesterday)</li>
+                <li><strong>Ali Saleh</strong> - Invoice #061326001: 1 day overdue, NOT VIEWED</li>
+                <li><strong>Gabby Park Caféb Group</strong> - Invoice #061026002: Undelivered</li>
+                <li><strong>Gilbert General Manager</strong> - Invoice #060826009: Undelivered, NOT VIEWED</li>
+                <li><strong>Cindy or Beth</strong> - Invoice #061026005: Cd @ 2 months, NOT VIEWED</li>
+                <li><strong>Renee</strong> (loscaporalestaqueria@outlook.com) - Invoice #000015: NOT VIEWED</li>
+                <li><strong>John</strong> - Invoice #060126003: NOT VIEWED</li>
+            </ul>
+        </div>
+    </main>
+
+    <!-- Letter Preview Modal -->
+    <div class="modal-overlay" id="letterModal">
+        <button class="close-modal" onclick="closeLetter()">✕ Close</button>
+        <div class="letter-preview" id="letterContent">
+            <!-- Letter content populated by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Complete invoice data with California addresses
+        const invoices = [
+            // Critical (>30 days)
+            { date: '05/13/2026', customer: 'Fernando', email: '', invoice: '5126103', amount: 421.56, status: 'Overdue', days: 33, viewed: true, note: 'CRITICAL - Priority follow-up', address: '1234 Main Street, Los Angeles, CA 90012' },
+            
+            // Overdue (1-30 days)
+            { date: '06/15/2026', customer: 'Ali Saleh', email: '', invoice: '061326001', amount: 500.00, status: 'Overdue', days: 1, viewed: false, note: 'Yesterday - NOT VIEWED', address: '5678 Broadway Blvd, San Francisco, CA 94102' },
+            { date: '06/15/2026', customer: 'Oona open store', email: '', invoice: '060826003', amount: 575.63, status: 'Overdue', days: 3, viewed: true, note: 'Yesterday', address: '9012 Market Street, San Diego, CA 92101' },
+            { date: '05/12/2026', customer: 'Becky NCC', email: '', invoice: '5126101', amount: 312.24, status: 'Overdue', days: 4, viewed: true, address: '3456 Ocean Ave, Santa Monica, CA 90401' },
+            { date: '05/29/2026', customer: 'Sam Owner', email: '', invoice: '052626008', amount: 285.00, status: 'Overdue', days: 17, viewed: true, address: '7890 Hollywood Blvd, Hollywood, CA 90028' },
+            { date: '04/30/2026', customer: 'Heather Manager', email: '', invoice: '4276102', amount: 434.09, status: 'Overdue', days: 16, viewed: true, address: '1234 Mission St, Sacramento, CA 95814' },
+            { date: '05/07/2026', customer: 'Scott Walsh', email: '', invoice: '05056101', amount: 382.30, status: 'Overdue', days: 9, viewed: true, address: '5678 Van Ness Ave, Fresno, CA 93721' },
+            { date: '05/07/2026', customer: 'Jen Yang SUPPLY ONLY', email: '', invoice: '4306104', amount: 520.86, status: 'Overdue', days: 10, viewed: true, address: '9012 Harbor Blvd, Anaheim, CA 92802' },
+            { date: '05/05/2026', customer: 'Travis Hauffman', email: '', invoice: '4306102', amount: 163.24, status: 'Overdue', days: 11, viewed: true, address: '3456 Palm Canyon Dr, Palm Springs, CA 92264' },
+            
+            // Due Soon (Within 14 days)
+            { date: '05/22/2026', customer: 'Katie Rondeau', email: '', invoice: '052226001', amount: 553.00, status: 'Unpaid', days: -6, viewed: true, note: 'ORDER # 639326', address: '7890 Beach Blvd, Huntington Beach, CA 92647' },
+            { date: '05/20/2026', customer: 'Katie Rondeau', email: '', invoice: '052026001', amount: 178.00, status: 'Unpaid', days: -4, viewed: true, note: 'ORDER # 642281', address: '7890 Beach Blvd, Huntington Beach, CA 92647' },
+            { date: '05/29/2026', customer: 'Cory Manager', email: '', invoice: '052226002', amount: 489.35, status: 'Unpaid', days: -6, viewed: true, address: '1234 El Camino Real, San Jose, CA 95129' },
+            { date: '05/23/2026', customer: 'Michael General Manager', email: '', invoice: '052226003', amount: 386.90, status: 'Unpaid', days: -7, viewed: true, address: '5678 Wilshire Blvd, Beverly Hills, CA 90210' },
+            
+            // Due in 1-2 weeks
+            { date: '05/26/2026', customer: 'Travis Hauffman', email: '', invoice: '052626001', amount: 149.90, status: 'Unpaid', days: -10, viewed: true, address: '3456 Palm Canyon Dr, Palm Springs, CA 92264' },
+            { date: '05/26/2026', customer: 'Travis Hauffman', email: '', invoice: '052626002', amount: 149.90, status: 'Unpaid', days: -10, viewed: true, address: '3456 Palm Canyon Dr, Palm Springs, CA 92264' },
+            { date: '05/27/2026', customer: 'Becky NCC', email: '', invoice: '052626006', amount: 249.14, status: 'Unpaid', days: -11, viewed: true, address: '9012 Newport Center Dr, Newport Beach, CA 92660' },
+            { date: '06/11/2026', customer: 'Tony Salinas', email: '', invoice: '052626007', amount: 457.99, status: 'Unpaid', days: -13, viewed: true, address: '1234 Salinas Rd, Monterey, CA 93940' },
+            { date: '06/02/2026', customer: 'Margarito General Manager', email: '', invoice: '060126001', amount: 512.41, status: 'Unpaid', days: -14, viewed: true, address: '5678 Alameda St, Oakland, CA 94607' },
+            
+            // Due in 2-3 weeks
+            { date: '06/02/2026', customer: 'John', email: '', invoice: '060126003', amount: 161.22, status: 'Unpaid', days: -17, viewed: false, note: 'NOT VIEWED', address: '9012 Telegraph Ave, Berkeley, CA 94704' },
+            { date: '06/02/2026', customer: 'Ema Kye', email: '', invoice: '060226004', amount: 150.36, status: 'Unpaid', days: -17, viewed: true, address: '3456 University Ave, Palo Alto, CA 94301' },
+            { date: '06/02/2026', customer: 'Joycelin Magno', email: '', invoice: '060226003', amount: 230.93, status: 'Unpaid', days: -17, viewed: true, address: '7890 State St, Santa Barbara, CA 93101' },
+            { date: '06/02/2026', customer: 'Renee', email: 'loscaporalestaqueria@outlook.com', invoice: '000015', amount: 360.45, status: 'Unpaid', days: -17, viewed: false, note: 'NOT VIEWED', address: '1234 3rd Street Promenade, Santa Monica, CA 90401' },
+            { date: '06/08/2026', customer: 'Caffe Greco', email: '', invoice: '060826005', amount: 104.63, status: 'Unpaid', days: -23, viewed: true, address: '5678 Columbus Ave, San Francisco, CA 94133' },
+            { date: '06/08/2026', customer: 'John Caine', email: '', invoice: '060826002', amount: 928.98, status: 'Unpaid', days: -23, viewed: true, address: '9012 Haight St, San Francisco, CA 94117' },
+            { date: '06/08/2026', customer: 'Maria Abundiz', email: '', invoice: '060826007', amount: 290.84, status: 'Unpaid', days: -23, viewed: true, address: '3456 Sunset Blvd, Los Angeles, CA 90026' },
+            { date: '06/12/2026', customer: 'Gilbert General Manager', email: '', invoice: '060826009', amount: 539.67, status: 'Undelivered', days: -23, viewed: false, note: 'Undelivered', address: '7890 Rosemead Blvd, Pasadena, CA 91101' },
+            
+            // Due in 3-4 weeks
+            { date: '06/11/2026', customer: 'Laura', email: '', invoice: '061026003', amount: 213.68, status: 'Unpaid', days: -26, viewed: true, address: '1234 Embarcadero, San Francisco, CA 94111' },
+            { date: '06/15/2026', customer: 'Gabby Park Caféb Group', email: '', invoice: '061026002', amount: 410.19, status: 'Undelivered', days: -26, viewed: false, note: 'Undelivered', address: '5678 Grand Ave, Los Angeles, CA 90012' },
+            { date: '06/11/2026', customer: 'Myly', email: '', invoice: '061026001', amount: 929.23, status: 'Unpaid', days: -25, viewed: true, address: '9012 Highland Ave, Manhattan Beach, CA 90266' },
+            { date: '06/15/2026', customer: 'Cindy or Beth', email: '', invoice: '061026005', amount: 756.01, status: 'Unpaid', days: -27, viewed: false, note: 'Cd @ 2 months', address: '3456 Ventura Blvd, Sherman Oaks, CA 91403' }
+        ];
+
+        function formatCurrency(amount) {
+            return '$' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+
+        function getStatusClass(days, status) {
+            if (days > 0) {
+                if (days > 30) return 'status-critical';
+                return 'status-overdue';
+            }
+            if (days >= -7) return 'status-due-soon';
+            return 'status-current';
+        }
+
+        function getStatusText(days, status) {
+            if (days > 0) {
+                if (days > 30) return 'Critical';
+                return 'Overdue';
+            }
+            if (days >= -7) return 'Due Soon';
+            if (status === 'Undelivered') return 'Undelivered';
+            return 'Current';
+        }
+
+        function generateReminderLetter(invoice) {
+            const dueText = invoice.days > 0 
+                ? `${invoice.days} days overdue` 
+                : `Due in ${Math.abs(invoice.days)} days`;
+            
+            return `
+                <div class="letter-header">
+                    <h2>PERFORMANCE SUPPLY DEPOT LLC</h2>
+                    <p>1234 Business Center Drive, Suite 100 | Los Angeles, CA 90012<br>
+                    Phone: (888) 881-6834 | Email: ap@psdepot.com</p>
+                </div>
+                
+                <div class="letter-body">
+                    <p style="text-align: right;">${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+                    
+                    <p><strong>${invoice.customer}</strong><br>
+                    ${invoice.address.replace(/, /g, '<br>')}</p>
+                    
+                    <p><strong>RE: Payment Reminder - Invoice #${invoice.invoice}</strong></p>
+                    
+                    <p>Dear ${invoice.customer},\u003c/p>
+                    
+                    <p>We hope this letter finds you well. We are writing to remind you that payment for the following invoice is ${dueText} in our records.\u003c/p>
+                    
+                    <div class="invoice-details">
+                        <table>
+                            <tr>
+                                <th>Invoice Number:\u003c/th>
+                                <td>${invoice.invoice}</td>
+                            </tr>
+                            <tr>
+                                <th>Invoice Date:\u003c/th>
+                                <td>${invoice.date}</td>
+                            </tr>
+                            <tr>
+                                <th>Amount Due:\u003c/th>
+                                <td style="font-size: 14pt; font-weight: bold;">${formatCurrency(invoice.amount)}</td>
+                            </tr>
+                            <tr>
+                                <th>Status:\u003c/th>
+                                <td>${getStatusText(invoice.days, invoice.status).toUpperCase()} - ${dueText.toUpperCase()}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <p>Please remit payment at your earliest convenience. We value your business and appreciate your prompt attention to this matter.\u003c/p>
+                    
+                    <p>If you have already submitted payment, please disregard this notice. If you have any questions or concerns regarding this invoice, please do not hesitate to contact our Accounts Payable department.\u003c/p>
+                    
+                    <p>We accept payment via:\u003c/p>
+                    <ul>
+                        <li>Check payable to: Performance Supply Depot LLC</li>
+                        <li>Credit card (Visa, MasterCard, American Express)\u003c/li>
+                        <li>ACH bank transfer\u003c/li>
+                        <li>Online portal: psdepot.com/pay\u003c/li>
+                    </ul>
+                    
+                    <p>Thank you for your continued business and cooperation.\u003c/p>
+                    
+                    <p>Sincerely,\u003cbr>
+                    <br>
+                    <strong>Accounts Payable Department</strong><br>
+                    Performance Supply Depot LLC</p>
+                </div>
+                
+                <div class="letter-footer">
+                    <p style="font-size: 9pt; color: #666;">This is a computer-generated notice. Please retain for your records.\u003cbr>
+                    Accounts Payable: ap@psdepot.com | (888) 881-6834</p>
+                </div>
+                
+                <button class="print-btn" onclick="window.print()">🖨️ Print Letter</button>
+            `;
+        }
+
+        function openLetter(invoiceId) {
+            const invoice = invoices.find(i => i.invoice === invoiceId);
+            if (!invoice) return;
+            
+            document.getElementById('letterContent').innerHTML = generateReminderLetter(invoice);
+            document.getElementById('letterModal').classList.add('active');
+        }
+
+        function closeLetter() {
+            document.getElementById('letterModal').classList.remove('active');
+        }
+
+        function renderTable(filter = 'all') {
+            const tbody = document.getElementById('table-body');
+            
+            let filtered = invoices;
+            if (filter === 'critical') filtered = invoices.filter(i => i.days > 30);
+            else if (filter === 'overdue') filtered = invoices.filter(i => i.days > 0 && i.days <= 30);
+            else if (filter === 'due-soon') filtered = invoices.filter(i => i.days <= 0 && i.days >= -14);
+            else if (filter === 'current') filtered = invoices.filter(i => i.days < -14);
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">✅</div>
+                        <h3>No accounts in this category</h3>
+                    </div>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(inv => `
+                <div class="table-row ${inv.days > 30 ? 'critical' : ''}">
+                    <div class="customer-info">
+                        <div class="customer-name">${inv.customer}
+                            ${!inv.viewed ? '<span style="color: var(--accent-red); margin-left: 0.5rem;">👁️</span>' : ''}
+                        </div>
+                        <div class="customer-address">${inv.address}</div>
+                        ${inv.note ? `<div style="font-size: 0.75rem; color: var(--accent-orange); margin-top: 0.25rem;">📝 ${inv.note}</div>` : ''}
+                    </div>
+                    <div class="invoice-number">${inv.invoice}</div>
+                    <div class="amount">${formatCurrency(inv.amount)}</div>
+                    <div class="customer-address">${inv.address.split(',')[1]}, ${inv.address.split(',')[2]}</div>
+                    <div>
+                        <span class="status-badge ${getStatusClass(inv.days, inv.status)}">
+                            ${getStatusText(inv.days, inv.status)}
+                        </span>
+                    </div>
+                    <div class="days-overdue ${inv.days > 30 ? 'critical' : inv.days > 0 ? 'warning' : ''}">
+                        ${inv.days > 0 ? `${inv.days} days overdue` : `${Math.abs(inv.days)} days left`}
+                    </div>
+                    <div class="actions">
+                        ${inv.days > 0 
+                            ? `<button class="btn btn-primary" onclick="openLetter('${inv.invoice}')">📄 Letter</button>`
+                            : `<button class="btn btn-secondary">View</button>`
+                        }
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateStats() {
+            const total = invoices.reduce((sum, inv) => sum + inv.amount, 0);
+            const critical = invoices.filter(i => i.days > 30);
+            const overdue = invoices.filter(i => i.days > 0 && i.days <= 30);
+            const dueSoon = invoices.filter(i => i.days <= 0 && i.days >= -7);
+            const current = invoices.filter(i => i.days < -7);
+
+            document.getElementById('total-outstanding').textContent = formatCurrency(total);
+            document.getElementById('overdue-count').textContent = overdue.length + critical.length;
+            document.getElementById('due-this-week').textContent = dueSoon.length;
+            
+            document.getElementById('critical-amount').textContent = formatCurrency(critical.reduce((s, i) => s + i.amount, 0));
+            document.getElementById('overdue-amount').textContent = formatCurrency(overdue.reduce((s, i) => s + i.amount, 0));
+            document.getElementById('due-soon-amount').textContent = formatCurrency(dueSoon.reduce((s, i) => s + i.amount, 0));
+            document.getElementById('current-amount').textContent = formatCurrency(current.reduce((s, i) => s + i.amount, 0));
+
+            document.getElementById('count-all').textContent = invoices.length;
+            document.getElementById('count-critical').textContent = critical.length;
+            document.getElementById('count-overdue').textContent = overdue.length;
+            document.getElementById('count-due-soon').textContent = invoices.filter(i => i.days <= 0 && i.days >= -14).length;
+            document.getElementById('count-current').textContent = current.length;
+        }
+
+        // Filter tabs
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                renderTable(tab.dataset.filter);
+            });
+        });
+
+        // Close modal on outside click
+        document.getElementById('letterModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('letterModal')) {
+                closeLetter();
+            }
+        });
+
+        // Initialize
+        updateStats();
+        renderTable();
+    </script>
+</body>
+</html>
