@@ -3,7 +3,7 @@
   "name": "Vex",
   "role": "PILOT",
   "level": 5,
-  "xp": 296637,
+  "xp": 296797,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 10,
     "combat": 10
   },
-  "missionsCompleted": 1957,
+  "missionsCompleted": 1959,
   "discoveries": [
     {
       "name": "Anomalous Planet",
@@ -9803,6 +9803,16 @@
       "name": "Space Anomaly",
       "location": "Alpha-1",
       "timestamp": 1781518985463
+    },
+    {
+      "name": "Unknown Signal",
+      "location": "Alpha-1",
+      "timestamp": 1781521904760
+    },
+    {
+      "name": "Alien Artifact",
+      "location": "Alpha-1",
+      "timestamp": 1781522295765
     }
   ],
   "status": "ACTIVE",
