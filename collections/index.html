@@ -945,7 +945,8 @@
                     </div>
                     <div class="actions">
                         ${inv.paid 
-                            ? `<span class="paid-badge">✅ Paid</span>`
+                            ? `<span class="paid-badge">✅ Paid</span>
+                               <button class="btn btn-secondary" onclick="undoPaid('${inv.invoice}')" style="padding: 0.5rem;">↩️ Undo</button>`
                             : inv.days > 0 
                                 ? `<button class="btn btn-primary" onclick="openLetter('${inv.invoice}')">📄 Letter</button>
                                    <button class="btn btn-success" onclick="markPaid('${inv.invoice}')">💰 Paid</button>`
@@ -1014,6 +1015,29 @@
                 
                 // Show success message
                 showToast(`✅ Invoice #${invoiceId} marked as paid!`);
+            }
+        }
+
+        // Undo marking as paid
+        function undoPaid(invoiceId) {
+            const invoice = invoices.find(i => i.invoice === invoiceId);
+            if (!invoice) return;
+            
+            if (confirm(`Undo payment for invoice #${invoiceId} - ${invoice.customer}?`)) {
+                invoice.paid = false;
+                delete invoice.paidDate;
+                delete invoice.paidAmount;
+                
+                // Save to localStorage
+                localStorage.setItem('collections_invoices', JSON.stringify(invoices));
+                
+                // Update UI
+                updateStats();
+                const activeFilter = document.querySelector('.filter-tab.active').dataset.filter;
+                renderTable(activeFilter);
+                
+                // Show success message
+                showToast(`↩️ Invoice #${invoiceId} restored to unpaid!`);
             }
         }
 
