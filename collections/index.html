@@ -736,7 +736,7 @@
         // Fetch from database API
         async function fetchFromDB() {
             try {
-                const response = await fetch('/collections/api.php');
+                const response = await fetch('/collections/api');
                 const data = await response.json();
                 if (data.success) {
                     return data.invoices;
