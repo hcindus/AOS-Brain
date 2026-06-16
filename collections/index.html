@@ -623,7 +623,7 @@
     <main class="container">
         <h1 class="page-title">Accounts Receivable Monitor</h1>
         <p class="page-subtitle">Track overdue invoices and payment collections</p>
-        <p class="last-updated">Last Updated: June 15, 2026 at 8:53 PM UTC | All accounts located in California</p>
+        <p class="last-updated">Last Updated: June 16, 2026 at 5:12 PM UTC | Performance Supply Depot</p>
 
         <div class="summary-grid">
             <div class="summary-card">
@@ -641,6 +641,26 @@
             <div class="summary-card">
                 <div class="summary-label">Current (Not Yet Due)</div>
                 <div class="summary-value success" id="current-amount">$0</div>
+            </div>
+            <div class="summary-card" style="grid-column: span 2;">
+                <div class="summary-label">📊 Paid (Last 30 Days)</div>
+                <div class="summary-value success" id="paid-30-days">$14,576.20</div>
+            </div>
+        </div>
+
+        <!-- Squarespace Summary Grid -->
+        <div class="summary-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="summary-card" style="border-left: 4px solid var(--accent-green);">
+                <div class="summary-label">✅ Not Overdue (22)</div>
+                <div class="summary-value success" id="not-overdue-amount">$11,165.20</div>
+            </div>
+            <div class="summary-card" style="border-left: 4px solid var(--accent-red);">
+                <div class="summary-label">🔴 Overdue (15)</div>
+                <div class="summary-value danger" id="overdue-summary-amount">$10,787.25</div>
+            </div>
+            <div class="summary-card" style="border-left: 4px solid var(--text-secondary);">
+                <div class="summary-label">📝 Drafts (5)</div>
+                <div class="summary-value" style="color: var(--text-secondary);" id="drafts-amount">$4,918.35</div>
             </div>
         </div>
 
@@ -706,12 +726,22 @@
         </div>
 
         <div class="notes-section">
-            <div class="notes-title">📋 Collections Notes</div>
+            <div class="notes-title">📋 Collections Notes - Updated June 16</div>
             <ul class="notes-list">
-                <li><strong>Fernando</strong> - Invoice #5126103: 33 days overdue - PRIORITY follow-up needed</li>
-                <li><strong>Oona open store</strong> - Invoice #060826003: 3 days overdue (Yesterday)</li>
-                <li><strong>Ali Saleh</strong> - Invoice #061326001: 1 day overdue, NOT VIEWED</li>
-                <li><strong>Gabby Park Caféb Group</strong> - Invoice #061026002: Undelivered</li>
+                <li><strong>Emmanual</strong> - Invoice #000008: 🔴 CRITICAL - 66 days overdue, NOT VIEWED - MICROSALE connection issues</li>
+                <li><strong>Fernando</strong> - Invoice #5126103: 34 days overdue - PRIORITY follow-up needed</li>
+                <li><strong>Travis Hauffman</strong> - Invoice #4166108: 27 days overdue</li>
+                <li><strong>Bo Thompson</strong> - Invoice #4166114: 25 days overdue, SUPPLY ONLY</li>
+                <li><strong>Oona open store</strong> - Invoice #060826003: 4 days overdue, VIEWED</li>
+                <li><strong>Morris Owner</strong> - Invoice #061326002: 1 day overdue, VIEWED - Sam4s POS system ($4,883.85)</li>
+                <li><strong>William Bishop</strong> - Invoice #061326006: 1 day overdue, NOT VIEWED - "If you approve, please process invoice"</li>
+                <li><strong>Kelly left msg</strong> - Invoice #061326004: 1 day overdue, NOT VIEWED</li>
+                <li><strong>Sam Owner</strong> - Invoice #061326003: 1 day overdue, NOT VIEWED</li>
+                <li><strong>Sarah Willams</strong> - Invoice #061326007: 1 day overdue, VIEWED</li>
+                <li><strong>Kevin Manager</strong> - Invoice #061326005: 1 day overdue, VIEWED</li>
+                <li><strong>Jen Yang</strong> - Invoice #4306104: 11 days overdue, SUPPLY ONLY</li>
+                <li><strong>Scott Walsh</strong> - Invoice #05056101: 10 days overdue, VIEWED</li>
+                <li><strong>Gabby Park Caféb Group</strong> - Invoice #061026002: Undelivered, NOT VIEWED</li>
                 <li><strong>Gilbert General Manager</strong> - Invoice #060826009: Undelivered, NOT VIEWED</li>
                 <li><strong>Cindy or Beth</strong> - Invoice #061026005: Cd @ 2 months, NOT VIEWED</li>
                 <li><strong>Renee</strong> (loscaporalestaqueria@outlook.com) - Invoice #000015: NOT VIEWED</li>
@@ -732,7 +762,48 @@
         // Load invoices from API
         let invoices = [];
         let isLoading = true;
-        
+
+        // Embedded invoice data from Squarespace (June 16, 2026)
+        const EMBEDDED_INVOICES = [
+            {"invoice": "061326002", "customer": "Morris Owner", "amount": 4883.85, "date": "06/16/2026", "status": "Overdue", "days": 1, "viewed": true, "address": "Fairfield, CA", "note": "Sam4s POS system"},
+            {"invoice": "061326008", "customer": "Brent Warehouse", "amount": 2962.42, "date": "06/16/2026", "status": "Unpaid", "days": -13, "viewed": false, "address": "Fairfield, CA", "note": "Due in 14 days"},
+            {"invoice": "061326007", "customer": "Sarah Willams", "amount": 109.52, "date": "06/15/2026", "status": "Overdue", "days": 1, "viewed": true, "address": "Fairfield, CA", "note": ""},
+            {"invoice": "061326006", "customer": "William Bishop", "amount": 73.15, "date": "06/15/2026", "status": "Overdue", "days": 1, "viewed": false, "address": "Fairfield, CA", "note": "If you approve, please process invoice"},
+            {"invoice": "061326005", "customer": "Kevin Manager", "amount": 402.90, "date": "06/15/2026", "status": "Overdue", "days": 1, "viewed": true, "address": "Fairfield, CA", "note": ""},
+            {"invoice": "061326004", "customer": "Kelly left msg", "amount": 300.73, "date": "06/15/2026", "status": "Overdue", "days": 1, "viewed": false, "address": "Fairfield, CA", "note": ""},
+            {"invoice": "4166114", "customer": "Bo Thompson SUPPLY ONLY", "amount": 329.75, "date": "06/15/2026", "status": "Overdue", "days": 25, "viewed": true, "address": "Fairfield, CA", "note": ""},
+            {"invoice": "061326003", "customer": "Sam Owner", "amount": 1272.00, "date": "06/15/2026", "status": "Overdue", "days": 1, "viewed": false, "address": "Fairfield, CA", "note": ""},
+            {"invoice": "060826003", "customer": "Oona open store", "amount": 575.63, "date": "06/14/2026", "status": "Overdue", "days": 4, "viewed": true, "address": "Fairfield, CA", "note": ""},
+            {"invoice": "061026002", "customer": "Gabby Park Caféb Group", "amount": 410.19, "date": "06/14/2026", "status": "Undelivered", "days": -24, "viewed": false, "address": "Fairfield, CA", "note": "Due in 25 days"},
+            {"invoice": "060826009", "customer": "Gilbert General Manager", "amount": 539.67, "date": "06/12/2026", "status": "Undelivered", "days": -21, "viewed": false, "address": "Fairfield, CA", "note": "Due in 22 days"},
+            {"invoice": "061026005", "customer": "Cindy or Beth Cd @ 2 months", "amount": 756.01, "date": "06/12/2026", "status": "Unpaid", "days": -25, "viewed": false, "address": "Fairfield, CA", "note": "Due in 26 days"},
+            {"invoice": "061026003", "customer": "Laura", "amount": 213.68, "date": "06/11/2026", "status": "Unpaid", "days": -24, "viewed": true, "address": "Fairfield, CA", "note": "Due in 25 days"},
+            {"invoice": "052626007", "customer": "Tony Salinas", "amount": 457.99, "date": "06/11/2026", "status": "Unpaid", "days": -11, "viewed": true, "address": "Fairfield, CA", "note": "Due in 12 days"},
+            {"invoice": "061026001", "customer": "Myly", "amount": 929.23, "date": "06/11/2026", "status": "Unpaid", "days": -23, "viewed": true, "address": "Fairfield, CA", "note": "Due in 24 days"},
+            {"invoice": "060826007", "customer": "Maria Abundiz", "amount": 290.84, "date": "06/08/2026", "status": "Unpaid", "days": -21, "viewed": true, "address": "Fairfield, CA", "note": "Due in 22 days"},
+            {"invoice": "060826005", "customer": "Caffe Greco", "amount": 104.63, "date": "06/08/2026", "status": "Unpaid", "days": -21, "viewed": true, "address": "Fairfield, CA", "note": "Due in 22 days"},
+            {"invoice": "060826002", "customer": "John Caine", "amount": 928.98, "date": "06/08/2026", "status": "Unpaid", "days": -21, "viewed": true, "address": "Fairfield, CA", "note": "Due in 22 days"},
+            {"invoice": "000015", "customer": "Renee loscaporalestaqueria", "amount": 360.45, "date": "06/02/2026", "status": "Unpaid", "days": -15, "viewed": false, "address": "Fairfield, CA", "note": "Due in 16 days"},
+            {"invoice": "060226004", "customer": "Ema Kye", "amount": 150.36, "date": "06/02/2026", "status": "Unpaid", "days": -15, "viewed": true, "address": "Fairfield, CA", "note": "Due in 16 days"},
+            {"invoice": "060226003", "customer": "Joycelin Magno", "amount": 230.93, "date": "06/02/2026", "status": "Unpaid", "days": -15, "viewed": true, "address": "Fairfield, CA", "note": "Due in 16 days"},
+            {"invoice": "060126003", "customer": "John", "amount": 161.22, "date": "06/02/2026", "status": "Unpaid", "days": -15, "viewed": false, "address": "Fairfield, CA", "note": "Due in 16 days"},
+            {"invoice": "060126001", "customer": "Margarito General Manager", "amount": 512.41, "date": "06/02/2026", "status": "Unpaid", "days": -12, "viewed": true, "address": "Fairfield, CA", "note": "Due in 13 days"},
+            {"invoice": "052226002", "customer": "Cory Manager", "amount": 489.35, "date": "05/29/2026", "status": "Unpaid", "days": -4, "viewed": true, "address": "Fairfield, CA", "note": "Due in 5 days"},
+            {"invoice": "052626006", "customer": "Becky NCC", "amount": 249.14, "date": "05/27/2026", "status": "Unpaid", "days": -9, "viewed": true, "address": "Fairfield, CA", "note": "Due in 10 days"},
+            {"invoice": "052626001", "customer": "Travis Hauffman", "amount": 149.90, "date": "05/26/2026", "status": "Unpaid", "days": -8, "viewed": true, "address": "Fairfield, CA", "note": "Due in 9 days"},
+            {"invoice": "052626002", "customer": "Travis Hauffman", "amount": 149.90, "date": "05/26/2026", "status": "Unpaid", "days": -8, "viewed": true, "address": "Fairfield, CA", "note": "Due in 9 days"},
+            {"invoice": "052226003", "customer": "Michael General Manager", "amount": 386.90, "date": "05/23/2026", "status": "Unpaid", "days": -5, "viewed": true, "address": "Fairfield, CA", "note": "Due in 6 days"},
+            {"invoice": "052226001", "customer": "Katie Rondeau", "amount": 553.00, "date": "05/22/2026", "status": "Unpaid", "days": -4, "viewed": true, "address": "Fairfield, CA", "note": "ORDER # 639326 - Due in 5 days"},
+            {"invoice": "052026001", "customer": "Katie Rondeau", "amount": 178.00, "date": "05/20/2026", "status": "Unpaid", "days": -2, "viewed": true, "address": "Fairfield, CA", "note": "ORDER # 642281 - Due in 3 days"},
+            {"invoice": "5126103", "customer": "Fernando", "amount": 421.56, "date": "05/13/2026", "status": "Overdue", "days": 34, "viewed": true, "address": "Fairfield, CA", "note": ""},
+            {"invoice": "05056101", "customer": "Scott Walsh", "amount": 382.30, "date": "05/07/2026", "status": "Overdue", "days": 10, "viewed": true, "address": "Fairfield, CA", "note": ""},
+            {"invoice": "4306104", "customer": "Jen Yang SUPPLY ONLY", "amount": 520.86, "date": "05/07/2026", "status": "Overdue", "days": 11, "viewed": true, "address": "Fairfield, CA", "note": ""},
+            {"invoice": "4306102", "customer": "Travis Hauffman", "amount": 163.24, "date": "05/05/2026", "status": "Overdue", "days": 12, "viewed": true, "address": "Fairfield, CA", "note": ""},
+            {"invoice": "4276102", "customer": "Heather Manager", "amount": 434.09, "date": "04/30/2026", "status": "Overdue", "days": 17, "viewed": true, "address": "Fairfield, CA", "note": ""},
+            {"invoice": "4166108", "customer": "Travis Hauffman", "amount": 242.67, "date": "04/23/2026", "status": "Overdue", "days": 27, "viewed": true, "address": "Fairfield, CA", "note": ""},
+            {"invoice": "000008", "customer": "Emmanual", "amount": 675.00, "date": "04/11/2026", "status": "Overdue", "days": 66, "viewed": false, "address": "Fairfield, CA", "note": "CONNECTION ISSUES - MICROSALE"}
+        ];
+
         // Fetch from database API
         async function fetchFromDB() {
             try {
@@ -747,39 +818,35 @@
                 return null;
             }
         }
-        
+
         // Load with fallback
         async function loadData() {
             // Try API first
             const dbData = await fetchFromDB();
             if (dbData && dbData.length > 0) {
                 invoices = dbData;
-                // Merge with localStorage paid status
-                const saved = localStorage.getItem('collections_invoices');
-                if (saved) {
-                    const savedData = JSON.parse(saved);
-                    invoices.forEach(inv => {
-                        const savedInv = savedData.find(s => s.invoice === inv.invoice);
-                        if (savedInv && savedInv.paid) {
-                            inv.paid = true;
-                            inv.paidDate = savedInv.paidDate;
-                            inv.paidAmount = savedInv.paidAmount;
-                        }
-                        // Preserve edited addresses
-                        if (savedInv && savedInv.address !== inv.address && savedInv.edited) {
-                            inv.address = savedInv.address;
-                            inv.edited = true;
-                        }
-                    });
-                }
             } else {
-                // Fallback to localStorage
-                const saved = localStorage.getItem('collections_invoices');
-                if (saved) {
-                    invoices = JSON.parse(saved);
-                } else {
-                    invoices = [];
-                }
+                // Use embedded data as fallback
+                invoices = EMBEDDED_INVOICES.map(inv => ({...inv}));
+            }
+
+            // Merge with localStorage paid status and edits
+            const saved = localStorage.getItem('collections_invoices');
+            if (saved) {
+                const savedData = JSON.parse(saved);
+                invoices.forEach(inv => {
+                    const savedInv = savedData.find(s => s.invoice === inv.invoice);
+                    if (savedInv && savedInv.paid) {
+                        inv.paid = true;
+                        inv.paidDate = savedInv.paidDate;
+                        inv.paidAmount = savedInv.paidAmount;
+                    }
+                    // Preserve edited addresses
+                    if (savedInv && savedInv.address !== inv.address && savedInv.edited) {
+                        inv.address = savedInv.address;
+                        inv.edited = true;
+                    }
+                });
             }
             isLoading = false;
             updateStats();
