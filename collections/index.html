@@ -729,53 +729,62 @@
     </div>
 
     <script>
-        // Load invoices from localStorage or use defaults
-        let invoices = JSON.parse(localStorage.getItem('collections_invoices'));
+        // Load invoices from API
+        let invoices = [];
+        let isLoading = true;
         
-        if (!invoices) {
-            invoices = [
-            // Critical (>30 days)
-            { date: '05/13/2026', customer: 'Fernando', email: '', invoice: '5126103', amount: 421.56, status: 'Overdue', days: 33, viewed: true, note: 'CRITICAL - Priority follow-up', address: '1234 Main Street, Los Angeles, CA 90012' },
-            
-            // Overdue (1-30 days)
-            { date: '06/15/2026', customer: 'Ali Saleh', email: '', invoice: '061326001', amount: 500.00, status: 'Overdue', days: 1, viewed: false, note: 'Yesterday - NOT VIEWED', address: '5678 Broadway Blvd, San Francisco, CA 94102' },
-            { date: '06/15/2026', customer: 'Oona open store', email: '', invoice: '060826003', amount: 575.63, status: 'Overdue', days: 3, viewed: true, note: 'Yesterday', address: '9012 Market Street, San Diego, CA 92101' },
-            { date: '05/12/2026', customer: 'Becky NCC', email: '', invoice: '5126101', amount: 312.24, status: 'Overdue', days: 4, viewed: true, address: '3456 Ocean Ave, Santa Monica, CA 90401' },
-            { date: '05/29/2026', customer: 'Sam Owner', email: '', invoice: '052626008', amount: 285.00, status: 'Overdue', days: 17, viewed: true, address: '7890 Hollywood Blvd, Hollywood, CA 90028' },
-            { date: '04/30/2026', customer: 'Heather Manager', email: '', invoice: '4276102', amount: 434.09, status: 'Overdue', days: 16, viewed: true, address: '1234 Mission St, Sacramento, CA 95814' },
-            { date: '05/07/2026', customer: 'Scott Walsh', email: '', invoice: '05056101', amount: 382.30, status: 'Overdue', days: 9, viewed: true, address: '5678 Van Ness Ave, Fresno, CA 93721' },
-            { date: '05/07/2026', customer: 'Jen Yang SUPPLY ONLY', email: '', invoice: '4306104', amount: 520.86, status: 'Overdue', days: 10, viewed: true, address: '9012 Harbor Blvd, Anaheim, CA 92802' },
-            { date: '05/05/2026', customer: 'Travis Hauffman', email: '', invoice: '4306102', amount: 163.24, status: 'Overdue', days: 11, viewed: true, address: '3456 Palm Canyon Dr, Palm Springs, CA 92264' },
-            
-            // Due Soon (Within 14 days)
-            { date: '05/22/2026', customer: 'Katie Rondeau', email: '', invoice: '052226001', amount: 553.00, status: 'Unpaid', days: -6, viewed: true, note: 'ORDER # 639326', address: '7890 Beach Blvd, Huntington Beach, CA 92647' },
-            { date: '05/20/2026', customer: 'Katie Rondeau', email: '', invoice: '052026001', amount: 178.00, status: 'Unpaid', days: -4, viewed: true, note: 'ORDER # 642281', address: '7890 Beach Blvd, Huntington Beach, CA 92647' },
-            { date: '05/29/2026', customer: 'Cory Manager', email: '', invoice: '052226002', amount: 489.35, status: 'Unpaid', days: -6, viewed: true, address: '1234 El Camino Real, San Jose, CA 95129' },
-            { date: '05/23/2026', customer: 'Michael General Manager', email: '', invoice: '052226003', amount: 386.90, status: 'Unpaid', days: -7, viewed: true, address: '5678 Wilshire Blvd, Beverly Hills, CA 90210' },
-            
-            // Due in 1-2 weeks
-            { date: '05/26/2026', customer: 'Travis Hauffman', email: '', invoice: '052626001', amount: 149.90, status: 'Unpaid', days: -10, viewed: true, address: '3456 Palm Canyon Dr, Palm Springs, CA 92264' },
-            { date: '05/26/2026', customer: 'Travis Hauffman', email: '', invoice: '052626002', amount: 149.90, status: 'Unpaid', days: -10, viewed: true, address: '3456 Palm Canyon Dr, Palm Springs, CA 92264' },
-            { date: '05/27/2026', customer: 'Becky NCC', email: '', invoice: '052626006', amount: 249.14, status: 'Unpaid', days: -11, viewed: true, address: '9012 Newport Center Dr, Newport Beach, CA 92660' },
-            { date: '06/11/2026', customer: 'Tony Salinas', email: '', invoice: '052626007', amount: 457.99, status: 'Unpaid', days: -13, viewed: true, address: '1234 Salinas Rd, Monterey, CA 93940' },
-            { date: '06/02/2026', customer: 'Margarito General Manager', email: '', invoice: '060126001', amount: 512.41, status: 'Unpaid', days: -14, viewed: true, address: '5678 Alameda St, Oakland, CA 94607' },
-            
-            // Due in 2-3 weeks
-            { date: '06/02/2026', customer: 'John', email: '', invoice: '060126003', amount: 161.22, status: 'Unpaid', days: -17, viewed: false, note: 'NOT VIEWED', address: '9012 Telegraph Ave, Berkeley, CA 94704' },
-            { date: '06/02/2026', customer: 'Ema Kye', email: '', invoice: '060226004', amount: 150.36, status: 'Unpaid', days: -17, viewed: true, address: '3456 University Ave, Palo Alto, CA 94301' },
-            { date: '06/02/2026', customer: 'Joycelin Magno', email: '', invoice: '060226003', amount: 230.93, status: 'Unpaid', days: -17, viewed: true, address: '7890 State St, Santa Barbara, CA 93101' },
-            { date: '06/02/2026', customer: 'Renee', email: 'loscaporalestaqueria@outlook.com', invoice: '000015', amount: 360.45, status: 'Unpaid', days: -17, viewed: false, note: 'NOT VIEWED', address: '1234 3rd Street Promenade, Santa Monica, CA 90401' },
-            { date: '06/08/2026', customer: 'Caffe Greco', email: '', invoice: '060826005', amount: 104.63, status: 'Unpaid', days: -23, viewed: true, address: '5678 Columbus Ave, San Francisco, CA 94133' },
-            { date: '06/08/2026', customer: 'John Caine', email: '', invoice: '060826002', amount: 928.98, status: 'Unpaid', days: -23, viewed: true, address: '9012 Haight St, San Francisco, CA 94117' },
-            { date: '06/08/2026', customer: 'Maria Abundiz', email: '', invoice: '060826007', amount: 290.84, status: 'Unpaid', days: -23, viewed: true, address: '3456 Sunset Blvd, Los Angeles, CA 90026' },
-            { date: '06/12/2026', customer: 'Gilbert General Manager', email: '', invoice: '060826009', amount: 539.67, status: 'Undelivered', days: -23, viewed: false, note: 'Undelivered', address: '7890 Rosemead Blvd, Pasadena, CA 91101' },
-            
-            // Due in 3-4 weeks
-            { date: '06/11/2026', customer: 'Laura', email: '', invoice: '061026003', amount: 213.68, status: 'Unpaid', days: -26, viewed: true, address: '1234 Embarcadero, San Francisco, CA 94111' },
-            { date: '06/15/2026', customer: 'Gabby Park Caféb Group', email: '', invoice: '061026002', amount: 410.19, status: 'Undelivered', days: -26, viewed: false, note: 'Undelivered', address: '5678 Grand Ave, Los Angeles, CA 90012' },
-            { date: '06/11/2026', customer: 'Myly', email: '', invoice: '061026001', amount: 929.23, status: 'Unpaid', days: -25, viewed: true, address: '9012 Highland Ave, Manhattan Beach, CA 90266' },
-            { date: '06/15/2026', customer: 'Cindy or Beth', email: '', invoice: '061026005', amount: 756.01, status: 'Unpaid', days: -27, viewed: false, note: 'Cd @ 2 months', address: '3456 Ventura Blvd, Sherman Oaks, CA 91403' }
-        ];
+        // Fetch from database API
+        async function fetchFromDB() {
+            try {
+                const response = await fetch('/collections/api.php');
+                const data = await response.json();
+                if (data.success) {
+                    return data.invoices;
+                }
+                throw new Error(data.error || 'API error');
+            } catch (e) {
+                console.error('Failed to fetch from DB:', e);
+                return null;
+            }
+        }
+        
+        // Load with fallback
+        async function loadData() {
+            // Try API first
+            const dbData = await fetchFromDB();
+            if (dbData && dbData.length > 0) {
+                invoices = dbData;
+                // Merge with localStorage paid status
+                const saved = localStorage.getItem('collections_invoices');
+                if (saved) {
+                    const savedData = JSON.parse(saved);
+                    invoices.forEach(inv => {
+                        const savedInv = savedData.find(s => s.invoice === inv.invoice);
+                        if (savedInv && savedInv.paid) {
+                            inv.paid = true;
+                            inv.paidDate = savedInv.paidDate;
+                            inv.paidAmount = savedInv.paidAmount;
+                        }
+                        // Preserve edited addresses
+                        if (savedInv && savedInv.address !== inv.address && savedInv.edited) {
+                            inv.address = savedInv.address;
+                            inv.edited = true;
+                        }
+                    });
+                }
+            } else {
+                // Fallback to localStorage
+                const saved = localStorage.getItem('collections_invoices');
+                if (saved) {
+                    invoices = JSON.parse(saved);
+                } else {
+                    invoices = [];
+                }
+            }
+            isLoading = false;
+            updateStats();
+            renderTable();
+        }
 
         function formatCurrency(amount) {
             return '$' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
@@ -1120,8 +1129,7 @@
         });
 
         // Initialize
-        updateStats();
-        renderTable();
+        loadData();
     </script>
 </body>
 </html>
