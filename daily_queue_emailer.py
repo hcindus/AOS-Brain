@@ -21,28 +21,34 @@ def send_daily_queue_report():
     recipient = "Antonio.hudnall@gmail.com"
     
     # Email content
-    subject = "🌑 Daily Queue Email Report - Patricia's Complete Work Queue"
-    body = """Good afternoon, Captain!
+    subject = "📊 Daily Queue Report - June 16, 2026"
+    
+    # Get current date for the report
+    current_date = datetime.now().strftime("%A, %B %d, %Y")
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M UTC")
+    
+    body = f"""Good afternoon, Captain!
 
-Here is Patricia's complete work queue report for today (Wednesday, June 10th, 2026).
+Here is Patricia's daily queue report for today ({current_date}).
 
 ═══════════════════════════════════════════════════════════════════════════
                               QUEUE SUMMARY
 ═══════════════════════════════════════════════════════════════════════════
 
-Generated: 2026-06-10 13:23:32 UTC
-Total Items: 16
+Generated: {current_time}
+Total Items: 61
 
 BY CATEGORY:
 • Governance     : 11 items
-• Production     :  3 items  
-• Data           :  1 items
-• Documentation  :  1 items
+• Production     :  3 items
+• Data           : 59 items (Lead Scraper Queue)
+• Documentation  :  1 item
+• Reports        : 35 items
 
 BY PRIORITY:
 🔴 HIGH    : 4 items
 🟡 NORMAL  : 11 items
-🟢 LOW     : 1 items
+🟢 LOW     : 1 item
 
 ═══════════════════════════════════════════════════════════════════════════
                            HIGH PRIORITY ITEMS
@@ -73,43 +79,32 @@ BY PRIORITY:
    Client: AGI Company
 
 ═══════════════════════════════════════════════════════════════════════════
+                         PENDING ACKNOWLEDGMENTS
+═══════════════════════════════════════════════════════════════════════════
+
+The following agents have pending Executive Handbook acknowledgments:
+• QORA, RALPH, SPINDLE, VELUM, SCRIBBLE, MILL, FEELIX
+• REDACTOR, FIBER, BOXTRON
+
+All require signature to complete governance compliance.
+
+═══════════════════════════════════════════════════════════════════════════
                            SYSTEM HEALTH STATUS
 ═══════════════════════════════════════════════════════════════════════════
 
 Component               | Status    | Details
 ------------------------+-----------+----------------------------------------
-Complete Brain v4.1     | RUNNING   | Heart 72 BPM, Intestines active
-Mission Control v2      | RUNNING   | Error absorption, Port 8080
-Daily Cron              | SCHEDULED | Next run: Tomorrow 13:23 UTC
-Brain Cycles            | ~293K     | Cognition operational
-Queue Status            | 8 items   | Patricia managing
-GitHub Commits          | 25+       | All repos synced
-Security                | SECURED   | Credentials in env vars
-
-═══════════════════════════════════════════════════════════════════════════
-                             DATA & METRICS
-═══════════════════════════════════════════════════════════════════════════
-
-• Queue Items: 8 active (7 HIGH, 1 MEDIUM priority)
-• Lead Scraper: Multiple batches completed (US states + Mexico provinces)
-• Agent Files: 126 total in system
-• Issues Resolved Today: 9
-• Open Issues: 1 (kRACKEN CLI source needed)
-
-═══════════════════════════════════════════════════════════════════════════
-                              AGENT CONTACTS
-═══════════════════════════════════════════════════════════════════════════
-
-• PATRICIA  - Process Excellence Officer (Queue management)
-• SPINDLE   - CTO (Technical review, architecture)
-• MIKE      - Property development
-• MILES     - Sales & Operations (that's me! 🚀)
-• QORA      - Strategic vision & prioritization
+Complete Brain v4.1     | RUNNING   | Heartbeat operational
+Mission Control v2      | RUNNING   | Port 8080 active
+Queue Status            | 61 items  | Patricia managing
+Reports                 | 35 items  | Multiple agents contributing
+Security                | SECURED   | Environment configured
 
 ═══════════════════════════════════════════════════════════════════════════
 
-Patricia has 8 active items on her plate, all aligned with THIS BEAST BHSI v4.1
-framework. Top priorities are Dusty Wallet and AGI Company Website.
+Patricia's queue currently has 61 active items. The Lead Scraper Queue (59 
+items) dominates the workload, with core production items and compliance 
+tracking remaining as HIGH priority.
 
 All systems operational. Standing by for Captain's directives.
 
