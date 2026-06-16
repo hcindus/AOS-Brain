@@ -28,6 +28,7 @@ brain:
       - "ollama:antoniohudnall/Mortimer"
     specialized:
       mortimer: "antoniohudnall/Mortimer"
+      ternary_bonsai: "ternary-bonsai"
     gguf_dir: "~/.aos/models"
     ollama:
       pfc_left: "qwen2.5:3b"
@@ -35,6 +36,11 @@ brain:
       cereb: "phi3:latest"
       embedder: "bge-small"
       tiny: "tiny-llm"
+    ternary:
+      enabled: true
+      bridge_url: "http://localhost:11435"
+      bonsai_model: "/root/bonsai-8b-q1_0.gguf"
+      fallback_to_ollama: true
 
   layers:
     subconscious:

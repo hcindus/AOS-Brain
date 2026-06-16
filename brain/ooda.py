@@ -12,6 +12,7 @@ from subconscious import SubconsciousLayer
 from unconscious import UnconsciousLayer
 from memory_bridge import MemoryBridge
 from memory_bootstrap import patch_hippocampus_for_resilience
+from dice import Dice
 
 class OODA:
     def __init__(self, cfg):
@@ -41,6 +42,9 @@ class OODA:
         self._index_thread.start()
         
         self.state_writer = StateWriter(self.cfg["state_path"])
+        
+        # 4. Initialize Dice (Quantum Intuition Organ)
+        self.dice = Dice()
         
         # Tracking for error calculation
         self.last_prediction = None
@@ -116,6 +120,14 @@ class OODA:
         basal_stats = self.basal.get_stats()
         nn_state = basal_stats["nn_state"]
         
+        # DICE: Auto-roll every 100 ticks for entropy harvesting
+        if self.tick_count % 100 == 0:
+            try:
+                # Quick entropy roll - just generate random state
+                self.dice.roll(["tick", "rest", "explore", "focus"])
+            except Exception as e:
+                print(f"[Dice] Entropy roll error: {e}")
+        
         # Write state for Visualizer
         state = {
             "phase": "Act",
@@ -142,6 +154,10 @@ class OODA:
                 "complexity": complexity,
                 "novelty": novelty,
                 "growth_triggered": self.basal.should_add_node(novelty, error) or self.basal.should_add_layer(complexity)
+            },
+            "dice": {
+                "last_roll": self.dice.get_last(),
+                "total_rolls": len(self.history)
             }
         }
         

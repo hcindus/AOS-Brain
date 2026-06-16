@@ -1,5 +1,8 @@
 import numpy as np
 import time
+import sys
+sys.path.insert(0, "/root/.openclaw/workspace/aoscros_brain/brain")
+from rl_core import AgentRL, RewardSignal
 
 class BasalAgent:
     def __init__(self, cfg):
@@ -26,6 +29,12 @@ class BasalAgent:
         # Complexity tracking
         self.complexity_scores = []
         
+        # RL Integration
+        self.rl = AgentRL(f"basal_{id(self)}")
+        self.reward_signal = RewardSignal()
+        self.last_action_taken = None
+        self.action_history = []
+        
     def execute(self, action, affect):
         """Execute action and track outcomes for error calculation."""
         # Store action for later outcome comparison
@@ -36,6 +45,10 @@ class BasalAgent:
         print(f"[Basal] Executing: {action.get('type', 'unknown')}")
         
         return {"status": "executed", "action": action}
+    
+    def _get_available_actions(self):
+        """Get list of available actions for RL"""
+        return ["move", "gather", "build", "attack", "defend", "trade", "explore", "rest", "communicate"]
 
     def track_error(self, predicted_outcome, actual_outcome):
         """

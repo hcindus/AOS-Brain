@@ -30,8 +30,26 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from brain.ternary_ooda import TernaryOodaBrain, Observation
 from brain.cortex import QMDAwareCortex
+from brain.pattern_recognition import PatternRecognizer, get_recognizer, get_insight
 from substrate.graph_store import GraphStore
 from visualizer.brain_visualizer import BrainVisualizer
+
+# Import VisualCortex (from parent brain/ directory)
+import numpy as np
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "brain"))
+try:
+    from visual_cortex import VisualCortex
+    HAS_VISUAL_CORTEX = True
+except ImportError as e:
+    HAS_VISUAL_CORTEX = False
+    VisualCortex = None
+    print(f"[Vision] Not available: {e}")
+
+# Initialize Visual Cortex
+visual_cortex = VisualCortex(width=320, height=240) if HAS_VISUAL_CORTEX else None
+
+# Pattern recognizer singleton
+pattern_recognizer = PatternRecognizer()
 
 
 # =========================
@@ -329,6 +347,24 @@ def think():
     # Run OODA cycle
     thought = b.tick(obs)
     
+    # Analyze patterns in input
+    patterns = pattern_recognizer.analyze_message(text, {"agent": agent, "source": source})
+    pattern_summary = [p.name for p in patterns]
+    
+    # Get accumulated insight
+    insight = pattern_recognizer.get_insight()
+    
+    # Store patterns to memory
+    if patterns:
+        for p in patterns:
+            pattern_recognizer._store_memory("subcon", {
+                "pattern_detected": p.name,
+                "type": p.pattern_type,
+                "confidence": p.confidence,
+                "source": source,
+                "agent": agent
+            })
+    
     # Build response
     response = {
         "tick": tick_counter,
@@ -345,6 +381,9 @@ def think():
             "mid_term": len(b.mid_term),
             "substrate": b.substrate.get_stats(),
         },
+        "patterns": pattern_summary,
+        "insight": insight,
+        "pattern_count": len(patterns),
     }
     
     # Write state for visualizer
@@ -372,6 +411,81 @@ def get_sheet_state():
     """Get cortical sheet state."""
     s = get_sheet()
     return jsonify(s.summarize())
+
+
+@app.route('/patterns', methods=['GET'])
+def get_patterns():
+    """Get detected patterns and insights."""
+    patterns = pattern_recognizer.detect_meta_patterns()
+    insight = pattern_recognizer.get_insight()
+    history = pattern_recognizer.session_history[-10:]
+    
+    return jsonify({
+        "patterns": [{"name": p.name, "type": p.pattern_type, "confidence": p.confidence, "count": p.occurrence_count} for p in patterns],
+        "insight": insight,
+        "session_history": history,
+        "pattern_count": len(patterns),
+        "total_interactions": len(pattern_recognizer.session_history),
+    })
+
+
+@app.route('/patterns/analyze', methods=['POST'])
+def analyze_patterns():
+    """Analyze text for patterns."""
+    data = request.get_json() or {}
+    text = data.get("text", "")
+    
+    if not text:
+        return jsonify({"error": "empty_text"}), 400
+    
+    patterns = pattern_recognizer.analyze_message(text, data.get("context", {}))
+    
+    return jsonify({
+        "patterns": [{"name": p.name, "type": p.pattern_type, "confidence": p.confidence} for p in patterns],
+        "pattern_count": len(patterns),
+        "insight": pattern_recognizer.get_insight(),
+    })
+
+
+@app.route('/vision', methods=['POST'])
+def process_vision():
+    """Process frame through Visual Cortex."""
+    if not visual_cortex:
+        return jsonify({"error": "VisualCortex not available"}), 503
+    
+    data = request.get_json() or {}
+    frame_data = data.get("frame", [])
+    
+    # Convert frame data to numpy array
+    if frame_data and len(frame_data) > 0:
+        frame = np.array(frame_data, dtype=np.uint8)
+        if len(frame.shape) == 1:
+            # Flattened array - need to reshape
+            h, w = data.get("height", 240), data.get("width", 320)
+            if len(frame) == h * w * 3:
+                frame = frame.reshape((h, w, 3))
+            elif len(frame) == h * w:
+                frame = frame.reshape((h, w))
+        perception = visual_cortex.process_frame(frame)
+    else:
+        # Generate test frame
+        frame = np.random.randint(0, 255, (240, 320, 3), dtype=np.uint8)
+        perception = visual_cortex.process_frame(frame)
+    
+    return jsonify({
+        "status": "ok",
+        "perception": perception,
+        "visual_cortex": "active" if visual_cortex else "inactive"
+    })
+
+
+@app.route('/vision/status', methods=['GET'])
+def vision_status():
+    """Get Visual Cortex status."""
+    return jsonify({
+        "available": visual_cortex is not None,
+        "streams": ["v1_geometry_motion", "v2_objects_affordances", "v3_narrative_prediction"] if visual_cortex else []
+    })
 
 
 # =========================

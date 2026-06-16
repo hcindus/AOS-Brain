@@ -20,6 +20,14 @@ from collections import deque
 # Import embedding orchestrator
 from embedding_orchestrator import get_orchestrator, EmbeddingConfig
 
+# Import Visual Cortex
+try:
+    from visual_cortex import VisualCortex
+    HAS_VISUAL_CORTEX = True
+except ImportError:
+    HAS_VISUAL_CORTEX = False
+    print("[AOSv3] VisualCortex not available")
+
 
 @dataclass
 class BrainState:
@@ -257,6 +265,13 @@ class AOSBrainv3:
         # State
         self.tick_count = 0
         self.phase = "Observe"
+        
+        # Visual Cortex (if available)
+        if HAS_VISUAL_CORTEX:
+            self.visual_cortex = VisualCortex(width=320, height=240)
+            print("[AOSv3] VisualCortex initialized")
+        else:
+            self.visual_cortex = None
         
         # Load existing state
         self._load_state()
