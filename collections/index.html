@@ -980,6 +980,12 @@
             document.getElementById('count-overdue').textContent = overdue.length;
             document.getElementById('count-due-soon').textContent = unpaid.filter(i => i.days <= 0 && i.days >= -14).length;
             document.getElementById('count-current').textContent = current.length;
+            
+            // Update paid count if element exists
+            const paidCountEl = document.getElementById('count-paid');
+            if (paidCountEl) {
+                paidCountEl.textContent = paid.length;
+            }
 
             // Update subtitle to show paid count
             const subtitle = document.querySelector('.page-subtitle');
