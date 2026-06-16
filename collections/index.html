@@ -596,6 +596,9 @@
                 <div class="logo-text">Collections Department</div>
             </div>
             <div class="header-actions" style="display: flex; gap: 1rem; align-items: center;">
+                <button class="btn btn-secondary" onclick="clearCacheAndReload()" style="display: flex; align-items: center; gap: 0.5rem;">
+                    🧹 Clear Cache
+                </button>
                 <button class="btn btn-secondary" onclick="refreshData()" style="display: flex; align-items: center; gap: 0.5rem;">
                     <span id="refresh-icon">🔄</span> Refresh
                 </button>
@@ -952,8 +955,13 @@
 
         function openLetter(invoiceId) {
             const invoice = invoices.find(i => i.invoice === invoiceId);
-            if (!invoice) return;
+            if (!invoice) {
+                console.error('Invoice not found:', invoiceId);
+                showToast('❌ Invoice not found');
+                return;
+            }
             
+            console.log('Generating letter for:', invoice.customer, '| Address:', invoice.address);
             document.getElementById('letterContent').innerHTML = generateReminderLetter(invoice);
             document.getElementById('letterModal').classList.add('active');
         }
@@ -1034,6 +1042,15 @@
             const current = unpaid.filter(i => i.days < -7);
             const paid = invoices.filter(i => i.paid);
 
+            console.log('=== Collections Stats Debug ===');
+            console.log('Total invoices:', invoices.length);
+            console.log('Unpaid:', unpaid.length, 'Total:', total);
+            console.log('Critical (>30):', critical.length, '=', critical.reduce((s,i)=>s+i.amount,0));
+            console.log('Overdue (1-30):', overdue.length, '=', overdue.reduce((s,i)=>s+i.amount,0));
+            console.log('Due Soon (-7 to 0):', dueSoon.length, '=', dueSoon.reduce((s,i)=>s+i.amount,0));
+            console.log('Current (<-7):', current.length, '=', current.reduce((s,i)=>s+i.amount,0));
+            console.log('Paid:', paid.length);
+
             document.getElementById('total-outstanding').textContent = formatCurrency(total);
             document.getElementById('overdue-count').textContent = overdue.length + critical.length;
             document.getElementById('due-this-week').textContent = dueSoon.length;
@@ -1108,18 +1125,42 @@
             }
         }
 
+        // Clear cache and reload from embedded data
+        function clearCacheAndReload() {
+            if (confirm('Clear all local changes (paid status, edited addresses) and reload fresh data from Squarespace?')) {
+                localStorage.removeItem('collections_invoices');
+                invoices = EMBEDDED_INVOICES.map(inv => ({...inv}));
+                updateStats();
+                const activeFilter = document.querySelector('.filter-tab.active').dataset.filter;
+                renderTable(activeFilter);
+                showToast('✅ Cache cleared! Fresh data loaded from Squarespace.');
+            }
+        }
+
         // Refresh data (reload from server or reset)
         async function refreshData() {
             const refreshIcon = document.getElementById('refresh-icon');
             refreshIcon.style.animation = 'spin 1s linear infinite';
             
-            // Simulate refresh delay
-            await new Promise(r => setTimeout(r, 1000));
+            // Reload from embedded data and merge with localStorage
+            invoices = EMBEDDED_INVOICES.map(inv => ({...inv}));
             
-            // Reload from localStorage (or could fetch from API)
+            // Merge with localStorage paid status and edits
             const saved = localStorage.getItem('collections_invoices');
             if (saved) {
-                invoices = JSON.parse(saved);
+                const savedData = JSON.parse(saved);
+                invoices.forEach(inv => {
+                    const savedInv = savedData.find(s => s.invoice === inv.invoice);
+                    if (savedInv && savedInv.paid) {
+                        inv.paid = true;
+                        inv.paidDate = savedInv.paidDate;
+                        inv.paidAmount = savedInv.paidAmount;
+                    }
+                    if (savedInv && savedInv.address !== inv.address && savedInv.edited) {
+                        inv.address = savedInv.address;
+                        inv.edited = true;
+                    }
+                });
             }
             
             updateStats();
@@ -1202,10 +1243,11 @@
             const newAddress = prompt('Enter new address:', invoice.address);
             if (newAddress && newAddress !== invoice.address) {
                 invoice.address = newAddress;
+                invoice.edited = true; // Mark as edited so it persists
                 localStorage.setItem('collections_invoices', JSON.stringify(invoices));
                 const activeFilter = document.querySelector('.filter-tab.active').dataset.filter;
                 renderTable(activeFilter);
-                showToast('✅ Address updated!');
+                showToast('✅ Address updated! Letter will use new address.');
             }
         }
 
