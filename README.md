@@ -1,5 +1,7 @@
 # AOS Brain v4.5 — Complete Brain Architecture
 
+**Updated 2026-05-16:** Integrated 15-layer Agent Kung Fu Standard (strategy, literature, science, psychology, ethics, historical patterns, and practical execution).
+
 **Autonomous Operations System with Ternary Organ Pipeline**
 
 [![Status: Active](https://img.shields.io/badge/status-active-brightgreen.svg)]()
@@ -11,6 +13,8 @@
 
 **Live Monitor:** [myl0nr0s.cloud/brain.html](https://myl0nr0s.cloud/brain.html)  
 **Contact:** [miles@myl0nr0s.cloud](mailto:miles@myl0nr0s.cloud)
+
+**New Operating Standard:** Agent Kung Fu v1.0 (15 layers) — fully integrated into Mortimer and available to all agents.
 
 ---
 

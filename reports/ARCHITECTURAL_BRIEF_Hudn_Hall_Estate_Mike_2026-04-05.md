@@ -89,6 +89,24 @@
 - Energy infrastructure coordination
 - Scaled construction phasing
 
+### 🪨 Stone Fireplace — Hudn Hall Main Estate
+
+**Type:** Masonry Stone Fireplace ( Rumford-style recommended)
+- **Description:** Classic stone-masonry fireplace with tall, narrow firebox for efficient heat output
+- **Benefits:** Radiates mass-stored heat, long-lasting, aesthetic centerpieces
+- **Components:** Stone veneer/masonry, firebox, chimney, hearth, damper
+- **Estimated Cost:** $8,000-$20,000 (materials + labor depending on stone)
+
+**Alternative: Stone- Veneer Fireplace**
+- **Cost:** $3,000-$8,000 (veneer over frame)
+- **Look:** Real stone appearance, lighter structure
+
+**Considerations:**
+- **Location:** Central great room for max heat distribution
+- **Chimney:** Full-height for proper draft
+- **Heat reclaim:** Ducted or radiant floor integration possible
+- **Permits:** May require inspection for chimney/firebox
+
 ---
 
 ### Structure C: A-Frame Cabin (Alternative/Additional)
@@ -152,6 +170,31 @@ Platform/Deck:                      To be designed
 - Foundation: Elevated or grade-level?
 - Timeline: 8-12 week yurt lead time
 
+### 🔥 Heating Options — Yurt
+
+**Option A: Rocket Mass Heater (Recommended)**
+- **Description:** Efficient wood-fired mass heater with cob/rock thermal mass
+- **Benefits:** 80-90% efficiency, burns little wood, radiates steady heat for hours
+- **Components:** Firebox, heat exchange bench (cob/rock), chimney
+- **Estimated Cost:** $1,500-$3,000 (DIY) / $4,000-$6,000 (prefab)
+- **Installation:** Requires foundation + thermal mass bench
+
+**Option B: Wood Stove (Traditional)**
+- **Description:** Cast iron or steel wood-burning stove
+- **Benefits:** Reliable, traditional aesthetic, various size options
+- **Components:** Stove unit, chimney pipe, hearth floor, heat shields
+- **Estimated Cost:** $800-$2,500 (stove only) + $500-$1,000 (install)
+- **Installation:** Requires hearth, proper clearances, chimney
+
+**Option C: Marine Heater (Compact)**
+- **Description:** Diesel/propane cabin heater (Webasto, Espar style)
+- **Benefits:** Compact, quiet, thermostat-controlled, efficient
+- **Components:** Heater unit, fuel tank, exhaust, thermostat
+- **Estimated Cost:** $1,200-$2,500 (unit) + $500-$800 (install)
+- **Installation:** Requires fuel supply, exhaust venting
+
+**Recommendation:** For high desert (cold winters), rocket mass heater or wood stove provides best value and off-grid capability. Marine heater good secondary option.
+
 ---
 
 ### Structure F: Water Shed (16' × 16')
@@ -211,6 +254,28 @@ Materials List:
 - See Water Shed (Structure F)
 - Supplementary to well
 - 1,200 gal/year capacity
+
+### 🌙 Half-Moon Ditch System — Supplemental Water Harvesting
+**Source:** Traditional method, proven in Senegal's Sahel (Great Green Wall project)
+
+**Method:**
+- Shallow elongated trench with straight side for water inflow
+- Curved/rounded embankment side to hold water in place
+- Slows water flow → promotes soil infiltration → recharges groundwater
+
+**Benefits:**
+- **Infiltration:** Embankment slows water, lets it seep into ground
+- **Storage:** Rounded side holds water temporarily for dry periods
+- **Groundwater recharge:** Replenishes water table over time
+- **Low cost/minimal tech:** Basic tools + local materials only
+
+**Application for Hudn Hall:**
+- Position ditches to intercept rainfall/runoff from structures
+- Dig in rainy season, maintain embankments to prevent erosion
+- Start small: A few half-moon ditches can improve water retention significantly
+- Complements Water Shed: Adds groundwater recharge to roof collection
+
+**Real-World Result:** Transformed barren Sahel wasteland into productive farmland
 
 ### Power System
 **Solar Options:**

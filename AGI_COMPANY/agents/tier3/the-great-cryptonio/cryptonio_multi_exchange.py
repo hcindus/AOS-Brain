@@ -103,17 +103,17 @@ class Config:
         ))
     
     # ═════════════════════════════════════════════════════════
-    # GEMINI
+# GEMINI - DISABLED (invalid API key)
     # ═════════════════════════════════════════════════════════
-    if os.getenv('GEMINI_API_KEY'):
-        EXCHANGES.append(ExchangeConfig(
-            exchange_type=ExchangeType.GEMINI,
-            name="gemini_main",
-            api_key=os.getenv('GEMINI_API_KEY', ''),
-            api_secret=os.getenv('GEMINI_API_SECRET', ''),
-            priority=2,
-            is_active=True
-        ))
+#    if os.getenv('GEMINI_API_KEY'):
+#        EXCHANGES.append(ExchangeConfig(
+#            exchange_type=ExchangeType.GEMINI,
+#            name="gemini_main",
+#            api_key=os.getenv('GEMINI_API_KEY', ''),
+#            api_secret=os.getenv('GEMINI_API_SECRET', ''),
+#            priority=2,
+#            is_active=True
+#        ))
     
     # ═════════════════════════════════════════════════════════
     # KRAKEN (Full Implementation Ready)
@@ -436,9 +436,49 @@ class GeminiClient(BaseExchangeClient):
         return pd.DataFrame()
     
     def get_balance(self, asset: str) -> float:
-        # Placeholder
-        logger.warning(f"[{self.name}] Balance fetch not yet implemented")
-        return 0.0
+        if not self.is_connected:
+            return 0.0
+        
+        try:
+            import base64
+            import hmac
+            import hashlib
+            
+            nonce = int(time.time() * 1000)
+            import json
+            payload = {"request": "/v1/balances", "nonce": nonce}
+            payload_b64 = base64.b64encode(json.dumps(payload).encode()).decode()
+            
+            signature = hmac.new(
+                self.config.api_secret.encode(),
+                payload_b64.encode(),
+                hashlib.sha384
+            ).hexdigest()
+            
+            headers = {
+                "Content-Type": "text/plain",
+                "X-GEMINI-APIKEY": self.config.api_key,
+                "X-GEMINI-PAYLOAD": payload_b64,
+                "X-GEMINI-SIGNATURE": signature
+            }
+            
+            response = requests.post(f"{self.BASE_URL}/balances", headers=headers, timeout=10)
+            result = response.json()
+            
+            if isinstance(result, dict) and result.get('result') == 'error':
+                logger.error(f"[{self.name}] Balance error: {result}")
+                return 0.0
+            
+            # Find asset balance
+            for item in result:
+                if item.get('currency', '').upper() == asset.upper():
+                    return float(item.get('balance', '0'))
+            
+            return 0.0
+        
+        except Exception as e:
+            logger.error(f"[{self.name}] Balance error: {e}")
+            return 0.0
     
     def place_market_order(self, symbol: str, side: str, quantity: float,
                           stop_loss: Optional[float] = None,
