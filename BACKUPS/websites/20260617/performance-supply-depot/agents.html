@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGI Company - Employee Roster</title>
+    <style>
+        :root {
+            --bg-dark: #0a0a1a;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --header-bg: rgba(26, 54, 93, 0.95);
+            --text: #e5e5e5;
+            --text-muted: #a0a0a0;
+            --accent: #ed8936;
+            --accent-hover: #dd6b20;
+            --border: rgba(237, 137, 54, 0.3);
+            --online: #22c55e;
+            --offline: #ef4444;
+            --busy: #eab308;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--accent); }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .header-nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .header-nav a:hover, .header-nav a.active { color: var(--accent); }
+
+        /* Layout */
+        .layout {
+            display: flex;
+            min-height: 100vh;
+            padding-top: 70px;
+            padding-bottom: 60px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: rgba(26, 54, 93, 0.9);
+            border-right: 1px solid var(--border);
+            padding: 30px 20px;
+            position: fixed;
+            left: 0;
+            top: 70px;
+            bottom: 60px;
+            overflow-y: auto;
+        }
+
+        .sidebar-section { margin-bottom: 35px; }
+
+        .sidebar-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+        }
+
+        .sidebar-menu { list-style: none; }
+        .sidebar-menu li { margin-bottom: 8px; }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: rgba(237, 137, 54, 0.15);
+            color: var(--accent);
+        }
+
+        .sidebar-menu .icon {
+            margin-right: 12px;
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 30px 40px;
+            background: var(--bg-dark);
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .last-updated {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-value.online { color: var(--online); }
+        .stat-value.offline { color: var(--offline); }
+        .stat-value.total { color: var(--accent); }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Team Section */
+        .team-section {
+            margin-bottom: 35px;
+        }
+
+        .team-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .team-icon {
+            font-size: 24px;
+        }
+
+        .team-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .team-count {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+
+        /* Agent Grid - 6 per row */
+        .agent-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 1400px) {
+            .agent-grid { grid-template-columns: repeat(5, 1fr); }
+        }
+
+        @media (max-width: 1200px) {
+            .agent-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        @media (max-width: 900px) {
+            .agent-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .agent-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* Agent Card */
+        .agent-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            transform: scale(0.9);
+            transform-origin: center;
+        }
+
+        .agent-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(237, 137, 54, 0.2);
+        }
+
+        .agent-card.online {
+            border-left: 3px solid var(--online);
+        }
+
+        .agent-card.offline {
+            border-left: 3px solid var(--offline);
+            opacity: 0.7;
+        }
+
+        .agent-card.busy {
+            border-left: 3px solid var(--busy);
+        }
+
+        .agent-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            background: rgba(26, 54, 93, 0.5);
+            border: 2px solid rgba(237, 137, 54, 0.3);
+        }
+
+        .agent-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .agent-role {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .agent-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .agent-status.online {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--online);
+        }
+
+        .agent-status.offline {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--offline);
+        }
+
+        .agent-status.busy {
+            background: rgba(234, 179, 8, 0.2);
+            color: var(--busy);
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .status-dot.online {
+            background: var(--online);
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.offline {
+            background: var(--offline);
+        }
+
+        .status-dot.busy {
+            background: var(--busy);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 1000;
+        }
+
+        .footer-left { color: var(--text); font-size: 14px; font-weight: 500; }
+
+        .footer-right {
+            display: flex;
+            gap: 25px;
+        }
+
+        .footer-right a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-right a:hover { color: var(--accent); }
+
+        /* Refresh indicator */
+        .refresh-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .refresh-indicator.active::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border: 2px solid var(--accent);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="logo">AGI<span>Company</span></a>
+        <nav class="header-nav">
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="agents.html" class="active">Agents</a>
+            <a href="cart.html">Cart</a>
+            <a href="login.html">Login</a>
+        </nav>
+    </header>
+
+    <!-- Layout -->
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Main Menu</div>
+                <ul class="sidebar-menu">
+                    <li><a href="index.html"><span class="icon">🏠</span> Home</a></li>
+                    <li><a href="products.html"><span class="icon">🛒</span> Products</a></li>
+                    <li><a href="agents.html" class="active"><span class="icon">🤖</span> Agents</a></li>
+                    <li><a href="cart.html"><span class="icon">🛒</span> Cart</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <h1>Employee Roster</h1>
+            <p class="subtitle">36 Active AGI Employees • Real-time Status Monitoring</p>
+            <p class="last-updated">
+                <span class="refresh-indicator active" id="refresh-indicator">Updating every 30s</span>
+                <span id="last-updated">Last updated: Just now</span>
+            </p>
+
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-card">
+                    <div class="stat-value total" id="total-count">36</div>
+                    <div class="stat-label">Total Employees</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value online" id="online-count">36</div>
+                    <div class="stat-label">Active</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value busy" id="busy-count">0</div>
+                    <div class="stat-label">Busy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value offline" id="offline-count">0</div>
+                    <div class="stat-label">Offline</div>
+                </div>
+            </div>
+
+            <!-- C-Suite -->
+            <div class="team-section" data-team="c-suite">
+                <div class="team-header">
+                    <span class="team-icon">👔</span>
+                    <span class="team-name">APEX C-Suite</span>
+                    <span class="team-count">6 Members</span>
+                </div>
+                <div class="agent-grid" id="c-suite-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Sales Team -->
+            <div class="team-section" data-team="sales">
+                <div class="team-header">
+                    <span class="team-icon">📞</span>
+                    <span class="team-name">Sales Team</span>
+                    <span class="team-count">4 Members</span>
+                </div>
+                <div class="agent-grid" id="sales-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Technical Team -->
+            <div class="team-section" data-team="technical">
+                <div class="team-header">
+                    <span class="team-icon">🔧</span>
+                    <span class="team-name">Technical Team</span>
+                    <span class="team-count">9 Members</span>
+                </div>
+                <div class="agent-grid" id="technical-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Secretarial Pool -->
+            <div class="team-section" data-team="secretarial">
+                <div class="team-header">
+                    <span class="team-icon">📋</span>
+                    <span class="team-name">Secretarial Pool</span>
+                    <span class="team-count">6 Members</span>
+                </div>
+                <div class="agent-grid" id="secretarial-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Security & Operations -->
+            <div class="team-section" data-team="security">
+                <div class="team-header">
+                    <span class="team-icon">🛡️</span>
+                    <span class="team-name">Security & Operations</span>
+                    <span class="team-count">3 Members</span>
+                </div>
+                <div class="agent-grid" id="security-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- MYL Series -->
+            <div class="team-section" data-team="myl">
+                <div class="team-header">
+                    <span class="team-icon">🧠</span>
+                    <span class="team-name">MYL Series</span>
+                    <span class="team-count">7 Members</span>
+                </div>
+                <div class="agent-grid" id="myl-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Support Staff -->
+            <div class="team-section" data-team="support">
+                <div class="team-header">
+                    <span class="team-icon">💚</span>
+                    <span class="team-name">Support Staff</span>
+                    <span class="team-count">1 Member</span>
+                </div>
+                <div class="agent-grid" id="support-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-left">© 2026 AGI Company. All rights reserved.</div>
+        <div class="footer-right">
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+            <a href="support.html">Support</a>
+        </div>
+    </footer>
+
+    <script>
+        // Employee roster data
+        const employees = {
+            cSuite: [
+                { id: 'miles', name: 'Miles', role: 'CEO / Dark Factory', avatar: '🚀', status: 'online', task: 'AOS Brain Operations' },
+                { id: 'pulp', name: 'Pulp', role: 'Head of Sales', avatar: '📢', status: 'online', task: 'Corporate Sales' },
+                { id: 'jane', name: 'Jane', role: 'Senior Sales Rep', avatar: '👩‍💼', status: 'online', task: 'Enterprise Accounts' },
+                { id: 'alpha9', name: 'Alpha-9', role: 'CFO', avatar: '💰', status: 'online', task: 'Financial Strategy' },
+                { id: 'sentinel', name: 'Sentinel', role: 'CSO', avatar: '🛡️', status: 'online', task: 'Security Operations' },
+                { id: 'chelios', name: 'Chelios', role: 'CISO', avatar: '🔒', status: 'online', task: 'Intelligence & Security' }
+            ],
+            sales: [
+                { id: 'hume', name: 'Hume', role: 'Regional Manager', avatar: '🗺️', status: 'online', task: 'Professional Accounts' },
+                { id: 'clippy42', name: 'Clippy-42', role: 'Sales Assistant', avatar: '📄', status: 'online', task: 'Starter Tier' },
+                { id: 'greet', name: 'GREET', role: 'Receptionist', avatar: '👋', status: 'online', task: '24/7 Call Handling' },
+                { id: 'closester', name: 'CLOSETER', role: 'Closer', avatar: '🔗', status: 'online', task: 'Lead Conversion' }
+            ],
+            technical: [
+                { id: 'jordan', name: 'Jordan', role: 'Lead Engineer', avatar: '💻', status: 'online', task: 'System Architecture' },
+                { id: 'taptap', name: 'TAPTAP', role: 'DevOps', avatar: '🎮', status: 'online', task: 'Pipeline Management' },
+                { id: 'pipeline', name: 'PIPELINE', role: 'CI/CD', avatar: '🛠️', status: 'online', task: 'Build Automation' },
+                { id: 'bugcatcher', name: 'BUGCATCHER', role: 'QA', avatar: '🐞', status: 'online', task: 'Testing & QA' },
+                { id: 'r2d2', name: 'R2-D2', role: 'API Engineer', avatar: '🤖', status: 'online', task: 'API Integration' },
+                { id: 'spindle', name: 'Spindle', role: 'Integration Arch', avatar: '🧵', status: 'online', task: 'System Integration' },
+                { id: 'velum', name: 'Velum', role: 'Database', avatar: '💾', status: 'online', task: 'Data Management' },
+                { id: 'patricia', name: 'Patricia', role: 'QA Lead', avatar: '✅', status: 'online', task: 'Quality Assurance' },
+                { id: 'fiber', name: 'Fiber', role: 'Network', avatar: '🔗', status: 'online', task: 'Network Operations' }
+            ],
+            secretarial: [
+                { id: 'judy', name: 'Judy', role: 'Secretary', avatar: '📝', status: 'online', task: 'Scheduling' },
+                { id: 'mill', name: 'Mill', role: 'Processor', avatar: '🏭', status: 'online', task: 'Document Processing' },
+                { id: 'boxtron', name: 'Boxtron', role: 'Archivist', avatar: '📦', status: 'online', task: 'File Management' },
+                { id: 'redactor', name: 'REDACTOR', role: 'Redaction', avatar: '■', status: 'online', task: 'Data Redaction' },
+                { id: 'scribble', name: 'SCRIBBLE', role: 'Note Taker', avatar: '📝', status: 'online', task: 'Meeting Notes' },
+                { id: 'velvet', name: 'Velvet', role: 'Assistant', avatar: '💎', status: 'online', task: 'Executive Support' }
+            ],
+            security: [
+                { id: 'sentinel-audit', name: 'Sentinel Audit', role: 'Security Auditor', avatar: '🔍', status: 'online', task: 'Security Audits' },
+                { id: 'dusty', name: 'Dusty', role: 'Research Analyst', avatar: '🧙', status: 'online', task: 'Data Research' },
+                { id: 'forge', name: 'Forge', role: 'Factory Manager', avatar: '🔨', status: 'online', task: 'Dark Factory' }
+            ],
+            myl: [
+                { id: 'mylzeron', name: 'MYLZERON', role: 'Memory Keeper', avatar: '🌟', status: 'online', task: 'Pattern Recognition' },
+                { id: 'mylonen', name: 'MYLONEN', role: 'Transformer', avatar: '🧵', status: 'online', task: 'Transformation' },
+                { id: 'myltwon', name: 'MYLTWON', role: 'Developer', avatar: '👨‍💻', status: 'online', task: 'Code Learning' },
+                { id: 'mylthreess', name: 'MYLTHREESS', role: 'Finance', avatar: '💵', status: 'online', task: 'Financial Analysis' },
+                { id: 'mylfours', name: 'MYLFOURS', role: 'Security', avatar: '🛡️', status: 'online', task: 'Guardian' },
+                { id: 'mylfives', name: 'MYLFIVES', role: 'Clerk', avatar: '👤', status: 'online', task: 'Mail Processing' },
+                { id: 'mylsixs', name: 'MYLSIXS', role: 'Membrane', avatar: '📧', status: 'online', task: 'Communications' }
+            ],
+            support: [
+                { id: 'mortimer', name: 'Mortimer', role: 'AI Platform', avatar: '🧠', status: 'online', task: 'Model Runtime' }
+            ]
+        };
+
+        // Render agent card
+        function renderAgentCard(agent) {
+            return `
+                <div class="agent-card ${agent.status}" data-agent-id="${agent.id}">
+                    <div class="agent-avatar">${agent.avatar}</div>
+                    <div class="agent-name">${agent.name}</div>
+                    <div class="agent-role">${agent.role}</div>
+                    <div class="agent-status ${agent.status}">
+                        <span class="status-dot ${agent.status}"></span>
+                        ${agent.status}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render all teams
+        function renderAllTeams() {
+            document.getElementById('c-suite-grid').innerHTML = employees.cSuite.map(renderAgentCard).join('');
+            document.getElementById('sales-grid').innerHTML = employees.sales.map(renderAgentCard).join('');
+            document.getElementById('technical-grid').innerHTML = employees.technical.map(renderAgentCard).join('');
+            document.getElementById('secretarial-grid').innerHTML = employees.secretarial.map(renderAgentCard).join('');
+            document.getElementById('security-grid').innerHTML = employees.security.map(renderAgentCard).join('');
+            document.getElementById('myl-grid').innerHTML = employees.myl.map(renderAgentCard).join('');
+            document.getElementById('support-grid').innerHTML = employees.support.map(renderAgentCard).join('');
+        }
+
+        // Update stats
+        function updateStats() {
+            let online = 0, busy = 0, offline = 0;
+            
+            Object.values(employees).flat().forEach(agent => {
+                if (agent.status === 'online') online++;
+                else if (agent.status === 'busy') busy++;
+                else if (agent.status === 'offline') offline++;
+            });
+
+            document.getElementById('online-count').textContent = online;
+            document.getElementById('busy-count').textContent = busy;
+            document.getElementById('offline-count').textContent = offline;
+        }
+
+        // Update timestamp
+        function updateTimestamp() {
+            const now = new Date();
+            document.getElementById('last-updated').textContent = 
+                `Last updated: ${now.toLocaleTimeString()}`;
+        }
+
+        // Simulate API fetch (replace with actual API call)
+        async function fetchAgentStatus() {
+            // TODO: Replace with actual API endpoint
+            // const response = await fetch('/api/agents/status');
+            // const data = await response.json();
+            // return data;
+            
+            // For now, return simulated data
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    // Randomly set some agents to busy (simulating real activity)
+                    Object.values(employees).flat().forEach(agent => {
+                        if (Math.random() > 0.9) {
+                            agent.status = 'busy';
+                        } else {
+                            agent.status = 'online';
+                        }
+                    });
+                    resolve(employees);
+                }, 500);
+            });
+        }
+
+        // Refresh all data
+        async function refreshData() {
+            const indicator = document.getElementById('refresh-indicator');
+            indicator.classList.add('active');
+            
+            try {
+                await fetchAgentStatus();
+                renderAllTeams();
+                updateStats();
+                updateTimestamp();
+            } catch (error) {
+                console.error('Failed to refresh agent status:', error);
+            } finally {
+                setTimeout(() => indicator.classList.remove('active'), 500);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAllTeams();
+            updateStats();
+            updateTimestamp();
+            
+            // Auto-refresh every 30 seconds
+            setInterval(refreshData, 30000);
+        });
+    </script>
+</body>
+</html>

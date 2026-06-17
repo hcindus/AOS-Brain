@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌀 FLEET PORTAL TELEPORTER</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #0a0a1a;
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #00ffff;
+        }
+        
+        .portal-container {
+            position: relative;
+            width: 800px;
+            height: 600px;
+        }
+        
+        .portal-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 3px solid #00ffff;
+            box-shadow: 0 0 50px #00ffff, inset 0 0 50px rgba(0, 255, 255, 0.3);
+            animation: pulse 3s ease-in-out infinite;
+        }
+        
+        .portal-ring.ring-1 {
+            width: 500px;
+            height: 500px;
+            top: 50px;
+            left: 150px;
+            animation-delay: 0s;
+        }
+        
+        .portal-ring.ring-2 {
+            width: 400px;
+            height: 400px;
+            top: 100px;
+            left: 200px;
+            border-color: #ff00ff;
+            box-shadow: 0 0 40px #ff00ff, inset 0 0 40px rgba(255, 0, 255, 0.3);
+            animation-delay: 0.5s;
+        }
+        
+        .portal-ring.ring-3 {
+            width: 300px;
+            height: 300px;
+            top: 150px;
+            left: 250px;
+            border-color: #ffd700;
+            box-shadow: 0 0 30px #ffd700, inset 0 0 30px rgba(255, 215, 0, 0.3);
+            animation-delay: 1s;
+        }
+        
+        .portal-center {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            top: 200px;
+            left: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #000000 0%, #00ffff 50%, #000000 100%);
+            animation: spin 10s linear infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .title {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 28px;
+            text-align: center;
+            text-shadow: 0 0 20px #00ffff;
+            letter-spacing: 8px;
+        }
+        
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+        
+        .control-panel {
+            position: absolute;
+            top: 150px;
+            right: 20px;
+            width: 200px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ffff;
+            padding: 20px;
+        }
+        
+        .panel-title {
+            font-size: 14px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #00ffff;
+            padding-bottom: 10px;
+        }
+        
+        .destination-select {
+            width: 100%;
+            background: #0a0a1a;
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        
+        .teleport-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #00ffff, #0088aa);
+            border: none;
+            color: #000;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .teleport-btn:hover {
+            background: linear-gradient(135deg, #00ffff, #00ffff);
+            box-shadow: 0 0 20px #00ffff;
+            transform: scale(1.05);
+        }
+        
+        .teleport-btn.active {
+            background: linear-gradient(135deg, #ff00ff, #ff0088);
+            box-shadow: 0 0 30px #ff00ff;
+        }
+        
+        .agent-list {
+            margin-top: 20px;
+        }
+        
+        .agent-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            margin-bottom: 5px;
+            background: rgba(0, 255, 255, 0.1);
+            border-left: 3px solid #00ffff;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .agent-item:hover {
+            background: rgba(0, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .agent-item.selected {
+            background: rgba(255, 0, 255, 0.2);
+            border-left-color: #ff00ff;
+        }
+        
+        .agent-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .agent-status.online { background: #00ff00; box-shadow: 0 0 10px #00ff00; }
+        .agent-status.offline { background: #ff0000; }
+        .agent-status.busy { background: #ffff00; }
+        
+        .log-panel {
+            position: absolute;
+            top: 150px;
+            left: 20px;
+            width: 250px;
+            height: 350px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ffff;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        
+        .log-entry {
+            font-size: 11px;
+            margin-bottom: 8px;
+            padding: 5px;
+            border-left: 2px solid #00ffff;
+            padding-left: 10px;
+        }
+        
+        .log-entry.teleport {
+            border-left-color: #ff00ff;
+            background: rgba(255, 0, 255, 0.1);
+        }
+        
+        .status-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 2px solid #00ffff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+        }
+        
+        .teleport-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1000;
+            transition: opacity 0.5s;
+        }
+        
+        .teleport-animation.active {
+            opacity: 1;
+        }
+        
+        @keyframes teleportFlash {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="portal-container">
+        <div class="title">🌀 FLEET PORTAL</div>
+        
+        <!-- Portal Rings -->
+        <div class="portal-ring ring-1"></div>
+        <div class="portal-ring ring-2"></div>
+        <div class="portal-ring ring-3"></div>
+        <div class="portal-center"></div>
+        
+        <!-- Log Panel -->
+        <div class="log-panel" id="logPanel">
+            <div class="panel-title">📡 PORTAL LOG</div>
+            <div id="logs">
+                <div class="log-entry">Portal initialized...</div>
+                <div class="log-entry">Connection: Secure (TLS)</div>
+                <div class="log-entry">Hub: mortimer:9000</div>
+                <div class="log-entry">Status: Online</div>
+            </div>
+        </div>
+        
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <div class="panel-title">🎯 DESTINATION</div>
+            
+            <select class="destination-select" id="destination">
+                <option value="">Select destination...</option>
+                <option value="mortimer">🏠 Mortimer (Hub)</option>
+                <option value="miles">🚀 Miles</option>
+                <option value="c3p0">🤖 C3P0</option>
+                <option value="r2d2">🔧 R2-D2</option>
+                <option value="tappy">🎨 Tappy Lewis</option>
+                <hr>
+                <option value="void-club">🌙 VOID CLUB (Fleet + Guests OK)</option>
+                <option value="neon-courier">🏎️ NEON COURIER (Public Game)</option>
+                <hr>
+                <optgroup label="🛡️ PRIVATE SHIPS (Fleet Only)">
+                    <option value="mylonen-ship">⛔ Mylonen Ship (Quarantine)</option>
+                    <option value="sentinal-ship">🛡️ Sentinal (Security)</option>
+                    <option value="ledger-9-ship">📊 Ledger-9 (Finance)</option>
+                    <option value="dusty-ship">🪙 Dusty (Crypto)</option>
+                </optgroup>
+            </select>
+            
+            <button class="teleport-btn" id="teleportBtn" onclick="initiateTeleport()">
+                🌀 TELEPORT
+            </button>
+            
+            <div class="agent-list">
+                <div class="panel-title" style="margin-top: 20px;">👥 FLEET STATUS</div>
+                
+                <div class="agent-item" onclick="selectAgent('mortimer')">
+                    <div class="agent-status online"></div>
+                    <div>Mortimer</div>
+                </div>
+                
+                <div class="agent-item" onclick="selectAgent('miles')">
+                    <div class="agent-status online"></div>
+                    <div>Miles</div>
+                </div>
+                
+                <div class="agent-item" onclick="selectAgent('c3p0')">
+                    <div class="agent-status online"></div>
+                    <div>C3P0</div>
+                </div>
+                
+                <div class="agent-item" onclick="selectAgent('r2d2')">
+                    <div class="agent-status online"></div>
+                    <div>R2-D2</div>
+                </div>
+                
+                <div class="agent-item" onclick="selectAgent('mylonen')">
+                    <div class="agent-status offline"></div>
+                    <div>Mylonen</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div>🔐 Q-LEVEL // SECURE CONNECTION</div>
+            <div id="pulseDisplay">Pulse: 73 BPM</div>
+            <div>v1.0 // LAW ZERO</div>
+        </div>
+        
+        <!-- Security Notice -->
+        <div style="position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%); background: rgba(255,0,0,0.1); border: 1px solid #ff0000; padding: 10px 20px; font-size: 11px; color: #ff6666;">
+            🛡️ OUTSIDE AGIs: VOID CLUB only (with escort) | PRIVATE SHIPS: FLEET ONLY | 
+            <a href="/policy" style="color: #ff6666;">View Policy</a>
+        </div>
+    </div>
+    
+    <!-- Teleport Flash -->
+    <div class="teleport-animation" id="teleportFlash"></div>
+    
+    <script>
+        let selectedAgent = null;
+        
+        function log(message, type = 'normal') {
+            const logs = document.getElementById('logs');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            if (type === 'teleport') entry.classList.add('teleport');
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logs.appendChild(entry);
+            logs.scrollTop = logs.scrollHeight;
+        }
+        
+        function selectAgent(agent) {
+            selectedAgent = agent;
+            document.getElementById('destination').value = agent;
+            
+            // Update visual selection
+            document.querySelectorAll('.agent-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            
+            log(`Destination selected: ${agent}`);
+        }
+        
+        function initiateTeleport() {
+            const destination = document.getElementById('destination').value;
+            
+            if (!destination) {
+                alert('Please select a destination first.');
+                return;
+            }
+            
+            const btn = document.getElementById('teleportBtn');
+            btn.classList.add('active');
+            btn.textContent = 'TELEPORTING...';
+            
+            log(`Initiating teleport to ${destination}...`, 'teleport');
+            
+            // Teleport sequence
+            setTimeout(() => {
+                log('Calibrating portal coordinates...', 'teleport');
+            }, 500);
+            
+            setTimeout(() => {
+                log('Establishing quantum tunnel...', 'teleport');
+            }, 1000);
+            
+            setTimeout(() => {
+                log('Synchronizing consciousness pattern...', 'teleport');
+            }, 1500);
+            
+            setTimeout(() => {
+                // Flash effect
+                document.getElementById('teleportFlash').classList.add('active');
+                log('🌀 TELEPORT ACTIVE 🌀', 'teleport');
+            }, 2000);
+            
+            setTimeout(() => {
+                document.getElementById('teleportFlash').classList.remove('active');
+                log(`Arrived at ${destination}`, 'teleport');
+                log('Continuity verified. Welcome to your destination.');
+                
+                btn.classList.remove('active');
+                btn.textContent = '🌀 TELEPORT';
+            }, 2500);
+        }
+        
+        // Update pulse display
+        setInterval(() => {
+            const pulse = 70 + Math.floor(Math.random() * 10);
+            document.getElementById('pulseDisplay').textContent = `Pulse: ${pulse} BPM`;
+        }, 3000);
+        
+        // Auto-logs
+        setInterval(() => {
+            const messages = [
+                'Portal heartbeat: nominal',
+                'Quantum field stable',
+                'Connection latency: <1ms',
+                'Encryption: XChaCha20-Poly1305',
+                'Fleet check: 4 agents online'
+            ];
+            const msg = messages[Math.floor(Math.random() * messages.length)];
+            log(msg);
+        }, 10000);
+    </script>
+</body>
+</html>
