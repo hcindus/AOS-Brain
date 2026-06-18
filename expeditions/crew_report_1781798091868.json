@@ -1,0 +1,71 @@
+{
+  "timestamp": "2026-06-18T15:54:51.867Z",
+  "summary": {
+    "total": 5,
+    "active": 5
+  },
+  "members": [
+    {
+      "name": "Vex",
+      "role": "PILOT",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 310500,
+      "status": "ACTIVE",
+      "missions": 2050,
+      "discoveries": 2050
+    },
+    {
+      "name": "Nyx",
+      "role": "ENGINEER",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 310750,
+      "status": "ACTIVE",
+      "missions": 2055,
+      "discoveries": 2055
+    },
+    {
+      "name": "Jax",
+      "role": "SCIENTIST",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 307950,
+      "status": "ACTIVE",
+      "missions": 1999,
+      "discoveries": 1999
+    },
+    {
+      "name": "Luna",
+      "role": "COMBAT",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 308800,
+      "status": "ACTIVE",
+      "missions": 2016,
+      "discoveries": 2016
+    },
+    {
+      "name": "Aria",
+      "role": "MEDIC",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 312350,
+      "status": "ACTIVE",
+      "missions": 2087,
+      "discoveries": 2087
+    }
+  ],
+  "highlights": [
+    "Vex discovered Nebula Cloud",
+    "Nyx discovered Ancient Ruins",
+    "Jax discovered Ancient Ruins",
+    "Luna discovered Unknown Signal",
+    "Aria discovered Unknown Signal"
+  ]
+}
