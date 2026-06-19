@@ -1,0 +1,35 @@
+=== Security Audit Fri Jun 19 02:00:07 UTC 2026 ===
+System: Miles.brain.cloud
+Auditor: Chelios
+
+SSH Configuration:
+#PasswordAuthentication yes
+# PasswordAuthentication.  Depending on your PAM configuration,
+# PAM authentication, then enable this but set PasswordAuthentication
+PermitRootLogin yes
+
+Active Ports:
+LISTEN 0      511          0.0.0.0:443        0.0.0.0:*    users:(("nginx",pid=3227507,fd=8),("nginx",pid=3227506,fd=8),("nginx",pid=3227505,fd=8),("nginx",pid=3227504,fd=8),("nginx",pid=3043611,fd=8))     
+LISTEN 0      511          0.0.0.0:80         0.0.0.0:*    users:(("nginx",pid=3227507,fd=9),("nginx",pid=3227506,fd=9),("nginx",pid=3227505,fd=9),("nginx",pid=3227504,fd=9),("nginx",pid=3043611,fd=9))     
+LISTEN 0      4096         0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=3130708,fd=3),("systemd",pid=1,fd=124))                                                                                         
+LISTEN 0      100          0.0.0.0:8767       0.0.0.0:*    users:(("python3",pid=3147331,fd=6))                                                                                                               
+LISTEN 0      5          127.0.0.1:8085       0.0.0.0:*    users:(("python3",pid=2779974,fd=3))                                                                                                               
+LISTEN 0      2048         0.0.0.0:8082       0.0.0.0:*    users:(("python3",pid=2764410,fd=13))                                                                                                              
+LISTEN 0      5            0.0.0.0:8080       0.0.0.0:*    users:(("python3",pid=1926169,fd=3))                                                                                                               
+LISTEN 0      2048         0.0.0.0:8081       0.0.0.0:*    users:(("python3",pid=2764447,fd=13))                                                                                                              
+LISTEN 0      5            0.0.0.0:8001       0.0.0.0:*    users:(("python3",pid=1925783,fd=3))                                                                                                               
+LISTEN 0      511             [::]:443           [::]:*    users:(("nginx",pid=3227507,fd=7),("nginx",pid=3227506,fd=7),("nginx",pid=3227505,fd=7),("nginx",pid=3227504,fd=7),("nginx",pid=3043611,fd=7))     
+LISTEN 0      511             [::]:80            [::]:*    users:(("nginx",pid=3227507,fd=10),("nginx",pid=3227506,fd=10),("nginx",pid=3227505,fd=10),("nginx",pid=3227504,fd=10),("nginx",pid=3043611,fd=10))
+LISTEN 0      4096            [::]:22            [::]:*    users:(("sshd",pid=3130708,fd=4),("systemd",pid=1,fd=126))                                                                                         
+
+Recent Failed Logins:
+2026-06-19T00:58:29.461699+00:00 Miles sshd[3284968]: Failed password for invalid user test from 91.92.40.231 port 56098 ssh2
+2026-06-19T01:01:36.577531+00:00 Miles sshd[3285271]: Failed password for invalid user test from 91.92.40.231 port 57556 ssh2
+2026-06-19T01:04:39.393838+00:00 Miles sshd[3285577]: Failed password for invalid user test from 91.92.40.231 port 43402 ssh2
+2026-06-19T01:07:49.205833+00:00 Miles sshd[3286027]: Failed password for invalid user test from 91.92.40.231 port 38084 ssh2
+2026-06-19T01:10:45.310727+00:00 Miles sshd[3286314]: Failed password for invalid user test from 91.92.40.231 port 54802 ssh2
+2026-06-19T01:13:44.303939+00:00 Miles sshd[3286597]: Failed password for invalid user test from 91.92.40.231 port 40398 ssh2
+2026-06-19T01:16:36.397858+00:00 Miles sshd[3286972]: Failed password for invalid user test from 91.92.40.231 port 41778 ssh2
+2026-06-19T01:19:36.997346+00:00 Miles sshd[3287369]: Failed password for invalid user test from 91.92.40.231 port 36356 ssh2
+2026-06-19T01:45:08.131883+00:00 Miles sshd[3290008]: Failed password for invalid user u0_a28 from 24.130.30.182 port 47500 ssh2
+2026-06-19T01:45:08.324782+00:00 Miles sshd[3290008]: Failed password for invalid user u0_a28 from 24.130.30.182 port 47500 ssh2
