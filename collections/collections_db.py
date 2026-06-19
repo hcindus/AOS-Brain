@@ -33,7 +33,7 @@ class CollectionsDB:
                 invoice_id TEXT UNIQUE NOT NULL,
                 customer_name TEXT,
                 amount REAL,
-                status TEXT CHECK(status IN ('Paid', 'Unpaid', 'Overdue', 'Draft', 'Canceled', 'Payment pending', 'Undelivered')),
+                status TEXT CHECK(status IN ('Paid', 'Unpaid', 'Overdue', 'Draft', 'Canceled', 'Payment pending', 'Undelivered', 'Refunded')),
                 invoice_date TEXT,
                 due_date TEXT,
                 paid_date TEXT,
