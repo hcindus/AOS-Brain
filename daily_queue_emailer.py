@@ -21,7 +21,7 @@ def send_daily_queue_report():
     recipient = "Antonio.hudnall@gmail.com"
     
     # Email content
-    subject = "📊 Daily Queue Report - June 16, 2026"
+    subject = f"📊 Daily Queue Report - {datetime.now().strftime('%B %d, %Y')}"
     
     # Get current date for the report
     current_date = datetime.now().strftime("%A, %B %d, %Y")
