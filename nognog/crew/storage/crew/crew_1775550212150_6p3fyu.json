@@ -3,7 +3,7 @@
   "name": "Vex",
   "role": "PILOT",
   "level": 5,
-  "xp": 315116,
+  "xp": 315645,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 10,
     "combat": 10
   },
-  "missionsCompleted": 2074,
+  "missionsCompleted": 2076,
   "discoveries": [
     {
       "name": "Anomalous Planet",
@@ -10388,6 +10388,16 @@
       "name": "Derelict Ship",
       "location": "Alpha-1",
       "timestamp": 1781898551354
+    },
+    {
+      "name": "Space Anomaly",
+      "location": "Alpha-1",
+      "timestamp": 1781911646363
+    },
+    {
+      "name": "Nebula Cloud",
+      "location": "Alpha-1",
+      "timestamp": 1781912822560
     }
   ],
   "status": "ACTIVE",
