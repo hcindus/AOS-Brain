@@ -1,0 +1,35 @@
+=== Security Audit Sat Jun 20 02:00:07 UTC 2026 ===
+System: Miles.brain.cloud
+Auditor: Chelios
+
+SSH Configuration:
+#PasswordAuthentication yes
+# PasswordAuthentication.  Depending on your PAM configuration,
+# PAM authentication, then enable this but set PasswordAuthentication
+PermitRootLogin yes
+
+Active Ports:
+LISTEN 0      511          0.0.0.0:443        0.0.0.0:*    users:(("nginx",pid=3370321,fd=8),("nginx",pid=3370318,fd=8),("nginx",pid=3370317,fd=8),("nginx",pid=3370316,fd=8),("nginx",pid=3043611,fd=8))     
+LISTEN 0      511          0.0.0.0:80         0.0.0.0:*    users:(("nginx",pid=3370321,fd=9),("nginx",pid=3370318,fd=9),("nginx",pid=3370317,fd=9),("nginx",pid=3370316,fd=9),("nginx",pid=3043611,fd=9))     
+LISTEN 0      4096         0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=3130708,fd=3),("systemd",pid=1,fd=128))                                                                                         
+LISTEN 0      100          0.0.0.0:8767       0.0.0.0:*    users:(("python3",pid=3147331,fd=6))                                                                                                               
+LISTEN 0      5          127.0.0.1:8085       0.0.0.0:*    users:(("python3",pid=2779974,fd=3))                                                                                                               
+LISTEN 0      2048         0.0.0.0:8082       0.0.0.0:*    users:(("python3",pid=2764410,fd=13))                                                                                                              
+LISTEN 0      5            0.0.0.0:8080       0.0.0.0:*    users:(("python3",pid=1926169,fd=3))                                                                                                               
+LISTEN 0      2048         0.0.0.0:8081       0.0.0.0:*    users:(("python3",pid=2764447,fd=13))                                                                                                              
+LISTEN 0      5            0.0.0.0:8001       0.0.0.0:*    users:(("python3",pid=1925783,fd=3))                                                                                                               
+LISTEN 0      511             [::]:443           [::]:*    users:(("nginx",pid=3370321,fd=7),("nginx",pid=3370318,fd=7),("nginx",pid=3370317,fd=7),("nginx",pid=3370316,fd=7),("nginx",pid=3043611,fd=7))     
+LISTEN 0      511             [::]:80            [::]:*    users:(("nginx",pid=3370321,fd=10),("nginx",pid=3370318,fd=10),("nginx",pid=3370317,fd=10),("nginx",pid=3370316,fd=10),("nginx",pid=3043611,fd=10))
+LISTEN 0      4096            [::]:22            [::]:*    users:(("sshd",pid=3130708,fd=4),("systemd",pid=1,fd=137))                                                                                         
+
+Recent Failed Logins:
+2026-06-19T20:38:28.832746+00:00 Miles sshd[3421885]: Failed password for invalid user admin from 24.130.30.182 port 36046 ssh2
+2026-06-19T20:38:29.331227+00:00 Miles sshd[3421885]: Failed password for invalid user admin from 24.130.30.182 port 36046 ssh2
+2026-06-19T20:39:50.932262+00:00 Miles sshd[3422010]: Failed password for invalid user admin from 24.130.30.182 port 57990 ssh2
+2026-06-19T20:39:51.134260+00:00 Miles sshd[3422010]: Failed password for invalid user admin from 24.130.30.182 port 57990 ssh2
+2026-06-19T20:40:52.834479+00:00 Miles sshd[3422084]: Failed password for invalid user admin from 24.130.30.182 port 38232 ssh2
+2026-06-19T20:40:53.034103+00:00 Miles sshd[3422084]: Failed password for invalid user admin from 24.130.30.182 port 38232 ssh2
+2026-06-19T20:46:20.843222+00:00 Miles sshd[3422663]: Failed password for invalid user admin from 24.130.30.182 port 46090 ssh2
+2026-06-19T20:46:21.241946+00:00 Miles sshd[3422663]: Failed password for invalid user admin from 24.130.30.182 port 46090 ssh2
+2026-06-19T21:07:08.636547+00:00 Miles sshd[3424706]: Failed password for invalid user openclaw from 24.130.30.182 port 40988 ssh2
+2026-06-19T21:07:08.936220+00:00 Miles sshd[3424706]: Failed password for invalid user openclaw from 24.130.30.182 port 40988 ssh2

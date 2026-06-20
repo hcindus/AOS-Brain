@@ -340,8 +340,8 @@ See CREAM in action (15 minutes)
 ## SALES INTELLIGENCE
 
 ### Realtor Lead Database
-**47,000+ Qualified Prospects** in our active database
+**7,000+ Qualified Prospects** in our active database
 - **1,000 new prospects added daily**
 - Priority A markets: NY, LA, Chicago, Dallas, Houston, Atlanta, Phoenix, Miami, Seattle, Denver
 - Filtered by transaction volume, experience, and CREAM fit score
-- Updated: June 19, 2026
+- Updated: June 20, 2026
