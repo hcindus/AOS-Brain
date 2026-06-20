@@ -1,0 +1,56 @@
+# Vault - Never commit credentials
+.aos/vault/
+*.pem
+*.key
+.env
+secrets.json
+Myl0n.R0s
+Myl0n.R0s
+
+# Wallet private keys - NEVER commit
+*_WALLET_PRIVATE_KEY.json
+AGI_COMPANY/wallets/*_PRIVATE_KEY.json
+wallets/*_PRIVATE_KEY.json
+
+# System files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.openclaw/
+node_modules/
+package-lock.json
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+
+# Large archives
+archive/backups/
+*.mp4
+*.mov
+*.avi
+
+# Data files that should be generated
+logs/*.log
+*.pid
+*.sock
+*.db-shm
+*.db-wal
+*.db-journal
+
+# Duplicate folder (previously committed)
+AOS/
+labs/bonsai-quant-lab/models/Bonsai-8B-Q1_0.gguf
+labs/bonsai-quant-lab/models/.cache/huggingface/download/*.gguf.metadata
+
+# Skip slow directories for git status
+cream-web/node_modules/
+AGI_COMPANY_WEBSITE_REBUILD/
+expeditions/2026-06-01/
+
+# Auto-generated agent reports (hundreds of files generated per session)
+agent_sandboxes/patricia/reports/factory_assessment_*.json
+agent_sandboxes/*/reports/factory_assessment_*.json
