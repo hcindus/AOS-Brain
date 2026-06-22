@@ -1,0 +1,71 @@
+{
+  "timestamp": "2026-06-22T12:55:00.166Z",
+  "summary": {
+    "total": 5,
+    "active": 5
+  },
+  "members": [
+    {
+      "name": "Vex",
+      "role": "PILOT",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 326580,
+      "status": "ACTIVE",
+      "missions": 2149,
+      "discoveries": 2149
+    },
+    {
+      "name": "Nyx",
+      "role": "ENGINEER",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 327480,
+      "status": "ACTIVE",
+      "missions": 2167,
+      "discoveries": 2167
+    },
+    {
+      "name": "Jax",
+      "role": "SCIENTIST",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 323630,
+      "status": "ACTIVE",
+      "missions": 2090,
+      "discoveries": 2090
+    },
+    {
+      "name": "Luna",
+      "role": "COMBAT",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 324830,
+      "status": "ACTIVE",
+      "missions": 2114,
+      "discoveries": 2114
+    },
+    {
+      "name": "Aria",
+      "role": "MEDIC",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 329330,
+      "status": "ACTIVE",
+      "missions": 2204,
+      "discoveries": 2204
+    }
+  ],
+  "highlights": [
+    "Vex discovered Unknown Signal",
+    "Nyx discovered Ancient Ruins",
+    "Jax discovered Hidden Base",
+    "Luna discovered Rare Minerals",
+    "Aria discovered Hidden Base"
+  ]
+}
