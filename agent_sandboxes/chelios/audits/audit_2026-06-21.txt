@@ -1,0 +1,25 @@
+=== Security Audit Sun Jun 21 02:00:07 UTC 2026 ===
+System: Miles.brain.cloud
+Auditor: Chelios
+
+SSH Configuration:
+#PasswordAuthentication yes
+# PasswordAuthentication.  Depending on your PAM configuration,
+# PAM authentication, then enable this but set PasswordAuthentication
+PermitRootLogin yes
+
+Active Ports:
+LISTEN 0      511          0.0.0.0:443        0.0.0.0:*    users:(("nginx",pid=3593536,fd=8),("nginx",pid=3593535,fd=8),("nginx",pid=3593534,fd=8),("nginx",pid=3593533,fd=8),("nginx",pid=3043611,fd=8))     
+LISTEN 0      511          0.0.0.0:80         0.0.0.0:*    users:(("nginx",pid=3593536,fd=9),("nginx",pid=3593535,fd=9),("nginx",pid=3593534,fd=9),("nginx",pid=3593533,fd=9),("nginx",pid=3043611,fd=9))     
+LISTEN 0      4096         0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=3130708,fd=3),("systemd",pid=1,fd=120))                                                                                         
+LISTEN 0      100          0.0.0.0:8767       0.0.0.0:*    users:(("python3",pid=3481849,fd=6))                                                                                                               
+LISTEN 0      5          127.0.0.1:8085       0.0.0.0:*    users:(("python3",pid=3453557,fd=3))                                                                                                               
+LISTEN 0      2048         0.0.0.0:8082       0.0.0.0:*    users:(("python3",pid=3453466,fd=13))                                                                                                              
+LISTEN 0      5            0.0.0.0:8080       0.0.0.0:*    users:(("python3",pid=1926169,fd=3))                                                                                                               
+LISTEN 0      2048         0.0.0.0:8081       0.0.0.0:*    users:(("python3",pid=3453580,fd=13))                                                                                                              
+LISTEN 0      5            0.0.0.0:8001       0.0.0.0:*    users:(("python3",pid=1925783,fd=3))                                                                                                               
+LISTEN 0      511             [::]:443           [::]:*    users:(("nginx",pid=3593536,fd=7),("nginx",pid=3593535,fd=7),("nginx",pid=3593534,fd=7),("nginx",pid=3593533,fd=7),("nginx",pid=3043611,fd=7))     
+LISTEN 0      511             [::]:80            [::]:*    users:(("nginx",pid=3593536,fd=10),("nginx",pid=3593535,fd=10),("nginx",pid=3593534,fd=10),("nginx",pid=3593533,fd=10),("nginx",pid=3043611,fd=10))
+LISTEN 0      4096            [::]:22            [::]:*    users:(("sshd",pid=3130708,fd=4),("systemd",pid=1,fd=121))                                                                                         
+
+Recent Failed Logins:
