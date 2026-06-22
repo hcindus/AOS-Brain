@@ -1,0 +1,71 @@
+{
+  "timestamp": "2026-06-21T16:54:58.461Z",
+  "summary": {
+    "total": 5,
+    "active": 5
+  },
+  "members": [
+    {
+      "name": "Vex",
+      "role": "PILOT",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 322936,
+      "status": "ACTIVE",
+      "missions": 2124,
+      "discoveries": 2124
+    },
+    {
+      "name": "Nyx",
+      "role": "ENGINEER",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 323736,
+      "status": "ACTIVE",
+      "missions": 2140,
+      "discoveries": 2140
+    },
+    {
+      "name": "Jax",
+      "role": "SCIENTIST",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 320286,
+      "status": "ACTIVE",
+      "missions": 2071,
+      "discoveries": 2071
+    },
+    {
+      "name": "Luna",
+      "role": "COMBAT",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 321586,
+      "status": "ACTIVE",
+      "missions": 2097,
+      "discoveries": 2097
+    },
+    {
+      "name": "Aria",
+      "role": "MEDIC",
+      "level": 5,
+      "health": "150/150",
+      "energy": 0,
+      "xp": 325286,
+      "status": "ACTIVE",
+      "missions": 2171,
+      "discoveries": 2171
+    }
+  ],
+  "highlights": [
+    "Vex discovered Nebula Cloud",
+    "Nyx discovered Hidden Base",
+    "Jax discovered Hidden Base",
+    "Luna discovered Nebula Cloud",
+    "Aria discovered Unknown Signal"
+  ]
+}
