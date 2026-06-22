@@ -24,17 +24,22 @@ def send(cmd, params=None):
         
         msg = json.dumps(request).encode()
         # Use length-prefixed message if the brain expects it
-        sock.sendall(msg + b'\n')
+        # Check if message ends with newline
+        if not msg.endswith(b'\n'):
+            msg += b'\n'
+        sock.sendall(msg)
         
         # Wait for response with timeout
-        sock.settimeout(5)
+        sock.settimeout(8)  # Increased timeout for brain processing
         response = b''
         start_time = time.time()
-        while time.time() - start_time < 5:
+        while time.time() - start_time < 8:
             try:
                 chunk = sock.recv(4096)
                 if not chunk:
-                    break
+                    if response:  # Got partial data but connection closed
+                        break
+                    continue
                 response += chunk
                 # Check if we have valid JSON
                 try:
@@ -123,10 +128,16 @@ def main():
     
     refreshed = []
     
-    # Refresh if needed
-    if sub_before < 10:
-        print("\nRefreshing subconscious...")
-        for content, intensity in SUBCONSCIOUS_REFRESH:
+    # Always maintain minimum levels - refresh proactively
+    TARGET_SUBCONSCIOUS = 25
+    TARGET_UNCONSCIOUS = 30
+    
+    if sub_before < TARGET_SUBCONSCIOUS:
+        items_to_add = TARGET_SUBCONSCIOUS - sub_before
+        print(f"\nRefreshing subconscious... (adding {items_to_add} items)")
+        for i, (content, intensity) in enumerate(SUBCONSCIOUS_REFRESH):
+            if i >= items_to_add:
+                break
             result = send("add_to_layer", {
                 "layer": "subconscious",
                 "content": content,
@@ -137,9 +148,12 @@ def main():
                 refreshed.append(f"sub:{content[:20]}")
             time.sleep(0.05)
     
-    if unc_before < 15:
-        print("Refreshing unconscious...")
-        for content, intensity in UNCONSCIOUS_REFRESH:
+    if unc_before < TARGET_UNCONSCIOUS:
+        items_to_add = TARGET_UNCONSCIOUS - unc_before
+        print(f"Refreshing unconscious... (adding {items_to_add} items)")
+        for i, (content, intensity) in enumerate(UNCONSCIOUS_REFRESH):
+            if i >= items_to_add:
+                break
             result = send("add_to_layer", {
                 "layer": "unconscious",
                 "content": content,
@@ -178,7 +192,7 @@ def main():
     print(f"\nSubconscious: {(sub_after/sub_capacity)*100:.1f}%")
     print(f"Unconscious:  {(unc_after/unc_capacity)*100:.1f}%")
     
-    if sub_after >= 10 and unc_after >= 15:
+    if sub_after >= TARGET_SUBCONSCIOUS and unc_after >= TARGET_UNCONSCIOUS:
         print("\n✅ Layers healthy and active")
     else:
         print("\n⚠️  Layers need attention")
