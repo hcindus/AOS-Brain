@@ -16,12 +16,14 @@ COMPETITORS = [
     {
         "name": "WebstaurantStore",
         "url": "https://www.webstaurantstore.com",
+        "search_url": "https://www.webstaurantstore.com/search/thermal-paper-3-1-8.html",
         "search_term": "thermal paper 3 1/8 x 230",
-        "price_selector": ".price"  # May need adjustment
+        "price_selector": ".price"
     },
     {
         "name": "Amazon",
         "url": "https://www.amazon.com",
+        "search_url": "https://www.amazon.com/s?k=thermal+receipt+paper+3+1+8",
         "search_term": "thermal receipt paper 3 1/8",
         "price_selector": ".a-price-whole"
     }
