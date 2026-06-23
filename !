@@ -1,1 +1,2 @@
-fatal: invalid refspec '/dev/null'
+[plugins] plugins.allow is empty; discovered non-bundled plugins may auto-load: openclaw-web-search (/root/.openclaw/extensions/openclaw-web-search/index.ts). Set plugins.allow to explicit trusted ids.
+[plugins] openclaw-web-search: loaded without install/load-path provenance; treat as untracked local code and pin trust via plugins.allow or install records (/root/.openclaw/extensions/openclaw-web-search/index.ts)

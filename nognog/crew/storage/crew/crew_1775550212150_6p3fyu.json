@@ -3,7 +3,7 @@
   "name": "Vex",
   "role": "PILOT",
   "level": 5,
-  "xp": 330371,
+  "xp": 330491,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 10,
     "combat": 10
   },
-  "missionsCompleted": 2177,
+  "missionsCompleted": 2179,
   "discoveries": [
     {
       "name": "Anomalous Planet",
@@ -10903,6 +10903,16 @@
       "name": "Ancient Ruins",
       "location": "Alpha-1",
       "timestamp": 1782204526174
+    },
+    {
+      "name": "Unknown Signal",
+      "location": "Alpha-1",
+      "timestamp": 1782205066391
+    },
+    {
+      "name": "Space Anomaly",
+      "location": "Alpha-1",
+      "timestamp": 1782205366496
     }
   ],
   "status": "ACTIVE",
