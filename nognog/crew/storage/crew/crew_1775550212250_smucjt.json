@@ -3,7 +3,7 @@
   "name": "Jax",
   "role": "SCIENTIST",
   "level": 5,
-  "xp": 327949,
+  "xp": 328019,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 21,
     "combat": 23
   },
-  "missionsCompleted": 2122,
+  "missionsCompleted": 2123,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -10628,6 +10628,11 @@
       "name": "Nebula Cloud",
       "location": "Alpha-1",
       "timestamp": 1782212628400
+    },
+    {
+      "name": "Space Anomaly",
+      "location": "Alpha-1",
+      "timestamp": 1782214939082
     }
   ],
   "status": "ACTIVE",
