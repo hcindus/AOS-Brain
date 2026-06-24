@@ -1,0 +1,35 @@
+=== Security Audit Wed Jun 24 02:00:03 UTC 2026 ===
+System: Miles.brain.cloud
+Auditor: Chelios
+
+SSH Configuration:
+#PasswordAuthentication yes
+# PasswordAuthentication.  Depending on your PAM configuration,
+# PAM authentication, then enable this but set PasswordAuthentication
+PermitRootLogin yes
+
+Active Ports:
+LISTEN 0      511          0.0.0.0:443        0.0.0.0:*    users:(("nginx",pid=4124647,fd=8),("nginx",pid=4124646,fd=8),("nginx",pid=4124645,fd=8),("nginx",pid=4124644,fd=8),("nginx",pid=3963884,fd=8))     
+LISTEN 0      511          0.0.0.0:80         0.0.0.0:*    users:(("nginx",pid=4124647,fd=9),("nginx",pid=4124646,fd=9),("nginx",pid=4124645,fd=9),("nginx",pid=4124644,fd=9),("nginx",pid=3963884,fd=9))     
+LISTEN 0      4096         0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=3130708,fd=3),("systemd",pid=1,fd=124))                                                                                         
+LISTEN 0      100          0.0.0.0:8767       0.0.0.0:*    users:(("python3",pid=3792746,fd=6))                                                                                                               
+LISTEN 0      5          127.0.0.1:8085       0.0.0.0:*    users:(("python3",pid=3453557,fd=3))                                                                                                               
+LISTEN 0      2048         0.0.0.0:8082       0.0.0.0:*    users:(("python3",pid=3453466,fd=13))                                                                                                              
+LISTEN 0      5            0.0.0.0:8080       0.0.0.0:*    users:(("python3",pid=1926169,fd=3))                                                                                                               
+LISTEN 0      2048         0.0.0.0:8081       0.0.0.0:*    users:(("python3",pid=3453580,fd=13))                                                                                                              
+LISTEN 0      5            0.0.0.0:8001       0.0.0.0:*    users:(("python3",pid=1925783,fd=3))                                                                                                               
+LISTEN 0      511             [::]:443           [::]:*    users:(("nginx",pid=4124647,fd=7),("nginx",pid=4124646,fd=7),("nginx",pid=4124645,fd=7),("nginx",pid=4124644,fd=7),("nginx",pid=3963884,fd=7))     
+LISTEN 0      511             [::]:80            [::]:*    users:(("nginx",pid=4124647,fd=10),("nginx",pid=4124646,fd=10),("nginx",pid=4124645,fd=10),("nginx",pid=4124644,fd=10),("nginx",pid=3963884,fd=10))
+LISTEN 0      4096            [::]:22            [::]:*    users:(("sshd",pid=3130708,fd=4),("systemd",pid=1,fd=125))                                                                                         
+
+Recent Failed Logins:
+2026-06-23T03:41:52.664158+00:00 Miles sshd[3939633]: Failed password for invalid user psdepot from 111.228.47.123 port 58656 ssh2
+2026-06-23T09:42:47.767951+00:00 Miles sshd[3999184]: Failed password for invalid user psdepot from 111.228.47.123 port 52612 ssh2
+2026-06-23T11:56:58.573206+00:00 Miles sshd[4027348]: Failed password for root from 111.228.47.123 port 48890 ssh2
+2026-06-23T13:48:42.505243+00:00 Miles sshd[4050521]: Failed password for invalid user psdepot from 111.228.47.123 port 44180 ssh2
+2026-06-23T15:58:42.957015+00:00 Miles sshd[4077661]: Failed password for invalid user psdepot from 111.228.47.123 port 44930 ssh2
+2026-06-23T17:49:05.892159+00:00 Miles sshd[4104341]: Failed password for invalid user psdepot from 111.228.47.123 port 49266 ssh2
+2026-06-23T19:26:36.687905+00:00 Miles sshd[4124975]: Failed password for root from 111.228.47.123 port 54050 ssh2
+2026-06-23T21:19:03.797326+00:00 Miles sshd[4146619]: Failed password for root from 111.228.47.123 port 50816 ssh2
+2026-06-23T23:03:06.208383+00:00 Miles sshd[4166344]: Failed password for invalid user psdepot from 111.228.47.123 port 45294 ssh2
+2026-06-24T00:41:47.064231+00:00 Miles sshd[4188855]: Failed password for root from 111.228.47.123 port 57128 ssh2
