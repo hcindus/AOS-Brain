@@ -3,7 +3,7 @@
   "name": "Vex",
   "role": "PILOT",
   "level": 5,
-  "xp": 334194,
+  "xp": 334262,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 10,
     "combat": 10
   },
-  "missionsCompleted": 2200,
+  "missionsCompleted": 2201,
   "discoveries": [
     {
       "name": "Anomalous Planet",
@@ -11018,6 +11018,11 @@
       "name": "Hidden Base",
       "location": "Alpha-1",
       "timestamp": 1782283724993
+    },
+    {
+      "name": "Nebula Cloud",
+      "location": "Alpha-1",
+      "timestamp": 1782285165298
     }
   ],
   "status": "ACTIVE",
