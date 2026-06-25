@@ -3,7 +3,7 @@
   "name": "Aria",
   "role": "MEDIC",
   "level": 5,
-  "xp": 343201,
+  "xp": 343272,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 17,
     "combat": 23
   },
-  "missionsCompleted": 2304,
+  "missionsCompleted": 2305,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -11538,6 +11538,11 @@
       "name": "Anomalous Planet",
       "location": "Alpha-1",
       "timestamp": 1782397918847
+    },
+    {
+      "name": "Nebula Cloud",
+      "location": "Alpha-1",
+      "timestamp": 1782399328916
     }
   ],
   "status": "ACTIVE",
