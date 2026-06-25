@@ -3,7 +3,7 @@
   "name": "Jax",
   "role": "SCIENTIST",
   "level": 5,
-  "xp": 335760,
+  "xp": 335830,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 21,
     "combat": 23
   },
-  "missionsCompleted": 2181,
+  "missionsCompleted": 2182,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -10923,6 +10923,11 @@
       "name": "Rare Minerals",
       "location": "Alpha-1",
       "timestamp": 1782359574295
+    },
+    {
+      "name": "Ancient Ruins",
+      "location": "Alpha-1",
+      "timestamp": 1782360864495
     }
   ],
   "status": "ACTIVE",
