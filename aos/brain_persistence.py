@@ -180,13 +180,28 @@ class BrainPersistence:
             return None
         
         th = self.brain.thyroid
+        # Thyroid v1.2 uses .hormone for levels and .stats dict for counters
+        if hasattr(th, 'hormone'):
+            ollama_level = th.hormone.ollama_level
+            local_level = th.hormone.local_level
+        else:
+            ollama_level = getattr(th, 'ollama_level', 0.0)
+            local_level = getattr(th, 'local_level', 1.0)
+        
+        if hasattr(th, 'stats'):
+            secretions_today = th.stats.get('secretions_today', 0)
+            total_secretion_time = th.stats.get('total_secretion_time', 0.0)
+        else:
+            secretions_today = getattr(th, 'secretions_today', 0)
+            total_secretion_time = getattr(th, 'total_secretion_time', 0.0)
+        
         return {
-            'state': th.state.value,
-            'ollama_level': th.ollama_level,
-            'local_level': th.local_level,
-            'secretions_today': th.secretions_today,
-            'total_secretion_time': th.total_secretion_time,
-            'baseline_time': th.baseline_time
+            'state': th.state.value if hasattr(th.state, 'value') else str(th.state),
+            'ollama_level': ollama_level,
+            'local_level': local_level,
+            'secretions_today': secretions_today,
+            'total_secretion_time': total_secretion_time,
+            'baseline_time': getattr(th, 'baseline_time', 0.0)
         }
     
     def _save_liver(self) -> Dict:
@@ -195,11 +210,16 @@ class BrainPersistence:
             return None
         
         lv = self.brain.liver
+        # Handle both old naming (filtered_total) and new (filtered_count)
+        filtered = getattr(lv, 'filtered_total', getattr(lv, 'filtered_count', 0))
+        toxic = getattr(lv, 'toxic_neutralized', getattr(lv, 'toxic_count', 0))
+        bile = getattr(lv, 'bile_stored', len(getattr(lv, 'bile', [])))
+        
         return {
-            'state': lv.state.value,
-            'filtered_total': lv.filtered_total,
-            'toxic_neutralized': lv.toxic_neutralized,
-            'bile_stored': lv.bile_stored
+            'state': lv.state.value if hasattr(lv.state, 'value') else str(lv.state),
+            'filtered_total': filtered,
+            'toxic_neutralized': toxic,
+            'bile_stored': bile
         }
     
     def _save_kidneys(self) -> Dict:
@@ -208,13 +228,17 @@ class BrainPersistence:
             return None
         
         kd = self.brain.kidneys
+        # Handle attribute name variations
+        bladder = getattr(kd, 'bladder', [])
+        bladder_len = len(bladder) if isinstance(bladder, list) else 0
+        
         return {
-            'state': kd.state.value,
-            'total_processed': kd.total_processed,
-            'reabsorbed': kd.reabsorbed,
-            'excreted': kd.excreted,
-            'bladder_level': kd.bladder.level,
-            'nutrients_stored': len(kd.nutrient_pool)
+            'state': kd.state.value if hasattr(kd.state, 'value') else str(kd.state),
+            'total_processed': getattr(kd, 'total_processed', 0),
+            'reabsorbed': getattr(kd, 'reabsorbed_count', getattr(kd, 'reabsorbed', 0)),
+            'excreted': getattr(kd, 'excreted_count', getattr(kd, 'excreted', 0)),
+            'bladder_level': bladder_len,
+            'nutrients_stored': len(getattr(kd, 'nutrient_pool', []))
         }
     
     def _save_lungs(self) -> Dict:
@@ -315,9 +339,11 @@ class BrainPersistence:
             return
         
         try:
-            self.brain.tracray.points = list(tracray_data.get('points', []))
+            # TracRay uses 'trajectory' deque, not 'points'
+            trajectory = tracray_data.get('trajectory', tracray_data.get('points', []))
+            self.brain.tracray.trajectory.extend(trajectory)
             self.brain.tracray.episodes = tracray_data.get('episodes', 0)
-            print(f"[BrainPersistence] TracRay restored: {len(self.brain.tracray.points)} points, {self.brain.tracray.episodes} episodes")
+            print(f"[BrainPersistence] TracRay restored: {len(self.brain.tracray.trajectory)} points, {self.brain.tracray.episodes} episodes")
         except Exception as e:
             print(f"[BrainPersistence] TracRay restore warning: {e}")
     
@@ -328,12 +354,16 @@ class BrainPersistence:
         
         try:
             th = self.brain.thyroid
-            th.ollama_level = thyroid_data.get('ollama_level', 0.5)
-            th.local_level = thyroid_data.get('local_level', 0.5)
-            th.secretions_today = thyroid_data.get('secretions_today', 0)
-            th.total_secretion_time = thyroid_data.get('total_secretion_time', 0.0)
+            # Thyroid v1.2 uses .hormone for levels and .stats dict for counters
+            if hasattr(th, 'hormone'):
+                th.hormone.ollama_level = thyroid_data.get('ollama_level', 0.0)
+                th.hormone.local_level = thyroid_data.get('local_level', 1.0)
+            if hasattr(th, 'stats'):
+                th.stats['secretions_today'] = thyroid_data.get('secretions_today', 0)
+                th.stats['total_secretion_time'] = thyroid_data.get('total_secretion_time', 0.0)
             th.baseline_time = thyroid_data.get('baseline_time', 0.0)
-            print(f"[BrainPersistence] Thyroid restored: {thyroid_data.get('secretions_today', 0)} secretions")
+            secretions = thyroid_data.get('secretions_today', 0)
+            print(f"[BrainPersistence] Thyroid restored: {secretions} secretions")
         except Exception as e:
             print(f"[BrainPersistence] Thyroid restore warning: {e}")
     

@@ -39,10 +39,11 @@ class VisionManager:
     Ported from legacy brain architecture
     """
     
-    def __init__(self, camera_id: int = 0, width: int = 640, height: int = 480):
+    def __init__(self, camera_id: int = 0, width: int = 640, height: int = 480, enable_camera: bool = True):
         self.camera_id = camera_id
         self.width = width
         self.height = height
+        self.enable_camera = enable_camera
         
         self.cap = None
         self.is_running = False
@@ -55,13 +56,47 @@ class VisionManager:
         # Feature detection
         self.features_detected = 0
         
-        print(f"[VisionManager] Initialized ({width}x{height})")
+        # Camera availability check (cached)
+        self._camera_available = None
+        self._camera_checked = False
+        
         if not CV2_AVAILABLE:
-            print("[VisionManager] Running in stub mode (no OpenCV)")
+            print("[VisionManager] OpenCV not available - vision in stub mode")
+        elif not enable_camera:
+            print("[VisionManager] Camera disabled by configuration")
+        else:
+            # Check if camera is available
+            self._check_camera_available()
+    
+    def _check_camera_available(self) -> bool:
+        """Check if camera is available (one-time check)"""
+        if self._camera_checked:
+            return self._camera_available
+        
+        self._camera_checked = True
+        
+        try:
+            # Quick check - try to open and immediately release
+            test_cap = cv2.VideoCapture(self.camera_id)
+            if test_cap.isOpened():
+                test_cap.release()
+                self._camera_available = True
+                print(f"[VisionManager] Camera available ({self.width}x{self.height})")
+                return True
+        except Exception:
+            pass
+        
+        self._camera_available = False
+        print("[VisionManager] No camera detected - using stub mode")
+        return False
     
     def open(self) -> bool:
         """Open camera"""
-        if not CV2_AVAILABLE:
+        if not CV2_AVAILABLE or not self.enable_camera:
+            return False
+        
+        # Use cached check result
+        if not self._camera_available:
             return False
         
         try:
@@ -70,12 +105,10 @@ class VisionManager:
             self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
             
             if self.cap.isOpened():
-                print(f"[VisionManager] Camera opened")
                 return True
         except:
             pass
         
-        print("[VisionManager] Failed to open camera")
         return False
     
     def capture_frame(self) -> Optional[VisionFrame]:
@@ -216,13 +249,18 @@ class VisionInterface:
     High-level vision interface for Ternary Brain
     """
     
-    def __init__(self):
-        self.vision_manager = VisionManager()
-        self.enabled = CV2_AVAILABLE
+    def __init__(self, enable_camera=False):
+        # Only enable camera if explicitly requested and available
+        self.vision_manager = VisionManager(enable_camera=enable_camera)
+        self.enabled = CV2_AVAILABLE and enable_camera and self.vision_manager._camera_available
+        self._camera_warned = False  # Track if we've warned about camera
         
     def observe(self) -> Optional[str]:
         """Get visual observation for brain"""
         if not self.enabled:
+            # Only warn once about camera not being available
+            if not self._camera_warned:
+                self._camera_warned = True
             return "Vision not available"
         
         if not self.vision_manager.open():
@@ -246,6 +284,14 @@ class VisionInterface:
         if self.enabled:
             self.vision_manager.open()
             print("[Vision] Continuous capture started")
+    
+    def get_status(self) -> Dict:
+        """Get vision interface status"""
+        return {
+            "enabled": self.enabled,
+            "opencv_available": CV2_AVAILABLE,
+            "camera_available": self.vision_manager._camera_available if self.vision_manager else False
+        }
 
 
 if __name__ == "__main__":

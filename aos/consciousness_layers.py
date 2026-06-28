@@ -206,6 +206,33 @@ class ConsciousnessManager:
         """Formulate insight from unconscious material"""
         return f"insight:{time.time() % 10000:.0f}"
     
+    def get_items(self, layer: str) -> List[Dict]:
+        """Get serialized items from a specific layer (for persistence)"""
+        layer_map = {
+            'conscious': self.conscious,
+            'subconscious': self.subconscious,
+            'unconscious': self.unconscious
+        }
+        
+        if layer not in layer_map:
+            return []
+        
+        items = []
+        for item in layer_map[layer].contents:
+            items.append({
+                'content': str(item.content)[:200],
+                'level': item.level.value if hasattr(item.level, 'value') else str(item.level),
+                'timestamp': item.timestamp,
+                'intensity': item.intensity,
+                'associations': item.associations[:10]
+            })
+        return items
+    
+    @property
+    def cross_talk_count(self) -> int:
+        """Total cross-talk events logged"""
+        return len(self.cross_talk_log)
+    
     def get_cross_talk(self, n: int = 10) -> List[Dict]:
         """Get recent cross-talk between layers"""
         return list(self.cross_talk_log)[-n:]
