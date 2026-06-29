@@ -3,7 +3,7 @@
   "name": "Luna",
   "role": "COMBAT",
   "level": 5,
-  "xp": 356818,
+  "xp": 356888,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 24,
     "combat": 15
   },
-  "missionsCompleted": 2325,
+  "missionsCompleted": 2326,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -11643,6 +11643,11 @@
       "name": "Nebula Cloud",
       "location": "Alpha-1",
       "timestamp": 1782773020483
+    },
+    {
+      "name": "Anomalous Planet",
+      "location": "Alpha-1",
+      "timestamp": 1782776861187
     }
   ],
   "status": "ACTIVE",
