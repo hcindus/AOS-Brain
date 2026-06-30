@@ -1,367 +1,285 @@
 #!/usr/bin/env python3
 """
-8-bit Chiptune SFX Generator
-Generates authentic NES/Game Boy era sound effects
+8-bit Chiptune SFX Generator for Performance Supply Depot Games
+Generates retro game sounds using synthetic waveforms
 """
+
 import numpy as np
 import wave
 import struct
 import os
-import sys
+from pathlib import Path
 
 SAMPLE_RATE = 44100
+AMPLITUDE = 0.5
 
-def save_wav(data, filename):
-    """Save numpy array as 16-bit WAV file"""
-    data = np.clip(data, -1.0, 1.0)
-    data = (data * 32767).astype(np.int16)
-    
-    with wave.open(filename, 'w') as wav:
-        wav.setnchannels(1)
-        wav.setsampwidth(2)
-        wav.setframerate(SAMPLE_RATE)
-        wav.writeframes(data.tobytes())
-    print(f"  Created: {filename}")
+def save_wav(samples, filename, sample_rate=SAMPLE_RATE):
+    """Save numpy array as WAV file"""
+    samples = np.clip(samples, -1.0, 1.0)
+    samples = (samples * 32767).astype(np.int16)
 
-def square_wave(freq, duration, duty=0.5):
-    """Generate square wave with given duty cycle"""
-    t = np.linspace(0, duration, int(SAMPLE_RATE * duration), False)
-    wave = np.sign(np.sin(2 * np.pi * freq * t) + np.cos(np.pi * duty))
-    return wave
+    with wave.open(filename, 'wb') as wav_file:
+        wav_file.setnchannels(1)
+        wav_file.setsampwidth(2)
+        wav_file.setframerate(sample_rate)
+        wav_file.writeframes(samples.tobytes())
 
-def triangle_wave(freq, duration):
-    """Generate triangle wave (NES triangle channel style)"""
-    t = np.linspace(0, duration, int(SAMPLE_RATE * duration), False)
-    wave = 2 * np.abs(2 * ((t * freq) % 1) - 1) - 1
-    return wave
+def generate_jump(duration=0.3):
+    """Rising pitch slide - classic jump sound"""
+    t = np.linspace(0, duration, int(SAMPLE_RATE * duration))
+    freq_start = 150
+    freq_end = 600
+    freq = np.linspace(freq_start, freq_end, len(t))
+    samples = AMPLITUDE * np.sin(2 * np.pi * freq * t) * np.exp(-t * 2)
+    return samples
 
-def noise(duration, seed=None):
-    """Generate white noise (NES noise channel)"""
-    samples = int(SAMPLE_RATE * duration)
-    return np.random.uniform(-1, 1, samples)
+def generate_shoot(duration=0.2):
+    """Quick high pitch pulse - laser/pew sound"""
+    t = np.linspace(0, duration, int(SAMPLE_RATE * duration))
+    freq = 800
+    samples = AMPLITUDE * np.sin(2 * np.pi * freq * t) * np.exp(-t * 15)
+    # Add square wave overtone for 8-bit feel
+    samples += AMPLITUDE * 0.3 * np.sign(np.sin(2 * np.pi * freq * t * 2)) * np.exp(-t * 15)
+    return samples
 
-def apply_envelope(wave, attack, decay, sustain, release, total_duration):
-    """Apply ADSR envelope"""
-    samples = len(wave)
-    envelope = np.zeros(samples)
-    
-    attack_s = int(SAMPLE_RATE * attack)
-    decay_s = int(SAMPLE_RATE * decay)
-    release_s = int(SAMPLE_RATE * release)
-    sustain_s = samples - attack_s - decay_s - release_s
-    
-    if attack_s > 0:
-        envelope[:attack_s] = np.linspace(0, 1, attack_s)
-    if decay_s > 0 and attack_s + decay_s <= samples:
-        envelope[attack_s:attack_s+decay_s] = np.linspace(1, sustain, decay_s)
-    if sustain_s > 0 and attack_s + decay_s + sustain_s <= samples:
-        envelope[attack_s+decay_s:attack_s+decay_s+sustain_s] = sustain
-    if release_s > 0 and samples - release_s >= 0:
-        envelope[-release_s:] = np.linspace(sustain if sustain_s > 0 else 1, 0, release_s)
-    
-    return wave * envelope
+def generate_hit(duration=0.15):
+    """Short noise burst - impact sound"""
+    samples = np.random.uniform(-AMPLITUDE, AMPLITUDE, int(SAMPLE_RATE * duration))
+    # Lowpass filter effect using exponential decay
+    t = np.linspace(0, duration, len(samples))
+    samples *= np.exp(-t * 20)
+    # Add some tone
+    tone = AMPLITUDE * 0.5 * np.sin(2 * np.pi * 200 * t) * np.exp(-t * 15)
+    return samples + tone
 
-def generate_jump():
-    """Quick rising arpeggio for jump"""
-    duration = 0.15
-    t = np.linspace(0, duration, int(SAMPLE_RATE * duration), False)
-    
-    # Frequency slide up
-    start_freq = 150
-    end_freq = 600
-    freq = start_freq + (end_freq - start_freq) * (t / duration)
-    
-    wave = square_wave(0, duration)
-    wave = np.sign(np.sin(2 * np.pi * np.cumsum(freq) / SAMPLE_RATE))
-    
-    # Add vibrato
-    vibrato = 1 + 0.1 * np.sin(2 * np.pi * 30 * t)
-    wave *= vibrato
-    
-    return apply_envelope(wave, 0.01, 0.05, 0.3, 0.09, duration)
-
-def generate_shoot():
-    """Quick descending blip for shoot"""
-    duration = 0.1
-    t = np.linspace(0, duration, int(SAMPLE_RATE * duration), False)
-    
-    start_freq = 800
-    end_freq = 200
-    freq = start_freq - (start_freq - end_freq) * (t / duration)
-    
-    wave = np.sign(np.sin(2 * np.pi * np.cumsum(freq) / SAMPLE_RATE))
-    return apply_envelope(wave, 0.005, 0.02, 0.5, 0.075, duration)
-
-def generate_hit():
-    """Short noise burst for hit"""
-    duration = 0.08
-    wave = noise(duration)
-    
-    # Lowpass filter effect using simple averaging
-    filtered = np.convolve(wave, np.ones(4)/4, mode='same')
-    return apply_envelope(filtered, 0.001, 0.02, 0.0, 0.059, duration)
-
-def generate_powerup():
-    """Ascending magical chime for powerup"""
-    duration = 0.4
-    t = np.linspace(0, duration, int(SAMPLE_RATE * duration), False)
-    
-    # Major chord arpeggio
+def generate_powerup(duration=0.4):
+    """Ascending arpeggio - powerup collect sound"""
+    t = np.linspace(0, duration, int(SAMPLE_RATE * duration))
+    # Arpeggio: C-E-G-C
     notes = [523.25, 659.25, 783.99, 1046.50]  # C5, E5, G5, C6
-    wave = np.zeros_like(t)
-    
+    samples = np.zeros_like(t)
+    segment = len(t) // len(notes)
+
     for i, freq in enumerate(notes):
-        start = int(i * len(t) / len(notes))
-        end = int((i + 1) * len(t) / len(notes))
-        if end > len(t):
-            end = len(t)
-        tone = np.sign(np.sin(2 * np.pi * freq * t[start:end]))
-        tone *= np.linspace(0, 1, len(tone))  # Fade in each note
-        wave[start:end] += tone * 0.25
-    
-    return apply_envelope(wave, 0.01, 0.1, 0.8, 0.29, duration)
+        start = i * segment
+        end = (i + 1) * segment if i < len(notes) - 1 else len(t)
+        t_seg = t[start:end]
+        envelope = np.exp(-(t_seg - t_seg[0]) * 5) if len(t_seg) > 0 else np.array([])
+        samples[start:end] = AMPLITUDE * np.sin(2 * np.pi * freq * t_seg) * envelope
 
-def generate_explosion():
-    """Noise burst with decay for explosion"""
-    duration = 0.3
-    wave = noise(duration)
-    
-    # Heavy lowpass
-    filtered = np.convolve(wave, np.ones(8)/8, mode='same')
-    
-    # Add rumble
-    rumble = np.sin(2 * np.pi * 60 * np.linspace(0, duration, len(wave))) * 0.3
-    
-    combined = filtered * 0.7 + rumble * 0.3
-    return apply_envelope(combined, 0.001, 0.05, 0.4, 0.249, duration)
+    return samples
 
-def generate_ui_confirm():
-    """Simple pleasant beep for UI confirm"""
-    duration = 0.08
-    freq = 880  # A5
-    wave = square_wave(freq, duration, duty=0.5)
-    return apply_envelope(wave, 0.005, 0.03, 0.5, 0.045, duration)
+def generate_explosion(duration=0.5):
+    """Noise with descending pitch - explosion sound"""
+    t = np.linspace(0, duration, int(SAMPLE_RATE * duration))
+    # White noise
+    noise = np.random.uniform(-AMPLITUDE, AMPLITUDE, len(t))
+    # Descending pitch rumble
+    freq = 200 * np.exp(-t * 3)
+    rumble = AMPLITUDE * 0.7 * np.sin(2 * np.pi * freq * t)
+    # Exponential decay
+    envelope = np.exp(-t * 4)
+    return (noise * 0.6 + rumble) * envelope
 
-def generate_ui_select():
-    """Lower beep for UI select"""
-    duration = 0.06
-    freq = 440  # A4
-    wave = square_wave(freq, duration, duty=0.5)
-    return apply_envelope(wave, 0.005, 0.02, 0.3, 0.035, duration)
+def generate_coin(duration=0.15):
+    """High pitched bing - coin collect"""
+    t = np.linspace(0, duration, int(SAMPLE_RATE * duration))
+    freq = 1200
+    samples = AMPLITUDE * np.sin(2 * np.pi * freq * t) * np.exp(-t * 10)
+    # Add higher harmonic
+    samples += AMPLITUDE * 0.3 * np.sin(2 * np.pi * freq * 2 * t) * np.exp(-t * 12)
+    return samples
 
-def generate_ui_cancel():
-    """Descending tone for UI cancel"""
-    duration = 0.1
-    t = np.linspace(0, duration, int(SAMPLE_RATE * duration), False)
-    start_freq = 330
-    end_freq = 220
-    freq = start_freq - (start_freq - end_freq) * (t / duration)
-    wave = np.sign(np.sin(2 * np.pi * np.cumsum(freq) / SAMPLE_RATE))
-    return apply_envelope(wave, 0.005, 0.03, 0.4, 0.065, duration)
+def generate_ui_select(duration=0.08):
+    """Short blip - menu selection"""
+    t = np.linspace(0, duration, int(SAMPLE_RATE * duration))
+    freq = 600
+    samples = AMPLITUDE * 0.7 * np.sin(2 * np.pi * freq * t) * np.exp(-t * 15)
+    return samples
 
-def generate_coin():
-    """High-pitched ding for coin collection"""
-    duration = 0.15
-    t = np.linspace(0, duration, int(SAMPLE_RATE * duration), False)
-    
-    # Two tone burst
-    freq1 = 987.77  # B5
-    freq2 = 1318.51  # E6
-    
-    wave = np.zeros_like(t)
-    mid = len(t) // 2
-    wave[:mid] = square_wave(freq1, mid/SAMPLE_RATE, duty=0.5)
-    wave[mid:] = square_wave(freq2, (len(t)-mid)/SAMPLE_RATE, duty=0.5)
-    
-    return apply_envelope(wave, 0.005, 0.02, 0.8, 0.125, duration)
+def generate_ui_confirm(duration=0.12):
+    """Two-tone success - menu confirm"""
+    t = np.linspace(0, duration, int(SAMPLE_RATE * duration))
+    # Rising two tones
+    samples = np.zeros_like(t)
+    half = len(t) // 2
+    t1, t2 = t[:half], t[half:]
+    samples[:half] = AMPLITUDE * 0.6 * np.sin(2 * np.pi * 600 * t1) * np.exp(-t1 * 10)
+    samples[half:] = AMPLITUDE * 0.8 * np.sin(2 * np.pi * 900 * t2) * np.exp(-(t2 - t2[0]) * 10)
+    return samples
 
-def generate_ambient_loop():
-    """Short looping ambient drone"""
-    duration = 2.0
-    t = np.linspace(0, duration, int(SAMPLE_RATE * duration), False)
-    
-    # Base drone
-    base = triangle_wave(110, duration) * 0.3
-    
-    # Slow LFO modulation
-    lfo = np.sin(2 * np.pi * 0.5 * t)
-    modulated = base * (0.5 + 0.5 * lfo)
-    
-    return modulated * 0.3  # Keep it quiet
+def generate_ui_cancel(duration=0.12):
+    """Falling tone - menu cancel/back"""
+    t = np.linspace(0, duration, int(SAMPLE_RATE * duration))
+    freq_start = 400
+    freq_end = 200
+    freq = np.linspace(freq_start, freq_end, len(t))
+    samples = AMPLITUDE * 0.6 * np.sin(2 * np.pi * freq * t) * np.exp(-t * 8)
+    return samples
 
-def generate_game_over():
-    """Descending sad tones for game over"""
-    duration = 0.6
-    t = np.linspace(0, duration, int(SAMPLE_RATE * duration), False)
-    
-    # Descending minor scale
-    freqs = [523.25, 466.16, 415.30, 392.00]  # C5, Bb4, Ab4, G4
-    wave = np.zeros_like(t)
-    
-    for i, freq in enumerate(freqs):
-        start = int(i * len(t) / len(freqs))
-        end = int((i + 1) * len(t) / len(freqs))
-        if end > len(t):
-            end = len(t)
-        tone = square_wave(freq, (end-start)/SAMPLE_RATE, duty=0.5)
-        wave[start:end] = tone
-    
-    return apply_envelope(wave, 0.01, 0.1, 0.5, 0.49, duration)
+def generate_ambient_loop(duration=2.0):
+    """Subtle background drone - ambient atmosphere"""
+    t = np.linspace(0, duration, int(SAMPLE_RATE * duration))
+    # Multiple low frequency oscillators
+    base = 0.2 * np.sin(2 * np.pi * 60 * t)
+    base += 0.15 * np.sin(2 * np.pi * 65 * t)
+    base += 0.1 * np.sin(2 * np.pi * 55 * t)
+    # Slow modulation
+    lfo = 1 + 0.3 * np.sin(2 * np.pi * 0.5 * t)
+    samples = AMPLITUDE * base * lfo * 0.5
+    return samples
 
-def generate_victory():
-    """Triumphant ascending fanfare"""
-    duration = 0.8
-    t = np.linspace(0, duration, int(SAMPLE_RATE * duration), False)
-    
-    # Major scale up
-    freqs = [523.25, 659.25, 783.99, 1046.50, 1318.51]  # C major
-    wave = np.zeros_like(t)
-    
-    for i, freq in enumerate(freqs):
-        start = int(i * len(t) / len(freqs))
-        end = int((i + 1) * len(t) / len(freqs))
-        if end > len(t):
-            end = len(t)
-        tone = square_wave(freq, (end-start)/SAMPLE_RATE, duty=0.5)
-        wave[start:end] += tone
-    
-    return apply_envelope(wave, 0.01, 0.1, 0.8, 0.69, duration)
+def generate_game_over(duration=1.5):
+    """Descending sad melody - game over"""
+    t = np.linspace(0, duration, int(SAMPLE_RATE * duration))
+    # Sad descending: G-F-E-D-C
+    notes = [392, 349.23, 329.63, 293.66, 261.63]
+    samples = np.zeros_like(t)
+    segment = len(t) // len(notes)
 
-def generate_boss_alarm():
-    """Pulsing alarm sound"""
-    duration = 0.4
-    t = np.linspace(0, duration, int(SAMPLE_RATE * duration), False)
-    
-    freq = 880
-    pulse = np.sign(np.sin(2 * np.pi * 8 * t))  # 8Hz pulse
-    wave = square_wave(freq, duration, duty=0.5) * (pulse > 0)
-    
-    return apply_envelope(wave, 0.01, 0.05, 0.9, 0.34, duration)
+    for i, freq in enumerate(notes):
+        start = i * segment
+        end = (i + 1) * segment if i < len(notes) - 1 else len(t)
+        t_seg = t[start:end]
+        # Square wave for retro feel
+        samples[start:end] = AMPLITUDE * 0.4 * np.sign(np.sin(2 * np.pi * freq * t_seg))
 
-def generate_checkpoint():
-    """ Pleasant chime for checkpoint"""
-    duration = 0.3
-    t = np.linspace(0, duration, int(SAMPLE_RATE * duration), False)
-    
-    freqs = [523.25, 659.25, 783.99]  # C major chord
-    wave = np.zeros_like(t)
-    
-    segment_duration = duration / (len(freqs) + 1)
-    for i, freq in enumerate(freqs):
-        start = int(i * len(t) / (len(freqs) + 1))
-        end = int((i + 2) * len(t) / (len(freqs) + 1))
-        if end > len(t):
-            end = len(t)
-        if start < len(t):
-            tone = triangle_wave(freq, segment_duration)
-            tone = tone[:end-start] if len(tone) >= end-start else np.pad(tone, (0, end-start-len(tone)))
-            wave[start:end] += tone[:end-start] * 0.33
-    
-    return apply_envelope(wave, 0.01, 0.05, 0.7, 0.24, duration)
+    return samples * np.exp(-t * 0.5)
 
-def generate_enemy_hit():
-    """Short blip for enemy hit"""
-    duration = 0.05
-    wave = square_wave(440, duration, duty=0.25)
-    return apply_envelope(wave, 0.001, 0.02, 0.0, 0.029, duration)
+def generate_level_complete(duration=1.0):
+    """Victory fanfare - level complete"""
+    t = np.linspace(0, duration, int(SAMPLE_RATE * duration))
+    # Victory pattern: C-E-G-C-G
+    notes = [523.25, 659.25, 783.99, 1046.50, 783.99]
+    samples = np.zeros_like(t)
+    segment = len(t) // len(notes)
 
-def generate_enemy_shoot():
-    """Lower pitch enemy shoot"""
-    duration = 0.12
-    t = np.linspace(0, duration, int(SAMPLE_RATE * duration), False)
-    
-    start_freq = 400
-    end_freq = 150
-    freq = start_freq - (start_freq - end_freq) * (t / duration)
-    wave = np.sign(np.sin(2 * np.pi * np.cumsum(freq) / SAMPLE_RATE))
-    
-    return apply_envelope(wave, 0.005, 0.03, 0.4, 0.085, duration)
+    for i, freq in enumerate(notes):
+        start = i * segment
+        end = (i + 1) * segment if i < len(notes) - 1 else len(t)
+        t_seg = t[start:end]
+        # Mix square and sine
+        sq = np.sign(np.sin(2 * np.pi * freq * t_seg))
+        sin = np.sin(2 * np.pi * freq * t_seg)
+        samples[start:end] = AMPLITUDE * 0.3 * (sq * 0.6 + sin * 0.4)
 
-def generate_warp():
-    """Sci-fi warp effect"""
-    duration = 0.4
-    t = np.linspace(0, duration, int(SAMPLE_RATE * duration), False)
-    
-    start_freq = 200
-    end_freq = 2000
-    freq = start_freq + (end_freq - start_freq) * (t / duration)
-    
-    # Ring mod effect
-    carrier = np.sign(np.sin(2 * np.pi * np.cumsum(freq) / SAMPLE_RATE))
-    mod = np.sin(2 * np.pi * 20 * t)
-    wave = carrier * mod
-    
-    return apply_envelope(wave, 0.05, 0.2, 0.5, 0.15, duration)
+    return samples
 
-def generate_level_complete():
-    """Victory jingle for level complete"""
-    duration = 0.5
-    t = np.linspace(0, duration, int(SAMPLE_RATE * duration), False)
-    
-    # Fanfare pattern
-    freqs = [523.25, 523.25, 659.25, 783.99]
-    wave = np.zeros_like(t)
-    
-    for i, freq in enumerate(freqs):
-        start = int(i * len(t) / len(freqs))
-        end = int((i + 1) * len(t) / len(freqs))
-        if end > len(t):
-            end = len(t)
-        tone = square_wave(freq, (end-start)/SAMPLE_RATE, duty=0.5)
-        wave[start:end] = tone
-    
-    return apply_envelope(wave, 0.01, 0.05, 0.8, 0.44, duration)
+def generate_checkpoint(duration=0.3):
+    """Positive chime - checkpoint reached"""
+    t = np.linspace(0, duration, int(SAMPLE_RATE * duration))
+    # Rising ping
+    freq = 800 + 400 * t / duration
+    samples = AMPLITUDE * 0.7 * np.sin(2 * np.pi * freq * t) * np.exp(-t * 8)
+    return samples
 
-SOUNDS = {
-    'jump': generate_jump,
-    'shoot': generate_shoot,
-    'hit': generate_hit,
-    'powerup': generate_powerup,
-    'explosion': generate_explosion,
-    'ui_confirm': generate_ui_confirm,
-    'ui_select': generate_ui_select,
-    'ui_cancel': generate_ui_cancel,
-    'coin': generate_coin,
-    'ambient_loop': generate_ambient_loop,
-    'game_over': generate_game_over,
-    'victory': generate_victory,
-    'boss_alarm': generate_boss_alarm,
-    'checkpoint': generate_checkpoint,
-    'enemy_hit': generate_enemy_hit,
-    'enemy_shoot': generate_enemy_shoot,
-    'warp': generate_warp,
-    'level_complete': generate_level_complete,
+def generate_boss_alarm(duration=0.4):
+    """Urgent alternating tones"""
+    t = np.linspace(0, duration, int(SAMPLE_RATE * duration))
+    samples = np.zeros_like(t)
+    segment = len(t) // 4
+    for i in range(4):
+        start = i * segment
+        end = (i + 1) * segment
+        t_seg = t[start:end]
+        freq = 500 if i % 2 == 0 else 700
+        samples[start:end] = AMPLITUDE * 0.5 * np.sin(2 * np.pi * freq * t_seg)
+    return samples * np.exp(-t * 3)
+
+def generate_enemy_hit(duration=0.1):
+    """Short grunt - enemy damage"""
+    t = np.linspace(0, duration, int(SAMPLE_RATE * duration))
+    noise = np.random.uniform(-AMPLITUDE * 0.5, AMPLITUDE * 0.5, len(t))
+    tone = AMPLITUDE * 0.3 * np.sin(2 * np.pi * 150 * t)
+    envelope = np.exp(-t * 30)
+    return (noise + tone) * envelope
+
+def generate_enemy_shoot(duration=0.15):
+    """Lower pitch shot - enemy projectile"""
+    t = np.linspace(0, duration, int(SAMPLE_RATE * duration))
+    freq = 400
+    samples = AMPLITUDE * np.sin(2 * np.pi * freq * t) * np.exp(-t * 12)
+    return samples
+
+def generate_laser(duration=0.2):
+    """Sci-fi laser with frequency sweep"""
+    t = np.linspace(0, duration, int(SAMPLE_RATE * duration))
+    freq = 1000 * np.exp(-t * 8)
+    samples = AMPLITUDE * np.sin(2 * np.pi * freq * t) * np.exp(-t * 5)
+    return samples
+
+# Map of sound types to generator functions
+SFX_GENERATORS = {
+    'jump.wav': generate_jump,
+    'shoot.wav': generate_shoot,
+    'hit.wav': generate_hit,
+    'powerup.wav': generate_powerup,
+    'explosion.wav': generate_explosion,
+    'coin.wav': generate_coin,
+    'ui_select.wav': generate_ui_select,
+    'ui_confirm.wav': generate_ui_confirm,
+    'ui_cancel.wav': generate_ui_cancel,
+    'ui_back.wav': generate_ui_cancel,
+    'ambient_loop.wav': generate_ambient_loop,
+    'game_over.wav': generate_game_over,
+    'level_complete.wav': generate_level_complete,
+    'checkpoint.wav': generate_checkpoint,
+    'boss_alarm.wav': generate_boss_alarm,
+    'boss_hit.wav': generate_hit,
+    'enemy_hit.wav': generate_enemy_hit,
+    'enemy_shoot.wav': generate_enemy_shoot,
+    'laser.wav': generate_laser,
 }
 
+# Games to process (exclude __pycache__)
+GAMES = [
+    'MilkMan', 'ReggieStarr', 'TEC-MA79-Digital', 'censys',
+    'dusty', 'issia_property', 'laser-pistol', 'memory-technology',
+    'milkman-game', 'neon-courier', 'netprobe-droidscript', 'netprobe',
+    'portal', 'quantum-defender', 'ronstrapp', 'socket-arsenal',
+    'tappys-online', 'teleport', 'tshirts', 'upcoming',
+    'venues', 'voice-system', 'websites'
+]
+
 def main():
-    # Check if game directory specified
-    if len(sys.argv) < 2:
-        print("Usage: python generate_chiptune_sfx.py <game_dir>")
-        sys.exit(1)
-    
-    game_dir = sys.argv[1]
-    audio_dir = os.path.join(game_dir, 'assets', 'audio')
-    
-    if not os.path.exists(audio_dir):
-        os.makedirs(audio_dir)
-        print(f"Created directory: {audio_dir}")
-    
-    game_name = os.path.basename(game_dir)
-    print(f"\n🎮 Generating chiptune SFX for: {game_name}")
-    print("=" * 50)
-    
-    generated = []
-    for name, generator in SOUNDS.items():
-        try:
-            wave_data = generator()
-            filepath = os.path.join(audio_dir, f"{name}.wav")
-            save_wav(wave_data, filepath)
-            generated.append(name)
-        except Exception as e:
-            print(f"  Error generating {name}: {e}")
-    
-    print(f"\n✅ Generated {len(generated)} sounds")
-    return generated
+    base_path = Path('/root/.openclaw/workspace/aocros/projects')
+    generated_count = 0
+    updated_games = []
+
+    for game in GAMES:
+        audio_dir = base_path / game / 'assets' / 'audio'
+
+        if not audio_dir.exists():
+            print(f"⚠️  {game}: No audio directory, skipping")
+            continue
+
+        print(f"\n🎮 Processing: {game}")
+        game_sfx_count = 0
+
+        for filename, generator in SFX_GENERATORS.items():
+            filepath = audio_dir / filename
+
+            try:
+                samples = generator()
+                save_wav(samples, str(filepath))
+                game_sfx_count += 1
+                generated_count += 1
+                print(f"  ✓ {filename}")
+            except Exception as e:
+                print(f"  ✗ {filename}: {e}")
+
+        if game_sfx_count > 0:
+            updated_games.append((game, game_sfx_count))
+
+    print(f"\n{'='*50}")
+    print(f"✅ GENERATION COMPLETE!")
+    print(f"📊 Total files generated: {generated_count}")
+    print(f"🎮 Games updated: {len(updated_games)}")
+    print(f"\nPer-game breakdown:")
+    for game, count in updated_games:
+        print(f"  • {game}: {count} files")
+
+    return updated_games
 
 if __name__ == '__main__':
     main()
