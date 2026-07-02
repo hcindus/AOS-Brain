@@ -3,7 +3,7 @@
   "name": "Luna",
   "role": "COMBAT",
   "level": 5,
-  "xp": 369491,
+  "xp": 369634,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 24,
     "combat": 15
   },
-  "missionsCompleted": 2411,
+  "missionsCompleted": 2413,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -12073,6 +12073,16 @@
       "name": "Space Anomaly",
       "location": "Alpha-1",
       "timestamp": 1783025274312
+    },
+    {
+      "name": "Nebula Cloud",
+      "location": "Alpha-1",
+      "timestamp": 1783027705777
+    },
+    {
+      "name": "Unknown Signal",
+      "location": "Alpha-1",
+      "timestamp": 1783028366087
     }
   ],
   "status": "ACTIVE",
