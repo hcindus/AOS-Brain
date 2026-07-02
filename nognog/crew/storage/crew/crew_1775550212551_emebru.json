@@ -3,7 +3,7 @@
   "name": "Aria",
   "role": "MEDIC",
   "level": 5,
-  "xp": 374805,
+  "xp": 375064,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 17,
     "combat": 23
   },
-  "missionsCompleted": 2520,
+  "missionsCompleted": 2524,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -12618,6 +12618,26 @@
       "name": "Space Anomaly",
       "location": "Alpha-1",
       "timestamp": 1783017679496
+    },
+    {
+      "name": "Hidden Base",
+      "location": "Alpha-1",
+      "timestamp": 1783023683116
+    },
+    {
+      "name": "Alien Artifact",
+      "location": "Alpha-1",
+      "timestamp": 1783024073609
+    },
+    {
+      "name": "Ancient Ruins",
+      "location": "Alpha-1",
+      "timestamp": 1783024764221
+    },
+    {
+      "name": "Unknown Signal",
+      "location": "Alpha-1",
+      "timestamp": 1783024974305
     }
   ],
   "status": "ACTIVE",
