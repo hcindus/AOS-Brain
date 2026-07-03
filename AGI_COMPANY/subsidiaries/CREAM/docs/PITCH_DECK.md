@@ -49,7 +49,7 @@ CREAM - All-in-One Platform
 ## Slide 7: Market Size
 - 1.55 million realtors in US
 - All 50 states + territories
-- **57,000+ qualified prospects** in active database
+- **58,000+ qualified prospects** in active database
 - 10% adoption = $46M+ revenue
 
 ## Slide 8: Competitive Advantage

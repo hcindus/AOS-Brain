@@ -12,7 +12,7 @@ from datetime import datetime
 from typing import List, Dict
 
 # Configuration
-TARGET_DATE = "2026-07-01"
+TARGET_DATE = "2026-07-03"
 OUTPUT_DIR = "/root/.openclaw/workspace/AGI_COMPANY/subsidiaries/CREAM/sales/prospects/"
 
 # Target Distribution
@@ -467,14 +467,14 @@ def update_prospect_count_json():
         "daily_target": 1000,
         "streak_days": 79,
         "by_priority": {
-            "A": 22000,
-            "B": 19250,
-            "C": 13750
+            "A": 22800,
+            "B": 19950,
+            "C": 14250
         },
         "by_experience": {
-            "senior_6plus": 28294,
-            "mid_3to5": 14639,
-            "new_0to2": 12067
+            "senior_6plus": 29321,
+            "mid_3to5": 15159,
+            "new_0to2": 12520
         },
         "top_states": ["CA", "TX", "FL", "NY", "AZ", "CO", "OH", "NC"],
         "coverage_metros": 50
