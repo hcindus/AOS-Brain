@@ -21,6 +21,14 @@ import ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+# Import SendGrid sender
+try:
+    from sendgrid_sender import send_single_email, process_email_queue, get_status as get_sendgrid_status
+    SENDGRID_AVAILABLE = True
+except ImportError:
+    SENDGRID_AVAILABLE = False
+    print("WARNING: sendgrid_sender not available, falling back to SMTP")
+
 # Pydantic model for email queue requests
 class QueueEmailRequest(BaseModel):
     recipient_email: str
@@ -680,7 +688,7 @@ async def add_email_to_queue(request: QueueEmailRequest):
 
 @app.get("/api/queue")
 async def get_email_queue():
-    """Get pending email queue"""
+    """Get pending email queue with SendGrid status"""
     import uuid
     queue_file = DATADEPOT_DIR / 'queue' / 'pending_emails.json'
     
@@ -695,7 +703,7 @@ async def get_email_queue():
         if 'id' not in email:
             email['id'] = str(uuid.uuid4())
         if 'status' not in email:
-            email['status'] = 'pending'  # Default status
+            email['status'] = 'pending'
     
     # Save back with IDs and status
     with open(queue_file, 'w') as f:
@@ -709,14 +717,13 @@ async def get_email_queue():
         scheduled_time = e.get('scheduled_time', '')
         if scheduled_time:
             try:
-                # Parse ISO format
                 sched = datetime.fromisoformat(scheduled_time.replace('Z', '+00:00').replace('+00:00', ''))
                 if sched <= now:
                     ready.append(e)
                 else:
                     scheduled.append(e)
             except:
-                ready.append(e)  # If can't parse, treat as ready
+                ready.append(e)
         else:
             ready.append(e)
     
@@ -738,14 +745,48 @@ async def get_email_queue():
         today = now.strftime('%Y-%m-%d')
         failed_today = len([s for s in failed if s.get('failed_at', '').startswith(today)])
     
+    # Get SendGrid status
+    sendgrid_info = {}
+    if SENDGRID_AVAILABLE:
+        try:
+            sendgrid_info = get_sendgrid_status()
+        except Exception as e:
+            sendgrid_info = {'error': str(e)}
+    
     return {
         'queue': queue,
         'total': len(queue),
         'ready_to_send': len(ready),
         'scheduled': len(scheduled),
         'sent_today': sent_today,
-        'failed_today': failed_today
+        'failed_today': failed_today,
+        'sendgrid': sendgrid_info
     }
+
+@app.get("/api/sendgrid/status")
+async def get_sendgrid_status_endpoint():
+    """Get SendGrid configuration and queue status"""
+    import os
+    
+    api_key = os.getenv('SENDGRID_API_KEY', '')
+    
+    status = {
+        'configured': bool(api_key),
+        'api_key_preview': api_key[:8] + '...' if len(api_key) > 10 else 'not set',
+        'from_email': 'info@psdepot.com',
+        'domain': 'psdepot.com'
+    }
+    
+    if SENDGRID_AVAILABLE:
+        try:
+            queue_status = get_sendgrid_status()
+            status.update(queue_status)
+        except Exception as e:
+            status['error'] = str(e)
+    else:
+        status['sendgrid_module'] = 'not available'
+    
+    return status
 
 @app.get("/api/activities")
 async def get_activities():
@@ -783,33 +824,12 @@ async def get_activities():
 
 @app.post("/api/queue/{email_id}/send")
 async def send_email_now(email_id: str):
-    """Send a queued email immediately via SMTP with rate limiting"""
+    """Send a queued email immediately via SendGrid with rate limiting"""
     import os
     import requests
     import uuid
     import time
     from pathlib import Path
-    
-    # Rate limiting configuration
-    RATE_LIMIT_FILE = Path('/tmp/depotchaos_last_send.txt')
-    MIN_DELAY_SECONDS = 300  # 5 minutes between sends (12 emails/hour max)
-    
-    # Check rate limit
-    now = time.time()
-    if RATE_LIMIT_FILE.exists():
-        try:
-            last_send = float(RATE_LIMIT_FILE.read_text().strip())
-            time_since_last = now - last_send
-            if time_since_last < MIN_DELAY_SECONDS:
-                wait_time = int(MIN_DELAY_SECONDS - time_since_last)
-                return JSONResponse(status_code=429, content={
-                    'success': False,
-                    'error': f'Rate limit: Please wait {wait_time}s before sending another email.',
-                    'retry_after': wait_time,
-                    'email_id': email_id
-                })
-        except (ValueError, IOError):
-            pass  # If file is corrupted, proceed anyway
     
     # Load queue
     queue_file = DATADEPOT_DIR / 'queue' / 'pending_emails.json'
@@ -843,13 +863,92 @@ async def send_email_now(email_id: str):
     with open(queue_file, 'w') as f:
         json.dump(queue, f, indent=2)
     
-    # SMTP Configuration for Hostinger - HARDCODED FOR LIVE MODE
+    # Use SendGrid if available, otherwise fallback to SMTP
+    if SENDGRID_AVAILABLE:
+        result = send_single_email(email_to_send)
+        
+        if result['success']:
+            # Record as sent
+            email_to_send['sent_at'] = datetime.now().isoformat()
+            email_to_send['message_id'] = result['message_id']
+            
+            sent_list = []
+            if sent_file.exists():
+                with open(sent_file, 'r') as f:
+                    sent_list = json.load(f)
+            
+            sent_list.append(email_to_send)
+            
+            with open(sent_file, 'w') as f:
+                json.dump(sent_list, f, indent=2)
+            
+            # Update queue
+            with open(queue_file, 'w') as f:
+                json.dump(remaining_queue, f, indent=2)
+            
+            return {
+                'success': True,
+                'message': f'Email sent to {email_to_send["to_email"]} via SendGrid',
+                'message_id': result['message_id'],
+                'email_id': email_id
+            }
+        elif result.get('rate_limited'):
+            return JSONResponse(status_code=429, content={
+                'success': False,
+                'error': result['error'],
+                'retry_after': result.get('retry_after', 900),
+                'email_id': email_id
+            })
+        else:
+            # SendGrid failed - record as failed
+            email_to_send['failed_at'] = datetime.now().isoformat()
+            email_to_send['error'] = result['error']
+            
+            failed_list = []
+            if failed_file.exists():
+                with open(failed_file, 'r') as f:
+                    failed_list = json.load(f)
+            
+            failed_list.append(email_to_send)
+            
+            with open(failed_file, 'w') as f:
+                json.dump(failed_list, f, indent=2)
+            
+            # Remove from queue on failure
+            with open(queue_file, 'w') as f:
+                json.dump(remaining_queue, f, indent=2)
+            
+            return JSONResponse(status_code=500, content={
+                'success': False,
+                'error': result['error'],
+                'email_id': email_id
+            })
+    
+    # Fallback to SMTP if SendGrid not available
     SMTP_SERVER = 'smtp.hostinger.com'
     SMTP_PORT = 587
     SMTP_USER = 'miles@myl0nr0s.cloud'
-    SMTP_PASS = 'Myl0n.R0s'
-    SMTP_FROM_EMAIL = 'info@psdepot.com'
-    TEST_MODE = False
+    SMTP_PASS = os.getenv('SMTP_PASS', '')
+    
+    # Rate limiting configuration for SMTP fallback
+    RATE_LIMIT_FILE = Path('/tmp/depotchaos_last_send.txt')
+    MIN_DELAY_SECONDS = 300  # 5 minutes between sends
+    
+    now = time.time()
+    if RATE_LIMIT_FILE.exists():
+        try:
+            last_send = float(RATE_LIMIT_FILE.read_text().strip())
+            time_since_last = now - last_send
+            if time_since_last < MIN_DELAY_SECONDS:
+                wait_time = int(MIN_DELAY_SECONDS - time_since_last)
+                return JSONResponse(status_code=429, content={
+                    'success': False,
+                    'error': f'Rate limit: Please wait {wait_time}s before sending another email.',
+                    'retry_after': wait_time,
+                    'email_id': email_id
+                })
+        except (ValueError, IOError):
+            pass
     
     if not SMTP_PASS:
         # Test mode - simulate send
@@ -857,22 +956,18 @@ async def send_email_now(email_id: str):
         email_to_send['test_mode'] = True
         email_to_send['message_id'] = f'test_{int(datetime.now().timestamp())}'
         
-        # Add to sent log
         sent_list = []
         if sent_file.exists():
             with open(sent_file, 'r') as f:
                 sent_list = json.load(f)
         
         sent_list.append(email_to_send)
-        
         with open(sent_file, 'w') as f:
             json.dump(sent_list, f, indent=2)
         
-        # Update queue
         with open(queue_file, 'w') as f:
             json.dump(remaining_queue, f, indent=2)
         
-        # Update rate limit tracker
         RATE_LIMIT_FILE.write_text(str(now))
         
         return {
@@ -882,39 +977,30 @@ async def send_email_now(email_id: str):
             'email_id': email_id
         }
     
-    # Real SMTP send via Hostinger
+    # SMTP send fallback
     try:
-        # Create message
         msg = MIMEMultipart('alternative')
         msg['Subject'] = email_to_send.get('subject', 'Performance Supply Depot')
-        # From must match SMTP user for Hostinger - reply-to can be info@psdepot.com
         msg['From'] = f'Miles - Performance Supply Depot <{SMTP_USER}>'
         msg['To'] = email_to_send['to_email']
         msg['Bcc'] = 'info@psdepot.com'
         msg['Reply-To'] = 'info@psdepot.com'
         
-        # Add message ID for tracking
         message_id = f"<{uuid.uuid4()}@psdepot.com>"
         msg['Message-ID'] = message_id
-        msg['X-Campaign-ID'] = email_to_send.get('campaign_id', 'default')
-        msg['X-Template'] = email_to_send.get('template', 'unknown')
         
-        # Attach HTML body
         html_body = email_to_send.get('html_body', '')
         if not html_body:
-            # Convert plain text to HTML if no HTML body
             html_body = f"<html><body><pre>{email_to_send.get('body', '')}</pre></body></html>"
         
         msg.attach(MIMEText(html_body, 'html'))
         
-        # Send via SMTP
         context = ssl.create_default_context()
         with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
             server.starttls(context=context)
             server.login(SMTP_USER, SMTP_PASS)
             server.send_message(msg)
         
-        # Record as sent
         email_to_send['sent_at'] = datetime.now().isoformat()
         email_to_send['message_id'] = message_id
         
@@ -924,15 +1010,12 @@ async def send_email_now(email_id: str):
                 sent_list = json.load(f)
         
         sent_list.append(email_to_send)
-        
         with open(sent_file, 'w') as f:
             json.dump(sent_list, f, indent=2)
         
-        # Update queue
         with open(queue_file, 'w') as f:
             json.dump(remaining_queue, f, indent=2)
         
-        # Update rate limit tracker on successful send
         RATE_LIMIT_FILE.write_text(str(time.time()))
         
         return {
@@ -943,7 +1026,6 @@ async def send_email_now(email_id: str):
         }
         
     except Exception as e:
-        # Record as failed
         email_to_send['failed_at'] = datetime.now().isoformat()
         email_to_send['error'] = str(e)
         
@@ -953,11 +1035,9 @@ async def send_email_now(email_id: str):
                 failed_list = json.load(f)
         
         failed_list.append(email_to_send)
-        
         with open(failed_file, 'w') as f:
             json.dump(failed_list, f, indent=2)
         
-        # Remove from queue even on failure
         with open(queue_file, 'w') as f:
             json.dump(remaining_queue, f, indent=2)
         

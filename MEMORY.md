@@ -88,11 +88,31 @@ systemctl status aos-mission-control
 
 ---
 
-## PENDING: SendGrid DNS Configuration for DepotChaos
-**Created:** 2026-06-11
-**Status:** AWAITING ACTION (Captain)
+## SendGrid Integration for DepotChaos ✅ DEPLOYED
+**Deployed:** 2026-07-03
+**Status:** ACTIVE (pending SENDGRID_API_KEY)
 
-### What Needs to Be Done
+### What's New
+- ✅ SendGrid sender module: `/datadepot/web/sendgrid_sender.py`
+- ✅ FastAPI integration with rate limiting (15min between sends)
+- ✅ Queue processor cron job: every 15 minutes
+- ✅ API endpoint: `/api/sendgrid/status` for health checks
+- ✅ 96 emails/day capacity (stays under SendGrid free limit)
+
+### Configuration Required
+Set the SendGrid API key:
+```bash
+# Add to environment
+export SENDGRID_API_KEY=SG.xxxxxxx
+
+# Or edit systemd service
+systemctl edit depotchaos
+# Add: Environment=SENDGRID_API_KEY=your_key_here
+systemctl daemon-reload
+systemctl restart depotchaos
+```
+
+### DNS Configuration (REQUIRED for deliverability)
 Add these DNS records to psdepot.com in Hostinger:
 
 | Type | Host | Value |
@@ -102,22 +122,22 @@ Add these DNS records to psdepot.com in Hostinger:
 | CNAME | s2._domainkey.psdepot.com | s2.domainkey.u109143135.wl136.sendgrid.net |
 | TXT | _dmarc.psdepot.com | v=DMARC1; p=none |
 
-### Steps
-1. Go to Hostinger Dashboard → Domains → psdepot.com → DNS Zone
-2. Add the 4 records above
-3. Wait 5-30 minutes for propagation
-4. Verify in SendGrid domain authentication page
-5. Create SendGrid API key (Settings → API Keys)
-6. Provide API key to Miles for DepotChaos configuration
+### API Endpoints
+```bash
+# Check queue status
+curl http://localhost:8082/api/queue | python3 -m json.tool
 
-### Why This Matters
-- Enables SendGrid email delivery for DepotChaos CRM
-- Bypasses Hostinger SMTP rate limits
-- Allows sending 100 emails/day free
-- Fixes current email queue blockage (106 emails pending)
+# Check SendGrid status
+curl http://localhost:8082/api/sendgrid/status | python3 -m json.tool
 
-### Reference
-Source: Telegram conversation 2026-06-11
+# Send single email
+curl -X POST http://localhost:8082/api/queue/{email_id}/send
+```
+
+### Files
+- Sender: `/datadepot/web/sendgrid_sender.py`
+- Cron: `/datadepot/cron/process_email_queue.py`
+- Service: `/etc/systemd/system/depotchaos.service`
 
 ---
 *Last Updated: 2026-06-11*
