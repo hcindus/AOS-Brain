@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSDepot 4th of July Flyer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .flyer {
+            width: 800px;
+            background: linear-gradient(180deg, #003366 0%, #004080 30%, #0066cc 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 8px rgba(196, 30, 58, 0.3), 0 0 0 16px rgba(255,255,255,0.1);
+            position: relative;
+        }
+        
+        /* Patriotic border effect */
+        .flyer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 12px;
+            background: linear-gradient(90deg, #c41e3a 0%, #c41e3a 33%, #ffffff 33%, #ffffff 66%, #003366 66%);
+        }
+        
+        .flyer::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 12px;
+            background: linear-gradient(90deg, #c41e3a 0%, #c41e3a 33%, #ffffff 33%, #ffffff 66%, #003366 66%);
+        }
+        
+        /* Stars background */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, white, transparent),
+                radial-gradient(2px 2px at 40px 70px, white, transparent),
+                radial-gradient(2px 2px at 50px 160px, white, transparent),
+                radial-gradient(2px 2px at 90px 40px, white, transparent),
+                radial-gradient(2px 2px at 130px 80px, white, transparent),
+                radial-gradient(2px 2px at 160px 120px, white, transparent);
+            opacity: 0.6;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 40px 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .holiday-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #c41e3a 0%, #9b2c2c 100%);
+            color: #ffd700;
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            border: 2px solid #ffd700;
+            box-shadow: 0 5px 20px rgba(196, 30, 58, 0.5);
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 52px;
+            color: #ffffff;
+            letter-spacing: 4px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            margin-bottom: 5px;
+        }
+        
+        .tagline {
+            color: #ff6600;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        
+        /* Main Title */
+        .main-title {
+            text-align: center;
+            padding: 30px 40px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .main-title h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 88px;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+        }
+        
+        .main-title .red {
+            color: #ff3333;
+            text-shadow: 0 0 30px rgba(255, 51, 51, 0.6), 4px 4px 0 rgba(0,0,0,0.3);
+        }
+        
+        .main-title .white {
+            color: #ffffff;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.4), 4px 4px 0 rgba(0,0,0,0.3);
+        }
+        
+        .main-title .blue {
+            color: #66b3ff;
+            text-shadow: 0 0 30px rgba(102, 179, 255, 0.6), 4px 4px 0 rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: #ffd700;
+            font-style: italic;
+            margin-top: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        /* Message Section */
+        .message {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 30px 40px;
+            padding: 35px 40px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .message p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .message strong {
+            color: #003366;
+        }
+        
+        .quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            color: #003366;
+            font-style: italic;
+            margin: 20px 0;
+            padding: 20px;
+            border-left: 4px solid #c41e3a;
+            border-right: 4px solid #003366;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        /* Products Grid */
+        .products {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            padding: 0 40px 30px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .product {
+            background: linear-gradient(145deg, #ffffff 0%, #f0f0f0 100%);
+            padding: 30px 35px;
+            border-radius: 15px;
+            text-align: center;
+            min-width: 160px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+        
+        .product:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product:nth-child(1) { border-top: 4px solid #ff6600; }
+        .product:nth-child(2) { border-top: 4px solid #003366; }
+        .product:nth-child(3) { border-top: 4px solid #c41e3a; }
+        
+        .product-icon {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+        
+        .product-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #003366;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* CTA */
+        .cta {
+            background: linear-gradient(135deg, #ff6600 0%, #e55a00 100%);
+            margin: 0 40px 30px;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 10px 30px rgba(255, 102, 0, 0.4);
+        }
+        
+        .cta-text {
+            font-size: 22px;
+            color: white;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .cta-url {
+            font-size: 28px;
+            color: white;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        /* Phone Section */
+        .phone-section {
+            background: linear-gradient(135deg, #c41e3a 0%, #9b2c2c 100%);
+            padding: 35px;
+            text-align: center;
+            border-top: 4px solid #ffd700;
+            border-bottom: 4px solid #ffd700;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .phone-label {
+            font-size: 14px;
+            color: #ffd700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .phone-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 56px;
+            color: white;
+            letter-spacing: 5px;
+            text-shadow: 
+                0 0 10px #ffd700,
+                0 0 20px #ffd700,
+                0 0 40px #ff6b6b,
+                3px 3px 0 rgba(0,0,0,0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 
+                    0 0 10px #ffd700,
+                    0 0 20px #ffd700,
+                    0 0 30px #ff6b6b;
+            }
+            to {
+                text-shadow: 
+                    0 0 20px #ffd700,
+                    0 0 40px #ffd700,
+                    0 0 60px #ff6b6b,
+                    0 0 80px #ff6b6b;
+            }
+        }
+        
+        .firework-emoji {
+            font-size: 36px;
+            vertical-align: middle;
+            margin: 0 15px;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #0a0a1a;
+            padding: 30px 40px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .footer-brand {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            color: white;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+        
+        .footer-text {
+            font-size: 13px;
+            color: #888;
+            font-style: italic;
+        }
+        
+        .footer-patriotic {
+            font-size: 14px;
+            color: #ffd700;
+            margin-top: 15px;
+            letter-spacing: 2px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 850px) {
+            .flyer {
+                width: 100%;
+                max-width: 600px;
+            }
+            
+            .main-title h1 {
+                font-size: 56px;
+            }
+            
+            .phone-number {
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="flyer">
+        <div class="stars"></div>
+        
+        <!-- Header -->
+        <div class="header">
+            <div class="holiday-badge">🇺🇸 Independence Day 🇺🇸</div>
+            <div class="logo">PERFORMANCE SUPPLY DEPOT</div>
+            <div class="tagline">Your Partner in Retail Solutions</div>
+        </div>
+        
+        <!-- Main Title -->
+        <div class="main-title">
+            <h1>
+                <span class="red">Happy</span>
+                <span class="white">4th of</span>
+                <span class="blue">July</span>
+            </h1>
+            <div class="subtitle">"Land of the Tree, Home of the Trade"</div>
+        </div>
+        
+        <!-- Message -->
+        <div class="message">
+            <p>As we celebrate <strong>Freedom, Enterprise & Innovation</strong>, we at Performance Supply Depot remain committed to powering American businesses with premium supplies and reliable service.</p>
+            
+            <div class="quote">"Where American Businesses Trade with Pride"</div>
+            
+            <p>From thermal rolls to toners, we've got your business covered — because a well-supplied business is a thriving business.</p>
+        </div>
+        
+        <!-- Products -->
+        <div class="products">
+            <div class="product">
+                <div class="product-icon">🖨️</div>
+                <div class="product-name">Thermal Rolls</div>
+            </div>
+            <div class="product">
+                <div class="product-icon">📦</div>
+                <div class="product-name">Paper Supply</div>
+            </div>
+            <div class="product">
+                <div class="product-icon">🖊️</div>
+                <div class="product-name">Toners & Ink</div>
+            </div>
+        </div>
+        
+        <!-- CTA -->
+        <div class="cta">
+            <div class="cta-text">Ready to Partner with Excellence?</div>
+            <div class="cta-url">psdepot.com</div>
+        </div>
+        
+        <!-- Phone -->
+        <div class="phone-section">
+            <div class="phone-label">📞 Call Us Today 📞</div>
+            <div class="phone-number">
+                <span class="firework-emoji">🎆</span>
+                888-881-6834
+                <span class="firework-emoji">🎇</span>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-brand">PERFORMANCE SUPPLY DEPOT LLC</div>
+            <div class="footer-text">Empowering American Businesses Since Day One</div>
+            <div class="footer-patriotic">Land of the Tree, Home of the Trade 🇺🇸</div>
+        </div>
+    </div>
+</body>
+</html>
