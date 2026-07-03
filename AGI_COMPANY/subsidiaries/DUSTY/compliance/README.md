@@ -17,6 +17,9 @@
 | **Data Privacy Policy** | [data-privacy-policy.md](data-privacy-policy.md) | 1/Finalized | ✅ Complete |
 | **Terms of Service** | [terms-of-service.md](terms-of-service.md) | 1/Finalized | ✅ Complete |
 | **Insurance Requirements** | [insurance-requirements.md](insurance-requirements.md) | 1/Quotes/Full | ✅ Doc Complete |
+| **DPO Appointment** | [dpo-appointment.md](dpo-appointment.md) | 1 | ✅ Complete |
+| **MSB Determination** | [msb-determination.md](msb-determination.md) | 1 | ✅ Complete |
+| **Insurance Quotes Request** | [insurance-quotes-request.md](insurance-quotes-request.md) | 2 | ✅ Ready to Send |
 
 ---
 
