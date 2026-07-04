@@ -3,7 +3,7 @@
   "name": "Luna",
   "role": "COMBAT",
   "level": 5,
-  "xp": 375232,
+  "xp": 375302,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 24,
     "combat": 15
   },
-  "missionsCompleted": 2454,
+  "missionsCompleted": 2455,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -12288,6 +12288,11 @@
       "name": "Space Anomaly",
       "location": "Alpha-1",
       "timestamp": 1783132851279
+    },
+    {
+      "name": "Alien Artifact",
+      "location": "Alpha-1",
+      "timestamp": 1783135521501
     }
   ],
   "status": "ACTIVE",
