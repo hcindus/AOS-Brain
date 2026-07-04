@@ -599,6 +599,28 @@ async def get_intelligence(
         'per_page': per_page
     }
 
+@app.get("/api/cities/intelligence")
+async def get_intelligence_cities():
+    """Get list of all unique cities in intelligence data"""
+    conn = get_db_connection()
+    c = conn.cursor()
+    
+    # Get distinct cities from intelligence table
+    c.execute("SELECT DISTINCT city FROM datadepot_intelligence WHERE city IS NOT NULL AND city != '' ORDER BY city")
+    cities = [row[0] for row in c.fetchall()]
+    
+    # Also get counts per city
+    c.execute("SELECT city, COUNT(*) FROM datadepot_intelligence WHERE city IS NOT NULL AND city != '' GROUP BY city ORDER BY city")
+    city_counts = dict(c.fetchall())
+    
+    conn.close()
+    
+    return {
+        'cities': cities,
+        'city_counts': city_counts,
+        'total_cities': len(cities)
+    }
+
 @app.get("/api/counties")
 async def get_counties():
     """Get list of all counties with counts"""
