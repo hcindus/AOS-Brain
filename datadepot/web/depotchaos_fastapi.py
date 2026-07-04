@@ -719,7 +719,7 @@ async def get_enrichment_filters():
     conn = get_depot_chaos_db()
     c = conn.cursor()
     
-    # Get distinct states from vendors
+    # Get distinct states from vendors (2-char codes only)
     c.execute("SELECT DISTINCT state FROM vendors WHERE state IS NOT NULL AND state != '' AND LENGTH(state) = 2 ORDER BY state")
     states = [row[0] for row in c.fetchall()]
     
@@ -731,11 +731,26 @@ async def get_enrichment_filters():
     c.execute("SELECT DISTINCT city FROM vendors WHERE city IS NOT NULL AND city != '' ORDER BY city")
     cities = [row[0] for row in c.fetchall()]
     
+    # Check if we have any enriched vendors (notes containing 'Yelp Enriched')
+    c.execute("SELECT COUNT(*) FROM vendors WHERE notes LIKE '%Yelp Enriched%'")
+    enriched_count = c.fetchone()[0]
+    
     conn.close()
+    
+    # Build status options: include real statuses + derived filters
+    status_options = list(statuses)  # Start with real DB statuses
+    
+    # Add 'enriched' filter if vendors exist with Yelp data
+    if enriched_count > 0 and 'enriched' not in status_options:
+        status_options.append('enriched')
+    
+    # Always add 'contacted' filter (checks last_contact_at field)
+    if 'contacted' not in status_options:
+        status_options.append('contacted')
     
     return {
         'states': states,
-        'statuses': statuses,
+        'statuses': status_options,
         'cities': cities
     }
 
