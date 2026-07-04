@@ -1341,7 +1341,7 @@
         async function loadEnrichmentFilters() {
             try {
                 console.log('Loading enrichment filters...');
-                const data = await fetchAPI('/filters/enrichment');
+                const data = await fetchAPI('/filters/enrichment?_=' + Date.now());
                 console.log('Enrichment filters response:', data);
                 console.log('Statuses received:', data.statuses);
                 
