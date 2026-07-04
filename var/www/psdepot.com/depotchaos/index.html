@@ -166,72 +166,12 @@
                 <input type="text" id="search-leads" class="filter-input" placeholder="🔍 Search companies..." style="flex: 1; min-width: 200px;">
                 <select id="state-filter" class="filter-select" onchange="filterLeads()">
                     <option value="">All States</option>
-                    <option value="AL">Alabama</option>
-                    <option value="AK">Alaska</option>
-                    <option value="AZ">Arizona</option>
-                    <option value="AR">Arkansas</option>
-                    <option value="CA">California</option>
-                    <option value="CO">Colorado</option>
-                    <option value="CT">Connecticut</option>
-                    <option value="DE">Delaware</option>
-                    <option value="FL">Florida</option>
-                    <option value="GA">Georgia</option>
-                    <option value="HI">Hawaii</option>
-                    <option value="ID">Idaho</option>
-                    <option value="IL">Illinois</option>
-                    <option value="IN">Indiana</option>
-                    <option value="IA">Iowa</option>
-                    <option value="KS">Kansas</option>
-                    <option value="KY">Kentucky</option>
-                    <option value="LA">Louisiana</option>
-                    <option value="ME">Maine</option>
-                    <option value="MD">Maryland</option>
-                    <option value="MA">Massachusetts</option>
-                    <option value="MI">Michigan</option>
-                    <option value="MN">Minnesota</option>
-                    <option value="MS">Mississippi</option>
-                    <option value="MO">Missouri</option>
-                    <option value="MT">Montana</option>
-                    <option value="NE">Nebraska</option>
-                    <option value="NV">Nevada</option>
-                    <option value="NH">New Hampshire</option>
-                    <option value="NJ">New Jersey</option>
-                    <option value="NM">New Mexico</option>
-                    <option value="NY">New York</option>
-                    <option value="NC">North Carolina</option>
-                    <option value="ND">North Dakota</option>
-                    <option value="OH">Ohio</option>
-                    <option value="OK">Oklahoma</option>
-                    <option value="OR">Oregon</option>
-                    <option value="PA">Pennsylvania</option>
-                    <option value="RI">Rhode Island</option>
-                    <option value="SC">South Carolina</option>
-                    <option value="SD">South Dakota</option>
-                    <option value="TN">Tennessee</option>
-                    <option value="TX">Texas</option>
-                    <option value="UT">Utah</option>
-                    <option value="VT">Vermont</option>
-                    <option value="VA">Virginia</option>
-                    <option value="WA">Washington</option>
-                    <option value="WV">West Virginia</option>
-                    <option value="WI">Wisconsin</option>
-                    <option value="WY">Wyoming</option>
                 </select>
                 <select id="status-filter" class="filter-select" onchange="filterLeads()">
                     <option value="">All Statuses</option>
-                    <option value="new">New</option>
-                    <option value="contacted">Contacted</option>
-                    <option value="qualified">Qualified</option>
-                    <option value="unqualified">Unqualified</option>
                 </select>
                 <select id="tier-filter" class="filter-select" onchange="filterLeads()">
                     <option value="">All Tiers</option>
-                    <option value="Tier 1">Tier 1 (Priority)</option>
-                    <option value="Tier 2">Tier 2 (Standard)</option>
-                    <option value="Tier 3">Tier 3 (Basic)</option>
-                    <option value="Tier A">Tier A (Highest)</option>
-                    <option value="Tier B">Tier B (High)</option>
-                    <option value="Tier C">Tier C (Standard)</option>
                 </select>
                 <button class="btn btn-secondary" onclick="exportLeads()">📥 Export</button>
             </div>
@@ -281,45 +221,9 @@
                     </select>
                     <select id="enrich-state-filter" class="filter-select" onchange="filterEnrichment()">
                         <option value="">All States</option>
-                        <option value="AR">Arkansas</option>
-                        <option value="AZ">Arizona</option>
-                        <option value="CA">California</option>
-                        <option value="CO">Colorado</option>
-                        <option value="CT">Connecticut</option>
-                        <option value="FL">Florida</option>
-                        <option value="GA">Georgia</option>
-                        <option value="IA">Iowa</option>
-                        <option value="ID">Idaho</option>
-                        <option value="IL">Illinois</option>
-                        <option value="IN">Indiana</option>
-                        <option value="KS">Kansas</option>
-                        <option value="LA">Louisiana</option>
-                        <option value="MA">Massachusetts</option>
-                        <option value="MD">Maryland</option>
-                        <option value="MI">Michigan</option>
-                        <option value="MN">Minnesota</option>
-                        <option value="MO">Missouri</option>
-                        <option value="NC">North Carolina</option>
-                        <option value="NJ">New Jersey</option>
-                        <option value="NV">Nevada</option>
-                        <option value="NY">New York</option>
-                        <option value="OH">Ohio</option>
-                        <option value="OK">Oklahoma</option>
-                        <option value="OR">Oregon</option>
-                        <option value="PA">Pennsylvania</option>
-                        <option value="SC">South Carolina</option>
-                        <option value="TN">Tennessee</option>
-                        <option value="TX">Texas</option>
-                        <option value="UT">Utah</option>
-                        <option value="VA">Virginia</option>
-                        <option value="WA">Washington</option>
-                        <option value="WI">Wisconsin</option>
                     </select>
                     <select id="enrich-status-filter" class="filter-select" onchange="filterEnrichment()">
                         <option value="">All Status</option>
-                        <option value="active">Active</option>
-                        <option value="enriched">Enriched</option>
-                        <option value="contacted">Contacted</option>
                     </select>
                     <button class="btn btn-secondary" onclick="exportEnrichment()">📥 Export</button>
                     <button class="btn btn-success" onclick="runYelpEnrichment()">🚀 Run Yelp Enrichment</button>
@@ -836,6 +740,7 @@
                 // Load enrichment data when enrichment tab is clicked
                 if (subtab === 'enrichment') {
                     loadEnrichment(1);
+                    loadEnrichmentFilters();
                 }
             });
         });
@@ -846,13 +751,19 @@
             document.getElementById(tab).classList.add('active');
             document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
             
-            if (tab === 'leads' && leadsData.length === 0) loadLeads();
+            if (tab === 'leads') {
+                if (leadsData.length === 0) loadLeads();
+                loadLeadsFilters();
+            }
             if (tab === 'intelligence') {
                 if (intelData.length === 0) loadIntelligence();
-                // Always load cities list when intelligence tab is shown
                 loadIntelligenceCities();
+                loadIntelligenceFilters();
             }
             if (tab === 'queue') loadQueue();
+            if (tab === 'enrichment') {
+                loadEnrichmentFilters();
+            }
         }
 
         // ============ DASHBOARD ============
@@ -953,6 +864,57 @@
                 renderPagination('leads-pagination', page, Math.ceil(data.total / data.per_page), loadLeads);
             } catch (e) {
                 container.innerHTML = `<div class="error-msg">Failed to load leads: ${escapeHtml(e.message)}</div>`;
+            }
+        }
+
+        // Fetch leads filters (states, statuses, tiers, POS systems)
+        async function loadLeadsFilters() {
+            try {
+                const data = await fetchAPI('/filters/leads');
+                
+                // Populate state filter
+                const stateSelect = document.getElementById('state-filter');
+                if (stateSelect && data.states) {
+                    const currentValue = stateSelect.value;
+                    stateSelect.innerHTML = '<option value="">All States</option>';
+                    data.states.forEach(state => {
+                        const opt = document.createElement('option');
+                        opt.value = state;
+                        opt.textContent = state;
+                        stateSelect.appendChild(opt);
+                    });
+                    if (currentValue) stateSelect.value = currentValue;
+                }
+                
+                // Populate status filter
+                const statusSelect = document.getElementById('status-filter');
+                if (statusSelect && data.statuses) {
+                    const currentValue = statusSelect.value;
+                    statusSelect.innerHTML = '<option value="">All Statuses</option>';
+                    data.statuses.forEach(status => {
+                        const opt = document.createElement('option');
+                        opt.value = status;
+                        opt.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+                        statusSelect.appendChild(opt);
+                    });
+                    if (currentValue) statusSelect.value = currentValue;
+                }
+                
+                // Populate tier filter
+                const tierSelect = document.getElementById('tier-filter');
+                if (tierSelect && data.tiers) {
+                    const currentValue = tierSelect.value;
+                    tierSelect.innerHTML = '<option value="">All Tiers</option>';
+                    data.tiers.forEach(tier => {
+                        const opt = document.createElement('option');
+                        opt.value = tier;
+                        opt.textContent = tier;
+                        tierSelect.appendChild(opt);
+                    });
+                    if (currentValue) tierSelect.value = currentValue;
+                }
+            } catch (e) {
+                console.error('Failed to load leads filters:', e);
             }
         }
 
@@ -1203,6 +1165,36 @@
                 console.error('Failed to load intelligence cities:', e);
             }
         }
+        
+        // Fetch intelligence filters (POS systems, license types)
+        async function loadIntelligenceFilters() {
+            try {
+                const data = await fetchAPI('/filters/intelligence');
+                
+                // Populate POS filter
+                const posSelect = document.getElementById('pos-filter');
+                if (posSelect && data.pos_systems) {
+                    const currentValue = posSelect.value;
+                    posSelect.innerHTML = '<option value="">All POS Systems</option>';
+                    data.pos_systems.forEach(pos => {
+                        const opt = document.createElement('option');
+                        opt.value = pos;
+                        opt.textContent = pos;
+                        posSelect.appendChild(opt);
+                    });
+                    // Add Unknown option if not present
+                    if (!data.pos_systems.includes('Unknown')) {
+                        const opt = document.createElement('option');
+                        opt.value = 'Unknown';
+                        opt.textContent = 'Unknown';
+                        posSelect.appendChild(opt);
+                    }
+                    if (currentValue) posSelect.value = currentValue;
+                }
+            } catch (e) {
+                console.error('Failed to load intelligence filters:', e);
+            }
+        }
 
         // ============ ENRICHMENT ============
         let enrichmentData = [];
@@ -1343,6 +1335,43 @@
                 enrichSort.dir = 'asc';
             }
             renderEnrichmentTable(enrichmentData);
+        }
+
+        // Fetch enrichment filters (states, statuses)
+        async function loadEnrichmentFilters() {
+            try {
+                const data = await fetchAPI('/filters/enrichment');
+                
+                // Populate state filter
+                const stateSelect = document.getElementById('enrich-state-filter');
+                if (stateSelect && data.states) {
+                    const currentValue = stateSelect.value;
+                    stateSelect.innerHTML = '<option value="">All States</option>';
+                    data.states.forEach(state => {
+                        const opt = document.createElement('option');
+                        opt.value = state;
+                        opt.textContent = state;
+                        stateSelect.appendChild(opt);
+                    });
+                    if (currentValue) stateSelect.value = currentValue;
+                }
+                
+                // Populate status filter
+                const statusSelect = document.getElementById('enrich-status-filter');
+                if (statusSelect && data.statuses) {
+                    const currentValue = statusSelect.value;
+                    statusSelect.innerHTML = '<option value="">All Status</option>';
+                    data.statuses.forEach(status => {
+                        const opt = document.createElement('option');
+                        opt.value = status;
+                        opt.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+                        statusSelect.appendChild(opt);
+                    });
+                    if (currentValue) statusSelect.value = currentValue;
+                }
+            } catch (e) {
+                console.error('Failed to load enrichment filters:', e);
+            }
         }
 
         function filterEnrichment() {
