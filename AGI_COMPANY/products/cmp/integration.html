@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGI CMP Integration Example</title>
+    <!-- AGI CMP Script - Load FIRST, before any tracking scripts -->
+    <script src="agi-cmp.js"></script>
+    
+    <!-- Google Tag Manager with Consent Mode v2 -->
+    <script>
+        // Initialize dataLayer
+        window.dataLayer = window.dataLayer || [];
+        
+        // Default consent to denied until user choice
+        window.dataLayer.push({
+            'event': 'default_consent',
+            'consent': {
+                'ad_storage': 'denied',
+                'analytics_storage': 'denied',
+                'functionality_storage': 'denied',
+                'personalization_storage': 'denied',
+                'security_storage': 'granted',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied'
+            }
+        });
+        
+        // GTM will be loaded based on consent
+    </script>
+    
+    <!-- Example: Analytics script blocked until consent -->
+    <script type="text/plain" data-agi-category="analytics">
+        // This script won't execute until analytics consent is given
+        console.log('Analytics loaded after consent');
+        // Google Analytics code would go here
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+    
+    <!-- Example: Marketing script blocked until consent -->
+    <script type="text/plain" data-agi-category="marketing" 
+            data-agi-src="https://facebook.com/tr?id=PIXEL_ID&ev=PageView">
+        // Facebook Pixel will be loaded only if marketing consent given
+    </script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.6;
+            background: #0a0a1a;
+            color: #e5e5e5;
+        }
+        h1 {
+            color: #ed8936;
+        }
+        .status-box {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .status-box h3 {
+            margin-top: 0;
+            color: #ed8936;
+        }
+        .consent-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+        }
+        .consent-item:last-child {
+            border-bottom: none;
+        }
+        .granted {
+            color: #48bb78;
+        }
+        .denied {
+            color: #f56565;
+        }
+        button {
+            background: #ed8936;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: #dd7825;
+        }
+        pre {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🍪 AGI CMP Integration Demo</h1>
+    <p>This page demonstrates the AGI Consent Management Platform.</p>
+    
+    <div class="status-box">
+        <h3>Current Consent Status</h3>
+        <div id="consent-status">
+            <p>Loading...</p>
+        </div>
+    </div>
+    
+    <div class="status-box">
+        <h3>How It Works</h3>
+        <p><strong>1. Script Blocking:</strong> Scripts with <code>data-agi-category</code> are blocked until consent is given.</p>
+        <pre>&lt;script type="text/plain" data-agi-category="analytics">
+  // Analytics code here - won't execute until consent
+&lt;/script></pre>
+        
+        <p><strong>2. Google Consent Mode:</strong> Automatically integrates with GTM Consent Mode v2.</p>
+        
+        <p><strong>3. Automatic Execution:</strong> Once consent is granted, blocked scripts are automatically allowed.</p>
+    </div>
+    
+    <button onclick="window.__agi_cmp.openSettings()">Open Consent Settings</button>
+    <button onclick="window.__agi_cmp.reset()">Reset Consent (Reload)</button>
+    
+    <script>
+        // Wait for CMP to be ready
+        function updateStatus() {
+            const cmp = window.__agi_cmp;
+            if (!cmp) {
+                setTimeout(updateStatus, 100);
+                return;
+            }
+            
+            const consent = cmp.getConsent();
+            const statusDiv = document.getElementById('consent-status');
+            
+            let html = '';
+            for (const [category, granted] of Object.entries(consent)) {
+                if (category === 'timestamp') {
+                    html += `<div class="consent-item"><span>Last Updated</span>`;
+                    html += `<span>${granted ? new Date(granted).toLocaleString() : 'Never'}</span></div>`;
+                } else {
+                    const status = granted ? '✅ Granted' : '❌ Denied';
+                    const className = granted ? 'granted' : 'denied';
+                    html += `<div class="consent-item"><span>${category.charAt(0).toUpperCase() + category.slice(1)}</span>`;
+                    html += `<span class="${className}">${status}</span></div>`;
+                }
+            }
+            
+            statusDiv.innerHTML = html;
+        }
+        
+        // Initial load
+        updateStatus();
+        
+        // Update on consent change
+        if (window.__agi_cmp) {
+            window.__agi_cmp.on('consent', updateStatus);
+        }
+    </script>
+</body>
+</html>
