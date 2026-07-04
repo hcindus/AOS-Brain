@@ -1340,7 +1340,10 @@
         // Fetch enrichment filters (states, statuses)
         async function loadEnrichmentFilters() {
             try {
+                console.log('Loading enrichment filters...');
                 const data = await fetchAPI('/filters/enrichment');
+                console.log('Enrichment filters response:', data);
+                console.log('Statuses received:', data.statuses);
                 
                 // Populate state filter
                 const stateSelect = document.getElementById('enrich-state-filter');
@@ -1366,8 +1369,12 @@
                         opt.value = status;
                         opt.textContent = status.charAt(0).toUpperCase() + status.slice(1);
                         statusSelect.appendChild(opt);
+                        console.log('Added status option:', status);
                     });
                     if (currentValue) statusSelect.value = currentValue;
+                    console.log('Status filter populated with', data.statuses.length, 'options');
+                } else {
+                    console.log('Status filter not populated - statusSelect:', statusSelect, 'data.statuses:', data.statuses);
                 }
             } catch (e) {
                 console.error('Failed to load enrichment filters:', e);
