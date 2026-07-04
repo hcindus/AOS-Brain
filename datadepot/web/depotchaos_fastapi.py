@@ -1197,9 +1197,9 @@ async def get_enrichment_data(
     c.execute("SELECT COUNT(*) FROM vendors WHERE phone IS NOT NULL AND phone != ''")
     with_phone = c.fetchone()[0]
     
-    # Get distinct cities for filter
-    c.execute("SELECT DISTINCT city FROM vendors WHERE city IS NOT NULL ORDER BY city")
-    cities = [row[0] for row in c.fetchall()]
+    # Get distinct cities for filter (filter out corrupted date values and empty entries)
+    c.execute("SELECT DISTINCT city FROM vendors WHERE city IS NOT NULL AND TRIM(city) != '' AND city NOT LIKE '__-%' ORDER BY city")
+    cities = [row[0] for row in c.fetchall() if row[0] and row[0].strip()]
     
     # Get paginated results
     offset = (page - 1) * per_page
