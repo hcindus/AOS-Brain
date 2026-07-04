@@ -1,0 +1,319 @@
+{
+  "check_interval": 60,
+  "max_failures": 3,
+  "restart_delay": 30,
+  "scrapers": {
+    "ak_priority": {
+      "script": "/root/.openclaw/workspace/datadepot/scrapers/alaska_business_scraper.py",
+      "enabled": true,
+      "schedule": "0 */6 * * *",
+      "last_run": "2026-07-04T15:51:29.545180",
+      "status": "idle",
+      "failures": 0
+    },
+    "multi_state": {
+      "script": "/root/.openclaw/workspace/datadepot/scrapers/multi_state_business_scraper.py",
+      "enabled": true,
+      "schedule": "0 */12 * * *",
+      "last_run": "2026-07-04T15:51:29.847716",
+      "status": "idle",
+      "failures": 0
+    }
+  },
+  "remaining_states": {
+    "AL": {
+      "cities": [
+        "Birmingham",
+        "Montgomery",
+        "Mobile",
+        "Huntsville"
+      ],
+      "enabled": true
+    },
+    "NM": {
+      "cities": [
+        "Albuquerque",
+        "Santa Fe",
+        "Las Cruces",
+        "Rio Rancho"
+      ],
+      "enabled": true
+    },
+    "MS": {
+      "cities": [
+        "Jackson",
+        "Gulfport",
+        "Southaven",
+        "Hattiesburg"
+      ],
+      "enabled": true
+    },
+    "KY": {
+      "cities": [
+        "Louisville",
+        "Lexington",
+        "Bowling Green",
+        "Owensboro"
+      ],
+      "enabled": true
+    },
+    "AR": {
+      "cities": [
+        "Little Rock",
+        "Fort Smith",
+        "Fayetteville",
+        "Springdale"
+      ],
+      "enabled": true
+    },
+    "IA": {
+      "cities": [
+        "Des Moines",
+        "Cedar Rapids",
+        "Davenport",
+        "Sioux City"
+      ],
+      "enabled": true
+    },
+    "KS": {
+      "cities": [
+        "Wichita",
+        "Overland Park",
+        "Kansas City",
+        "Topeka"
+      ],
+      "enabled": true
+    },
+    "ID": {
+      "cities": [
+        "Boise",
+        "Meridian",
+        "Nampa",
+        "Idaho Falls"
+      ],
+      "enabled": true
+    },
+    "MN": {
+      "cities": [
+        "Minneapolis",
+        "St. Paul",
+        "Rochester",
+        "Duluth"
+      ],
+      "enabled": true
+    },
+    "UT": {
+      "cities": [
+        "Salt Lake City",
+        "West Valley City",
+        "Provo",
+        "West Jordan"
+      ],
+      "enabled": true
+    },
+    "OK": {
+      "cities": [
+        "Oklahoma City",
+        "Tulsa",
+        "Norman",
+        "Broken Arrow"
+      ],
+      "enabled": true
+    },
+    "MO": {
+      "cities": [
+        "Kansas City",
+        "St. Louis",
+        "Springfield",
+        "Columbia"
+      ],
+      "enabled": true
+    },
+    "WI": {
+      "cities": [
+        "Milwaukee",
+        "Madison",
+        "Green Bay",
+        "Kenosha"
+      ],
+      "enabled": true
+    },
+    "IN": {
+      "cities": [
+        "Indianapolis",
+        "Fort Wayne",
+        "Evansville",
+        "South Bend"
+      ],
+      "enabled": true
+    },
+    "MI": {
+      "cities": [
+        "Detroit",
+        "Grand Rapids",
+        "Warren",
+        "Sterling Heights"
+      ],
+      "enabled": true
+    },
+    "OH": {
+      "cities": [
+        "Columbus",
+        "Cleveland",
+        "Cincinnati",
+        "Toledo"
+      ],
+      "enabled": true
+    },
+    "GA": {
+      "cities": [
+        "Atlanta",
+        "Augusta",
+        "Columbus",
+        "Macon"
+      ],
+      "enabled": true
+    },
+    "SC": {
+      "cities": [
+        "Charleston",
+        "Columbia",
+        "North Charleston",
+        "Mount Pleasant"
+      ],
+      "enabled": true
+    },
+    "NC": {
+      "cities": [
+        "Charlotte",
+        "Raleigh",
+        "Greensboro",
+        "Durham"
+      ],
+      "enabled": true
+    },
+    "VA": {
+      "cities": [
+        "Virginia Beach",
+        "Norfolk",
+        "Chesapeake",
+        "Richmond"
+      ],
+      "enabled": true
+    },
+    "MD": {
+      "cities": [
+        "Baltimore",
+        "Frederick",
+        "Rockville",
+        "Gaithersburg"
+      ],
+      "enabled": true
+    },
+    "CT": {
+      "cities": [
+        "Bridgeport",
+        "New Haven",
+        "Stamford",
+        "Hartford"
+      ],
+      "enabled": true
+    },
+    "MA": {
+      "cities": [
+        "Boston",
+        "Worcester",
+        "Springfield",
+        "Cambridge"
+      ],
+      "enabled": true
+    },
+    "NJ": {
+      "cities": [
+        "Newark",
+        "Jersey City",
+        "Paterson",
+        "Elizabeth"
+      ],
+      "enabled": true
+    },
+    "PA": {
+      "cities": [
+        "Philadelphia",
+        "Pittsburgh",
+        "Allentown",
+        "Erie"
+      ],
+      "enabled": true
+    },
+    "NY": {
+      "cities": [
+        "New York City",
+        "Buffalo",
+        "Rochester",
+        "Yonkers"
+      ],
+      "enabled": true
+    },
+    "VT": {
+      "cities": [
+        "Burlington",
+        "South Burlington",
+        "Rutland",
+        "Barre"
+      ],
+      "enabled": true
+    },
+    "NH": {
+      "cities": [
+        "Manchester",
+        "Nashua",
+        "Concord",
+        "Derry"
+      ],
+      "enabled": true
+    },
+    "ME": {
+      "cities": [
+        "Portland",
+        "Lewiston",
+        "Bangor",
+        "South Portland"
+      ],
+      "enabled": true
+    },
+    "RI": {
+      "cities": [
+        "Providence",
+        "Warwick",
+        "Cranston",
+        "Pawtucket"
+      ],
+      "enabled": true
+    },
+    "DE": {
+      "cities": [
+        "Wilmington",
+        "Dover",
+        "Newark",
+        "Middletown"
+      ],
+      "enabled": true
+    },
+    "WV": {
+      "cities": [
+        "Charleston",
+        "Huntington",
+        "Morgantown",
+        "Parkersburg"
+      ],
+      "enabled": true
+    },
+    "DC": {
+      "cities": [
+        "Washington"
+      ],
+      "enabled": true
+    }
+  }
+}

@@ -661,6 +661,84 @@ async def get_pos_systems():
     
     return systems
 
+@app.get("/api/filters/leads")
+async def get_leads_filters():
+    """Get all distinct filter values for leads"""
+    conn = get_db_connection()
+    c = conn.cursor()
+    
+    # Get distinct states from leads
+    c.execute("SELECT DISTINCT state FROM leads WHERE state IS NOT NULL AND state != '' AND deleted = 0 ORDER BY state")
+    states = [row[0] for row in c.fetchall()]
+    
+    # Get distinct status values
+    c.execute("SELECT DISTINCT status FROM leads WHERE status IS NOT NULL AND status != '' AND deleted = 0 ORDER BY status")
+    statuses = [row[0] for row in c.fetchall()]
+    
+    # Get distinct tier values
+    c.execute("SELECT DISTINCT tier FROM leads WHERE tier IS NOT NULL AND tier != '' AND deleted = 0 ORDER BY tier")
+    tiers = [row[0] for row in c.fetchall()]
+    
+    # Get distinct POS systems from leads
+    c.execute("SELECT DISTINCT pos_system FROM leads WHERE pos_system IS NOT NULL AND pos_system != '' AND deleted = 0 ORDER BY pos_system")
+    pos_systems = [row[0] for row in c.fetchall()]
+    
+    conn.close()
+    
+    return {
+        'states': states,
+        'statuses': statuses,
+        'tiers': tiers,
+        'pos_systems': pos_systems
+    }
+
+@app.get("/api/filters/intelligence")
+async def get_intelligence_filters():
+    """Get all distinct filter values for intelligence"""
+    conn = get_db_connection()
+    c = conn.cursor()
+    
+    # Get distinct POS systems from intelligence
+    c.execute("SELECT DISTINCT pos_system FROM datadepot_intelligence WHERE pos_system IS NOT NULL AND pos_system != '' ORDER BY pos_system")
+    pos_systems = [row[0] for row in c.fetchall()]
+    
+    # Get distinct license types
+    c.execute("SELECT DISTINCT license_type FROM datadepot_intelligence WHERE license_type IS NOT NULL AND license_type != '' ORDER BY license_type")
+    license_types = [row[0] for row in c.fetchall()]
+    
+    conn.close()
+    
+    return {
+        'pos_systems': pos_systems,
+        'license_types': license_types
+    }
+
+@app.get("/api/filters/enrichment")
+async def get_enrichment_filters():
+    """Get all distinct filter values for enrichment (vendors)"""
+    conn = get_depot_chaos_db()
+    c = conn.cursor()
+    
+    # Get distinct states from vendors
+    c.execute("SELECT DISTINCT state FROM vendors WHERE state IS NOT NULL AND state != '' AND LENGTH(state) = 2 ORDER BY state")
+    states = [row[0] for row in c.fetchall()]
+    
+    # Get distinct status values
+    c.execute("SELECT DISTINCT status FROM vendors WHERE status IS NOT NULL AND status != '' ORDER BY status")
+    statuses = [row[0] for row in c.fetchall()]
+    
+    # Get distinct cities
+    c.execute("SELECT DISTINCT city FROM vendors WHERE city IS NOT NULL AND city != '' ORDER BY city")
+    cities = [row[0] for row in c.fetchall()]
+    
+    conn.close()
+    
+    return {
+        'states': states,
+        'statuses': statuses,
+        'cities': cities
+    }
+
 @app.post("/api/queue")
 async def add_email_to_queue(request: QueueEmailRequest):
     """Add a new email to the queue"""
