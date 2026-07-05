@@ -3,7 +3,7 @@
   "name": "Aria",
   "role": "MEDIC",
   "level": 5,
-  "xp": 384437,
+  "xp": 384508,
   "stats": {
     "health": 150,
     "maxHealth": 150,
@@ -17,7 +17,7 @@
     "scanning": 17,
     "combat": 23
   },
-  "missionsCompleted": 2584,
+  "missionsCompleted": 2585,
   "discoveries": [
     {
       "name": "Ancient Ruins",
@@ -12938,6 +12938,11 @@
       "name": "Unknown Signal",
       "location": "Alpha-1",
       "timestamp": 1783211157613
+    },
+    {
+      "name": "Anomalous Planet",
+      "location": "Alpha-1",
+      "timestamp": 1783216737859
     }
   ],
   "status": "ACTIVE",
