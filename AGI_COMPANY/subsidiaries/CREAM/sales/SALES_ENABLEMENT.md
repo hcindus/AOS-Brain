@@ -344,5 +344,5 @@ Before every demo:
 
 ---
 
-*Last Updated: June 20, 2026*  
+*Last Updated: July 6, 2026*  
 *Questions? Contact: sales@getcream.io*
