@@ -1,0 +1,155 @@
+syntax = "proto3";
+
+package aospm01;
+
+// High-level intent commands from AOS Brain to PM01
+message IntentCommand {
+  string agent_id = 1;        // "miles", "patricia", "jordan", "pulp"
+  string command_type = 2;    // "navigate", "interact", "speak", "observe"
+  Target target = 3;
+  Context context = 4;
+  int64 timestamp = 5;
+}
+
+message Target {
+  oneof target_type {
+    Location location = 1;
+    string object_id = 2;
+    string person_id = 3;
+  }
+}
+
+message Location {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+  string frame_id = 4;  // "map", "odom", "base_link"
+}
+
+message Context {
+  string scene_description = 1;
+  repeated DetectedObject nearby_objects = 2;
+  repeated DetectedPerson nearby_people = 3;
+}
+
+message DetectedObject {
+  string id = 1;
+  string label = 2;
+  float confidence = 3;
+  BoundingBox bbox = 4;
+}
+
+message DetectedPerson {
+  string id = 1;
+  string name = 2;  // Known person, empty if unknown
+  float confidence = 3;
+  BoundingBox bbox = 4;
+}
+
+message BoundingBox {
+  float x_min = 1;
+  float y_min = 2;
+  float x_max = 3;
+  float y_max = 4;
+}
+
+// RL action space - low-level commands to robot controller
+message RLAction {
+  string agent_id = 1;
+  repeated float joint_targets = 2;  // Joint positions/velocities
+  Pose base_velocity = 3;             // Linear/angular velocity
+  int64 timestamp = 4;
+}
+
+message Pose {
+  float linear_x = 1;
+  float linear_y = 2;
+  float linear_z = 3;
+  float angular_x = 4;
+  float angular_y = 5;
+  float angular_z = 6;
+}
+
+// Robot state telemetry from PM01 to AOS Brain
+message RobotState {
+  string agent_id = 1;
+  Pose robot_pose = 2;
+  repeated JointState joints = 3;
+  repeated SensorReading sensors = 4;
+  BatteryStatus battery = 5;
+  string behavior_state = 6;  // Current FSM state
+  int64 timestamp = 7;
+}
+
+message JointState {
+  string name = 1;
+  float position = 2;
+  float velocity = 3;
+  float effort = 4;
+}
+
+message SensorReading {
+  string sensor_id = 1;
+  oneof reading {
+    CameraFrame camera = 2;
+    AudioFrame audio = 3;
+    LidarScan lidar = 4;
+    ImuData imu = 5;
+  }
+}
+
+message CameraFrame {
+  bytes image_data = 1;
+  string encoding = 2;  // "jpeg", "png", "h264"
+  int32 width = 3;
+  int32 height = 4;
+}
+
+message AudioFrame {
+  bytes audio_data = 1;
+  int32 sample_rate = 2;
+  int32 channels = 3;
+}
+
+message LidarScan {
+  repeated float ranges = 1;
+  repeated float angles = 2;
+}
+
+message ImuData {
+  float accel_x = 1;
+  float accel_y = 2;
+  float accel_z = 3;
+  float gyro_x = 4;
+  float gyro_y = 5;
+  float gyro_z = 6;
+}
+
+message BatteryStatus {
+  float percentage = 1;
+  float voltage = 2;
+  bool is_charging = 3;
+}
+
+// Bidirectional streaming service
+service AOSPM01Bridge {
+  // Send high-level intent commands to robot
+  rpc SendCommand(IntentCommand) returns (CommandAck);
+  
+  // Stream robot state back to brain
+  rpc StreamState(StateRequest) returns (stream RobotState);
+  
+  // Bidirectional: intent in, actions out
+  rpc AgentLoop(stream IntentCommand) returns (stream RLAction);
+}
+
+message CommandAck {
+  bool success = 1;
+  string error_message = 2;
+  int64 processed_timestamp = 3;
+}
+
+message StateRequest {
+  string agent_id = 1;
+  int32 update_rate_hz = 2;  // Desired state update frequency
+}
