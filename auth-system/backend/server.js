@@ -7,6 +7,7 @@ const path = require('path');
 
 const authRoutes = require('./routes/auth');
 const passwordResetRoutes = require('./routes/password-reset');
+const consentRoutes = require('./routes/consent');
 const { apiLimiter } = require('./middleware/rateLimit');
 const { setCsrfToken } = require('./middleware/auth');
 const { securityHeaders } = require('./middleware/security');
@@ -67,6 +68,7 @@ app.get('/api/csrf-token', csrfLimiter, setCsrfToken, (req, res) => {
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/auth', passwordResetRoutes);
+app.use('/api/consent', consentRoutes);
 
 // Security guardian status endpoint
 app.get('/api/security/status', securityStatusRoute);

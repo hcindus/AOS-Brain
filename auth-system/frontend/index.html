@@ -69,11 +69,15 @@
                     <li>Rate-limited login attempts</li>
                     <li>TOTP MFA support</li>
                 </ul>
+                <p style="margin-top: 12px; font-size: 12px;">
+                    <a href="#" onclick="CRP.reopen(); return false;" style="color: var(--accent);">🍪 Manage Cookie Preferences</a>
+                </p>
             </div>
         </div>
     </div>
 
     <script src="assets/auth.js"></script>
+    <script src="assets/cookie-consent.js"></script>
     <script>
         // Handle login form
         document.getElementById('login-form').addEventListener('submit', async (e) => {
