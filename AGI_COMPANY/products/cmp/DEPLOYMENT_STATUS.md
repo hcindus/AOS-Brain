@@ -1,6 +1,6 @@
 # AGI CMP Deployment Status
 
-**Last Updated:** 2026-07-07 00:21 UTC
+**Last Updated:** 2026-07-07 00:24 UTC
 
 ## Status
 
@@ -60,3 +60,15 @@ Updated `/root/.openclaw/workspace/auth-system/frontend/index.html`:
 2. Test on auth system: `https://myl0nr0s.cloud/auth-system/frontend/`
 3. Add CMP to other sites (psdepot.com, etc.)
 4. Configure SendGrid for email notifications
+
+## Website Status
+
+**AGI Company Website** deployed to `myl0nr0s.cloud`:
+- Source: `/root/.openclaw/workspace/AGI_COMPANY_WEBSITE_REBUILD/`
+- Location: `/var/www/myl0nr0s.cloud/`
+- Files: index.html, agents.html, cream.html, rs79.html, live_demo.html
+- CSS: agi-company.css
+- Products: cream/, reggiestarr/
+- Backup: index.html.backup.2026-07-07
+
+**CMP script added** to index.html for GDPR compliance.
