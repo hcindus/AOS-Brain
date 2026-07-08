@@ -10,3 +10,9 @@
 
 ### Crypto/Trading
 - Portfolio Manager: Linked to `hcindus/the-great-cryptonio-active` and the Binance API endpoints in `aocros`.
+
+### DeepSeek API
+- **API Key:** Stored in `/root/.deepseek_env`
+- **Base URL:** https://api.deepseek.com
+- **Models:** deepseek-chat (V3), deepseek-reasoner (R1)
+- **Load:** `source /root/.deepseek_env`
