@@ -16,3 +16,11 @@
 - **Base URL:** https://api.deepseek.com
 - **Models:** deepseek-chat (V3), deepseek-reasoner (R1)
 - **Load:** `source /root/.deepseek_env`
+
+### Jordan's Local Models
+| Model | Size | Best For | Command |
+|-------|------|----------|---------|
+| **Qwen2.5:14b** | 9GB | Coding, reasoning, text | `ollama run qwen2.5:14b` |
+| **Qwen3.5** | 6.6GB | Vision + text (multimodal) | `ollama run qwen3.5` |
+| Llama3.1 | 4.9GB | General purpose | `ollama run llama3.1` |
+| Mistral | 4.4GB | Fast responses | `ollama run mistral` |
