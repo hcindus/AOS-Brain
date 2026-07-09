@@ -1,0 +1,36 @@
+=== Security Audit Thu Jul  9 02:00:02 UTC 2026 ===
+System: Miles.brain.cloud
+Auditor: Chelios
+
+SSH Configuration:
+#PasswordAuthentication yes
+# PasswordAuthentication.  Depending on your PAM configuration,
+# PAM authentication, then enable this but set PasswordAuthentication
+PermitRootLogin yes
+
+Active Ports:
+LISTEN 0      511          0.0.0.0:443        0.0.0.0:*    users:(("nginx",pid=3288045,fd=8),("nginx",pid=116818,fd=8),("nginx",pid=116817,fd=8),("nginx",pid=116816,fd=8),("nginx",pid=116815,fd=8))     
+LISTEN 0      511          0.0.0.0:80         0.0.0.0:*    users:(("nginx",pid=3288045,fd=9),("nginx",pid=116818,fd=9),("nginx",pid=116817,fd=9),("nginx",pid=116816,fd=9),("nginx",pid=116815,fd=9))     
+LISTEN 0      4096         0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=3130708,fd=3),("systemd",pid=1,fd=117))                                                                                     
+LISTEN 0      100          0.0.0.0:8767       0.0.0.0:*    users:(("python3",pid=3704377,fd=6))                                                                                                           
+LISTEN 0      5          127.0.0.1:8085       0.0.0.0:*    users:(("python3",pid=3386176,fd=3))                                                                                                           
+LISTEN 0      2048         0.0.0.0:8082       0.0.0.0:*    users:(("python3",pid=3386220,fd=13))                                                                                                          
+LISTEN 0      2048         0.0.0.0:8083       0.0.0.0:*    users:(("python3",pid=3386210,fd=13))                                                                                                          
+LISTEN 0      5            0.0.0.0:8080       0.0.0.0:*    users:(("python3",pid=3386519,fd=3))                                                                                                           
+LISTEN 0      2048         0.0.0.0:8081       0.0.0.0:*    users:(("python3",pid=3386203,fd=13))                                                                                                          
+LISTEN 0      5            0.0.0.0:8001       0.0.0.0:*    users:(("python3",pid=3386199,fd=3))                                                                                                           
+LISTEN 0      511             [::]:443           [::]:*    users:(("nginx",pid=3288045,fd=7),("nginx",pid=116818,fd=7),("nginx",pid=116817,fd=7),("nginx",pid=116816,fd=7),("nginx",pid=116815,fd=7))     
+LISTEN 0      511             [::]:80            [::]:*    users:(("nginx",pid=3288045,fd=10),("nginx",pid=116818,fd=10),("nginx",pid=116817,fd=10),("nginx",pid=116816,fd=10),("nginx",pid=116815,fd=10))
+LISTEN 0      4096            [::]:22            [::]:*    users:(("sshd",pid=3130708,fd=4),("systemd",pid=1,fd=118))                                                                                     
+
+Recent Failed Logins:
+2026-07-07T18:20:29.458549+00:00 Miles sshd[3681185]: Failed password for root from 115.159.211.112 port 49490 ssh2
+2026-07-07T18:25:26.118782+00:00 Miles sshd[3685124]: Failed password for root from 115.159.211.112 port 62897 ssh2
+2026-07-07T18:40:37.258883+00:00 Miles sshd[3695595]: Failed password for root from 115.159.211.112 port 55200 ssh2
+2026-07-07T18:46:16.582132+00:00 Miles sshd[3699912]: Failed password for root from 185.93.89.72 port 60280 ssh2
+2026-07-07T20:28:27.118204+00:00 Miles sshd[3753930]: Failed password for root from 115.159.211.112 port 54377 ssh2
+2026-07-07T20:31:50.514591+00:00 Miles sshd[3755418]: Failed password for root from 115.159.211.112 port 52554 ssh2
+2026-07-08T03:11:09.025258+00:00 Miles sshd[3965025]: Failed password for root from 124.222.159.38 port 49762 ssh2
+2026-07-08T04:30:39.368391+00:00 Miles sshd[4004724]: Failed password for root from 124.222.159.38 port 65176 ssh2
+2026-07-08T05:18:22.851821+00:00 Miles sshd[4030533]: Failed password for invalid user admin from 34.14.113.131 port 18914 ssh2
+2026-07-08T15:45:20.954227+00:00 Miles sshd[173693]: Failed password for invalid user psdepot from 31.97.159.167 port 57538 ssh2
