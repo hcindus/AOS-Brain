@@ -1,20 +1,30 @@
 {
-  "total_prospects": 58000,
-  "last_update": "2026-07-08",
-  "todays_addition": 1000,
-  "breakdown": {
-    "priority_a": 400,
-    "priority_b": 350,
-    "priority_c": 250
+  "total_prospects": 59000,
+  "generated_today": 1000,
+  "last_updated": "2026-07-09T06:21:00+00:00",
+  "previous_count": 58000,
+  "file_location": "prospects/realtor_prospects_2026-07-09.json",
+  "daily_target": 1000,
+  "streak_days": 79,
+  "by_priority": {
+    "A": 22800,
+    "B": 19950,
+    "C": 14250
   },
-  "experience_mix": {
-    "senior_6plus_years": 500,
-    "mid_level_3_5_years": 250,
-    "new_0_2_years": 250
+  "by_experience": {
+    "senior_6plus": 29321,
+    "mid_3to5": 15159,
+    "new_0to2": 12520
   },
-  "files_generated": [
-    "realtor_prospects_2026-07-08.json",
-    "realtor_prospects_2026-07-08.csv"
+  "top_states": [
+    "CA",
+    "TX",
+    "FL",
+    "NY",
+    "AZ",
+    "CO",
+    "OH",
+    "NC"
   ],
-  "generation_timestamp": "2026-07-08T06:22:00Z"
+  "coverage_metros": 50
 }

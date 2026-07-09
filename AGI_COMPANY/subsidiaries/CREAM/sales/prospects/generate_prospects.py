@@ -12,7 +12,7 @@ from datetime import datetime
 from typing import List, Dict
 
 # Configuration
-TARGET_DATE = "2026-07-04"
+TARGET_DATE = "2026-07-09"
 OUTPUT_DIR = "/root/.openclaw/workspace/AGI_COMPANY/subsidiaries/CREAM/sales/prospects/"
 
 # Target Distribution
