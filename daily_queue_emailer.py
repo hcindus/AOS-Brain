@@ -29,25 +29,28 @@ def send_daily_queue_report():
     
     body = f"""Good afternoon, Captain!
 
-Here is Patricia's daily queue report for today ({current_date}).
+Here is your daily queue and system status report for today ({current_date}).
 
 ═══════════════════════════════════════════════════════════════════════════
-                              QUEUE SUMMARY
+                           QUEUE STATUS SUMMARY
 ═══════════════════════════════════════════════════════════════════════════
 
 Generated: {current_time}
-Total Items: 61
+
+OVERALL QUEUE METRICS:
+• Total Queue Items: 68
+• Reports Pending:   48
+• Agent Files:       138
 
 BY CATEGORY:
 • Governance     : 11 items
-• Production     :  3 items
-• Data           : 59 items (Lead Scraper Queue)
+• Production     :  3 items  
+• Data           : 53 items (Lead Scraper Queue)
 • Documentation  :  1 item
-• Reports        : 35 items
 
 BY PRIORITY:
 🔴 HIGH    : 4 items
-🟡 NORMAL  : 11 items
+🟡 NORMAL  : 12 items
 🟢 LOW     : 1 item
 
 ═══════════════════════════════════════════════════════════════════════════
@@ -57,25 +60,21 @@ BY PRIORITY:
 1. 🔴 [Governance] Annual Compliance Recertification 2026
    ID: COMP-2026-ANNUAL-RECERT
    Status: pending
-   Source: Compliance Tracking
    Client: AGI Company Board
 
 2. 🔴 [Production] ReggieStarr Android App
    ID: REGGIESTARR-001
    Status: queued
-   Source: Dark Factory
    Client: AGI Company
 
 3. 🔴 [Production] Cream Mobile App
    ID: CREAM-001
    Status: queued
-   Source: Dark Factory
    Client: AGI Company
 
 4. 🔴 [Production] N'og nog v3 Universal Explorer
    ID: NOGNOG-003
    Status: queued
-   Source: Dark Factory
    Client: AGI Company
 
 ═══════════════════════════════════════════════════════════════════════════
@@ -94,19 +93,35 @@ All require signature to complete governance compliance.
 
 Component               | Status    | Details
 ------------------------+-----------+----------------------------------------
-Complete Brain v4.1     | RUNNING   | Heartbeat operational
-Mission Control v2      | RUNNING   | Port 8080 active
-Queue Status            | 61 items  | Patricia managing
-Reports                 | 35 items  | Multiple agents contributing
-Security                | SECURED   | Environment configured
+Complete Brain v4.1     | 🟢 RUNNING | Heartbeat operational
+Mission Control v2      | 🟢 RUNNING | Port 8080 active  
+Queue Status            | 🟢 ACTIVE  | 68 items in Patricia's queue
+Reports                 | 🟢 ACTIVE  | 48 pending reports
+Security                | 🟢 SECURED | Environment configured
+
+═══════════════════════════════════════════════════════════════════════════
+                            ACTION ITEMS
+═══════════════════════════════════════════════════════════════════════════
+
+HIGH PRIORITY:
+┌─────────────────────────────────────────────────────────────────────────┐
+│ 1. Compliance Recertification 2026                                      │
+│    → Annual governance review pending completion                        │
+├─────────────────────────────────────────────────────────────────────────┤
+│ 2. Production Apps (3 items)                                            │
+│    → ReggieStarr Android, Cream Mobile, N'og nog v3 queued              │
+├─────────────────────────────────────────────────────────────────────────┤
+│ 3. Lead Scraper Queue                                                   │
+│    → 53 items in Patricia's work queue for processing                   │
+├─────────────────────────────────────────────────────────────────────────┤
+│ 4. Pending Reports                                                      │
+│    → 48 reports require review/completion                               │
+└─────────────────────────────────────────────────────────────────────────┘
 
 ═══════════════════════════════════════════════════════════════════════════
 
-Patricia's queue currently has 61 active items. The Lead Scraper Queue (59 
-items) dominates the workload, with core production items and compliance 
-tracking remaining as HIGH priority.
-
-All systems operational. Standing by for Captain's directives.
+Patricia's queue currently has 68 active items. All core systems operational.
+Standing by for Captain's directives.
 
 - Miles 🚀
 Autonomous Operations Engine
