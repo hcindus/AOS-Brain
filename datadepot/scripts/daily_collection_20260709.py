@@ -13,7 +13,7 @@ from collections import Counter
 import re
 
 # Configuration
-DATA_DIR = "datadepot/data"
+DATA_DIR = "/datadepot/data"
 LOG_DIR = "datadepot/logs"
 ENRICHMENT_DIR = "datadepot/enrichment"
 REPORTS_DIR = "datadepot/reports"
