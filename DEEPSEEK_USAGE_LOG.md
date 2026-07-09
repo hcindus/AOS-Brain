@@ -21,6 +21,7 @@
 | Date | User | Model | Tokens | Cost | Purpose | Justification |
 |------|------|-------|--------|------|---------|---------------|
 | 2026-07-09 | Miles | - | - | - | Log created | Initial setup |
+| 2026-07-09 | Miles | deepseek-v4-flash | 118 | $0.0005 | API connectivity test | Verify API is active and funded |
 
 ---
 
