@@ -54,3 +54,6 @@ expeditions/2026-06-01/
 # Auto-generated agent reports (hundreds of files generated per session)
 agent_sandboxes/patricia/reports/factory_assessment_*.json
 agent_sandboxes/*/reports/factory_assessment_*.json
+
+# Nognog runtime state files
+nognog/crew/storage/crew/*.json
