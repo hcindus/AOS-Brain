@@ -37,6 +37,7 @@ archive/backups/
 logs/*.log
 *.pid
 *.sock
+*.db
 *.db-shm
 *.db-wal
 *.db-journal
