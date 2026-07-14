@@ -17,30 +17,36 @@ WASTE_EMAIL_RECIPIENT = "Antonio.hudnall@gmail.com"
 WASTE_EMAIL_SUBJECT = "🫘 AOS Brain Waste Report - {timestamp}"
 
 
-def send_to_brain(cmd, params=None):
-    """Send command to brain via socket"""
-    try:
-        sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        sock.settimeout(5)
-        sock.connect('/tmp/aos_brain.sock')
-        
-        request = {"cmd": cmd}
-        if params:
-            request["params"] = params
-        
-        sock.sendall(json.dumps(request).encode() + b'\n')
-        
-        response = b''
-        while True:
-            chunk = sock.recv(4096)
-            if not chunk:
-                break
-            response += chunk
-        
-        sock.close()
-        return json.loads(response.decode())
-    except Exception as e:
-        return {"error": str(e)}
+def send_to_brain(cmd, params=None, max_retries=3):
+    """Send command to brain via socket with retry logic"""
+    last_error = None
+    for attempt in range(max_retries):
+        try:
+            sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+            sock.settimeout(15)  # Increased from 5 to 15 seconds
+            sock.connect('/tmp/aos_brain.sock')
+            
+            request = {"cmd": cmd}
+            if params:
+                request["params"] = params
+            
+            sock.sendall(json.dumps(request).encode() + b'\n')
+            
+            response = b''
+            while True:
+                chunk = sock.recv(4096)
+                if not chunk:
+                    break
+                response += chunk
+            
+            sock.close()
+            return json.loads(response.decode())
+        except Exception as e:
+            last_error = str(e)
+            if attempt < max_retries - 1:
+                time.sleep(2)  # Wait 2 seconds before retry
+                continue
+            return {"error": last_error}
 
 
 def get_kidneys_status():
