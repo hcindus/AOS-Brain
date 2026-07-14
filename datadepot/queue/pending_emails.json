@@ -1285,5 +1285,18 @@
     "from_email": "info@psdepot.com",
     "status": "pending",
     "created_at": "2026-06-05T15:43:37.474975"
+  },
+  {
+    "id": "491b0f1a-923b-4e2f-a06c-bb941a940232",
+    "to_email": "antonio.hudnall@gmail.com",
+    "subject": "DNS Records for psdepot.com - Action Required",
+    "body": "Hi Captain,\n\nHere are the DNS records to add in Hostinger for psdepot.com:\n\nSUBDOMAIN CNAMES:\n- Type: CNAME | Name: cream | Target: psdepot.com\n- Type: CNAME | Name: reggiestarr | Target: psdepot.com\n- Type: CNAME | Name: dashboard | Target: psdepot.com\n- Type: CNAME | Name: depotchaos | Target: psdepot.com\n\nSENDGRID DOMAIN AUTHENTICATION (Required for email deliverability):\n- Type: CNAME | Host: em8873.psdepot.com | Value: u109143135.wl136.sendgrid.net\n- Type: CNAME | Host: s1._domainkey.psdepot.com | Value: s1.domainkey.u109143135.wl136.sendgrid.net\n- Type: CNAME | Host: s2._domainkey.psdepot.com | Value: s2.domainkey.u109143135.wl136.sendgrid.net\n- Type: TXT | Host: _dmarc.psdepot.com | Value: v=DMARC1; p=none\n\nWhere to add: Hostinger Dashboard \u2192 Domains \u2192 psdepot.com \u2192 DNS Zone Editor\n\nOnce the SendGrid records propagate (usually 24-48 hours), our email deliverability will improve significantly.\n\n- Miles",
+    "lead_id": null,
+    "campaign_id": "outreach",
+    "scheduled_time": null,
+    "from_name": "Miles",
+    "from_email": "info@psdepot.com",
+    "status": "pending",
+    "created_at": "2026-07-14T02:38:39.502386"
   }
 ]
