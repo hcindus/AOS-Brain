@@ -2,7 +2,12 @@
 """
 WASTE EMAILER v1.3 - Updated for Mortimer Only
 Packages Miles' brain waste and emails it to mortimer@myl0nr0s.cloud
+
+⚠️  DISABLED - Stopped by Captain on 2026-07-15
 """
+
+import sys
+sys.exit(0)  # Disabled - no more waste emails
 
 import json
 import smtplib
