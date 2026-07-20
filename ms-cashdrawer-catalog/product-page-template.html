@@ -6,224 +6,183 @@
     <title>{{PRODUCT_NAME}} | M-S Cash Drawer | Performance Supply Depot</title>
     <meta name="description" content="{{PRODUCT_DESCRIPTION_SHORT}}">
     <meta name="keywords" content="{{PRODUCT_KEYWORDS}}">
+    <link rel="canonical" href="https://psdepot.com/products/{{PRODUCT_SLUG}}.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     
     <!-- Open Graph -->
     <meta property="og:title" content="{{PRODUCT_NAME}} | Performance Supply Depot">
     <meta property="og:description" content="{{PRODUCT_DESCRIPTION_SHORT}}">
     <meta property="og:image" content="{{PRODUCT_IMAGE}}">
-    <meta property="og:url" content="https://psdepot.com/products/{{PRODUCT_SLUG}}">
+    <meta property="og:url" content="https://psdepot.com/products/{{PRODUCT_SLUG}}.html">
     <meta property="og:type" content="product">
     
     <!-- Product Schema -->
     {{PRODUCT_SCHEMA}}
     
-    <!-- Organization Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Performance Supply Depot LLC",
-      "url": "https://psdepot.com",
-      "logo": "https://psdepot.com/assets/images/psdepot-logo.png",
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+1-888-881-6834",
-        "contactType": "sales"
-      }
-    }
-    </script>
-    
-    <!-- Breadcrumb Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [{
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://psdepot.com"
-      },{
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Products",
-        "item": "https://psdepot.com/products"
-      },{
-        "@type": "ListItem",
-        "position": 3,
-        "name": "{{CATEGORY_NAME}}",
-        "item": "https://psdepot.com/categories/{{CATEGORY_SLUG}}"
-      },{
-        "@type": "ListItem",
-        "position": 4,
-        "name": "{{PRODUCT_NAME}}"
-      }]
-    }
-    </script>
-    
     <style>
         :root {
-            --primary: #003366;
+            --primary: #1a365d;
+            --primary-dark: #0f2744;
+            --accent: #d69e2e;
+            --accent-hover: #b7791f;
             --secondary: #ff6600;
-            --accent: #ffd700;
             --success: #28a745;
-            --dark: #1a1a2e;
-            --light: #f8f9fa;
-            --gray: #6c757d;
-            --border: #dee2e6;
+            --bg: #f7fafc;
+            --card: #ffffff;
+            --text: #2d3748;
+            --text-muted: #718096;
+            --border: #e2e8f0;
         }
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
-            color: #333;
-            background: var(--light);
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
         }
         
         /* Header */
         .header {
             background: var(--primary);
             color: white;
-            padding: 15px 0;
-            margin-bottom: 30px;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
         .header-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
+
+        .logo { font-size: 1.5rem; font-weight: 700; }
+        .logo span { color: var(--accent); }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
         }
-        
-        .logo span {
-            color: var(--secondary);
-        }
-        
-        .header-phone {
-            font-size: 18px;
-            font-weight: bold;
-        }
-        
-        .header-phone a {
-            color: var(--accent);
+
+        .contact-info a {
+            color: white;
             text-decoration: none;
+            font-size: 0.95rem;
+            transition: opacity 0.2s;
+        }
+
+        .contact-info a:hover { opacity: 0.8; }
+
+        .cart-icon {
+            background: #c53030;
+            color: white !important;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .cart-icon:hover {
+            background: #9b2c2c;
+            transform: translateY(-1px);
         }
         
         /* Breadcrumb */
         .breadcrumb {
-            padding: 15px 0;
-            font-size: 14px;
+            max-width: 1200px;
+            margin: 1rem auto;
+            padding: 0 2rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
         }
         
         .breadcrumb a {
             color: var(--primary);
             text-decoration: none;
+            transition: color 0.2s;
         }
         
-        .breadcrumb a:hover {
-            text-decoration: underline;
-        }
+        .breadcrumb a:hover { text-decoration: underline; }
         
-        .breadcrumb span {
-            color: var(--gray);
-            margin: 0 5px;
-        }
-        
-        /* Product Layout */
+        /* Product Container */
         .product-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            gap: 3rem;
         }
         
         @media (max-width: 768px) {
             .product-container {
                 grid-template-columns: 1fr;
-                padding: 20px;
+                gap: 2rem;
+                padding: 1rem;
             }
         }
         
-        /* Product Images */
-        .product-images {
-            position: relative;
+        /* Image Section */
+        .product-image-section {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            height: fit-content;
         }
         
-        .main-image {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        
-        .main-image img {
-            max-width: 100%;
-            height: auto;
-            max-height: 400px;
-            object-fit: contain;
-        }
-        
-        .image-gallery {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .gallery-thumb {
-            width: 80px;
-            height: 80px;
-            border: 2px solid var(--border);
-            border-radius: 4px;
-            cursor: pointer;
-            overflow: hidden;
-            transition: border-color 0.3s;
-        }
-        
-        .gallery-thumb:hover,
-        .gallery-thumb.active {
-            border-color: var(--secondary);
-        }
-        
-        .gallery-thumb img {
+        .product-image {
             width: 100%;
-            height: 100%;
-            object-fit: contain;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+            background: white;
+            padding: 20px;
         }
         
-        /* Product Info */
-        .product-info h1 {
-            font-size: 28px;
+        .image-caption {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+        
+        /* Info Section */
+        .product-info { display: flex; flex-direction: column; gap: 1.5rem; }
+        
+        .sku-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
+            color: var(--text-muted);
+            padding: 0.35rem 0.85rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            width: fit-content;
+        }
+        
+        .product-title {
+            font-size: 2rem;
+            font-weight: 700;
             color: var(--primary);
-            margin-bottom: 10px;
+            line-height: 1.2;
         }
         
         .product-brand {
-            color: var(--gray);
-            font-size: 14px;
-            margin-bottom: 15px;
+            font-size: 1rem;
+            color: var(--text-muted);
         }
         
         .product-brand a {
@@ -231,210 +190,161 @@
             text-decoration: none;
         }
         
-        .product-sku {
-            font-size: 12px;
-            color: var(--gray);
-            margin-bottom: 20px;
+        /* Price Section */
+        .price-section {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid var(--border);
         }
         
-        .product-sku span {
-            background: var(--light);
-            padding: 3px 10px;
-            border-radius: 3px;
-            margin-right: 10px;
-        }
-        
-        .product-rating {
+        .price-row {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
+            align-items: baseline;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.75rem;
         }
         
-        .stars {
-            color: var(--accent);
-            font-size: 18px;
+        .price-current {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary);
         }
         
-        .rating-count {
-            color: var(--gray);
-            font-size: 14px;
-        }
-        
-        .product-price {
-            background: linear-gradient(135deg, var(--primary), var(--dark));
-            color: white;
-            padding: 25px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-        }
-        
-        .price-label {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-        
-        .price-value {
-            font-size: 36px;
-            font-weight: bold;
-        }
-        
-        .price-msrp {
-            font-size: 16px;
+        .price-original {
+            font-size: 1.25rem;
+            color: var(--text-muted);
             text-decoration: line-through;
-            opacity: 0.7;
-            margin-left: 15px;
         }
         
         .price-savings {
-            font-size: 14px;
-            color: var(--accent);
-            margin-top: 5px;
+            background: linear-gradient(135deg, #c6f6d5 0%, #9ae6b4 100%);
+            color: #22543d;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
         }
         
-        .availability {
+        .stock-status {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-        
-        .availability-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            gap: 0.5rem;
+            font-size: 0.95rem;
             font-weight: 500;
         }
         
-        .availability-status.in-stock::before {
-            content: "●";
-            color: var(--success);
-            font-size: 20px;
-        }
+        .stock-status.in-stock { color: var(--success); }
+        .stock-status.pre-order { color: var(--accent); }
+        .stock-status.out-of-stock { color: #c53030; }
         
-        .availability-status.out-of-stock::before {
-            content: "●";
-            color: #dc3545;
-            font-size: 20px;
-        }
-        
-        .availability-status.pre-order::before {
-            content: "●";
-            color: var(--accent);
-            font-size: 20px;
-        }
-        
-        .shipping-info {
-            font-size: 14px;
-            color: var(--gray);
-        }
-        
-        .shipping-info strong {
-            color: var(--success);
-        }
-        
-        /* Action Buttons */
-        .product-actions {
+        /* Quantity and Add to Cart */
+        .quantity-cart {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .quantity-selector {
-            display: flex;
+            gap: 1rem;
             align-items: center;
-            gap: 10px;
+            margin: 1.5rem 0;
         }
         
-        .quantity-selector label {
-            font-weight: 500;
-        }
-        
-        .quantity-selector input {
-            width: 70px;
-            padding: 10px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
+        .quantity-input {
+            width: 80px;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
             text-align: center;
-            font-size: 16px;
         }
         
-        .btn {
-            padding: 15px 30px;
+        .quantity-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .btn-add-cart {
+            flex: 1;
+            background: var(--secondary);
+            color: white;
             border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-add-cart:hover {
+            background: #e55a00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
+        }
+        
+        .btn-call {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
+            gap: 0.5rem;
         }
         
-        .btn-primary {
-            background: var(--secondary);
-            color: white;
+        .btn-call:hover {
+            background: var(--primary-dark);
         }
         
-        .btn-primary:hover {
-            background: #e55a00;
-            transform: translateY(-2px);
+        /* Product Details */
+        .product-details {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-top: 2rem;
         }
         
-        .btn-secondary {
-            background: var(--primary);
-            color: white;
+        .details-section {
+            margin-bottom: 2rem;
         }
         
-        .btn-secondary:hover {
-            background: #002244;
+        .details-section:last-child {
+            margin-bottom: 0;
         }
         
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--primary);
+        .details-title {
+            font-size: 1.25rem;
+            font-weight: 700;
             color: var(--primary);
-        }
-        
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
-        }
-        
-        /* Product Description */
-        .product-description {
-            margin-bottom: 30px;
-        }
-        
-        .product-description h2 {
-            font-size: 20px;
-            color: var(--primary);
-            margin-bottom: 15px;
-            padding-bottom: 10px;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
             border-bottom: 2px solid var(--border);
         }
         
-        .product-description p {
-            margin-bottom: 15px;
+        .details-content {
+            font-size: 1rem;
             line-height: 1.8;
+            color: var(--text);
         }
         
-        /* Features */
+        /* Features List */
         .features-list {
             list-style: none;
-            margin-bottom: 30px;
         }
         
         .features-list li {
-            padding: 10px 0;
-            padding-left: 30px;
+            padding: 0.75rem 0;
+            padding-left: 1.75rem;
             position: relative;
             border-bottom: 1px solid var(--border);
         }
@@ -449,397 +359,269 @@
             left: 0;
             color: var(--success);
             font-weight: bold;
-            font-size: 18px;
         }
         
-        /* Specifications */
+        /* Specs Table */
         .specs-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 30px;
         }
         
         .specs-table tr:nth-child(even) {
-            background: var(--light);
+            background: var(--bg);
         }
         
         .specs-table th,
         .specs-table td {
-            padding: 12px 15px;
+            padding: 0.75rem 1rem;
             text-align: left;
             border-bottom: 1px solid var(--border);
         }
         
         .specs-table th {
-            width: 30%;
+            width: 35%;
             font-weight: 600;
             color: var(--primary);
         }
         
-        /* Compatibility */
-        .compatibility-section {
-            background: var(--light);
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-        }
-        
-        .compatibility-section h3 {
-            font-size: 16px;
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-        
+        /* Compatibility Tags */
         .compatibility-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 0.5rem;
         }
         
-        .compatibility-tag {
-            background: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 13px;
+        .compat-tag {
+            background: var(--bg);
+            padding: 0.35rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.875rem;
             border: 1px solid var(--border);
         }
         
-        /* Warranty */
+        /* Warranty Badge */
         .warranty-badge {
             display: flex;
             align-items: center;
-            gap: 15px;
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-            padding: 20px;
+            gap: 1rem;
+            background: linear-gradient(135deg, #c6f6d5 0%, #9ae6b4 100%);
+            padding: 1rem 1.5rem;
             border-radius: 8px;
-            margin-bottom: 30px;
+            margin: 1.5rem 0;
         }
         
         .warranty-icon {
-            font-size: 40px;
+            font-size: 2rem;
         }
         
-        .warranty-text h3 {
-            font-size: 18px;
-            margin-bottom: 5px;
+        .warranty-text h4 {
+            color: #22543d;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
         }
         
         .warranty-text p {
-            font-size: 14px;
-            opacity: 0.9;
+            color: #276749;
+            font-size: 0.875rem;
         }
         
         /* Vendor Info */
-        .vendor-section {
-            background: var(--light);
-            padding: 20px;
+        .vendor-info {
+            background: var(--bg);
+            padding: 1.5rem;
             border-radius: 8px;
-            margin-bottom: 30px;
+            margin-top: 1.5rem;
         }
         
-        .vendor-section h3 {
-            font-size: 16px;
-            margin-bottom: 10px;
+        .vendor-info h4 {
             color: var(--primary);
+            margin-bottom: 0.5rem;
         }
         
-        .vendor-section p {
-            font-size: 14px;
-            color: var(--gray);
-            margin-bottom: 10px;
+        .vendor-info p {
+            color: var(--text-muted);
+            font-size: 0.875rem;
         }
         
-        .vendor-awards {
+        /* Stock Info Box */
+        .stock-info {
+            background: var(--bg);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+        }
+        
+        .stock-info-row {
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .vendor-award {
-            background: var(--accent);
-            color: var(--dark);
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: 600;
+            justify-content: space-between;
+            padding: 0.25rem 0;
         }
         
         /* Footer */
         .footer {
-            background: var(--dark);
+            background: var(--primary-dark);
             color: white;
-            padding: 40px 0;
-            margin-top: 50px;
+            padding: 2rem;
             text-align: center;
+            margin-top: 3rem;
         }
         
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .footer h3 {
-            font-size: 20px;
-            margin-bottom: 15px;
-        }
-        
-        .footer p {
-            color: #aaa;
-            margin-bottom: 10px;
-        }
-        
-        .footer-phone {
-            font-size: 24px;
-            color: var(--accent);
-            margin: 20px 0;
-        }
-        
-        .footer-phone a {
+        .footer a {
             color: var(--accent);
             text-decoration: none;
-        }
-        
-        /* Dealer Notice */
-        .dealer-notice {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        
-        .dealer-notice p {
-            margin: 0;
-            font-size: 14px;
-            color: #856404;
-        }
-        
-        /* Full Width Sections */
-        .full-width-section {
-            background: white;
-            padding: 40px;
-            margin-top: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        .section-title {
-            font-size: 24px;
-            color: var(--primary);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--border);
-        }
-        
-        /* Related Products */
-        .related-products {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        
-        .related-card {
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .related-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        
-        .related-card-image {
-            height: 150px;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .related-card-image img {
-            max-height: 100%;
-            max-width: 100%;
-            object-fit: contain;
-        }
-        
-        .related-card-info {
-            padding: 15px;
-        }
-        
-        .related-card-info h4 {
-            font-size: 14px;
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-        
-        .related-card-price {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--secondary);
         }
     </style>
 </head>
 <body>
     <header class="header">
         <div class="header-content">
-            <div class="logo">Performance<span>Supply</span>Depot</div>
-            <div class="header-phone">Call: <a href="tel:888-881-6834">888-881-6834</a></div>
+            <a href="/" class="logo">Performance<span>Supply</span>Depot</a>
+            <div class="contact-info">
+                <a href="tel:888-881-6834">888-881-6834</a>
+                <a href="/checkout.html" class="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
+            </div>
         </div>
     </header>
     
-    <div class="container">
-        <nav class="breadcrumb">
-            <a href="/">Home</a>
-            <span>/</span>
-            <a href="/products">Products</a>
-            <span>/</span>
-            <a href="/categories/{{CATEGORY_SLUG}}">{{CATEGORY_NAME}}</a>
-            <span>/</span>
-            <span>{{PRODUCT_NAME}}</span>
-        </nav>
-        
-        <div class="dealer-notice">
-            <p>📢 <strong>Authorized Dealer Pricing:</strong> Contact us at 888-881-6834 or email info@psdepot.com for dealer-exclusive pricing. Prices shown are MSRP.</p>
+    <nav class="breadcrumb">
+        <a href="/">Home</a> / 
+        <a href="/products">Products</a> / 
+        <a href="/categories/{{CATEGORY_SLUG}}">{{CATEGORY_NAME}}</a> / 
+        <span>{{PRODUCT_NAME}}</span>
+    </nav>
+    
+    <div class="product-container">
+        <div class="product-image-section">
+            <img src="{{PRODUCT_IMAGE}}" alt="{{PRODUCT_NAME}}" class="product-image">
+            <p class="image-caption">{{BRAND_NAME}} - {{CATEGORY_NAME}}</p>
         </div>
         
-        <div class="product-container">
-            <div class="product-images">
-                <div class="main-image">
-                    <img src="{{PRODUCT_IMAGE}}" alt="{{PRODUCT_NAME}}" id="mainImage">
-                </div>
-                <div class="image-gallery">
-                    {{GALLERY_IMAGES}}
-                </div>
+        <div class="product-info">
+            <span class="sku-badge">SKU: {{SKU}} | MPN: {{MPN}}</span>
+            
+            <h1 class="product-title">{{PRODUCT_NAME}}</h1>
+            
+            <div class="product-brand">
+                Brand: <a href="/brands/{{BRAND_SLUG}}">{{BRAND_NAME}}</a>
             </div>
             
-            <div class="product-info">
-                <div class="product-brand">
-                    Brand: <a href="/brands/{{BRAND_SLUG}}">{{BRAND_NAME}}</a>
-                </div>
-                <h1>{{PRODUCT_NAME}}</h1>
-                <div class="product-sku">
-                    <span>SKU: {{SKU}}</span>
-                    <span>MPN: {{MPN}}</span>
+            <div class="price-section">
+                <div class="price-row">
+                    <span class="price-current">${{SELLING_PRICE}}</span>
+                    <span class="price-original">${{MSRP}}</span>
+                    <span class="price-savings">Save ${{SAVINGS}} ({{SAVINGS_PERCENT}}%)</span>
                 </div>
                 
-                <div class="product-rating">
-                    <div class="stars">{{RATING_STARS}}</div>
-                    <div class="rating-count">({{REVIEW_COUNT}} reviews)</div>
+                <div class="stock-status {{AVAILABILITY_CLASS}}">
+                    {{STOCK_STATUS_ICON}} {{STOCK_STATUS_TEXT}}
                 </div>
                 
-                <div class="product-price">
-                    <div class="price-label">Your Price</div>
-                    <div>
-                        <span class="price-value">${{PRICE}}</span>
-                        {{#if HAS_MSRP}}
-                        <span class="price-msrp">${{MSRP}}</span>
-                        {{/if}}
-                    </div>
-                    {{#if SAVINGS}}
-                    <div class="price-savings">Save ${{SAVINGS}} ({{SAVINGS_PERCENT}}%)</div>
-                    {{/if}}
+                {{STOCK_DETAILS}}
+                
+                <div class="quantity-cart">
+                    <input type="number" class="quantity-input" id="qty-{{SKU}}" value="1" min="1" max="99">
+                    <button class="btn-add-cart" onclick="addToCart('{{SKU}}', '{{PRODUCT_NAME_JS}}', {{SELLING_PRICE_RAW}}, {{MSRP_RAW}}, '{{PRODUCT_IMAGE}}')">
+                        🛒 Add to Cart
+                    </button>
                 </div>
                 
-                <div class="availability">
-                    <div class="availability-status {{AVAILABILITY_CLASS}}">
-                        {{AVAILABILITY_TEXT}}
-                    </div>
-                    <div class="shipping-info">
-                        <strong>Free Shipping</strong> on orders over $99
-                    </div>
-                </div>
-                
-                <div class="product-actions">
-                    <div class="quantity-selector">
-                        <label for="quantity">Quantity:</label>
-                        <input type="number" id="quantity" name="quantity" value="1" min="1" max="99">
-                    </div>
-                    <button class="btn btn-primary">🛒 Add to Cart</button>
-                    <button class="btn btn-outline">📄 Request Quote</button>
-                    <a href="tel:888-881-6834" class="btn btn-secondary">📞 Call for Dealer Pricing</a>
-                </div>
+                <a href="tel:888-881-6834" class="btn-call">
+                    📞 Call for Volume Pricing
+                </a>
                 
                 <div class="warranty-badge">
-                    <div class="warranty-icon">🛡️</div>
+                    <span class="warranty-icon">🛡️</span>
                     <div class="warranty-text">
-                        <h3>{{WARRANTY}} Manufacturer Warranty</h3>
-                        <p>Backed by M-S Cash Drawer's award-winning support</p>
+                        <h4>{{WARRANTY}} Manufacturer Warranty</h4>
+                        <p>Backed by {{BRAND_NAME}} support</p>
                     </div>
                 </div>
-                
-                <div class="vendor-section">
-                    <h3>About M-S Cash Drawer</h3>
-                    <p>12-time RSPA Vendor Award of Excellence winner. Leading manufacturer of cash drawers and distributor of 35+ POS brands.</p>
-                    <div class="vendor-awards">
-                        <span class="vendor-award">🏆 12x RSPA Winner</span>
-                        <span class="vendor-award">⭐ 35+ Vendors</span>
-                    </div>
-                </div>
+            </div>
+            
+            <div class="vendor-info">
+                <h4>Authorized Dealer</h4>
+                <p>Performance Supply Depot is an authorized dealer for {{BRAND_NAME}}. All products include full manufacturer warranty and support.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="product-details">
+        <div class="details-section">
+            <h3 class="details-title">Product Description</h3>
+            <div class="details-content">
+                <p>{{PRODUCT_DESCRIPTION}}</p>
             </div>
         </div>
         
-        <div class="full-width-section">
-            <h2 class="section-title">Product Description</h2>
-            <div class="product-description">
-                {{PRODUCT_DESCRIPTION_FULL}}
-            </div>
-            
-            <h2 class="section-title">Key Features</h2>
+        <div class="details-section">
+            <h3 class="details-title">Key Features</h3>
             <ul class="features-list">
                 {{FEATURES_LIST}}
             </ul>
-            
-            <h2 class="section-title">Technical Specifications</h2>
+        </div>
+        
+        <div class="details-section">
+            <h3 class="details-title">Technical Specifications</h3>
             <table class="specs-table">
                 <tbody>
                     {{SPECIFICATIONS_TABLE}}
                 </tbody>
             </table>
-            
-            <h2 class="section-title">Compatibility</h2>
-            <div class="compatibility-section">
-                <h3>Compatible With:</h3>
-                <div class="compatibility-tags">
-                    {{COMPATIBILITY_TAGS}}
-                </div>
-            </div>
         </div>
         
-        <div class="full-width-section">
-            <h2 class="section-title">Related Products</h2>
-            <div class="related-products">
-                {{RELATED_PRODUCTS}}
+        <div class="details-section">
+            <h3 class="details-title">Compatibility</h3>
+            <div class="compatibility-tags">
+                {{COMPATIBILITY_TAGS}}
             </div>
         </div>
     </div>
     
     <footer class="footer">
-        <div class="footer-content">
-            <h3>Performance Supply Depot LLC</h3>
-            <p>Authorized M-S Cash Drawer Dealer</p>
-            <p>California | Serving Nationwide</p>
-            <div class="footer-phone">
-                <a href="tel:888-881-6834">888-881-6834</a>
-            </div>
-            <p><a href="mailto:info@psdepot.com">info@psdepot.com</a></p>
-            <p><a href="https://psdepot.com">psdepot.com</a></p>
-        </div>
+        <p><strong>Performance Supply Depot LLC</strong></p>
+        <p>Authorized {{BRAND_NAME}} Dealer | <a href="tel:888-881-6834">888-881-6834</a></p>
+        <p><a href="mailto:info@psdepot.com">info@psdepot.com</a> | <a href="https://psdepot.com">psdepot.com</a></p>
     </footer>
     
     <script>
-        // Image gallery functionality
-        document.querySelectorAll('.gallery-thumb').forEach(thumb => {
-            thumb.addEventListener('click', function() {
-                document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                document.getElementById('mainImage').src = this.querySelector('img').src.replace('-thumb', '');
-            });
-        });
+        // Update cart count on load
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('psdepot.com:psdepot_cart') || '[]');
+            const count = cart.reduce((sum, item) => sum + (parseInt(item.quantity) || 0), 0);
+            document.getElementById('cart-count').textContent = count;
+        }
+        
+        // Add to cart function
+        function addToCart(sku, name, price, msrp, image) {
+            const qtyInput = document.getElementById('qty-' + sku);
+            const quantity = parseInt(qtyInput.value) || 1;
+            
+            let cart = JSON.parse(localStorage.getItem('psdepot.com:psdepot_cart') || '[]');
+            
+            const existing = cart.find(item => item.id === sku);
+            if (existing) {
+                existing.quantity += quantity;
+            } else {
+                cart.push({ 
+                    id: sku, 
+                    name: name, 
+                    price: price,
+                    msrp: msrp,
+                    image: image,
+                    quantity: quantity 
+                });
+            }
+            
+            localStorage.setItem('psdepot.com:psdepot_cart', JSON.stringify(cart));
+            updateCartCount();
+            
+            // Show confirmation
+            alert(name + ' (Qty: ' + quantity + ') added to cart!');
+        }
+        
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', updateCartCount);
     </script>
 </body>
 </html>

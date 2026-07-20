@@ -21,6 +21,13 @@ def load_template():
 
 def generate_product_schema(product, category):
     """Generate JSON-LD Product schema"""
+    availability_map = {
+        'InStock': 'InStock',
+        'PreOrder': 'PreOrder',
+        'OutOfStock': 'OutOfStock'
+    }
+    availability = availability_map.get(product['availability'], 'InStock')
+    
     return f'''<script type="application/ld+json">
 {{
   "@context": "https://schema.org",
@@ -38,43 +45,13 @@ def generate_product_schema(product, category):
   "offers": {{
     "@type": "Offer",
     "url": "https://psdepot.com/products/{slugify(product['name'])}.html",
-    "price": "{product['price']['msrp']}",
+    "price": "{product['price']['selling_price']}",
     "priceCurrency": "USD",
-    "availability": "https://schema.org/{product['availability']}",
+    "availability": "https://schema.org/{availability}",
     "priceValidUntil": "2027-12-31",
     "seller": {{
       "@type": "Organization",
       "name": "Performance Supply Depot LLC"
-    }},
-    "shippingDetails": {{
-      "@type": "OfferShippingDetails",
-      "shippingRate": {{
-        "@type": "MonetaryAmount",
-        "value": "0",
-        "currency": "USD"
-      }},
-      "deliveryTime": {{
-        "@type": "ShippingDeliveryTime",
-        "handlingTime": {{
-          "@type": "QuantitativeValue",
-          "minValue": "0",
-          "maxValue": "1",
-          "unitCode": "DAY"
-        }},
-        "transitTime": {{
-          "@type": "QuantitativeValue",
-          "minValue": "1",
-          "maxValue": "5",
-          "unitCode": "DAY"
-        }}
-      }}
-    }},
-    "hasMerchantReturnPolicy": {{
-      "@type": "MerchantReturnPolicy",
-      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-      "merchantReturnDays": 30,
-      "returnMethod": "https://schema.org/ReturnByMail",
-      "returnFees": "https://schema.org/FreeReturn"
     }}
   }},
   "itemCondition": "https://schema.org/NewCondition",
@@ -99,33 +76,52 @@ def generate_specs_table(specs):
 
 def generate_compatibility_tags(compatibility):
     """Generate HTML for compatibility tags"""
-    return '\n'.join([f'<span class="compatibility-tag">{item}</span>' for item in compatibility])
+    return '\n'.join([f'<span class="compat-tag">{item}</span>' for item in compatibility])
 
-def generate_rating_stars(rating):
-    """Generate star rating HTML"""
-    full_stars = int(float(rating))
-    has_half = float(rating) - full_stars >= 0.5
-    stars = '★' * full_stars
-    if has_half:
-        stars += '½'
-    stars += '☆' * (5 - full_stars - (1 if has_half else 0))
-    return stars
+def generate_stock_details(stock):
+    """Generate stock info HTML"""
+    if stock.get('available', 0) > 0:
+        return f'''<div class="stock-info">
+    <div class="stock-info-row"><span>Available:</span><span>{stock['available']}</span></div>
+    <div class="stock-info-row"><span>In Stock:</span><span>{stock.get('in_stock', 0)}</span></div>
+    <div class="stock-info-row"><span>On Order:</span><span>{stock.get('on_order', 0)}</span></div>
+</div>'''
+    return ''
+
+def get_stock_status(product):
+    """Get stock status display info"""
+    availability = product['availability']
+    stock = product.get('stock', {})
+    
+    if availability == 'InStock':
+        return 'in-stock', '●', f'In Stock ({stock.get("available", 0)} available)'
+    elif availability == 'PreOrder':
+        return 'pre-order', '◐', f'Pre-Order ({stock.get("on_order", 0)} on order)'
+    else:
+        return 'out-of-stock', '○', 'Out of Stock'
 
 def slugify(text):
     """Convert text to URL-friendly slug"""
     text = text.lower().replace(' ', '-')
     text = re.sub(r'[^a-z0-9-]', '', text)
-    return text
+    return text[:80]  # Limit length
 
-def generate_product_page(product, category, template):
+def escape_js(text):
+    """Escape text for JavaScript"""
+    return text.replace("'", "\\'").replace('"', '\\"')
+
+def generate_product_page(product, category, template, all_products):
     """Generate a single product page"""
+    
+    # Get stock status
+    avail_class, stock_icon, stock_text = get_stock_status(product)
     
     # Basic replacements
     page = template
     page = page.replace('{{PRODUCT_NAME}}', product['name'])
+    page = page.replace('{{PRODUCT_NAME_JS}}', escape_js(product['name']))
     page = page.replace('{{PRODUCT_DESCRIPTION_SHORT}}', product['description'][:160])
-    page = page.replace('{{PRODUCT_DESCRIPTION_FULL}}', f'<p>{product["description"]}</p>')
-    page = page.replace('{{PRODUCT_KEYWORDS}}', ', '.join(product.get('tags', []) + [product['brand'], category['name']]))
+    page = page.replace('{{PRODUCT_DESCRIPTION}}', product['description'])
     page = page.replace('{{PRODUCT_IMAGE}}', product['images']['primary'])
     page = page.replace('{{PRODUCT_SLUG}}', slugify(product['name']))
     page = page.replace('{{CATEGORY_NAME}}', category['name'])
@@ -134,11 +130,19 @@ def generate_product_page(product, category, template):
     page = page.replace('{{BRAND_SLUG}}', slugify(product['brand']))
     page = page.replace('{{SKU}}', product['sku'])
     page = page.replace('{{MPN}}', product['mpn'])
-    page = page.replace('{{PRICE}}', product['price']['msrp'])
+    page = page.replace('{{SELLING_PRICE}}', product['price']['selling_price'])
+    page = page.replace('{{SELLING_PRICE_RAW}}', product['price']['selling_price'])
     page = page.replace('{{MSRP}}', product['price']['msrp'])
+    page = page.replace('{{MSRP_RAW}}', product['price']['msrp'])
+    page = page.replace('{{SAVINGS}}', product.get('savings', '0'))
+    page = page.replace('{{SAVINGS_PERCENT}}', product.get('savings_percent', '0'))
     page = page.replace('{{WARRANTY}}', product['warranty'])
-    page = page.replace('{{RATING_STARS}}', generate_rating_stars(product.get('rating', '4.5')))
-    page = page.replace('{{REVIEW_COUNT}}', product.get('reviews', '0'))
+    
+    # Stock status
+    page = page.replace('{{AVAILABILITY_CLASS}}', avail_class)
+    page = page.replace('{{STOCK_STATUS_ICON}}', stock_icon)
+    page = page.replace('{{STOCK_STATUS_TEXT}}', stock_text)
+    page = page.replace('{{STOCK_DETAILS}}', generate_stock_details(product.get('stock', {})))
     
     # Schema
     page = page.replace('{{PRODUCT_SCHEMA}}', generate_product_schema(product, category))
@@ -152,36 +156,11 @@ def generate_product_page(product, category, template):
     # Compatibility
     page = page.replace('{{COMPATIBILITY_TAGS}}', generate_compatibility_tags(product['compatibility']))
     
-    # Availability
-    avail_class = product['availability'].lower().replace(' ', '-')
-    avail_text = 'In Stock' if product['availability'] == 'InStock' else product['availability']
-    page = page.replace('{{AVAILABILITY_CLASS}}', avail_class)
-    page = page.replace('{{AVAILABILITY_TEXT}}', avail_text)
-    page = page.replace('{{HAS_MSRP}}', 'false')
-    page = page.replace('{{SAVINGS}}', '')
-    page = page.replace('{{SAVINGS_PERCENT}}', '')
-    
-    # Clean up template tags
-    page = re.sub(r'\{\{#if\s+.*?\}\}', '', page)
-    page = re.sub(r'\{\{/if\}\}', '', page)
-    page = re.sub(r'\{\{#each\s+.*?\}\}', '', page)
-    page = re.sub(r'\{\{/each\}\}', '', page)
-    page = re.sub(r'\{\{.*?\}\}', '', page)
+    # Keywords
+    keywords = ', '.join(product.get('tags', []) + [product['brand'], category['name']])
+    page = page.replace('{{PRODUCT_KEYWORDS}}', keywords)
     
     return page
-
-def generate_related_product_card(product):
-    """Generate a related product card"""
-    return f'''
-<div class="related-card">
-    <div class="related-card-image">
-        <img src="{product['images']['primary']}" alt="{product['name']}">
-    </div>
-    <div class="related-card-info">
-        <h4>{product['name']}</h4>
-        <div class="related-card-price">${product['price']['msrp']}</div>
-    </div>
-</div>'''
 
 def main():
     """Main generation function"""
@@ -192,14 +171,15 @@ def main():
     # Load data
     print("\n📂 Loading catalog...")
     catalog = load_catalog()
-    print(f"✅ Loaded catalog with {len(catalog['categories'])} categories")
+    total_products = sum(len(cat['products']) for cat in catalog['categories'])
+    print(f"✅ Loaded catalog with {len(catalog['categories'])} categories, {total_products} products")
     
     print("\n📂 Loading template...")
     template = load_template()
     print("✅ Template loaded")
     
     # Create output directory
-    output_dir = '../psdepot/products/mscashdrawer'
+    output_dir = '/var/www/psdepot.com/products/mscashdrawer'
     os.makedirs(output_dir, exist_ok=True)
     print(f"\n📁 Output directory: {output_dir}")
     
@@ -208,19 +188,13 @@ def main():
     all_products = []
     
     for category in catalog['categories']:
-        print(f"\n📂 Processing category: {category['name']}")
+        print(f"\n📂 Processing: {category['name']}")
         
         for product in category['products']:
             all_products.append((product, category))
             
             # Generate page
-            page = generate_product_page(product, category, template)
-            
-            # Add related products
-            related = [p for p, c in all_products[:-1]][-3:] if len(all_products) > 1 else []
-            related_html = '\n'.join([generate_related_product_card(p) for p in related])
-            page = page.replace('{{RELATED_PRODUCTS}}', related_html)
-            page = page.replace('{{GALLERY_IMAGES}}', '')
+            page = generate_product_page(product, category, template, all_products)
             
             # Save file
             filename = f"{slugify(product['name'])}.html"
@@ -230,10 +204,13 @@ def main():
                 f.write(page)
             
             generated_count += 1
-            print(f"  ✅ Generated: {filename}")
+            price = product['price']['selling_price']
+            stock = product.get('stock', {}).get('available', 0)
+            print(f"  ✅ {filename} - ${price} ({stock} in stock)")
     
     print("\n" + "=" * 60)
-    print(f"🎉 Generation complete! Created {generated_count} product pages")
+    print(f"🎉 Generation complete!")
+    print(f"📁 {generated_count} product pages created")
     print(f"📁 Location: {output_dir}/")
     print("=" * 60)
     
@@ -241,11 +218,15 @@ def main():
     print("\n📊 Catalog Summary:")
     print(f"  Total Categories: {len(catalog['categories'])}")
     print(f"  Total Products: {generated_count}")
+    print(f"  Pricing Formula: Dealer cost / 0.6 = Selling price")
     
+    print("\n  Products by Category:")
     for category in catalog['categories']:
-        print(f"\n  📁 {category['name']}: {len(category['products'])} products")
+        print(f"\n  📁 {category['name']}")
         for product in category['products']:
-            print(f"     • {product['name']} (${product['price']['msrp']})")
+            stock = product.get('stock', {}).get('available', 0)
+            status = "✓" if stock > 0 else "○"
+            print(f"     {status} {product['name'][:45]}... - ${product['price']['selling_price']}")
 
 if __name__ == '__main__':
     main()
