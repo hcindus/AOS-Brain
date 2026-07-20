@@ -4,81 +4,92 @@
     "vendor_url": "https://mscashdrawer.com",
     "dealer_portal": "https://mscashdrawerus.focuspointsap.com",
     "last_updated": "2026-07-20",
-    "version": "1.0.0",
-    "currency": "USD"
+    "version": "1.0.1",
+    "currency": "USD",
+    "pricing_formula": "dealer_cost / 0.6 = selling_price"
   },
   "categories": [
     {
-      "id": "cash_drawers",
-      "name": "Cash Drawers",
-      "description": "Industry-leading cash drawers with Smart Cord technology and multi-drawer control capabilities",
+      "id": "cash_drawers_compact",
+      "name": "Compact Cash Drawers",
+      "description": "13\" compact cash drawers with Smart Cord connectivity - perfect for small spaces",
       "products": [
         {
-          "sku": "MS-SC-100",
-          "mpn": "SC-100",
-          "name": "M-S Cash Drawer Smart Cord 100",
+          "sku": "PSD-CC-330-B2-3B5C",
+          "mpn": "CC-330-B2-3B5C",
+          "name": "M-S Cash Drawer CC-330 13\" 3-Bill/5-Coin Black",
           "brand": "M-S Cash Drawer",
           "category": "Cash Drawers",
-          "description": "Compact cash drawer with Smart Cord connectivity. Features 4 bill / 5 coin compartments, steel construction, and plug-and-play operation.",
+          "description": "13\" wide compact cash drawer with 3 bill / 5 coin compartments. Black finish with bottom exit cable and printer interface. Perfect for retail environments with limited counter space.",
           "specs": {
-            "interface": "Smart Cord (RJ12)",
-            "dimensions": "13.0\" W x 13.4\" D x 4.0\" H",
-            "weight": "12 lbs",
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "13\" W x 13.4\" D x 4.0\" H",
             "color": "Black",
-            "compartments": "4 bills / 5 coins",
+            "compartments": "3 bills / 5 coins",
             "media_slots": "1",
+            "cable_exit": "Bottom exit",
             "lock_type": "3-position"
           },
           "features": [
-            "Smart Cord technology - no separate printer needed",
-            "Plug-and-play operation",
+            "Compact 13\" width for limited counter space",
+            "Bottom exit cable for clean installation",
+            "3 bill / 5 coin compartments",
+            "Printer interface included",
             "Heavy-duty steel construction",
-            "Adjustable coin and bill compartments",
             "3-position lock (locked, open, manual)",
             "Media slot for checks and receipts"
           ],
           "compatibility": [
             "Universal POS systems",
-            "USB with adapter",
-            "Ethernet with adapter"
+            "Star Micronics printers",
+            "Epson printers",
+            "Bixolon printers"
           ],
           "warranty": "3 years",
           "price": {
-            "msrp": "149.00",
-            "dealer": "TBD",
-            "map": "TBD"
+            "dealer_cost": "75.00",
+            "selling_price": "125.00",
+            "msrp": "149.00"
           },
-          "availability": "InStock",
+          "savings": "24.00",
+          "savings_percent": "16",
+          "stock": {
+            "available": 0,
+            "in_stock": 0,
+            "on_order": 0
+          },
+          "availability": "PreOrder",
           "images": {
-            "primary": "https://mscashdrawer.com/assets/images/smart-cord-100.jpg",
+            "primary": "https://mscashdrawer.com/assets/images/cc-330-black.jpg",
             "gallery": []
           },
           "is_featured": true,
-          "tags": ["smart-cord", "compact", "entry-level"]
+          "tags": ["compact", "13-inch", "3-bill", "black"]
         },
         {
-          "sku": "MS-SC-200",
-          "mpn": "SC-200",
-          "name": "M-S Cash Drawer Smart Cord 200",
+          "sku": "PSD-CC-330-B2-4B5C",
+          "mpn": "CC-330-B2-4B5C",
+          "name": "M-S Cash Drawer CC-330 13\" 4-Bill/5-Coin Black",
           "brand": "M-S Cash Drawer",
           "category": "Cash Drawers",
-          "description": "Mid-size cash drawer with Smart Cord connectivity. 5 bill / 5 coin compartments, robust steel construction for high-traffic environments.",
+          "description": "13\" wide compact cash drawer with 4 bill / 5 coin compartments. Black finish with bottom exit cable and printer interface. Most popular compact drawer with excellent availability.",
           "specs": {
-            "interface": "Smart Cord (RJ12)",
-            "dimensions": "16.1\" W x 16.3\" D x 4.3\" H",
-            "weight": "18 lbs",
-            "color": "Black / Beige",
-            "compartments": "5 bills / 5 coins",
-            "media_slots": "2",
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "13\" W x 13.4\" D x 4.0\" H",
+            "color": "Black",
+            "compartments": "4 bills / 5 coins",
+            "media_slots": "1",
+            "cable_exit": "Bottom exit",
             "lock_type": "3-position"
           },
           "features": [
-            "Smart Cord connectivity",
-            "Removable coin tray",
-            "Heavy-duty ball bearing slides",
-            "Adjustable compartments",
-            "Dual media slots",
-            "Drawer open/close sensor"
+            "Compact 13\" width - most popular size",
+            "4 bill compartments for better organization",
+            "Bottom exit cable for clean installation",
+            "Printer interface included",
+            "Heavy-duty steel construction",
+            "3-position lock",
+            "Media slot for checks"
           ],
           "compatibility": [
             "Universal POS systems",
@@ -87,667 +98,528 @@
           ],
           "warranty": "3 years",
           "price": {
-            "msrp": "199.00",
-            "dealer": "TBD",
-            "map": "TBD"
+            "dealer_cost": "75.00",
+            "selling_price": "125.00",
+            "msrp": "149.00"
+          },
+          "savings": "24.00",
+          "savings_percent": "16",
+          "stock": {
+            "available": 19,
+            "in_stock": 19,
+            "on_order": 35
           },
           "availability": "InStock",
           "images": {
-            "primary": "https://mscashdrawer.com/assets/images/smart-cord-200.jpg",
+            "primary": "https://mscashdrawer.com/assets/images/cc-330-4b5c.jpg",
             "gallery": []
           },
           "is_featured": true,
-          "tags": ["smart-cord", "mid-size", "high-traffic"]
+          "is_best_seller": true,
+          "tags": ["compact", "13-inch", "4-bill", "black", "best-seller"]
         },
         {
-          "sku": "MS-MCCD-4",
-          "mpn": "mC-CONNECT-4",
-          "name": "M-S Cash Drawer mC-Connect (4-Drawer Controller)",
+          "sku": "PSD-CC-330-W2-4B5C",
+          "mpn": "CC-330-W2-4B5C",
+          "name": "M-S Cash Drawer CC-330 13\" 4-Bill/5-Coin Brilliant White",
           "brand": "M-S Cash Drawer",
           "category": "Cash Drawers",
-          "description": "Revolutionary multi-drawer controller. Control up to 4 cash drawers from a single device with USB, Ethernet, Wireless LAN, and Bluetooth Low Energy connectivity.",
+          "description": "13\" wide compact cash drawer in brilliant white finish. 4 bill / 5 coin compartments with bottom exit cable and printer interface. Cable included.",
           "specs": {
-            "interface": "USB, Ethernet, WiFi, Bluetooth LE",
-            "drawer_capacity": "4 drawers",
-            "dimensions": "4.5\" W x 3.2\" D x 1.1\" H",
-            "weight": "0.5 lbs",
-            "color": "Black",
-            "power": "USB powered"
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "13\" W x 13.4\" D x 4.0\" H",
+            "color": "Brilliant White",
+            "compartments": "4 bills / 5 coins",
+            "media_slots": "1",
+            "cable_exit": "Bottom exit",
+            "includes_cable": "Yes"
           },
           "features": [
-            "Control 4 drawers from 1 device",
-            "Multiple connectivity options",
-            "Bluetooth Low Energy support",
-            "Wireless LAN connectivity",
-            "USB and Ethernet ports",
-            "Compact design",
-            "Works with any POS software"
+            "Brilliant white finish for modern POS",
+            "4 bill / 5 coin compartments",
+            "Cable included",
+            "Bottom exit for clean look",
+            "Printer interface ready",
+            "Compact footprint"
           ],
           "compatibility": [
-            "Windows",
-            "macOS",
-            "Linux",
-            "iOS",
-            "Android",
-            "Cloud-based POS"
+            "Universal POS systems",
+            "All major receipt printers"
           ],
           "warranty": "3 years",
           "price": {
-            "msrp": "249.00",
-            "dealer": "TBD",
-            "map": "TBD"
+            "dealer_cost": "75.00",
+            "selling_price": "125.00",
+            "msrp": "149.00"
+          },
+          "savings": "24.00",
+          "savings_percent": "16",
+          "stock": {
+            "available": 328,
+            "in_stock": 328,
+            "on_order": 0
           },
           "availability": "InStock",
           "images": {
-            "primary": "https://mscashdrawer.com/assets/images/mc-connect.jpg",
+            "primary": "https://mscashdrawer.com/assets/images/cc-330-white.jpg",
+            "gallery": []
+          },
+          "tags": ["compact", "13-inch", "white", "4-bill"]
+        }
+      ]
+    },
+    {
+      "id": "cash_drawers_standard",
+      "name": "Standard Cash Drawers",
+      "description": "16\" standard cash drawers for medium to high-traffic retail environments",
+      "products": [
+        {
+          "sku": "PSD-CC-410-B2-4B8C",
+          "mpn": "CC-410-B2-4B8C",
+          "name": "M-S Cash Drawer CC-410 16\" 4-Bill/8-Coin Black",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "16\" standard cash drawer with 4 bill / 8 coin compartments. Black finish with bottom exit cable and printer interface. Cable included. High coin capacity for busy locations.",
+          "specs": {
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "16\" W x 16.3\" D x 4.3\" H",
+            "color": "Black",
+            "compartments": "4 bills / 8 coins",
+            "media_slots": "1",
+            "cable_exit": "Bottom exit",
+            "includes_cable": "Yes"
+          },
+          "features": [
+            "16\" standard width",
+            "High-capacity 8-coin tray",
+            "4 bill compartments",
+            "Bottom exit cable included",
+            "Printer interface ready",
+            "Durable construction"
+          ],
+          "compatibility": [
+            "Universal POS systems",
+            "All receipt printers"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "dealer_cost": "78.00",
+            "selling_price": "130.00",
+            "msrp": "159.00"
+          },
+          "savings": "29.00",
+          "savings_percent": "18",
+          "stock": {
+            "available": 0,
+            "in_stock": 6,
+            "on_order": 400
+          },
+          "availability": "PreOrder",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cc-410-4b8c.jpg",
+            "gallery": []
+          },
+          "tags": ["standard", "16-inch", "4-bill", "8-coin", "high-capacity"]
+        },
+        {
+          "sku": "PSD-CC-410-B2-5B5C",
+          "mpn": "CC-410-B2-5B5C",
+          "name": "M-S Cash Drawer CC-410 16\" 5-Bill/5-Coin Black",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "Standard 16\" cash drawer with 5 bill / 5 coin configuration. Black finish with bottom exit cable and printer interface. Most versatile standard drawer.",
+          "specs": {
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "16\" W x 16.3\" D x 4.3\" H",
+            "color": "Black",
+            "compartments": "5 bills / 5 coins",
+            "media_slots": "1",
+            "cable_exit": "Bottom exit",
+            "includes_cable": "Yes"
+          },
+          "features": [
+            "16\" standard size",
+            "5 bill compartments for currency organization",
+            "Standard 5-coin layout",
+            "Bottom exit cable included",
+            "Printer interface",
+            "Perfect balance of size and capacity"
+          ],
+          "compatibility": [
+            "Universal POS systems",
+            "Star Micronics",
+            "Epson",
+            "Citizen"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "dealer_cost": "78.00",
+            "selling_price": "130.00",
+            "msrp": "159.00"
+          },
+          "savings": "29.00",
+          "savings_percent": "18",
+          "stock": {
+            "available": 45,
+            "in_stock": 45,
+            "on_order": 0
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cc-410-5b5c.jpg",
             "gallery": []
           },
           "is_featured": true,
-          "is_new": true,
-          "tags": ["multi-drawer", "wireless", "bluetooth", "cloud-ready"]
+          "tags": ["standard", "16-inch", "5-bill", "5-coin", "most-popular"]
         },
         {
-          "sku": "MS-HD-400",
-          "mpn": "HD-400",
-          "name": "M-S Cash Drawer Heavy Duty 400",
+          "sku": "PSD-CC-410-B2-5B8C",
+          "mpn": "CC-410-B2-5B8C",
+          "name": "M-S Cash Drawer CC-410 16\" 5-Bill/8-Coin Black",
           "brand": "M-S Cash Drawer",
           "category": "Cash Drawers",
-          "description": "Heavy-duty cash drawer for demanding retail environments. Reinforced steel construction with high-capacity storage.",
+          "description": "16\" standard cash drawer with 5 bill / 8 coin compartments. Maximum capacity configuration for high-volume retail. Black finish with bottom exit cable and printer interface.",
           "specs": {
-            "interface": "RJ12 / USB",
-            "dimensions": "18.0\" W x 16.5\" D x 4.5\" H",
-            "weight": "25 lbs",
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "16\" W x 16.3\" D x 4.3\" H",
             "color": "Black",
             "compartments": "5 bills / 8 coins",
-            "media_slots": "3",
-            "lock_type": "4-position heavy-duty"
+            "media_slots": "1",
+            "cable_exit": "Bottom exit",
+            "includes_cable": "Yes"
           },
           "features": [
-            "Heavy-duty reinforced steel",
-            "High-capacity storage",
-            "4-position lock with drawer release",
-            "Reinforced drawer slides",
-            "Anti-tamper design",
-            "Status LED indicators"
+            "Maximum capacity 5 bill / 8 coin",
+            "16\" standard size",
+            "High-volume retail ready",
+            "Bottom exit cable included",
+            "Printer interface",
+            "Excellent availability"
           ],
           "compatibility": [
-            "All major POS systems",
-            "Receipt printers",
-            "Direct USB connection"
+            "Universal POS systems",
+            "All receipt printers"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "dealer_cost": "78.00",
+            "selling_price": "130.00",
+            "msrp": "159.00"
+          },
+          "savings": "29.00",
+          "savings_percent": "18",
+          "stock": {
+            "available": 1220,
+            "in_stock": 1220,
+            "on_order": 5490
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cc-410-5b8c.jpg",
+            "gallery": []
+          },
+          "is_featured": true,
+          "tags": ["standard", "16-inch", "5-bill", "8-coin", "high-volume"]
+        },
+        {
+          "sku": "PSD-CC-410-BW2-5B8C",
+          "mpn": "CC-410-BW2-5B8C-BB",
+          "name": "M-S Cash Drawer CC-410 16\" 5-Bill/8-Coin Brilliant White",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "16\" standard cash drawer in brilliant white textured finish. Pantone 11-0601TPX. 5 bill / 8 coin configuration. Brown box packaging.",
+          "specs": {
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "16\" W x 16.3\" D x 4.3\" H",
+            "color": "Brilliant White (Pantone 11-0601TPX)",
+            "compartments": "5 bills / 8 coins",
+            "finish": "Textured",
+            "packaging": "Brown Box"
+          },
+          "features": [
+            "Brilliant white textured finish",
+            "Pantone 11-0601TPX color match",
+            "5 bill / 8 coin maximum capacity",
+            "Modern aesthetic for contemporary POS",
+            "Brown box packaging",
+            "Standard 16\" size"
+          ],
+          "compatibility": [
+            "Universal POS systems"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "dealer_cost": "78.00",
+            "selling_price": "130.00",
+            "msrp": "159.00"
+          },
+          "savings": "29.00",
+          "savings_percent": "18",
+          "stock": {
+            "available": 100,
+            "in_stock": 88,
+            "on_order": 30
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cc-410-white.jpg",
+            "gallery": []
+          },
+          "tags": ["standard", "16-inch", "white", "5-bill", "8-coin"]
+        }
+      ]
+    },
+    {
+      "id": "cash_drawers_heavy_duty",
+      "name": "Heavy Duty Cash Drawers",
+      "description": "Large format heavy duty cash drawers for high-traffic retail and restaurants",
+      "products": [
+        {
+          "sku": "PSD-CC-460-B3-5B8C",
+          "mpn": "CC-460-B3-BB",
+          "name": "M-S Cash Drawer CC-460 Heavy Duty 18\" 5-Bill/8-Coin Black",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "Extra heavy duty 18.1\" x 18.3\" x 3.9\" cash drawer with 5 bill / 8 coin configuration. Black finish with dual media slots. Brown box packaging. Built for demanding environments.",
+          "specs": {
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "18.1\" W x 18.3\" D x 3.9\" H",
+            "color": "Black",
+            "compartments": "5 bills / 8 coins",
+            "media_slots": "2",
+            "packaging": "Brown Box",
+            "construction": "Heavy duty"
+          },
+          "features": [
+            "Extra heavy duty construction",
+            "Large 18\" wide format",
+            "Dual media slots",
+            "5 bill / 8 coin high capacity",
+            "Built for high-traffic retail",
+            "Restaurant and bar ready"
+          ],
+          "compatibility": [
+            "Universal POS systems",
+            "High-volume printers"
           ],
           "warranty": "5 years",
           "price": {
-            "msrp": "349.00",
-            "dealer": "TBD",
-            "map": "TBD"
+            "dealer_cost": "96.00",
+            "selling_price": "160.00",
+            "msrp": "199.00"
+          },
+          "savings": "39.00",
+          "savings_percent": "20",
+          "stock": {
+            "available": 65,
+            "in_stock": 65,
+            "on_order": 0
           },
           "availability": "InStock",
           "images": {
-            "primary": "https://mscashdrawer.com/assets/images/hd-400.jpg",
-            "gallery": []
-          },
-          "tags": ["heavy-duty", "high-capacity", "retail"]
-        }
-      ]
-    },
-    {
-      "id": "receipt_printers",
-      "name": "Receipt Printers",
-      "description": "High-speed thermal receipt printers from industry leaders",
-      "products": [
-        {
-          "sku": "STAR-MC-LABEL",
-          "mpn": "mC-Label",
-          "name": "Star Micronics mC-Label Family",
-          "brand": "Star Micronics",
-          "category": "Receipt Printers",
-          "description": "Compact label printing solution with cash drawer control. Ideal for food service, retail, and mobile applications.",
-          "specs": {
-            "print_method": "Direct thermal",
-            "print_width": "2.25\"",
-            "print_speed": "Up to 72mm/sec",
-            "resolution": "203 dpi",
-            "interface": "USB, Bluetooth, Ethernet",
-            "dimensions": "5.1\" W x 5.9\" D x 5.1\" H",
-            "weight": "1.5 lbs"
-          },
-          "features": [
-            "Compact desktop design",
-            "Cash drawer kick port",
-            "Built-in label peeler option",
-            "Bluetooth connectivity",
-            "CloudPRNT ready",
-            "Auto-cutter"
-          ],
-          "compatibility": [
-            "Square",
-            "Clover",
-            "Toast",
-            "Lightspeed",
-            "Vend"
-          ],
-          "warranty": "2 years",
-          "price": {
-            "msrp": "379.00",
-            "dealer": "TBD",
-            "map": "TBD"
-          },
-          "availability": "InStock",
-          "images": {
-            "primary": "https://mscashdrawer.com/assets/images/star-mc-label.jpg",
+            "primary": "https://mscashdrawer.com/assets/images/cc-460.jpg",
             "gallery": []
           },
           "is_featured": true,
-          "tags": ["label-printer", "star-micronics", "bluetooth", "cloud-ready"]
+          "tags": ["heavy-duty", "18-inch", "5-bill", "8-coin", "dual-media"]
         },
         {
-          "sku": "STAR-CT-S601IIR",
-          "mpn": "CT-S601IIR",
-          "name": "Star Micronics CT-S601IIR",
-          "brand": "Star Micronics",
-          "category": "Receipt Printers",
-          "description": "Ultra-high speed thermal receipt printer with internal power supply and advanced connectivity options.",
+          "sku": "PSD-CRS-160018",
+          "mpn": "CRS-160018",
+          "name": "CRS Wide Extra Heavy Duty POS Cash Drawer 18\"",
+          "brand": "CRS",
+          "category": "Cash Drawers",
+          "description": "Wide extra heavy duty POS cash drawer. 18\"W x 4-3/8\"H x 16-5/8\"D. Professional-grade construction for demanding commercial environments.",
           "specs": {
-            "print_method": "Direct thermal",
-            "print_width": "3.15\"",
-            "print_speed": "Up to 250mm/sec",
-            "resolution": "203 dpi",
-            "interface": "USB, Ethernet, WiFi, Bluetooth",
-            "cutter": "Guillotine (full/partial)",
-            "dimensions": "5.8\" W x 8.0\" D x 5.5\" H"
+            "interface": "Printer Interface",
+            "dimensions": "18\" W x 16.625\" D x 4.375\" H",
+            "color": "Black",
+            "construction": "Extra heavy duty",
+            "application": "High-traffic POS"
           },
           "features": [
-            "Ultra-high speed printing",
-            "Internal power supply",
-            "Multiple interface options",
-            "Receipt barcodes",
-            "Logo storage",
-            "Status LEDs"
+            "Extra heavy duty construction",
+            "Wide 18\" format",
+            "Professional-grade",
+            "Designed for demanding environments",
+            "Reliable long-term operation"
           ],
           "compatibility": [
-            "All major POS software",
-            "Windows/macOS/Linux drivers"
-          ],
-          "warranty": "3 years",
-          "price": {
-            "msrp": "425.00",
-            "dealer": "TBD",
-            "map": "TBD"
-          },
-          "availability": "InStock",
-          "images": {
-            "primary": "https://mscashdrawer.com/assets/images/ct-s601iir.jpg",
-            "gallery": []
-          },
-          "tags": ["high-speed", "thermal", "ethernet", "wifi"]
-        },
-        {
-          "sku": "EPSON-TM-L100",
-          "mpn": "Omnilink-TM-L100",
-          "name": "Epson Omnilink TM-L100",
-          "brand": "Epson",
-          "category": "Receipt Printers",
-          "description": "Epson's Omnilink series receipt printer with integrated hub capabilities for modern POS ecosystems.",
-          "specs": {
-            "print_method": "Direct thermal",
-            "print_width": "3.15\"",
-            "print_speed": "Up to 150mm/sec",
-            "resolution": "203 dpi",
-            "interface": "USB, Ethernet, Serial",
-            "cutter": "Auto-cutter (partial)",
-            "dimensions": "5.7\" W x 7.7\" D x 5.4\" H"
-          },
-          "features": [
-            "Omnilink hub capabilities",
-            "Connect multiple peripherals",
-            "Prints logos and coupons",
-            "Paper-saving features",
-            "Status monitoring"
-          ],
-          "compatibility": [
-            "Epson ePOS",
-            "OPOS/JPOS",
-            "Windows",
-            "Android"
-          ],
-          "warranty": "2 years",
-          "price": {
-            "msrp": "349.00",
-            "dealer": "TBD",
-            "map": "TBD"
-          },
-          "availability": "InStock",
-          "images": {
-            "primary": "https://mscashdrawer.com/assets/images/epson-tm-l100.jpg",
-            "gallery": []
-          },
-          "tags": ["epson", "omnilink", "hub", "thermal"]
-        }
-      ]
-    },
-    {
-      "id": "pos_systems",
-      "name": "POS Systems & Terminals",
-      "description": "All-in-one POS solutions from leading manufacturers",
-      "products": [
-        {
-          "sku": "PIONEER-S413",
-          "mpn": "S413",
-          "name": "Pioneer Solution S413 All-In-One",
-          "brand": "Pioneer Solution",
-          "category": "POS Systems",
-          "description": "Sleek 13.3\" PCAP multitouch computer with IP54-rated front for dust and splash resistance. Ideal for restaurants and retail.",
-          "specs": {
-            "display": "13.3\" PCAP multitouch",
-            "processor": "Intel Celeron / Core i options",
-            "memory": "4GB / 8GB options",
-            "storage": "128GB / 256GB SSD",
-            "os": "Windows 10/11 IoT",
-            "connectivity": "WiFi, Bluetooth, Ethernet",
-            "ports": "USB 3.0 x4, HDMI, VGA",
-            "dimensions": "13.4\" W x 11.8\" H x 2.4\" D",
-            "weight": "8.8 lbs",
-            "rating": "IP54 front panel"
-          },
-          "features": [
-            "IP54 splash and dust resistant",
-            "10-point capacitive touch",
-            "Fanless design",
-            "Multiple mounting options",
-            "Built-in speakers",
-            "VESA mount compatible"
-          ],
-          "compatibility": [
-            "Windows POS software",
-            "Browser-based POS",
-            "Legacy applications"
-          ],
-          "warranty": "3 years",
-          "price": {
-            "msrp": "1299.00",
-            "dealer": "TBD",
-            "map": "TBD"
-          },
-          "availability": "InStock",
-          "images": {
-            "primary": "https://mscashdrawer.com/assets/images/pioneer-s413.jpg",
-            "gallery": []
-          },
-          "is_featured": true,
-          "tags": ["all-in-one", "touchscreen", "ip54", "restaurant"]
-        },
-        {
-          "sku": "TOUCHDYN-SUMMIT",
-          "mpn": "Summit-Kiosk",
-          "name": "Touch Dynamic Summit Kiosk",
-          "brand": "Touch Dynamic",
-          "category": "POS Systems",
-          "description": "Self-service solution with Android 13 and GMS. Reach for the sky with this modern, customizable kiosk platform.",
-          "specs": {
-            "display": "21.5\" / 32\" options",
-            "touch": "Capacitive 10-point",
-            "processor": "ARM Octa-core",
-            "memory": "4GB RAM",
-            "storage": "64GB eMMC",
-            "os": "Android 13 with GMS",
-            "connectivity": "WiFi, Bluetooth, Ethernet",
-            "dimensions": "Varies by configuration",
-            "mounting": "Floor, countertop, wall"
-          },
-          "features": [
-            "Android 13 with GMS certification",
-            "Self-service capable",
-            "Payment device integration",
-            "Printer connectivity",
-            "Custom branding options",
-            "24/7 operation rated"
-          ],
-          "compatibility": [
-            "Android kiosk apps",
-            "Web-based ordering",
-            "Payment SDKs"
-          ],
-          "warranty": "3 years",
-          "price": {
-            "msrp": "2499.00",
-            "dealer": "TBD",
-            "map": "TBD"
-          },
-          "availability": "InStock",
-          "images": {
-            "primary": "https://mscashdrawer.com/assets/images/summit-kiosk.jpg",
-            "gallery": []
-          },
-          "is_new": true,
-          "tags": ["kiosk", "self-service", "android", "restaurant"]
-        },
-        {
-          "sku": "SAM4S-SAP-630",
-          "mpn": "SAP-630",
-          "name": "SAM4S SAP-630 Android POS Terminal",
-          "brand": "SAM4S",
-          "category": "POS Systems",
-          "description": "Android touchscreen POS terminal with 10-inch display and raised programmable keyboard. Cloud-ready for modern businesses.",
-          "specs": {
-            "display": "10.1\" IPS touchscreen",
-            "keyboard": "Raised programmable 64 keys",
-            "processor": "ARM Quad-core",
-            "memory": "2GB / 4GB options",
-            "storage": "16GB / 32GB eMMC",
-            "os": "Android",
-            "connectivity": "WiFi, Bluetooth, Ethernet",
-            "ports": "USB x4, Serial, Cash drawer"
-          },
-          "features": [
-            "Android-based for flexibility",
-            "Programmable raised keyboard",
-            "10-inch vibrant display",
-            "Cloud POS ready",
-            "Compact footprint",
-            "Integrated customer display option"
-          ],
-          "compatibility": [
-            "Loyverse",
-            "Square",
-            "Toast",
-            "Odoo",
-            "Custom Android apps"
-          ],
-          "warranty": "2 years",
-          "price": {
-            "msrp": "1395.00",
-            "dealer": "TBD",
-            "map": "TBD"
-          },
-          "availability": "InStock",
-          "images": {
-            "primary": "https://mscashdrawer.com/assets/images/sam4s-sap-630.jpg",
-            "gallery": []
-          },
-          "tags": ["android", "all-in-one", "cloud-ready", "retail"]
-        }
-      ]
-    },
-    {
-      "id": "label_printers",
-      "name": "Label Printers",
-      "description": "Thermal label printing solutions for shipping, inventory, and product labeling",
-      "products": [
-        {
-          "sku": "BIXOLON-XQ840II",
-          "mpn": "XQ-840II",
-          "name": "Bixolon XQ-840II Label Printer",
-          "brand": "Bixolon",
-          "category": "Label Printers",
-          "description": "All-in-one labeling solution featuring an 8-inch Android tablet embedded onto a 4-inch direct thermal desktop label printer.",
-          "specs": {
-            "print_method": "Direct thermal",
-            "print_width": "4.25\"",
-            "print_speed": "Up to 152mm/sec",
-            "resolution": "203 dpi",
-            "display": "8\" Android tablet",
-            "interface": "USB, WiFi, Bluetooth",
-            "dimensions": "9.4\" W x 10.2\" D x 11.8\" H"
-          },
-          "features": [
-            "Integrated 8\" Android tablet",
-            "Standalone operation",
-            "No PC required",
-            "Cloud printing support",
-            "Touch-based label design",
-            "Multiple label templates"
-          ],
-          "compatibility": [
-            "Android apps",
-            "Cloud services",
-            "Web browsers"
-          ],
-          "warranty": "2 years",
-          "price": {
-            "msrp": "895.00",
-            "dealer": "TBD",
-            "map": "TBD"
-          },
-          "availability": "InStock",
-          "images": {
-            "primary": "https://mscashdrawer.com/assets/images/bixolon-xq840ii.jpg",
-            "gallery": []
-          },
-          "is_featured": true,
-          "is_new": true,
-          "tags": ["label-printer", "android", "tablet", "standalone"]
-        },
-        {
-          "sku": "CITIZEN-CL-E300",
-          "mpn": "CL-E300",
-          "name": "Citizen CL-E300 Label Printer",
-          "brand": "Citizen",
-          "category": "Label Printers",
-          "description": "Compact desktop label printer with exceptional reliability and ease of use for retail and logistics applications.",
-          "specs": {
-            "print_method": "Direct thermal",
-            "print_width": "4.1\"",
-            "print_speed": "Up to 8 ips",
-            "resolution": "203 dpi / 300 dpi options",
-            "interface": "USB, Serial, Ethernet, WiFi",
-            "dimensions": "7.8\" W x 9.8\" D x 6.9\" H"
-          },
-          "features": [
-            "Tool-less maintenance",
-            "Large media capacity",
-            "Adjustable media sensor",
-            "Print status LED",
-            "Easy loading design",
-            "Multiple emulation support"
-          ],
-          "compatibility": [
-            "ZPL II",
-            "EPL",
-            "CPCL",
-            "Windows drivers"
-          ],
-          "warranty": "2 years",
-          "price": {
-            "msrp": "495.00",
-            "dealer": "TBD",
-            "map": "TBD"
-          },
-          "availability": "InStock",
-          "images": {
-            "primary": "https://mscashdrawer.com/assets/images/citizen-cl-e300.jpg",
-            "gallery": []
-          },
-          "tags": ["label-printer", "desktop", "reliable", "shipping"]
-        }
-      ]
-    },
-    {
-      "id": "scales",
-      "name": "Retail Scales",
-      "description": "Precision weighing solutions for retail, grocery, and food service",
-      "products": [
-        {
-          "sku": "CAS-PDN-SERIES",
-          "mpn": "PDN-Series",
-          "name": "CAS PDN Series Retail Scale",
-          "brand": "CAS",
-          "category": "Scales",
-          "description": "High-capacity retail scale with dual display and PLU memory. Perfect for grocery and bulk retail environments.",
-          "specs": {
-            "capacity": "30 lb / 60 lb options",
-            "resolution": "0.01 lb / 0.02 lb",
-            "display": "Dual LCD (operator + customer)",
-            "plu_memory": "1,000 PLUs",
-            "interface": "RS-232, USB",
-            "power": "AC adapter / rechargeable battery",
-            "platform": "12\" x 14\" stainless steel"
-          },
-          "features": [
-            "Dual display for customer visibility",
-            "Large 1,000 PLU database",
-            "Stainless steel platform",
-            "Rechargeable battery operation",
-            "RS-232 interface for POS",
-            "Tare and preset functions"
-          ],
-          "compatibility": [
-            "CAS POS software",
-            "Third-party POS systems",
-            "Label printers"
-          ],
-          "warranty": "2 years",
-          "price": {
-            "msrp": "795.00",
-            "dealer": "TBD",
-            "map": "TBD"
-          },
-          "availability": "InStock",
-          "images": {
-            "primary": "https://mscashdrawer.com/assets/images/cas-pdn.jpg",
-            "gallery": []
-          },
-          "tags": ["scale", "retail", "grocery", "dual-display"]
-        },
-        {
-          "sku": "CAS-LP-1000N",
-          "mpn": "LP-1000N",
-          "name": "CAS LP-1000N Label Printing Scale",
-          "brand": "CAS",
-          "category": "Scales",
-          "description": "NTEP certified label printing scale with 4,000 PLUs and thermal printing. Ideal for delis, grocery stores, and specialty food retailers.",
-          "specs": {
-            "capacity": "30 lb x 0.01 lb",
-            "display": "LCD with backlight",
-            "plu_memory": "4,000 PLUs",
-            "label_size": "Various formats supported",
-            "interface": "RS-232, Ethernet, WiFi optional",
-            "printer": "Built-in thermal",
-            "certification": "NTEP certified"
-          },
-          "features": [
-            "NTEP certified for trade use",
-            "4,000 PLU capacity",
-            "Custom label formats",
-            "Nutritional facts printing",
-            "Preset keys for popular items",
-            "Ethernet connectivity option"
-          ],
-          "compatibility": [
-            "CAS software",
-            "POS integration",
-            "Back office systems"
-          ],
-          "warranty": "2 years",
-          "price": {
-            "msrp": "1495.00",
-            "dealer": "TBD",
-            "map": "TBD"
-          },
-          "availability": "InStock",
-          "images": {
-            "primary": "https://mscashdrawer.com/assets/images/cas-lp-1000n.jpg",
-            "gallery": []
-          },
-          "is_featured": true,
-          "tags": ["scale", "label-printing", "ntep", "deli", "grocery"]
-        }
-      ]
-    },
-    {
-      "id": "scanners",
-      "name": "Barcode Scanners",
-      "description": "Precision scanning solutions for retail and inventory management",
-      "products": [
-        {
-          "sku": "DATALOGIC-MAG900I",
-          "mpn": "Magellan-900i",
-          "name": "Datalogic Magellan 900i",
-          "brand": "Datalogic",
-          "category": "Scanners",
-          "description": "High-performance presentation scanner with imaging technology for fast, accurate barcode reading.",
-          "specs": {
-            "technology": "2D imaging",
-            "scan_rate": "60 frames/sec",
-            "field_of_view": "Wide angle",
-            "interface": "USB, RS-232",
-            "dimensions": "3.5\" W x 3.0\" D x 5.5\" H",
-            "color": "Black / White"
-          },
-          "features": [
-            "2D imaging technology",
-            "Reads mobile phone screens",
-            "Compact presentation design",
-            "Multiple interface options",
-            "Green Spot good-read",
-            "Integrated EAS antenna"
-          ],
-          "compatibility": [
-            "USB HID",
-            "USB COM",
-            "RS-232"
+            "Universal POS systems"
           ],
           "warranty": "5 years",
           "price": {
-            "msrp": "295.00",
-            "dealer": "TBD",
-            "map": "TBD"
+            "dealer_cost": "120.00",
+            "selling_price": "200.00",
+            "msrp": "249.00"
           },
-          "availability": "InStock",
+          "savings": "49.00",
+          "savings_percent": "20",
+          "stock": {
+            "available": 0,
+            "in_stock": 0,
+            "on_order": 0
+          },
+          "availability": "OutOfStock",
           "images": {
-            "primary": "https://mscashdrawer.com/assets/images/magellan-900i.jpg",
+            "primary": "https://mscashdrawer.com/assets/images/crs-160018.jpg",
             "gallery": []
           },
-          "tags": ["scanner", "presentation", "2d", "retail"]
+          "tags": ["heavy-duty", "crs", "18-inch", "extra-duty"]
         }
       ]
     },
     {
-      "id": "mobile_printers",
-      "name": "Mobile Printers",
-      "description": "Portable printing solutions for field service and mobile POS",
+      "id": "cash_drawers_cf_series",
+      "name": "CF Series Cash Drawers",
+      "description": "Premium CF series cash drawers with advanced features and media slots",
       "products": [
         {
-          "sku": "CUSTOM-ALPHA-3R",
-          "mpn": "Alpha-3R",
-          "name": "Custom America Alpha-3R Mobile Printer",
-          "brand": "Custom America",
-          "category": "Mobile Printers",
-          "description": "Compact 3-inch mobile receipt printer with Bluetooth connectivity. Perfect for field service, delivery, and mobile POS applications.",
+          "sku": "PSD-CF-405BX-M-B",
+          "mpn": "CF-405BX-M-B",
+          "name": "M-S Cash Drawer CF-405BX 16\" 5-Bill/5-Coin Black with Media",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "Premium CF-405BX series 16\" cash drawer with media slot. Black finish, 5 bill / 5 coin compartments. Bottom exit cable. High availability, excellent for immediate deployment.",
           "specs": {
-            "print_method": "Direct thermal",
-            "print_width": "3\"",
-            "print_speed": "Up to 100mm/sec",
-            "resolution": "203 dpi",
-            "interface": "Bluetooth, USB",
-            "battery": "Rechargeable Li-ion",
-            "dimensions": "4.3\" W x 3.3\" D x 1.6\" H",
-            "weight": "0.5 lbs"
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "16\" W x 16.3\" D x 4.3\" H",
+            "color": "Black",
+            "compartments": "5 bills / 5 coins",
+            "media_slots": "1",
+            "cable_exit": "Bottom exit",
+            "series": "CF-405BX Premium"
           },
           "features": [
-            "Ultra-compact design",
-            "Bluetooth wireless",
-            "iOS and Android compatible",
-            "Drop resistant (4 ft)",
-            "Belt clip included",
-            "Easy paper loading"
+            "Premium CF series construction",
+            "Built-in media slot",
+            "5 bill / 5 coin standard",
+            "Bottom exit cable",
+            "Printer interface",
+            "Excellent stock availability"
           ],
           "compatibility": [
-            "iOS",
-            "Android",
-            "Windows Mobile"
+            "Universal POS systems",
+            "All receipt printers"
           ],
-          "warranty": "2 years",
+          "warranty": "3 years",
           "price": {
-            "msrp": "395.00",
-            "dealer": "TBD",
-            "map": "TBD"
+            "dealer_cost": "91.00",
+            "selling_price": "151.67",
+            "msrp": "189.00"
+          },
+          "savings": "37.33",
+          "savings_percent": "20",
+          "stock": {
+            "available": 423,
+            "in_stock": 781,
+            "on_order": 2350
           },
           "availability": "InStock",
           "images": {
-            "primary": "https://mscashdrawer.com/assets/images/alpha-3r.jpg",
+            "primary": "https://mscashdrawer.com/assets/images/cf-405bx.jpg",
             "gallery": []
           },
-          "tags": ["mobile", "bluetooth", "portable", "field-service"]
+          "is_featured": true,
+          "is_best_seller": true,
+          "tags": ["cf-series", "premium", "16-inch", "media-slot", "high-stock"]
+        },
+        {
+          "sku": "PSD-CF-405BX-M-B-4B8C",
+          "mpn": "CF-405BX-M-B-4B8C",
+          "name": "M-S Cash Drawer CF-405BX 16\" 4-Bill/8-Coin Black with Media",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "CF-405BX series 16\" cash drawer with media slot. 4 bill / 8 coin configuration for high coin capacity. Black finish with bottom exit cable.",
+          "specs": {
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "16\" W x 16.3\" D x 4.3\" H",
+            "color": "Black",
+            "compartments": "4 bills / 8 coins",
+            "media_slots": "1",
+            "cable_exit": "Bottom exit",
+            "series": "CF-405BX"
+          },
+          "features": [
+            "CF series premium build",
+            "Media slot included",
+            "High-capacity 8-coin tray",
+            "4 bill compartments",
+            "Bottom exit cable",
+            "Great availability"
+          ],
+          "compatibility": [
+            "Universal POS systems"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "dealer_cost": "91.00",
+            "selling_price": "151.67",
+            "msrp": "189.00"
+          },
+          "savings": "37.33",
+          "savings_percent": "20",
+          "stock": {
+            "available": 264,
+            "in_stock": 264,
+            "on_order": 0
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cf-405bx-4b8c.jpg",
+            "gallery": []
+          },
+          "tags": ["cf-series", "16-inch", "4-bill", "8-coin", "media-slot"]
+        },
+        {
+          "sku": "PSD-CF-460BX-M-B",
+          "mpn": "CF-460BX-M-B",
+          "name": "M-S Cash Drawer CF-460BX 17.3\" Heavy Duty with Media & SS Front",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "Large format CF-460BX 17.3\" x 18.1\" x 4.68\" heavy duty cash drawer with stainless steel front. Media slot, black finish, RJ-female connector. Professional grade for demanding environments.",
+          "specs": {
+            "interface": "Printer Interface (RJ-female)",
+            "dimensions": "17.3\" W x 18.1\" D x 4.68\" H",
+            "color": "Black with SS Front",
+            "compartments": "5 bills / 6 coins + 2",
+            "media_slots": "1",
+            "cable_exit": "Bottom exit",
+            "front": "Stainless Steel",
+            "connector": "RJ-female"
+          },
+          "features": [
+            "Heavy duty CF-460BX series",
+            "Stainless steel front panel",
+            "Large 17.3\" format",
+            "Media slot",
+            "Bottom exit with RJ-female",
+            "Professional grade"
+          ],
+          "compatibility": [
+            "Universal POS systems",
+            "Commercial grade applications"
+          ],
+          "warranty": "5 years",
+          "price": {
+            "dealer_cost": "118.00",
+            "selling_price": "196.67",
+            "msrp": "245.00"
+          },
+          "savings": "48.33",
+          "savings_percent": "20",
+          "stock": {
+            "available": 76,
+            "in_stock": 76,
+            "on_order": 40
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cf-460bx.jpg",
+            "gallery": []
+          },
+          "is_featured": true,
+          "tags": ["cf-series", "heavy-duty", "17-inch", "stainless-steel", "professional"]
         }
       ]
     }
