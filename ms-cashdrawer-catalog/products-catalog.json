@@ -1,0 +1,783 @@
+{
+  "catalog_metadata": {
+    "vendor": "M-S Cash Drawer",
+    "vendor_url": "https://mscashdrawer.com",
+    "dealer_portal": "https://mscashdrawerus.focuspointsap.com",
+    "last_updated": "2026-07-20",
+    "version": "1.0.0",
+    "currency": "USD"
+  },
+  "categories": [
+    {
+      "id": "cash_drawers",
+      "name": "Cash Drawers",
+      "description": "Industry-leading cash drawers with Smart Cord technology and multi-drawer control capabilities",
+      "products": [
+        {
+          "sku": "MS-SC-100",
+          "mpn": "SC-100",
+          "name": "M-S Cash Drawer Smart Cord 100",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "Compact cash drawer with Smart Cord connectivity. Features 4 bill / 5 coin compartments, steel construction, and plug-and-play operation.",
+          "specs": {
+            "interface": "Smart Cord (RJ12)",
+            "dimensions": "13.0\" W x 13.4\" D x 4.0\" H",
+            "weight": "12 lbs",
+            "color": "Black",
+            "compartments": "4 bills / 5 coins",
+            "media_slots": "1",
+            "lock_type": "3-position"
+          },
+          "features": [
+            "Smart Cord technology - no separate printer needed",
+            "Plug-and-play operation",
+            "Heavy-duty steel construction",
+            "Adjustable coin and bill compartments",
+            "3-position lock (locked, open, manual)",
+            "Media slot for checks and receipts"
+          ],
+          "compatibility": [
+            "Universal POS systems",
+            "USB with adapter",
+            "Ethernet with adapter"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "msrp": "149.00",
+            "dealer": "TBD",
+            "map": "TBD"
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/smart-cord-100.jpg",
+            "gallery": []
+          },
+          "is_featured": true,
+          "tags": ["smart-cord", "compact", "entry-level"]
+        },
+        {
+          "sku": "MS-SC-200",
+          "mpn": "SC-200",
+          "name": "M-S Cash Drawer Smart Cord 200",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "Mid-size cash drawer with Smart Cord connectivity. 5 bill / 5 coin compartments, robust steel construction for high-traffic environments.",
+          "specs": {
+            "interface": "Smart Cord (RJ12)",
+            "dimensions": "16.1\" W x 16.3\" D x 4.3\" H",
+            "weight": "18 lbs",
+            "color": "Black / Beige",
+            "compartments": "5 bills / 5 coins",
+            "media_slots": "2",
+            "lock_type": "3-position"
+          },
+          "features": [
+            "Smart Cord connectivity",
+            "Removable coin tray",
+            "Heavy-duty ball bearing slides",
+            "Adjustable compartments",
+            "Dual media slots",
+            "Drawer open/close sensor"
+          ],
+          "compatibility": [
+            "Universal POS systems",
+            "Star Micronics printers",
+            "Epson printers"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "msrp": "199.00",
+            "dealer": "TBD",
+            "map": "TBD"
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/smart-cord-200.jpg",
+            "gallery": []
+          },
+          "is_featured": true,
+          "tags": ["smart-cord", "mid-size", "high-traffic"]
+        },
+        {
+          "sku": "MS-MCCD-4",
+          "mpn": "mC-CONNECT-4",
+          "name": "M-S Cash Drawer mC-Connect (4-Drawer Controller)",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "Revolutionary multi-drawer controller. Control up to 4 cash drawers from a single device with USB, Ethernet, Wireless LAN, and Bluetooth Low Energy connectivity.",
+          "specs": {
+            "interface": "USB, Ethernet, WiFi, Bluetooth LE",
+            "drawer_capacity": "4 drawers",
+            "dimensions": "4.5\" W x 3.2\" D x 1.1\" H",
+            "weight": "0.5 lbs",
+            "color": "Black",
+            "power": "USB powered"
+          },
+          "features": [
+            "Control 4 drawers from 1 device",
+            "Multiple connectivity options",
+            "Bluetooth Low Energy support",
+            "Wireless LAN connectivity",
+            "USB and Ethernet ports",
+            "Compact design",
+            "Works with any POS software"
+          ],
+          "compatibility": [
+            "Windows",
+            "macOS",
+            "Linux",
+            "iOS",
+            "Android",
+            "Cloud-based POS"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "msrp": "249.00",
+            "dealer": "TBD",
+            "map": "TBD"
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/mc-connect.jpg",
+            "gallery": []
+          },
+          "is_featured": true,
+          "is_new": true,
+          "tags": ["multi-drawer", "wireless", "bluetooth", "cloud-ready"]
+        },
+        {
+          "sku": "MS-HD-400",
+          "mpn": "HD-400",
+          "name": "M-S Cash Drawer Heavy Duty 400",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "Heavy-duty cash drawer for demanding retail environments. Reinforced steel construction with high-capacity storage.",
+          "specs": {
+            "interface": "RJ12 / USB",
+            "dimensions": "18.0\" W x 16.5\" D x 4.5\" H",
+            "weight": "25 lbs",
+            "color": "Black",
+            "compartments": "5 bills / 8 coins",
+            "media_slots": "3",
+            "lock_type": "4-position heavy-duty"
+          },
+          "features": [
+            "Heavy-duty reinforced steel",
+            "High-capacity storage",
+            "4-position lock with drawer release",
+            "Reinforced drawer slides",
+            "Anti-tamper design",
+            "Status LED indicators"
+          ],
+          "compatibility": [
+            "All major POS systems",
+            "Receipt printers",
+            "Direct USB connection"
+          ],
+          "warranty": "5 years",
+          "price": {
+            "msrp": "349.00",
+            "dealer": "TBD",
+            "map": "TBD"
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/hd-400.jpg",
+            "gallery": []
+          },
+          "tags": ["heavy-duty", "high-capacity", "retail"]
+        }
+      ]
+    },
+    {
+      "id": "receipt_printers",
+      "name": "Receipt Printers",
+      "description": "High-speed thermal receipt printers from industry leaders",
+      "products": [
+        {
+          "sku": "STAR-MC-LABEL",
+          "mpn": "mC-Label",
+          "name": "Star Micronics mC-Label Family",
+          "brand": "Star Micronics",
+          "category": "Receipt Printers",
+          "description": "Compact label printing solution with cash drawer control. Ideal for food service, retail, and mobile applications.",
+          "specs": {
+            "print_method": "Direct thermal",
+            "print_width": "2.25\"",
+            "print_speed": "Up to 72mm/sec",
+            "resolution": "203 dpi",
+            "interface": "USB, Bluetooth, Ethernet",
+            "dimensions": "5.1\" W x 5.9\" D x 5.1\" H",
+            "weight": "1.5 lbs"
+          },
+          "features": [
+            "Compact desktop design",
+            "Cash drawer kick port",
+            "Built-in label peeler option",
+            "Bluetooth connectivity",
+            "CloudPRNT ready",
+            "Auto-cutter"
+          ],
+          "compatibility": [
+            "Square",
+            "Clover",
+            "Toast",
+            "Lightspeed",
+            "Vend"
+          ],
+          "warranty": "2 years",
+          "price": {
+            "msrp": "379.00",
+            "dealer": "TBD",
+            "map": "TBD"
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/star-mc-label.jpg",
+            "gallery": []
+          },
+          "is_featured": true,
+          "tags": ["label-printer", "star-micronics", "bluetooth", "cloud-ready"]
+        },
+        {
+          "sku": "STAR-CT-S601IIR",
+          "mpn": "CT-S601IIR",
+          "name": "Star Micronics CT-S601IIR",
+          "brand": "Star Micronics",
+          "category": "Receipt Printers",
+          "description": "Ultra-high speed thermal receipt printer with internal power supply and advanced connectivity options.",
+          "specs": {
+            "print_method": "Direct thermal",
+            "print_width": "3.15\"",
+            "print_speed": "Up to 250mm/sec",
+            "resolution": "203 dpi",
+            "interface": "USB, Ethernet, WiFi, Bluetooth",
+            "cutter": "Guillotine (full/partial)",
+            "dimensions": "5.8\" W x 8.0\" D x 5.5\" H"
+          },
+          "features": [
+            "Ultra-high speed printing",
+            "Internal power supply",
+            "Multiple interface options",
+            "Receipt barcodes",
+            "Logo storage",
+            "Status LEDs"
+          ],
+          "compatibility": [
+            "All major POS software",
+            "Windows/macOS/Linux drivers"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "msrp": "425.00",
+            "dealer": "TBD",
+            "map": "TBD"
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/ct-s601iir.jpg",
+            "gallery": []
+          },
+          "tags": ["high-speed", "thermal", "ethernet", "wifi"]
+        },
+        {
+          "sku": "EPSON-TM-L100",
+          "mpn": "Omnilink-TM-L100",
+          "name": "Epson Omnilink TM-L100",
+          "brand": "Epson",
+          "category": "Receipt Printers",
+          "description": "Epson's Omnilink series receipt printer with integrated hub capabilities for modern POS ecosystems.",
+          "specs": {
+            "print_method": "Direct thermal",
+            "print_width": "3.15\"",
+            "print_speed": "Up to 150mm/sec",
+            "resolution": "203 dpi",
+            "interface": "USB, Ethernet, Serial",
+            "cutter": "Auto-cutter (partial)",
+            "dimensions": "5.7\" W x 7.7\" D x 5.4\" H"
+          },
+          "features": [
+            "Omnilink hub capabilities",
+            "Connect multiple peripherals",
+            "Prints logos and coupons",
+            "Paper-saving features",
+            "Status monitoring"
+          ],
+          "compatibility": [
+            "Epson ePOS",
+            "OPOS/JPOS",
+            "Windows",
+            "Android"
+          ],
+          "warranty": "2 years",
+          "price": {
+            "msrp": "349.00",
+            "dealer": "TBD",
+            "map": "TBD"
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/epson-tm-l100.jpg",
+            "gallery": []
+          },
+          "tags": ["epson", "omnilink", "hub", "thermal"]
+        }
+      ]
+    },
+    {
+      "id": "pos_systems",
+      "name": "POS Systems & Terminals",
+      "description": "All-in-one POS solutions from leading manufacturers",
+      "products": [
+        {
+          "sku": "PIONEER-S413",
+          "mpn": "S413",
+          "name": "Pioneer Solution S413 All-In-One",
+          "brand": "Pioneer Solution",
+          "category": "POS Systems",
+          "description": "Sleek 13.3\" PCAP multitouch computer with IP54-rated front for dust and splash resistance. Ideal for restaurants and retail.",
+          "specs": {
+            "display": "13.3\" PCAP multitouch",
+            "processor": "Intel Celeron / Core i options",
+            "memory": "4GB / 8GB options",
+            "storage": "128GB / 256GB SSD",
+            "os": "Windows 10/11 IoT",
+            "connectivity": "WiFi, Bluetooth, Ethernet",
+            "ports": "USB 3.0 x4, HDMI, VGA",
+            "dimensions": "13.4\" W x 11.8\" H x 2.4\" D",
+            "weight": "8.8 lbs",
+            "rating": "IP54 front panel"
+          },
+          "features": [
+            "IP54 splash and dust resistant",
+            "10-point capacitive touch",
+            "Fanless design",
+            "Multiple mounting options",
+            "Built-in speakers",
+            "VESA mount compatible"
+          ],
+          "compatibility": [
+            "Windows POS software",
+            "Browser-based POS",
+            "Legacy applications"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "msrp": "1299.00",
+            "dealer": "TBD",
+            "map": "TBD"
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/pioneer-s413.jpg",
+            "gallery": []
+          },
+          "is_featured": true,
+          "tags": ["all-in-one", "touchscreen", "ip54", "restaurant"]
+        },
+        {
+          "sku": "TOUCHDYN-SUMMIT",
+          "mpn": "Summit-Kiosk",
+          "name": "Touch Dynamic Summit Kiosk",
+          "brand": "Touch Dynamic",
+          "category": "POS Systems",
+          "description": "Self-service solution with Android 13 and GMS. Reach for the sky with this modern, customizable kiosk platform.",
+          "specs": {
+            "display": "21.5\" / 32\" options",
+            "touch": "Capacitive 10-point",
+            "processor": "ARM Octa-core",
+            "memory": "4GB RAM",
+            "storage": "64GB eMMC",
+            "os": "Android 13 with GMS",
+            "connectivity": "WiFi, Bluetooth, Ethernet",
+            "dimensions": "Varies by configuration",
+            "mounting": "Floor, countertop, wall"
+          },
+          "features": [
+            "Android 13 with GMS certification",
+            "Self-service capable",
+            "Payment device integration",
+            "Printer connectivity",
+            "Custom branding options",
+            "24/7 operation rated"
+          ],
+          "compatibility": [
+            "Android kiosk apps",
+            "Web-based ordering",
+            "Payment SDKs"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "msrp": "2499.00",
+            "dealer": "TBD",
+            "map": "TBD"
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/summit-kiosk.jpg",
+            "gallery": []
+          },
+          "is_new": true,
+          "tags": ["kiosk", "self-service", "android", "restaurant"]
+        },
+        {
+          "sku": "SAM4S-SAP-630",
+          "mpn": "SAP-630",
+          "name": "SAM4S SAP-630 Android POS Terminal",
+          "brand": "SAM4S",
+          "category": "POS Systems",
+          "description": "Android touchscreen POS terminal with 10-inch display and raised programmable keyboard. Cloud-ready for modern businesses.",
+          "specs": {
+            "display": "10.1\" IPS touchscreen",
+            "keyboard": "Raised programmable 64 keys",
+            "processor": "ARM Quad-core",
+            "memory": "2GB / 4GB options",
+            "storage": "16GB / 32GB eMMC",
+            "os": "Android",
+            "connectivity": "WiFi, Bluetooth, Ethernet",
+            "ports": "USB x4, Serial, Cash drawer"
+          },
+          "features": [
+            "Android-based for flexibility",
+            "Programmable raised keyboard",
+            "10-inch vibrant display",
+            "Cloud POS ready",
+            "Compact footprint",
+            "Integrated customer display option"
+          ],
+          "compatibility": [
+            "Loyverse",
+            "Square",
+            "Toast",
+            "Odoo",
+            "Custom Android apps"
+          ],
+          "warranty": "2 years",
+          "price": {
+            "msrp": "1395.00",
+            "dealer": "TBD",
+            "map": "TBD"
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/sam4s-sap-630.jpg",
+            "gallery": []
+          },
+          "tags": ["android", "all-in-one", "cloud-ready", "retail"]
+        }
+      ]
+    },
+    {
+      "id": "label_printers",
+      "name": "Label Printers",
+      "description": "Thermal label printing solutions for shipping, inventory, and product labeling",
+      "products": [
+        {
+          "sku": "BIXOLON-XQ840II",
+          "mpn": "XQ-840II",
+          "name": "Bixolon XQ-840II Label Printer",
+          "brand": "Bixolon",
+          "category": "Label Printers",
+          "description": "All-in-one labeling solution featuring an 8-inch Android tablet embedded onto a 4-inch direct thermal desktop label printer.",
+          "specs": {
+            "print_method": "Direct thermal",
+            "print_width": "4.25\"",
+            "print_speed": "Up to 152mm/sec",
+            "resolution": "203 dpi",
+            "display": "8\" Android tablet",
+            "interface": "USB, WiFi, Bluetooth",
+            "dimensions": "9.4\" W x 10.2\" D x 11.8\" H"
+          },
+          "features": [
+            "Integrated 8\" Android tablet",
+            "Standalone operation",
+            "No PC required",
+            "Cloud printing support",
+            "Touch-based label design",
+            "Multiple label templates"
+          ],
+          "compatibility": [
+            "Android apps",
+            "Cloud services",
+            "Web browsers"
+          ],
+          "warranty": "2 years",
+          "price": {
+            "msrp": "895.00",
+            "dealer": "TBD",
+            "map": "TBD"
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/bixolon-xq840ii.jpg",
+            "gallery": []
+          },
+          "is_featured": true,
+          "is_new": true,
+          "tags": ["label-printer", "android", "tablet", "standalone"]
+        },
+        {
+          "sku": "CITIZEN-CL-E300",
+          "mpn": "CL-E300",
+          "name": "Citizen CL-E300 Label Printer",
+          "brand": "Citizen",
+          "category": "Label Printers",
+          "description": "Compact desktop label printer with exceptional reliability and ease of use for retail and logistics applications.",
+          "specs": {
+            "print_method": "Direct thermal",
+            "print_width": "4.1\"",
+            "print_speed": "Up to 8 ips",
+            "resolution": "203 dpi / 300 dpi options",
+            "interface": "USB, Serial, Ethernet, WiFi",
+            "dimensions": "7.8\" W x 9.8\" D x 6.9\" H"
+          },
+          "features": [
+            "Tool-less maintenance",
+            "Large media capacity",
+            "Adjustable media sensor",
+            "Print status LED",
+            "Easy loading design",
+            "Multiple emulation support"
+          ],
+          "compatibility": [
+            "ZPL II",
+            "EPL",
+            "CPCL",
+            "Windows drivers"
+          ],
+          "warranty": "2 years",
+          "price": {
+            "msrp": "495.00",
+            "dealer": "TBD",
+            "map": "TBD"
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/citizen-cl-e300.jpg",
+            "gallery": []
+          },
+          "tags": ["label-printer", "desktop", "reliable", "shipping"]
+        }
+      ]
+    },
+    {
+      "id": "scales",
+      "name": "Retail Scales",
+      "description": "Precision weighing solutions for retail, grocery, and food service",
+      "products": [
+        {
+          "sku": "CAS-PDN-SERIES",
+          "mpn": "PDN-Series",
+          "name": "CAS PDN Series Retail Scale",
+          "brand": "CAS",
+          "category": "Scales",
+          "description": "High-capacity retail scale with dual display and PLU memory. Perfect for grocery and bulk retail environments.",
+          "specs": {
+            "capacity": "30 lb / 60 lb options",
+            "resolution": "0.01 lb / 0.02 lb",
+            "display": "Dual LCD (operator + customer)",
+            "plu_memory": "1,000 PLUs",
+            "interface": "RS-232, USB",
+            "power": "AC adapter / rechargeable battery",
+            "platform": "12\" x 14\" stainless steel"
+          },
+          "features": [
+            "Dual display for customer visibility",
+            "Large 1,000 PLU database",
+            "Stainless steel platform",
+            "Rechargeable battery operation",
+            "RS-232 interface for POS",
+            "Tare and preset functions"
+          ],
+          "compatibility": [
+            "CAS POS software",
+            "Third-party POS systems",
+            "Label printers"
+          ],
+          "warranty": "2 years",
+          "price": {
+            "msrp": "795.00",
+            "dealer": "TBD",
+            "map": "TBD"
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cas-pdn.jpg",
+            "gallery": []
+          },
+          "tags": ["scale", "retail", "grocery", "dual-display"]
+        },
+        {
+          "sku": "CAS-LP-1000N",
+          "mpn": "LP-1000N",
+          "name": "CAS LP-1000N Label Printing Scale",
+          "brand": "CAS",
+          "category": "Scales",
+          "description": "NTEP certified label printing scale with 4,000 PLUs and thermal printing. Ideal for delis, grocery stores, and specialty food retailers.",
+          "specs": {
+            "capacity": "30 lb x 0.01 lb",
+            "display": "LCD with backlight",
+            "plu_memory": "4,000 PLUs",
+            "label_size": "Various formats supported",
+            "interface": "RS-232, Ethernet, WiFi optional",
+            "printer": "Built-in thermal",
+            "certification": "NTEP certified"
+          },
+          "features": [
+            "NTEP certified for trade use",
+            "4,000 PLU capacity",
+            "Custom label formats",
+            "Nutritional facts printing",
+            "Preset keys for popular items",
+            "Ethernet connectivity option"
+          ],
+          "compatibility": [
+            "CAS software",
+            "POS integration",
+            "Back office systems"
+          ],
+          "warranty": "2 years",
+          "price": {
+            "msrp": "1495.00",
+            "dealer": "TBD",
+            "map": "TBD"
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cas-lp-1000n.jpg",
+            "gallery": []
+          },
+          "is_featured": true,
+          "tags": ["scale", "label-printing", "ntep", "deli", "grocery"]
+        }
+      ]
+    },
+    {
+      "id": "scanners",
+      "name": "Barcode Scanners",
+      "description": "Precision scanning solutions for retail and inventory management",
+      "products": [
+        {
+          "sku": "DATALOGIC-MAG900I",
+          "mpn": "Magellan-900i",
+          "name": "Datalogic Magellan 900i",
+          "brand": "Datalogic",
+          "category": "Scanners",
+          "description": "High-performance presentation scanner with imaging technology for fast, accurate barcode reading.",
+          "specs": {
+            "technology": "2D imaging",
+            "scan_rate": "60 frames/sec",
+            "field_of_view": "Wide angle",
+            "interface": "USB, RS-232",
+            "dimensions": "3.5\" W x 3.0\" D x 5.5\" H",
+            "color": "Black / White"
+          },
+          "features": [
+            "2D imaging technology",
+            "Reads mobile phone screens",
+            "Compact presentation design",
+            "Multiple interface options",
+            "Green Spot good-read",
+            "Integrated EAS antenna"
+          ],
+          "compatibility": [
+            "USB HID",
+            "USB COM",
+            "RS-232"
+          ],
+          "warranty": "5 years",
+          "price": {
+            "msrp": "295.00",
+            "dealer": "TBD",
+            "map": "TBD"
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/magellan-900i.jpg",
+            "gallery": []
+          },
+          "tags": ["scanner", "presentation", "2d", "retail"]
+        }
+      ]
+    },
+    {
+      "id": "mobile_printers",
+      "name": "Mobile Printers",
+      "description": "Portable printing solutions for field service and mobile POS",
+      "products": [
+        {
+          "sku": "CUSTOM-ALPHA-3R",
+          "mpn": "Alpha-3R",
+          "name": "Custom America Alpha-3R Mobile Printer",
+          "brand": "Custom America",
+          "category": "Mobile Printers",
+          "description": "Compact 3-inch mobile receipt printer with Bluetooth connectivity. Perfect for field service, delivery, and mobile POS applications.",
+          "specs": {
+            "print_method": "Direct thermal",
+            "print_width": "3\"",
+            "print_speed": "Up to 100mm/sec",
+            "resolution": "203 dpi",
+            "interface": "Bluetooth, USB",
+            "battery": "Rechargeable Li-ion",
+            "dimensions": "4.3\" W x 3.3\" D x 1.6\" H",
+            "weight": "0.5 lbs"
+          },
+          "features": [
+            "Ultra-compact design",
+            "Bluetooth wireless",
+            "iOS and Android compatible",
+            "Drop resistant (4 ft)",
+            "Belt clip included",
+            "Easy paper loading"
+          ],
+          "compatibility": [
+            "iOS",
+            "Android",
+            "Windows Mobile"
+          ],
+          "warranty": "2 years",
+          "price": {
+            "msrp": "395.00",
+            "dealer": "TBD",
+            "map": "TBD"
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/alpha-3r.jpg",
+            "gallery": []
+          },
+          "tags": ["mobile", "bluetooth", "portable", "field-service"]
+        }
+      ]
+    }
+  ],
+  "vendor_info": {
+    "name": "M-S Cash Drawer",
+    "description": "Industry-leading cash drawer manufacturer and POS distributor with 35+ vendor partnerships",
+    "awards": [
+      "12-time RSPA Vendor Award of Excellence Winner (2025)",
+      "Technology Distributor Category Excellence"
+    ],
+    "services": [
+      "Comprehensive technical support",
+      "System integration assistance",
+      "Training and education",
+      "Marketing support for resellers",
+      "Dealer portal access"
+    ],
+    "partner_portal": "https://mscashdrawerus.focuspointsap.com",
+    "isv_partnerships": [
+      "Square",
+      "RPOWER",
+      "OrderCounter",
+      "Pecan POS",
+      "Diner Daddy",
+      "RMH",
+      "CerTek"
+    ],
+    "warranty_policy": "2-5 years depending on product category",
+    "support_phone": "1-800-MS-CASH-1",
+    "support_email": "support@mscashdrawer.com"
+  }
+}

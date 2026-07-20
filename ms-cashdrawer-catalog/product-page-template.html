@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{PRODUCT_NAME}} | M-S Cash Drawer | Performance Supply Depot</title>
+    <meta name="description" content="{{PRODUCT_DESCRIPTION_SHORT}}">
+    <meta name="keywords" content="{{PRODUCT_KEYWORDS}}">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{PRODUCT_NAME}} | Performance Supply Depot">
+    <meta property="og:description" content="{{PRODUCT_DESCRIPTION_SHORT}}">
+    <meta property="og:image" content="{{PRODUCT_IMAGE}}">
+    <meta property="og:url" content="https://psdepot.com/products/{{PRODUCT_SLUG}}">
+    <meta property="og:type" content="product">
+    
+    <!-- Product Schema -->
+    {{PRODUCT_SCHEMA}}
+    
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Performance Supply Depot LLC",
+      "url": "https://psdepot.com",
+      "logo": "https://psdepot.com/assets/images/psdepot-logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-888-881-6834",
+        "contactType": "sales"
+      }
+    }
+    </script>
+    
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://psdepot.com"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Products",
+        "item": "https://psdepot.com/products"
+      },{
+        "@type": "ListItem",
+        "position": 3,
+        "name": "{{CATEGORY_NAME}}",
+        "item": "https://psdepot.com/categories/{{CATEGORY_SLUG}}"
+      },{
+        "@type": "ListItem",
+        "position": 4,
+        "name": "{{PRODUCT_NAME}}"
+      }]
+    }
+    </script>
+    
+    <style>
+        :root {
+            --primary: #003366;
+            --secondary: #ff6600;
+            --accent: #ffd700;
+            --success: #28a745;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --border: #dee2e6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: var(--light);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        .header {
+            background: var(--primary);
+            color: white;
+            padding: 15px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .header-phone {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .header-phone a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 15px 0;
+            font-size: 14px;
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        .breadcrumb span {
+            color: var(--gray);
+            margin: 0 5px;
+        }
+        
+        /* Product Layout */
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .product-container {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+        }
+        
+        /* Product Images */
+        .product-images {
+            position: relative;
+        }
+        
+        .main-image {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .main-image img {
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+        }
+        
+        .image-gallery {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .gallery-thumb {
+            width: 80px;
+            height: 80px;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+        
+        .gallery-thumb:hover,
+        .gallery-thumb.active {
+            border-color: var(--secondary);
+        }
+        
+        .gallery-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        /* Product Info */
+        .product-info h1 {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .product-brand {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .product-brand a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+        
+        .product-sku {
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        .product-sku span {
+            background: var(--light);
+            padding: 3px 10px;
+            border-radius: 3px;
+            margin-right: 10px;
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .stars {
+            color: var(--accent);
+            font-size: 18px;
+        }
+        
+        .rating-count {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .product-price {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        
+        .price-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        
+        .price-value {
+            font-size: 36px;
+            font-weight: bold;
+        }
+        
+        .price-msrp {
+            font-size: 16px;
+            text-decoration: line-through;
+            opacity: 0.7;
+            margin-left: 15px;
+        }
+        
+        .price-savings {
+            font-size: 14px;
+            color: var(--accent);
+            margin-top: 5px;
+        }
+        
+        .availability {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .availability-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        
+        .availability-status.in-stock::before {
+            content: "●";
+            color: var(--success);
+            font-size: 20px;
+        }
+        
+        .availability-status.out-of-stock::before {
+            content: "●";
+            color: #dc3545;
+            font-size: 20px;
+        }
+        
+        .availability-status.pre-order::before {
+            content: "●";
+            color: var(--accent);
+            font-size: 20px;
+        }
+        
+        .shipping-info {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .shipping-info strong {
+            color: var(--success);
+        }
+        
+        /* Action Buttons */
+        .product-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quantity-selector label {
+            font-weight: 500;
+        }
+        
+        .quantity-selector input {
+            width: 70px;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            text-align: center;
+            font-size: 16px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #e55a00;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #002244;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Product Description */
+        .product-description {
+            margin-bottom: 30px;
+        }
+        
+        .product-description h2 {
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+        }
+        
+        .product-description p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        /* Features */
+        .features-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .features-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .features-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        /* Specifications */
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        
+        .specs-table tr:nth-child(even) {
+            background: var(--light);
+        }
+        
+        .specs-table th,
+        .specs-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .specs-table th {
+            width: 30%;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        /* Compatibility */
+        .compatibility-section {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .compatibility-section h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .compatibility-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .compatibility-tag {
+            background: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            border: 1px solid var(--border);
+        }
+        
+        /* Warranty */
+        .warranty-badge {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .warranty-icon {
+            font-size: 40px;
+        }
+        
+        .warranty-text h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .warranty-text p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        /* Vendor Info */
+        .vendor-section {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .vendor-section h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .vendor-section p {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .vendor-awards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .vendor-award {
+            background: var(--accent);
+            color: var(--dark);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0;
+            margin-top: 50px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .footer p {
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+        
+        .footer-phone {
+            font-size: 24px;
+            color: var(--accent);
+            margin: 20px 0;
+        }
+        
+        .footer-phone a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        /* Dealer Notice */
+        .dealer-notice {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .dealer-notice p {
+            margin: 0;
+            font-size: 14px;
+            color: #856404;
+        }
+        
+        /* Full Width Sections */
+        .full-width-section {
+            background: white;
+            padding: 40px;
+            margin-top: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+        }
+        
+        /* Related Products */
+        .related-products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .related-card {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .related-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .related-card-image {
+            height: 150px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .related-card-image img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+        
+        .related-card-info {
+            padding: 15px;
+        }
+        
+        .related-card-info h4 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .related-card-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">Performance<span>Supply</span>Depot</div>
+            <div class="header-phone">Call: <a href="tel:888-881-6834">888-881-6834</a></div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="/">Home</a>
+            <span>/</span>
+            <a href="/products">Products</a>
+            <span>/</span>
+            <a href="/categories/{{CATEGORY_SLUG}}">{{CATEGORY_NAME}}</a>
+            <span>/</span>
+            <span>{{PRODUCT_NAME}}</span>
+        </nav>
+        
+        <div class="dealer-notice">
+            <p>📢 <strong>Authorized Dealer Pricing:</strong> Contact us at 888-881-6834 or email info@psdepot.com for dealer-exclusive pricing. Prices shown are MSRP.</p>
+        </div>
+        
+        <div class="product-container">
+            <div class="product-images">
+                <div class="main-image">
+                    <img src="{{PRODUCT_IMAGE}}" alt="{{PRODUCT_NAME}}" id="mainImage">
+                </div>
+                <div class="image-gallery">
+                    {{GALLERY_IMAGES}}
+                </div>
+            </div>
+            
+            <div class="product-info">
+                <div class="product-brand">
+                    Brand: <a href="/brands/{{BRAND_SLUG}}">{{BRAND_NAME}}</a>
+                </div>
+                <h1>{{PRODUCT_NAME}}</h1>
+                <div class="product-sku">
+                    <span>SKU: {{SKU}}</span>
+                    <span>MPN: {{MPN}}</span>
+                </div>
+                
+                <div class="product-rating">
+                    <div class="stars">{{RATING_STARS}}</div>
+                    <div class="rating-count">({{REVIEW_COUNT}} reviews)</div>
+                </div>
+                
+                <div class="product-price">
+                    <div class="price-label">Your Price</div>
+                    <div>
+                        <span class="price-value">${{PRICE}}</span>
+                        {{#if HAS_MSRP}}
+                        <span class="price-msrp">${{MSRP}}</span>
+                        {{/if}}
+                    </div>
+                    {{#if SAVINGS}}
+                    <div class="price-savings">Save ${{SAVINGS}} ({{SAVINGS_PERCENT}}%)</div>
+                    {{/if}}
+                </div>
+                
+                <div class="availability">
+                    <div class="availability-status {{AVAILABILITY_CLASS}}">
+                        {{AVAILABILITY_TEXT}}
+                    </div>
+                    <div class="shipping-info">
+                        <strong>Free Shipping</strong> on orders over $99
+                    </div>
+                </div>
+                
+                <div class="product-actions">
+                    <div class="quantity-selector">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" id="quantity" name="quantity" value="1" min="1" max="99">
+                    </div>
+                    <button class="btn btn-primary">🛒 Add to Cart</button>
+                    <button class="btn btn-outline">📄 Request Quote</button>
+                    <a href="tel:888-881-6834" class="btn btn-secondary">📞 Call for Dealer Pricing</a>
+                </div>
+                
+                <div class="warranty-badge">
+                    <div class="warranty-icon">🛡️</div>
+                    <div class="warranty-text">
+                        <h3>{{WARRANTY}} Manufacturer Warranty</h3>
+                        <p>Backed by M-S Cash Drawer's award-winning support</p>
+                    </div>
+                </div>
+                
+                <div class="vendor-section">
+                    <h3>About M-S Cash Drawer</h3>
+                    <p>12-time RSPA Vendor Award of Excellence winner. Leading manufacturer of cash drawers and distributor of 35+ POS brands.</p>
+                    <div class="vendor-awards">
+                        <span class="vendor-award">🏆 12x RSPA Winner</span>
+                        <span class="vendor-award">⭐ 35+ Vendors</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="full-width-section">
+            <h2 class="section-title">Product Description</h2>
+            <div class="product-description">
+                {{PRODUCT_DESCRIPTION_FULL}}
+            </div>
+            
+            <h2 class="section-title">Key Features</h2>
+            <ul class="features-list">
+                {{FEATURES_LIST}}
+            </ul>
+            
+            <h2 class="section-title">Technical Specifications</h2>
+            <table class="specs-table">
+                <tbody>
+                    {{SPECIFICATIONS_TABLE}}
+                </tbody>
+            </table>
+            
+            <h2 class="section-title">Compatibility</h2>
+            <div class="compatibility-section">
+                <h3>Compatible With:</h3>
+                <div class="compatibility-tags">
+                    {{COMPATIBILITY_TAGS}}
+                </div>
+            </div>
+        </div>
+        
+        <div class="full-width-section">
+            <h2 class="section-title">Related Products</h2>
+            <div class="related-products">
+                {{RELATED_PRODUCTS}}
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <h3>Performance Supply Depot LLC</h3>
+            <p>Authorized M-S Cash Drawer Dealer</p>
+            <p>California | Serving Nationwide</p>
+            <div class="footer-phone">
+                <a href="tel:888-881-6834">888-881-6834</a>
+            </div>
+            <p><a href="mailto:info@psdepot.com">info@psdepot.com</a></p>
+            <p><a href="https://psdepot.com">psdepot.com</a></p>
+        </div>
+    </footer>
+    
+    <script>
+        // Image gallery functionality
+        document.querySelectorAll('.gallery-thumb').forEach(thumb => {
+            thumb.addEventListener('click', function() {
+                document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById('mainImage').src = this.querySelector('img').src.replace('-thumb', '');
+            });
+        });
+    </script>
+</body>
+</html>
