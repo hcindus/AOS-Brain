@@ -1,0 +1,1667 @@
+{
+  "catalog_metadata": {
+    "vendor": "M-S Cash Drawer",
+    "vendor_url": "https://mscashdrawer.com",
+    "dealer_portal": "https://mscashdrawerus.focuspointsap.com",
+    "last_updated": "2026-07-20",
+    "version": "1.1.0",
+    "currency": "USD",
+    "pricing_formula": "dealer_cost / 0.6 = selling_price",
+    "total_products": 32
+  },
+  "categories": [
+    {
+      "id": "cash_drawers_compact",
+      "name": "Compact Cash Drawers",
+      "description": "13\" compact cash drawers with Smart Cord connectivity - perfect for small spaces",
+      "products": [
+        {
+          "sku": "PSD-CC-330-B2-3B5C",
+          "mpn": "CC-330-B2-3B5C",
+          "name": "M-S Cash Drawer CC-330 13\" 3-Bill/5-Coin Black",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "13\" wide compact cash drawer with 3 bill / 5 coin compartments. Black finish with bottom exit cable and printer interface. Perfect for retail environments with limited counter space.",
+          "specs": {
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "13\" W x 13.4\" D x 4.0\" H",
+            "color": "Black",
+            "compartments": "3 bills / 5 coins",
+            "media_slots": "1",
+            "cable_exit": "Bottom exit",
+            "lock_type": "3-position"
+          },
+          "features": [
+            "Compact 13\" width for limited counter space",
+            "Bottom exit cable for clean installation",
+            "3 bill / 5 coin compartments",
+            "Printer interface included",
+            "Heavy-duty steel construction",
+            "3-position lock (locked, open, manual)",
+            "Media slot for checks and receipts"
+          ],
+          "compatibility": [
+            "Universal POS systems",
+            "Star Micronics printers",
+            "Epson printers",
+            "Bixolon printers"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "dealer_cost": "75.00",
+            "selling_price": "125.00",
+            "msrp": "149.00"
+          },
+          "savings": "24.00",
+          "savings_percent": "16",
+          "stock": {
+            "available": 0,
+            "in_stock": 0,
+            "on_order": 0
+          },
+          "availability": "PreOrder",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cc-330-black.jpg",
+            "gallery": []
+          },
+          "is_featured": true,
+          "tags": [
+            "compact",
+            "13-inch",
+            "3-bill",
+            "black"
+          ]
+        },
+        {
+          "sku": "PSD-CC-330-B2-4B5C",
+          "mpn": "CC-330-B2-4B5C",
+          "name": "M-S Cash Drawer CC-330 13\" 4-Bill/5-Coin Black",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "13\" wide compact cash drawer with 4 bill / 5 coin compartments. Black finish with bottom exit cable and printer interface. Most popular compact drawer with excellent availability.",
+          "specs": {
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "13\" W x 13.4\" D x 4.0\" H",
+            "color": "Black",
+            "compartments": "4 bills / 5 coins",
+            "media_slots": "1",
+            "cable_exit": "Bottom exit",
+            "lock_type": "3-position"
+          },
+          "features": [
+            "Compact 13\" width - most popular size",
+            "4 bill compartments for better organization",
+            "Bottom exit cable for clean installation",
+            "Printer interface included",
+            "Heavy-duty steel construction",
+            "3-position lock",
+            "Media slot for checks"
+          ],
+          "compatibility": [
+            "Universal POS systems",
+            "Star Micronics printers",
+            "Epson printers"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "dealer_cost": "75.00",
+            "selling_price": "125.00",
+            "msrp": "149.00"
+          },
+          "savings": "24.00",
+          "savings_percent": "16",
+          "stock": {
+            "available": 19,
+            "in_stock": 19,
+            "on_order": 35
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cc-330-4b5c.jpg",
+            "gallery": []
+          },
+          "is_featured": true,
+          "is_best_seller": true,
+          "tags": [
+            "compact",
+            "13-inch",
+            "4-bill",
+            "black",
+            "best-seller"
+          ]
+        },
+        {
+          "sku": "PSD-CC-330-W2-4B5C",
+          "mpn": "CC-330-W2-4B5C",
+          "name": "M-S Cash Drawer CC-330 13\" 4-Bill/5-Coin Brilliant White",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "13\" wide compact cash drawer in brilliant white finish. 4 bill / 5 coin compartments with bottom exit cable and printer interface. Cable included.",
+          "specs": {
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "13\" W x 13.4\" D x 4.0\" H",
+            "color": "Brilliant White",
+            "compartments": "4 bills / 5 coins",
+            "media_slots": "1",
+            "cable_exit": "Bottom exit",
+            "includes_cable": "Yes"
+          },
+          "features": [
+            "Brilliant white finish for modern POS",
+            "4 bill / 5 coin compartments",
+            "Cable included",
+            "Bottom exit for clean look",
+            "Printer interface ready",
+            "Compact footprint"
+          ],
+          "compatibility": [
+            "Universal POS systems",
+            "All major receipt printers"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "dealer_cost": "75.00",
+            "selling_price": "125.00",
+            "msrp": "149.00"
+          },
+          "savings": "24.00",
+          "savings_percent": "16",
+          "stock": {
+            "available": 328,
+            "in_stock": 328,
+            "on_order": 0
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cc-330-white.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "compact",
+            "13-inch",
+            "white",
+            "4-bill"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cash_drawers_standard",
+      "name": "Standard Cash Drawers",
+      "description": "16\" standard cash drawers for medium to high-traffic retail environments",
+      "products": [
+        {
+          "sku": "PSD-CC-410-B2-4B8C",
+          "mpn": "CC-410-B2-4B8C",
+          "name": "M-S Cash Drawer CC-410 16\" 4-Bill/8-Coin Black",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "16\" standard cash drawer with 4 bill / 8 coin compartments. Black finish with bottom exit cable and printer interface. Cable included. High coin capacity for busy locations.",
+          "specs": {
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "16\" W x 16.3\" D x 4.3\" H",
+            "color": "Black",
+            "compartments": "4 bills / 8 coins",
+            "media_slots": "1",
+            "cable_exit": "Bottom exit",
+            "includes_cable": "Yes"
+          },
+          "features": [
+            "16\" standard width",
+            "High-capacity 8-coin tray",
+            "4 bill compartments",
+            "Bottom exit cable included",
+            "Printer interface ready",
+            "Durable construction"
+          ],
+          "compatibility": [
+            "Universal POS systems",
+            "All receipt printers"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "dealer_cost": "78.00",
+            "selling_price": "130.00",
+            "msrp": "159.00"
+          },
+          "savings": "29.00",
+          "savings_percent": "18",
+          "stock": {
+            "available": 0,
+            "in_stock": 6,
+            "on_order": 400
+          },
+          "availability": "PreOrder",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cc-410-4b8c.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "standard",
+            "16-inch",
+            "4-bill",
+            "8-coin",
+            "high-capacity"
+          ]
+        },
+        {
+          "sku": "PSD-CC-410-B2-5B5C",
+          "mpn": "CC-410-B2-5B5C",
+          "name": "M-S Cash Drawer CC-410 16\" 5-Bill/5-Coin Black",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "Standard 16\" cash drawer with 5 bill / 5 coin configuration. Black finish with bottom exit cable and printer interface. Most versatile standard drawer.",
+          "specs": {
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "16\" W x 16.3\" D x 4.3\" H",
+            "color": "Black",
+            "compartments": "5 bills / 5 coins",
+            "media_slots": "1",
+            "cable_exit": "Bottom exit",
+            "includes_cable": "Yes"
+          },
+          "features": [
+            "16\" standard size",
+            "5 bill compartments for currency organization",
+            "Standard 5-coin layout",
+            "Bottom exit cable included",
+            "Printer interface",
+            "Perfect balance of size and capacity"
+          ],
+          "compatibility": [
+            "Universal POS systems",
+            "Star Micronics",
+            "Epson",
+            "Citizen"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "dealer_cost": "78.00",
+            "selling_price": "130.00",
+            "msrp": "159.00"
+          },
+          "savings": "29.00",
+          "savings_percent": "18",
+          "stock": {
+            "available": 45,
+            "in_stock": 45,
+            "on_order": 0
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cc-410-5b5c.jpg",
+            "gallery": []
+          },
+          "is_featured": true,
+          "tags": [
+            "standard",
+            "16-inch",
+            "5-bill",
+            "5-coin",
+            "most-popular"
+          ]
+        },
+        {
+          "sku": "PSD-CC-410-B2-5B8C",
+          "mpn": "CC-410-B2-5B8C",
+          "name": "M-S Cash Drawer CC-410 16\" 5-Bill/8-Coin Black",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "16\" standard cash drawer with 5 bill / 8 coin compartments. Maximum capacity configuration for high-volume retail. Black finish with bottom exit cable and printer interface.",
+          "specs": {
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "16\" W x 16.3\" D x 4.3\" H",
+            "color": "Black",
+            "compartments": "5 bills / 8 coins",
+            "media_slots": "1",
+            "cable_exit": "Bottom exit",
+            "includes_cable": "Yes"
+          },
+          "features": [
+            "Maximum capacity 5 bill / 8 coin",
+            "16\" standard size",
+            "High-volume retail ready",
+            "Bottom exit cable included",
+            "Printer interface",
+            "Excellent availability"
+          ],
+          "compatibility": [
+            "Universal POS systems",
+            "All receipt printers"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "dealer_cost": "78.00",
+            "selling_price": "130.00",
+            "msrp": "159.00"
+          },
+          "savings": "29.00",
+          "savings_percent": "18",
+          "stock": {
+            "available": 1220,
+            "in_stock": 1220,
+            "on_order": 5490
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cc-410-5b8c.jpg",
+            "gallery": []
+          },
+          "is_featured": true,
+          "tags": [
+            "standard",
+            "16-inch",
+            "5-bill",
+            "8-coin",
+            "high-volume"
+          ]
+        },
+        {
+          "sku": "PSD-CC-410-BW2-5B8C",
+          "mpn": "CC-410-BW2-5B8C-BB",
+          "name": "M-S Cash Drawer CC-410 16\" 5-Bill/8-Coin Brilliant White",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "16\" standard cash drawer in brilliant white textured finish. Pantone 11-0601TPX. 5 bill / 8 coin configuration. Brown box packaging.",
+          "specs": {
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "16\" W x 16.3\" D x 4.3\" H",
+            "color": "Brilliant White (Pantone 11-0601TPX)",
+            "compartments": "5 bills / 8 coins",
+            "finish": "Textured",
+            "packaging": "Brown Box"
+          },
+          "features": [
+            "Brilliant white textured finish",
+            "Pantone 11-0601TPX color match",
+            "5 bill / 8 coin maximum capacity",
+            "Modern aesthetic for contemporary POS",
+            "Brown box packaging",
+            "Standard 16\" size"
+          ],
+          "compatibility": [
+            "Universal POS systems"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "dealer_cost": "78.00",
+            "selling_price": "130.00",
+            "msrp": "159.00"
+          },
+          "savings": "29.00",
+          "savings_percent": "18",
+          "stock": {
+            "available": 100,
+            "in_stock": 88,
+            "on_order": 30
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cc-410-white.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "standard",
+            "16-inch",
+            "white",
+            "5-bill",
+            "8-coin"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cash_drawers_heavy_duty",
+      "name": "Heavy Duty Cash Drawers",
+      "description": "Large format heavy duty cash drawers for high-traffic retail and restaurants",
+      "products": [
+        {
+          "sku": "PSD-CC-460-B3-5B8C",
+          "mpn": "CC-460-B3-BB",
+          "name": "M-S Cash Drawer CC-460 Heavy Duty 18\" 5-Bill/8-Coin Black",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "Extra heavy duty 18.1\" x 18.3\" x 3.9\" cash drawer with 5 bill / 8 coin configuration. Black finish with dual media slots. Brown box packaging. Built for demanding environments.",
+          "specs": {
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "18.1\" W x 18.3\" D x 3.9\" H",
+            "color": "Black",
+            "compartments": "5 bills / 8 coins",
+            "media_slots": "2",
+            "packaging": "Brown Box",
+            "construction": "Heavy duty"
+          },
+          "features": [
+            "Extra heavy duty construction",
+            "Large 18\" wide format",
+            "Dual media slots",
+            "5 bill / 8 coin high capacity",
+            "Built for high-traffic retail",
+            "Restaurant and bar ready"
+          ],
+          "compatibility": [
+            "Universal POS systems",
+            "High-volume printers"
+          ],
+          "warranty": "5 years",
+          "price": {
+            "dealer_cost": "96.00",
+            "selling_price": "160.00",
+            "msrp": "199.00"
+          },
+          "savings": "39.00",
+          "savings_percent": "20",
+          "stock": {
+            "available": 65,
+            "in_stock": 65,
+            "on_order": 0
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cc-460.jpg",
+            "gallery": []
+          },
+          "is_featured": true,
+          "tags": [
+            "heavy-duty",
+            "18-inch",
+            "5-bill",
+            "8-coin",
+            "dual-media"
+          ]
+        },
+        {
+          "sku": "PSD-CRS-160018",
+          "mpn": "CRS-160018",
+          "name": "CRS Wide Extra Heavy Duty POS Cash Drawer 18\"",
+          "brand": "CRS",
+          "category": "Cash Drawers",
+          "description": "Wide extra heavy duty POS cash drawer. 18\"W x 4-3/8\"H x 16-5/8\"D. Professional-grade construction for demanding commercial environments.",
+          "specs": {
+            "interface": "Printer Interface",
+            "dimensions": "18\" W x 16.625\" D x 4.375\" H",
+            "color": "Black",
+            "construction": "Extra heavy duty",
+            "application": "High-traffic POS"
+          },
+          "features": [
+            "Extra heavy duty construction",
+            "Wide 18\" format",
+            "Professional-grade",
+            "Designed for demanding environments",
+            "Reliable long-term operation"
+          ],
+          "compatibility": [
+            "Universal POS systems"
+          ],
+          "warranty": "5 years",
+          "price": {
+            "dealer_cost": "120.00",
+            "selling_price": "200.00",
+            "msrp": "249.00"
+          },
+          "savings": "49.00",
+          "savings_percent": "20",
+          "stock": {
+            "available": 0,
+            "in_stock": 0,
+            "on_order": 0
+          },
+          "availability": "OutOfStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/crs-160018.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "heavy-duty",
+            "crs",
+            "18-inch",
+            "extra-duty"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cash_drawers_cf_series",
+      "name": "CF Series Cash Drawers",
+      "description": "Premium CF series cash drawers with advanced features and media slots",
+      "products": [
+        {
+          "sku": "PSD-CF-405BX-M-B",
+          "mpn": "CF-405BX-M-B",
+          "name": "M-S Cash Drawer CF-405BX 16\" 5-Bill/5-Coin Black with Media",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "Premium CF-405BX series 16\" cash drawer with media slot. Black finish, 5 bill / 5 coin compartments. Bottom exit cable. High availability, excellent for immediate deployment.",
+          "specs": {
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "16\" W x 16.3\" D x 4.3\" H",
+            "color": "Black",
+            "compartments": "5 bills / 5 coins",
+            "media_slots": "1",
+            "cable_exit": "Bottom exit",
+            "series": "CF-405BX Premium"
+          },
+          "features": [
+            "Premium CF series construction",
+            "Built-in media slot",
+            "5 bill / 5 coin standard",
+            "Bottom exit cable",
+            "Printer interface",
+            "Excellent stock availability"
+          ],
+          "compatibility": [
+            "Universal POS systems",
+            "All receipt printers"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "dealer_cost": "91.00",
+            "selling_price": "151.67",
+            "msrp": "189.00"
+          },
+          "savings": "37.33",
+          "savings_percent": "20",
+          "stock": {
+            "available": 423,
+            "in_stock": 781,
+            "on_order": 2350
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cf-405bx.jpg",
+            "gallery": []
+          },
+          "is_featured": true,
+          "is_best_seller": true,
+          "tags": [
+            "cf-series",
+            "premium",
+            "16-inch",
+            "media-slot",
+            "high-stock"
+          ]
+        },
+        {
+          "sku": "PSD-CF-405BX-M-B-4B8C",
+          "mpn": "CF-405BX-M-B-4B8C",
+          "name": "M-S Cash Drawer CF-405BX 16\" 4-Bill/8-Coin Black with Media",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "CF-405BX series 16\" cash drawer with media slot. 4 bill / 8 coin configuration for high coin capacity. Black finish with bottom exit cable.",
+          "specs": {
+            "interface": "Printer Interface (RJ12)",
+            "dimensions": "16\" W x 16.3\" D x 4.3\" H",
+            "color": "Black",
+            "compartments": "4 bills / 8 coins",
+            "media_slots": "1",
+            "cable_exit": "Bottom exit",
+            "series": "CF-405BX"
+          },
+          "features": [
+            "CF series premium build",
+            "Media slot included",
+            "High-capacity 8-coin tray",
+            "4 bill compartments",
+            "Bottom exit cable",
+            "Great availability"
+          ],
+          "compatibility": [
+            "Universal POS systems"
+          ],
+          "warranty": "3 years",
+          "price": {
+            "dealer_cost": "91.00",
+            "selling_price": "151.67",
+            "msrp": "189.00"
+          },
+          "savings": "37.33",
+          "savings_percent": "20",
+          "stock": {
+            "available": 264,
+            "in_stock": 264,
+            "on_order": 0
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cf-405bx-4b8c.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "cf-series",
+            "16-inch",
+            "4-bill",
+            "8-coin",
+            "media-slot"
+          ]
+        },
+        {
+          "sku": "PSD-CF-460BX-M-B",
+          "mpn": "CF-460BX-M-B",
+          "name": "M-S Cash Drawer CF-460BX 17.3\" Heavy Duty with Media & SS Front",
+          "brand": "M-S Cash Drawer",
+          "category": "Cash Drawers",
+          "description": "Large format CF-460BX 17.3\" x 18.1\" x 4.68\" heavy duty cash drawer with stainless steel front. Media slot, black finish, RJ-female connector. Professional grade for demanding environments.",
+          "specs": {
+            "interface": "Printer Interface (RJ-female)",
+            "dimensions": "17.3\" W x 18.1\" D x 4.68\" H",
+            "color": "Black with SS Front",
+            "compartments": "5 bills / 6 coins + 2",
+            "media_slots": "1",
+            "cable_exit": "Bottom exit",
+            "front": "Stainless Steel",
+            "connector": "RJ-female"
+          },
+          "features": [
+            "Heavy duty CF-460BX series",
+            "Stainless steel front panel",
+            "Large 17.3\" format",
+            "Media slot",
+            "Bottom exit with RJ-female",
+            "Professional grade"
+          ],
+          "compatibility": [
+            "Universal POS systems",
+            "Commercial grade applications"
+          ],
+          "warranty": "5 years",
+          "price": {
+            "dealer_cost": "118.00",
+            "selling_price": "196.67",
+            "msrp": "245.00"
+          },
+          "savings": "48.33",
+          "savings_percent": "20",
+          "stock": {
+            "available": 76,
+            "in_stock": 76,
+            "on_order": 40
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cf-460bx.jpg",
+            "gallery": []
+          },
+          "is_featured": true,
+          "tags": [
+            "cf-series",
+            "heavy-duty",
+            "17-inch",
+            "stainless-steel",
+            "professional"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cas_cash_registers",
+      "name": "CAS Cash Registers",
+      "description": "Professional electronic cash registers from CAS America",
+      "products": [
+        {
+          "sku": "PSD-CAS-SE-C3500MC",
+          "mpn": "CAS-SE-C3500MC",
+          "name": "CAS SE-C3500MC Split Keyboard Cash Register",
+          "brand": "CAS",
+          "category": "Cash Registers",
+          "description": "NCNR SE-C3500MC split keyboard cash register. Professional-grade ECR with advanced features for retail environments.",
+          "specs": {
+            "keyboard": "Split keyboard",
+            "type": "Electronic Cash Register",
+            "condition": "NCNR"
+          },
+          "features": [
+            "Split keyboard design",
+            "Professional grade",
+            "Advanced features"
+          ],
+          "compatibility": [
+            "Standard POS accessories"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "287.00",
+            "selling_price": "478.33",
+            "msrp": "599.00"
+          },
+          "savings": "120.67",
+          "savings_percent": "20",
+          "stock": {
+            "available": 0,
+            "in_stock": 0,
+            "on_order": 0
+          },
+          "availability": "OutOfStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cas-se-c3500mc.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "cas",
+            "cash-register",
+            "split-keyboard"
+          ]
+        },
+        {
+          "sku": "PSD-CAS-SR-S4000MC",
+          "mpn": "CAS-SR-S4000MC",
+          "name": "CAS SR-4000MC Raised Keyboard/Dual Station Printer",
+          "brand": "CAS",
+          "category": "Cash Registers",
+          "description": "NCNR SR-4000MC raised keyboard cash register with dual station printer. Professional ECR solution.",
+          "specs": {
+            "keyboard": "Raised keyboard",
+            "printer": "Dual station",
+            "type": "Electronic Cash Register"
+          },
+          "features": [
+            "Raised keyboard",
+            "Dual station printer",
+            "Professional grade"
+          ],
+          "compatibility": [
+            "Standard POS accessories"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "324.00",
+            "selling_price": "540.00",
+            "msrp": "675.00"
+          },
+          "savings": "135.00",
+          "savings_percent": "20",
+          "stock": {
+            "available": 0,
+            "in_stock": 0,
+            "on_order": 0
+          },
+          "availability": "OutOfStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cas-sr-4000mc.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "cas",
+            "cash-register",
+            "raised-keyboard",
+            "dual-printer"
+          ]
+        },
+        {
+          "sku": "PSD-CAS-TE-3000SB",
+          "mpn": "CAS-TE-3000SB-CB",
+          "name": "CAS TE-3000 ECR Stroke Keyboard Multi-Line LCD",
+          "brand": "CAS",
+          "category": "Cash Registers",
+          "description": "NCNR TE-3000 ECR with stroke keyboard and Multi-Line LCD Display. Cash drawer sold separately.",
+          "specs": {
+            "keyboard": "Stroke keyboard",
+            "display": "Multi-Line LCD",
+            "cash_drawer": "Sold separately"
+          },
+          "features": [
+            "Stroke keyboard",
+            "Multi-Line LCD display",
+            "Compact design"
+          ],
+          "compatibility": [
+            "Standard cash drawers"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "525.00",
+            "selling_price": "875.00",
+            "msrp": "1095.00"
+          },
+          "savings": "220.00",
+          "savings_percent": "20",
+          "stock": {
+            "available": 0,
+            "in_stock": 0,
+            "on_order": 0
+          },
+          "availability": "OutOfStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cas-te-3000.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "cas",
+            "cash-register",
+            "stroke-keyboard",
+            "lcd-display"
+          ]
+        },
+        {
+          "sku": "PSD-CAS-TE-4500FB",
+          "mpn": "CAS-TE-4500FB-CB3616",
+          "name": "CAS TE-4500FB-CB with Mid Size Cash Drawer DL-3616",
+          "brand": "CAS",
+          "category": "Cash Registers",
+          "description": "NCNR TE-4500FB-CB with Mid Size Cash Drawer DL-3616 in a separate box. Complete ECR solution.",
+          "specs": {
+            "keyboard": "Flat keyboard",
+            "includes": "DL-3616 cash drawer",
+            "packaging": "Separate boxes"
+          },
+          "features": [
+            "Flat keyboard",
+            "Includes DL-3616 drawer",
+            "Complete package"
+          ],
+          "compatibility": [
+            "Standard peripherals"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "485.00",
+            "selling_price": "808.33",
+            "msrp": "1010.00"
+          },
+          "savings": "201.67",
+          "savings_percent": "20",
+          "stock": {
+            "available": 0,
+            "in_stock": 0,
+            "on_order": 0
+          },
+          "availability": "OutOfStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cas-te-4500fb.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "cas",
+            "cash-register",
+            "flat-keyboard",
+            "complete-package"
+          ]
+        },
+        {
+          "sku": "PSD-CAS-TK-3200C",
+          "mpn": "CAS-TK-3200C",
+          "name": "CAS TK-3200C Flat Keyboard Cash Register",
+          "brand": "CAS",
+          "category": "Cash Registers",
+          "description": "NCNR TK-3200C flat keyboard cash register. Reliable ECR for small to medium businesses.",
+          "specs": {
+            "keyboard": "Flat keyboard",
+            "type": "Electronic Cash Register"
+          },
+          "features": [
+            "Flat keyboard design",
+            "Reliable operation",
+            "Compact footprint"
+          ],
+          "compatibility": [
+            "Standard POS accessories"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "389.00",
+            "selling_price": "648.33",
+            "msrp": "810.00"
+          },
+          "savings": "161.67",
+          "savings_percent": "20",
+          "stock": {
+            "available": 0,
+            "in_stock": 0,
+            "on_order": 0
+          },
+          "availability": "OutOfStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/cas-tk-3200c.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "cas",
+            "cash-register",
+            "flat-keyboard"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crs_sam4s_registers",
+      "name": "CRS SAM4s Cash Registers",
+      "description": "Professional electronic cash registers from CRS/SAM4s",
+      "products": [
+        {
+          "sku": "PSD-CRS-ER-180U",
+          "mpn": "CRS-ER-180U",
+          "name": "SAM4s ER-180U Open Line Cash Register",
+          "brand": "SAM4s",
+          "category": "Cash Registers",
+          "description": "SAM4s ER-180U BLACK OPEN LINE CASH REGISTER. Thermal printer, raised keyboard. Compact and reliable.",
+          "specs": {
+            "printer": "Thermal printer",
+            "keyboard": "Raised keyboard",
+            "color": "Black"
+          },
+          "features": [
+            "Thermal printer",
+            "Raised keyboard",
+            "Compact design",
+            "Open line ECR"
+          ],
+          "compatibility": [
+            "Standard POS accessories"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "159.00",
+            "selling_price": "265.00",
+            "msrp": "330.00"
+          },
+          "savings": "65.00",
+          "savings_percent": "20",
+          "stock": {
+            "available": 0,
+            "in_stock": 0,
+            "on_order": 6
+          },
+          "availability": "PreOrder",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/sam4s-er-180u.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "sam4s",
+            "crs",
+            "cash-register",
+            "thermal",
+            "raised-keyboard"
+          ]
+        },
+        {
+          "sku": "PSD-CRS-ER-260EJ",
+          "mpn": "CRS-ER-260EJ",
+          "name": "SAM4s ER-260EJ Raised Keyboard Electronic Journal",
+          "brand": "SAM4s",
+          "category": "Cash Registers",
+          "description": "Open line raised keyboard ECR with electronic journal. 3 Serial & 1 USB port. Black color.",
+          "specs": {
+            "keyboard": "Raised keyboard",
+            "journal": "Electronic journal",
+            "ports": "3 Serial, 1 USB",
+            "color": "Black"
+          },
+          "features": [
+            "Electronic journal",
+            "Raised keyboard",
+            "Multiple ports",
+            "Open line"
+          ],
+          "compatibility": [
+            "Standard peripherals"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "349.00",
+            "selling_price": "581.67",
+            "msrp": "725.00"
+          },
+          "savings": "143.33",
+          "savings_percent": "20",
+          "stock": {
+            "available": 0,
+            "in_stock": 0,
+            "on_order": 0
+          },
+          "availability": "OutOfStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/sam4s-er-260ej.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "sam4s",
+            "crs",
+            "cash-register",
+            "electronic-journal"
+          ]
+        },
+        {
+          "sku": "PSD-CRS-ER-265EJ",
+          "mpn": "CRS-ER-265EJ",
+          "name": "SAM4s ER-265EJ Flat Keyboard Electronic Journal",
+          "brand": "SAM4s",
+          "category": "Cash Registers",
+          "description": "Open line flat keyboard ECR with electronic journal. 2 Serial & 1 USB port. Black color.",
+          "specs": {
+            "keyboard": "Flat keyboard",
+            "journal": "Electronic journal",
+            "ports": "2 Serial, 1 USB",
+            "color": "Black"
+          },
+          "features": [
+            "Electronic journal",
+            "Flat keyboard",
+            "USB connectivity",
+            "Open line"
+          ],
+          "compatibility": [
+            "Standard peripherals"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "349.00",
+            "selling_price": "581.67",
+            "msrp": "725.00"
+          },
+          "savings": "143.33",
+          "savings_percent": "20",
+          "stock": {
+            "available": 0,
+            "in_stock": 0,
+            "on_order": 0
+          },
+          "availability": "OutOfStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/sam4s-er-265ej.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "sam4s",
+            "crs",
+            "cash-register",
+            "flat-keyboard"
+          ]
+        },
+        {
+          "sku": "PSD-CRS-ER-915",
+          "mpn": "CRS-ER-915",
+          "name": "SAM4s ER-915 Raised Keyboard Receipt & Journal Printers",
+          "brand": "SAM4s",
+          "category": "Cash Registers",
+          "description": "CRS Sam4s ER-915 Raised keyboard ECR with Receipt & Journal Printers. Black. MCR optional.",
+          "specs": {
+            "keyboard": "Raised keyboard",
+            "printers": "Receipt & Journal",
+            "color": "Black",
+            "mcr": "Optional"
+          },
+          "features": [
+            "Receipt printer",
+            "Journal printer",
+            "Raised keyboard",
+            "MCR optional"
+          ],
+          "compatibility": [
+            "MCR accessories"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "479.00",
+            "selling_price": "798.33",
+            "msrp": "995.00"
+          },
+          "savings": "196.67",
+          "savings_percent": "20",
+          "stock": {
+            "available": 6,
+            "in_stock": 6,
+            "on_order": 5
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/sam4s-er-915.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "sam4s",
+            "crs",
+            "cash-register",
+            "dual-printer",
+            "mcr-ready"
+          ]
+        },
+        {
+          "sku": "PSD-CRS-ER-920",
+          "mpn": "CRS-ER-920",
+          "name": "SAM4s ER-920 Single-Station Flat Keyboard Cash Register",
+          "brand": "SAM4s",
+          "category": "Cash Registers",
+          "description": "Sam4s ER-920 open line Single-Station printer/Flat Keyboard/2-Line Display cash register.",
+          "specs": {
+            "keyboard": "Flat keyboard",
+            "printer": "Single-Station",
+            "display": "2-Line Display"
+          },
+          "features": [
+            "Single-station printer",
+            "Flat keyboard",
+            "2-Line display",
+            "Open line"
+          ],
+          "compatibility": [
+            "Standard peripherals"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "459.00",
+            "selling_price": "765.00",
+            "msrp": "955.00"
+          },
+          "savings": "190.00",
+          "savings_percent": "20",
+          "stock": {
+            "available": 0,
+            "in_stock": 0,
+            "on_order": 3
+          },
+          "availability": "PreOrder",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/sam4s-er-920.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "sam4s",
+            "crs",
+            "cash-register",
+            "flat-keyboard"
+          ]
+        },
+        {
+          "sku": "PSD-CRS-ER-925",
+          "mpn": "CRS-ER-925",
+          "name": "SAM4s ER-925 Single-Station Raised Keyboard Cash Register",
+          "brand": "SAM4s",
+          "category": "Cash Registers",
+          "description": "Sam4s ER-925 open line Single-Station printer/Raised Keyboard/2-Line Display cash register.",
+          "specs": {
+            "keyboard": "Raised keyboard",
+            "printer": "Single-Station",
+            "display": "2-Line Display"
+          },
+          "features": [
+            "Single-station printer",
+            "Raised keyboard",
+            "2-Line display",
+            "Open line"
+          ],
+          "compatibility": [
+            "Standard peripherals"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "479.00",
+            "selling_price": "798.33",
+            "msrp": "995.00"
+          },
+          "savings": "196.67",
+          "savings_percent": "20",
+          "stock": {
+            "available": 1,
+            "in_stock": 2,
+            "on_order": 0
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/sam4s-er-925.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "sam4s",
+            "crs",
+            "cash-register",
+            "raised-keyboard"
+          ]
+        },
+        {
+          "sku": "PSD-CRS-ER-940",
+          "mpn": "CRS-ER-940",
+          "name": "SAM4s ER-940 Dual-Station Flat Keyboard Cash Register",
+          "brand": "SAM4s",
+          "category": "Cash Registers",
+          "description": "Sam4s ER-940 open line Dual-Station printer/Flat Keyboard/2-Line Display. Professional ECR.",
+          "specs": {
+            "keyboard": "Flat keyboard",
+            "printer": "Dual-Station",
+            "display": "2-Line Display"
+          },
+          "features": [
+            "Dual-station printer",
+            "Flat keyboard",
+            "2-Line display",
+            "Professional grade"
+          ],
+          "compatibility": [
+            "Standard peripherals"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "499.00",
+            "selling_price": "831.67",
+            "msrp": "1039.00"
+          },
+          "savings": "207.33",
+          "savings_percent": "20",
+          "stock": {
+            "available": 9,
+            "in_stock": 9,
+            "on_order": 1
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/sam4s-er-940.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "sam4s",
+            "crs",
+            "cash-register",
+            "dual-station",
+            "flat-keyboard"
+          ]
+        },
+        {
+          "sku": "PSD-CRS-ER-945",
+          "mpn": "CRS-ER-945",
+          "name": "SAM4s ER-945 Dual-Station Raised Keyboard Cash Register",
+          "brand": "SAM4s",
+          "category": "Cash Registers",
+          "description": "Sam4s ER-945 open line Dual-Station printer/Raised Keyboard/2-Line Display cash register.",
+          "specs": {
+            "keyboard": "Raised keyboard",
+            "printer": "Dual-Station",
+            "display": "2-Line Display"
+          },
+          "features": [
+            "Dual-station printer",
+            "Raised keyboard",
+            "2-Line display",
+            "Professional grade"
+          ],
+          "compatibility": [
+            "Standard peripherals"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "509.00",
+            "selling_price": "848.33",
+            "msrp": "1060.00"
+          },
+          "savings": "211.67",
+          "savings_percent": "20",
+          "stock": {
+            "available": 25,
+            "in_stock": 25,
+            "on_order": 0
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/sam4s-er-945.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "sam4s",
+            "crs",
+            "cash-register",
+            "dual-station",
+            "raised-keyboard",
+            "best-seller"
+          ]
+        },
+        {
+          "sku": "PSD-CRS-NR-510",
+          "mpn": "CRS-NR-510",
+          "name": "SAM4s NR-510 Flat Keyboard Commercial Grade ECR",
+          "brand": "SAM4s",
+          "category": "Cash Registers",
+          "description": "Sam4s NR-510B ECR - Flat Keyboard - Traditional Format Commercial Grade ECRs. Reliable business solution.",
+          "specs": {
+            "keyboard": "Flat keyboard",
+            "format": "Traditional",
+            "grade": "Commercial"
+          },
+          "features": [
+            "Flat keyboard",
+            "Traditional format",
+            "Commercial grade",
+            "Reliable"
+          ],
+          "compatibility": [
+            "Standard peripherals"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "399.00",
+            "selling_price": "665.00",
+            "msrp": "830.00"
+          },
+          "savings": "165.00",
+          "savings_percent": "20",
+          "stock": {
+            "available": 0,
+            "in_stock": 0,
+            "on_order": 0
+          },
+          "availability": "OutOfStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/sam4s-nr-510.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "sam4s",
+            "crs",
+            "cash-register",
+            "flat-keyboard",
+            "commercial"
+          ]
+        },
+        {
+          "sku": "PSD-CRS-NR-510R",
+          "mpn": "CRS-NR-510R",
+          "name": "SAM4s NR-510R Raised Keyboard Commercial Grade ECR",
+          "brand": "SAM4s",
+          "category": "Cash Registers",
+          "description": "Sam4s NR-510R ECR - Raised Keyboard - Traditional Format Commercial Grade ECRs.",
+          "specs": {
+            "keyboard": "Raised keyboard",
+            "format": "Traditional",
+            "grade": "Commercial"
+          },
+          "features": [
+            "Raised keyboard",
+            "Traditional format",
+            "Commercial grade"
+          ],
+          "compatibility": [
+            "Standard peripherals"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "389.00",
+            "selling_price": "648.33",
+            "msrp": "810.00"
+          },
+          "savings": "161.67",
+          "savings_percent": "20",
+          "stock": {
+            "available": 0,
+            "in_stock": 0,
+            "on_order": 0
+          },
+          "availability": "OutOfStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/sam4s-nr-510r.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "sam4s",
+            "crs",
+            "cash-register",
+            "raised-keyboard"
+          ]
+        },
+        {
+          "sku": "PSD-CRS-SAP-630-FT",
+          "mpn": "CRS-SAP-630-FT",
+          "name": "SAM4s SAP-630-FT Flat Keyboard Android Terminal",
+          "brand": "SAM4s",
+          "category": "POS Terminals",
+          "description": "Sam4s SAP-630-FT flat keyboard Android based Terminal. Needs software. CRS Dealer line required.",
+          "specs": {
+            "keyboard": "Flat keyboard",
+            "os": "Android",
+            "software": "Sold separately",
+            "requirements": "CRS Dealer line required"
+          },
+          "features": [
+            "Android based",
+            "Flat keyboard",
+            "Touchscreen",
+            "Modern POS"
+          ],
+          "compatibility": [
+            "Android POS software"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "799.00",
+            "selling_price": "1331.67",
+            "msrp": "1665.00"
+          },
+          "savings": "333.33",
+          "savings_percent": "20",
+          "stock": {
+            "available": 0,
+            "in_stock": 0,
+            "on_order": 0
+          },
+          "availability": "OutOfStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/sam4s-sap-630-ft.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "sam4s",
+            "crs",
+            "pos-terminal",
+            "android",
+            "flat-keyboard"
+          ]
+        },
+        {
+          "sku": "PSD-CRS-SAP-630-RT",
+          "mpn": "CRS-SAP-630-RT",
+          "name": "SAM4s SAP-630-RT Raised Keyboard Android Terminal",
+          "brand": "SAM4s",
+          "category": "POS Terminals",
+          "description": "Sam4s SAP-630-RT raised keyboard Android based Terminal. Needs software. CRS Dealer line required.",
+          "specs": {
+            "keyboard": "Raised keyboard",
+            "os": "Android",
+            "software": "Sold separately",
+            "requirements": "CRS Dealer line required"
+          },
+          "features": [
+            "Android based",
+            "Raised keyboard",
+            "Touchscreen",
+            "Modern POS"
+          ],
+          "compatibility": [
+            "Android POS software"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "799.00",
+            "selling_price": "1331.67",
+            "msrp": "1665.00"
+          },
+          "savings": "333.33",
+          "savings_percent": "20",
+          "stock": {
+            "available": 5,
+            "in_stock": 7,
+            "on_order": 2
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/sam4s-sap-630-rt.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "sam4s",
+            "crs",
+            "pos-terminal",
+            "android",
+            "raised-keyboard"
+          ]
+        },
+        {
+          "sku": "PSD-CRS-SPS-320",
+          "mpn": "CRS-SPS-320",
+          "name": "SAM4s SPS-320 Flat Spill-Resistant ECR",
+          "brand": "SAM4s",
+          "category": "Cash Registers",
+          "description": "CRS Sam4s SPS-320 Flat Spill-Resistant, thermal receipt printer black ECR. Restaurant ready.",
+          "specs": {
+            "keyboard": "Flat spill-resistant",
+            "printer": "Thermal receipt",
+            "color": "Black"
+          },
+          "features": [
+            "Spill-resistant",
+            "Thermal printer",
+            "Flat keyboard",
+            "Restaurant ready"
+          ],
+          "compatibility": [
+            "Restaurant peripherals"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "509.00",
+            "selling_price": "848.33",
+            "msrp": "1060.00"
+          },
+          "savings": "211.67",
+          "savings_percent": "20",
+          "stock": {
+            "available": 2,
+            "in_stock": 2,
+            "on_order": 0
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/sam4s-sps-320.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "sam4s",
+            "crs",
+            "cash-register",
+            "spill-resistant",
+            "restaurant"
+          ]
+        },
+        {
+          "sku": "PSD-CRS-SPS-340",
+          "mpn": "CRS-SPS-340",
+          "name": "SAM4s SPS-340 Flat Spill-Resistant Dual Printer ECR",
+          "brand": "SAM4s",
+          "category": "Cash Registers",
+          "description": "CRS Sam4s SPS-340 Flat Spill-Resistant keyboard, Receipt & Journal Printers black ECR.",
+          "specs": {
+            "keyboard": "Flat spill-resistant",
+            "printers": "Receipt & Journal",
+            "color": "Black"
+          },
+          "features": [
+            "Spill-resistant",
+            "Dual printers",
+            "Flat keyboard",
+            "Restaurant grade"
+          ],
+          "compatibility": [
+            "Restaurant peripherals"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "529.00",
+            "selling_price": "881.67",
+            "msrp": "1100.00"
+          },
+          "savings": "218.33",
+          "savings_percent": "20",
+          "stock": {
+            "available": 6,
+            "in_stock": 6,
+            "on_order": 1
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/sam4s-sps-340.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "sam4s",
+            "crs",
+            "cash-register",
+            "spill-resistant",
+            "dual-printer"
+          ]
+        },
+        {
+          "sku": "PSD-CRS-SPS-345",
+          "mpn": "CRS-SPS-345",
+          "name": "SAM4s SPS-345 Raised Spill-Resistant Dual Printer ECR",
+          "brand": "SAM4s",
+          "category": "Cash Registers",
+          "description": "CRS Sam4s SPS-345 Raised keyboard, Receipt & Journal Printers black ECR.",
+          "specs": {
+            "keyboard": "Raised spill-resistant",
+            "printers": "Receipt & Journal",
+            "color": "Black"
+          },
+          "features": [
+            "Spill-resistant",
+            "Dual printers",
+            "Raised keyboard",
+            "Restaurant grade"
+          ],
+          "compatibility": [
+            "Restaurant peripherals"
+          ],
+          "warranty": "1 year",
+          "price": {
+            "dealer_cost": "539.00",
+            "selling_price": "898.33",
+            "msrp": "1120.00"
+          },
+          "savings": "221.67",
+          "savings_percent": "20",
+          "stock": {
+            "available": 4,
+            "in_stock": 3,
+            "on_order": 7
+          },
+          "availability": "InStock",
+          "images": {
+            "primary": "https://mscashdrawer.com/assets/images/sam4s-sps-345.jpg",
+            "gallery": []
+          },
+          "tags": [
+            "sam4s",
+            "crs",
+            "cash-register",
+            "spill-resistant",
+            "raised-keyboard",
+            "dual-printer"
+          ]
+        }
+      ]
+    }
+  ],
+  "vendor_info": {
+    "name": "M-S Cash Drawer",
+    "description": "Industry-leading cash drawer manufacturer and POS distributor with 35+ vendor partnerships",
+    "awards": [
+      "12-time RSPA Vendor Award of Excellence Winner (2025)",
+      "Technology Distributor Category Excellence"
+    ],
+    "services": [
+      "Comprehensive technical support",
+      "System integration assistance",
+      "Training and education",
+      "Marketing support for resellers",
+      "Dealer portal access"
+    ],
+    "partner_portal": "https://mscashdrawerus.focuspointsap.com",
+    "isv_partnerships": [
+      "Square",
+      "RPOWER",
+      "OrderCounter",
+      "Pecan POS",
+      "Diner Daddy",
+      "RMH",
+      "CerTek"
+    ],
+    "warranty_policy": "2-5 years depending on product category",
+    "support_phone": "1-800-MS-CASH-1",
+    "support_email": "support@mscashdrawer.com"
+  }
+}
