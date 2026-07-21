@@ -56,7 +56,33 @@ systemctl status aos-mission-control
 
 ---
 
-*Last Updated: 2026-04-07*
+## Capton Pouring Systems Pages
+**Created:** 2026-07-21
+**Status:** DEPLOYED
+
+### Category Page
+- **URL:** `https://psdepot.com/products/capton-pouring-systems.html`
+- **Description:** Main landing page for Capton beverage portion control systems
+
+### Product Pages Created
+| Product | SKU | Price | URL |
+|---------|-----|-------|-----|
+| Capton 1 oz Bottle Top Pourer | CAP-100-1OZ | $24.99 | `/products/capton-1oz-pourer.html` |
+| Capton 1.5 oz Bottle Top Pourer | CAP-150-15OZ | $24.99 | `/products/capton-1.5oz-pourer.html` |
+| Capton 2 oz Bottle Top Pourer | CAP-200-2OZ | $26.99 | `/products/capton-2oz-pourer.html` |
+| Capton Wine Pourer (5 oz) | CAP-WINE-5OZ | $29.99 | `/products/capton-wine-pourer.html` |
+| Capton Variety Pack (12-Pack) | CAP-VARY-12PK | $279.99 | `/products/capton-variety-pack.html` |
+| Capton Pourer Cleaning Kit | CAP-CLEAN-KIT | $34.99 | `/products/capton-cleaning-kit.html` |
+
+### Features
+- Schema.org Product markup on all pages
+- Responsive design matching existing PSD template
+- SEO optimized with proper meta tags
+- Linked from `/products/index.html` in categories
+
+---
+
+*Last Updated: 2026-07-21
 
 ---
 
