@@ -71,7 +71,7 @@ Replaces 6+ tools with one intuitive platform:
 
 ### Proven Demand
 
-📊 **60,000+ Realtor Prospects** in database
+📊 **69,000+ Realtor Prospects** in database
 - 1,000 new prospects added daily
 - Top states: CA, TX, FL, NY, AZ, CO, OH, NC
 - 40% Priority A markets (major metros)
