@@ -7,7 +7,7 @@
       "script": "/root/.openclaw/workspace/datadepot/scrapers/alaska_business_scraper.py",
       "enabled": true,
       "schedule": "0 */6 * * *",
-      "last_run": "2026-07-21T22:30:14.629279",
+      "last_run": "2026-07-22T04:30:55.105699",
       "status": "idle",
       "failures": 0
     },
@@ -15,7 +15,7 @@
       "script": "/root/.openclaw/workspace/datadepot/scrapers/multi_state_business_scraper.py",
       "enabled": true,
       "schedule": "0 */12 * * *",
-      "last_run": "2026-07-21T16:08:16.697837",
+      "last_run": "2026-07-22T04:08:39.390942",
       "status": "idle",
       "failures": 0
     }
