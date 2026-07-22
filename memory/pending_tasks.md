@@ -62,3 +62,60 @@ https://secure-send.acmtech.com/note/5U567H575R4G6Z5g5e6T487Y6Q5C6O4i815O626J5i4
 ---
 
 **Daily Check:** Review inbox for credentials from Captain
+
+---
+
+## PS Depot Website Widget + Cal.com Integration
+**Created:** 2026-07-22  
+**Status:** DEPLOYED - Awaiting Captain Action
+
+### What's Done
+✅ Smart widget with brain-connected responses deployed to `/static/widget/psdepot-widget.js`
+✅ Agent routing (Pulp/Jane/Clippy-42) based on intent
+✅ Cal.com webhook endpoint at `/api/webhooks/calcom`
+✅ Inline booking embed in widget chat
+✅ Lead capture to `/var/www/psdepot.com/data/leads/`
+
+### Action Required
+| Task | Status |
+|------|--------|
+| Add widget embed code to psdepot.com | **PENDING** |
+| Configure Cal.com webhook URL | **PENDING** |
+| Set Cal.com booking URL in widget config | **PENDING** |
+
+### Widget Embed Code
+```html
+<script>
+  window.PSDEPOT_WIDGET_API = 'https://mc.myl0nr0s.cloud:8080';
+  window.PSDEPOT_WIDGET_POSITION = 'bottom-right';
+  window.PSDEPOT_WIDGET_GREETING = 'Hi! Need help with POS supplies?';
+  window.PSDEPOT_CALCOM_URL = 'https://cal.com/psdepot/EVENT-URL';  // <-- UPDATE THIS
+</script>
+<script src="https://mc.myl0nr0s.cloud:8080/static/widget/psdepot-widget.js" async></script>
+```
+
+### Cal.com Webhook Setup
+**URL:** `https://mc.myl0nr0s.cloud:8080/api/webhooks/calcom`
+**Events:** `BOOKING_CREATED`, `BOOKING_CANCELLED`, `BOOKING_RESCHEDULED`
+
+---
+
+## PS Depot Sitemap Update
+**Created:** 2026-07-22  
+**Status:** ✅ COMPLETE
+
+### Updated
+- 302 URLs total
+- Added all Capton products (7 pages)
+- Added CAS/SAM4S cash registers (30+ pages)
+- Added OrionStar Lucki robot page
+- Added PF-230 Phenol-Free Thermal Paper page
+
+### Files
+- **Sitemap:** `/var/www/psdepot.com/sitemap.xml`
+- **Robots:** `/var/www/psdepot.com/robots.txt`
+
+### Next Step
+Submit to Google Search Console and Bing Webmaster Tools for indexing
+
+**Daily Check:** Review inbox for credentials from Captain
