@@ -4,7 +4,7 @@ DepotChaos Web Interface - FastAPI Backend
 Serves database content to web frontend
 """
 
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, Request, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
@@ -1800,6 +1800,304 @@ async def get_recent_emails(limit: int = Query(20, ge=1, le=100)):
             'cancelled_today': len([a for a in activities if a['type'] == 'email_cancelled' and a.get('timestamp', '').startswith(datetime.now().strftime('%Y-%m-%d'))])
         }
     }
+
+# ===== CAL.COM INTEGRATION ENDPOINTS =====
+
+import os
+from typing import Dict, Any, Optional
+import httpx
+
+CALCOM_API_KEY = os.getenv("CALCOM_API_KEY", "")
+CALCOM_API_URL = "https://api.cal.com/v1"
+
+class CalComBookingRequest(BaseModel):
+    eventTypeId: int
+    start: str
+    end: str
+    name: str
+    email: str
+    notes: Optional[str] = ""
+    guests: Optional[list] = []
+    timeZone: Optional[str] = "America/Los_Angeles"
+
+class CalComAvailabilityRequest(BaseModel):
+    eventTypeId: int
+    dateFrom: str
+    dateTo: str
+
+@app.get("/api/cal/health")
+async def cal_health():
+    """Check Cal.com integration status"""
+    return {
+        "service": "cal.com",
+        "configured": bool(CALCOM_API_KEY),
+        "api_key_present": bool(CALCOM_API_KEY),
+        "embed_mode": not bool(CALCOM_API_KEY)  # Use embed if no API key
+    }
+
+@app.post("/api/cal/book")
+async def cal_book_booking(request: CalComBookingRequest):
+    """Create a new Cal.com booking"""
+    if not CALCOM_API_KEY:
+        return JSONResponse(
+            status_code=501,
+            content={"error": "Cal.com API key not configured. Use embed mode instead."}
+        )
+    
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                f"{CALCOM_API_URL}/bookings",
+                headers={
+                    "Authorization": f"Bearer {CALCOM_API_KEY}",
+                    "Content-Type": "application/json"
+                },
+                json=request.dict()
+            )
+            return response.json()
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"error": f"Booking failed: {str(e)}"}
+        )
+
+@app.post("/api/cal/availability")
+async def cal_get_availability(request: CalComAvailabilityRequest):
+    """Get available time slots for an event type"""
+    if not CALCOM_API_KEY:
+        return JSONResponse(
+            status_code=501,
+            content={"error": "Cal.com API key not configured"}
+        )
+    
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(
+                f"{CALCOM_API_URL}/availability",
+                headers={"Authorization": f"Bearer {CALCOM_API_KEY}"},
+                params={
+                    "eventTypeId": request.eventTypeId,
+                    "dateFrom": request.dateFrom,
+                    "dateTo": request.dateTo
+                }
+            )
+            return response.json()
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"error": f"Availability check failed: {str(e)}"}
+        )
+
+@app.post("/api/cal/webhook")
+async def cal_webhook(request: Request):
+    """Receive Cal.com webhook events"""
+    payload = await request.json()
+    
+    # Log the webhook for processing
+    webhook_log = DATADEPOT_DIR / 'logs' / 'cal_webhooks.json'
+    webhook_log.parent.mkdir(parents=True, exist_ok=True)
+    
+    webhooks = []
+    if webhook_log.exists():
+        with open(webhook_log, 'r') as f:
+            webhooks = json.load(f)
+    
+    webhooks.append({
+        "received_at": datetime.now().isoformat(),
+        "payload": payload
+    })
+    
+    # Keep last 100 webhooks
+    webhooks = webhooks[-100:]
+    
+    with open(webhook_log, 'w') as f:
+        json.dump(webhooks, f, indent=2)
+    
+    # Process based on event type
+    event_type = payload.get("type", "unknown")
+    
+    if event_type == "BOOKING_CREATED":
+        # Could trigger notifications, CRM updates, etc.
+        pass
+    elif event_type == "BOOKING_CANCELLED":
+        pass
+    elif event_type == "BOOKING_RESCHEDULED":
+        pass
+    
+    return {"status": "received", "type": event_type}
+
+@app.get("/api/cal/bookings")
+async def cal_get_bookings(
+    status: Optional[str] = Query(None, description="Filter by status: upcoming, past, cancelled, unconfirmed"),
+    limit: int = Query(20, ge=1, le=100)
+):
+    """Get recent bookings"""
+    if not CALCOM_API_KEY:
+        return JSONResponse(
+            status_code=501,
+            content={"error": "Cal.com API key not configured"}
+        )
+    
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(
+                f"{CALCOM_API_URL}/bookings",
+                headers={"Authorization": f"Bearer {CALCOM_API_KEY}"},
+                params={"status": status, "take": limit}
+            )
+            return response.json()
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"error": f"Failed to fetch bookings: {str(e)}"}
+        )
+
+
+# ===== KNOWLEDGE BASE ENDPOINTS =====
+
+KB_DB_PATH = "/root/.openclaw/workspace/data/psdepot_kb.db"
+
+class KBSearchRequest(BaseModel):
+    query: str
+    limit: Optional[int] = 5
+
+@app.get("/api/kb/health")
+async def kb_health():
+    """Check knowledge base status"""
+    kb_exists = os.path.exists(KB_DB_PATH)
+    
+    stats = {"exists": kb_exists}
+    
+    if kb_exists:
+        try:
+            conn = sqlite3.connect(KB_DB_PATH)
+            cursor = conn.cursor()
+            
+            cursor.execute("SELECT COUNT(*) FROM documents")
+            doc_count = cursor.fetchone()[0]
+            
+            cursor.execute("SELECT COUNT(*) FROM chunks")
+            chunk_count = cursor.fetchone()[0]
+            
+            cursor.execute("SELECT MAX(crawled_at) FROM documents")
+            last_crawl = cursor.fetchone()[0]
+            
+            conn.close()
+            
+            stats.update({
+                "documents": doc_count,
+                "chunks": chunk_count,
+                "last_crawl": last_crawl
+            })
+        except Exception as e:
+            stats["error"] = str(e)
+    
+    return stats
+
+@app.post("/api/kb/search")
+async def kb_search(request: KBSearchRequest):
+    """Search the knowledge base"""
+    if not os.path.exists(KB_DB_PATH):
+        return JSONResponse(
+            status_code=404,
+            content={"error": "Knowledge base not initialized. Run auto_crawl_rag.py first."}
+        )
+    
+    try:
+        conn = sqlite3.connect(KB_DB_PATH)
+        cursor = conn.cursor()
+        
+        query_lower = request.query.lower()
+        
+        # Simple keyword search (can be enhanced with embeddings)
+        cursor.execute("""
+            SELECT c.chunk_text, d.title, d.url
+            FROM chunks c
+            JOIN documents d ON c.doc_id = d.id
+            WHERE LOWER(c.chunk_text) LIKE ?
+            ORDER BY LENGTH(c.chunk_text) DESC
+            LIMIT ?
+        """, (f'%{query_lower}%', request.limit))
+        
+        results = []
+        for row in cursor.fetchall():
+            results.append({
+                "text": row[0],
+                "title": row[1],
+                "url": row[2]
+            })
+        
+        conn.close()
+        
+        return {
+            "query": request.query,
+            "results": results,
+            "count": len(results)
+        }
+        
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"error": f"Search failed: {str(e)}"}
+        )
+
+@app.post("/api/kb/refresh")
+async def kb_refresh(background_tasks: BackgroundTasks):
+    """Trigger a knowledge base refresh (async)"""
+    def run_crawl():
+        import subprocess
+        subprocess.run([
+            "python3", 
+            "/root/.openclaw/workspace/scripts/auto_crawl_rag.py",
+            "crawl"
+        ], capture_output=True)
+    
+    background_tasks.add_task(run_crawl)
+    
+    return {
+        "status": "started",
+        "message": "Knowledge base refresh initiated in background"
+    }
+
+@app.get("/api/kb/documents")
+async def kb_documents(limit: int = Query(50, ge=1, le=200)):
+    """List all documents in the knowledge base"""
+    if not os.path.exists(KB_DB_PATH):
+        return {"documents": [], "count": 0}
+    
+    try:
+        conn = sqlite3.connect(KB_DB_PATH)
+        cursor = conn.cursor()
+        
+        cursor.execute("""
+            SELECT url, title, crawled_at, last_updated
+            FROM documents
+            ORDER BY last_updated DESC
+            LIMIT ?
+        """, (limit,))
+        
+        documents = []
+        for row in cursor.fetchall():
+            documents.append({
+                "url": row[0],
+                "title": row[1],
+                "crawled_at": row[2],
+                "last_updated": row[3]
+            })
+        
+        conn.close()
+        
+        return {
+            "documents": documents,
+            "count": len(documents)
+        }
+        
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"error": str(e)}
+        )
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8082, log_level="info")
