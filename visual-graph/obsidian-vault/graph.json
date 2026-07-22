@@ -1,0 +1,1323 @@
+{
+  "nodes": [
+    {
+      "id": "sys_brain_v45",
+      "label": "Brain v4.5",
+      "type": "core"
+    },
+    {
+      "id": "sys_bhsi_v4",
+      "label": "BHSI v4",
+      "type": "core"
+    },
+    {
+      "id": "sys_mission_control",
+      "label": "Mission Control",
+      "type": "interface"
+    },
+    {
+      "id": "sys_thyroid",
+      "label": "Thyroid v1.2",
+      "type": "organ"
+    },
+    {
+      "id": "sys_liver",
+      "label": "Liver v1.0",
+      "type": "organ"
+    },
+    {
+      "id": "sys_kidneys",
+      "label": "Kidneys v1.0",
+      "type": "organ"
+    },
+    {
+      "id": "sys_lungs",
+      "label": "Lungs v1.0",
+      "type": "organ"
+    },
+    {
+      "id": "agent_patricia-factory",
+      "label": "Patricia Factory",
+      "type": "agent"
+    },
+    {
+      "id": "agent_forge-factory",
+      "label": "Forge Factory",
+      "type": "agent"
+    },
+    {
+      "id": "agent_chelios-security",
+      "label": "Chelios Security",
+      "type": "agent"
+    },
+    {
+      "id": "agent_jordan-office",
+      "label": "Jordan Office",
+      "type": "agent"
+    },
+    {
+      "id": "agent_aurora-tasks",
+      "label": "Aurora Tasks",
+      "type": "agent"
+    },
+    {
+      "id": "int_ollama",
+      "label": "Ollama/Mortimer",
+      "type": "integration"
+    },
+    {
+      "id": "int_sendgrid",
+      "label": "SendGrid",
+      "type": "integration"
+    },
+    {
+      "id": "int_hostinger",
+      "label": "Hostinger",
+      "type": "integration"
+    },
+    {
+      "id": "skill_depotchaos",
+      "label": "Depotchaos",
+      "type": "skill",
+      "file": "skills/depotchaos/SKILL.md"
+    },
+    {
+      "id": "skill_browser-agent",
+      "label": "Browser Agent",
+      "type": "skill",
+      "file": "skills/browser-agent/SKILL.md"
+    },
+    {
+      "id": "skill_cmp",
+      "label": "Cmp",
+      "type": "skill",
+      "file": "skills/cmp/SKILL.md"
+    },
+    {
+      "id": "skill_agent-browser-clawdbot",
+      "label": "Agent Browser Clawdbot",
+      "type": "skill",
+      "file": "skills/agent-browser-clawdbot/SKILL.md"
+    },
+    {
+      "id": "skill_email-sender",
+      "label": "Email Sender",
+      "type": "skill",
+      "file": "skills/email-sender/SKILL.md"
+    },
+    {
+      "id": "skill_game-creator",
+      "label": "Game Creator",
+      "type": "skill",
+      "file": "skills/game-creator/SKILL.md"
+    },
+    {
+      "id": "skill_browser-automation",
+      "label": "Browser Automation",
+      "type": "skill",
+      "file": "skills/browser-automation/SKILL.md"
+    },
+    {
+      "id": "skill_skill-builder",
+      "label": "Skill Builder",
+      "type": "skill",
+      "file": "skills/skill-builder/SKILL.md"
+    },
+    {
+      "id": "skill_audit",
+      "label": "Audit",
+      "type": "skill",
+      "file": "skills/audit/SKILL.md"
+    },
+    {
+      "id": "mem_ai_agent_implementation_plan",
+      "label": "Memory ai_agent_implementation_plan",
+      "type": "memory",
+      "date": "ai_agent_implementation_plan",
+      "file": "memory/ai_agent_implementation_plan.md"
+    },
+    {
+      "id": "mem_2026-04-15",
+      "label": "Memory 2026-04-15",
+      "type": "memory",
+      "date": "2026-04-15",
+      "file": "memory/2026-04-15.md"
+    },
+    {
+      "id": "mem_2026-06-30_midnight_push",
+      "label": "Memory 2026-06-30_midnight_push",
+      "type": "memory",
+      "date": "2026-06-30_midnight_push",
+      "file": "memory/2026-06-30_midnight_push.md"
+    },
+    {
+      "id": "mem_2026-04-19",
+      "label": "Memory 2026-04-19",
+      "type": "memory",
+      "date": "2026-04-19",
+      "file": "memory/2026-04-19.md"
+    },
+    {
+      "id": "mem_2026-07-15",
+      "label": "Memory 2026-07-15",
+      "type": "memory",
+      "date": "2026-07-15",
+      "file": "memory/2026-07-15.md"
+    },
+    {
+      "id": "mem_element-analysis-2026-03-31",
+      "label": "Memory element-analysis-2026-03-31",
+      "type": "memory",
+      "date": "element-analysis-2026-03-31",
+      "file": "memory/element-analysis-2026-03-31.md"
+    },
+    {
+      "id": "mem_2026-06-13",
+      "label": "Memory 2026-06-13",
+      "type": "memory",
+      "date": "2026-06-13",
+      "file": "memory/2026-06-13.md"
+    },
+    {
+      "id": "mem_2026-04-14",
+      "label": "Memory 2026-04-14",
+      "type": "memory",
+      "date": "2026-04-14",
+      "file": "memory/2026-04-14.md"
+    },
+    {
+      "id": "mem_2026-07-22_midnight_push",
+      "label": "Memory 2026-07-22_midnight_push",
+      "type": "memory",
+      "date": "2026-07-22_midnight_push",
+      "file": "memory/2026-07-22_midnight_push.md"
+    },
+    {
+      "id": "mem_2026-03-30",
+      "label": "Memory 2026-03-30",
+      "type": "memory",
+      "date": "2026-03-30",
+      "file": "memory/2026-03-30.md"
+    },
+    {
+      "id": "mem_2026-07-16_evening_push",
+      "label": "Memory 2026-07-16_evening_push",
+      "type": "memory",
+      "date": "2026-07-16_evening_push",
+      "file": "memory/2026-07-16_evening_push.md"
+    },
+    {
+      "id": "mem_PIPELINE_POST_MORTEM_2026-06-02",
+      "label": "Memory PIPELINE_POST_MORTEM_2026-06-02",
+      "type": "memory",
+      "date": "PIPELINE_POST_MORTEM_2026-06-02",
+      "file": "memory/PIPELINE_POST_MORTEM_2026-06-02.md"
+    },
+    {
+      "id": "mem_monthly_audit_2026-03",
+      "label": "Memory monthly_audit_2026-03",
+      "type": "memory",
+      "date": "monthly_audit_2026-03",
+      "file": "memory/monthly_audit_2026-03.md"
+    },
+    {
+      "id": "mem_2026-06-15",
+      "label": "Memory 2026-06-15",
+      "type": "memory",
+      "date": "2026-06-15",
+      "file": "memory/2026-06-15.md"
+    },
+    {
+      "id": "mem_2026-06-24",
+      "label": "Memory 2026-06-24",
+      "type": "memory",
+      "date": "2026-06-24",
+      "file": "memory/2026-06-24.md"
+    },
+    {
+      "id": "mem_2026-04-07",
+      "label": "Memory 2026-04-07",
+      "type": "memory",
+      "date": "2026-04-07",
+      "file": "memory/2026-04-07.md"
+    },
+    {
+      "id": "mem_ICP_CHEATSHEET",
+      "label": "Memory ICP_CHEATSHEET",
+      "type": "memory",
+      "date": "ICP_CHEATSHEET",
+      "file": "memory/ICP_CHEATSHEET.md"
+    },
+    {
+      "id": "mem_2026-03-27",
+      "label": "Memory 2026-03-27",
+      "type": "memory",
+      "date": "2026-03-27",
+      "file": "memory/2026-03-27.md"
+    },
+    {
+      "id": "mem_2026-04-09",
+      "label": "Memory 2026-04-09",
+      "type": "memory",
+      "date": "2026-04-09",
+      "file": "memory/2026-04-09.md"
+    },
+    {
+      "id": "mem_2026-07-14",
+      "label": "Memory 2026-07-14",
+      "type": "memory",
+      "date": "2026-07-14",
+      "file": "memory/2026-07-14.md"
+    },
+    {
+      "id": "mem_2026-03-15",
+      "label": "Memory 2026-03-15",
+      "type": "memory",
+      "date": "2026-03-15",
+      "file": "memory/2026-03-15.md"
+    },
+    {
+      "id": "mem_PHASE1_STATUS_REPORT",
+      "label": "Memory PHASE1_STATUS_REPORT",
+      "type": "memory",
+      "date": "PHASE1_STATUS_REPORT",
+      "file": "memory/PHASE1_STATUS_REPORT.md"
+    },
+    {
+      "id": "mem_2026-03-28",
+      "label": "Memory 2026-03-28",
+      "type": "memory",
+      "date": "2026-03-28",
+      "file": "memory/2026-03-28.md"
+    },
+    {
+      "id": "mem_ICP_COMPLETE_GUIDE",
+      "label": "Memory ICP_COMPLETE_GUIDE",
+      "type": "memory",
+      "date": "ICP_COMPLETE_GUIDE",
+      "file": "memory/ICP_COMPLETE_GUIDE.md"
+    },
+    {
+      "id": "mem_2026-04-21",
+      "label": "Memory 2026-04-21",
+      "type": "memory",
+      "date": "2026-04-21",
+      "file": "memory/2026-04-21.md"
+    },
+    {
+      "id": "mem_2026-04-08",
+      "label": "Memory 2026-04-08",
+      "type": "memory",
+      "date": "2026-04-08",
+      "file": "memory/2026-04-08.md"
+    },
+    {
+      "id": "mem_2026-07-14_morning_push",
+      "label": "Memory 2026-07-14_morning_push",
+      "type": "memory",
+      "date": "2026-07-14_morning_push",
+      "file": "memory/2026-07-14_morning_push.md"
+    },
+    {
+      "id": "mem_2026-05-19",
+      "label": "Memory 2026-05-19",
+      "type": "memory",
+      "date": "2026-05-19",
+      "file": "memory/2026-05-19.md"
+    },
+    {
+      "id": "mem_2026-03-17",
+      "label": "Memory 2026-03-17",
+      "type": "memory",
+      "date": "2026-03-17",
+      "file": "memory/2026-03-17.md"
+    },
+    {
+      "id": "mem_2026-05-13",
+      "label": "Memory 2026-05-13",
+      "type": "memory",
+      "date": "2026-05-13",
+      "file": "memory/2026-05-13.md"
+    },
+    {
+      "id": "mem_2026-06-10",
+      "label": "Memory 2026-06-10",
+      "type": "memory",
+      "date": "2026-06-10",
+      "file": "memory/2026-06-10.md"
+    },
+    {
+      "id": "mem_2026-04-02",
+      "label": "Memory 2026-04-02",
+      "type": "memory",
+      "date": "2026-04-02",
+      "file": "memory/2026-04-02.md"
+    },
+    {
+      "id": "mem_2026-07-08",
+      "label": "Memory 2026-07-08",
+      "type": "memory",
+      "date": "2026-07-08",
+      "file": "memory/2026-07-08.md"
+    },
+    {
+      "id": "mem_2026-07-02_evening_push",
+      "label": "Memory 2026-07-02_evening_push",
+      "type": "memory",
+      "date": "2026-07-02_evening_push",
+      "file": "memory/2026-07-02_evening_push.md"
+    },
+    {
+      "id": "mem_2026-06-27",
+      "label": "Memory 2026-06-27",
+      "type": "memory",
+      "date": "2026-06-27",
+      "file": "memory/2026-06-27.md"
+    },
+    {
+      "id": "mem_2026-06-25",
+      "label": "Memory 2026-06-25",
+      "type": "memory",
+      "date": "2026-06-25",
+      "file": "memory/2026-06-25.md"
+    },
+    {
+      "id": "mem_2026-04-29",
+      "label": "Memory 2026-04-29",
+      "type": "memory",
+      "date": "2026-04-29",
+      "file": "memory/2026-04-29.md"
+    },
+    {
+      "id": "mem_2026-06-05",
+      "label": "Memory 2026-06-05",
+      "type": "memory",
+      "date": "2026-06-05",
+      "file": "memory/2026-06-05.md"
+    },
+    {
+      "id": "mem_2026-04-28",
+      "label": "Memory 2026-04-28",
+      "type": "memory",
+      "date": "2026-04-28",
+      "file": "memory/2026-04-28.md"
+    },
+    {
+      "id": "mem_2026-04-27",
+      "label": "Memory 2026-04-27",
+      "type": "memory",
+      "date": "2026-04-27",
+      "file": "memory/2026-04-27.md"
+    },
+    {
+      "id": "mem_2026-03-31_brain_stall_alert",
+      "label": "Memory 2026-03-31_brain_stall_alert",
+      "type": "memory",
+      "date": "2026-03-31_brain_stall_alert",
+      "file": "memory/2026-03-31_brain_stall_alert.md"
+    },
+    {
+      "id": "mem_2026-06-29_evening_push",
+      "label": "Memory 2026-06-29_evening_push",
+      "type": "memory",
+      "date": "2026-06-29_evening_push",
+      "file": "memory/2026-06-29_evening_push.md"
+    },
+    {
+      "id": "mem_2026-06-11",
+      "label": "Memory 2026-06-11",
+      "type": "memory",
+      "date": "2026-06-11",
+      "file": "memory/2026-06-11.md"
+    },
+    {
+      "id": "mem_2026-03-31-icp-integration-guide",
+      "label": "Memory 2026-03-31-icp-integration-guide",
+      "type": "memory",
+      "date": "2026-03-31-icp-integration-guide",
+      "file": "memory/2026-03-31-icp-integration-guide.md"
+    },
+    {
+      "id": "mem_2026-04-02-email-processing",
+      "label": "Memory 2026-04-02-email-processing",
+      "type": "memory",
+      "date": "2026-04-02-email-processing",
+      "file": "memory/2026-04-02-email-processing.md"
+    },
+    {
+      "id": "mem_2026-06-06",
+      "label": "Memory 2026-06-06",
+      "type": "memory",
+      "date": "2026-06-06",
+      "file": "memory/2026-06-06.md"
+    },
+    {
+      "id": "mem_CRYPTONIO_ICP_PHASE1",
+      "label": "Memory CRYPTONIO_ICP_PHASE1",
+      "type": "memory",
+      "date": "CRYPTONIO_ICP_PHASE1",
+      "file": "memory/CRYPTONIO_ICP_PHASE1.md"
+    },
+    {
+      "id": "mem_PIPELINE_ISSUE_REPORT_2026-06-02",
+      "label": "Memory PIPELINE_ISSUE_REPORT_2026-06-02",
+      "type": "memory",
+      "date": "PIPELINE_ISSUE_REPORT_2026-06-02",
+      "file": "memory/PIPELINE_ISSUE_REPORT_2026-06-02.md"
+    },
+    {
+      "id": "mem_pending_tasks",
+      "label": "Memory pending_tasks",
+      "type": "memory",
+      "date": "pending_tasks",
+      "file": "memory/pending_tasks.md"
+    },
+    {
+      "id": "mem_daily_email_check_procedure",
+      "label": "Memory daily_email_check_procedure",
+      "type": "memory",
+      "date": "daily_email_check_procedure",
+      "file": "memory/daily_email_check_procedure.md"
+    },
+    {
+      "id": "mem_factory-queue-2026-03-31",
+      "label": "Memory factory-queue-2026-03-31",
+      "type": "memory",
+      "date": "factory-queue-2026-03-31",
+      "file": "memory/factory-queue-2026-03-31.md"
+    },
+    {
+      "id": "mem_2026-03-31",
+      "label": "Memory 2026-03-31",
+      "type": "memory",
+      "date": "2026-03-31",
+      "file": "memory/2026-03-31.md"
+    },
+    {
+      "id": "mem_2026-04-30",
+      "label": "Memory 2026-04-30",
+      "type": "memory",
+      "date": "2026-04-30",
+      "file": "memory/2026-04-30.md"
+    },
+    {
+      "id": "mem_2026-06-29_morning_push",
+      "label": "Memory 2026-06-29_morning_push",
+      "type": "memory",
+      "date": "2026-06-29_morning_push",
+      "file": "memory/2026-06-29_morning_push.md"
+    },
+    {
+      "id": "mem_2026-04-17",
+      "label": "Memory 2026-04-17",
+      "type": "memory",
+      "date": "2026-04-17",
+      "file": "memory/2026-04-17.md"
+    },
+    {
+      "id": "mem_2026-06-28",
+      "label": "Memory 2026-06-28",
+      "type": "memory",
+      "date": "2026-06-28",
+      "file": "memory/2026-06-28.md"
+    },
+    {
+      "id": "mem_2026-06-16",
+      "label": "Memory 2026-06-16",
+      "type": "memory",
+      "date": "2026-06-16",
+      "file": "memory/2026-06-16.md"
+    },
+    {
+      "id": "mem_2026-04-04",
+      "label": "Memory 2026-04-04",
+      "type": "memory",
+      "date": "2026-04-04",
+      "file": "memory/2026-04-04.md"
+    },
+    {
+      "id": "mem_2026-04-22",
+      "label": "Memory 2026-04-22",
+      "type": "memory",
+      "date": "2026-04-22",
+      "file": "memory/2026-04-22.md"
+    },
+    {
+      "id": "mem_2026-04-06",
+      "label": "Memory 2026-04-06",
+      "type": "memory",
+      "date": "2026-04-06",
+      "file": "memory/2026-04-06.md"
+    },
+    {
+      "id": "mem_2026-03-16",
+      "label": "Memory 2026-03-16",
+      "type": "memory",
+      "date": "2026-03-16",
+      "file": "memory/2026-03-16.md"
+    },
+    {
+      "id": "mem_2026-06-30_evening_push",
+      "label": "Memory 2026-06-30_evening_push",
+      "type": "memory",
+      "date": "2026-06-30_evening_push",
+      "file": "memory/2026-06-30_evening_push.md"
+    },
+    {
+      "id": "mem_2026-06-29_email_processing",
+      "label": "Memory 2026-06-29_email_processing",
+      "type": "memory",
+      "date": "2026-06-29_email_processing",
+      "file": "memory/2026-06-29_email_processing.md"
+    },
+    {
+      "id": "mem_2026-04-10-APK-iOS-SEARCH-RESULTS",
+      "label": "Memory 2026-04-10-APK-iOS-SEARCH-RESULTS",
+      "type": "memory",
+      "date": "2026-04-10-APK-iOS-SEARCH-RESULTS",
+      "file": "memory/2026-04-10-APK-iOS-SEARCH-RESULTS.md"
+    },
+    {
+      "id": "mem_exec_team_openclaw_optimization_2026",
+      "label": "Memory exec_team_openclaw_optimization_2026",
+      "type": "memory",
+      "date": "exec_team_openclaw_optimization_2026",
+      "file": "memory/exec_team_openclaw_optimization_2026.md"
+    },
+    {
+      "id": "mem_2026-07-21",
+      "label": "Memory 2026-07-21",
+      "type": "memory",
+      "date": "2026-07-21",
+      "file": "memory/2026-07-21.md"
+    },
+    {
+      "id": "mem_2026-04-05",
+      "label": "Memory 2026-04-05",
+      "type": "memory",
+      "date": "2026-04-05",
+      "file": "memory/2026-04-05.md"
+    },
+    {
+      "id": "mem_2026-07-11",
+      "label": "Memory 2026-07-11",
+      "type": "memory",
+      "date": "2026-07-11",
+      "file": "memory/2026-07-11.md"
+    },
+    {
+      "id": "mem_2026-06-04",
+      "label": "Memory 2026-06-04",
+      "type": "memory",
+      "date": "2026-06-04",
+      "file": "memory/2026-06-04.md"
+    },
+    {
+      "id": "mem_2026-06-26_evening_push",
+      "label": "Memory 2026-06-26_evening_push",
+      "type": "memory",
+      "date": "2026-06-26_evening_push",
+      "file": "memory/2026-06-26_evening_push.md"
+    },
+    {
+      "id": "mem_2026-03-29",
+      "label": "Memory 2026-03-29",
+      "type": "memory",
+      "date": "2026-03-29",
+      "file": "memory/2026-03-29.md"
+    },
+    {
+      "id": "mem_2026-05-11",
+      "label": "Memory 2026-05-11",
+      "type": "memory",
+      "date": "2026-05-11",
+      "file": "memory/2026-05-11.md"
+    },
+    {
+      "id": "mem_2026-03-18",
+      "label": "Memory 2026-03-18",
+      "type": "memory",
+      "date": "2026-03-18",
+      "file": "memory/2026-03-18.md"
+    },
+    {
+      "id": "mem_DARK_FACTORY_STATUS_REPORT_2026-06-02",
+      "label": "Memory DARK_FACTORY_STATUS_REPORT_2026-06-02",
+      "type": "memory",
+      "date": "DARK_FACTORY_STATUS_REPORT_2026-06-02",
+      "file": "memory/DARK_FACTORY_STATUS_REPORT_2026-06-02.md"
+    },
+    {
+      "id": "mem_monthly_audit_2026-04",
+      "label": "Memory monthly_audit_2026-04",
+      "type": "memory",
+      "date": "monthly_audit_2026-04",
+      "file": "memory/monthly_audit_2026-04.md"
+    },
+    {
+      "id": "mem_factory-queue-updated-2026-06-01",
+      "label": "Memory factory-queue-updated-2026-06-01",
+      "type": "memory",
+      "date": "factory-queue-updated-2026-06-01",
+      "file": "memory/factory-queue-updated-2026-06-01.md"
+    }
+  ],
+  "edges": [
+    {
+      "source": "sys_bhsi_v4",
+      "target": "sys_brain_v45",
+      "type": "feeds"
+    },
+    {
+      "source": "sys_liver",
+      "target": "sys_brain_v45",
+      "type": "filters"
+    },
+    {
+      "source": "sys_brain_v45",
+      "target": "sys_kidneys",
+      "type": "drains"
+    },
+    {
+      "source": "sys_lungs",
+      "target": "sys_brain_v45",
+      "type": "oxygenates"
+    },
+    {
+      "source": "sys_thyroid",
+      "target": "sys_brain_v45",
+      "type": "regulates"
+    },
+    {
+      "source": "agent_patricia-factory",
+      "target": "sys_mission_control",
+      "type": "uses"
+    },
+    {
+      "source": "agent_forge-factory",
+      "target": "sys_mission_control",
+      "type": "uses"
+    },
+    {
+      "source": "agent_chelios-security",
+      "target": "sys_mission_control",
+      "type": "uses"
+    },
+    {
+      "source": "agent_jordan-office",
+      "target": "sys_mission_control",
+      "type": "uses"
+    },
+    {
+      "source": "agent_aurora-tasks",
+      "target": "sys_mission_control",
+      "type": "uses"
+    },
+    {
+      "source": "sys_brain_v45",
+      "target": "int_ollama",
+      "type": "connects"
+    },
+    {
+      "source": "sys_brain_v45",
+      "target": "int_sendgrid",
+      "type": "connects"
+    },
+    {
+      "source": "sys_brain_v45",
+      "target": "int_hostinger",
+      "type": "connects"
+    },
+    {
+      "source": "mem_ai_agent_implementation_plan",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-15",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-15",
+      "target": "sys_mission_control",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-15",
+      "target": "sys_liver",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-30_midnight_push",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-19",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-19",
+      "target": "sys_bhsi",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-19",
+      "target": "sys_mission_control",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-19",
+      "target": "sys_thyroid",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-19",
+      "target": "sys_liver",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-19",
+      "target": "sys_kidneys",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-19",
+      "target": "sys_lungs",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-07-15",
+      "target": "sys_liver",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_element-analysis-2026-03-31",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_element-analysis-2026-03-31",
+      "target": "sys_liver",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-13",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-07-22_midnight_push",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-03-30",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-07-16_evening_push",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_PIPELINE_POST_MORTEM_2026-06-02",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_monthly_audit_2026-03",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-15",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-15",
+      "target": "sys_mission_control",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-15",
+      "target": "sys_liver",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-15",
+      "target": "sys_kidneys",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-07",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-07",
+      "target": "sys_mission_control",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-07",
+      "target": "sys_thyroid",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-07",
+      "target": "sys_liver",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-07",
+      "target": "sys_kidneys",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-03-27",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-09",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-09",
+      "target": "sys_mission_control",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-09",
+      "target": "sys_thyroid",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-07-14",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-07-14",
+      "target": "sys_mission_control",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-03-15",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-03-15",
+      "target": "sys_liver",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_PHASE1_STATUS_REPORT",
+      "target": "sys_liver",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-21",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-21",
+      "target": "sys_mission_control",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-08",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-08",
+      "target": "sys_mission_control",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-08",
+      "target": "sys_thyroid",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-08",
+      "target": "sys_liver",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-08",
+      "target": "sys_kidneys",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-08",
+      "target": "sys_lungs",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-07-14_morning_push",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-05-19",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-03-17",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-10",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-02",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-02",
+      "target": "sys_bhsi",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-02",
+      "target": "sys_mission_control",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-07-02_evening_push",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-27",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-25",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-29",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-29",
+      "target": "sys_bhsi",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-29",
+      "target": "sys_mission_control",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-05",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-28",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-28",
+      "target": "sys_bhsi",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-28",
+      "target": "sys_mission_control",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-27",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-27",
+      "target": "sys_bhsi",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-27",
+      "target": "sys_mission_control",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-03-31_brain_stall_alert",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-29_evening_push",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-11",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-11",
+      "target": "sys_liver",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-06",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_factory-queue-2026-03-31",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-03-31",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-29_morning_push",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-17",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-17",
+      "target": "sys_mission_control",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-17",
+      "target": "sys_thyroid",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-17",
+      "target": "sys_liver",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-17",
+      "target": "sys_kidneys",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-17",
+      "target": "sys_lungs",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-28",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-16",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-04",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-04",
+      "target": "sys_mission_control",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-22",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-22",
+      "target": "sys_bhsi",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-22",
+      "target": "sys_mission_control",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-22",
+      "target": "sys_thyroid",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-22",
+      "target": "sys_liver",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-22",
+      "target": "sys_kidneys",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-06",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-06",
+      "target": "sys_liver",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-06",
+      "target": "sys_kidneys",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-03-16",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-30_evening_push",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-10-APK-iOS-SEARCH-RESULTS",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_exec_team_openclaw_optimization_2026",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_exec_team_openclaw_optimization_2026",
+      "target": "sys_bhsi",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_exec_team_openclaw_optimization_2026",
+      "target": "sys_mission_control",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-07-21",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-07-21",
+      "target": "sys_mission_control",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-05",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-05",
+      "target": "sys_mission_control",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-05",
+      "target": "sys_thyroid",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-05",
+      "target": "sys_liver",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-04-05",
+      "target": "sys_kidneys",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-07-11",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-04",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-06-26_evening_push",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-03-29",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_2026-03-18",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_monthly_audit_2026-04",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_monthly_audit_2026-04",
+      "target": "sys_bhsi",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_factory-queue-updated-2026-06-01",
+      "target": "sys_brain",
+      "type": "mentions"
+    },
+    {
+      "source": "mem_factory-queue-updated-2026-06-01",
+      "target": "sys_liver",
+      "type": "mentions"
+    }
+  ],
+  "generated": "2026-07-22T05:38:10.337488",
+  "stats": {
+    "total_nodes": 100,
+    "total_edges": 129,
+    "categories": {
+      "core": 2,
+      "interface": 1,
+      "organ": 4,
+      "skills": 9
+    }
+  }
+}
