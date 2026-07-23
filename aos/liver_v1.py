@@ -11,9 +11,12 @@ Ternary States:
 
 import time
 import re
-from dataclasses import dataclass
-from typing import List, Tuple, Optional
+import json
+import os
+from dataclasses import dataclass, asdict
+from typing import List, Tuple, Optional, Dict, Any
 from enum import Enum, auto
+from datetime import datetime
 
 
 class LiverState(Enum):
@@ -79,6 +82,36 @@ class BloodSample:
         return min(1.0, density / 5)  # Normalize
 
 
+class CurriculumItem:
+    """
+    Feedback-to-Curriculum: Priority curriculum from waste
+    
+    Represents a lesson derived from Kidneys waste detection
+    that should be prioritized in the next Brain tick.
+    """
+    def __init__(self, content: str, source: str = "waste_loop",
+                 priority_boost: bool = True, importance: float = 0.8,
+                 error_category: str = "general", waste_event_id: str = None):
+        self.content = content
+        self.source = source
+        self.priority_boost = priority_boost
+        self.importance = importance
+        self.error_category = error_category
+        self.waste_event_id = waste_event_id
+        self.timestamp = time.time()
+    
+    def to_dict(self) -> dict:
+        return {
+            "content": self.content,
+            "source": self.source,
+            "priority_boost": self.priority_boost,
+            "importance": self.importance,
+            "error_category": self.error_category,
+            "waste_event_id": self.waste_event_id,
+            "timestamp": self.timestamp
+        }
+
+
 class AOSLiverV1:
     """
     Ternary Liver - Filters incoming data before it reaches the brain
@@ -87,26 +120,44 @@ class AOSLiverV1:
     - CLEAN: Pure signal flows to brain immediately
     - PURIFY: Mixed signal gets filtered, enhanced, then passed
     - TOXIC: Garbage is neutralized and stored as bile (waste log)
+    
+    NEW v1.1: Priority Curriculum Routing
+    - Waste-derived curriculum gets HIGH priority
+    - Skips normal queue processing
+    - Direct route to Brain immediate processing
     """
+    
+    # Priority levels
+    PRIORITY_NORMAL = "NORMAL"
+    PRIORITY_HIGH = "HIGH"
+    PRIORITY_CRITICAL = "CRITICAL"
     
     def __init__(self, 
                  toxic_threshold: float = 0.7,
                  purify_threshold: float = 0.3,
-                 bile_capacity: int = 1000):
+                 bile_capacity: int = 1000,
+                 priority_queue_enabled: bool = True):
         
         self.toxic_threshold = toxic_threshold    # Above this = TOXIC
         self.purify_threshold = purify_threshold  # Above this = PURIFY
         self.bile_capacity = bile_capacity        # Waste storage
+        self.priority_queue_enabled = priority_queue_enabled
         
         self.state = LiverState.CLEAN
         self.bile = []  # Waste log (like bile storage)
         self.filtered_count = 0
         self.toxic_count = 0
         
-        print(f"[Liver v1.0] Initialized - ternary filtration")
+        # NEW v1.1: Priority curriculum queue
+        self.priority_queue = []  # HIGH priority items (waste-derived)
+        self.priority_queue_max = 100
+        
+        print(f"[Liver v1.1] Initialized - ternary filtration")
         print(f"  CLEAN (<{purify_threshold}) → Pass through")
         print(f"  PURIFY ({purify_threshold}-{toxic_threshold}) → Filter & enhance")
         print(f"  TOXIC (>{toxic_threshold}) → Neutralize & discard")
+        if priority_queue_enabled:
+            print(f"  ⚡ PRIORITY ROUTING: Waste-derived curriculum → HIGH priority")
     
     def process(self, sample: BloodSample) -> Tuple[LiverState, Optional[str], dict]:
         """
@@ -195,7 +246,12 @@ class AOSLiverV1:
             "bile_stored": len(self.bile),
             "bile_capacity": self.bile_capacity,
             "purify_threshold": self.purify_threshold,
-            "toxic_threshold": self.toxic_threshold
+            "toxic_threshold": self.toxic_threshold,
+            # NEW v1.1
+            "priority_queue_enabled": self.priority_queue_enabled,
+            "priority_queue_size": len(self.priority_queue),
+            "priority_queue_max": self.priority_queue_max,
+            "has_priority_items": self.has_priority_items()
         }
     
     def analyze_bile(self) -> dict:
@@ -214,6 +270,97 @@ class AOSLiverV1:
             "avg_toxicity": sum(e.get('toxicity', 0) for e in self.bile) / len(self.bile),
             "recent_pattern": "High noise from: " + max(sources.items(), key=lambda x: x[1])[0] if sources else "None"
         }
+    
+    # ========== v1.1: PRIORITY CURRICULUM ROUTING ==========
+    
+    def filter_input(self, raw_input, source="unknown"):
+        """
+        NEW v1.1: Main entry point with priority routing support
+        
+        Handles both normal BloodSample and priority CurriculumItem
+        Returns: (state, result, metadata)
+        """
+        from typing import Any, Dict, Tuple, Optional
+        
+        # Check if this is a priority curriculum item
+        if isinstance(raw_input, CurriculumItem):
+            return self._process_priority_curriculum(raw_input)
+        
+        # Check if this is a waste-derived curriculum from Kidneys
+        if isinstance(raw_input, dict) and raw_input.get("priority_boost"):
+            # Convert dict to CurriculumItem
+            item = CurriculumItem(
+                content=raw_input.get("content", ""),
+                source=raw_input.get("source", "waste_loop"),
+                priority_boost=True,
+                importance=raw_input.get("importance", 0.8),
+                error_category=raw_input.get("error_category", "general"),
+                waste_event_id=raw_input.get("waste_event_id")
+            )
+            return self._process_priority_curriculum(item)
+        
+        # Standard BloodSample processing
+        if isinstance(raw_input, BloodSample):
+            return self.process(raw_input)
+        
+        # Convert string to BloodSample
+        sample = BloodSample(
+            source=source,
+            content=str(raw_input),
+            timestamp=time.time(),
+            flow_rate=1.0
+        )
+        return self.process(sample)
+    
+    def _process_priority_curriculum(self, item: CurriculumItem) -> Tuple[LiverState, Optional[str], Dict]:
+        """
+        Process priority curriculum item (waste-derived lesson)
+        
+        These skip normal filtration and go straight to Brain
+        with HIGH priority routing.
+        """
+        self.state = LiverState.CLEAN  # Assume curriculum is clean (already filtered by Kidneys)
+        
+        # Add to priority queue for tracking
+        self._enqueue_priority(item)
+        
+        metadata = {
+            "priority": self.PRIORITY_HIGH,
+            "routing": "BRAIN_IMMEDIATE",
+            "source": item.source,
+            "error_category": item.error_category,
+            "waste_event_id": item.waste_event_id,
+            "original_toxicity": 0.0,  # Curriculum is pre-cleaned
+            "original_density": 0.9,    # High information density
+            "processing_time": 0.0,     # Bypass normal processing
+            "action": "PRIORITY_PASS"
+        }
+        
+        return self.state, item.content, metadata
+    
+    def _enqueue_priority(self, item: CurriculumItem):
+        """Add curriculum item to priority queue"""
+        if len(self.priority_queue) >= self.priority_queue_max:
+            # Remove oldest
+            self.priority_queue.pop(0)
+        
+        self.priority_queue.append(item)
+    
+    def get_priority_queue(self) -> List[CurriculumItem]:
+        """Get all priority curriculum items (for Brain consumption)"""
+        items = self.priority_queue.copy()
+        self.priority_queue = []  # Clear after retrieval
+        return items
+    
+    def peek_priority_queue(self) -> Optional[CurriculumItem]:
+        """Peek at next priority item without removing"""
+        if self.priority_queue:
+            return self.priority_queue[0]
+        return None
+    
+    def has_priority_items(self) -> bool:
+        """Check if priority items are waiting"""
+        return len(self.priority_queue) > 0
 
 
 # Test

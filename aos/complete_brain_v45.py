@@ -368,6 +368,53 @@ class BrainSocketServer:
                 'tick': getattr(self.brain, 'tick_count', 0),
                 'phase': getattr(self.brain, 'current_phase', 'unknown')
             }
+        elif cmd == 'waste_loop':
+            # Feedback-to-Curriculum: Control the metabolic loop
+            action = params.get('action', 'status')
+            if self.brain.kidneys:
+                if action == 'enable':
+                    self.brain.kidneys.waste_loop_enabled = True
+                    return {'waste_loop': 'enabled', 'status': 'active'}
+                elif action == 'disable':
+                    self.brain.kidneys.waste_loop_enabled = False
+                    return {'waste_loop': 'disabled', 'status': 'inactive'}
+                elif action == 'status':
+                    return {
+                        'waste_loop_enabled': self.brain.kidneys.waste_loop_enabled,
+                        'waste_queue_size': len(self.brain.kidneys.waste_queue),
+                        'events_generated': self.brain.kidneys.waste_events_generated,
+                        'items_queued': self.brain.kidneys.curriculum_items_queued
+                    }
+            return {'error': 'Kidneys not available'}
+        elif cmd == 'waste_queue':
+            # Manage waste queue for curriculum ingestion
+            action = params.get('action', 'status')
+            if self.brain.kidneys:
+                if action == 'status':
+                    return self.brain.kidneys.get_waste_queue_status()
+                elif action == 'flush':
+                    flushed = self.brain.kidneys.flush_waste_queue()
+                    return {
+                        'flushed': len(flushed),
+                        'events': [e.to_dict() for e in flushed]
+                    }
+            return {'error': 'Kidneys not available'}
+        elif cmd == 'priority_curriculum':
+            # Check or consume priority curriculum items
+            action = params.get('action', 'peek')
+            if self.brain.liver:
+                if action == 'peek':
+                    item = self.brain.liver.peek_priority_queue()
+                    if item:
+                        return {'has_item': True, 'item': item.to_dict()}
+                    return {'has_item': False}
+                elif action == 'consume':
+                    items = self.brain.liver.get_priority_queue()
+                    return {
+                        'consumed': len(items),
+                        'items': [i.to_dict() for i in items]
+                    }
+            return {'error': 'Liver not available'}
         elif cmd == 'cortex_register':
             """Register an agent with the cortex"""
             agent_id = params.get('agent_id', 'anonymous')
@@ -431,6 +478,31 @@ class BrainSocketServer:
                 'agents': agent_stats,
                 'current_tick': self.brain.cortex.current_tick
             }
+        elif cmd == 'curriculum_intelligence':
+            """Curriculum Intelligence v1.3 dashboard"""
+            action = params.get('action', 'dashboard')
+            if self.brain.curriculum_intel:
+                if action == 'dashboard':
+                    return self.brain.curriculum_intel.get_dashboard()
+                elif action == 'metrics':
+                    return self.brain.curriculum_intel.get_conversion_metrics()
+                elif action == 'report':
+                    return {'report': self.brain.curriculum_intel.generate_report()}
+                elif action == 'evaluate':
+                    lesson_id = params.get('lesson_id')
+                    if lesson_id:
+                        result = self.brain.curriculum_intel.evaluate_lesson_effectiveness(lesson_id)
+                        return {'evaluation': asdict(result) if result else None}
+                    return {'error': 'lesson_id required'}
+                elif action == 'auto_tune':
+                    if self.brain.kidneys:
+                        applied = self.brain.curriculum_intel.auto_tune_kidneys(self.brain.kidneys)
+                        return {'auto_tuned': True, 'adjustments': applied}
+                    return {'error': 'Kidneys not available'}
+                elif action == 'threshold_recommendations':
+                    recs = self.brain.curriculum_intel.calculate_threshold_recommendations()
+                    return {'recommendations': recs}
+            return {'error': 'Curriculum Intelligence not available'}
         else:
             return {'error': f'Unknown command: {cmd}'}
 
@@ -546,6 +618,60 @@ class CompleteBrainV44:
         except Exception as e:
             print(f"  ⚠️ Persistence not loaded: {e}")
             self.persistence = None
+        
+        # NEW v4.6: Feedback-to-Curriculum persistence
+        print("\n[Feedback-to-Curriculum v1.1] Initializing...")
+        self.waste_queue_path = '/var/lib/aos/brain_state/waste_queue.json'
+        self._ensure_waste_state_dir()
+        self._load_waste_queue()
+        print("  ✅ Waste queue persistence ready")
+        
+        # NEW v4.6: Curriculum Intelligence v1.3
+        print("\n[Curriculum Intelligence v1.3] Initializing...")
+        try:
+            from curriculum_intelligence import CurriculumIntelligence
+            self.curriculum_intel = CurriculumIntelligence()
+            print("  ✅ Intelligence layer active - tracking lesson effectiveness")
+        except Exception as e:
+            print(f"  ⚠️ Curriculum Intelligence not loaded: {e}")
+            self.curriculum_intel = None
+    
+    def _ensure_waste_state_dir(self):
+        """Ensure waste queue directory exists"""
+        state_dir = os.path.dirname(self.waste_queue_path)
+        os.makedirs(state_dir, exist_ok=True)
+    
+    def _load_waste_queue(self):
+        """Load persisted waste queue from disk"""
+        if not os.path.exists(self.waste_queue_path):
+            return
+        try:
+            with open(self.waste_queue_path, 'r') as f:
+                data = json.load(f)
+            # Queue is loaded by curriculum_feeder, not directly here
+            print(f"  💾 Loaded {len(data)} waste events from disk")
+        except Exception as e:
+            print(f"  ⚠️ Could not load waste queue: {e}")
+    
+    def _save_waste_queue(self):
+        """Save current waste queue to disk"""
+        if not hasattr(self, 'kidneys') or not self.kidneys:
+            return
+        try:
+            events = self.kidneys.flush_waste_queue()
+            if events:
+                # Load existing
+                existing = []
+                if os.path.exists(self.waste_queue_path):
+                    with open(self.waste_queue_path, 'r') as f:
+                        existing = json.load(f)
+                # Append new
+                existing.extend([e.to_dict() for e in events])
+                # Save
+                with open(self.waste_queue_path, 'w') as f:
+                    json.dump(existing, f, indent=2)
+        except Exception as e:
+            print(f"[Waste Queue] Save error: {e}")
         
         print("\n" + "=" * 70)
         print("  ✅ ALL SYSTEMS INITIALIZED")
@@ -787,6 +913,24 @@ class CompleteBrainV44:
             {"is_brain_output": True, "liver_state": liver_state.name}
         )
         
+        # NEW v4.6: Curriculum Intelligence tracking
+        if self.curriculum_intel and kidney_meta.get('waste_event_created'):
+            waste_event = kidney_meta.get('waste_event')
+            if waste_event:
+                # Record error for trend tracking
+                self.curriculum_intel.record_error_event(
+                    waste_event.error_category,
+                    waste_event.severity
+                )
+                
+                # If lesson was created, track it
+                if hasattr(waste_event, 'suggested_lesson'):
+                    self.curriculum_intel.record_lesson_created(
+                        lesson_id=waste_event.event_id,
+                        error_category=waste_event.error_category,
+                        lesson_content=waste_event.suggested_lesson
+                    )
+        
         # 12. TracRay record (with full pipeline metadata)
         self.tracray.record(
             tick=self.tick_count,
@@ -800,6 +944,20 @@ class CompleteBrainV44:
             action=qmd_result.get("action", "unknown")
         )
         
+        # NEW v4.6: Check for priority curriculum from Liver
+        if self.liver and self.liver.has_priority_items():
+            priority_items = self.liver.get_priority_queue()
+            if priority_items:
+                print(f"  ⚡ Consuming {len(priority_items)} priority curriculum items")
+                # Process priority items (feed to consciousness immediately)
+                for item in priority_items:
+                    self.consciousness.perceive(item.content, intensity=item.importance)
+                    print(f"    📚 Learned: {item.error_category} → {item.content[:60]}...")
+        
+        # Save waste queue periodically
+        if self.tick_count % 10 == 0:
+            self._save_waste_queue()
+        
         # Display status every 50 ticks
         if self.tick_count % 50 == 0:
             summary = self.consciousness.get_layer_summary()
@@ -808,18 +966,29 @@ class CompleteBrainV44:
             lung_phase = self.lungs.phase if hasattr(self.lungs, 'phase') else "REST"
             avg_signal = sum(self.signal_quality_history[-20:]) / min(len(self.signal_quality_history[-20:]), 20)
             
+            # NEW v4.6: Intelligence metrics
+            intel_status = ""
+            if self.curriculum_intel:
+                metrics = self.curriculum_intel.get_conversion_metrics()
+                if metrics['total_lessons_created'] > 0:
+                    intel_status = f" | 📚 {metrics['lesson_conversion_rate']:.0%} lesson conversion"
+            
             print(f"\n[Cycle {self.tick_count:5d}] "
                   f"🫀 {heart_output.bpm:.0f} BPM | "
                   f"🧠 {brain_output.phase:8s} | "
                   f"🎛️  {qmd_result.get('action', 'unknown'):10s} | "
                   f"🫁 {thyroid_state:10s} | "
                   f"🫘 {kidney_state_str:8s} | "
-                  f"📶 {avg_signal:.2f}")
+                  f"📶 {avg_signal:.2f}{intel_status}")
             print(f"              Liver: {liver_state.name:8s} | "
                   f"Lungs: {lung_phase:8s} | "
                   f"Con:{summary['conscious']['active_items']}/"
                   f"Sub:{summary['subconscious']['active_items']} | "
                   f"Waste:{kidney_meta['bladder_level']}")
+            
+            # NEW v4.6: Print intelligence report every 250 ticks
+            if self.tick_count % 250 == 0 and self.curriculum_intel:
+                print("\n" + self.curriculum_intel.generate_report())
         
         # Save periodically
         if self.tick_count % 100 == 0:
