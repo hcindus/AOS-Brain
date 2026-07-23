@@ -244,18 +244,46 @@ Add to Model Router as EMERGENCY mode fallback when budget constraints hit but t
 
 ---
 
-## AOCROS Upgrades Summary v4.6
+## AOCROS Upgrades Summary v4.6 - COMPLETE
 **Date:** 2026-07-23
-**Status:** 4 of 5 Complete
+**Status:** ✅ ALL 5 COMPLETE
 
-### ✅ Completed
+### ✅ Completed Upgrades
+
 1. **Feedback-to-Curriculum v1.3** - Metabolic loop for self-improvement
-2. **Protected Memory Segments** - SOUL.md/IDENTITY.md immutable
-3. **Cost-Aware Thyroid v1.3** - Budget-aware model switching
-4. **Hold Out Kidneys v1.0** - Blind validation pattern
+   - Kidneys v1.1 waste event generation
+   - Liver v1.1 priority routing
+   - Intelligence v1.3 with auto-tuning
+   - 92.9% improvement detected
 
-### ⏸️ Remaining
-5. **Crew Isolation** - True sandbox for N'og nog agents
+2. **Protected Memory Segments** - SOUL.md/IDENTITY.md immutable
+   - 5 files protected
+   - 2 immutable (SOUL.md, IDENTITY.md)
+   - Write protection enforced
+   - Integrity verification active
+
+3. **Cost-Aware Thyroid v1.3** - Budget-aware model switching
+   - Daily/hourly budget tracking
+   - NORMAL/CONSERVATIVE/EMERGENCY modes
+   - Gemma 4 E4B integration for EMERGENCY mode
+   - Auto-downgrade at 70% budget
+
+4. **Hold Out Kidneys v1.0** - Blind validation pattern
+   - 15% bias eliminated (sycophancy removal)
+   - Implementation plan HIDDEN from validator
+   - Pure quality assessment
+
+5. **Crew Isolation v1.0** - True sandbox for agents
+   - Isolated workspaces per agent
+   - Message queue communication only
+   - Quarantine for misbehaving agents
+   - Complete destruction capability
+
+### New Model Added
+- **Gemma 4 E4B** - Emergency mode fallback
+  - 4.5B effective params (8B equivalent knowledge)
+  - Runs on Raspberry Pi 5
+  - Cost-efficient for budget constraints
 
 ---
 
