@@ -82,7 +82,70 @@ systemctl status aos-mission-control
 
 ---
 
-*Last Updated: 2026-07-21
+## Feedback-to-Curriculum v1.1 - DEPLOYED
+**Created:** 2026-07-23
+**Status:** Phase 1.1 + 1.2 Complete
+
+### Implementation
+- **Kidneys v1.1**: Extended with `WasteEvent` data structure and `process_for_recycling()` method
+- **Auto-categorization**: syntax/logic/security/efficiency/alignment errors
+- **Auto-lesson generation**: Converts waste into curriculum items
+- **Liver v1.1**: Priority queue routing for waste-derived curriculum (HIGH priority)
+- **Socket commands**: `waste_loop`, `waste_queue`, `priority_curriculum`
+- **Persistence**: Waste queue saved to `/var/lib/aos/brain_state/waste_queue.json`
+
+### Metabolic Loop
+```
+Brain Output → Kidneys (process_for_recycling)
+    ↓
+    REABSORB/EXCRETE detected
+    ↓
+WasteEvent created → Queued for curriculum
+    ↓
+Curriculum Feeder (ingest_from_waste)
+    ↓
+Priority curriculum item → Brain (next tick)
+```
+
+### Test Results
+- All 4 test scenarios passed
+- Waste events generating correctly (REABSORB mode)
+- Curriculum conversion working with priority boosting
+- Deduplication preventing duplicate lessons
+
+---
+
+## Performance Supply Depot SOPs v1.0
+**Created:** 2026-07-23
+**Status:** Ready for Review
+**Location:** `/root/.openclaw/workspace/psd/sops/`
+
+### SOPs Created
+1. **SOP-001: Lead Response & Qualification**
+   - Target: 5-minute response, 40%+ conversion
+   - Lead scoring (Hot/Warm/Cold)
+   - Ghosted lead recovery sequence
+
+2. **SOP-002: Quote Generation & Follow-Up**
+   - Target: 2-hour turnaround, 35%+ close rate
+   - Pricing rules and discounts
+   - 30-day follow-up sequence
+
+3. **SOP-003: Order Status & Customer Inquiry**
+   - Target: 60-second response, 80%+ first-contact resolution
+   - Status definitions and scripts
+   - **Highest automation potential**
+
+### Implementation Package
+- 4-week rollout timeline
+- Daily metrics tracking sheet
+- Risk mitigation plan
+- Real-world test results (4/4 passed per SOP)
+- Automation notes for AI agent deployment
+
+---
+
+*Last Updated: 2026-07-23
 
 ---
 
