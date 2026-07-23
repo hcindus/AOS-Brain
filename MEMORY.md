@@ -82,9 +82,9 @@ systemctl status aos-mission-control
 
 ---
 
-## Feedback-to-Curriculum v1.1 - DEPLOYED
+## Feedback-to-Curriculum v1.3 - FULLY DEPLOYED
 **Created:** 2026-07-23
-**Status:** Phase 1.1 + 1.2 Complete
+**Status:** All Phases Complete (1.1 + 1.2 + 1.3)
 
 ### Implementation
 - **Kidneys v1.1**: Extended with `WasteEvent` data structure and `process_for_recycling()` method
@@ -94,7 +94,14 @@ systemctl status aos-mission-control
 - **Socket commands**: `waste_loop`, `waste_queue`, `priority_curriculum`
 - **Persistence**: Waste queue saved to `/var/lib/aos/brain_state/waste_queue.json`
 
-### Metabolic Loop
+### NEW: Intelligence Layer v1.3 (Phase 1.3)
+- **CurriculumIntelligence**: Tracks lesson effectiveness over time
+- **Error Trend Analysis**: Detects improving/worsening patterns
+- **Auto-Tuning**: Automatically adjusts Kidneys thresholds based on results
+- **Conversion Metrics**: waste → lesson → improvement funnel
+- **Dashboard & Reports**: Human-readable intelligence reports
+
+### Metabolic Loop with Intelligence
 ```
 Brain Output → Kidneys (process_for_recycling)
     ↓
@@ -105,13 +112,27 @@ WasteEvent created → Queued for curriculum
 Curriculum Feeder (ingest_from_waste)
     ↓
 Priority curriculum item → Brain (next tick)
+    ↓
+Curriculum Intelligence (track effectiveness)
+    ↓
+Auto-tune thresholds → Better performance
 ```
 
 ### Test Results
-- All 4 test scenarios passed
-- Waste events generating correctly (REABSORB mode)
-- Curriculum conversion working with priority boosting
-- Deduplication preventing duplicate lessons
+- Phase 1.1: 4/4 tests passed
+- Phase 1.2: 5/5 tests passed
+- Phase 1.3: 6/6 tests passed
+- Lesson effectiveness tracking: 92.9% improvement detected
+- Auto-tuning: Threshold recommendations generated
+
+### Socket Commands
+```bash
+# Intelligence dashboard
+echo '{"cmd":"curriculum_intelligence", "action":"dashboard"}' | nc -U /tmp/aos_brain.sock
+echo '{"cmd":"curriculum_intelligence", "action":"metrics"}' | nc -U /tmp/aos_brain.sock
+echo '{"cmd":"curriculum_intelligence", "action":"report"}' | nc -U /tmp/aos_brain.sock
+echo '{"cmd":"curriculum_intelligence", "action":"auto_tune"}' | nc -U /tmp/aos_brain.sock
+```
 
 ---
 
