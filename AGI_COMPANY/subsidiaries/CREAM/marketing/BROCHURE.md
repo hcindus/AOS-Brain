@@ -13,7 +13,7 @@
 **$699** One-Time Investment  
 **$99/Year** Updates & Support
 
-**📊 Trusted by 67,000+ Realtor Prospects Nationwide**
+**📊 Trusted by 69,000+ Realtor Prospects Nationwide**
 
 ---
 
