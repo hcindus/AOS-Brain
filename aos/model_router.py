@@ -30,6 +30,7 @@ class AOSModelRouter:
         "voice": "antoniohudnall/Mort_II:latest",  # Natural conversation
         "embedding": "nomic-embed-text:latest",    # Vector embeddings
         "reasoning": "qwen2.5:3b",           # Complex reasoning
+        "emergency": "gemma4e4b:latest",     # NEW: Lightweight for budget constraints
     }
     
     def __init__(self):
@@ -173,6 +174,48 @@ DECISION:"""
                     return action, 0.75
         
         return "CONTINUE", 0.30
+    
+    def emergency_decide(self, context: Dict) -> Tuple[str, float]:
+        """
+        Emergency mode decision using Gemma 4 E4B
+        
+        Used when budget constraints hit but tinyllama insufficient.
+        Lightweight (4.5B params) but capable (8B equivalent knowledge).
+        """
+        model = self.MODELS["emergency"]
+        prompt = self._format_decision_prompt(context)
+        
+        start = time.time()
+        try:
+            resp = requests.post(
+                self.OLLAMA_URL,
+                json={
+                    "model": model,
+                    "prompt": prompt,
+                    "stream": False,
+                    "options": {
+                        "temperature": 0.2,
+                        "num_predict": 20  # Slightly longer for better reasoning
+                    }
+                },
+                timeout=15  # Allow more time for Gemma
+            )
+            latency = (time.time() - start) * 1000
+            
+            if resp.status_code == 200:
+                text = resp.json().get("response", "").strip().upper()
+                action, confidence = self._parse_action(text)
+                
+                print(f"[ModelRouter] 🚨 Emergency decision via Gemma 4 E4B: {action}")
+                self._update_stats("decision", latency)
+                return action, confidence * 0.85  # Conservative confidence in emergency mode
+            else:
+                # Fall back to tinyllama if Gemma not available
+                print(f"[ModelRouter] Gemma 4 E4B unavailable, falling back to tinyllama")
+                return self._decide_fallback(context)
+        except Exception as e:
+            print(f"[ModelRouter] Emergency model failed ({str(e)[:30]}), using fallback")
+            return self._decide_fallback(context)
     
     def _update_stats(self, task_type: str, latency: float):
         """Update latency stats"""

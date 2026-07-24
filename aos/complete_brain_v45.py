@@ -503,6 +503,85 @@ class BrainSocketServer:
                     recs = self.brain.curriculum_intel.calculate_threshold_recommendations()
                     return {'recommendations': recs}
             return {'error': 'Curriculum Intelligence not available'}
+        elif cmd == 'chief_of_staff':
+            """APEX Chief of Staff commands"""
+            action = params.get('action', 'receive')
+            if self.brain.chief_of_staff:
+                if action == 'receive':
+                    objective = params.get('objective')
+                    initiator = params.get('initiator', 'system')
+                    if objective:
+                        wf_id = self.brain.chief_of_staff.receive_objective(objective, initiator)
+                        return {'workflow_id': wf_id, 'status': 'created'}
+                    return {'error': 'objective required'}
+                elif action == 'execute':
+                    workflow_id = params.get('workflow_id')
+                    if workflow_id:
+                        success = self.brain.chief_of_staff.execute_workflow(workflow_id)
+                        return {'workflow_id': workflow_id, 'success': success}
+                    return {'error': 'workflow_id required'}
+                elif action == 'status':
+                    workflow_id = params.get('workflow_id')
+                    if workflow_id:
+                        status = self.brain.chief_of_staff.get_workflow_status(workflow_id)
+                        return {'workflow_id': workflow_id, 'status': status}
+                    return {'error': 'workflow_id required'}
+                elif action == 'crew_status' or action == 'company_status':
+                    company_status = self.brain.chief_of_staff.get_company_status()
+                    return company_status
+                elif action == 'query':
+                    query = params.get('query')
+                    if query:
+                        result = self.brain.chief_of_staff.query_crew(query)
+                        return {'result': result}
+                    return {'error': 'query required'}
+            return {'error': 'Chief of Staff not available'}
+        elif cmd == 'channel':
+            """Brain Socket Channel commands"""
+            action = params.get('action')
+            if self.brain.channels:
+                return self.brain.channels.handle_command(action, params)
+            return {'error': 'Channels not available'}
+        elif cmd == 'crypto_identity':
+            """Agent cryptographic identity commands"""
+            action = params.get('action', 'create')
+            if self.brain.crypto_manager:
+                if action == 'create':
+                    agent_id = params.get('agent_id')
+                    agent_name = params.get('agent_name')
+                    if agent_id and agent_name:
+                        identity = self.brain.crypto_manager.create_identity(agent_id, agent_name)
+                        return {
+                            'agent_id': identity.agent_id,
+                            'agent_name': identity.agent_name,
+                            'public_key': identity.public_key_hex,
+                            'npub': identity.npub
+                        }
+                    return {'error': 'agent_id and agent_name required'}
+                elif action == 'load':
+                    agent_id = params.get('agent_id')
+                    if agent_id:
+                        identity = self.brain.crypto_manager.load_identity(agent_id)
+                        if identity:
+                            return {
+                                'agent_id': identity.agent_id,
+                                'agent_name': identity.agent_name,
+                                'public_key': identity.public_key_hex,
+                                'npub': identity.npub
+                            }
+                        return {'error': 'Identity not found'}
+                    return {'error': 'agent_id required'}
+                elif action == 'sign_event':
+                    agent_id = params.get('agent_id')
+                    event_data = params.get('event_data', {})
+                    if agent_id:
+                        signature = self.brain.crypto_manager.sign_event(agent_id, event_data)
+                        return {'signature': signature}
+                    return {'error': 'agent_id required'}
+                elif action == 'list':
+                    agents = self.brain.crypto_manager.list_agents()
+                    return {'agents': agents}
+            return {'error': 'Crypto manager not available'}
         else:
             return {'error': f'Unknown command: {cmd}'}
 
@@ -593,6 +672,36 @@ class CompleteBrainV44:
         # Socket server
         print("\n[Interface] Socket Server...")
         self.socket_server = BrainSocketServer(self)
+        
+        # NEW v4.6: APEX Chief of Staff (Patricia as coordinator)
+        print("\n[APEX] Chief of Staff v1.0 (Patricia as crew coordinator)...")
+        try:
+            from apex_chief_of_staff import APEXChiefOfStaff
+            self.chief_of_staff = APEXChiefOfStaff()
+            print("  ✅ Chief of Staff active - Patricia manages crew workflows")
+        except Exception as e:
+            print(f"  ⚠️ Chief of Staff not loaded: {e}")
+            self.chief_of_staff = None
+        
+        # NEW v4.6: Agent Cryptographic Identities
+        print("\n[Crypto] Agent Identity Manager v1.0...")
+        try:
+            from agent_crypto_identity import AgentCryptoManager
+            self.crypto_manager = AgentCryptoManager()
+            print("  ✅ Cryptographic identities active")
+        except Exception as e:
+            print(f"  ⚠️ Crypto manager not loaded: {e}")
+            self.crypto_manager = None
+        
+        # NEW v4.6: Brain Socket Channels (Buzz-inspired)
+        print("\n[Channels] Brain Socket Channels v1.0...")
+        try:
+            from brain_socket_channels import BrainSocketChannels
+            self.channels = BrainSocketChannels()
+            print("  ✅ Channel-based collaboration active")
+        except Exception as e:
+            print(f"  ⚠️ Channels not loaded: {e}")
+            self.channels = None
         
         # State
         self.tick_count = 0
@@ -891,8 +1000,23 @@ class CompleteBrainV44:
             }
         }
         
-        # Check thyroid state
-        if self.thyroid.state == ThyroidState.SECRETING:
+        # Check thyroid state and budget mode
+        qmd_result = None
+        if hasattr(self.thyroid, 'budget_mode') and self.thyroid.budget_mode == "EMERGENCY":
+            # EMERGENCY: Use Gemma 4 E4B via emergency_decide
+            try:
+                action, confidence = self.router.emergency_decide(qmd_context)
+                qmd_result = {
+                    "action": action.lower(),
+                    "confidence": confidence,
+                    "reasoning": "emergency_gemma4e4b",
+                    "model": self.router.MODELS['emergency']
+                }
+                print(f"[Brain] 🚨 Emergency decision via Gemma 4 E4B: {action}")
+            except Exception as e:
+                print(f"[Brain] Emergency decision failed, using QMD: {str(e)[:30]}")
+                qmd_result = self.qmd.cycle(qmd_context, memory_bridge=self.memory_bridge)
+        elif self.thyroid.state == ThyroidState.SECRETING:
             try:
                 action, confidence = self.router.decide(qmd_context)
                 qmd_result = {
