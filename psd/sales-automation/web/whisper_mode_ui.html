@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSD Whisper Mode - AI Sales Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            min-height: 100vh;
+            display: flex;
+        }
+        
+        .sidebar {
+            width: 300px;
+            background: #16213e;
+            padding: 20px;
+            border-right: 1px solid #0f3460;
+        }
+        
+        .main {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e94560;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e94560;
+        }
+        
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #00d9ff;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .call-info {
+            background: #0f3460;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .call-info h3 {
+            color: #e94560;
+            margin-bottom: 10px;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #1a1a2e;
+        }
+        
+        .transcript-container {
+            background: #16213e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            height: 300px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        .message.prospect {
+            background: #0f3460;
+            margin-right: 50px;
+        }
+        
+        .message.rep {
+            background: #e94560;
+            margin-left: 50px;
+            text-align: right;
+        }
+        
+        .speaker {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+        
+        .whisper-panel {
+            background: #16213e;
+            border: 2px solid #e94560;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .whisper-panel.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .objection-badge {
+            background: #e94560;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        
+        .suggested-response {
+            background: #0f3460;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #00d9ff;
+        }
+        
+        .suggested-response h4 {
+            color: #00d9ff;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .technique {
+            background: #1a1a2e;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .technique-name {
+            color: #e94560;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .script {
+            font-style: italic;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: #ff6b6b;
+            transform: translateY(-2px);
+        }
+        
+        .btn.secondary {
+            background: #0f3460;
+        }
+        
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .metric-card {
+            background: #16213e;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #e94560;
+        }
+        
+        .metric-label {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+        
+        .listening-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #e94560;
+            padding: 15px 25px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
+        }
+        
+        .wave {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        
+        .wave-bar {
+            width: 4px;
+            height: 20px;
+            background: white;
+            animation: wave 1s ease-in-out infinite;
+        }
+        
+        .wave-bar:nth-child(2) { animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.3s; }
+        .wave-bar:nth-child(5) { animation-delay: 0.4s; }
+        
+        @keyframes wave {
+            0%, 100% { height: 10px; }
+            50% { height: 25px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="header">
+            <div class="logo">🎯 PSD Whisper</div>
+        </div>
+        
+        <div class="call-info">
+            <h3>Current Call</h3>
+            <div class="info-row">
+                <span>Company</span>
+                <strong id="company-name">--</strong>
+            </div>
+            <div class="info-row">
+                <span>Contact</span>
+                <strong id="contact-name">--</strong>
+            </div>
+            <div class="info-row">
+                <span>Duration</span>
+                <strong id="call-duration">00:00</strong>
+            </div>
+            <div class="info-row">
+                <span>ICP Score</span>
+                <strong id="icp-score">--</strong>
+            </div>
+        </div>
+        
+        <div class="metrics">
+            <div class="metric-card">
+                <div class="metric-value" id="objection-count">0</div>
+                <div class="metric-label">Objections</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="confidence-score">--</div>
+                <div class="metric-label">Confidence</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="win-probability">--</div>
+                <div class="metric-label">Win %</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main">
+        <div class="header">
+            <h1>Live Call Assistant</h1>
+            <div class="status">
+                <div class="status-dot"></div>
+                <span>AI Listening</span>
+            </div>
+        </div>
+        
+        <div class="transcript-container" id="transcript">
+            <div class="message rep">
+                <div class="speaker">Miles (AI)</div>
+                <div>Hi, this is Miles from Performance Supply Depot. I hope I'm not catching you at a bad time?</div>
+            </div>
+            <div class="message prospect">
+                <div class="speaker">Prospect</div>
+                <div>No, this is fine. What's this about?</div>
+            </div>
+        </div>
+        
+        <div class="whisper-panel" id="whisper-panel">
+            <div class="objection-badge" id="objection-type">PRICE OBJECTION</div>
+            
+            <div class="suggested-response">
+                <h4>🎯 Suggested Response</h4>
+                <div class="technique">
+                    <div class="technique-name">Feel-Felt-Found</div>
+                    <div class="script" id="primary-script">
+                        "I understand how you feel. The price is higher than you expected. Actually, a lot of our customers felt the same way at first. But what they found was that the quality difference saved them money in the long run. Can I show you what I mean?"
+                    </div>
+                </div>
+            </div>
+            
+            <div class="suggested-response">
+                <h4>💡 Alternative Approaches</h4>
+                <div class="technique">
+                    <div class="technique-name">Reframe</div>
+                    <div class="script" id="alt-script-1">
+                        "What does it cost you when you run out of supplies during a busy shift?"
+                    </div>
+                </div>
+                <div class="technique">
+                    <div class="technique-name">Curiosity</div>
+                    <div class="script" id="alt-script-2">
+                        "Help me understand - are you comparing this to a specific competitor, or is this about your allocated budget?"
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quick-actions">
+                <button class="btn" onclick="copyScript()">📋 Copy Script</button>
+                <button class="btn secondary" onclick="nextObjection()">⏭️ Next Objection</button>
+                <button class="btn secondary" onclick="dismissWhisper()">✕ Dismiss</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="listening-indicator">
+        <div class="wave">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+        </div>
+        <span>Listening...</span>
+    </div>
+    
+    <script>
+        // Simulated real-time updates
+        let callDuration = 0;
+        let objectionCount = 0;
+        
+        // Update call duration
+        setInterval(() => {
+            callDuration++;
+            const minutes = Math.floor(callDuration / 60).toString().padStart(2, '0');
+            const seconds = (callDuration % 60).toString().padStart(2, '0');
+            document.getElementById('call-duration').textContent = `${minutes}:${seconds}`;
+        }, 1000);
+        
+        // Simulate objection detection after 10 seconds
+        setTimeout(() => {
+            showWhisperPanel('price');
+        }, 10000);
+        
+        function showWhisperPanel(objectionType) {
+            const panel = document.getElementById('whisper-panel');
+            const badge = document.getElementById('objection-type');
+            
+            badge.textContent = objectionType.toUpperCase() + ' OBJECTION';
+            panel.classList.add('active');
+            
+            objectionCount++;
+            document.getElementById('objection-count').textContent = objectionCount;
+            
+            // Update scripts based on objection type
+            updateScripts(objectionType);
+        }
+        
+        function updateScripts(type) {
+            const scripts = {
+                price: {
+                    primary: '"I understand how you feel. The price is higher than you expected. Actually, a lot of our customers felt the same way at first. But what they found was that the quality difference saved them money in the long run. Can I show you what I mean?"',
+                    alt1: '"What does it cost you when you run out of supplies during a busy shift?"',
+                    alt2: '"Help me understand - are you comparing this to a specific competitor, or is this about your allocated budget?"'
+                },
+                timing: {
+                    primary: '"Of course, I totally understand wanting to think it through. Most of our partners felt that way too. What they found was that delaying the decision actually cost them more in stockouts. What specifically do you need to think through?"',
+                    alt1: '"What timeline are you thinking?"',
+                    alt2: '"If we could solve your main concern, would you be ready to move forward today?"'
+                }
+            };
+            
+            const s = scripts[type] || scripts.price;
+            document.getElementById('primary-script').textContent = s.primary;
+            document.getElementById('alt-script-1').textContent = s.alt1;
+            document.getElementById('alt-script-2').textContent = s.alt2;
+        }
+        
+        function copyScript() {
+            const script = document.getElementById('primary-script').textContent;
+            navigator.clipboard.writeText(script);
+            
+            // Visual feedback
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✓ Copied!';
+            setTimeout(() => {
+                btn.textContent = originalText;
+            }, 2000);
+        }
+        
+        function dismissWhisper() {
+            document.getElementById('whisper-panel').classList.remove('active');
+        }
+        
+        function nextObjection() {
+            // Cycle through objection types for demo
+            const types = ['price', 'timing', 'competition'];
+            const current = types[Math.floor(Math.random() * types.length)];
+            updateScripts(current);
+        }
+        
+        // WebSocket connection for real-time updates would go here
+        // const ws = new WebSocket('ws://localhost:8085/ws');
+        // ws.onmessage = (event) => {
+        //     const data = JSON.parse(event.data);
+        //     if (data.type === 'objection') {
+        //         showWhisperPanel(data.objection_category);
+        //     }
+        // };
+    </script>
+</body>
+</html>
