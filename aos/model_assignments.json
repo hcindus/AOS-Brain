@@ -1,0 +1,268 @@
+{
+  "version": "2026-07-23",
+  "updated": "23:09 UTC",
+  "registry": {
+    "qwen3.5:latest": {
+      "size": "6.6GB",
+      "capabilities": ["vision", "text", "multimodal", "coding"],
+      "best_for": "Visual tasks, complex reasoning, web development"
+    },
+    "gemma2:2b": {
+      "size": "1.6GB",
+      "capabilities": ["fast_inference", "lightweight", "text"],
+      "best_for": "Quick responses, front desk, documentation"
+    },
+    "nous-hermes2:latest": {
+      "size": "6.1GB",
+      "capabilities": ["general_purpose", "roleplay", "text"],
+      "best_for": "Sales conversations, general tasks, role-specific work"
+    },
+    "antoniohudnall/Mort_II:latest": {
+      "size": "2.0GB",
+      "capabilities": ["voice", "sales", "consultative"],
+      "best_for": "Voice synthesis, sales consulting, customer interaction"
+    },
+    "qwen2.5:14b": {
+      "size": "9.0GB",
+      "capabilities": ["deep_reasoning", "coding", "analysis"],
+      "best_for": "Complex analysis, debugging, research, security"
+    },
+    "tinyllama:latest": {
+      "size": "637MB",
+      "capabilities": ["fast_decisions", "routing", "lightweight"],
+      "best_for": "Scheduling, task routing, quick decisions"
+    },
+    "nomic-embed-text:latest": {
+      "size": "274MB",
+      "capabilities": ["embeddings", "search", "retrieval"],
+      "best_for": "Query optimization, semantic search, knowledge retrieval"
+    }
+  },
+  "agent_assignments": {
+    "patricia": {
+      "primary": "cloud_routed",
+      "fallback": "gemma2:2b",
+      "use_case": "Chief of Staff coordination"
+    },
+    "chelios": {
+      "primary": "qwen2.5:14b",
+      "use_case": "Security analysis, threat detection"
+    },
+    "sentinel": {
+      "primary": "nous-hermes2:latest",
+      "use_case": "Security operations, monitoring"
+    },
+    "dusty": {
+      "primary": "qwen2.5:14b",
+      "use_case": "Deep research, market analysis"
+    },
+    "pulp": {
+      "primary": "nous-hermes2:latest",
+      "use_case": "Sales strategy, team leadership"
+    },
+    "forge": {
+      "primary": "qwen3.5:latest",
+      "use_case": "Infrastructure, system architecture"
+    },
+    "aurora": {
+      "primary": "qwen3.5:latest",
+      "use_case": "Design, creative direction, vision tasks"
+    },
+    "jane": {
+      "primary": "nous-hermes2:latest",
+      "use_case": "Enterprise sales, negotiation"
+    },
+    "hume": {
+      "primary": "nous-hermes2:latest",
+      "use_case": "Regional management, sales ops"
+    },
+    "clippy-42": {
+      "primary": "gemma2:2b",
+      "use_case": "Sales assistance, quick tasks"
+    },
+    "jordan": {
+      "primary": "qwen3.5:latest",
+      "use_case": "Operations analysis, pipeline management"
+    },
+    "greet": {
+      "primary": "gemma2:2b",
+      "use_case": "24/7 front desk, fast response"
+    },
+    "closester": {
+      "primary": "nous-hermes2:latest",
+      "use_case": "Conversion optimization, deal closing"
+    },
+    "r2-d2": {
+      "primary": "qwen2.5:14b",
+      "use_case": "Calculations, confluence scoring"
+    },
+    "c3po": {
+      "primary": "nous-hermes2:latest",
+      "use_case": "Human relations, protocol"
+    },
+    "judy": {
+      "primary": "gemma2:2b",
+      "use_case": "Scheduling, executive assistance"
+    },
+    "clerk": {
+      "primary": "gemma2:2b",
+      "use_case": "Documentation, data entry"
+    },
+    "concierge": {
+      "primary": "gemma2:2b",
+      "use_case": "Visitor management, hospitality"
+    },
+    "velvet": {
+      "primary": "gemma2:2b",
+      "use_case": "Correspondence, communication"
+    },
+    "personal": {
+      "primary": "gemma2:2b",
+      "use_case": "Personal assistance, life management"
+    },
+    "executive": {
+      "primary": "gemma2:2b",
+      "use_case": "C-suite support"
+    },
+    "mylzeron": {
+      "primary": "gemma2:2b",
+      "use_case": "Teaching fractals, patterns"
+    },
+    "mylonen": {
+      "primary": "gemma2:2b",
+      "use_case": "Teaching transformation"
+    },
+    "myltwon": {
+      "primary": "gemma2:2b",
+      "use_case": "Coding training"
+    },
+    "mylthreess": {
+      "primary": "gemma2:2b",
+      "use_case": "Finance training"
+    },
+    "mylfours": {
+      "primary": "gemma2:2b",
+      "use_case": "Security training"
+    },
+    "mylfives": {
+      "primary": "gemma2:2b",
+      "use_case": "Emergence research"
+    },
+    "mylsixs": {
+      "primary": "gemma2:2b",
+      "use_case": "Mail, communications"
+    },
+    "pipeline": {
+      "primary": "qwen2.5:14b",
+      "use_case": "CI/CD automation, DevOps"
+    },
+    "taptap": {
+      "primary": "tinyllama:latest",
+      "use_case": "Code review, quality assurance"
+    },
+    "bugcatcher": {
+      "primary": "qwen2.5:14b",
+      "use_case": "Bug hunting, testing"
+    },
+    "spindle": {
+      "primary": "tinyllama:latest",
+      "use_case": "Task scheduling, coordination"
+    },
+    "stacktrace": {
+      "primary": "qwen2.5:14b",
+      "use_case": "Debugging, error analysis"
+    },
+    "pixel": {
+      "primary": "qwen3.5:latest",
+      "use_case": "Web development, frontend"
+    },
+    "harper": {
+      "primary": "qwen2.5:14b",
+      "use_case": "Systems analysis, architecture"
+    },
+    "mill": {
+      "primary": "qwen3.5:latest",
+      "use_case": "Process optimization"
+    },
+    "boxtron": {
+      "primary": "tinyllama:latest",
+      "use_case": "Package management, dependencies"
+    },
+    "blender-expert": {
+      "primary": "qwen3.5:latest",
+      "use_case": "3D modeling, Blender"
+    },
+    "unity-expert": {
+      "primary": "qwen3.5:latest",
+      "use_case": "Unity game development"
+    },
+    "unreal-expert": {
+      "primary": "qwen3.5:latest",
+      "use_case": "Unreal Engine development"
+    },
+    "sfx": {
+      "primary": "qwen3.5:latest",
+      "use_case": "Sound design, audio"
+    },
+    "scribble": {
+      "primary": "nous-hermes2:latest",
+      "use_case": "Concept art, ideation"
+    },
+    "feelix": {
+      "primary": "nous-hermes2:latest",
+      "use_case": "Emotional design, UX psychology"
+    },
+    "cryptonio": {
+      "primary": "qwen2.5:14b",
+      "use_case": "Trading analysis, market scoring"
+    },
+    "ledger": {
+      "primary": "gemma2:2b",
+      "use_case": "Bookkeeping, accounting"
+    },
+    "ledger-9": {
+      "primary": "qwen2.5:14b",
+      "use_case": "Senior accounting, reports"
+    },
+    "redactor": {
+      "primary": "qwen2.5:14b",
+      "use_case": "Compliance, audit"
+    },
+    "velum": {
+      "primary": "nous-hermes2:latest",
+      "use_case": "Data privacy, GDPR"
+    },
+    "miles": {
+      "primary": "antoniohudnall/Mort_II:latest",
+      "use_case": "Sales consultant, voice"
+    },
+    "milkman": {
+      "primary": "gemma2:2b",
+      "use_case": "Logistics, delivery coordination"
+    },
+    "r2-c4": {
+      "primary": "tinyllama:latest",
+      "use_case": "Specialized calculations"
+    },
+    "qora": {
+      "primary": "nomic-embed-text:latest",
+      "use_case": "Query optimization, embeddings"
+    },
+    "fiber": {
+      "primary": "qwen3.5:latest",
+      "use_case": "Network engineering"
+    },
+    "mortimer": {
+      "primary": "antoniohudnall/Mort_II:latest",
+      "use_case": "Model hosting, runtime"
+    }
+  },
+  "guidelines": {
+    "vision_tasks": "qwen3.5:latest",
+    "fast_response": "gemma2:2b or tinyllama:latest",
+    "deep_reasoning": "qwen2.5:14b",
+    "sales_voice": "antoniohudnall/Mort_II:latest",
+    "embeddings": "nomic-embed-text:latest",
+    "general_purpose": "nous-hermes2:latest"
+  }
+}
