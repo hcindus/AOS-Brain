@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ivoire Auto | Exclusive ICON4x4 Distributor - Côte d'Ivoire</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.5em;
+            color: #e94560;
+            margin-bottom: 30px;
+        }
+        
+        .hero .tagline {
+            font-size: 1.2em;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        
+        .section {
+            margin-bottom: 80px;
+        }
+        
+        .section h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #1a1a2e;
+            border-bottom: 4px solid #e94560;
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card h3 {
+            color: #e94560;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        
+        .stats {
+            background: #1a1a2e;
+            color: white;
+            padding: 60px 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .stat-item h3 {
+            font-size: 3em;
+            color: #e94560;
+            margin-bottom: 10px;
+        }
+        
+        .cta {
+            background: #e94560;
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: white;
+            color: #e94560;
+            padding: 20px 50px;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 50px;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 3px solid white;
+            color: white;
+        }
+        
+        .partners {
+            text-align: center;
+            padding: 60px 20px;
+            background: #f8f9fa;
+        }
+        
+        .partners h2 {
+            margin-bottom: 40px;
+        }
+        
+        .partner-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+        
+        .partner-logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #1a1a2e;
+            padding: 20px;
+        }
+        
+        .flag {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        
+        footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto 40px;
+            text-align: left;
+        }
+        
+        .footer-section h3 {
+            color: #e94560;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: #aaa;
+            text-decoration: none;
+            line-height: 2;
+        }
+        
+        .footer-section a:hover {
+            color: #e94560;
+        }
+        
+        .copyright {
+            border-top: 1px solid #333;
+            padding-top: 30px;
+            margin-top: 30px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <h1>Ivoire Auto</h1>
+        <p class="subtitle"><span class="flag">🇨🇮</span> Exclusive ICON4x4 Distributor <span class="flag">🇺🇸</span></p>
+        <p class="tagline">Bringing handcrafted American 4x4 excellence to Côte d'Ivoire. 
+        Premium vehicles, legendary durability, unmatched style.</p>
+    </section>
+
+    <section class="container">
+        <div class="section">
+            <h2>About ICON4x4</h2>
+            <p style="font-size: 1.2em; margin-bottom: 30px;">ICON4x4 vehicles are hand-built in Los Angeles, California, combining vintage 
+            4x4 aesthetics with modern performance. Each vehicle is a masterpiece of 
+            craftsmanship, taking 1,000+ hours to complete.</p>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>🛠️ Hand Crafted</h3>
+                    <p>Each vehicle assembled by master craftsmen in Los Angeles. No assembly lines, 
+                    no compromises. Every bolt, stitch, and weld receives personal attention.</p>
+                </div>
+                
+                <div class="card">
+                    <h3>🚙 Legendary Platforms</h3>
+                    <p>Toyota FJ40, Ford Bronco, Land Cruiser - reborn with modern engines, 
+                    suspensions, and interiors while maintaining classic styling.</p>
+                </div>
+                
+                <div class="card">
+                    <h3>🏆 Premium Materials</h3>
+                    <p>Full-grain leather, marine-grade stainless steel, aircraft-quality 
+                    aluminum. Built to last generations, not just years.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>1,000+</h3>
+                <p>Hours Per Build</p>
+            </div>
+            
+            <div class="stat-item">
+                <h3>$200K+</h3>
+                <p>Starting Investment</p>
+            </div>
+            
+            <div class="stat-item">
+                <h3>100%</h3>
+                <p>Hand Assembled</p>
+            </div>
+            
+            <div class="stat-item">
+                <h3>USA</h3>
+                <p>Made in Los Angeles</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="section">
+            <h2>The Côte d'Ivoire Advantage</h2>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>📈 Growing Economy</h3>
+                    <p>6-7% annual GDP growth. One of Africa's fastest-growing economies with 
+                    increasing demand for luxury vehicles.</p>
+                </div>
+                
+                <div class="card">
+                    <h3>🛣️ Perfect Terrain</h3>
+                    <p>ICON4x4 vehicles thrive on challenging roads. Perfect for Côte d'Ivoire's 
+                    mix of urban and rural terrain.</p>
+                </div>
+                
+                <div class="card">
+                    <h3>🏛️ Status Symbol</h3>
+                    <p>"Made in USA" carries prestige. Unique, hand-built vehicles command 
+                    attention in diplomatic and business circles.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="partners">
+        <h2>Our Partners</h2>
+        
+        <div class="partner-logos">
+            <div class="partner-logo">ICON4x4</div>
+            <div class="partner-logo">×</div>
+            <div class="partner-logo">Ivoire Auto</div>
+            <div class="partner-logo">×</div>
+            <div class="partner-logo">Performance Supply Depot</div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <h2>Ready to Drive ICON?</h2>
+        
+        <p style="font-size: 1.2em; margin-bottom: 30px;">Be among the first in Côte d'Ivoire to own a handcrafted ICON4x4.</p>
+        
+        <a href="mailto:miles@psdepot.com" class="btn">📧 Contact Sales</a>
+        
+        <a href="tel:+8888816834" class="btn btn-outline">📞 Call Us</a>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3>Ivoire Auto</h3>
+                <p>Exclusive distributor of ICON4x4 vehicles in Côte d'Ivoire.</p>
+                <p>Abidjan, Côte d'Ivoire</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><a href="mailto:miles@psdepot.com">miles@psdepot.com</a></p>
+                <p><a href="tel:+18888816834">+1 (888) 881-6834</a></p>
+                <p><a href="tel:+14155719724">+1 (415) 571-9724</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Partners</h3>
+                <p><a href="https://icon4x4.com" target="_blank">ICON4x4</a></p>
+                <p><a href="https://psdepot.com">Performance Supply Depot</a></p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2026 Ivoire Auto. A division of Performance Supply Depot LLC.</p>
+            <p>Bringing American craftsmanship to African roads.</p>
+        </div>
+    </footer>
+</body>
+</html>
