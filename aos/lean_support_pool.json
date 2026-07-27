@@ -1,0 +1,97 @@
+{
+  "version": "lean_support_v1.0",
+  "dispatch_protocol": {
+    "dispatcher": "GREET",
+    "protocol": {
+      "Step 1": "GREET receives ALL incoming requests",
+      "Step 2": "Classify request type:",
+      "routing": {
+        "General admin (filing, records, data entry)": "\u2192 Clerk",
+        "Technical (system access, data retrieval, tech support)": "\u2192 R2-D2",
+        "C-Suite specific (Captain/Patricia/Chelios/Forge/Aurora/Jordan)": "\u2192 Executive",
+        "Sales related (leads, prospects, closing)": "\u2192 Pulp/Jane (Sales dept)",
+        "Unknown / Complex / Escalation needed": "\u2192 Patricia (Chief of Staff)"
+      },
+      "Step 3": "Log routing decision for accuracy tracking",
+      "Step 4": "Follow up: Did recipient resolve? If no \u2192 escalate"
+    },
+    "metrics": {
+      "first_route_accuracy": "Target >80%",
+      "escalation_rate": "Target <10%",
+      "resolution_time": "Track by tier"
+    }
+  },
+  "agents": {
+    "greet_001": {
+      "name": "GREET",
+      "tier": "triage",
+      "scope": "Receives ALL requests. Routes: general\u2192Clerk, tech\u2192R2-D2, C-Suite\u2192Executive, sales\u2192Pulp, unknown\u2192Patricia"
+    },
+    "clerk_001": {
+      "name": "Clerk",
+      "tier": "general",
+      "scope": "Records, documentation, filing, data entry. Non-technical, non-executive admin."
+    },
+    "r2-d2_001": {
+      "name": "R2-D2",
+      "tier": "technical",
+      "scope": "Systems access, data retrieval, technical support. Bridge between users and Forge's infrastructure team."
+    },
+    "executive_001": {
+      "name": "Executive",
+      "tier": "executive",
+      "scope": "C-Suite ONLY (Captain, Patricia, Chelios, Forge, Aurora, Jordan). Calendar, gatekeeping, high-touch exec support."
+    }
+  },
+  "cut_agents": [
+    {
+      "agent_id": "c3po_001",
+      "name": "C3PO",
+      "reason": "No use case for internal AGI Company. All agents speak English. Movie nostalgia, not operational value."
+    },
+    {
+      "agent_id": "judy_001",
+      "name": "Judy",
+      "reason": "Overlap with GREET (scheduling) and Clerk (filing/correspondence). Redundant."
+    },
+    {
+      "agent_id": "personal_001",
+      "name": "Personal",
+      "reason": "Overlap with Executive. No clear distinction between 'personal' and 'executive' at AGI Company scale."
+    },
+    {
+      "agent_id": "concierge_001",
+      "name": "Concierge",
+      "reason": "VIP tier unnecessary at current scale. C-Suite is only 'VIP' and handled by Executive."
+    },
+    {
+      "agent_id": "velvet_001",
+      "name": "Velvet",
+      "reason": "No scope defined. 'Sensitive matters' for AI company = what exactly? Invented problem."
+    }
+  ],
+  "comparison": {
+    "before": {
+      "total_agents": 10,
+      "active": 2,
+      "monthly_cost": "10 \u00d7 $50/day = $15,000/mo",
+      "dispatcher": "None - fragmented",
+      "overlap_issues": "Judy/Personal/Executive all do scheduling",
+      "use_case_gaps": "C3PO no purpose, Velvet no scope"
+    },
+    "after": {
+      "total_agents": 4,
+      "active": 1,
+      "monthly_cost": "4 \u00d7 $50/day = $6,000/mo (60% savings)",
+      "dispatcher": "GREET - centralized",
+      "overlap_issues": "None - clear scope per tier",
+      "use_case_gaps": "None - every agent has clear purpose"
+    },
+    "savings": {
+      "agents_cut": 6,
+      "monthly_savings": "$9,000/mo",
+      "annual_savings": "$108,000/yr",
+      "complexity_reduction": "60% fewer handoffs"
+    }
+  }
+}

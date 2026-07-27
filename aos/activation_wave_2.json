@@ -1,0 +1,35 @@
+{
+  "wave": 2,
+  "name": "Activation Wave 2 - Post Full Org Roast",
+  "generated_at": "2026-07-25T10:32:10.497355",
+  "rationale": "Unblock Creative (83% inactive) and Sales (no regional coverage)",
+  "agents": {
+    "blender-expert_001": {
+      "name": "Blender-Expert",
+      "role": "3D Design / Blender Specialist",
+      "department": "Creative",
+      "model": "qwen3.5",
+      "reports_to": "aurora_001",
+      "task": "Create 3D voxel asset for N'og nog game (character model or environment piece)",
+      "reason": "Creative dept 83% inactive - Aurora bottleneck. Need 3D capability for N'og nog game."
+    },
+    "scribble_001": {
+      "name": "Scribble",
+      "role": "Concept Art / Illustration",
+      "department": "Creative",
+      "model": "qwen3.5",
+      "reports_to": "aurora_001",
+      "task": "Create 3 concept art pieces: (1) AGI Company logo concept, (2) N'og nog character sketch, (3) PSD hero image concept",
+      "reason": "Creative capacity. Concept art for PSD website or game assets."
+    },
+    "hume_001": {
+      "name": "Hume",
+      "role": "Regional Sales Manager",
+      "department": "Sales",
+      "model": "nous-hermes2:latest",
+      "reports_to": "pulp_001",
+      "task": "Segment 2,911 leads by region. Identify top 3 territories with highest density.",
+      "reason": "Sales dept lacks regional coverage. 2,911 leads need territory management."
+    }
+  }
+}

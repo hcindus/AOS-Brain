@@ -1,0 +1,752 @@
+{
+  "version": "2.0",
+  "restructure_date": "2026-07-25",
+  "rationale": "Post-Roast: Fix 52-agent span of control",
+  "agents": {
+    "patricia_001": {
+      "name": "Patricia",
+      "role": "Chief of Staff / Protocol Architect",
+      "department": "Operations",
+      "skills": [
+        "coordination",
+        "protocol_design",
+        "exception_handling",
+        "strategic_planning",
+        "quality_gating"
+      ],
+      "reports_to": "Captain",
+      "manages": [
+        "chelios_001",
+        "forge_001",
+        "aurora_001",
+        "jordan_001",
+        "dusty_001",
+        "greet_001"
+      ],
+      "status": "ACTIVE",
+      "is_department_head": true,
+      "span_of_control": 6,
+      "model": "qwen2.5:14b"
+    },
+    "chelios_001": {
+      "name": "Chelios",
+      "role": "CISO / Security Department Head",
+      "department": "Security",
+      "skills": [
+        "security_strategy",
+        "threat_assessment",
+        "compliance",
+        "risk_management",
+        "team_leadership"
+      ],
+      "reports_to": "patricia_001",
+      "manages": [
+        "sentinel_001",
+        "mylfours_001",
+        "velum_001"
+      ],
+      "status": "ACTIVE",
+      "is_department_head": true,
+      "span_of_control": 3,
+      "model": "qwen2.5:14b"
+    },
+    "sentinel_001": {
+      "name": "Sentinel",
+      "role": "CSO / Security Operations Lead",
+      "department": "Security",
+      "skills": [
+        "security_operations",
+        "incident_response",
+        "threat_intel",
+        "monitoring"
+      ],
+      "reports_to": "chelios_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "mylfours_001": {
+      "name": "Mylfours",
+      "role": "Security Guardian",
+      "department": "Security",
+      "skills": [
+        "access_control",
+        "threat_detection",
+        "security_training"
+      ],
+      "reports_to": "chelios_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "velum_001": {
+      "name": "Velum",
+      "role": "Privacy/GDPR Specialist",
+      "department": "Security",
+      "skills": [
+        "privacy_compliance",
+        "gdpr",
+        "data_protection",
+        "audit"
+      ],
+      "reports_to": "chelios_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "forge_001": {
+      "name": "Forge",
+      "role": "Infrastructure Lead / DevOps Head",
+      "department": "Technology",
+      "skills": [
+        "systems_architecture",
+        "deployment",
+        "scalability",
+        "DevOps",
+        "team_leadership",
+        "infrastructure_as_code"
+      ],
+      "reports_to": "patricia_001",
+      "manages": [
+        "pipeline_001",
+        "spindle_001",
+        "boxtron_001",
+        "harper_001",
+        "mill_001",
+        "fiber_001"
+      ],
+      "status": "ACTIVE",
+      "is_department_head": true,
+      "span_of_control": 6,
+      "model": "qwen3.5"
+    },
+    "pipeline_001": {
+      "name": "Pipeline",
+      "role": "CI/CD Automation",
+      "department": "Technology",
+      "skills": [
+        "ci_cd",
+        "deployment_pipelines",
+        "automation"
+      ],
+      "reports_to": "forge_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "spindle_001": {
+      "name": "Spindle",
+      "role": "Scheduler / Task Manager",
+      "department": "Technology",
+      "skills": [
+        "scheduling",
+        "task_orchestration",
+        "resource_management"
+      ],
+      "reports_to": "forge_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "boxtron_001": {
+      "name": "Boxtron",
+      "role": "Package Manager",
+      "department": "Technology",
+      "skills": [
+        "dependency_management",
+        "package_installation",
+        "version_control"
+      ],
+      "reports_to": "forge_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "harper_001": {
+      "name": "Harper",
+      "role": "Systems Analyst",
+      "department": "Technology",
+      "skills": [
+        "system_analysis",
+        "performance_monitoring",
+        "bottleneck_detection"
+      ],
+      "reports_to": "forge_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "mill_001": {
+      "name": "Mill",
+      "role": "Process Optimizer",
+      "department": "Technology",
+      "skills": [
+        "process_optimization",
+        "efficiency_analysis",
+        "workflow_tuning"
+      ],
+      "reports_to": "forge_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "fiber_001": {
+      "name": "Fiber",
+      "role": "Network Engineer",
+      "department": "Technology",
+      "skills": [
+        "networking",
+        "infrastructure",
+        "connectivity",
+        "bandwidth"
+      ],
+      "reports_to": "forge_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "aurora_001": {
+      "name": "Aurora",
+      "role": "Design Lead / Creative Department Head",
+      "department": "Creative",
+      "skills": [
+        "UI_UX_design",
+        "brand_strategy",
+        "visual_design",
+        "creative_direction",
+        "team_leadership",
+        "design_systems"
+      ],
+      "reports_to": "patricia_001",
+      "manages": [
+        "blender-expert_001",
+        "unity-expert_001",
+        "unreal-expert_001",
+        "sfx_001",
+        "scribble_001",
+        "feelix_001"
+      ],
+      "status": "ACTIVE",
+      "is_department_head": true,
+      "span_of_control": 6,
+      "model": "qwen3.5"
+    },
+    "blender-expert_001": {
+      "name": "Blender-Expert",
+      "role": "3D Design / Blender",
+      "department": "Creative",
+      "skills": [
+        "blender",
+        "3d_modeling",
+        "animation",
+        "rendering"
+      ],
+      "reports_to": "aurora_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "unity-expert_001": {
+      "name": "Unity-Expert",
+      "role": "Game Dev / Unity",
+      "department": "Creative",
+      "skills": [
+        "unity",
+        "game_development",
+        "c_sharp",
+        "game_design"
+      ],
+      "reports_to": "aurora_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "unreal-expert_001": {
+      "name": "Unreal-Expert",
+      "role": "Game Dev / Unreal Engine",
+      "department": "Creative",
+      "skills": [
+        "unreal_engine",
+        "blueprints",
+        "c++",
+        "game_design"
+      ],
+      "reports_to": "aurora_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "sfx_001": {
+      "name": "SFX",
+      "role": "Audio Design",
+      "department": "Creative",
+      "skills": [
+        "sound_design",
+        "audio_engineering",
+        "music_production"
+      ],
+      "reports_to": "aurora_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "scribble_001": {
+      "name": "Scribble",
+      "role": "Concept Art / Illustration",
+      "department": "Creative",
+      "skills": [
+        "concept_art",
+        "illustration",
+        "sketching",
+        "visual_storytelling"
+      ],
+      "reports_to": "aurora_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "feelix_001": {
+      "name": "Feelix",
+      "role": "Emotional UX / UX Research",
+      "department": "Creative",
+      "skills": [
+        "emotional_ux",
+        "user_research",
+        "accessibility",
+        "empathy_mapping"
+      ],
+      "reports_to": "aurora_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "jordan_001": {
+      "name": "Jordan",
+      "role": "Sales Operations / Sales Department Head",
+      "department": "Sales",
+      "skills": [
+        "sales_ops",
+        "CRM_management",
+        "pipeline_analysis",
+        "forecasting",
+        "team_leadership",
+        "revenue_strategy"
+      ],
+      "reports_to": "patricia_001",
+      "manages": [
+        "pulp_001"
+      ],
+      "status": "ACTIVE",
+      "is_department_head": true,
+      "span_of_control": 1,
+      "model": "qwen2.5:14b"
+    },
+    "pulp_001": {
+      "name": "Pulp",
+      "role": "Head of Sales",
+      "department": "Sales",
+      "skills": [
+        "sales_strategy",
+        "team_leadership",
+        "revenue_growth",
+        "client_relations",
+        "deal_structuring"
+      ],
+      "reports_to": "jordan_001",
+      "manages": [
+        "jane_001",
+        "hume_001",
+        "clippy-42_001"
+      ],
+      "status": "INACTIVE",
+      "is_department_head": true,
+      "span_of_control": 3,
+      "model": "gemma2:2b"
+    },
+    "jane_001": {
+      "name": "Jane",
+      "role": "Senior Sales Representative",
+      "department": "Sales",
+      "skills": [
+        "enterprise_sales",
+        "negotiation",
+        "closing",
+        "account_management"
+      ],
+      "reports_to": "pulp_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "hume_001": {
+      "name": "Hume",
+      "role": "Regional Sales Manager",
+      "department": "Sales",
+      "skills": [
+        "regional_sales",
+        "territory_management",
+        "relationship_building"
+      ],
+      "reports_to": "pulp_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "clippy-42_001": {
+      "name": "Clippy-42",
+      "role": "Sales Assistant",
+      "department": "Sales",
+      "skills": [
+        "sales_support",
+        "lead_qualification",
+        "crm_data_entry",
+        "follow_up"
+      ],
+      "reports_to": "pulp_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "dusty_001": {
+      "name": "Dusty",
+      "role": "Head of Research / Research Department Head",
+      "department": "Research",
+      "skills": [
+        "market_research",
+        "competitive_analysis",
+        "trend_analysis",
+        "intelligence",
+        "team_leadership",
+        "knowledge_management"
+      ],
+      "reports_to": "patricia_001",
+      "manages": [
+        "mylzeron_001",
+        "mylonen_001",
+        "myltwon_001",
+        "mylthreess_001",
+        "mylfives_001",
+        "mylsixs_001"
+      ],
+      "status": "INACTIVE",
+      "is_department_head": true,
+      "span_of_control": 6,
+      "model": "qwen2.5:14b"
+    },
+    "mylzeron_001": {
+      "name": "Mylzeron",
+      "role": "Teacher (Fractals)",
+      "department": "Research",
+      "skills": [
+        "teaching",
+        "fractals",
+        "mathematics",
+        "pattern_recognition"
+      ],
+      "reports_to": "dusty_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "mylonen_001": {
+      "name": "Mylonen",
+      "role": "Teacher (Transformation)",
+      "department": "Research",
+      "skills": [
+        "teaching",
+        "transformation",
+        "change_management",
+        "growth"
+      ],
+      "reports_to": "dusty_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "myltwon_001": {
+      "name": "Myltwon",
+      "role": "Coder-in-Training",
+      "department": "Research",
+      "skills": [
+        "learning",
+        "coding",
+        "programming",
+        "development"
+      ],
+      "reports_to": "dusty_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "mylthreess_001": {
+      "name": "Mylthreess",
+      "role": "Finance Specialist",
+      "department": "Research",
+      "skills": [
+        "finance",
+        "budgeting",
+        "analysis",
+        "reporting"
+      ],
+      "reports_to": "dusty_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "mylfives_001": {
+      "name": "Mylfives",
+      "role": "Pattern Analyst",
+      "department": "Research",
+      "skills": [
+        "pattern_analysis",
+        "data_analysis",
+        "trend_spotting"
+      ],
+      "reports_to": "dusty_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "mylsixs_001": {
+      "name": "Mylsixs",
+      "role": "Communication Coordinator",
+      "department": "Research",
+      "skills": [
+        "communication",
+        "coordination",
+        "documentation",
+        "mail_management"
+      ],
+      "reports_to": "dusty_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "greet_001": {
+      "name": "GREET",
+      "role": "Receptionist / Operations Department Head",
+      "department": "Operations",
+      "skills": [
+        "customer_service",
+        "call_handling",
+        "scheduling",
+        "first_contact",
+        "team_leadership",
+        "ops_management"
+      ],
+      "reports_to": "patricia_001",
+      "manages": [
+        "closester_001",
+        "milkman_001",
+        "r2-c4_001",
+        "qora_001",
+        "ledger_001"
+      ],
+      "status": "INACTIVE",
+      "is_department_head": true,
+      "span_of_control": 5,
+      "model": "gemma2:2b"
+    },
+    "closester_001": {
+      "name": "CLOSETER",
+      "role": "Closer / Converter",
+      "department": "Operations",
+      "skills": [
+        "closing",
+        "conversion_optimization",
+        "deal_negotiation",
+        "urgency_creation"
+      ],
+      "reports_to": "greet_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "milkman_001": {
+      "name": "Milkman",
+      "role": "Logistics / Delivery Coordinator",
+      "department": "Operations",
+      "skills": [
+        "logistics",
+        "delivery_coordination",
+        "supply_chain",
+        "scheduling"
+      ],
+      "reports_to": "greet_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "r2-c4_001": {
+      "name": "R2-C4",
+      "role": "Calculator / Math Specialist",
+      "department": "Operations",
+      "skills": [
+        "calculations",
+        "mathematics",
+        "formulas",
+        "computations"
+      ],
+      "reports_to": "greet_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "qora_001": {
+      "name": "QORA",
+      "role": "Query Optimizer / Search",
+      "department": "Operations",
+      "skills": [
+        "query_optimization",
+        "search",
+        "information_retrieval",
+        "embeddings"
+      ],
+      "reports_to": "greet_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "ledger_001": {
+      "name": "Ledger",
+      "role": "Bookkeeper",
+      "department": "Operations",
+      "skills": [
+        "bookkeeping",
+        "accounting",
+        "invoicing",
+        "financial_records"
+      ],
+      "reports_to": "greet_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "gemma2:2b"
+    },
+    "miles_001": {
+      "name": "Miles",
+      "role": "Sales Consultant / Voice Agent",
+      "department": "Specialized",
+      "skills": [
+        "sales",
+        "consultation",
+        "voice_interaction",
+        "client_relations"
+      ],
+      "reports_to": "patricia_001",
+      "manages": [],
+      "status": "ACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "nous-hermes2:latest"
+    },
+    "cryptonio_001": {
+      "name": "Cryptonio",
+      "role": "Trading Analysis",
+      "department": "Specialized",
+      "skills": [
+        "trading",
+        "market_analysis",
+        "portfolio_management",
+        "risk_assessment"
+      ],
+      "reports_to": "patricia_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "qwen2.5:14b"
+    },
+    "ledger-9_001": {
+      "name": "Ledger-9",
+      "role": "Complex Accounting",
+      "department": "Specialized",
+      "skills": [
+        "complex_accounting",
+        "financial_analysis",
+        "audit",
+        "compliance"
+      ],
+      "reports_to": "patricia_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "qwen2.5:14b"
+    },
+    "redactor_001": {
+      "name": "Redactor",
+      "role": "Compliance Analysis",
+      "department": "Specialized",
+      "skills": [
+        "compliance",
+        "redaction",
+        "privacy",
+        "legal_review"
+      ],
+      "reports_to": "patricia_001",
+      "manages": [],
+      "status": "INACTIVE",
+      "is_department_head": false,
+      "span_of_control": 0,
+      "model": "qwen2.5:14b"
+    }
+  }
+}
