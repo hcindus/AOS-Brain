@@ -1,0 +1,114 @@
+{
+  "timestamp": "2026-07-25T10:34:33.486495",
+  "trigger": "24h checkpoint",
+  "blocked_missions": [
+    {
+      "id": "Z5",
+      "agent": "Jane",
+      "blocked_by": "Z3"
+    },
+    {
+      "id": "Z9",
+      "agent": "CLOSETER",
+      "blocked_by": "Z3"
+    }
+  ],
+  "escalation_plan": {
+    "trigger": "24h checkpoint: 2 missions blocked on Z3",
+    "priority": "CRITICAL",
+    "blocker": "Pulp (Z3) - Sales Playbook",
+    "dependents": [
+      "Jane (Z5)",
+      "CLOSETER (Z9)"
+    ],
+    "business_impact": "Sales infrastructure delayed \u2192 revenue at risk",
+    "plan": {
+      "phase1": {
+        "name": "MVP Delivery",
+        "duration": "12 hours",
+        "deliverable": "Playbook sections 1,2,5 (ICP, Value Props, Closing)",
+        "unblocks": [
+          "Z5 (Jane templates)",
+          "Z9 (CLOSETER scripts)"
+        ]
+      },
+      "phase2": {
+        "name": "Parallel Execution",
+        "duration": "36 hours",
+        "parallel_work": [
+          "Pulp: completes sections 3,4 (Objections, Process)",
+          "Jane: creates templates from sections 1-3",
+          "CLOSETER: drafts scripts from section 5"
+        ]
+      },
+      "phase3": {
+        "name": "Integration",
+        "duration": "End of 48h",
+        "deliverable": "Complete playbook + templates + scripts"
+      }
+    }
+  },
+  "handoff_protocol": {
+    "workflow_name": "Sales Playbook \u2192 Templates/Scripts",
+    "departments": [
+      "Sales (Pulp)",
+      "Sales (Jane)",
+      "Sales (CLOSETER)"
+    ],
+    "handoff_type": "Document-based dependency",
+    "protocol": {
+      "step1_producer": {
+        "agent": "Pulp",
+        "action": "Publish MVP sections to /shared/sales/playbook_v0.5.md",
+        "notify": [
+          "Jane",
+          "CLOSETER",
+          "Jordan"
+        ]
+      },
+      "step2_consumers": {
+        "agents": [
+          "Jane",
+          "CLOSETER"
+        ],
+        "action": "Pull relevant sections, begin parallel work",
+        "acknowledge": "Reply to Pulp with 'Sections received, starting work'"
+      },
+      "step3_tracking": {
+        "system": "Mission Control",
+        "action": "Update Z5, Z9 status to 'IN_PROGRESS'",
+        "note": "Blocked \u2192 Active (parallel phase)"
+      },
+      "step4_completion": {
+        "trigger": "All 3 missions complete",
+        "action": "Archive workflow as first cross-dept success",
+        "document": "Template for future dependencies"
+      }
+    },
+    "success_criteria": [
+      "Pulp delivers MVP within 12h",
+      "Jane/CLOSETER acknowledge receipt within 1h",
+      "All 3 missions complete by 48h",
+      "Handoff latency <2h (Pulp delivery \u2192 Jane/CLOSETER start)"
+    ]
+  },
+  "ripple_effects": {
+    "unblock_pulp": {
+      "direct": [
+        "Z5 (Jane)",
+        "Z9 (CLOSETER)"
+      ],
+      "indirect": [
+        "Sales dept reaches 4/4 missions complete",
+        "Sales infrastructure ready for 2,911 leads",
+        "Cross-dept workflow proven"
+      ],
+      "revenue_impact": "2,911 leads \u00d7 scripts/templates = $X potential"
+    },
+    "if_not_unblocked": {
+      "risk": "Sales missions fail (2/4 incomplete)",
+      "validation": "Below 7/12 threshold",
+      "consequence": "Reassess Zombie Protocol efficacy"
+    }
+  }
+}

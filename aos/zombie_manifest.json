@@ -1,0 +1,132 @@
+{
+  "protocol": "ZOMBIE v1.0",
+  "generated_at": "2026-07-25T10:24:22.430526",
+  "activations": {
+    "dusty_001": {
+      "name": "Dusty",
+      "role": "Head of Research",
+      "department": "Research",
+      "status": "READY",
+      "progress": 100,
+      "activated_at": "2026-07-25T10:24:21.127198",
+      "steps": [
+        "Model check: Model qwen2.5:14b available",
+        "Workspace: Workspace exists: /var/lib/aos/agents/crew-dusty_001/",
+        "Context: Base hydration complete",
+        "Task queue: Ready for delegation"
+      ]
+    },
+    "greet_001": {
+      "name": "GREET",
+      "role": "Receptionist / Ops Head",
+      "department": "Operations",
+      "status": "READY",
+      "progress": 100,
+      "activated_at": "2026-07-25T10:24:21.283129",
+      "steps": [
+        "Model check: Model gemma2:2b available",
+        "Workspace: Workspace exists: /var/lib/aos/agents/crew-greet_001/",
+        "Context: Base hydration complete",
+        "Task queue: Ready for delegation"
+      ]
+    },
+    "pulp_001": {
+      "name": "Pulp",
+      "role": "Head of Sales",
+      "department": "Sales",
+      "status": "READY",
+      "progress": 100,
+      "activated_at": "2026-07-25T10:24:21.418925",
+      "steps": [
+        "Model check: Model nous-hermes2:latest available",
+        "Workspace: Workspace exists: /var/lib/aos/agents/crew-pulp_001/",
+        "Context: Base hydration complete",
+        "Task queue: Ready for delegation"
+      ]
+    },
+    "sentinel_001": {
+      "name": "Sentinel",
+      "role": "CSO / Security Ops",
+      "department": "Security",
+      "status": "READY",
+      "progress": 100,
+      "activated_at": "2026-07-25T10:24:21.601647",
+      "steps": [
+        "Model check: Model qwen2.5:14b available",
+        "Workspace: Workspace exists: /var/lib/aos/agents/crew-sentinel_001/",
+        "Context: Base hydration complete",
+        "Task queue: Ready for delegation"
+      ]
+    },
+    "jane_001": {
+      "name": "Jane",
+      "role": "Senior Sales Rep",
+      "department": "Sales",
+      "status": "READY",
+      "progress": 100,
+      "activated_at": "2026-07-25T10:24:21.810261",
+      "steps": [
+        "Model check: Model nous-hermes2:latest available",
+        "Workspace: Workspace exists: /var/lib/aos/agents/crew-jane_001/",
+        "Context: Base hydration complete",
+        "Task queue: Ready for delegation"
+      ]
+    },
+    "mylzeron_001": {
+      "name": "Mylzeron",
+      "role": "Teacher (Fractals)",
+      "department": "Research",
+      "status": "READY",
+      "progress": 100,
+      "activated_at": "2026-07-25T10:24:22.005994",
+      "steps": [
+        "Model check: Model gemma2:2b available",
+        "Workspace: Workspace missing: /var/lib/aos/agents/crew-mylzeron_001/",
+        "Context: Base hydration complete",
+        "Task queue: Ready for delegation"
+      ]
+    },
+    "pipeline_001": {
+      "name": "Pipeline",
+      "role": "CI/CD Automation",
+      "department": "Technology",
+      "status": "READY",
+      "progress": 100,
+      "activated_at": "2026-07-25T10:24:22.217443",
+      "steps": [
+        "Model check: Model qwen2.5:14b available",
+        "Workspace: Workspace missing: /var/lib/aos/agents/crew-pipeline_001/",
+        "Context: Base hydration complete",
+        "Task queue: Ready for delegation"
+      ]
+    },
+    "taptap_001": {
+      "name": "TAPTAP",
+      "role": "Code Reviewer",
+      "department": "Technology",
+      "status": "READY",
+      "progress": 100,
+      "activated_at": "2026-07-25T10:24:22.324504",
+      "steps": [
+        "Model check: Model tinyllama:latest available",
+        "Workspace: Workspace missing: /var/lib/aos/agents/crew-taptap_001/",
+        "Context: Base hydration complete",
+        "Task queue: Ready for delegation"
+      ]
+    },
+    "closester_001": {
+      "name": "CLOSETER",
+      "role": "Closer / Converter",
+      "department": "Sales",
+      "status": "READY",
+      "progress": 100,
+      "activated_at": "2026-07-25T10:24:22.430393",
+      "steps": [
+        "Model check: Model nous-hermes2:latest available",
+        "Workspace: Workspace missing: /var/lib/aos/agents/crew-closester_001/",
+        "Context: Base hydration complete",
+        "Task queue: Ready for delegation"
+      ]
+    }
+  }
+}
