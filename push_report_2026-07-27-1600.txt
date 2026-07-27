@@ -1,0 +1,93 @@
+================================================================================
+🌆 EVENING GIT PUSH REPORT - 2026-07-27 16:00 UTC
+================================================================================
+
+STATUS: ✅ PARTIAL - Pushed what was possible
+
+--------------------------------------------------------------------------------
+REPO: main (/root/.openclaw/workspace)
+--------------------------------------------------------------------------------
+Branch: main
+Status: ✅ Up to date with origin/main
+Working tree: Clean - nothing to commit
+
+Last Commit:
+  12fd71bab6 Auto-commit: Add new crew report JSON file 
+               (expeditions/crew_report_1785164107697.json)
+  Time: 2026-07-27 15:38 UTC
+
+Recent History (last 5):
+  12fd71bab6 Auto-commit: Add new crew report JSON file
+  a6b36820b3 Auto: Add crew report for 2026-07-27
+  09b078f6df Auto-commit: Add daily memory log and queue report
+  9efae713d3 Auto-commit: Add crew report JSON
+  f8e6835c0d Jordan office sync 2026-07-27_12:42
+
+Pending Changes: None
+
+Note: Branch "backup-before-filter" has 10 unpushed commits but is not 
+      tracking a remote branch. This appears to be a local backup branch.
+
+--------------------------------------------------------------------------------
+REPO: aocros (submodule)
+--------------------------------------------------------------------------------
+Branch: main
+Status: ✅ Successfully pushed
+Working tree: Clean
+
+Pushed: 1 commit
+  924b9b62 Add daily standup for 2026-07-27
+
+--------------------------------------------------------------------------------
+REPOS WITH UNPUSHED COMMITS (Remote Repository Issues)
+--------------------------------------------------------------------------------
+
+📁 psdepot
+   Unpushed: 8 commits
+   Status: ❌ Remote repository not found (404)
+   Last local commit: f1993ad Add thank-you-payment page
+
+📁 myl0nr0s.cloud  
+   Unpushed: 14 commits
+   Status: ❌ Remote repository not found (404)
+   Last local commit: 6b3cf87 Morning push: Payment server updates
+
+📁 wiki
+   Unpushed: 8 commits
+   Status: ❌ Remote repository not found (404)
+   Last local commit: 69363c7 Auto-update: Wiki sync
+
+📁 .sync
+   Unpushed: 1 commit
+   Status: ❌ Remote repository not found (404)
+   Last local commit: (local sync data)
+
+📁 reggiestarr-pos
+   Unpushed: 6 commits
+   Status: ❌ Remote repository not found (404)
+   Last local commit: 71216e9 feat: Update demo.html
+
+--------------------------------------------------------------------------------
+SUMMARY
+--------------------------------------------------------------------------------
+✅ Main repo: Up to date with origin/main
+✅ aocros submodule: Successfully pushed (1 commit)
+⚠️  5 local repos: Have unpushed commits but remote repos not accessible
+   - These may be local-only repos or remotes need to be created
+   - Total unpushed commits: 37 across 5 repositories
+
+Files/Changes Since Last Push:
+  - Crew reports: expeditions/crew_report_1785164107697.json (latest)
+  - Daily memory logs updated
+  - Queue reports generated
+  - aocros daily standup (2026-07-27)
+
+Errors/Conflicts:
+  - No merge conflicts
+  - 5 repositories returned "Repository not found" (may need to be created
+    on GitHub or remotes may have been deleted/renamed)
+
+Next scheduled push: 00:00 UTC (midnight)
+
+Report generated: 2026-07-27 16:05 UTC
+================================================================================
