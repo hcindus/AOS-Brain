@@ -30,6 +30,34 @@ game/
 
 ---
 
+## psdepot.com Cart localStorage Issue - 2026-07-28
+**Problem:** Cart items from main page not appearing in checkout
+
+**Root Cause:** Inconsistent localStorage keys across pages
+- Product pages (72-100-cash-drawer.html, etc.): Used `psdepot.com:psdepot_cart`
+- Checkout/index pages: Used `psdepot_cart`
+- This caused carts to appear empty or items to not sync
+
+**Solution:** Standardize ALL pages to use `psdepot_cart`
+- Updated ~30+ HTML files site-wide
+- Keys must match exactly: `psdepot_cart` (not `psdepot.com:psdepot_cart`)
+- Data structure: `{sku, name, price, quantity}` minimum fields
+
+**Files to check if issue recurs:**
+- `/var/www/psdepot.com/index.html` — main page cart functions
+- `/var/www/psdepot.com/checkout.html` — checkout getCart/saveCart
+- `/var/www/psdepot.com/products/*.html` — product addToCart functions
+
+**Diagnostic:** Visit `https://psdepot.com/cart-test.html` to inspect localStorage contents
+
+**Command to verify consistency:**
+```bash
+grep -r "localStorage.*psdepot_cart" /var/www/psdepot.com --include="*.html" | grep -v ".backups"
+# All should show: psdepot_cart (NOT psdepot.com:psdepot_cart)
+```
+
+---
+
 ## Quick Reference
 
 ### Brain Status Commands
