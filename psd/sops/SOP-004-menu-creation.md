@@ -32,8 +32,31 @@ Applies to all menu creation and redesign projects for restaurant, café, bar, a
 | Competitive Review | Analyze 3-5 competitor menus for positioning | Competitive Analysis |
 | Concept Definition | Establish cuisine type, service style, atmosphere | Concept Document |
 
-### 1.2 Menu Engineering
-**Categorize all menu items:**
+### 1.2 Food Cost Analysis
+**Calculate true profitability before pricing:**
+
+| Metric | Formula | Target |
+|--------|---------|--------|
+| **Food Cost %** | (Ingredient Cost ÷ Menu Price) × 100 | 25-35% |
+| **Contribution Margin** | Menu Price − Ingredient Cost | Maximum |
+| **Plate Cost** | Sum of all ingredients + waste % | Track weekly |
+
+**Required for each menu item:**
+- [ ] Recipe costing sheet (all ingredients, weights, costs)
+- [ ] Vendor pricing (update monthly)
+- [ ] Waste/shrink factor (5-10% typical)
+- [ ] Labor cost allocation (if applicable)
+- [ ] Target margin (65-75% gross margin typical)
+
+**Red Flags:**
+- Food cost > 40% (unless premium positioning)
+- Low-margin items with high labor complexity
+- Ingredients with volatile pricing
+
+**Deliverable:** Recipe Costing Worksheet
+
+### 1.3 Menu Engineering
+**Categorize all menu items by profitability AND popularity:**
 
 | Category | Profit | Popularity | Action |
 |----------|--------|------------|--------|
@@ -42,7 +65,9 @@ Applies to all menu creation and redesign projects for restaurant, café, bar, a
 | **Plough Horses** | Low | High | Maintain, consider slight price increase |
 | **Dogs** | Low | Low | Remove or re-engineer |
 
-**Deliverable:** Menu Engineering Matrix
+**Note:** High food cost items can still be Stars if priced appropriately. Focus on contribution margin, not just cost %.
+
+**Deliverable:** Menu Engineering Matrix with food cost data
 
 ---
 
@@ -71,13 +96,30 @@ Applies to all menu creation and redesign projects for restaurant, café, bar, a
 - ✅ "Fire-grilled free-range chicken with seasonal roasted vegetables and herb compound butter"
 
 ### 2.3 Pricing Strategy
-**Techniques:**
+**Cost-First Pricing Formula:**
+```
+Menu Price = (Food Cost + Labor Cost) ÷ (1 − Target Margin %)
+```
+
+**Example:**
+- Food cost: $4.50
+- Labor cost: $2.00
+- Target margin: 70%
+- Menu price = ($4.50 + $2.00) ÷ 0.30 = **$21.67** → round to **$21.99**
+
+**Psychological Techniques:**
 1. **Anchoring**: Place highest-priced item first in section
 2. **Charm Pricing**: $18.99 vs $19.00
 3. **Remove Currency Symbols**: "18" vs "$18" (reduces price sensitivity)
 4. **Decoy Item**: One expensive item makes others seem reasonable
 
-**Deliverable:** Menu Content Document with descriptions and pricing
+**Pricing Guardrails:**
+- Never price below food cost + minimum margin
+- Know your break-even point per item
+- Account for comp/voids (typically 2-5%)
+- Review vendor costs monthly, adjust prices quarterly if needed
+
+**Deliverable:** Menu Content Document with cost-based pricing rationale
 
 ---
 
