@@ -122,6 +122,95 @@ Create menus in:
 - **PDF**: Print-ready, consistent formatting
 - **Canva/Figma**: Visual design tools for non-dev users
 
+### Risk Mitigation: Common Failures
+
+**What Could Go Wrong:**
+
+| Failure Mode | Warning Signs | Prevention |
+|--------------|---------------|------------|
+| **Overpricing** | Customer complaints, low sales volume | Verify food cost <35%, competitive analysis |
+| **Poor Layout** | Customers skip sections, long decision time | A/B test with 5 customers, track eye movement |
+| **Ignored Food Costs** | Thin margins, unexpected losses | Recipe costing before pricing, weekly monitoring |
+| **Description Overload** | Confused customers, order errors | 2-3 power words max, clear ingredient lists |
+| **Seasonal Blindness** | Out-of-stock items, price volatility | 90-day ingredient forecast, backup suppliers |
+
+**Contingency Planning:**
+- Build 10% buffer into all pricing for cost fluctuations
+- Keep 2 "Puzzle" items on standby to replace Dogs quickly
+- Monthly margin review: remove items <15% contribution margin
+
+---
+
+### Validation Framework: 48h Cheap Test
+
+**Objective:** Validate menu design before full deployment
+
+**Method:**
+1. **Select 3 pilot restaurants** (different cuisines, price points)
+2. **Deploy draft menu** for 48 hours
+3. **Measure:**
+   - Average order time (should decrease 10%)
+   - Staff questions about items (should be <2 per hour)
+   - Customer confusion rate (survey 10 customers)
+4. **Success Criteria:**
+   - 7/10+ customers find menu "easy to navigate"
+   - Staff can describe all Stars without reference
+   - Average check increases OR stays stable with higher margin
+
+**A/B Testing Guide:**
+- Test 2 layouts with same items
+- Run each for 1 week minimum
+- Track: sales per position, time to order, customer feedback
+- Winner: better margin OR faster decisions with maintained sales
+
+---
+
+### ROI Calculator
+
+**Value Proposition:**
+
+| Metric | Before | After Menu Design | Improvement |
+|--------|--------|-------------------|-------------|
+| Average Check | $X | $X × 1.08-1.12 | +8-12% |
+| High-Margin Item Sales | Y% | Y% + 15% | +15% |
+| Table Turn Time | Z min | Z − 10% | Faster service |
+| Customer Decision Time | 3-5 min | 1-2 min | Better flow |
+
+**Time Savings:**
+- SOP-004 process: 10 days vs 4-6 weeks trial-and-error
+- Reduced revisions: 1-2 cycles vs 5-10 cycles
+- Staff training: Clear descriptions reduce questions by 30%
+
+---
+
+### Budget Tiers
+
+**DIY (Self-Service):**
+- Time: 20-30 hours
+- Cost: $0 (use free templates)
+- Best for: Small cafes, existing brand clarity
+- Risk: Higher without design experience
+
+**Consultant-Assisted:**
+- Time: 10 hours + 5 hours consultant
+- Cost: $500-2,000
+- Best for: Mid-size restaurants, need guidance
+- Value: Expert review prevents costly mistakes
+
+**Full-Service:**
+- Time: 5 hours (your input)
+- Cost: $3,000-10,000
+- Best for: Fine dining, rebrands, complex menus
+- Includes: Photography, copywriting, full implementation
+
+**Reality Check:**
+- SOP-004 is consultant-assisted tier
+- Full timeline: 10 days (not 2 days - quality takes time)
+- Requires: Client commitment to food costing and staff training
+- Success rate: 85% when followed completely vs 40% DIY
+
+---
+
 ### Deliverables
 
 Complete menu package includes:
@@ -129,10 +218,14 @@ Complete menu package includes:
 2. Pricing strategy notes
 3. Item descriptions
 4. Visual hierarchy guide
-5. Implementation instructions
+5. **Risk assessment checklist**
+6. **48h validation test template**
+7. **ROI tracking spreadsheet**
+8. Implementation instructions
 
 ### References
 
 - [Menu Engineering Guide](references/menu-engineering.md)
 - [Color Psychology in Dining](references/color-psychology.md)
 - [Typography for Restaurants](references/typography.md)
+- [Common Failures & Solutions](references/risk-mitigation.md)
