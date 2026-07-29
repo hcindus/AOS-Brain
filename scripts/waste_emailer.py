@@ -43,18 +43,16 @@ env_file = '/root/.openclaw/workspace/aocros/secrets/smtp.env'
 load_env_file(env_file)
 
 # ═══════════════════════════════════════════════════════════════════
-# CONFIGURATION - ONLY Mortimer receives waste now
+# CONFIGURATION - DISABLED: No waste emails per Captain's orders
 # ═══════════════════════════════════════════════════════════════════
 SMTP_HOST = os.getenv("SMTP_HOST", os.getenv("HOSTINGER_SMTP_SERVER", "smtp.hostinger.com"))
 SMTP_PORT = int(os.getenv("SMTP_PORT", os.getenv("HOSTINGER_SMTP_PORT", "587")))
 SMTP_USER = os.getenv("SMTP_USER", os.getenv("HOSTINGER_SMTP_USER", "miles@myl0nr0s.cloud"))
 SMTP_PASS = os.getenv("SMTP_PASS", os.getenv("HOSTINGER_SMTP_PASS", ""))  # Set via env var
 
-# UPDATED: Mortimer and Captain receive waste emails
-WASTE_RECIPIENTS = [
-    "mortimer@myl0nr0s.cloud",
-    "Antonio.hudnall@gmail.com",  # Captain
-]
+# DISABLED: Waste emails ceased per Captain's orders on 2026-07-29
+WASTE_RECIPIENTS = []
+# Previously: mortimer@myl0nr0s.cloud, Antonio.hudnall@gmail.com
 
 # ═══════════════════════════════════════════════════════════════════
 # RATE LIMITING
@@ -143,7 +141,12 @@ def package_waste():
 # ═══════════════════════════════════════════════════════════════════
 
 def send_waste_email(waste_data):
-    """Send waste package to Mortimer only."""
+    """Send waste package to configured recipients."""
+    # DISABLED: Waste emails ceased per Captain's orders
+    if not WASTE_RECIPIENTS:
+        print("🛑 Waste emails DISABLED - no recipients configured per Captain's orders")
+        return True  # Return success to avoid errors, but don't actually send
+    
     if not SMTP_PASS:
         print("ERROR: SMTP password not configured", file=sys.stderr)
         return False
