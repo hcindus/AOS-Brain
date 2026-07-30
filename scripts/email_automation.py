@@ -369,8 +369,9 @@ def run_email_cycle():
     if new_messages:
         process_incoming_emails(new_messages)
     
-    # 2. Check and send waste
-    check_and_send_waste()
+    # 2. Check and send waste - DISABLED per Captain's orders 2026-07-30
+    # check_and_send_waste()
+    log("🛑 Waste emails DISABLED per Captain's orders")
     
     log("=" * 60)
 
