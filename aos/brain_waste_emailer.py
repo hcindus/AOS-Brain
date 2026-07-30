@@ -12,8 +12,9 @@ import time
 import sys
 from datetime import datetime
 
-# Configuration
-WASTE_EMAIL_RECIPIENT = "Antonio.hudnall@gmail.com"
+# Configuration - DISABLED: No more waste emails
+# Previously: WASTE_EMAIL_RECIPIENT = "Antonio.hudnall@gmail.com"
+WASTE_EMAIL_RECIPIENT = None  # Disabled - waste emails ceased per Captain's orders
 WASTE_EMAIL_SUBJECT = "🫘 AOS Brain Waste Report - {timestamp}"
 
 
@@ -267,6 +268,10 @@ def main():
     print("\n📊 Collecting kidneys status...")
     kidneys_data = get_kidneys_status()
     
+    # DISABLED: Waste emails stopped per Captain's orders
+    print("🛑 Brain waste emailer is DISABLED - no emails sent per Captain's orders")
+    print("   Report saved locally only.")
+    
     if kidneys_data.get('error'):
         print(f"❌ Error getting kidneys status: {kidneys_data['error']}")
         sys.exit(1)
@@ -287,33 +292,36 @@ def main():
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
     
-    # Send email
-    subject = WASTE_EMAIL_SUBJECT.format(timestamp=timestamp)
-    print(f"\n📧 Sending email to {WASTE_EMAIL_RECIPIENT}...")
-    
-    success, message = send_email(
-        WASTE_EMAIL_RECIPIENT,
-        subject,
-        email_body,
-        attachment_content=feeder_script,
-        attachment_name="brain_feeder.py"
-    )
-    
-    if success:
-        print(f"✅ {message}")
-        print(f"\n📬 Email sent!")
-        print(f"   To: {WASTE_EMAIL_RECIPIENT}")
-        print(f"   Subject: {subject}")
-        print(f"   Attached: brain_feeder.py")
+    # Send email - DISABLED
+    if WASTE_EMAIL_RECIPIENT:
+        subject = WASTE_EMAIL_SUBJECT.format(timestamp=timestamp)
+        print(f"\n📧 Sending email to {WASTE_EMAIL_RECIPIENT}...")
+        
+        success, message = send_email(
+            WASTE_EMAIL_RECIPIENT,
+            subject,
+            email_body,
+            attachment_content=feeder_script,
+            attachment_name="brain_feeder.py"
+        )
+        
+        if success:
+            print(f"✅ {message}")
+            print(f"\n📬 Email sent!")
+            print(f"   To: {WASTE_EMAIL_RECIPIENT}")
+            print(f"   Subject: {subject}")
+            print(f"   Attached: brain_feeder.py")
+        else:
+            print(f"❌ Failed to send email: {message}")
+            sys.exit(1)
     else:
-        print(f"❌ Failed to send email: {message}")
-        sys.exit(1)
+        print("\n📧 Email sending is DISABLED - saving report locally only")
     
     # Also save locally
     report_file = f"/tmp/brain_waste_report_{datetime.utcnow().strftime('%Y%m%d_%H%M')}.txt"
     with open(report_file, 'w') as f:
         f.write(email_body)
-    print(f"\n📝 Report also saved to: {report_file}")
+    print(f"\n📝 Report saved to: {report_file}")
     
     # Save feeder script locally
     feeder_file = "/tmp/brain_feeder.py"
