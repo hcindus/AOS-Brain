@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Collections API - Standalone HTTP Server
-Uses built-in sqlite3, no external dependencies"""
+"""Collections API - Standalone HTTP Server"""
 
 import http.server
 import socketserver
@@ -14,7 +13,6 @@ PORT = 8085
 
 class CollectionsHandler(http.server.BaseHTTPRequestHandler):
     def log_message(self, format, *args):
-        # Suppress default logging
         pass
     
     def send_json(self, data, status=200):
@@ -36,17 +34,15 @@ class CollectionsHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         parsed = urlparse(self.path)
         
-        if parsed.path == '/collections/api' or parsed.path == '/collections/api/':
+        if parsed.path in ('/collections/api', '/collections/api/'):
             try:
-                # Read-only connection
                 conn = sqlite3.connect(f'file:{DB_PATH}?mode=ro', uri=True)
                 conn.row_factory = sqlite3.Row
                 cursor = conn.cursor()
                 
                 cursor.execute("""
                     SELECT * FROM collections_accounts 
-                    WHERE status != 'paid' 
-                    ORDER BY days_overdue DESC, amount DESC
+                    ORDER BY paid ASC, days_overdue DESC, amount DESC
                 """)
                 
                 rows = cursor.fetchall()
@@ -65,7 +61,9 @@ class CollectionsHandler(http.server.BaseHTTPRequestHandler):
                         'viewed': bool(row['viewed']),
                         'note': row['notes'] or '',
                         'address': row['address'] or 'Address not on file - Click Edit to add',
-                        'phone': row['phone'] or ''
+                        'phone': row['phone'] or '',
+                        'paid': bool(row['paid']),
+                        'paidDate': row['paid_date'] or ''
                     })
                 
                 self.send_json({
@@ -77,19 +75,13 @@ class CollectionsHandler(http.server.BaseHTTPRequestHandler):
                 
             except Exception as e:
                 print(f"API Error: {e}")
-                self.send_json({
-                    'error': str(e),
-                    'fallback': True,
-                    'invoices': []
-                }, 500)
+                self.send_json({'error': str(e), 'fallback': True, 'invoices': []}, 500)
             return
         
-        # Health check
         if parsed.path == '/collections/api/health':
             self.send_json({'status': 'ok', 'service': 'collections-api'})
             return
         
-        # 404
         self.send_json({'error': 'Not found'}, 404)
 
 if __name__ == '__main__':
@@ -97,6 +89,7 @@ if __name__ == '__main__':
         print(f"ERROR: Database not found at {DB_PATH}")
         exit(1)
     
+    socketserver.TCPServer.allow_reuse_address = True
     print(f"Collections API starting on port {PORT}...")
     print(f"Database: {DB_PATH}")
     

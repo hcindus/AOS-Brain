@@ -647,7 +647,7 @@
             </div>
             <div class="summary-card" style="grid-column: span 2;">
                 <div class="summary-label">📊 Paid (Last 30 Days)</div>
-                <div class="summary-value success" id="paid-30-days">$14,576.20</div>
+                <div class="summary-value success" id="paid-30-days">$—</div>
             </div>
         </div>
 
@@ -655,15 +655,15 @@
         <div class="summary-grid" style="grid-template-columns: repeat(3, 1fr);">
             <div class="summary-card" style="border-left: 4px solid var(--accent-green);">
                 <div class="summary-label">✅ Not Overdue (22)</div>
-                <div class="summary-value success" id="not-overdue-amount">$11,165.20</div>
+                <div class="summary-value success" id="not-overdue-amount">$—</div>
             </div>
             <div class="summary-card" style="border-left: 4px solid var(--accent-red);">
                 <div class="summary-label">🔴 Overdue (15)</div>
-                <div class="summary-value danger" id="overdue-summary-amount">$10,787.25</div>
+                <div class="summary-value danger" id="overdue-summary-amount">$—</div>
             </div>
             <div class="summary-card" style="border-left: 4px solid var(--text-secondary);">
                 <div class="summary-label">📝 Drafts (5)</div>
-                <div class="summary-value" style="color: var(--text-secondary);" id="drafts-amount">$4,918.35</div>
+                <div class="summary-value" style="color: var(--text-secondary);" id="drafts-amount">$—</div>
             </div>
         </div>
 
@@ -728,7 +728,7 @@
             </div>
         </div>
 
-                        <div class="notes-section">
+                                <div class="notes-section">
             <div class="notes-title">📋 Collections Notes - Updated August 3, 2026</div>
             <ul class="notes-list">
                 <li><strong>Emmanual</strong> - Invoice #000008: 🔴 114 days overdue, VIEWED - $675.99 - CONNECTION ISSUES - MICROSALE</li>
@@ -744,7 +744,7 @@
                 <li><strong>John</strong> - Invoice #060126003: 🔴 32 days overdue, VIEWED - $163.24 - Thank you for your order.</li>
                 <li><strong>Maria Abundiz</strong> - Invoice #060826007: 🔴 26 days overdue, VIEWED - $292.28 - Thank you for your order.</li>
                 <li><strong>Bitu Manager</strong> - Invoice #061326-036: 🔴 21 days overdue, NOT VIEWED - $457.99 - screen</li>
-                <li><strong>Mark Edwards</strong> - Invoice #061326-033: 🔴 20 days overdue, VIEWED - $65.34 - Thank you for your order.</li>
+                <li><strong>Mark Edwards</strong> - Invoice #061326-033: 🔴 20 days overdue, VIEWED - $62.48 - Thank you for your order.</li>
                 <li><strong>Robert Simon</strong> - Invoice #061326022: 🔴 16 days overdue, VIEWED - $161.22</li>
                 <li><strong>Erick MAITRE'D</strong> - Invoice #061326018: 🔴 15 days overdue, VIEWED - $694.47 - Thank you for your order.</li>
                 <li><strong>Katie Rondeau</strong> - Invoice #061326016: 🔴 15 days overdue, VIEWED - $655.07 - ORDER # 651332</li>
@@ -769,7 +769,7 @@
         let isLoading = true;
 
         // Embedded invoice data from Squarespace (June 16, 2026)
-                        const EMBEDDED_INVOICES = [
+                                const EMBEDDED_INVOICES = [
             {"invoice": "003206", "customer": "Derrick Owner", "amount": 10612.24, "date": "01/15/2026", "status": "Paid", "days": 0, "viewed": true, "address": "Fairfield, CA", "note": "We look forward to working with you.", "paid": true, "paidDate": "01/19/2026"},
             {"invoice": "061326002", "customer": "Morris Owner", "amount": 8786.0, "date": "07/20/2026", "status": "Canceled", "days": 0, "viewed": true, "address": "Fairfield, CA", "note": "Sam4s POS system", "paid": false, "paidDate": ""},
             {"invoice": "052626010", "customer": "Robert Guerra", "amount": 3999.87, "date": "08/03/2026", "status": "Paid", "days": 0, "viewed": false, "address": "Fairfield, CA", "note": "Thank you for your order.", "paid": true, "paidDate": "08/03/2026"},
@@ -950,11 +950,11 @@
             {"invoice": "061326006", "customer": "William Bishop", "amount": 79.0, "date": "06/18/2026", "status": "Overdue", "days": 49, "viewed": true, "address": "Fairfield, CA", "note": "If you approve, please process invoice", "paid": false, "paidDate": ""},
             {"invoice": "061426-001", "customer": "Emad Ali", "amount": 73.15, "date": "06/24/2026", "status": "Paid", "days": 0, "viewed": true, "address": "Fairfield, CA", "note": "Thank you for your order.", "paid": true, "paidDate": "06/24/2026"},
             {"invoice": "070126-001", "customer": "General Manager", "amount": 69.29, "date": "07/09/2026", "status": "Paid", "days": 0, "viewed": false, "address": "Fairfield, CA", "note": "Thank you fir your business", "paid": true, "paidDate": "07/09/2026"},
-            {"invoice": "060126006", "customer": "Izat left msg", "amount": 68.14, "date": "06/02/2026", "status": "Paid", "days": 0, "viewed": false, "address": "Fairfield, CA", "note": "Thank you for your order.", "paid": true, "paidDate": "06/02/2026"},
-            {"invoice": "061326-033", "customer": "Mark Edwards", "amount": 65.34, "date": "07/21/2026", "status": "Overdue", "days": 20, "viewed": true, "address": "Fairfield, CA", "note": "Thank you for your order.", "paid": false, "paidDate": ""},
+            {"invoice": "060126006", "customer": "Izat left msg", "amount": 65.34, "date": "06/02/2026", "status": "Paid", "days": 0, "viewed": false, "address": "Fairfield, CA", "note": "Thank you for your order.", "paid": true, "paidDate": "06/02/2026"},
+            {"invoice": "061326-033", "customer": "Mark Edwards", "amount": 62.48, "date": "07/21/2026", "status": "Overdue", "days": 20, "viewed": true, "address": "Fairfield, CA", "note": "Thank you for your order.", "paid": false, "paidDate": ""},
             {"invoice": "05056105", "customer": "Joycelin Magno", "amount": 62.48, "date": "05/13/2026", "status": "Paid", "days": 0, "viewed": true, "address": "Fairfield, CA", "note": "Thank you for your order.", "paid": true, "paidDate": "05/31/2026"},
-            {"invoice": "051326008", "customer": "Don Tom La Torre", "amount": 62.48, "date": "05/19/2026", "status": "Paid", "days": 0, "viewed": true, "address": "Fairfield, CA", "note": "", "paid": true, "paidDate": "05/19/2026"},
-            {"invoice": "061326-034", "customer": "Satinder Sherfill", "amount": 60.83, "date": "07/06/2026", "status": "Draft", "days": 0, "viewed": false, "address": "Fairfield, CA", "note": "Thank you for your order.", "paid": false, "paidDate": ""}
+            {"invoice": "051326008", "customer": "Don Tom La Torre", "amount": 60.83, "date": "05/19/2026", "status": "Paid", "days": 0, "viewed": true, "address": "Fairfield, CA", "note": "", "paid": true, "paidDate": "05/19/2026"},
+            {"invoice": "4166-106", "customer": "Satinder Sherfill", "amount": 10612.24, "date": "07/06/2026", "status": "Overdue", "days": 3, "viewed": true, "address": "Fairfield, CA", "note": "Sam4s POS system", "paid": false, "paidDate": ""}
         ];
 
         // Fetch from database API
@@ -1237,6 +1237,28 @@
             const subtitle = document.querySelector('.page-subtitle');
             if (paid.length > 0) {
                 subtitle.innerHTML = `Track overdue invoices and payment collections <span style="color: var(--accent-green);">• ${paid.length} paid (${formatCurrency(paid.reduce((s, i) => s + i.amount, 0))})</span>`;
+            }
+
+            // Update Squarespace summary grid
+            const allOverdue = unpaid.filter(i => i.days > 0);
+            const notOverdue = unpaid.filter(i => i.days <= 0 && i.status !== 'Draft' && i.status !== 'Canceled' && i.status !== 'Refunded');
+            const drafts = unpaid.filter(i => i.status === 'Draft' && i.amount > 0);
+            
+            const notOverdueEl = document.getElementById('not-overdue-amount');
+            const overdueSummaryEl = document.getElementById('overdue-summary-amount');
+            const draftsEl = document.getElementById('drafts-amount');
+            
+            if (notOverdueEl) {
+                notOverdueEl.textContent = formatCurrency(notOverdue.reduce((s,i) => s + i.amount, 0));
+                notOverdueEl.previousElementSibling.textContent = `✅ Not Overdue (${notOverdue.length})`;
+            }
+            if (overdueSummaryEl) {
+                overdueSummaryEl.textContent = formatCurrency(allOverdue.reduce((s,i) => s + i.amount, 0));
+                overdueSummaryEl.previousElementSibling.textContent = `🔴 Overdue (${allOverdue.length})`;
+            }
+            if (draftsEl) {
+                draftsEl.textContent = formatCurrency(drafts.reduce((s,i) => s + i.amount, 0));
+                draftsEl.previousElementSibling.textContent = `📝 Drafts (${drafts.length})`;
             }
         }
 
