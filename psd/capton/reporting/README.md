@@ -1,8 +1,23 @@
 # Capton Systems Provider — Reporting Package
 
 **Prepared by:** Miles | Performance Supply Depot LLC  
-**Date:** 2026-08-03  
+**Date:** 2026-08-03 (Updated with Capton Jan-23 reseller pricing)  
 **Ref:** CSP Agreement Section 1.3 (Forecasts) & Section 1.2 (Installation Reporting)
+
+---
+
+## Pricing Reference
+
+| Product | SKU | List | Cost | Margin |
+|---------|-----|:---:|:---:|:---:|
+| Pour Spout 1oz | CAP-100-1OZ | $49.00 | $34.30 | 30% |
+| Pour Spout 1.5oz | CAP-150-15OZ | $49.00 | $34.30 | 30% |
+| Pour Spout 2oz | CAP-200-2OZ | $49.00 | $34.30 | 30% |
+| Wine Pourer 5oz | CAP-WINE-5OZ | $49.00 | $34.30 | 30% |
+| Variety Pack 12pk | CAP-VARY-12PK | $558.00 | $412.00 | 26% |
+| Cleaning Kit | CAP-CLEAN-KIT | $34.99 | ~$20.00 | ~43% |
+| PourLink Receiver | POUR-RECV | $2,200.00 | $1,200.00 | 45% |
+| PourLink Analytics | POUR-ANALYTICS | $3,000.00 | $2,400.00 | 20% |
 
 ---
 
@@ -10,25 +25,7 @@
 
 **File:** `capton_monthly_forecast_template.csv`
 
-**Purpose:** Satisfies Section 1.3 requirement for a monthly sales forecast in a format acceptable to Capton.
-
-**Fields:**
-| Field | Description |
-|-------|-------------|
-| Month/Year | Reporting month |
-| Product SKU/Name | Which Capton product |
-| Forecasted Units | Expected units to sell |
-| Forecasted Revenue | Units × unit price |
-| Expected Close Date | When we think this deal closes |
-| Lead/Customer Name | Who it's for |
-| Confidence (%) | 25/50/75/90% — how sure we are |
-| Notes | Context |
-
-**How to generate from CRM:**
-1. Pull open leads tagged `capton` from PSD CRM
-2. Sort by expected close date within the month
-3. Apply confidence multipliers: Hot (75%) / Warm (50%) / Cold (25%)
-4. Export as CSV in this format
+Tracks projected sales by SKU with list price, cost, and forecasted profit. Pull from CRM leads tagged `capton`, apply confidence multipliers.
 
 ---
 
@@ -36,43 +33,35 @@
 
 **File:** `capton_install_sales_report_template.csv`
 
-**Purpose:** Satisfies Section 1.2 — logs every install and sale completed that month.
-
-**Fields:**
-| Field | Description |
-|-------|-------------|
-| Install Date | Date system was placed |
-| Customer Name | Business name |
-| Business Type | Bar / Restaurant / Nightclub / Hotel / Other |
-| Address/City/State | Location for territory verification |
-| Contact Name/Email/Phone | Who we dealt with |
-| Product SKU/Name | Which products installed |
-| Units Installed | Quantity |
-| Unit Price | Per-unit price we charged |
-| Total Revenue | Units × price |
-| Installation Notes | Any calibrations, training, issues |
-| Follow-Up Date | Next check-in |
-
-**How to generate:**
-1. Pull closed-won opportunities tagged `capton` for the reporting month
-2. Include installation date from fulfillment records
-3. Export as CSV
+Logs every install with client details, products delivered, revenue, **and profit margin**. Includes cost tracking for accurate P&L reporting.
 
 ---
 
-## Automation Path (Future)
+## Deal Scenarios (for quoting)
 
-Once volumes justify it, this can be automated:
-- CRM webhook → auto-populate templates
-- Scheduled cron job → generate CSV on the 1st of each month
-- Email to Capton rep directly from PSD system
-
-**Estimated build effort:** ~4 hours for a Python script + cron job.
+| Type | Spouts | Hardware List | Our Cost | **Profit** |
+|------|------:|-----:|-----:|-----:|
+| Small Bar | 25 | $6,543 | $4,540 | **$2,003** |
+| Standard Bar | 54 | $7,886 | $5,480 | **$2,406** |
+| Large Bar | 170 | $18,930 | $13,171 | **$5,759** |
 
 ---
 
-## Notes for Captain
+## Customer ROI (their numbers)
 
-- These are **draft templates** — we should send these to Capton for approval _before_ relying on them as our official format, since Section 1.3 says "format acceptable to Company."
-- The forecast uses confidence percentages. If Capton wants a simpler number (just total units), we can collapse the confidence column.
-- I recommend asking for **quarterly** instead of monthly reporting. If they push back, these templates work monthly too — just more paperwork.
+**"Our system pays for itself in ~2 months"**
+
+| Bar Revenue | At 6% Pour Savings |
+|-----:|-----:|
+| $500K | $30,000/yr saved |
+| $750K | $45,000/yr saved |
+| $1M | $60,000/yr saved |
+
+---
+
+## To-Do
+
+- [ ] Add PourLink Receiver & Analytics product pages to psdepot.com
+- [ ] Confirm POUR-RECV and POUR-ANALYTICS SKUs with Capton
+- [ ] Send forecast template to Capton for format approval
+- [ ] Set up automated monthly CSV export from CRM

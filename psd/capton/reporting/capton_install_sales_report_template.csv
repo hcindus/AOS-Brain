@@ -1,3 +1,6 @@
-Install Date,Customer Name,Business Type,Address,City,State,Contact Name,Contact Email,Contact Phone,Product SKU,Product Name,Units Installed,Unit Price,Total Revenue,Installation Notes,Follow-Up Date
-2026-08-TBD,TBD Customer,Bar,123 Main St,Los Angeles,CA,John Doe,john@example.com,555-0100,CAP-100-1OZ,Capton 1 oz Bottle Top Pourer,10,24.99,249.90,"Installed at main bar, trained staff on use",2026-08-TBD
-2026-08-TBD,TBD Customer,Restaurant,456 Oak Ave,San Diego,CA,Jane Smith,jane@example.com,555-0200,CAP-200-2OZ,Capton 2 oz Bottle Top Pourer,5,26.99,134.95,"Calibrated pour volume, verified accuracy",2026-08-TBD
+Install Date,Customer Name,Business Type,Address,City,State,Contact Name,Contact Email,Contact Phone,Product SKU,Product Name,Units Installed,Unit Price,Total Revenue,Our Cost,Profit,Installation Notes,Follow-Up Date
+2026-08-TBD,TBD Customer,Bar,123 Main St,Los Angeles,CA,John Doe,john@example.com,555-0100,CAP-100-1OZ,Capton 1 oz Pour Spout,15,49.00,735.00,514.50,220.50,Calibrated pour volume 1oz verified,2026-09-TBD
+2026-08-TBD,TBD Customer,Bar,123 Main St,Los Angeles,CA,John Doe,john@example.com,555-0100,CAP-150-15OZ,Capton 1.5 oz Pour Spout,10,49.00,490.00,343.00,147.00,Standard install,2026-09-TBD
+2026-08-TBD,TBD Customer,Bar,123 Main St,Los Angeles,CA,John Doe,john@example.com,555-0100,POUR-RECV,PourLink Receiver,1,2200.00,2200.00,1200.00,1000.00,Installed at bar POS station,2026-09-TBD
+2026-08-TBD,TBD Customer,Bar,123 Main St,Los Angeles,CA,John Doe,john@example.com,555-0100,POUR-ANALYTICS,PourLink Analytics (Annual),1,3000.00,3000.00,2400.00,600.00,Account activated, portal training complete,2027-08-TBD
+2026-08-TBD,TBD Customer,Bar,123 Main St,Los Angeles,CA,John Doe,john@example.com,555-0100,CAP-CLEAN-KIT,Capton Pourer Cleaning Kit,2,34.99,69.98,40.00,29.98,Provided with install,2026-09-TBD
