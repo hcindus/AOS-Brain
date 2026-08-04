@@ -106,3 +106,10 @@
 4. **Sales/voice:** Use `Mort_II`
 5. **Embeddings:** Use `nomic-embed-text`
 6. **General purpose:** Use `nous-hermes2`
+
+### Ollama Model Registry Update (2026-08-04)
+**Status:** Old models deprecated. New models deployed:
+- **deepseek-r1:7b** - Updated reasoning model (replaces deprecated)
+- **qwen3.5** or **qwen3.6** - Updated multimodal model (replaces deprecated)
+
+**Captain Note:** "I DID deploy these. Old models deprecated. Needed replacements."
