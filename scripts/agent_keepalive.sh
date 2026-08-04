@@ -21,10 +21,10 @@ log() {
 log "=== Agent Keepalive Check v2.0 ==="
 
 # 1. Ollama Mortimer Model (external dependency)
-curl -s --max-time 30 http://localhost:11434/api/generate \
-  -d '{"model":"antoniohudnall/Mortimer:latest","prompt":"p","stream":false}' \
-  > /dev/null 2>&1
-if [ $? -eq 0 ]; then
+HTTP_CODE=$(curl -s --max-time 120 -w "%{http_code}" -o /dev/null \
+  http://localhost:11434/api/generate \
+  -d '{"model":"antoniohudnall/Mort_II:latest","prompt":".","stream":false,"keep_alive":"30m","options":{"num_predict":1}}')
+if [ "$HTTP_CODE" = "200" ]; then
     log "✅ Mortimer: RESPONSIVE"
 else
     log "⚠️ Mortimer: UNRESPONSIVE - Model may have unloaded"
