@@ -21,13 +21,19 @@ log() {
 log "=== Agent Keepalive Check v2.0 ==="
 
 # 1. Ollama Mortimer Model (external dependency)
-HTTP_CODE=$(curl -s --max-time 120 -w "%{http_code}" -o /dev/null \
-  http://localhost:11434/api/generate \
-  -d '{"model":"antoniohudnall/Mort_II:latest","prompt":".","stream":false,"keep_alive":"30m","options":{"num_predict":1}}')
-if [ "$HTTP_CODE" = "200" ]; then
+# Check if model is already loaded first (fast, no generation needed)
+if ollama ps 2>/dev/null | grep -q "antoniohudnall/Mort_II"; then
     log "✅ Mortimer: RESPONSIVE"
 else
-    log "⚠️ Mortimer: UNRESPONSIVE - Model may have unloaded"
+    # Model not loaded - cold load with 5min timeout
+    HTTP_CODE=$(curl -s --max-time 300 -w "%{http_code}" -o /dev/null \
+      http://localhost:11434/api/generate \
+      -d '{"model":"antoniohudnall/Mort_II:latest","prompt":".","stream":false,"keep_alive":"168h","options":{"num_predict":1}}')
+    if [ "$HTTP_CODE" = "200" ]; then
+        log "✅ Mortimer: LOADED (cold start)"
+    else
+        log "⚠️ Mortimer: UNRESPONSIVE (HTTP $HTTP_CODE)"
+    fi
 fi
 
 # 2. Complete Brain v4.5 - MONITOR ONLY, systemd manages restarts
