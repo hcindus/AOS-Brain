@@ -21,7 +21,7 @@ log() {
 log "=== Agent Keepalive Check v2.0 ==="
 
 # 1. Ollama Mortimer Model (external dependency)
-curl -s --max-time 8 http://localhost:11434/api/generate \
+curl -s --max-time 30 http://localhost:11434/api/generate \
   -d '{"model":"antoniohudnall/Mortimer:latest","prompt":"p","stream":false}' \
   > /dev/null 2>&1
 if [ $? -eq 0 ]; then

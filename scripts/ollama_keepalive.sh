@@ -7,7 +7,7 @@ MORTIMER_MODEL="antoniohudnall/Mort_II:latest"
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] Keeping Mortimer model resident..."
 
 # Send a lightweight keepalive request
-curl -s http://localhost:11434/api/generate \
+curl -s --max-time 60 http://localhost:11434/api/generate \
   -H "Content-Type: application/json" \
   -d "{
     \"model\": \"${MORTIMER_MODEL}\",
