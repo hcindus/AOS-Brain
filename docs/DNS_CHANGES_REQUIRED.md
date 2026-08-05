@@ -18,13 +18,18 @@
 
 ---
 
-## 🟡 OPTIONAL — Subdomain A Records (3 records)
+## 🟡 PRODUCT SUBDOMAINS (6 records — Nginx ready, DNS missing)
 
-| Type | Host | Value |
-|------|------|-------|
-| A | depotchaos.psdepot.com | 31.97.6.40 |
-| A | pos.psdepot.com | 31.97.6.40 |
-| A | api.psdepot.com | 31.97.6.40 |
+| Type | Host | Value | Product |
+|------|------|-------|---------|
+| A | cream.psdepot.com | 31.97.6.40 | CREAM Mobile |
+| A | reggiestarr.psdepot.com | 31.97.6.40 | ReggieStarr POS (RS-79) |
+| A | pos.psdepot.com | 31.97.6.40 | RS-79 + RS-80 Demo |
+| A | depotchaos.psdepot.com | 31.97.6.40 | CRM Dashboard |
+| A | api.psdepot.com | 31.97.6.40 | API Endpoints |
+| A | rs-80.psdepot.com | 31.97.6.40 | RS-80 Product Page |
+
+**Status:** Nginx configs ACTIVE, SSL certs provisioned, pages served. DNS is the only missing piece — all 6 subdomains return HTTP 000 until A records are added.
 
 ---
 
@@ -32,9 +37,9 @@
 
 | Item | Method |
 |------|--------|
-| Google Search Console verification | Meta tag (HTML file alternative available) |
+| Google Search Console verification | Meta tag (already in place) |
 | Sitemap submission | https://psdepot.com/sitemap.xml |
 
 ---
 
-## TOTAL: 7 records (4 critical, 3 optional)
+## TOTAL: 10 records (4 critical SendGrid + 6 product subdomains)
