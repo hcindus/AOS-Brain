@@ -400,3 +400,30 @@ curl -X POST http://localhost:8082/api/queue/{email_id}/send
 
 ---
 *Last Updated: 2026-06-11*
+
+---
+
+## TODO: Auth System SendGrid Setup
+**Added:** 2026-08-05
+**Status:** PENDING
+
+### Problem
+Auth system live mode login broken — email verification and password reset flows require SendGrid, which isn't configured for the auth system.
+
+### Tasks
+1. Get SendGrid API key (or reuse existing one)
+2. Add DNS records for auth system domain (CNAME + DKIM + DMARC)
+3. Add `SENDGRID_API_KEY` to auth system `.env`
+4. Test email delivery (verification emails, password resets)
+
+### Reference
+DepotChaos already has SendGrid integration patterns:
+- `/datadepot/web/sendgrid_sender.py`
+- `/datadepot/cron/process_email_queue.py`
+
+### Files
+- `/root/.openclaw/workspace/auth-system/.env`
+- `/root/.openclaw/workspace/auth-system/backend/`
+
+### Reminder
+Cron job `auth-system-sendgrid-setup` set for daily.

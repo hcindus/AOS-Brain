@@ -62,6 +62,14 @@
         </div>
     </div>
 
+    <style>
+        #cookie-notice{position:fixed;bottom:0;left:0;right:0;background:#1a1a2e;color:#e0e0e0;padding:12px 20px;font-size:13px;display:flex;align-items:center;justify-content:center;gap:16px;z-index:9999;border-top:1px solid #333;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+        #cookie-dismiss{background:#4a90d9;color:#fff;border:none;padding:6px 18px;border-radius:4px;cursor:pointer;font-size:13px;white-space:nowrap}
+        #cookie-dismiss:hover{background:#357abd}
+    </style>
+    <script>
+        !function(){if(!localStorage.getItem('cookie_notice_dismissed')){var e=document.createElement('div');e.id='cookie-notice',e.innerHTML='<span>🍪 This site uses only essential cookies for secure login and session management. No tracking or advertising cookies are used.</span><button id="cookie-dismiss">Got it</button>',document.body.appendChild(e),document.getElementById('cookie-dismiss').addEventListener('click',function(){e.style.display='none',localStorage.setItem('cookie_notice_dismissed','1')})}}();
+    </script>
     <script src="assets/auth.js"></script>
     <script>
         // Password strength indicator

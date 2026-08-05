@@ -69,15 +69,40 @@
                     <li>Rate-limited login attempts</li>
                     <li>TOTP MFA support</li>
                 </ul>
-                <p style="margin-top: 12px; font-size: 12px;">
-                    <a href="#" onclick="CRP.reopen(); return false;" style="color: var(--accent);">🍪 Manage Cookie Preferences</a>
-                </p>
+
             </div>
         </div>
     </div>
 
-    <!-- AGI CMP - Load before any tracking scripts -->
-    <script src="/cmp/agi-cmp.js"></script>
+    <script>
+        // Minimal cookie notice — no tracking, essential-only
+        (function() {
+            if (localStorage.getItem('cookie_notice_dismissed')) return;
+            var banner = document.createElement('div');
+            banner.id = 'cookie-notice';
+            banner.innerHTML = '<span>🍪 This site uses only essential cookies for secure login and session management. No tracking or advertising cookies are used.</span><button id="cookie-dismiss">Got it</button>';
+            document.body.appendChild(banner);
+            document.getElementById('cookie-dismiss').addEventListener('click', function() {
+                banner.style.display = 'none';
+                localStorage.setItem('cookie_notice_dismissed', '1');
+            });
+        })();
+    </script>
+    <style>
+        #cookie-notice {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: #1a1a2e; color: #e0e0e0; padding: 12px 20px;
+            font-size: 13px; display: flex; align-items: center; justify-content: center;
+            gap: 16px; z-index: 9999; border-top: 1px solid #333;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        #cookie-dismiss {
+            background: #4a90d9; color: #fff; border: none;
+            padding: 6px 18px; border-radius: 4px; cursor: pointer;
+            font-size: 13px; white-space: nowrap;
+        }
+        #cookie-dismiss:hover { background: #357abd; }
+    </style>
     <script src="assets/auth.js"></script>
     <script>
         // Handle login form
