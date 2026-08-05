@@ -12,7 +12,7 @@
 
 **$699** One-Time | **$99/Year** Updates
 
-**📊 99,000 Qualified Realtor Prospects Nationwide**
+**📊 100,000 Qualified Realtor Prospects Nationwide**
 
 ---
 
@@ -71,7 +71,7 @@ Replaces 6+ tools with one intuitive platform:
 
 ### Proven Demand
 
-📊 **99,000 Realtor Prospects** in database
+📊 **100,000 Realtor Prospects** in database
 - 1,000 new prospects added daily
 - Top states: CA, TX, FL, NY, AZ, CO, OH, NC
 - 40% Priority A markets (major metros)
