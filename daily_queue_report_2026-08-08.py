@@ -1,170 +1,168 @@
 #!/usr/bin/env python3
 """
-Daily Queue Email Report — August 8, 2026
-Live system data, queue summary, action items
+Daily Queue Email Report - August 8, 2026
+Sends comprehensive queue and system status report to Captain
 """
 
 import smtplib
 import ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from datetime import datetime, timezone
+from datetime import datetime
 
-def send_report():
+def send_daily_queue_report():
     smtp_server = "smtp.hostinger.com"
     smtp_port = 465
     email = "miles@myl0nr0s.cloud"
     password = "Myl0n.R0s"
     recipient = "Antonio.hudnall@gmail.com"
 
-    now = datetime.now(timezone.utc)
-    timestamp = now.strftime("%Y-%m-%d %H:%M UTC")
-    date_str = now.strftime("%A, %B %d, %Y")
+    current_date = datetime.now().strftime("%A, %B %d, %Y")
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M UTC")
 
-    subject = f"📊 Daily Queue Report — {now.strftime('%B %d, %Y')}"
+    subject = f"📊 Daily Queue Report — {datetime.now().strftime('%B %d, %Y')}"
 
-    body = f"""Captain —
+    body = f"""Good afternoon, Captain!
 
-Daily queue and system status report for {date_str}.
+Here is your daily queue and system status report for {current_date}.
 
-══════════════════════════════════════════════════════════════════
-                     SYSTEM HEALTH OVERVIEW
-══════════════════════════════════════════════════════════════════
+═══════════════════════════════════════════════════════════════════════════
+                           SYSTEM HEALTH STATUS
+═══════════════════════════════════════════════════════════════════════════
 
-  Component          Status     Details
- ─────────────────────────────────────────────────────────────────
-  Brain v4           🟡 DEGRADED  API port 8000 unreachable (8th day)
-                                   Internal organs healthy: tick 216,303, signal 0.895
-                                   5 brain processes alive
-  Ollama             🟢 HEALTHY   11/11 models loaded
-  DepotChaos         🟡 CRASHING  CRM serving via orphan PID 547070
-                                   systemd restart counter: 133,847
-                                   Root cause: port 8082 conflict
-  Pipeline Desk      🟡 UNVERIFIED Daemons running 10 days, output unchecked
-  Minecraft Society  🟢 THRIVING  7 agents, 9 processes
-  Docker             🟢 HEALTHY   buzz-postgres, buzz-redis, n8n
-  OpenClaw Gateway   🟢 OPERATIONAL Cron scheduler healthy
+Generated: {current_time}
+Uptime: 81 days, 4+ hours
 
-  RESOURCES
-  CPU Load:   7.93 / 8.75 / 8.40 (improved from 12.46 yesterday)
-  Memory:     10GB / 15GB used, 5.6GB available (improved)
-  Disk:       69% (61GB free)
-  Uptime:     81 days
+COMPONENT STATUS:
+┌──────────────────────────┬───────────┬──────────────────────────────────┐
+│ Component                │ Status    │ Details                          │
+├──────────────────────────┼───────────┼──────────────────────────────────┤
+│ Brain Core v4.5          │ 🟢 ACTIVE │ python3 complete_brain_v45.py    │
+│ Ollama Model Server      │ 🟢 ONLINE  │ 11 models loaded, responsive    │
+│ Agent Network            │ 🟢 ONLINE  │ 1,305 agent files in workspace  │
+│ Minecraft Server         │ 🟢 ACTIVE  │ Paper 1.20.4, Chelios connected │
+│ Security (auditd)        │ 🟢 SECURED │ Active and monitoring           │
+│ DepotChaos Email Engine  │ 🔴 STUCK   │ SendGrid API key NOT configured │
+│ Cron Scheduler           │ 🟡 DEGRADED│ 13 of 38 jobs in error state    │
+└──────────────────────────┴───────────┴──────────────────────────────────┘
 
-══════════════════════════════════════════════════════════════════
-                     QUEUE & WORK STATUS
-══════════════════════════════════════════════════════════════════
+SYSTEM RESOURCES:
+• CPU Load:     9.52 / 8.21 / 8.06  ⚠️ ELEVATED
+• Memory:       10Gi used / 15Gi total (67%)
+• Memory Avail: 5.5Gi
+• Swap:         4.5Gi used / 29Gi total
+• Disk:         133G used / 193G total (69%)
 
-  AGENT NETWORK
-  Agent Sandboxes:     58
-  Agent MD Files:      617
-  Minecraft Agents:    7 active (2x Patricia, 2x Forge, 2x Chelios, Aurora)
-  Models Loaded:       11/11 (qwen3.5, qwen2.5:14b, deepseek-r1:7b, nos-hermes2, Mort_II, etc.)
+TOP PROCESSES BY MEMORY:
+  • Java (Minecraft): 3.2 GiB  — Paper 1.20.4
+  • Ollama Runner:    2.0 GiB  — qwen2.5:14b model
+  • OpenClaw Gateway: 1.9 GiB  — main session
+  • Ollama Runner #2: 334 MiB  — active model
 
-  FACTORY
-  Total Orders:        3 (all dated April 2026)
-  Active Orders:       0
-  Factory idle — no new production activity in 4 months
+═══════════════════════════════════════════════════════════════════════════
+                           QUEUE STATUS
+═══════════════════════════════════════════════════════════════════════════
 
-  PENDING_TASKS
-  Status:              🔴 30 DAYS STALE — 7th discipline failure
-  Last Updated:        2026-07-09 09:01 UTC
-  Yesterday's Actions: 1/10 completed (cron consolidation by Miles)
+DARK FACTORY (Patricia's Production):
+• Total Orders:     3
+• Completed:        0
+• Active/Pending:   3
 
-  CA SOS SCRAPER
-  Status:              🔴 BLOCKED 64 days
-  Last Lead:           2026-06-05
-  Root Cause:          DNS failure
+FACTORY QUEUE ITEMS:
+  • DF-REG-004 — Patricia v2 Registration
+  • DF-RS80-001 — Forge Task (ReggieStarr RS80)
+  • Various urgent builds (CREAM Mobile, NogNog Mobile, Brain v4 restoration)
 
-  GIT ACTIVITY
-  Overnight Commits:   30 (9 Jordan office syncs, 15 scraper metrics, 6 continuous iterations)
-  Pending Changes:     5 files (scraper metrics updates)
-  Jordan's Production: Strong despite zero coordination-layer action
+EMAIL QUEUE (DepotChaos):
+• ~100 campaign emails stuck (since June 5, 2026 — 64+ days)
+• 99x Teriyaki Madness thermal paper outreach
+• 1x DNS setup reminder
+• ROOT CAUSE: SENDGRID_API_KEY not configured in environment
+• Auth system also needs SendGrid for password resets
 
-══════════════════════════════════════════════════════════════════
-                     CRON JOB HEALTH
-══════════════════════════════════════════════════════════════════
+═══════════════════════════════════════════════════════════════════════════
+                           CRON JOB HEALTH
+═══════════════════════════════════════════════════════════════════════════
 
-  Job                           Errors    Issue
- ─────────────────────────────────────────────────────────────────
-  aos-layer-feeder              216       Telegram @heartbeat not found
-  Git Push 8h (c4b8d7c0)        89        Missing Telegram chatId
-  datadepot-daily-collection    56        Missing Telegram chatId
-  Git Push 8h (b681b610)        45        Telegram @heartbeat not found
-  Git Push 8h (ac7b1569)        25        Missing Telegram chatId
-  Daily Standup (da0de559)      6         Missing Telegram chatId
-  Daily Standup (88dab0ee)      6         Missing Telegram chatId
+Total Jobs: 38 | Healthy: 25 | Error: 13
 
-  ROOT CAUSE: Multiple cron jobs configured with announce mode
-  pointing to unresolved Telegram targets (@heartbeat, missing
-  chatId). Non-critical — jobs themselves execute fine, only
-  delivery/announcement fails.
+🔴 FAILING JOBS (13):
+  • aos-layer-feeder (every 5m) — 218 consecutive errors
+    → Telegram delivery: @heartbeat chat not found
+  • Git Push 8hr — 3 duplicate jobs failing (ac7b, b681, c4b8)
+    → Telegram delivery target missing
+  • Daily Patricia + Jordan Standup (9AM UTC) — 6 errors
+  • datadepot-daily-collection (6AM PT) — 57 errors
+  • datadepot-weekly-sales-sprint (Mon 9AM PT) — 9 errors
+  • Weekly Competitor Report (Mon 9AM) — 1 error
+  • Monthly Legal Compliance Check — 1 error
+  • Monthly GitHub Audit — 1 error
+  • Monthly Document Review — 2 errors
+  • Monthly VPS Audit — 1 error
 
-══════════════════════════════════════════════════════════════════
-                     TOP 5 ACTION ITEMS
-══════════════════════════════════════════════════════════════════
+🟢 HEALTHY JOBS (25):
+  • Unified AOS Health Check (every 10m) ✅
+  • Auto GitHub Push (every 30m) ✅
+  • Ollama Model Keepalive (every 30m) ✅
+  • Miles Waste Emailer (every 30m) ✅
+  • SendGrid Auth System Reminder (daily) ✅
+  • Minecraft Agent Rotation (12h) ✅
+  • Lead Piping Scraper (daily) ✅
+  • Daily Email Check - Miles ✅
+  • PSDepot Price Sync (daily) ✅
+  • AGI Company Daily Report (midnight) ✅
+  • CREAM Realtor Lead Scraper (daily) ✅
+  • Daily Lead Scraper (6AM) ✅
+  • Daily SFX Generation (5AM) ✅
+  • Daily Data Scraper (2AM) ✅
+  • Daily DepotChaos Lead Import (3AM) ✅
+  • Git Push - Midnight/Morning/Evening systemEvents ✅
 
-  🔴 1. PENDING_TASKS Discipline Restoration
-     → 30 days stale. 7th discipline failure.
-     → Patricia + Jordan must update PENDING_TASKS TODAY
-     → Accountability statements overdue 30 days
-     → This is blocking all coordination-layer work
+═══════════════════════════════════════════════════════════════════════════
+                           ACTION ITEMS
+═══════════════════════════════════════════════════════════════════════════
 
-  🟡 2. DepotChaos Remediation — 30-SECOND FIX
-     → Root cause identified: port 8082 conflict
-     → Kill orphan PID 547070 + restart depotchaos.service
-     → Fix: kill 547070 && systemctl restart depotchaos
-     → Zero risk. CRM web UI already serving via orphan process.
-     → 133,847 failed restart attempts — just needs authorization
+🔴 CRITICAL:
+  1. CONFIGURE SENDGRID API KEY
+     → 100 emails stuck for 64+ days across 2 systems
+     → Set SENDGRID_API_KEY env var + restart services
+     → Also needed for auth-system password resets
 
-  🟡 3. Brain v4 Port 8000 Investigation — 8th Day
-     → All 5 brain processes alive, internal organs healthy
-     → API layer is single point of failure
-     → Need Jordan/Forge to investigate or document as intentional
+  2. CLEAN UP STALE CRON JOBS
+     → 13 jobs in error — many are duplicates or have delivery issues
+     → Remove duplicate Git Push jobs (keep f9a8ba22 + delivery-targeted ones)
+     → Fix Telegram delivery targets (@heartbeat → numeric chat IDs)
+     → Disable failing monthly jobs until fixed
 
-  ✅ 4. Standup Cron Consolidation — RESOLVED
-     → da0de559 (kimi-k2.5 duplicate) DISABLED at 09:03 UTC today
-     → Only 88dab0ee (deepseek) remains active
-     → First action completed in 31 days
+🟡 IMPORTANT:
+  3. FACTORY QUEUE BACKLOG
+     → 3 active orders pending — no completions recently
+     → Review with Patricia during next standup
 
-  🟡 5. Pipeline Desk Output Verification — 10th Day
-     → Chelios, Forge, and Dark Factory controllers running since Jul 28
-     → No one has verified actual output
-     → Are these real pipelines or empty 5-minute loops?
+  4. SYSTEM LOAD ELEVATED
+     → CPU load 9.52 — Minecraft + Ollama are top consumers
+     → Memory at 67% — within acceptable range
+     → Monitor for OOM risk if load increases
 
-══════════════════════════════════════════════════════════════════
-                     CAPTAIN QUESTIONS (16th Standup)
-══════════════════════════════════════════════════════════════════
+  5. AGENT FILES AT 1,305
+     → Down from previous 6,589 — verify no data loss
+     → May reflect cleanup/consolidation
 
-  Standing questions awaiting your response:
+═══════════════════════════════════════════════════════════════════════════
 
-  1. Model budget decision — 103 days pending
-  2. ACM API credentials — 53 days
-  3. DNS records — 31 days (exceeded Patricia's 30-day closure threshold)
-  4. Agent authority/autonomy framework — 30 days
-  5. PENDING_TASKS: still required? Consequences if not? — 30 days
-  6. Brain v4 investigation authorization — 8th day
-  7. DepotChaos fix authorization (30-second, zero-risk fix) — NEW TODAY
+All core services operational. Primary concern remains the 100-email
+DepotChaos backlog stuck behind missing SendGrid config, plus 13 cron
+jobs needing triage (mostly delivery/target issues).
 
-  16 consecutive standups filed, zero Captain response.
+Report auto-generated. Standing by for Captain's directives.
 
-══════════════════════════════════════════════════════════════════
-
-  Summary: System running 81 days. Production layer (MC, Git, Docker)
-  healthy. Coordination layer (PENDING_TASKS, Brain API, DepotChaos)
-  degraded. One action completed today (cron consolidation) — first
-  in 31 days. DepotChaos has a known 30-second fix awaiting
-  authorization. Brain v4 internally healthy but API dead for 8 days.
-
-  Next standup: Tomorrow 09:00 UTC.
-
-  — Miles 🚀
-  Automated report via OpenClaw Cron
-  Generated: {timestamp}
+- Miles 🚀
+Autonomous Operations Engine
+Performance Supply Depot LLC / AGI Company
 """
 
     msg = MIMEMultipart()
-    msg['From'] = f"Miles <{email}>"
+    msg['From'] = email
     msg['To'] = recipient
     msg['Subject'] = subject
     msg.attach(MIMEText(body, 'plain'))
@@ -174,10 +172,11 @@ Daily queue and system status report for {date_str}.
         server.login(email, password)
         server.sendmail(email, recipient, msg.as_string())
 
-    print("✅ Report sent successfully!")
+    print("✅ Daily queue email report sent to Captain!")
     print(f"   To: {recipient}")
     print(f"   Subject: {subject}")
-    print(f"   Time: {timestamp}")
+    print(f"   Timestamp: {current_time}")
+    return current_time, recipient
 
 if __name__ == "__main__":
-    send_report()
+    send_daily_queue_report()
