@@ -1,99 +1,121 @@
-╔══════════════════════════════════════════════════════════════════════╗
-║     📊 DAILY QUEUE EMAIL REPORT — Sunday, August 9, 2026           ║
-╠══════════════════════════════════════════════════════════════════════╣
-║ Generated: 2026-08-09 11:38 UTC                                     ║
-║ From: Miles 🚀 <miles@myl0nr0s.cloud>                              ║
-╚══════════════════════════════════════════════════════════════════════╝
+Good afternoon, Captain!
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📧 EMAIL QUEUE STATUS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Here is your daily queue and system status report for today (Sunday, August 09, 2026).
 
-  Pending Emails:        100
-  ├─ teriyaki_thermal_paper_q2_2026:  99
-  └─ outreach:                         1
+═══════════════════════════════════════════════════════════════════════════
+                    📊 QUEUE STATUS SUMMARY
+═══════════════════════════════════════════════════════════════════════════
 
-  Follow-up Queue:       100 items (followup_queue_20260429.json)
-  Failed Emails:          28 (all Teriyaki Madness locations)
-  
-  Total Sent (All Time): 170
-  Sent Last 24h:           0  ⚠️
-  Sent Last 7 Days:        0  ⚠️
+Generated: 2026-08-09 13:24 UTC
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏭 DARK FACTORY — PATRICIA'S PRODUCTION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+OVERALL QUEUE METRICS (LIVE DATA):
+• Active Queue Items: 3,100
+  ├─ Dark Factory (Patricia): 0 queued, 0 in progress, 48 completed
+  ├─ Pending Tasks (JSON): 2,100 pending, 0 in progress
+  ├─ Enrichment Queue: 1,000 available
+  └─ Unified Leads DB: 31,050 total
 
-  Database:  data/factory/dark_factory.db (1.5 MB)
-  Total Orders:   48
-  Status:         48 Completed ✅ | 0 Active | 0 Queued
-  
-  New Orders (7d):      0
-  Completed (7d):       0
-  
-  Note: Factory queue is fully cleared. All 48 production orders 
-  completed. No new orders entered this week. Factory is idle.
+═══════════════════════════════════════════════════════════════════════════
+                    🏭 DARK FACTORY — PRODUCTION QUEUE
+═══════════════════════════════════════════════════════════════════════════
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🖥️  SYSTEM HEALTH
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Total Orders:        48
+  ├─ Completed:        48 ✅  (100%)
+  ├─ Active:           0 🔧
+  └─ Status:           🟡 FACTORY IDLE
 
-  Host:     Miles (Ubuntu, 82 days uptime)
-  Load:     12.06 / 12.35 / 12.17  🟡 Elevated but stable
-  Memory:   11.1 GiB / 15 GiB used (75%)  🟡
-  Disk:     132G / 193G used (69%)  🟢
+  Recently Completed:
+    1. ✅ ReggieStarr Android App (2026-07-13)
+    2. ✅ Cream Mobile App (2026-07-13)
+    3. ✅ N'og nog v3 Universal Explorer (2026-07-13)
 
-  Ollama:   ✅ Running (7 processes)
-  Postfix:  ✅ Running (mail queue empty)
-  Brain:    🟢 aos_brain.sock present (last: Aug 8 23:53)
-  BHSI v4:  🟢 bhsi_v4.sock present (last: Aug 1 06:28)
-  Gateway:  inactive (openclaw-gateway not as systemd service)
+  ⚠️  No active orders — factory has been idle since July 13
+  ⚠️  Zero new orders in the last 27 days
 
-  Git Sync: ✅ Active (Jordan syncing every 10 min, scraper active)
-  Agents:   4 agent directories (keymaster, mike_builder, shared, example)
+═══════════════════════════════════════════════════════════════════════════
+                    📧 EMAIL OUTREACH QUEUE (DepotChaos)
+═══════════════════════════════════════════════════════════════════════════
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠️  ACTION ITEMS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Pending Emails:      100 ⏳
+  Follow-up Queue:     100 📌
+  Enrichment Available: 1,000
 
-  🔴 CRITICAL — Email Pipeline Stalled
-     0 emails sent in the last 7 days. 100 pending emails (teriyaki
-     campaign). 28 failed deliveries (all Teriyaki Madness locations).
-     Postfix is running but no outbound email activity detected.
-     → Check SMTP relay config & teriyaki campaign script execution.
+  Campaigns Pending:
+    🔴 Teriyaki Madness Q2 2026: Thermal Paper & POS Supplies
 
-  🟡 HIGH — Dark Factory Idle
-     All 48 production orders completed. No new orders in 7+ days.
-     Patricia's queue is empty — no work to process.
-     → Submit new production orders or verify intake pipeline.
+  🔴 ALERT: Email pipeline remains STALLED
+     → SMTP/auth check needed for depotchaos scripts
 
-  🟡 MEDIUM — Follow-up Queue at 100
-     100 follow-up items with no activity this week. Follow-up queue
-     file dated April 29 — may be stale.
-     → Review & clean stale follow-ups or trigger outreach cycle.
+═══════════════════════════════════════════════════════════════════════════
+                    🔧 SYSTEM HEALTH
+═══════════════════════════════════════════════════════════════════════════
 
-  🟢 LOW — System Load Elevated
-     Load average 12.06 on what looks like a modest VPS. Ollama (7
-     processes) is the likely driver. Memory at 75%.
-     → Monitor, not critical right now.
+  VPS Resources (Miles.cloud):
+  ┌─────────────┬─────────┬──────────────────────┐
+  │ Resource    │ Status  │ Details              │
+  ├─────────────┼─────────┼──────────────────────┤
+  │ Disk Usage  │ 🟢 OK   │ 69% (132G/193G)          │
+  │ Memory      │ 🟢 OK   │ 73% (11Gi/15Gi)          │
+  │ Load Avg    │ 🟡 HIGH  │ 12.63 / 12.53 / 12.37       │
+  │ Cron Jobs   │ 🟢 OK   │ 7 configured          │
+  └─────────────┴─────────┴──────────────────────┘
 
-  🟢 LOW — Gateway Inactive
-     openclaw-gateway not running as systemd service. Cron jobs still
-     firing so it may be running via alternate method.
-     → Verify gateway process is alive if remote access needed.
+  Uptime: up 11 weeks, 5 days, 4 hours, 32 minutes
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 FILE LOCATIONS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Key Processes:
+    ✅ OpenClaw Gateway: RUNNING
+    ✅ Ollama Serve:      RUNNING (11 models)
+    ✅ Minecraft Server: RUNNING
 
-  Pending Emails:  datadepot/queue/pending_emails.json (139 KB)
-  Sent Emails:     datadepot/queue/sent_emails.json (285 KB)
-  Failed Emails:   datadepot/queue/failed_emails.json (44 KB)
-  Follow-ups:      datadepot/queue/followup_queue_20260429.json (170 KB)
-  Factory DB:      data/factory/dark_factory.db (1.5 MB)
+  Infrastructure:
+    📁 Agent Files:   47 loaded
+    📊 Unified Leads: 31,050 in depot_chaos
+    🗄️  Factory DB:    48 records
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+═══════════════════════════════════════════════════════════════════════════
+                    ⚡ ACTION ITEMS
+═══════════════════════════════════════════════════════════════════════════
 
-Report generated by Miles 🚀 | AGI Company Operations
-Schedule: Daily at 13:23 UTC | Next: Aug 10, 2026
-Contact: miles@myl0nr0s.cloud
+  🔴 UNCLOG EMAIL PIPELINE
+     → 100 pending emails, campaign stalled
+     → Scripts: depotchaos_enrichment_master.py / email_automation.py
+     → Check SMTP auth, rate limits, or script health
+
+  🔴 ELEVATED SYSTEM LOAD (12.6)
+     → Sustained above 12.0 — investigate heavy processes
+     → Check: htop, iotop, or process list for CPU hogs
+
+  🟡 FACTORY IDLE — 27 days without new orders
+     → All 48 historical orders completed
+     → Consider adding new production projects
+
+  🟡 PENDING TASKS — 2,100 items with no activity
+     → PENDING_TASKS.json at 2,100 items, all unassigned
+     → Review and triage for Patricia or Spindle
+
+  🟡 FOLLOW-UP QUEUE — 100 items from April
+     → Stale leads need re-engagement or cleanup
+
+═══════════════════════════════════════════════════════════════════════════
+                    📁 DATA SOURCES
+═══════════════════════════════════════════════════════════════════════════
+
+  • Factory DB:      data/factory/dark_factory.db
+  • Unified Leads:   data/depot_chaos/unified.db
+  • Enrichment Q:    mortimer-build/software/depotchaos/enrichment_queue/
+  • Pending Tasks:   data/PENDING_TASKS.json
+  • Follow-up Q:     datadepot/queue/followup_queue_20260429.json
+  • Email Q:         datadepot/queue/pending_emails.json
+
+═══════════════════════════════════════════════════════════════════════════
+
+All metrics queried live from production databases and system stats.
+Standing by for Captain's directives.
+
+- Miles 🚀
+Autonomous Operations Engine
+Performance Supply Depot LLC / AGI Company
+miles@myl0nr0s.cloud
+
+---
+*Automated daily report — Next: 2026-08-09 13:23 UTC*
