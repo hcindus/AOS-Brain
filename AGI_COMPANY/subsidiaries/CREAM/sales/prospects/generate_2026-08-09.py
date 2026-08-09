@@ -488,7 +488,7 @@ def update_marketing_materials(prospects: List[Dict]):
                 content = f.read()
 
             # Update prospect count
-            old_values = ["104,000", "103,000+", "103,000", "102,000+", "102,000"]
+            old_values = ["103,000", "102,000+", "102,000", "101,000+", "101,000"]
             new_value = "104,000"
             for old in old_values:
                 content = content.replace(old, new_value)
@@ -498,8 +498,8 @@ def update_marketing_materials(prospects: List[Dict]):
             old_streaks = ["101-day", "100-day", "99-day", "98-day"]
             for old in old_streaks:
                 content = content.replace(old, "102-day")
-            content = re.sub(r'(Streak\s*\|\s*)\d+(\s*days)', r'\g<1>101\g<2>', content)
-            content = re.sub(r'(Streak.*?)\b(98|99|100)\b(.*?days)', r'\g<1>101\g<3>', content)
+            content = re.sub(r'(Streak\s*\|\s*)\d+(\s*days)', r'\g<1>102\g<2>', content)
+            content = re.sub(r'(Streak.*?)\b(99|100|101)\b(.*?days)', r'\g<1>102\g<3>', content)
             content = re.sub(r'(\d{2,3})-day streak', '102-day streak', content)
 
             # Update dates
@@ -518,7 +518,7 @@ def update_marketing_materials(prospects: List[Dict]):
     try:
         with open(battle_path, 'r') as f:
             content = f.read()
-        old_vals = ["104,000", "103,000+", "103,000", "102,000"]
+        old_vals = ["103,000", "102,000+", "102,000", "101,000+"]
         for old in old_vals:
             content = content.replace(old, "104,000")
         with open(battle_path, 'w') as f:
@@ -532,7 +532,7 @@ def update_marketing_materials(prospects: List[Dict]):
     try:
         with open(pricing_path, 'r') as f:
             content = f.read()
-        old_vals = ["104,000", "103,000+", "103,000", "102,000"]
+        old_vals = ["103,000", "102,000+", "102,000", "101,000+"]
         for old in old_vals:
             content = content.replace(old, "104,000")
         content = content.replace("101-day", "102-day")
@@ -563,7 +563,7 @@ def write_run_report(prospects: List[Dict]):
 
     report = f"""# CREAM Realtor Lead Scraper - Run Report
 ## August 9, 2026 Execution Summary
-## 🔥 101-Day Streak — Post-Century Momentum
+## 🔥 102-Day Streak — Post-Century Momentum
 
 ---
 
@@ -683,7 +683,7 @@ def main():
     print(f"Target Date: {TARGET_DATE}")
     print(f"Target: {TOTAL_PROSPECTS} prospects")
     print(f"Database: 103,000 → 104,000")
-    print(f"🔥 Streak: Day 101 — Post-century momentum!")
+    print(f"🔥 Streak: Day 102 — Post-century momentum!")
     print("=" * 60)
     print()
 
