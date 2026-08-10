@@ -4,10 +4,16 @@
     {
       "name": "WebstaurantStore",
       "url": "https://www.webstaurantstore.com/search/thermal-paper-3-1-8.html",
-      "price": null,
-      "product": "www.webstaurantstore.com",
+      "price": "$62.49/Case",
+      "product": "PointPlus 3-1/8\" x 230' Thermal POS Paper Roll - 50/Case",
       "screenshot": "/tmp/webstaurantstore_debug.png",
-      "status": "no_price_found"
+      "status": "success",
+      "pricing_details": {
+        "standard_230ft_50case": "$62.49/Case ($1.25/Each)",
+        "phenol_free_230ft_50case": "$106.99/Case ($2.14/Each)",
+        "colored_230ft_50case": "$108.99/Case ($2.18/Each)",
+        "source": "web_fetch extraction"
+      }
     },
     {
       "name": "Amazon",
@@ -15,7 +21,9 @@
       "price": null,
       "product": null,
       "screenshot": "/tmp/amazon_debug.png",
-      "status": "no_price_found"
+      "status": "blocked",
+      "error": "Amazon returned 503 - bot detection active",
+      "last_known_price": "$38.49 - $52.99/case (from May 11 report)"
     }
   ]
 }
