@@ -24,14 +24,11 @@
 
 ---
 
-## THE 5 AUDIT CHECKS (Memorize These)
-
-```
-1. llms.txt?         → curl domain/llms.txt          → 200 or 404?
-2. Schema markup?    → view-source | grep ld+json    → Count @type values
-3. Product feed?     → curl domain/products.json     → Machine-readable?
-4. Competitor check? → Same 3 checks on competitors  → Who's ahead?
-5. Price clarity?    → Is pricing in HTML or JS-only? → Can agents read it?
+## THE 5 AUDIT CHECKS (Run This)
+```bash
+# One command does it all:
+bash skills/agent-readiness-audit/scripts/run-audit.sh <domain> [competitor1] [competitor2...]
+# Output: structured JSON at /tmp/audit-<domain>-<timestamp>.json
 ```
 
 ---

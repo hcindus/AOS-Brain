@@ -1,5 +1,69 @@
 # MEMORY.md - Curated Knowledge
 
+## GoR Protocol v1.0 — Governance-Optimized Resolution
+**Created:** 2026-08-11
+**Location:** `/root/.aos/aos/gor_protocol.py`
+**Skill:** `/root/.openclaw/workspace/skills/gor-protocol/SKILL.md`
+
+### Formula
+```
+GoR(task) = Roast(task) + Patricia(roast_result) → Go(verdict)
+```
+
+### Pipeline
+1. **Stage 1 — ROAST:** 6 adversarial personas evaluate (Contrarian, Expansionist, FirstPrinciples, Researcher, Buyer → Judge)
+2. **Stage 2 — PATRICIA:** Chief of Staff adds strategic context, org alignment, delegation target
+3. **Stage 3 — GoR:** Combined verdict via decision matrix → GO / RESHAPE / KILL / ESCALATE
+
+### Decision Matrix
+| Roast ↓ × Patricia → | ALIGNED | URGENT | DEFERRED | MISALIGNED | NEEDS_CLARITY |
+|----------------------|---------|--------|----------|------------|---------------|
+| GREEN_LIGHT | GO | GO | RESHAPE | RESHAPE | RESHAPE |
+| RESHAPE | RESHAPE | **GO** | RESHAPE | KILL | RESHAPE |
+| KILL | KILL | **ESCALATE** | KILL | KILL | **ESCALATE** |
+
+**Key rules:**
+- RESHAPE + URGENT = GO (Patricia can override Roast hesitation when urgent)
+- KILL + URGENT = ESCALATE (Captain must resolve conflict)
+- KILL + ALIGNED = KILL (Patricia cannot override Roast KILL verdict)
+- Simple tasks (under complexity threshold) skip Roast, go straight to Patricia
+
+### Socket Commands
+```bash
+# Evaluate a task through GoR
+echo '{"cmd":"gor","task":{"title":"Launch X","objective":"Build Y","budget":5000,"time_estimate":80}}' | nc -U /tmp/aos_brain.sock
+
+# Get last decision
+echo '{"cmd":"gor","action":"last"}' | nc -U /tmp/aos_brain.sock
+
+# Decision history
+echo '{"cmd":"gor","action":"history","limit":10}' | nc -U /tmp/aos_brain.sock
+
+# Delegation queue
+echo '{"cmd":"gor","action":"queue"}' | nc -U /tmp/aos_brain.sock
+
+# Protocol status
+echo '{"cmd":"gor","action":"status"}' | nc -U /tmp/aos_brain.sock
+
+# Captain override
+echo '{"cmd":"gor","action":"override","task_title":"Launch X","verdict":"GO"}' | nc -U /tmp/aos_brain.sock
+```
+
+### Integration
+- Patricia must use `patricia_delegate_with_gor()` instead of delegating directly
+- All GoR decisions logged to `/var/lib/aos/brain_state/gor_history.json`
+- Captain has final override authority via socket command
+
+### Test Results (4/4 passed)
+| Task | Roast | Patricia | GoR |
+|------|-------|----------|-----|
+| Critical Security Patch | 5.5 RESHAPE | URGENT | **GO** |
+| YouTube-to-LinkedIn SaaS | 5.5 RESHAPE | ALIGNED | RESHAPE |
+| Pizza Delivery Drones | 5.5 RESHAPE | NEEDS_CLARITY | RESHAPE |
+| Update Product Images | 7.5 SKIPPED | ALIGNED | **GO** |
+
+---
+
 ## Game Creation Skill v1.0
 **Created:** 2026-04-07
 **Location:** `/root/.openclaw/workspace/skills/game-creator/SKILL.md`

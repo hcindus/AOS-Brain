@@ -4,7 +4,7 @@
 # Output: Structured JSON report + human-readable summary
 # Part of: skills/agent-readiness-audit
 
-set -euo pipefail
+set -uo pipefail
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'
 CYAN='\033[0;36m'; NC='\033[0m'; BOLD='\033[1m'
@@ -28,6 +28,7 @@ BASE_URL="https://${DOMAIN_CLEAN}"
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 TMPDIR=$(mktemp -d)
 trap 'rm -rf "$TMPDIR"' EXIT
+SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 echo -e "${BOLD}${CYAN}╔══════════════════════════════════════════╗${NC}"
 echo -e "${BOLD}${CYAN}║   AGENT READINESS AUDIT                 ║${NC}"
@@ -84,10 +85,10 @@ echo "  robots.txt:     HTTP $ROBOTS_CODE"
 echo "  sitemap.xml:    HTTP $SITEMAP_CODE"
 
 AGENT_FILES_SCORE=0
-[[ "$LLMS_CODE" == "200" ]] && ((AGENT_FILES_SCORE+=4))
-[[ "$PJ_CODE" == "200" ]] && ((AGENT_FILES_SCORE+=3))
-[[ "$ROBOTS_CODE" == "200" ]] && ((AGENT_FILES_SCORE+=2))
-[[ "$SITEMAP_CODE" == "200" ]] && ((AGENT_FILES_SCORE+=1))
+[[ "$LLMS_CODE" == "200" ]] && AGENT_FILES_SCORE=$((AGENT_FILES_SCORE + 4)) || true
+[[ "$PJ_CODE" == "200" ]] && AGENT_FILES_SCORE=$((AGENT_FILES_SCORE + 3)) || true
+[[ "$ROBOTS_CODE" == "200" ]] && AGENT_FILES_SCORE=$((AGENT_FILES_SCORE + 2)) || true
+[[ "$SITEMAP_CODE" == "200" ]] && AGENT_FILES_SCORE=$((AGENT_FILES_SCORE + 1)) || true
 
 echo -e "  → Score: ${AGENT_FILES_SCORE}/10 $(grade_emoji $AGENT_FILES_SCORE)\n"
 
@@ -121,13 +122,13 @@ HAS_BREADCRUMB=$(echo "$HAS_BREADCRUMB" | tr -d '\n\r ')
 HAS_REVIEW=$(echo "$HAS_REVIEW" | tr -d '\n\r ')
 
 SCHEMA_SCORE=0
-[[ "$SCHEMA_COUNT" -ge 1 ]] && ((SCHEMA_SCORE+=3))
-[[ "$HAS_PRODUCT" -ge 1 ]] && ((SCHEMA_SCORE+=3))
-[[ "$HAS_FAQ" -ge 1 ]] && ((SCHEMA_SCORE+=1))
-[[ "$HAS_LOCAL" -ge 1 ]] && ((SCHEMA_SCORE+=1))
-[[ "$HAS_BREADCRUMB" -ge 1 ]] && ((SCHEMA_SCORE+=1))
-[[ "$HAS_REVIEW" -ge 1 ]] && ((SCHEMA_SCORE+=1))
-[[ "$SCHEMA_SCORE" -gt 10 ]] && SCHEMA_SCORE=10
+SCHEMA_SCORE=$((SCHEMA_SCORE + $( ((SCHEMA_COUNT >= 1)) && echo 3 || echo 0 )))
+SCHEMA_SCORE=$((SCHEMA_SCORE + $( ((HAS_PRODUCT >= 1)) && echo 3 || echo 0 )))
+SCHEMA_SCORE=$((SCHEMA_SCORE + $( ((HAS_FAQ >= 1)) && echo 1 || echo 0 )))
+SCHEMA_SCORE=$((SCHEMA_SCORE + $( ((HAS_LOCAL >= 1)) && echo 1 || echo 0 )))
+SCHEMA_SCORE=$((SCHEMA_SCORE + $( ((HAS_BREADCRUMB >= 1)) && echo 1 || echo 0 )))
+SCHEMA_SCORE=$((SCHEMA_SCORE + $( ((HAS_REVIEW >= 1)) && echo 1 || echo 0 )))
+[[ $SCHEMA_SCORE -gt 10 ]] && SCHEMA_SCORE=10 || true
 
 echo -e "  → Score: ${SCHEMA_SCORE}/10 $(grade_emoji $SCHEMA_SCORE)\n"
 
@@ -148,10 +149,10 @@ echo "  OG Image:      $( [[ "$OG_IMAGE" != "Missing" ]] && echo '✅ Present' |
 echo "  Canonical:     $( [[ "$CANONICAL" != "Missing" ]] && echo '✅ Present' || echo '❌ Missing' )"
 
 META_SCORE=5
-[[ "$META_DESC" == "Missing" ]] && ((META_SCORE-=2))
-[[ "$OG_TITLE" == "Missing" ]] && ((META_SCORE-=1))
-[[ "$OG_IMAGE" == "Missing" ]] && ((META_SCORE-=1))
-[[ "$CANONICAL" == "Missing" ]] && ((META_SCORE-=1))
+[[ "$META_DESC" == "Missing" ]] && META_SCORE=$((META_SCORE - 2)) || true
+[[ "$OG_TITLE" == "Missing" ]] && META_SCORE=$((META_SCORE - 1)) || true
+[[ "$OG_IMAGE" == "Missing" ]] && META_SCORE=$((META_SCORE - 1)) || true
+[[ "$CANONICAL" == "Missing" ]] && META_SCORE=$((META_SCORE - 1)) || true
 
 echo -e "  → Score: ${META_SCORE}/5 (scaled to 10: $((META_SCORE*2))/10)\n"
 
@@ -174,11 +175,11 @@ echo "  Phone visible: $( [[ "$HAS_PHONE" -gt 0 ]] && echo '✅ Yes' || echo '�
 echo "  Location visible: $( [[ "$HAS_ADDRESS" -gt 0 ]] && echo '✅ Yes' || echo '❌ No' )"
 
 CONTENT_SCORE=4
-[[ "$WORD_COUNT" -gt 200 ]] && ((CONTENT_SCORE+=2))
-[[ "$HAS_PRICING" -gt 0 ]] && ((CONTENT_SCORE+=2))
-[[ "$HAS_PHONE" -gt 0 ]] && ((CONTENT_SCORE+=1))
-[[ "$HAS_ADDRESS" -gt 0 ]] && ((CONTENT_SCORE+=1))
-[[ "$CONTENT_SCORE" -gt 10 ]] && CONTENT_SCORE=10
+CONTENT_SCORE=$((CONTENT_SCORE + $( ((WORD_COUNT > 200)) && echo 2 || echo 0 )))
+CONTENT_SCORE=$((CONTENT_SCORE + $( ((HAS_PRICING > 0)) && echo 2 || echo 0 )))
+CONTENT_SCORE=$((CONTENT_SCORE + $( ((HAS_PHONE > 0)) && echo 1 || echo 0 )))
+CONTENT_SCORE=$((CONTENT_SCORE + $( ((HAS_ADDRESS > 0)) && echo 1 || echo 0 )))
+[[ $CONTENT_SCORE -gt 10 ]] && CONTENT_SCORE=10 || true
 
 echo -e "  → Score: ${CONTENT_SCORE}/10 $(grade_emoji $CONTENT_SCORE)\n"
 
@@ -208,14 +209,14 @@ if [[ -n "$PRODUCT_URLS" ]]; then
     echo "  Shipping details: $( [[ "$HAS_SHIPPING" -gt 0 ]] && echo '✅ Yes' || echo '❌ No' )"
     echo "  Return policy: $( [[ "$HAS_RETURN" -gt 0 ]] && echo '✅ Yes' || echo '❌ No' )"
     
-    [[ "$PRODUCT_SCHEMA" -gt 0 ]] && ((PRODUCT_SCORE+=3))
-    [[ "$HAS_PRICE_SCHEMA" -gt 0 ]] && ((PRODUCT_SCORE+=2))
-    [[ "$HAS_SKU" -gt 0 ]] && ((PRODUCT_SCORE+=1))
-    [[ "$HAS_AVAIL" -gt 0 ]] && ((PRODUCT_SCORE+=1))
-    [[ "$HAS_SHIPPING" -gt 0 ]] && ((PRODUCT_SCORE+=1))
-    [[ "$HAS_RETURN" -gt 0 ]] && ((PRODUCT_SCORE+=1))
-    [[ "$HAS_SHIPPING" -gt 0 && "$HAS_RETURN" -gt 0 ]] && ((PRODUCT_SCORE+=1))
-    [[ "$PRODUCT_SCORE" -gt 10 ]] && PRODUCT_SCORE=10
+    PRODUCT_SCORE=$((PRODUCT_SCORE + $( ((PRODUCT_SCHEMA > 0)) && echo 3 || echo 0 )))
+    PRODUCT_SCORE=$((PRODUCT_SCORE + $( ((HAS_PRICE_SCHEMA > 0)) && echo 2 || echo 0 )))
+    PRODUCT_SCORE=$((PRODUCT_SCORE + $( ((HAS_SKU > 0)) && echo 1 || echo 0 )))
+    PRODUCT_SCORE=$((PRODUCT_SCORE + $( ((HAS_AVAIL > 0)) && echo 1 || echo 0 )))
+    PRODUCT_SCORE=$((PRODUCT_SCORE + $( ((HAS_SHIPPING > 0)) && echo 1 || echo 0 )))
+    PRODUCT_SCORE=$((PRODUCT_SCORE + $( ((HAS_RETURN > 0)) && echo 1 || echo 0 )))
+    PRODUCT_SCORE=$((PRODUCT_SCORE + $( ((HAS_SHIPPING > 0 && HAS_RETURN > 0)) && echo 1 || echo 0 )))
+    [[ $PRODUCT_SCORE -gt 10 ]] && PRODUCT_SCORE=10 || true
 else
     echo "  No product pages found on homepage"
     PRODUCT_SCORE=2
@@ -226,7 +227,7 @@ echo -e "  → Score: ${PRODUCT_SCORE}/10 $(grade_emoji $PRODUCT_SCORE)\n"
 # ─── 6. Competitor Check ───
 echo -e "${BOLD}[6/7] Competitive Agent Visibility${NC}"
 
-COMPETITOR_DATA=""
+# COMPETITOR_DATA built via python3 below
 COMP_SCORE=10  # Start high, deduct for each competitor ahead
 
 if [[ ${#COMPETITORS[@]} -gt 0 ]]; then
@@ -239,35 +240,31 @@ if [[ ${#COMPETITORS[@]} -gt 0 ]]; then
         comp_pj=$(check_url "${comp_url}/products.json")
         comp_pj_code="${comp_pj%%:*}"
         comp_schema_raw=$(curl -s --max-time 10 -L "$comp_url" 2>/dev/null | grep -c 'application/ld\+json' || echo "0")
-        comp_schema=$(echo "$comp_schema_raw" | tr -d '\n\r ')
+        comp_schema=$(echo "$comp_schema_raw" | tr -d '\n\r ' | sed 's/^0*//; s/^$/0/')
         
         comp_advantage=0
         [[ "$comp_llms_code" == "200" ]] && ((comp_advantage+=1))
         [[ "$comp_pj_code" == "200" ]] && ((comp_advantage+=1))
         
         ahead="="
-        if [[ "$comp_llms_code" == "200" && "$LLMS_CODE" != "200" ]]; then ahead="↑"; ((COMP_SCORE-=2)); fi
-        if [[ "$comp_pj_code" == "200" && "$PJ_CODE" != "200" ]]; then ahead="↑"; ((COMP_SCORE-=2)); fi
+        if [[ "$comp_llms_code" == "200" && "$LLMS_CODE" != "200" ]]; then ahead="↑"; COMP_SCORE=$((COMP_SCORE - 2)); fi
+        if [[ "$comp_pj_code" == "200" && "$PJ_CODE" != "200" ]]; then ahead="↑"; COMP_SCORE=$((COMP_SCORE - 2)); fi
         
         echo "  ${comp_clean}: llms=${comp_llms_code} p.json=${comp_pj_code} schemas=${comp_schema} ${ahead}"
         
-        COMPETITOR_DATA+=$(printf '    {
-      "domain": "%s",
-      "llms_txt": "%s",
-      "products_json": "%s",
-      "schema_blocks": %s,
-      "ahead": %s
-    },
-'             "${comp_clean}" "${comp_llms_code}" "${comp_pj_code}" "${comp_schema}"             "$([[ "$ahead" == "↑" ]] && echo "true" || echo "false")")
+        # Write competitor entry to temp file
+        ahead_val="false"
+        [[ "$ahead" == "↑" ]] && ahead_val="true"
+        printf '{"domain":"%s","llms_txt":"%s","products_json":"%s","schema_blocks":%s,"ahead":%s}\n'             "$comp_clean" "$comp_llms_code" "$comp_pj_code" "$comp_schema" "$ahead_val"             >> "${TMPDIR}/competitors.jsonl"
     done
-    COMPETITOR_DATA="${COMPETITOR_DATA%,}"
-    COMPETITOR_JSON="[${COMPETITOR_DATA}]"
+    
+
 else
-    COMPETITOR_JSON="[]"
+  COMPETITOR_JSON="[]"
   echo "  No competitors specified for comparison"
 fi
-[[ "$COMP_SCORE" -lt 1 ]] && COMP_SCORE=1
-[[ "$COMP_SCORE" -gt 10 ]] && COMP_SCORE=10
+[[ $COMP_SCORE -lt 1 ]] && COMP_SCORE=1 || true
+[[ $COMP_SCORE -gt 10 ]] && COMP_SCORE=10 || true
 
 echo -e "  → Score: ${COMP_SCORE}/10 $(grade_emoji $COMP_SCORE)\n"
 
@@ -287,11 +284,11 @@ echo "  Phone visible: $( [[ "$HAS_PHONE_VISIBLE" -gt 0 ]] && echo '✅ Yes' || 
 echo "  Policy pages: $( [[ "$HAS_POLICY" -gt 0 ]] && echo '✅ Referenced' || echo '❌ Not found' )"
 
 TRUST_SCORE=3
-[[ "$HAS_REVIEWS" -gt 0 ]] && ((TRUST_SCORE+=4))
-[[ "$HAS_SSL" == "1" ]] && ((TRUST_SCORE+=1))
-[[ "$HAS_PHONE_VISIBLE" -gt 0 ]] && ((TRUST_SCORE+=1))
-[[ "$HAS_POLICY" -gt 0 ]] && ((TRUST_SCORE+=1))
-[[ "$TRUST_SCORE" -gt 10 ]] && TRUST_SCORE=10
+TRUST_SCORE=$((TRUST_SCORE + $( ((HAS_REVIEWS > 0)) && echo 4 || echo 0 )))
+[[ "$HAS_SSL" == "1" ]] && TRUST_SCORE=$((TRUST_SCORE + 1)) || true
+TRUST_SCORE=$((TRUST_SCORE + $( ((HAS_PHONE_VISIBLE > 0)) && echo 1 || echo 0 )))
+TRUST_SCORE=$((TRUST_SCORE + $( ((HAS_POLICY > 0)) && echo 1 || echo 0 )))
+[[ $TRUST_SCORE -gt 10 ]] && TRUST_SCORE=10 || true
 
 echo -e "  → Score: ${TRUST_SCORE}/10 $(grade_emoji $TRUST_SCORE)\n"
 
@@ -328,6 +325,23 @@ done
 
 # ─── Generate JSON Report ───
 # Export all variables for python3 JSON generator
+# Build competitor JSON using python (handles all escaping)
+if [ -f "${TMPDIR}/competitors.jsonl" ] && [ -s "${TMPDIR}/competitors.jsonl" ]; then
+    COMPETITOR_JSON=$(python3 -c '
+import json
+items=[]
+with open("'${TMPDIR}'/competitors.jsonl") as f:
+    for line in f:
+        line=line.strip()
+        if line:
+            try: items.append(json.loads(line))
+            except: pass
+print(json.dumps(items))
+')
+else
+    COMPETITOR_JSON="[]"
+fi
+
 export DOMAIN_CLEAN BASE_URL TIMESTAMP OVERALL
 export AGENT_FILES_SCORE SCHEMA_SCORE META_SCORE CONTENT_SCORE PRODUCT_SCORE COMP_SCORE TRUST_SCORE
 export LLMS_CODE PJ_CODE ROBOTS_CODE SITEMAP_CODE LLMS_SIZE PJ_SIZE
@@ -339,88 +353,7 @@ export HAS_REVIEWS HAS_POLICY HAS_SSL
 export LLMS_CONTENT ROBOTS_CONTENT COMPETITOR_JSON
 
 # Generate JSON report using python3 (avoids all shell escaping issues)
-python3 << 'PYJSON' > "$TMPDIR/report.json"
-import json, os, datetime
-
-SCHEMA_COUNT = int(os.environ.get("SCHEMA_COUNT", "0").strip() or "0")
-AGENT_FILES_SCORE = int(os.environ.get("AGENT_FILES_SCORE", "0").strip() or "0")
-SCHEMA_SCORE = int(os.environ.get("SCHEMA_SCORE", "0").strip() or "0")
-META_SCORE = int(os.environ.get("META_SCORE", "0").strip() or "0")
-CONTENT_SCORE = int(os.environ.get("CONTENT_SCORE", "0").strip() or "0")
-PRODUCT_SCORE = int(os.environ.get("PRODUCT_SCORE", "0").strip() or "0")
-COMP_SCORE = int(os.environ.get("COMP_SCORE", "0").strip() or "0")
-TRUST_SCORE = int(os.environ.get("TRUST_SCORE", "0").strip() or "0")
-LLMS_SIZE = int(os.environ.get("LLMS_SIZE", "0").strip() or "0")
-PJ_SIZE = int(os.environ.get("PJ_SIZE", "0").strip() or "0")
-WORD_COUNT = int(os.environ.get("WORD_COUNT", "0").strip() or "0")
-
-report = {
-    "audit": {
-        "domain": os.environ.get("DOMAIN_CLEAN", ""),
-        "url": os.environ.get("BASE_URL", ""),
-        "timestamp": os.environ.get("TIMESTAMP", ""),
-        "overall_score": int(os.environ.get("OVERALL", "0").strip() or "0")
-    },
-    "scores": {
-        "agent_files": {"score": AGENT_FILES_SCORE, "max": 10},
-        "schema_markup": {"score": SCHEMA_SCORE, "max": 10},
-        "meta_tags": {"score": META_SCORE * 2, "max": 10},
-        "content_clarity": {"score": CONTENT_SCORE, "max": 10},
-        "product_data": {"score": PRODUCT_SCORE, "max": 10},
-        "competitive": {"score": COMP_SCORE, "max": 10},
-        "trust_signals": {"score": TRUST_SCORE, "max": 10}
-    },
-    "details": {
-        "agent_files": {
-            "llms_txt": {"status": os.environ.get("LLMS_CODE","")},
-            "products_json": {"status": os.environ.get("PJ_CODE","")},
-            "robots_txt": {"status": os.environ.get("ROBOTS_CODE","")},
-            "sitemap_xml": {"status": os.environ.get("SITEMAP_CODE","")}
-        },
-        "schema": {
-            "jsonld_blocks": SCHEMA_COUNT,
-            "has_product": os.environ.get("HAS_PRODUCT","0").strip() != "0",
-            "has_faq": os.environ.get("HAS_FAQ","0").strip() != "0",
-            "has_local_business": os.environ.get("HAS_LOCAL","0").strip() != "0",
-            "has_breadcrumb": os.environ.get("HAS_BREADCRUMB","0").strip() != "0",
-            "has_review": os.environ.get("HAS_REVIEW","0").strip() != "0"
-        },
-        "meta": {
-            "title": os.environ.get("TITLE_TAG","")[:200],
-            "description_present": os.environ.get("META_DESC","Missing") != "Missing",
-            "og_title_present": os.environ.get("OG_TITLE","Missing") != "Missing",
-            "og_image_present": os.environ.get("OG_IMAGE","Missing") != "Missing",
-            "canonical_present": os.environ.get("CANONICAL","Missing") != "Missing"
-        },
-        "content": {
-            "word_count": WORD_COUNT,
-            "pricing_visible": os.environ.get("HAS_PRICING","0").strip() != "0",
-            "phone_visible": os.environ.get("HAS_PHONE","0").strip() != "0",
-            "location_visible": os.environ.get("HAS_ADDRESS","0").strip() != "0"
-        },
-        "product_sample": {
-            "has_product_schema": os.environ.get("PRODUCT_SCHEMA","0").strip() != "0",
-            "has_price": os.environ.get("HAS_PRICE_SCHEMA","0").strip() != "0",
-            "has_sku": os.environ.get("HAS_SKU","0").strip() != "0",
-            "has_availability": os.environ.get("HAS_AVAIL","0").strip() != "0",
-            "has_shipping": os.environ.get("HAS_SHIPPING","0").strip() != "0",
-            "has_return_policy": os.environ.get("HAS_RETURN","0").strip() != "0"
-        },
-        "competitors": json.loads(os.environ.get("COMPETITOR_JSON", "[]")),
-        "trust": {
-            "review_schema": os.environ.get("HAS_REVIEWS","0").strip() != "0",
-            "ssl": os.environ.get("HAS_SSL","0").strip() == "1",
-            "phone_visible": os.environ.get("HAS_PHONE","0").strip() != "0",
-            "policy_pages": os.environ.get("HAS_POLICY","0").strip() != "0"
-        },
-        "raw": {
-            "llms_content": os.environ.get("LLMS_CONTENT","")[:500],
-            "robots_content": os.environ.get("ROBOTS_CONTENT","")[:500]
-        }
-    }
-}
-json.dump(report, sys.stdout, indent=2)
-PYJSON
+python3 "$SKILL_DIR/scripts/generate_report.py" > "$TMPDIR/report.json" || echo "{}" > "$TMPDIR/report.json"
 
 # Pretty print
 python3 -m json.tool "$TMPDIR/report.json" > "$TMPDIR/report_pretty.json" 2>/dev/null

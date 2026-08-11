@@ -127,6 +127,26 @@ We'll review it together in about 3-5 business days. Sound good?"
 
 ## Phase 2: AI Analysis (Rip & Go)
 
+### Automated Audit Tool
+```bash
+# Run the automated audit on any domain
+bash scripts/run-audit.sh <domain> [competitor1] [competitor2] ...
+
+# Example:
+bash scripts/run-audit.sh psdepot.com pospaper.com staples.com
+
+# Output: /tmp/audit-<domain>-<timestamp>.json
+```
+
+The tool checks 7 categories and produces a structured JSON report:
+- Agent-Native Files (llms.txt, products.json, robots.txt, sitemap)
+- Schema.org Structured Data (JSON-LD blocks, types present)
+- Meta Tags & Social Cards (OG tags, canonical, description)
+- Content Clarity for AI (readability, pricing, contact visibility)
+- Structured Product Data (product schema quality)
+- Competitive Agent Visibility (competitor comparison)
+- Trust Signals (reviews, SSL, policies)
+
 ### Step 1: Site Crawl & Audit
 Run this automated audit on the client's domain:
 
