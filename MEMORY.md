@@ -95,18 +95,50 @@ systemctl status aos-mission-control
 ### Product Pages Created
 | Product | SKU | Price | URL |
 |---------|-----|-------|-----|
-| Capton 1 oz Bottle Top Pourer | CAP-100-1OZ | $24.99 | `/products/capton-1oz-pourer.html` |
-| Capton 1.5 oz Bottle Top Pourer | CAP-150-15OZ | $24.99 | `/products/capton-1.5oz-pourer.html` |
-| Capton 2 oz Bottle Top Pourer | CAP-200-2OZ | $26.99 | `/products/capton-2oz-pourer.html` |
-| Capton Wine Pourer (5 oz) | CAP-WINE-5OZ | $29.99 | `/products/capton-wine-pourer.html` |
-| Capton Variety Pack (12-Pack) | CAP-VARY-12PK | $279.99 | `/products/capton-variety-pack.html` |
+| Capton 1 oz Bottle Top Pourer | CAP-100-1OZ | $49.00 | `/products/capton-1oz-pourer.html` |
+| Capton 1.5 oz Bottle Top Pourer | CAP-150-15OZ | $49.00 | `/products/capton-1.5oz-pourer.html` |
+| Capton 2 oz Bottle Top Pourer | CAP-200-2OZ | $49.00 | `/products/capton-2oz-pourer.html` |
+| Capton Wine Pourer (5 oz) | CAP-WINE-5OZ | $49.00 | `/products/capton-wine-pourer.html` |
+| Capton Variety Pack (12-Pack) | CAP-VARY-12PK | $558.00 | `/products/capton-variety-pack.html` |
 | Capton Pourer Cleaning Kit | CAP-CLEAN-KIT | $34.99 | `/products/capton-cleaning-kit.html` |
+| Capton PourLink Analytics | POUR-ANALYTICS | $3,000.00 | `/products/capton-pourlink-analytics.html` |
+| Capton PourLink Receiver | POUR-RECV | $2,200.00 | `/products/capton-pourlink-receiver.html` |
 
 ### Features
 - Schema.org Product markup on all pages
 - Responsive design matching existing PSD template
 - SEO optimized with proper meta tags
 - Linked from `/products/index.html` in categories
+
+---
+
+## Agent Readiness — llms.txt + products.json Deployed
+**Deployed:** 2026-08-11 00:37 UTC
+**Status:** ✅ LIVE
+
+### What's New
+- **`https://psdepot.com/llms.txt`** — Agent-readable site index listing all categories, services, shipping, contact, and crawling policy. First POS supply site with agent-native discovery.
+- **`https://psdepot.com/products.json`** — Machine-readable product catalog with 24 products across 6 categories. Each product has SKU, name, price, brand, category, description, URL, availability, and specs.
+
+### Agent Readiness Audit Results
+- ✅ Schema.org markup: B+ (LocalBusiness, FAQPage, Product schemas)
+- ✅ llms.txt deployed
+- ✅ products.json deployed
+- ⚠️ 6 product pages still need Product schema added (15-741, 30-150, 54-230, 62245, 67240, CC-235)
+- ⚠️ No MCP endpoint / agent checkout yet
+- ⚠️ No review/rating schema
+
+### Competitive Position
+- **pospaper.com**: Only competitor with llms.txt (Shopify store, basic)
+- **Staples, Uline, POSSupply, ReceiptPaper**: All 404 on llms.txt
+- **psdepot.com**: First POS supply site with both llms.txt + products.json
+
+### Price Bug Fixed
+- Capton prices in MEMORY.md corrected to match live site ($24.99→$49.00 etc.)
+
+### Files
+- `/var/www/psdepot.com/llms.txt`
+- `/var/www/psdepot.com/products.json`
 
 ---
 
