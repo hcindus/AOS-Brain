@@ -1,0 +1,22 @@
+REPO: ros-training-simulation
+==========================================
+--- UNCOMMITTED CHANGES ---
+--- LARGE FILES (>10MB) ---
+--- BRANCHES (stale check) ---
+origin|2026-07-06 16:04:45 +0000
+origin/main|2026-07-06 16:04:45 +0000
+--- DEPENDENCY FILES ---
+--- README ---
+EXISTS: README.md (108 lines)
+# RL training of isaac gym environments for engineai-robots #
+This repository provides the environment used to train engineai-robots (and other robots) to walk on rough terrain using NVIDIA's Isaac Gym.
+It includes all components needed for sim-to-real transfer: actuator network, friction & mass randomization, noisy observations and random pushes during training.  
+
+## 2024.09.10 This is the full version of our repository which offers the basic operation of RL, including training, play(generate .pt model), sim2sim, and sim2rea(generate .onnx model for real deployment). This repository will be maintained and update continuously##
+--- LAST COMMIT ---
+Miles|miles@myl0nr0s.cloud|2026-07-06 16:04:45 +0000|Add training launcher and mock training tracker
+--- REPO STATS ---
+File count: 103
+Dir count: 47
+Total size: 18M
+
