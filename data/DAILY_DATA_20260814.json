@@ -1,0 +1,29 @@
+{
+  "date": "2026-08-14T02:00:40+00:00",
+  "timestamp_utc": 1786672840,
+  "system_health": 
+======================================================================
+  [90m🩺 TRIAGE REPORT[0m
+======================================================================
+
+Overall Status: [90mUNKNOWN[0m
+Recommendation: N/A
+
+Checks:
+======================================================================,
+  "metrics": {
+    "emails_processed": 0,
+    "agent_files": 315,
+    "queue_items": 74,
+    "reports_generated": 85,
+    "brain_cycles": 218550
+  },
+  "security": {
+    "probes_installed": true,
+    "last_check": "2026-08-14T02:00:41+00:00"
+  },
+  "github": {
+    "repo": "hcindus/AOS-Brain",
+    "last_sync": "2026-08-14T02:00:41+00:00"
+  }
+}
