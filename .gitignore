@@ -38,6 +38,9 @@ logs/*.log
 *.pid
 *.sock
 *.db
+
+# Nested repo (tracked separately in hcindus/aocros.git)
+aocros/
 *.db-shm
 *.db-wal
 *.db-journal
