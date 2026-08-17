@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sovereign Citizen Bingo — Mr. Day Edition</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #fff;
+    --accent: #8b1a1a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #4a4a4a;
+    font-family: Georgia, "Times New Roman", serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+    color: var(--ink);
+  }
+  .card {
+    background: var(--paper);
+    width: 100%;
+    max-width: 620px;
+    padding: 24px;
+    border-radius: 6px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  }
+  .card h1 {
+    text-align: center;
+    font-size: 1.7rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .card .sub {
+    text-align: center;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 16px;
+    font-size: 0.95rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+  .cell {
+    border: 2px solid var(--ink);
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6px;
+    font-size: 0.72rem;
+    line-height: 1.15;
+    word-break: break-word;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.1s;
+  }
+  .cell.free {
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .cell.marked { background: #d4edda; text-decoration: line-through; }
+  .legend {
+    margin-top: 16px;
+    font-size: 0.8rem;
+    color: #444;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .legend .free-desc { font-style: italic; }
+  .tools {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  button {
+    font-family: inherit;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  button:hover { filter: brightness(1.1); }
+  button.ghost { background: #666; }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .tools { display: none; }
+    .card { box-shadow: none; max-width: 100%; border: none; }
+    @page { margin: 0.4in; }
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>Sovereign Citizen Bingo</h1>
+    <div class="sub">Mr. Tariq Day Edition — 14B District Court</div>
+    <div class="grid" id="grid"></div>
+    <div class="legend">
+      Mark a square when he says it. First to a full row, column, or diagonal wins.
+      <br><span class="free-desc">FREE SPACE = he mentions "jurisdiction" or refuses to raise his right hand</span>
+    </div>
+    <div class="tools">
+      <button id="newCard">🔀 New Card</button>
+      <button class="ghost" id="clear">Clear Marks</button>
+      <button class="ghost" id="print">🖨 Print</button>
+    </div>
+  </div>
+
+<script>
+  const WORDS = [
+    "violation",
+    "indigenous",
+    "oath",
+    "trust",
+    "escrow",
+    "assimilation",
+    "affidavit",
+    "discrimination",
+    "creditor",
+    "flesh and blood",
+    "duress",
+    "jurisdiction",
+    "autonomy",
+    "sovereign",
+    "consumer rights",
+    "human rights",
+    "securitization",
+    "impropriety",
+    "Fabuloso",
+    "artificial person",
+    "misnomer",
+    "birth certificate",
+    "Morris National Republic of Peace",
+    "enemy of the state"
+  ];
+
+  const FREE = "REFUSES TO RAISE RIGHT HAND";
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function render() {
+    const grid = document.getElementById('grid');
+    grid.innerHTML = '';
+    const words = shuffle(WORDS).slice(0, 24);
+    let w = 0;
+    for (let i = 0; i < 25; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      if (i === 12) {
+        cell.classList.add('free');
+        cell.textContent = 'FREE';
+      } else {
+        cell.textContent = words[w++];
+        cell.addEventListener('click', () => cell.classList.toggle('marked'));
+      }
+      grid.appendChild(cell);
+    }
+  }
+
+  document.getElementById('newCard').addEventListener('click', render);
+  document.getElementById('clear').addEventListener('click', () => {
+    document.querySelectorAll('.cell.marked').forEach(c => c.classList.remove('marked'));
+  });
+  document.getElementById('print').addEventListener('click', () => window.print());
+
+  render();
+</script>
+</body>
+</html>
