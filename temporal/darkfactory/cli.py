@@ -44,6 +44,9 @@ async def start_order(args):
     if args.wait:
         print("⏳ Waiting for completion...")
         result = await handle.result()
+        from dataclasses import asdict, is_dataclass
+        if is_dataclass(result):
+            result = asdict(result)
         print(f"\n📦 Result:")
         print(json.dumps(result, indent=2))
     

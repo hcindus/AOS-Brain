@@ -108,10 +108,15 @@ async def allocate_build_resources(order_id: str, build_type: str, priority: str
 async def execute_build(order, resources) -> dict:
     """
     Actually execute the build. Heartbeats every 30 seconds.
-    Patricia would be proud - this actually builds things.
+    `order` arrives as a dict at the activity boundary (Temporal JSON-serializes dataclasses).
     """
-    activity.logger.info(f"Building {order.order_id}")
-    
+    oid = order.get("order_id") if isinstance(order, dict) else order.order_id
+    build_type = order.get("build_type") if isinstance(order, dict) else order.build_type
+    source = order.get("source_path") if isinstance(order, dict) else order.source_path
+    project = order.get("project_name") if isinstance(order, dict) else order.project_name
+
+    activity.logger.info(f"Building {oid}")
+
     # Send initial heartbeat
     activity.heartbeat("Starting build...")
     
@@ -120,14 +125,14 @@ async def execute_build(order, resources) -> dict:
     file_size = 0
     
     try:
-        if order.build_type == "apk":
-            result = await _build_apk(order, resources, logs)
-        elif order.build_type == "web":
-            result = await _build_web(order, resources, logs)
-        elif order.build_type == "docker":
-            result = await _build_docker(order, resources, logs)
+        if build_type == "apk":
+            result = await _build_apk(source, resources, logs)
+        elif build_type == "web":
+            result = await _build_web(source, resources, logs)
+        elif build_type == "docker":
+            result = await _build_docker(source, project, resources, logs)
         else:
-            raise ValueError(f"Unknown build type: {order.build_type}")
+            raise ValueError(f"Unknown build type: {build_type}")
         
         activity.heartbeat("Build complete, verifying...")
         return {
@@ -149,11 +154,10 @@ async def execute_build(order, resources) -> dict:
         }
 
 
-async def _build_apk(order, resources, logs):
+async def _build_apk(source, resources, logs):
     """Build an Android APK using Bubblewrap or Gradle."""
     import asyncio
     
-    source = order.source_path
     output_dir = resources["output_dir"]
     
     # Try Bubblewrap first (for PWAs)
@@ -224,9 +228,8 @@ async def _build_apk(order, resources, logs):
     }
 
 
-async def _build_web(order, resources, logs):
+async def _build_web(source, resources, logs):
     """Build a web app."""
-    source = order.source_path
     output_dir = resources["output_dir"]
     
     # Detect build tool
@@ -283,10 +286,9 @@ async def _build_web(order, resources, logs):
     }
 
 
-async def _build_docker(order, resources, logs):
+async def _build_docker(source, project, resources, logs):
     """Build a Docker image."""
-    source = order.source_path
-    tag = f"darkfactory/{order.project_name}:{datetime.utcnow().strftime('%Y%m%d')}"
+    tag = f"darkfactory/{project}:{datetime.utcnow().strftime('%Y%m%d')}"
     
     activity.heartbeat(f"Building Docker image {tag}...")
     
