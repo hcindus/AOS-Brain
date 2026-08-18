@@ -17,6 +17,7 @@ from activities import (
     allocate_build_resources,
     execute_build,
     verify_build_output,
+    validate_hold_out,
     notify_completion,
     notify_escalation,
     cleanup_resources,
@@ -49,6 +50,7 @@ async def main():
             allocate_build_resources,
             execute_build,
             verify_build_output,
+            validate_hold_out,
             notify_completion,
             notify_escalation,
             cleanup_resources,
@@ -59,7 +61,7 @@ async def main():
     print("🚀 Dark Factory worker starting...")
     print("   Task queue: darkfactory-queue")
     print("   Workflows: DarkFactoryWorkflow, DarkFactoryBatchWorkflow, DarkFactoryHealthCheck")
-    print("   Activities: 7 build activities")
+    print("   Activities: 8 build + validation activities")
     
     await worker.run()
 

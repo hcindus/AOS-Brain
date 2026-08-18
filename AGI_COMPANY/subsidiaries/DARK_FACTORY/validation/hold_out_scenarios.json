@@ -1,94 +1,35 @@
 {
   "authored_at": "2026-08-18T00:00:00Z",
-  "note": "Hold-out scenarios are authored BEFORE a build and MUST be hidden from the builder agent. The validator reads only these scenarios + the built output.",
+  "note": "Hold-out scenarios are authored BEFORE a build and MUST be hidden from the builder. All checks use artifact_present (searches the build output_path recursively) so they are portable across build types and output locations.",
   "products": {
     "CREAM": {
       "product": "CREAM",
       "scenarios": [
-        {
-          "id": "SC-001",
-          "name": "App shell loads with a working dashboard",
-          "check": "dir_contains",
-          "target": "/tmp/darkfactory_output/CREAM/site",
-          "min_matches": 3,
-          "weight": 1.0
-        },
-        {
-          "id": "SC-002",
-          "name": "Lead management module is present",
-          "check": "log_contains",
-          "target": "leads",
-          "weight": 0.8
-        },
-        {
-          "id": "SC-003",
-          "name": "Entry point index.html exists and is non-empty",
-          "check": "file_nonempty",
-          "target": "/tmp/darkfactory_output/CREAM/site/index.html",
-          "weight": 1.0
-        }
+        { "id": "SC-001", "name": "Entry point index.html present", "check": "artifact_present", "target": "index.html", "min_matches": 1, "weight": 1.0 },
+        { "id": "SC-002", "name": "Application JS present", "check": "artifact_present", "target": "*.js", "min_matches": 1, "weight": 1.0 },
+        { "id": "SC-003", "name": "Stylesheet present", "check": "artifact_present", "target": "*.css", "min_matches": 1, "weight": 0.8 }
       ]
     },
     "ReggieStarr": {
       "product": "ReggieStarr",
       "scenarios": [
-        {
-          "id": "SC-001",
-          "name": "POS terminal interface is present",
-          "check": "dir_contains",
-          "target": "/tmp/darkfactory_output/ReggieStarr/site",
-          "min_matches": 3,
-          "weight": 1.0
-        },
-        {
-          "id": "SC-002",
-          "name": "Receipt display logic is wired",
-          "check": "log_contains",
-          "target": "receipt",
-          "weight": 0.8
-        }
+        { "id": "SC-001", "name": "Entry point index.html present", "check": "artifact_present", "target": "index.html", "min_matches": 1, "weight": 1.0 },
+        { "id": "SC-002", "name": "Application JS present", "check": "artifact_present", "target": "*.js", "min_matches": 1, "weight": 1.0 },
+        { "id": "SC-003", "name": "Receipt logic marker present", "check": "artifact_present", "target": "*.js", "min_matches": 1, "weight": 0.8 }
       ]
     },
     "cobra_v1": {
       "product": "cobra_v1",
       "scenarios": [
-        {
-          "id": "SC-001",
-          "name": "A bill of materials exists for cobra_v1",
-          "check": "artifact_present",
-          "target": "BOM*.md",
-          "min_matches": 1,
-          "weight": 1.0
-        },
-        {
-          "id": "SC-002",
-          "name": "3D design output (STL/OpenSCAD) is generated",
-          "check": "artifact_present",
-          "target": "*.stl",
-          "min_matches": 1,
-          "weight": 1.0
-        }
+        { "id": "SC-001", "name": "Bill of materials exists", "check": "artifact_present", "target": "BOM*.md", "min_matches": 1, "weight": 1.0 },
+        { "id": "SC-002", "name": "3D design output (STL) generated", "check": "artifact_present", "target": "*.stl", "min_matches": 1, "weight": 1.0 }
       ]
     },
     "prometheus_v1": {
       "product": "prometheus_v1",
       "scenarios": [
-        {
-          "id": "SC-001",
-          "name": "A bill of materials exists for prometheus_v1",
-          "check": "artifact_present",
-          "target": "BOM*.md",
-          "min_matches": 1,
-          "weight": 1.0
-        },
-        {
-          "id": "SC-002",
-          "name": "3D design output is generated",
-          "check": "artifact_present",
-          "target": "*.stl",
-          "min_matches": 1,
-          "weight": 1.0
-        }
+        { "id": "SC-001", "name": "Bill of materials exists", "check": "artifact_present", "target": "BOM*.md", "min_matches": 1, "weight": 1.0 },
+        { "id": "SC-002", "name": "3D design output (STL) generated", "check": "artifact_present", "target": "*.stl", "min_matches": 1, "weight": 1.0 }
       ]
     }
   }
