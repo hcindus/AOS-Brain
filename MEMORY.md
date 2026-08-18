@@ -46,19 +46,26 @@
 
 ---
 
-## GoR Protocol v1.0 — Governance-Optimized Resolution
+## RiP GoR Protocol v1.0 — Governance-Optimized Resolution
 **Created:** 2026-08-11
 **Location:** `/root/.aos/aos/gor_protocol.py`
 **Skill:** `/root/.openclaw/workspace/skills/gor-protocol/SKILL.md`
 
+### Acronym (Captain, 2026-08-18)
+**RiP GoR** =
+- **R** = Roast — 6-persona adversarial council (`roast_skill.py`)
+- **i** (int) = the topic / input
+- **P** = Patricia — DMCIA specialist (was "Chief of Staff")
+- **Go** = go with the **(R)esult** (verdict)
+
 ### Formula
 ```
-GoR(task) = Roast(task) + Patricia(roast_result) → Go(verdict)
+RiP GoR(int) = Roast(int) + Patricia(roast_result) → Go with Result
 ```
 
 ### Pipeline
 1. **Stage 1 — ROAST:** 6 adversarial personas evaluate (Contrarian, Expansionist, FirstPrinciples, Researcher, Buyer → Judge)
-2. **Stage 2 — PATRICIA:** Chief of Staff adds strategic context, org alignment, delegation target
+2. **Stage 2 — PATRICIA:** DMCIA specialist adds strategic context, org alignment, delegation target
 3. **Stage 3 — GoR:** Combined verdict via decision matrix → GO / RESHAPE / KILL / ESCALATE
 
 ### Decision Matrix
