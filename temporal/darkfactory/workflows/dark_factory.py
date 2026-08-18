@@ -16,6 +16,7 @@ with workflow.unsafe.imports_passed_through():
         allocate_build_resources,
         execute_build,
         verify_build_output,
+        validate_hold_out,
         notify_completion,
         notify_escalation,
         cleanup_resources,
@@ -125,6 +126,22 @@ class DarkFactoryWorkflow:
             
             if not verified:
                 raise ApplicationError("Build verification failed - file missing or empty")
+            
+            # STAGE 4.5: Blind hold-out validation (separate validator session)
+            self.current_stage = "HOLDOUT_VALIDATING"
+            holdout = await workflow.execute_activity(
+                validate_hold_out,
+                args=(order.project_name, result.output_path, result.file_size_bytes),
+                start_to_close_timeout=timedelta(minutes=3),
+                retry_policy=RetryPolicy(
+                    initial_interval=timedelta(seconds=5),
+                    maximum_attempts=2,
+                ),
+            )
+            if not holdout.get("passed"):
+                raise ApplicationError(
+                    f"Hold-out validation failed for {order.project_name}: {holdout.get('reason')}"
+                )
             
             # STAGE 5: Notify completion
             self.current_stage = "NOTIFYING"

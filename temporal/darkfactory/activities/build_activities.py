@@ -363,6 +363,48 @@ async def verify_build_output(output_path: str, expected_size: int) -> bool:
 
 
 @activity.defn
+async def validate_hold_out(project_name: str, output_path: str, file_size_bytes: int) -> dict:
+    """
+    Blind hold-out validation. Runs BEFORE notify_completion.
+
+    SEPARATION RULE (RiP GoR Council, 2026-08-18):
+    This activity is the VALIDATOR session. It is intentionally blind to the
+    build plan and builder logs. It reads ONLY the pre-authored hold-out
+    scenarios + the built output. The builder (execute_build) never sees
+    the scenarios; this validator never sees the plan. No shared context = no bias.
+    """
+    activity.logger.info(f"Running blind hold-out validation for {project_name}")
+
+    try:
+        # Import the shared validator (lives in DARK_FACTORY/validation/)
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "hold_out_scenarios",
+            "/root/.openclaw/workspace/AGI_COMPANY/subsidiaries/DARK_FACTORY/validation/hold_out_scenarios.py",
+        )
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+
+        result = mod.validate_hold_out(project_name, output_path, file_size_bytes)
+        activity.logger.info(
+            f"Hold-out result for {project_name}: passed={result.get('passed')} "
+            f"score={result.get('score')} ({result.get('passed_count')}/{result.get('total_count')})"
+        )
+        return result
+
+    except Exception as e:
+        # Validation harness itself failing is a config error, not a silent pass.
+        activity.logger.error(f"Hold-out validation errored: {e}")
+        return {
+            "product": project_name,
+            "passed": False,
+            "score": 0.0,
+            "results": [],
+            "reason": f"VALIDATOR_ERROR: {e}",
+        }
+
+
+@activity.defn
 async def notify_completion(order_id: str, result: dict) -> None:
     """Send completion notification."""
     activity.logger.info(f"Order {order_id} completed: {result}")
