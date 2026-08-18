@@ -36,7 +36,14 @@ python3 cli.py list
 - `AGI_COMPANY/subsidiaries/DARK_FACTORY/mission.md` — goals + non-goals + accept/reject triage
 - `.../DARK_FACTORY/validation/hold_out_scenarios.{py,json}` — blind hold-out validator
 - `.../DARK_FACTORY/factory.py` — back-ported `triage_order()` (accept/reject) + `run_qc()` (blind hold-out QC gate at phase 4→5)
-- Note: also dormant Temporal codebases exist (Go `collections-worker`, mortimer, depotchaos) — NOT consolidated yet.
+
+### Temporal consolidation (2026-08-18)
+One Temporal server (Miles VPS `localhost:7233`), all workflows on it:
+- **Dark Factory** (Python) — `darkfactory-worker.service`, queue `darkfactory-queue`
+- **Collections** (Go, compiled `collections-worker` binary) — `collections-worker.service`, queue `collections-queue`
+- **DepotChaos MS-Connect** (Python) — available, not yet registered (its `depotchaos-tasks.service` is dead; CRM services are active but non-Temporal)
+- **Mortimer sales engine** — deprecated (was a mock "Temporal-like" engine, not real Temporal)
+- See `temporal/CONSOLIDATION.md` for full map.
 
 ---
 
