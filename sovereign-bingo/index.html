@@ -28,6 +28,14 @@
     border-radius: 6px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.4);
   }
+  .video-shell { position: relative; width: 100%; max-width: 620px; padding-top: 56.25%; background: #000; border-radius: 6px; overflow: hidden; margin: 0 auto 16px; }
+  .video-shell iframe { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .loadbar { max-width: 620px; margin: 0 auto 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .loadbar input { flex: 1; min-width: 200px; padding: 9px 12px; border: 1px solid #aaa; border-radius: 6px; font-family: inherit; font-size: 0.9rem; }
+  .loadbar button { white-space: nowrap; }
+  .status-msg { max-width: 620px; margin: 0 auto 12px; font-size: 0.85rem; padding: 10px; border-radius: 6px; display: none; text-align: center; }
+  .status-msg.err { background: #fde8e8; color: #8b1a1a; display: block; }
+  .status-msg.ok { background: #e6f7ec; color: #1a7a3a; display: block; }
   .card h1 {
     text-align: center;
     font-size: 1.7rem;
@@ -109,6 +117,17 @@
 </style>
 </head>
 <body>
+  <div class="loadbar">
+    <input id="ytLink" placeholder="Paste a YouTube link to play alongside the card…">
+    <button id="ytBtn">🎬 Load video</button>
+    <button id="demo1">Tariq Day #1</button>
+    <button id="demo2">Tariq Day #2</button>
+  </div>
+  <div class="status-msg" id="statusMsg"></div>
+  <div class="video-shell" id="videoShell" style="display:none;">
+    <iframe id="videoFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
   <div class="card">
     <h1>Sovereign Citizen Bingo</h1>
     <div class="sub">Mr. Tariq Day Edition — 14B District Court</div>
@@ -187,6 +206,24 @@
     document.querySelectorAll('.cell.marked').forEach(c => c.classList.remove('marked'));
   });
   document.getElementById('print').addEventListener('click', () => window.print());
+
+  // --- video load ---
+  function setStatus(msg, isErr){ const s=document.getElementById('statusMsg'); s.textContent=msg; s.className='status-msg '+(isErr?'err':'ok'); }
+  function showVideo(videoId){ document.getElementById('videoShell').style.display='block'; document.getElementById('videoFrame').src='https://www.youtube.com/embed/'+videoId+'?rel=0'; }
+  function extractId(url){
+    let m=url.match(/youtu\.be\/([A-Za-z0-9_-]{6,})/); if(m) return m[1];
+    m=url.match(/(?:v=|embed\/|shorts\/)([A-Za-z0-9_-]{6,})/); if(m) return m[1];
+    if(/^[A-Za-z0-9_-]{11}$/.test(url.trim())) return url.trim();
+    return null;
+  }
+  document.getElementById('ytBtn').addEventListener('click',()=>{
+    const u=document.getElementById('ytLink').value.trim();
+    const id=extractId(u);
+    if(id){ showVideo(id); setStatus('Video loaded. Mark your card as he talks.', false); }
+    else setStatus('Could not parse a YouTube ID from that link.', true);
+  });
+  document.getElementById('demo1').addEventListener('click',()=>{ showVideo('-vy-CwLGE4g'); setStatus('Tariq Day #1 playing — mark your card!', false); });
+  document.getElementById('demo2').addEventListener('click',()=>{ showVideo('5qMhN_kfrtw'); setStatus('Tariq Day #2 playing — mark your card!', false); });
 
   render();
 </script>

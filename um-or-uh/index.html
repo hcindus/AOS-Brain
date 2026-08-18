@@ -6,366 +6,254 @@
 <title>Um or Uh? — Drinking Game</title>
 <style>
   :root {
-    --bg: #0f1115;
-    --panel: #1a1d24;
-    --border: #2a2f3a;
-    --um: #ffb347;
-    --uh: #5c9eff;
-    --text: #e6e8ee;
-    --muted: #8a90a0;
+    --bg: #0f1115; --panel: #1a1d24; --border: #2a2f3a;
+    --um: #ffb347; --uh: #5c9eff; --text: #e6e8ee; --muted: #8a90a0;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    min-height: 100vh;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; min-height: 100vh; padding: 24px; display: flex; flex-direction: column; align-items: center; }
   h1 { font-size: 2rem; letter-spacing: -0.02em; margin-bottom: 4px; }
-  .subtitle { color: var(--muted); margin-bottom: 24px; }
+  .subtitle { color: var(--muted); margin-bottom: 20px; }
+  .wrap { width: 100%; max-width: 960px; }
 
-  .layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    width: 100%;
-    max-width: 900px;
-  }
+  .video-shell { position: relative; width: 100%; padding-top: 56.25%; background: #000; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); margin-bottom: 16px; }
+  .video-shell iframe { position: absolute; inset: 0; width: 100%; height: 100%; }
 
-  .team {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px;
-  }
+  .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .team { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
   .team.um { border-top: 4px solid var(--um); }
   .team.uh { border-top: 4px solid var(--uh); }
-
-  .team-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-  }
+  .team-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
   .team-name { font-size: 1.4rem; font-weight: 700; }
-  .team.um .team-name { color: var(--um); }
-  .team.uh .team-name { color: var(--uh); }
-  .keyword-badge {
-    font-size: 0.85rem;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-weight: 600;
-  }
+  .team.um .team-name { color: var(--um); } .team.uh .team-name { color: var(--uh); }
+  .keyword-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; font-weight: 600; }
   .team.um .keyword-badge { background: rgba(255,179,71,0.15); color: var(--um); }
   .team.uh .keyword-badge { background: rgba(92,158,255,0.15); color: var(--uh); }
-
   .score-big { font-size: 3rem; font-weight: 800; text-align: center; margin: 8px 0; }
-  .team.um .score-big { color: var(--um); }
-  .team.uh .score-big { color: var(--uh); }
-
+  .team.um .score-big { color: var(--um); } .team.uh .score-big { color: var(--uh); }
   .players { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
-  .player {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 12px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid transparent;
-  }
+  .player { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid transparent; }
   .player.current { border-color: #fff; background: rgba(255,255,255,0.08); }
   .player .pname { font-weight: 600; }
   .player .pshots { color: var(--muted); font-variant-numeric: tabular-nums; }
   .player .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); margin-right: 8px; }
   .player.current .dot { background: #3ddc84; box-shadow: 0 0 8px #3ddc84; }
 
-  .controls {
-    grid-column: 1 / -1;
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    justify-content: center;
-    margin-top: 8px;
-    flex-wrap: wrap;
-  }
-  button {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 10px 18px;
-    border-radius: 10px;
-    font-size: 1rem;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.15s;
-  }
+  .current-word { grid-column: 1 / -1; text-align: center; padding: 24px; background: var(--panel); border: 1px solid var(--border); border-radius: 16px; }
+  .current-word .label { color: var(--muted); font-size: 0.9rem; }
+  .current-word .word { font-size: 4rem; font-weight: 800; margin: 8px 0; text-transform: uppercase; }
+  .current-word .word.um { color: var(--um); } .current-word .word.uh { color: var(--uh); }
+  .current-word .drinker { color: var(--muted); font-size: 1.1rem; }
+
+  .controls { grid-column: 1 / -1; display: flex; gap: 12px; align-items: center; justify-content: center; margin-top: 8px; flex-wrap: wrap; }
+  button { background: var(--panel); border: 1px solid var(--border); color: var(--text); padding: 10px 18px; border-radius: 10px; font-size: 1rem; cursor: pointer; font-weight: 600; transition: 0.15s; }
   button:hover { border-color: #fff; }
   button.primary { background: #3ddc84; color: #0f1115; border-color: #3ddc84; }
   button.primary:hover { filter: brightness(1.1); }
 
-  .current-word {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 24px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-  }
-  .current-word .label { color: var(--muted); font-size: 0.9rem; }
-  .current-word .word {
-    font-size: 4rem;
-    font-weight: 800;
-    margin: 8px 0;
-    text-transform: uppercase;
-  }
-  .current-word .word.um { color: var(--um); }
-  .current-word .word.uh { color: var(--uh); }
-  .current-word .drinker { color: var(--muted); font-size: 1.1rem; }
+  .winner-banner { grid-column: 1 / -1; text-align: center; font-size: 1.3rem; font-weight: 700; padding: 12px; border-radius: 12px; display: none; }
 
-  .setup {
-    width: 100%;
-    max-width: 900px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 16px;
-  }
+  .setup { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
   .setup h2 { margin-bottom: 12px; font-size: 1.1rem; }
-  .setup textarea {
-    width: 100%;
-    height: 140px;
-    background: #0a0c10;
-    color: var(--text);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px;
-    font-family: inherit;
-    font-size: 0.9rem;
-    resize: vertical;
-  }
+  .setup textarea { width: 100%; height: 110px; background: #0a0c10; color: var(--text); border: 1px solid var(--border); border-radius: 10px; padding: 12px; font-family: inherit; font-size: 0.9rem; resize: vertical; }
   .setup .row { display: flex; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
-  .setup input {
-    background: #0a0c10;
-    color: var(--text);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 10px;
-    font-size: 0.9rem;
-    flex: 1;
-    min-width: 140px;
-  }
+  .setup input { background: #0a0c10; color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 0.9rem; flex: 1; min-width: 200px; }
   .setup label { font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 4px; }
-  .field { flex: 1; min-width: 180px; }
-
-  .winner-banner {
-    grid-column: 1 / -1;
-    text-align: center;
-    font-size: 1.3rem;
-    font-weight: 700;
-    padding: 12px;
-    border-radius: 12px;
-    display: none;
-  }
+  .field { flex: 1; min-width: 200px; }
+  .hint { color: var(--muted); font-size: 0.8rem; margin-top: 8px; }
+  .demo-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .status-msg { margin-top: 10px; font-size: 0.9rem; padding: 10px; border-radius: 8px; display: none; }
+  .status-msg.err { background: rgba(255,80,80,0.12); color: #ff9a9a; display: block; }
+  .status-msg.ok { background: rgba(61,220,132,0.12); color: #7ce6a8; display: block; }
 </style>
 </head>
 <body>
-  <h1>🍻 Um or Uh?</h1>
-  <div class="subtitle">Two teams, two lines. Drink on your keyword, rotate to the back.</div>
+  <div class="wrap">
+    <h1>🍻 Um or Uh?</h1>
+    <div class="subtitle">Two teams, two lines. Drink on your keyword, rotate to the back.</div>
 
-  <div class="setup" id="setupPanel">
-    <h2>Setup</h2>
-    <div class="row">
-      <div class="field">
-        <label>Team "um" players (comma-separated)</label>
-        <input id="teamA" value="Alice, Ben, Cara, Dan">
+    <div class="setup" id="setupPanel">
+      <h2>Setup — load a video or paste a transcript</h2>
+      <div class="row">
+        <div class="field">
+          <label>Paste a YouTube link (we'll grab the transcript)</label>
+          <input id="ytLink" placeholder="https://youtu.be/... or watch?v=...">
+        </div>
+        <div class="field" style="display:flex; align-items:flex-end;">
+          <button class="primary" id="ytBtn">🎬 Load video</button>
+        </div>
       </div>
-      <div class="field">
-        <label>Team "uh" players (comma-separated)</label>
-        <input id="teamB" value="Wendy, Xavier, Yara, Zed">
+      <div class="row">
+        <div class="field">
+          <label>…or paste a transcript directly (um/uh auto-detected)</label>
+          <textarea id="transcript" placeholder="Paste any text containing 'um' and 'uh'..."></textarea>
+        </div>
       </div>
+      <div class="row">
+        <div class="field">
+          <label>Team "um" players (comma-separated)</label>
+          <input id="teamA" value="Alice, Ben, Cara, Dan">
+        </div>
+        <div class="field">
+          <label>Team "uh" players (comma-separated)</label>
+          <input id="teamB" value="Wendy, Xavier, Yara, Zed">
+        </div>
+      </div>
+      <div class="demo-row">
+        <button id="demo1">🎬 Demo: Tariq Day #1</button>
+        <button id="demo2">🎬 Demo: Tariq Day #2</button>
+        <button class="primary" id="startBtn">▶ Play transcript</button>
+      </div>
+      <div class="status-msg" id="statusMsg"></div>
     </div>
-    <div class="row">
-      <div class="field">
-        <label>Paste a transcript (um/uh will be auto-detected)</label>
-        <textarea id="transcript" placeholder="Paste any text containing 'um' and 'uh'..."></textarea>
-      </div>
+
+    <div class="video-shell" id="videoShell" style="display:none;">
+      <iframe id="videoFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
-    <div class="row">
-      <button class="primary" id="startBtn">🎬 Load &amp; Play</button>
-      <button id="demoBtn">Load Tariq Day demo</button>
+
+    <div class="layout" id="gameArea" style="display:none;">
+      <div class="team um">
+        <div class="team-header"><span class="team-name">Team UM</span><span class="keyword-badge">drink on "um"</span></div>
+        <div class="score-big" id="scoreA">0</div>
+        <div class="players" id="playersA"></div>
+      </div>
+      <div class="team uh">
+        <div class="team-header"><span class="team-name">Team UH</span><span class="keyword-badge">drink on "uh"</span></div>
+        <div class="score-big" id="scoreB">0</div>
+        <div class="players" id="playersB"></div>
+      </div>
+      <div class="current-word">
+        <div class="label">Next up</div>
+        <div class="word" id="wordDisplay">—</div>
+        <div class="drinker" id="drinkerDisplay">Press play to begin</div>
+      </div>
+      <div class="winner-banner" id="winnerBanner"></div>
+      <div class="controls">
+        <button class="primary" id="playBtn">▶ Play</button>
+        <button id="pauseBtn">⏸ Pause</button>
+        <button id="resetBtn">↺ Reset</button>
+        <button id="setupBtn">⚙ Setup</button>
+      </div>
     </div>
   </div>
 
-  <div class="layout" id="gameArea" style="display:none;">
-    <div class="team um">
-      <div class="team-header">
-        <span class="team-name">Team UM</span>
-        <span class="keyword-badge">drink on "um"</span>
-      </div>
-      <div class="score-big" id="scoreA">0</div>
-      <div class="players" id="playersA"></div>
-    </div>
-
-    <div class="team uh">
-      <div class="team-header">
-        <span class="team-name">Team UH</span>
-        <span class="keyword-badge">drink on "uh"</span>
-      </div>
-      <div class="score-big" id="scoreB">0</div>
-      <div class="players" id="playersB"></div>
-    </div>
-
-    <div class="current-word">
-      <div class="label">Next up</div>
-      <div class="word" id="wordDisplay">—</div>
-      <div class="drinker" id="drinkerDisplay">Press play to begin</div>
-    </div>
-
-    <div class="winner-banner" id="winnerBanner"></div>
-
-    <div class="controls">
-      <button class="primary" id="playBtn">▶ Play</button>
-      <button id="pauseBtn">⏸ Pause</button>
-      <button id="resetBtn">↺ Reset</button>
-      <button id="setupBtn">⚙ Setup</button>
-    </div>
-  </div>
-
+<script src="/tariq_videos.js"></script>
 <script>
-  const state = {
-    teamA: [], teamB: [],
-    aIdx: 0, bIdx: 0,
-    aShots: {}, bShots: {},
-    totalA: 0, totalB: 0,
-    tokens: [], // array of {type:'um'|'uh', context}
-    pos: 0,
-    playing: false,
-    timer: null
-  };
-
+  const state = { teamA:[], teamB:[], aIdx:0, bIdx:0, aShots:{}, bShots:{}, totalA:0, totalB:0, tokens:[], pos:0, playing:false, timer:null, text:'', videoId:null };
   const $ = id => document.getElementById(id);
+  let player = null; // YouTube IFrame player
 
-  function parsePlayers(str) {
-    return str.split(',').map(s => s.trim()).filter(Boolean);
-  }
-
-  function buildTeams() {
+  function parsePlayers(s){ return s.split(',').map(x=>x.trim()).filter(Boolean); }
+  function buildTeams(){
     state.teamA = parsePlayers($('teamA').value) || ['A1'];
     state.teamB = parsePlayers($('teamB').value) || ['B1'];
-    state.aShots = Object.fromEntries(state.teamA.map(p => [p, 0]));
-    state.bShots = Object.fromEntries(state.teamB.map(p => [p, 0]));
+    state.aShots = Object.fromEntries(state.teamA.map(p=>[p,0]));
+    state.bShots = Object.fromEntries(state.teamB.map(p=>[p,0]));
   }
-
-  function tokenize(text) {
-    const out = [];
-    const re = /\b(um|uh)\b/gi;
-    let m;
-    while ((m = re.exec(text)) !== null) {
-      const start = Math.max(0, m.index - 40);
-      const end = Math.min(text.length, m.index + m[0].length + 40);
-      out.push({ type: m[1].toLowerCase(), context: text.slice(start, end).replace(/\s+/g, ' ') });
+  function tokenize(text){
+    const out=[]; const re=/\b(um|uh)\b/gi; let m;
+    while((m=re.exec(text))!==null){
+      const s=Math.max(0,m.index-40), e=Math.min(text.length,m.index+m[0].length+40);
+      out.push({type:m[1].toLowerCase(), context:text.slice(s,e).replace(/\s+/g,' ')});
     }
     return out;
   }
-
-  function renderPlayers() {
-    const aEl = $('playersA'), bEl = $('playersB');
-    aEl.innerHTML = state.teamA.map((p, i) => `
-      <div class="player ${i === state.aIdx ? 'current' : ''}">
-        <span class="dot"></span><span class="pname">${p}</span><span class="pshots">${state.aShots[p]} shots</span>
-      </div>`).join('');
-    bEl.innerHTML = state.teamB.map((p, i) => `
-      <div class="player ${i === state.bIdx ? 'current' : ''}">
-        <span class="dot"></span><span class="pname">${p}</span><span class="pshots">${state.bShots[p]} shots</span>
-      </div>`).join('');
+  function renderPlayers(){
+    $('playersA').innerHTML = state.teamA.map((p,i)=>`<div class="player ${i===state.aIdx?'current':''}"><span class="dot"></span><span class="pname">${p}</span><span class="pshots">${state.aShots[p]} shots</span></div>`).join('');
+    $('playersB').innerHTML = state.teamB.map((p,i)=>`<div class="player ${i===state.bIdx?'current':''}"><span class="dot"></span><span class="pname">${p}</span><span class="pshots">${state.bShots[p]} shots</span></div>`).join('');
     $('scoreA').textContent = state.totalA;
     $('scoreB').textContent = state.totalB;
   }
-
-  function renderNext() {
-    if (state.pos >= state.tokens.length) {
-      $('wordDisplay').textContent = 'DONE';
-      $('wordDisplay').className = 'word';
-      $('drinkerDisplay').textContent = 'All hits consumed. Reset to replay.';
-      showWinner();
-      return;
-    }
-    const tok = state.tokens[state.pos];
-    $('wordDisplay').textContent = tok.type;
-    $('wordDisplay').className = 'word ' + tok.type;
-    const drinker = tok.type === 'um' ? state.teamA[state.aIdx] : state.teamB[state.bIdx];
-    $('drinkerDisplay').textContent = `${drinker} drinks!  ·  "${tok.context}"`;
+  function renderNext(){
+    if(state.pos>=state.tokens.length){ $('wordDisplay').textContent='DONE'; $('wordDisplay').className='word'; $('drinkerDisplay').textContent='All hits consumed.'; showWinner(); return; }
+    const t=state.tokens[state.pos];
+    $('wordDisplay').textContent=t.type; $('wordDisplay').className='word '+t.type;
+    const d = t.type==='um'?state.teamA[state.aIdx]:state.teamB[state.bIdx];
+    $('drinkerDisplay').textContent = `${d} drinks!  ·  "${t.context}"`;
   }
-
-  function step() {
-    if (state.pos >= state.tokens.length) { state.playing = false; return; }
-    const tok = state.tokens[state.pos];
-    if (tok.type === 'um') {
-      const p = state.teamA[state.aIdx];
-      state.aShots[p]++; state.totalA++;
-      state.aIdx = (state.aIdx + 1) % state.teamA.length;
-    } else {
-      const p = state.teamB[state.bIdx];
-      state.bShots[p]++; state.totalB++;
-      state.bIdx = (state.bIdx + 1) % state.teamB.length;
-    }
-    state.pos++;
-    renderPlayers();
-    renderNext();
+  function step(){
+    if(state.pos>=state.tokens.length){ state.playing=false; return; }
+    const t=state.tokens[state.pos];
+    if(t.type==='um'){ const p=state.teamA[state.aIdx]; state.aShots[p]++; state.totalA++; state.aIdx=(state.aIdx+1)%state.teamA.length; }
+    else { const p=state.teamB[state.bIdx]; state.bShots[p]++; state.totalB++; state.bIdx=(state.bIdx+1)%state.teamB.length; }
+    state.pos++; renderPlayers(); renderNext();
   }
-
-  function showWinner() {
-    const b = $('winnerBanner');
-    b.style.display = 'block';
-    if (state.totalA === state.totalB) b.textContent = '🤝 It\'s a tie! Everyone drinks.';
-    else if (state.totalA < state.totalB) b.textContent = '🏆 Team UM is soberest! Team UH must finish a round.';
-    else b.textContent = '🏆 Team UH is soberest! Team UM must finish a round.';
+  function showWinner(){
+    const b=$('winnerBanner'); b.style.display='block';
+    if(state.totalA===state.totalB) b.textContent='🤝 Tie! Everyone drinks.';
+    else if(state.totalA<state.totalB) b.textContent='🏆 Team UM is soberest! Team UH finishes a round.';
+    else b.textContent='🏆 Team UH is soberest! Team UM finishes a round.';
   }
+  function setStatus(msg, isErr){ const s=$('statusMsg'); s.textContent=msg; s.className='status-msg '+(isErr?'err':'ok'); }
 
-  function start(text) {
+  function start(text, videoId){
     buildTeams();
-    state.tokens = tokenize(text);
-    state.pos = 0;
-    state.totalA = state.totalB = 0;
-    state.aIdx = state.bIdx = 0;
-    state.teamA.forEach(p => state.aShots[p] = 0);
-    state.teamB.forEach(p => state.bShots[p] = 0);
-    $('setupPanel').style.display = 'none';
-    $('gameArea').style.display = 'grid';
-    $('winnerBanner').style.display = 'none';
-    renderPlayers();
-    renderNext();
+    state.text = text || '';
+    state.videoId = videoId || null;
+    state.tokens=tokenize(state.text); state.pos=0; state.totalA=state.totalB=0; state.aIdx=state.bIdx=0;
+    state.teamA.forEach(p=>state.aShots[p]=0); state.teamB.forEach(p=>state.bShots[p]=0);
+    $('setupPanel').style.display='none';
+    $('gameArea').style.display='grid';
+    $('winnerBanner').style.display='none';
+    state.playing=false; clearInterval(state.timer); player=null;
+    if(state.videoId){ $('videoShell').style.display='block'; createPlayer(state.videoId); }
+    else { $('videoShell').style.display='none'; $('videoFrame').src=''; }
+    renderPlayers(); renderNext();
+    setStatus(state.tokens.length?`Loaded ${state.tokens.length} hits.`:'No "um"/"uh" found in that text.', state.tokens.length===0);
   }
 
-  $('startBtn').addEventListener('click', () => start($('transcript').value || prompt('No transcript — playing with empty. Paste text!')));
-  $('demoBtn').addEventListener('click', () => {
-    $('transcript').value = DEMO;
-    start(DEMO);
-  });
-  $('playBtn').addEventListener('click', () => {
-    if (state.pos >= state.tokens.length) return;
-    state.playing = true;
-    clearInterval(state.timer);
-    state.timer = setInterval(() => {
-      if (!state.playing) { clearInterval(state.timer); return; }
-      step();
-      if (state.pos >= state.tokens.length) clearInterval(state.timer);
-    }, 1200);
-  });
-  $('pauseBtn').addEventListener('click', () => { state.playing = false; clearInterval(state.timer); });
-  $('resetBtn').addEventListener('click', () => start(state.tokens.map(t => t.type).join(' ') === '' ? '' : $('transcript').value));
-  $('setupBtn').addEventListener('click', () => {
-    state.playing = false; clearInterval(state.timer);
-    $('gameArea').style.display = 'none';
-    $('setupPanel').style.display = 'block';
-  });
+  // YouTube IFrame API player so Play/Pause can drive the video
+  function createPlayer(videoId){
+    const existing = document.getElementById('playerEl');
+    if(existing) existing.remove();
+    const div = document.createElement('div');
+    div.id = 'playerEl';
+    $('videoShell').innerHTML = '';
+    $('videoShell').appendChild(div);
+    if(window.YT && YT.Player){
+      player = new YT.Player('playerEl', {
+        videoId, width:'100%', height:'100%',
+        playerVars:{ rel:0, autoplay:0 },
+        events:{ onReady:()=>{} }
+      });
+    } else {
+      // fallback: plain iframe if API not loaded yet
+      $('videoShell').innerHTML = `<iframe id="videoFrame" src="https://www.youtube.com/embed/${videoId}?rel=0&enablejsapi=1" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+    }
+  }
 
-  const DEMO = `Um, as I stated, um, I will affirm to, uh, with you to take an oath. Yes. But I'm not a United States citizen, so I don't uh I don't raise my hand. Um uh this from building official. Uh and it states notice is hereby. Um that Country Meadows has not held up uh their end of the contract and has been in constant violation. Uh I've issued what um we are expecting to take place. Um well, firstly, um in regards to um the uh my statement. Uh but there have been a handful of instances. Um, and the most recent time they cleaned. Uh her throat will begin to uh seize up. Um so as I stated. Uh the citation. Um yes. Uh for what is this for?`;
+  function videoPlay(){ if(player && player.playVideo) player.playVideo(); }
+  function videoPause(){ if(player && player.pauseVideo) player.pauseVideo(); }
+
+  async function loadYouTube(url){
+    setStatus('Fetching transcript…', false);
+    try {
+      const r = await fetch('/transcript?url='+encodeURIComponent(url));
+      const j = await r.json();
+      if(!j.ok){ setStatus('Could not auto-fetch transcript: '+(j.error||'unknown')+' — paste it manually below.', true); return; }
+      start(j.text, j.videoId);
+    } catch(e){ setStatus('Proxy error: '+e.message+' — paste transcript manually.', true); }
+  }
+
+  $('startBtn').addEventListener('click',()=>start($('transcript').value||'',null));
+  $('ytBtn').addEventListener('click',()=>{ const u=$('ytLink').value.trim(); if(u) loadYouTube(u); else setStatus('Paste a YouTube URL first.', true); });
+  $('ytLink').addEventListener('keydown',e=>{ if(e.key==='Enter'){ const u=$('ytLink').value.trim(); if(u) loadYouTube(u); }});
+
+  function demo(id){ const v=(window.TARIQ_VIDEOS||[]).find(x=>x.id===id); if(v) start(v.transcript, v.id); }
+  $('demo1').addEventListener('click',()=>demo('-vy-CwLGE4g'));
+  $('demo2').addEventListener('click',()=>demo('5qMhN_kfrtw'));
+
+  $('playBtn').addEventListener('click',()=>{ if(state.pos>=state.tokens.length) return; state.playing=true; videoPlay(); clearInterval(state.timer); state.timer=setInterval(()=>{ if(!state.playing){clearInterval(state.timer);return;} step(); if(state.pos>=state.tokens.length){ clearInterval(state.timer); videoPause(); } },1200); });
+  $('pauseBtn').addEventListener('click',()=>{ state.playing=false; clearInterval(state.timer); videoPause(); });
+  $('resetBtn').addEventListener('click',()=>{ start(state.text, state.videoId); });
+  $('setupBtn').addEventListener('click',()=>{ state.playing=false; clearInterval(state.timer); player=null; $('gameArea').style.display='none'; $('videoShell').style.display='none'; $('videoShell').innerHTML=''; $('setupPanel').style.display='block'; });
+
+  // Load YouTube IFrame API
+  (function(){
+    if(window.YT && YT.Player) return;
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+  })();
 </script>
 </body>
 </html>
