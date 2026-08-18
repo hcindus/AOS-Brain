@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
 """
+⚠️ DEPRECATED (2026-08-18) — CONSOLIDATED onto the real Temporal server.
+
+This is a CUSTOM "Temporal-like" engine (not actual Temporal). The real
+Temporal server + worker now live on this host (Miles VPS):
+  - Server: localhost:7233 (Docker, /opt/temporal/docker-compose.yml)
+  - Dark Factory worker: darkfactory-worker.service
+  - Collections worker (Go): collections-worker.service
+
+See temporal/darkfactory/DEPLOYMENT.md + CONSOLIDATION.md.
+Do NOT extend this mock — port new workflows to the real Temporal SDK instead.
+
 ⚡ TEMPORAL-COMPATIBLE WORKFLOW ENGINE
 Patricia-Approved Architecture for Agent Sales Pipeline
 
