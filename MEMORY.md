@@ -25,6 +25,13 @@ python3 cli.py start CREAM --type web --source /root/.openclaw/workspace/Cream/w
 python3 cli.py list
 ```
 
+### Level 5 (full autonomy) — added 2026-08-18
+- **Auto-triage loop** — `triage_loop.py` scans `specs/inbox/*.json`, accepts/rejects vs mission.md, auto-submits to Temporal. Run every 30 min via `darkfactory-triage.timer`.
+- **Blue-green deploy** — `deploy_blue_green` activity deploys to `/var/www/darkfactory-deploy/{project}/` with atomic `current` symlink flip.
+- **The "console"** = drop a spec JSON into `specs/inbox/`. Everything else is autonomous.
+- Full pipeline: validate → allocate → build → verify → blind hold-out → **blue-green deploy** → notify.
+- Deployment docs + infra config: `temporal/darkfactory/DEPLOYMENT.md`, `deploy/` (docker-compose + systemd units).
+
 ### Dark Factory upgrades (RiP GoR Council directive)
 - `AGI_COMPANY/subsidiaries/DARK_FACTORY/mission.md` — goals + non-goals + accept/reject triage
 - `.../DARK_FACTORY/validation/hold_out_scenarios.{py,json}` — blind hold-out validator
