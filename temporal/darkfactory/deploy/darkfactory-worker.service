@@ -1,0 +1,17 @@
+[Unit]
+Description=Dark Factory Temporal Worker (durable build pipeline)
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/.openclaw/workspace/temporal/darkfactory
+Environment=TEMPORAL_HOST=localhost:7233
+ExecStart=/root/.openclaw/workspace/temporal/darkfactory/.venv/bin/python3 -u worker.py
+Restart=always
+RestartSec=5
+# Give Temporal time to come up on boot before the worker connects
+ExecStartPre=/bin/sleep 10
+
+[Install]
+WantedBy=multi-user.target

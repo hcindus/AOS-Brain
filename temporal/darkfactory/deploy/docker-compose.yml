@@ -1,0 +1,43 @@
+version: "3.5"
+services:
+  postgresql:
+    container_name: temporal-postgresql
+    image: postgres:13
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: temporal
+      POSTGRES_PASSWORD: temporal
+    # No host port mapping — 5432 is already taken by buzz-postgres.
+    # Temporal reaches this container internally via the service name.
+    volumes:
+      - temporal_pg_data:/var/lib/postgresql/data
+
+  temporal:
+    container_name: temporal
+    image: temporalio/auto-setup:1.24.2
+    restart: unless-stopped
+    depends_on:
+      - postgresql
+    environment:
+      - DB=postgres12
+      - DB_PORT=5432
+      - POSTGRES_USER=temporal
+      - POSTGRES_PWD=temporal
+      - POSTGRES_SEEDS=postgresql
+    ports:
+      - "7233:7233"
+
+  temporal-ui:
+    container_name: temporal-ui
+    image: temporalio/ui:2.24.0
+    restart: unless-stopped
+    depends_on:
+      - temporal
+    environment:
+      - TEMPORAL_ADDRESS=temporal:7233
+      - TEMPORAL_CORS_ORIGINS=http://localhost:3000
+    ports:
+      - "8233:8080"
+
+volumes:
+  temporal_pg_data:

@@ -17,6 +17,7 @@ with workflow.unsafe.imports_passed_through():
         execute_build,
         verify_build_output,
         validate_hold_out,
+        deploy_blue_green,
         notify_completion,
         notify_escalation,
         cleanup_resources,
@@ -175,11 +176,23 @@ class DarkFactoryWorkflow:
                 f"Hold-out validation failed for {order.project_name}: {holdout.get('reason')}"
             )
 
-        # STAGE 5: Notify completion
+        # STAGE 5: Auto-deploy (blue-green) — Level 5: no human in the loop
+        self.current_stage = "DEPLOYING"
+        deploy = await workflow.execute_activity(
+            deploy_blue_green,
+            args=(order.project_name, output_path),
+            start_to_close_timeout=timedelta(minutes=5),
+            retry_policy=RetryPolicy(
+                initial_interval=timedelta(seconds=5),
+                maximum_attempts=2,
+            ),
+        )
+
+        # STAGE 6: Notify completion
         self.current_stage = "NOTIFYING"
         await workflow.execute_activity(
             notify_completion,
-            args=(order.order_id, result),
+            args=(order.order_id, {"build": result, "deploy": deploy}),
             start_to_close_timeout=timedelta(minutes=1),
         )
 

@@ -407,6 +407,60 @@ async def validate_hold_out(project_name: str, output_path: str, file_size_bytes
 
 
 @activity.defn
+async def deploy_blue_green(project_name: str, output_path: str) -> dict:
+    """
+    Blue-green deploy: copy the new build to the standby color, then flip
+    the 'current' symlink atomically. Zero-downtime, safe rollback.
+
+    Deploys to /var/www/darkfactory-deploy/{project}/ (the factory's OWN
+    products). Production psdepot.com remains behind human sign-off (mission.md).
+    """
+    import shutil
+    from pathlib import Path
+
+    base = Path(f"/var/www/darkfactory-deploy/{project_name}")
+    base.mkdir(parents=True, exist_ok=True)
+
+    current = base / "current"
+    blue = base / "blue"
+    green = base / "green"
+
+    # Determine the standby color (the one NOT currently live)
+    if current.exists() and current.is_symlink():
+        active_color = current.resolve().name  # "blue" or "green"
+    else:
+        active_color = "green"  # assume green is "live" on first deploy
+
+    standby = green if active_color == "blue" else blue
+    activity.logger.info(f"Active={active_color}, deploying to standby={standby.name}")
+
+    # Copy new build into the standby slot (fresh)
+    if standby.exists():
+        shutil.rmtree(standby)
+    src = Path(output_path)
+    if src.is_dir():
+        shutil.copytree(src, standby)
+    else:
+        standby.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, standby / src.name)
+
+    # Atomic flip of the symlink
+    new_link = base / f".current_{standby.name}"
+    if new_link.exists() or new_link.is_symlink():
+        new_link.unlink()
+    new_link.symlink_to(standby.name, target_is_directory=True)
+    new_link.replace(current)  # atomic rename over the old symlink
+
+    return {
+        "deployed": True,
+        "project": project_name,
+        "active_color": standby.name,
+        "path": str(standby),
+        "previous_color": active_color,
+    }
+
+
+@activity.defn
 async def notify_completion(order_id: str, result: dict) -> None:
     """Send completion notification."""
     activity.logger.info(f"Order {order_id} completed: {result}")

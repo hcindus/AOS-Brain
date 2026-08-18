@@ -1,0 +1,13 @@
+[Unit]
+Description=Dark Factory Triage Loop (scan inbox, triage, auto-submit to Temporal)
+After=darkfactory-worker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/root/.openclaw/workspace/temporal/darkfactory
+Environment=TEMPORAL_HOST=localhost:7233
+ExecStart=/root/.openclaw/workspace/temporal/darkfactory/.venv/bin/python3 triage_loop.py
+
+[Install]
+WantedBy=multi-user.target

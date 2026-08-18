@@ -1,0 +1,11 @@
+[Unit]
+Description=Run Dark Factory triage loop every 30 minutes (Level 5 autonomous queue)
+Requires=darkfactory-triage.service
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=30min
+Unit=darkfactory-triage.service
+
+[Install]
+WantedBy=timers.target
