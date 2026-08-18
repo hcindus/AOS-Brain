@@ -54,7 +54,7 @@ def send_cmd(cmd, params=None):
     sock = None
     try:
         sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        sock.settimeout(10)  # Longer timeout for filtered commands
+        sock.settimeout(20)  # Longer timeout for filtered commands
         sock.connect(SOCKET_PATH)
         
         request = {"cmd": cmd}
@@ -65,10 +65,10 @@ def send_cmd(cmd, params=None):
         sock.sendall(msg)
         
         # Wait for response with retries
-        sock.settimeout(10)
+        sock.settimeout(20)
         response = b''
         start = time.time()
-        while time.time() - start < 10:
+        while time.time() - start < 20:
             try:
                 chunk = sock.recv(8192)
                 if not chunk:
