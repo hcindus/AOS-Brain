@@ -1,5 +1,38 @@
 # MEMORY.md - Curated Knowledge
 
+## Temporal Dark Factory — LIVE (2026-08-18)
+**Status:** ✅ DEPLOYED on Miles VPS (this host). Server + worker running.
+
+### What's running
+- **Temporal server** — Docker Compose at `/opt/temporal/docker-compose.yml` (postgres + auto-setup + UI)
+  - gRPC `localhost:7233`, UI `http://localhost:8233`
+  - Containers: `temporal`, `temporal-postgresql`, `temporal-ui` (`restart: unless-stopped`)
+- **Worker** — systemd service `darkfactory-worker` (auto-restart + boot)
+  - `/root/.openclaw/workspace/temporal/darkfactory/worker.py` (Python, venv `.venv`)
+  - Task queue: `darkfactory-queue`
+- **Pipeline (Level 3 autonomy):** validate SDK → allocate → build → verify → **blind hold-out validate** → notify, with a 30-min durable watchdog + escalation.
+
+### Key fixes made
+- `workflow.start_timer` / `cancel_timer` don't exist in temporalio 1.31 — replaced with durable `asyncio.wait_for` watchdog.
+- Activity args are JSON-serialized to dicts at the boundary — `execute_build` made dict-safe.
+- Hold-out scenarios use `artifact_present` (relative globs) so they work on any build output.
+
+### CLI usage
+```bash
+cd /root/.openclaw/workspace/temporal/darkfactory && source .venv/bin/activate
+export TEMPORAL_HOST=localhost:7233
+python3 cli.py start CREAM --type web --source /root/.openclaw/workspace/Cream/web/ --wait
+python3 cli.py list
+```
+
+### Dark Factory upgrades (RiP GoR Council directive)
+- `AGI_COMPANY/subsidiaries/DARK_FACTORY/mission.md` — goals + non-goals + accept/reject triage
+- `.../DARK_FACTORY/validation/hold_out_scenarios.{py,json}` — blind hold-out validator
+- `.../DARK_FACTORY/factory.py` — back-ported `triage_order()` (accept/reject) + `run_qc()` (blind hold-out QC gate at phase 4→5)
+- Note: also dormant Temporal codebases exist (Go `collections-worker`, mortimer, depotchaos) — NOT consolidated yet.
+
+---
+
 ## Partner Leads Portal (PSD × Chipp × WitzEnd) v1.0
 **Created:** 2026-08-18
 **Live URLs:**
