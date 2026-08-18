@@ -16,7 +16,7 @@
   .wrap { width: 100%; max-width: 960px; }
 
   .video-shell { position: relative; width: 100%; padding-top: 56.25%; background: #000; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); margin-bottom: 16px; }
-  .video-shell iframe { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .video-shell iframe, .video-shell > div { position: absolute; inset: 0; width: 100%; height: 100%; }
 
   .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .team { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
@@ -106,9 +106,7 @@
       <div class="status-msg" id="statusMsg"></div>
     </div>
 
-    <div class="video-shell" id="videoShell" style="display:none;">
-      <iframe id="videoFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
+    <div class="video-shell" id="videoShell" style="display:none;"></div>
 
     <div class="layout" id="gameArea" style="display:none;">
       <div class="team um">
@@ -122,7 +120,7 @@
         <div class="players" id="playersB"></div>
       </div>
       <div class="current-word">
-        <div class="label">Next up</div>
+        <div class="label" id="progressLabel">Next up</div>
         <div class="word" id="wordDisplay">—</div>
         <div class="drinker" id="drinkerDisplay">Press play to begin</div>
       </div>
@@ -138,9 +136,9 @@
 
 <script src="/tariq_videos.js"></script>
 <script>
-  const state = { teamA:[], teamB:[], aIdx:0, bIdx:0, aShots:{}, bShots:{}, totalA:0, totalB:0, tokens:[], pos:0, playing:false, timer:null, text:'', videoId:null };
+  const state = { teamA:[], teamB:[], aIdx:0, bIdx:0, aShots:{}, bShots:{}, totalA:0, totalB:0, hits:[], pos:0, playing:false, timer:null, text:'', videoId:null, synced:false };
   const $ = id => document.getElementById(id);
-  let player = null; // YouTube IFrame player
+  let player = null;
 
   function parsePlayers(s){ return s.split(',').map(x=>x.trim()).filter(Boolean); }
   function buildTeams(){
@@ -149,34 +147,47 @@
     state.aShots = Object.fromEntries(state.teamA.map(p=>[p,0]));
     state.bShots = Object.fromEntries(state.teamB.map(p=>[p,0]));
   }
+
+  // tokenize plain text -> hits WITHOUT timestamps (manual mode)
   function tokenize(text){
     const out=[]; const re=/\b(um|uh)\b/gi; let m;
     while((m=re.exec(text))!==null){
       const s=Math.max(0,m.index-40), e=Math.min(text.length,m.index+m[0].length+40);
-      out.push({type:m[1].toLowerCase(), context:text.slice(s,e).replace(/\s+/g,' ')});
+      out.push({type:m[1].toLowerCase(), t:null, context:text.slice(s,e).replace(/\s+/g,' ')});
     }
     return out;
   }
+
   function renderPlayers(){
     $('playersA').innerHTML = state.teamA.map((p,i)=>`<div class="player ${i===state.aIdx?'current':''}"><span class="dot"></span><span class="pname">${p}</span><span class="pshots">${state.aShots[p]} shots</span></div>`).join('');
     $('playersB').innerHTML = state.teamB.map((p,i)=>`<div class="player ${i===state.bIdx?'current':''}"><span class="dot"></span><span class="pname">${p}</span><span class="pshots">${state.bShots[p]} shots</span></div>`).join('');
     $('scoreA').textContent = state.totalA;
     $('scoreB').textContent = state.totalB;
   }
+
   function renderNext(){
-    if(state.pos>=state.tokens.length){ $('wordDisplay').textContent='DONE'; $('wordDisplay').className='word'; $('drinkerDisplay').textContent='All hits consumed.'; showWinner(); return; }
-    const t=state.tokens[state.pos];
+    if(state.pos>=state.hits.length){
+      $('wordDisplay').textContent='DONE'; $('wordDisplay').className='word';
+      $('drinkerDisplay').textContent='All hits consumed.'; showWinner(); return;
+    }
+    const t=state.hits[state.pos];
     $('wordDisplay').textContent=t.type; $('wordDisplay').className='word '+t.type;
     const d = t.type==='um'?state.teamA[state.aIdx]:state.teamB[state.bIdx];
-    $('drinkerDisplay').textContent = `${d} drinks!  ·  "${t.context}"`;
+    let extra = '';
+    if(t.t!=null) extra = ` (at ${fmt(t.t)})`;
+    else if(t.context) extra = ` · "${t.context}"`;
+    $('drinkerDisplay').textContent = `${d} drinks${extra}`;
   }
-  function step(){
-    if(state.pos>=state.tokens.length){ state.playing=false; return; }
-    const t=state.tokens[state.pos];
+
+  function fmt(sec){ const m=Math.floor(sec/60), s=Math.floor(sec%60); return m+':'+String(s).padStart(2,'0'); }
+
+  // consume a single hit (increment + rotate)
+  function consumeHit(t){
     if(t.type==='um'){ const p=state.teamA[state.aIdx]; state.aShots[p]++; state.totalA++; state.aIdx=(state.aIdx+1)%state.teamA.length; }
     else { const p=state.teamB[state.bIdx]; state.bShots[p]++; state.totalB++; state.bIdx=(state.bIdx+1)%state.teamB.length; }
-    state.pos++; renderPlayers(); renderNext();
+    state.pos++;
   }
+
   function showWinner(){
     const b=$('winnerBanner'); b.style.display='block';
     if(state.totalA===state.totalB) b.textContent='🤝 Tie! Everyone drinks.';
@@ -185,29 +196,28 @@
   }
   function setStatus(msg, isErr){ const s=$('statusMsg'); s.textContent=msg; s.className='status-msg '+(isErr?'err':'ok'); }
 
-  function start(text, videoId){
+  function start(hits, videoId, synced){
     buildTeams();
-    state.text = text || '';
+    state.hits = hits || [];
     state.videoId = videoId || null;
-    state.tokens=tokenize(state.text); state.pos=0; state.totalA=state.totalB=0; state.aIdx=state.bIdx=0;
+    state.synced = !!synced;
+    state.pos=0; state.totalA=state.totalB=0; state.aIdx=state.bIdx=0;
     state.teamA.forEach(p=>state.aShots[p]=0); state.teamB.forEach(p=>state.bShots[p]=0);
     $('setupPanel').style.display='none';
     $('gameArea').style.display='grid';
     $('winnerBanner').style.display='none';
     state.playing=false; clearInterval(state.timer); player=null;
     if(state.videoId){ $('videoShell').style.display='block'; createPlayer(state.videoId); }
-    else { $('videoShell').style.display='none'; $('videoFrame').src=''; }
+    else { $('videoShell').style.display='none'; $('videoShell').innerHTML=''; }
     renderPlayers(); renderNext();
-    setStatus(state.tokens.length?`Loaded ${state.tokens.length} hits.`:'No "um"/"uh" found in that text.', state.tokens.length===0);
+    const msg = state.hits.length ? `Loaded ${state.hits.length} hits${state.synced?' (video-synced)':''}.` : 'No "um"/"uh" found in that text.';
+    setStatus(msg, state.hits.length===0);
   }
 
-  // YouTube IFrame API player so Play/Pause can drive the video
   function createPlayer(videoId){
-    const existing = document.getElementById('playerEl');
-    if(existing) existing.remove();
+    $('videoShell').innerHTML = '';
     const div = document.createElement('div');
     div.id = 'playerEl';
-    $('videoShell').innerHTML = '';
     $('videoShell').appendChild(div);
     if(window.YT && YT.Player){
       player = new YT.Player('playerEl', {
@@ -216,13 +226,48 @@
         events:{ onReady:()=>{} }
       });
     } else {
-      // fallback: plain iframe if API not loaded yet
       $('videoShell').innerHTML = `<iframe id="videoFrame" src="https://www.youtube.com/embed/${videoId}?rel=0&enablejsapi=1" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
     }
   }
 
+  function videoTime(){ try { return (player && player.getCurrentTime) ? player.getCurrentTime() : null; } catch(e){ return null; } }
   function videoPlay(){ if(player && player.playVideo) player.playVideo(); }
   function videoPause(){ if(player && player.pauseVideo) player.pauseVideo(); }
+
+  // SYNC MODE: consume all hits whose timestamp <= current video time
+  function syncTick(){
+    if(!state.playing || !state.synced) return;
+    const ct = videoTime();
+    if(ct==null) return;
+    let consumed = 0;
+    while(state.pos < state.hits.length && state.hits[state.pos].t != null && state.hits[state.pos].t <= ct){
+      consumeHit(state.hits[state.pos]); consumed++;
+    }
+    if(consumed){ renderPlayers(); renderNext(); }
+    if(state.pos>=state.hits.length){ stopLoop(); videoPause(); }
+    else {
+      $('progressLabel').textContent = 'Video time ' + fmt(ct) + ' · next hit at ' + fmt(state.hits[state.pos].t);
+    }
+  }
+
+  // MANUAL MODE: fixed-interval stepping
+  function manualStep(){
+    if(!state.playing) return;
+    if(state.pos>=state.hits.length){ stopLoop(); return; }
+    consumeHit(state.hits[state.pos]);
+    renderPlayers(); renderNext();
+    if(state.pos>=state.hits.length) stopLoop();
+  }
+
+  function startLoop(){
+    clearInterval(state.timer);
+    if(state.synced){
+      state.timer = setInterval(syncTick, 200);
+    } else {
+      state.timer = setInterval(manualStep, 1200);
+    }
+  }
+  function stopLoop(){ state.playing=false; clearInterval(state.timer); }
 
   async function loadYouTube(url){
     setStatus('Fetching transcript…', false);
@@ -230,24 +275,34 @@
       const r = await fetch('/transcript?url='+encodeURIComponent(url));
       const j = await r.json();
       if(!j.ok){ setStatus('Could not auto-fetch transcript: '+(j.error||'unknown')+' — paste it manually below.', true); return; }
-      start(j.text, j.videoId);
+      // proxy returns plain text (no timestamps) -> manual mode with video
+      start(tokenize(j.text), j.videoId, false);
     } catch(e){ setStatus('Proxy error: '+e.message+' — paste transcript manually.', true); }
   }
 
-  $('startBtn').addEventListener('click',()=>start($('transcript').value||'',null));
+  $('startBtn').addEventListener('click',()=>start(tokenize($('transcript').value||''), null, false));
   $('ytBtn').addEventListener('click',()=>{ const u=$('ytLink').value.trim(); if(u) loadYouTube(u); else setStatus('Paste a YouTube URL first.', true); });
   $('ytLink').addEventListener('keydown',e=>{ if(e.key==='Enter'){ const u=$('ytLink').value.trim(); if(u) loadYouTube(u); }});
 
-  function demo(id){ const v=(window.TARIQ_VIDEOS||[]).find(x=>x.id===id); if(v) start(v.transcript, v.id); }
+  function demo(id){
+    const v=(window.TARIQ_VIDEOS||[]).find(x=>x.id===id);
+    if(v) start(v.hits, v.id, true); // timestamped hits + video -> sync mode
+  }
   $('demo1').addEventListener('click',()=>demo('-vy-CwLGE4g'));
   $('demo2').addEventListener('click',()=>demo('5qMhN_kfrtw'));
 
-  $('playBtn').addEventListener('click',()=>{ if(state.pos>=state.tokens.length) return; state.playing=true; videoPlay(); clearInterval(state.timer); state.timer=setInterval(()=>{ if(!state.playing){clearInterval(state.timer);return;} step(); if(state.pos>=state.tokens.length){ clearInterval(state.timer); videoPause(); } },1200); });
-  $('pauseBtn').addEventListener('click',()=>{ state.playing=false; clearInterval(state.timer); videoPause(); });
-  $('resetBtn').addEventListener('click',()=>{ start(state.text, state.videoId); });
-  $('setupBtn').addEventListener('click',()=>{ state.playing=false; clearInterval(state.timer); player=null; $('gameArea').style.display='none'; $('videoShell').style.display='none'; $('videoShell').innerHTML=''; $('setupPanel').style.display='block'; });
+  $('playBtn').addEventListener('click',()=>{
+    if(state.pos>=state.hits.length) return;
+    state.playing=true; videoPlay(); startLoop();
+  });
+  $('pauseBtn').addEventListener('click',()=>{ stopLoop(); videoPause(); });
+  $('resetBtn').addEventListener('click',()=>{
+    stopLoop();
+    const hits = state.synced ? state.hits.map(h=>({...h})) : tokenize(state.text||'');
+    start(hits, state.videoId, state.synced);
+  });
+  $('setupBtn').addEventListener('click',()=>{ stopLoop(); player=null; $('gameArea').style.display='none'; $('videoShell').style.display='none'; $('videoShell').innerHTML=''; $('setupPanel').style.display='block'; });
 
-  // Load YouTube IFrame API
   (function(){
     if(window.YT && YT.Player) return;
     const tag = document.createElement('script');
