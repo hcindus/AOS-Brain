@@ -1,5 +1,51 @@
 # MEMORY.md - Curated Knowledge
 
+## Partner Leads Portal (PSD × Chipp × WitzEnd) v1.0
+**Created:** 2026-08-18
+**Live URLs:**
+- Portal: `https://psdepot.com/leads-portal/` (was `/chipp-portal/`)
+- Dashboard: `https://psdepot.com/leads-dashboard/` (was `/chipp-dashboard/`)
+- Old `chipp-*` URLs now 301-redirect to new names
+
+### Architecture
+- **Backend:** `chipp_leads_api.py` (FastAPI, port 8086) — JSON store at `/var/lib/psdepot/chipp_leads.json`
+  - Service: `chipp-leads-api.service` (`/root/.openclaw/workspace/datadepot/web/chipp_leads_api.py`)
+  - nginx: `/api/leads` → `127.0.0.1:8086/api/leads`
+- **Frontend:** static HTML in `/var/www/psdepot.com/leads-portal/` + `leads-dashboard/`
+- **Files:** `/var/www/psdepot.com/leads-portal/index.html`, `leads-dashboard/index.html`
+
+### Three Destinations (routing partners)
+| Destination | Key | Notify email | Accent |
+|---|---|---|---|
+| PSDepot | `psd` | info@psdepot.com | blue `#58a6ff` |
+| Chipp | `chipp` | steven@chipp.cc | green `#3fb950` |
+| WitzEnd Beverages | `witzend` | lisa@witzendbeverages.com | pink `#f778ba` |
+
+### WitzEnd Beverages (new partner, 2026-08-18)
+- Shopify mocktail brand: `witzendbeverages.com` (`7a7896-52.myshopify.com`)
+- Contact: Lisa Ikeda — lisa@witzendbeverages.com
+- 6 mocktail flavors: Hugo Spritz, The Maitai, The Mule, The Paloma, Ranch Water, Sea Breeze + Variety 12-Pack + merch
+- Bay Area. Product list mapped in portal: Mocktails (Wholesale), 6 flavors, Variety 12-Pack, Merch/Apparel, Multiple/Not Sure
+
+### Email notifications (on new lead only)
+- Fires ONLY on `POST /api/leads` (new lead), never bulk sync/update
+- Hostinger SMTP: `smtp.hostinger.com:587`, auth `miles@myl0nr0s.cloud` / pass in `workspace/.env` (`HOSTINGER_SMTP_PASS`)
+- From: `Performance Supply Depot — Lead Portal <miles@myl0nr0s.cloud>`
+- SendGrid + Mailgun keys are placeholders (NOT configured) — Hostinger SMTP is the live path
+- Function: `notify_new_lead()` in `chipp_leads_api.py`, mapping `DESTINATION_EMAILS`
+
+### Lead schema (fields)
+`id, source, destination, businessName, contactName, email, phone, city, state, address, zip, product, notes, createdAt, status, dateContacted, otherReason`
+- Form field order: Street Address → City → State → ZIP (above ZIP)
+
+### Known bug fixed (2026-08-18)
+- Old dashboard had binary `'PSD' : 'Chipp'` dest fallback → new `witzend` value displayed as "Chipp". Fixed with `destText()` helper handling all 3.
+
+### Test lead
+- Star Grocery, Nick, stargrocery@sbcglobal.net, Berkeley CA, 3068 Claremont Ave (still in notes — address migration optional)
+
+---
+
 ## GoR Protocol v1.0 — Governance-Optimized Resolution
 **Created:** 2026-08-11
 **Location:** `/root/.aos/aos/gor_protocol.py`
