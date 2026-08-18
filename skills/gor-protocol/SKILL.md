@@ -1,7 +1,14 @@
-# GoR Protocol v1.0 — Governance-Optimized Resolution
+# RiP GoR Council v1.0 — Governance-Optimized Resolution
 
 ## Name
-gor-protocol
+gor-protocol (a.k.a. the **RiP GoR Council**)
+
+## Acronym (Captain, 2026-08-18)
+**RiP GoR** = **R**oast(int) + **P**atricia → **Go** with the **R**esult
+- **R** = Roast — 6-persona adversarial council
+- **i** (int) = the topic / input
+- **P** = Patricia — DMCIA specialist
+- **Go** = go with the (R)esult (verdict)
 
 ## Description
 Two-stage decision pipeline: Roast Council (adversarial analysis) → Patricia (strategic context) → Go/No-Go verdict. Prevents sycophancy, catches blind spots, and ensures every significant decision gets both adversarial scrutiny and organizational alignment before execution.

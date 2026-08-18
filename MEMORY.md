@@ -58,6 +58,23 @@
 - **P** = Patricia — DMCIA specialist (was "Chief of Staff")
 - **Go** = go with the **(R)esult** (verdict)
 
+### The RiP GoR Council (named by Captain, 2026-08-18)
+The governing body that runs `RiP GoR(int) = Roast(int) + Patricia → Go with Result`.
+
+**Roster:**
+| Seat | Member | Role |
+|------|--------|------|
+| Roast Council | Contrarian (25%) | Fatal Flaw Finder |
+| Roast Council | Expansionist (15%) | Upside Maximizer |
+| Roast Council | FirstPrinciples (20%) | Logic Purist |
+| Roast Council | Researcher (20%) | Market Intelligence |
+| Roast Council | Buyer (20%) | Customer Proxy |
+| Roast Council | Judge (—) | Final Arbiter → verdict |
+| Strategic | Patricia | DMCIA specialist — org alignment, delegation |
+| Authority | Captain | Final override (override / escalate) |
+
+**First Council ruling (2026-08-18):** DarkFactory → **RESHAPE** (5.5 × ALIGNED-with-caution). Build sandboxed Level-3+ harness, not full Level-5, pointed at a safe workload; wire from existing `coding-agent` skill + Hold Out Kidneys + cron.
+
 ### Formula
 ```
 RiP GoR(int) = Roast(int) + Patricia(roast_result) → Go with Result
