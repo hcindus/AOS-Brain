@@ -865,6 +865,7 @@ document.addEventListener('keydown',e=>{
   if(!player.alive){document.getElementById('title').click()}
 });
 document.addEventListener('keyup',e=>{keys[e.key]=false});
+window.addEventListener('blur',()=>{keys={};fireActive=false;joy.active=false});
 
 // Touch joystick
 document.getElementById('joy').addEventListener('touchstart',e=>{e.preventDefault();let t=e.touches[0];joy.active=true;joy.id=t.identifier;joy.dx=0;joy.dy=0});
@@ -877,8 +878,11 @@ document.getElementById('joy').addEventListener('touchmove',e=>{e.preventDefault
   document.getElementById('knob').style.transform=`translate(calc(-50% + ${joy.dx*28}px), calc(-50% + ${-joy.dy*28}px))`;
 });
 document.getElementById('joy').addEventListener('touchend',e=>{joy.active=false;document.getElementById('knob').style.transform='translate(-50%,-50%)'});
+document.getElementById('joy').addEventListener('touchcancel',e=>{joy.active=false;document.getElementById('knob').style.transform='translate(-50%,-50%)'});
 document.getElementById('fire').addEventListener('touchstart',e=>{e.preventDefault();fireActive=true});
 document.getElementById('fire').addEventListener('touchend',e=>{fireActive=false});
+document.getElementById('fire').addEventListener('touchcancel',e=>{fireActive=false});
+document.getElementById('fire').addEventListener('pointerup',e=>{fireActive=false});
 
 // Title tap — works for both initial start and restart
 document.getElementById('title').addEventListener('click',()=>{
