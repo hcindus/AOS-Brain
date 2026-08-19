@@ -16,14 +16,17 @@ class PinGate:
 
     def __init__(self, pins: str = PIN_ENV):
         self.pins = {p.strip() for p in pins.split(",") if p.strip()}
+        self.rate_limit = RATE_LIMIT
+        self.rate_window = RATE_WINDOW
+        self.token_ttl = TOKEN_TTL
         self._attempts = defaultdict(list)   # client -> [timestamps]
         self._tokens = {}                    # token -> expiry epoch
 
     def check(self, code: str, client: str = "unknown") -> tuple[bool, str]:
         now = time.time()
-        recent = [t for t in self._attempts[client] if now - t < RATE_WINDOW]
+        recent = [t for t in self._attempts[client] if now - t < self.rate_window]
         self._attempts[client] = recent
-        if len(recent) >= RATE_LIMIT:
+        if len(recent) >= self.rate_limit:
             return False, "Too many attempts. Try again later."
         if code.strip() in self.pins:
             self._attempts[client] = []
@@ -37,7 +40,7 @@ class PinGate:
             self._log_failure(client)
             return None, msg
         token = secrets.token_urlsafe(32)
-        self._tokens[token] = time.time() + TOKEN_TTL
+        self._tokens[token] = time.time() + self.token_ttl
         return token, "Access granted."
 
     def validate_token(self, token: str) -> bool:

@@ -22,6 +22,7 @@ from typing import Optional, List, Tuple
 import os
 
 from jarvis_core import LeadsStore, QuoteEngine, InvoiceEngine, PinGate
+from jarvis_audit import run_audit
 
 app = FastAPI(title="JARVIS — Performance Supply Depot AI Assistant", version="1.0.0")
 
@@ -113,6 +114,12 @@ def auth(a: AuthIn):
 @app.get("/health")
 def health():
     return {"status": "ok", "leads": len(store.all())}
+
+
+@app.get("/api/audit", dependencies=[Depends(require_auth)])
+def audit():
+    """Run the JARVIS security/health/data-integrity audit."""
+    return run_audit(store, pin_gate)
 
 
 # Serve generated documents + frontend
