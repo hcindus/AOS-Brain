@@ -67,3 +67,8 @@ push_report_*.txt
 # Empty audit repos (bare git dirs)
 audit_repos/hcindus/AOCROS-/
 audit_repos/hcindus/depotcrm/
+
+# Java heap dumps - never commit
+*.hprof
+*.heap
+reggiestarr-rs80/*.hprof
