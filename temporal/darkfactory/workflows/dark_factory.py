@@ -134,7 +134,7 @@ class DarkFactoryWorkflow:
             execute_build,
             args=(order, resources),
             start_to_close_timeout=timedelta(minutes=order.max_duration_minutes),
-            heartbeat_timeout=timedelta(seconds=60),  # Must heartbeat every 60s
+            heartbeat_timeout=timedelta(minutes=15),  # Gradle/native builds are slow
             retry_policy=RetryPolicy(
                 initial_interval=timedelta(seconds=15),
                 backoff_coefficient=2.0,

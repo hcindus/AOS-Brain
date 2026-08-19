@@ -3,12 +3,12 @@ package com.ps.pos.services
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.github.anastaciocintra.escpos.coffee.EscPos
-import com.github.anastaciocintra.escpos.coffee.EscPosConst
-import com.github.anastaciocintra.escpos.coffee.Style
-import com.github.anastaciocintra.escpos.coffee.barcode.BarCode
-import com.github.anastaciocintra.escpos.coffee.image.CoffeeImage
-import com.github.anastaciocintra.escpos.coffee.image.EscPosImage
+import com.github.anastaciocintra.escpos.EscPos
+import com.github.anastaciocintra.escpos.EscPosConst
+import com.github.anastaciocintra.escpos.Style
+import com.github.anastaciocintra.escpos.barcode.BarCode
+import com.github.anastaciocintra.escpos.image.CoffeeImage
+import com.github.anastaciocintra.escpos.image.EscPosImage
 import java.io.OutputStream
 import java.net.Socket
 
