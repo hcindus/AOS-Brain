@@ -1,79 +1,74 @@
 # Skill Catalog — AGI Company / Performance Supply Depot
 
-A single registry of every AgentSkill. Each entry: name · purpose · KPI.
-The house rule: **if you do a process twice, it becomes a skill with a clear KPI.**
+A registry of **every** AgentSkill in the repo. Each entry: name · purpose · KPI.
 
-**Total: 24 active · 6 proposed**
+> **Total: ~210 distinct skills across 9 collections.** The house rule:
+> *if you do a process twice, it becomes a skill with a clear KPI.*
 
 ---
 
-## 🎯 Framework
+## Collections (all locations)
 
-| Skill | Purpose | KPI |
+| Collection | Count | What it holds |
 |---|---|---|
-| `gcao-prompting` | House prompting standard (Goal·Context·Action·Output·**KPI**) | every prompt structured |
+| `mortimer-build/skills/hermes/` | 94 | Hermes agent — mlops (vllm, unsloth, peft), github, research (arxiv, duckduckgo), apple, media, productivity, gaming |
+| `MetaClaw/memory_data/skills/` | 36 | Agent best-practices — secure-code-review, git-workflow, sql, secrets, debugging, task-decomposition |
+| `AGI_COMPANY/shared/skills/` | 34 | AGI Company agents — crypto, finance, sales-consultant, security-officer, portfolio-manager, technical-architect |
+| `skills/` | 23 | Working set — SOPs, `gcao-prompting`, `gor-protocol`, `jarvis-audit`, tooling |
+| `aos_brain_py/skills/` | 12 | AOS Brain — brain-health-check, memory-consolidation, stomach-v1, thalamus-v1, pfc-v2 |
+| `AGI_COMPANY/agents/technical/` | 3 | blender-expert, unity-expert, unreal-expert |
+| `AGI_COMPANY/skills/` | 1 | script-generation |
+| `mortimer-build/skills/aosbrain/` | 6 | mirror of `skills/` |
+| `mortimer-build/skills/myl0n-ros/` | 1 | — |
 
-## 🧭 Governance
+**Mirror dirs (duplicates, not counted twice):** `aocros/skills/` (= AGI_COMPANY), `.sync/skills/` (= `skills/`), `aocros/agent_sandboxes/` (= technical agents).
 
-| Skill | Purpose | KPI |
-|---|---|---|
-| `gor-protocol` | RiP GoR decision pipeline (Roast → Patricia → Go) | every significant decision stress-tested |
+---
 
-## 🏭 Build & Deploy
+## Working set (`skills/`) — actively used
 
-| Skill | Purpose | KPI | Status |
-|---|---|---|---|
-| `dark-factory` | Operate the Dark Factory (spec → build → validate → deploy) | specs ship autonomously | 🟡 proposed |
-| `deployment` | Deploy web/apps to psdepot.com / tappylewis.cloud (nginx, blue-green) | zero-downtime, rollback-safe | 🟡 proposed |
-
-## 💰 Sales pipeline (SOP chain)
-
-| Skill | Purpose | KPI |
-|---|---|---|
-| `sop-ai-prospecting` | Build qualified prospect lists | 10k/qtr · 80% ICP |
-| `sop-ai-qualifying` | Pre-qualify leads with AI | 95% fewer unqualified calls |
-| `sop-lead-response` | Respond + qualify inbound leads | 5-min · 40% conversion |
-| `sop-ai-presenting` | Generate custom proposals | <10 min · 35% close |
-| `sop-quote-followup` | Quote + 30-day follow-up | 2h · 35% close |
-| `sop-ai-objection-handling` | Handle objections (Feel-Felt-Found) | 90% handled · 25% lift |
-| `sop-ai-closing-delivery` | Close + onboard | 90% onboarding · win in 48h |
-| `sop-order-status` | Order-status inquiries | 60-sec · 80% FCR |
-
-## 🗄️ Ops & Data
-
-| Skill | Purpose | KPI | Status |
-|---|---|---|---|
-| `sop-resale-certificate` | Manage resale/tax certs | 100% valid · 30-day flag |
-| `sop-database-operations` | Safe DB add/update/query | 0 data loss |
-| `lead-enrichment` | Enrich leads with AI (`ai_enrich_leads.py`) | 100% leads enriched | 🟡 proposed |
-| `lead-scraping` | Daily lead generation (`daily_lead_scraper.py`) | daily fresh leads | 🟡 proposed |
-| `email-campaign` | Send campaigns (`agi_company_email_campaign.py`) | delivered + tracked | 🟡 proposed |
-| `email-sender` | Send email via Hostinger SMTP | sent + logged |
-
-## 🧠 Systems & Monitoring
-
-| Skill | Purpose | KPI | Status |
-|---|---|---|---|
-| `system-monitoring` | Brain/system health checks (`brain_health_monitor.py`) | issues caught early | 🟡 proposed |
-
-## 🔍 Audit & QA
-
-| Skill | Purpose | KPI |
-|---|---|---|
-| `jarvis-audit` | Security/health/data audit of JARVIS | PASS / WARN / FAIL |
-| `agent-readiness-audit` | Audit agent readiness | — |
-| `audit` | General audit | — |
-
-## 🛠️ Tooling
-
-| Skill | Purpose |
+### 🎯 Framework
+| Skill | KPI |
 |---|---|
-| `browser-agent` / `browser-automation` / `agent-browser-clawdbot` | Browser automation |
-| `game-creator` | 3D game generation (Three.js) |
-| `menu-design` | Menu design |
-| `skill-builder` | Build new skills |
-| `cmp` / `depotchaos` | DepotChaos CRM tooling |
+| `gcao-prompting` | every prompt structured (Goal·Ctx·Act·Out·KPI) |
+
+### 🧭 Governance
+| Skill | KPI |
+|---|---|
+| `gor-protocol` | every decision stress-tested |
+
+### 💰 Sales pipeline
+| Skill | KPI |
+|---|---|
+| `sop-ai-prospecting` | 10k/qtr · 80% ICP |
+| `sop-ai-qualifying` | 95% fewer unqualified calls |
+| `sop-lead-response` | 5-min · 40% conversion |
+| `sop-ai-presenting` | <10 min · 35% close |
+| `sop-quote-followup` | 2h · 35% close |
+| `sop-ai-objection-handling` | 90% handled · 25% lift |
+| `sop-ai-closing-delivery` | 90% onboarding · win in 48h |
+| `sop-order-status` | 60-sec · 80% FCR |
+
+### 🗄️ Ops & Data
+| Skill | KPI |
+|---|---|
+| `sop-resale-certificate` | 100% valid · 30-day flag |
+| `sop-database-operations` | 0 data loss |
+
+### 🔍 Audit
+| Skill | KPI |
+|---|---|
+| `jarvis-audit` | PASS / WARN / FAIL |
+| `agent-readiness-audit` | — |
+
+### 🛠️ Tooling
+`email-sender`, `game-creator`, `browser-agent`, `browser-automation`, `agent-browser-clawdbot`, `cmp`, `depotchaos`, `skill-builder`, `audit`
 
 ---
 
-*Maintained at `skills/CATALOG.md` · regenerate with `clawhub list` for external skills.*
+## Proposed (to codify next)
+`dark-factory`, `deployment`, `lead-enrichment`, `lead-scraping`, `email-campaign`, `system-monitoring`
+
+---
+
+*Maintained at `skills/CATALOG.md`. The 210-skill full inventory spans 9 collections — consolidation into the dedicated `hcindus/skills` repo is the open task.*
