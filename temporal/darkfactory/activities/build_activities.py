@@ -155,77 +155,78 @@ async def execute_build(order, resources) -> dict:
 
 
 async def _build_apk(source, resources, logs):
-    """Build an Android APK using Bubblewrap or Gradle."""
+    """Build an Android APK — native Gradle first, PWA/Bubblewrap fallback."""
     import asyncio
-    
+
     output_dir = resources["output_dir"]
-    
-    # Try Bubblewrap first (for PWAs)
-    bubblewrap_cmd = [
-        "npx", "@bubblewrap/cli", "build",
-        "--directory", source,
-        "--output", output_dir,
-    ]
-    
-    activity.heartbeat("Running Bubblewrap...")
-    
+    env = {**os.environ, "ANDROID_HOME": "/opt/android-sdk", "ANDROID_SDK_ROOT": "/opt/android-sdk"}
+    src = Path(source)
+
+    # Native Android project? (settings.gradle / build.gradle / gradlew present)
+    is_native = (
+        (src / "settings.gradle").exists()
+        or (src / "settings.gradle.kts").exists()
+        or (src / "build.gradle").exists()
+        or (src / "build.gradle.kts").exists()
+        or (src / "gradlew").exists()
+    )
+
+    if is_native:
+        # Use global `gradle` first (wrapper jar is often missing from git),
+        # then fall back to ./gradlew. assembleDebug avoids release signing.
+        for gradle_bin in (["gradle"], ["./gradlew"]):
+            activity.heartbeat(f"Running {gradle_bin[0]} assembleDebug...")
+            try:
+                process = await asyncio.create_subprocess_exec(
+                    *gradle_bin, "assembleDebug", "--no-daemon",
+                    cwd=str(src),
+                    env=env,
+                    stdout=asyncio.subprocess.PIPE,
+                    stderr=asyncio.subprocess.PIPE,
+                )
+                stdout, stderr = await process.communicate()
+            except FileNotFoundError:
+                logs.append(f"{gradle_bin[0]} not found")
+                continue
+            logs.append(stdout.decode()[-4000:])
+            if stderr:
+                logs.append(stderr.decode()[-4000:])
+
+            # Find any produced APK (debug or release)
+            apk_files = []
+            for pattern in ("app/build/outputs/apk/**/*.apk", "**/*.apk"):
+                apk_files = list(src.glob(pattern))
+                if apk_files:
+                    break
+            if apk_files:
+                apk = apk_files[0]
+                dest = Path(output_dir) / apk.name
+                shutil.copy(apk, dest)
+                return {"success": True, "output_path": str(dest), "file_size": dest.stat().st_size}
+
+        return {"success": False, "error": "Gradle build produced no APK"}
+
+    # PWA: wrap with Bubblewrap
+    activity.heartbeat("Running Bubblewrap (PWA)...")
+    bubblewrap_cmd = ["npx", "@bubblewrap/cli", "build", "--directory", source, "--output", output_dir]
     process = await asyncio.create_subprocess_exec(
         *bubblewrap_cmd,
+        env=env,
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,
     )
-    
     stdout, stderr = await process.communicate()
-    
-    logs.append(stdout.decode())
+    logs.append(stdout.decode()[-4000:])
     if stderr:
-        logs.append(stderr.decode())
-    
-    # Find the APK in output
+        logs.append(stderr.decode()[-4000:])
+
     output_files = list(Path(output_dir).glob("*.apk"))
     if output_files:
         apk_path = str(output_files[0])
-        file_size = Path(apk_path).stat().st_size
-        return {
-            "success": True,
-            "output_path": apk_path,
-            "file_size": file_size,
-        }
-    
-    # Bubblewrap failed, try Gradle if manifest exists
-    gradle_path = Path(source) / "gradlew"
-    if gradle_path.exists():
-        activity.heartbeat("Falling back to Gradle...")
-        
-        gradle_cmd = ["./gradlew", "assembleRelease"]
-        process = await asyncio.create_subprocess_exec(
-            *gradle_cmd,
-            cwd=source,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-        )
-        
-        stdout, stderr = await process.communicate()
-        logs.append(stdout.decode())
-        
-        # Look for APK in build/outputs/apk/release/
-        apk_dir = Path(source) / "app" / "build" / "outputs" / "apk" / "release"
-        if apk_dir.exists():
-            apks = list(apk_dir.glob("*.apk"))
-            if apks:
-                # Copy to output dir
-                dest = Path(output_dir) / apks[0].name
-                shutil.copy(apks[0], dest)
-                return {
-                    "success": True,
-                    "output_path": str(dest),
-                    "file_size": dest.stat().st_size,
-                }
-    
-    return {
-        "success": False,
-        "error": "No APK generated",
-    }
+        return {"success": True, "output_path": apk_path, "file_size": Path(apk_path).stat().st_size}
+
+    return {"success": False, "error": "No APK generated"}
+
 
 
 async def _build_web(source, resources, logs):
