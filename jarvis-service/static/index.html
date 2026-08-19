@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JARVIS — AI Assistant</title>
+<style>
+  :root{--primary:#0A1A2F;--accent:#FF7A00;--bg:#0f2744;--card:#1a2f47;--text:#e6eef7;--muted:#8aa0b8}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;background:linear-gradient(135deg,#0A1A2F,#0f2744);color:var(--text);min-height:100vh;padding:2rem}
+  .wrap{max-width:1000px;margin:0 auto}
+  h1{font-size:2rem;margin-bottom:.25rem} h1 span{color:var(--accent)}
+  .sub{color:var(--muted);margin-bottom:1.5rem}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border-radius:12px;padding:1.5rem;box-shadow:0 4px 16px rgba(0,0,0,.3)}
+  .card h2{font-size:1.1rem;margin-bottom:1rem;color:var(--accent)}
+  label{display:block;font-size:.8rem;color:var(--muted);margin:8px 0 3px}
+  input,textarea{width:100%;padding:8px;border-radius:6px;border:1px solid #2c4560;background:#0f2744;color:var(--text)}
+  button{background:var(--accent);color:#fff;border:none;padding:10px 16px;border-radius:6px;font-weight:600;cursor:pointer;margin-top:12px}
+  button.ghost{background:transparent;border:1px solid #2c4560;color:var(--text)}
+  table{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:.5rem}
+  th,td{text-align:left;padding:7px 5px;border-bottom:1px solid #2c4560}
+  th{color:var(--muted);font-weight:600}
+  .status{font-size:.7rem;padding:2px 8px;border-radius:10px;text-transform:uppercase}
+  .new{background:#2c4560}.quoted{background:#b7791f}.won{background:#2f855a}
+  a{color:#7cc4ff}
+  .toast{position:fixed;bottom:20px;right:20px;background:var(--accent);color:#fff;padding:12px 18px;border-radius:8px;display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>JARVIS <span>AI Assistant</span></h1>
+  <div class="sub">Performance Supply Depot — leads, quotes &amp; invoices</div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>➕ New Lead</h2>
+      <label>Name</label><input id="name" placeholder="John Doe">
+      <label>Email</label><input id="email" placeholder="john@gmail.com">
+      <label>Phone</label><input id="phone" placeholder="510-796-9193">
+      <label>Business</label><input id="business" placeholder="Oil Change Shop">
+      <label>Product</label><input id="product" value="AI Reputation Build">
+      <label>Value ($)</label><input id="value" type="number" value="2500">
+      <button onclick="addLead()">Add Lead</button>
+    </div>
+
+    <div class="card">
+      <h2>📄 Leads</h2>
+      <table id="leads"><thead><tr><th>Name</th><th>Product</th><th>Value</th><th>Status</th><th></th></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1.5rem">
+    <h2>🔒 Hotline PIN</h2>
+    <input id="pin" placeholder="Enter access code" style="max-width:200px">
+    <button class="ghost" onclick="auth()">Verify</button>
+    <span id="authResult" style="margin-left:10px;color:var(--muted)"></span>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const api = (p, o) => fetch(p, o).then(r => r.json());
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2500)}
+async function addLead(){
+  const body = {name:val('name'),email:val('email'),phone:val('phone'),business:val('business'),product:val('product'),value:+val('value')};
+  const r = await api('/api/leads',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  toast('Lead added #'+r.id); loadLeads();
+}
+async function loadLeads(){
+  const leads = await api('/api/leads');
+  const tb = document.querySelector('#leads tbody');
+  tb.innerHTML = leads.map(l=>`<tr>
+    <td>${l.name}</td><td>${l.product}</td><td>$${(l.value||0).toLocaleString()}</td>
+    <td><span class="status ${l.status}">${l.status}</span></td>
+    <td><a href="#" onclick="quote(${l.id});return false">Quote</a> · <a href="#" onclick="invoice(${l.id});return false">Invoice</a></td>
+  </tr>`).join('');
+}
+async function quote(id){
+  const items=[["AI Reputation Builder — setup & configuration",1,2000],["Onboarding & staff training",1,500]];
+  const r = await api('/api/quote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lead_id:id,items})});
+  window.open(r.pdf,'_blank'); toast('Quote generated'); loadLeads();
+}
+async function invoice(id){
+  const items=[["AI Reputation Builder — setup & configuration",1,2000],["Onboarding & staff training",1,500]];
+  const r = await api('/api/invoice',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lead_id:id,items})});
+  window.open(r.pdf,'_blank'); toast('Invoice generated');
+}
+async function auth(){
+  const r = await api('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:val('pin')})});
+  document.getElementById('authResult').textContent = r.message;
+  document.getElementById('authResult').style.color = r.granted ? '#2f855a' : '#e53e3e';
+}
+const val = id => document.getElementById(id).value;
+loadLeads();
+</script>
+</body>
+</html>
