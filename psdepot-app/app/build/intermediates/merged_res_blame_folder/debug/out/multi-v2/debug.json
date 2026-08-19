@@ -1,0 +1,45 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.psdepot.app-merged_res-4:/values_values.arsc.flat",
+            "map": [
+                {
+                    "source": "/root/.openclaw/workspace/psdepot-app/app/src/main/res/values/strings.xml",
+                    "from": {
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "16",
+                        "endColumns": "61",
+                        "endOffsets": "73"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "61",
+                        "endOffsets": "112"
+                    }
+                },
+                {
+                    "source": "/root/.openclaw/workspace/psdepot-app/app/src/main/res/values/themes.xml",
+                    "from": {
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "16",
+                        "endLines": "4",
+                        "endColumns": "12",
+                        "endOffsets": "222"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "117",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "323"
+                    }
+                }
+            ]
+        }
+    ]
+}
