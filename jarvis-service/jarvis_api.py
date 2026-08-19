@@ -14,7 +14,7 @@ Endpoints:
   POST /api/auth         hotline PIN check
   GET  /docs             Swagger UI
 """
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Header, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
@@ -32,6 +32,14 @@ pin_gate = PinGate()
 
 DOCS_DIR = os.environ.get("JARVIS_OUT", "/var/lib/psdepot/documents")
 PUBLIC_DOCS = "/documents"  # served route
+
+
+def require_auth(authorization: str = Header(default="")):
+    """Token-based auth — protected endpoints require a valid issued token."""
+    token = authorization.removeprefix("Bearer ").strip()
+    if not pin_gate.validate_token(token):
+        raise HTTPException(401, "Unauthorized — valid PIN required")
+    return token
 
 
 class LeadIn(BaseModel):
@@ -55,19 +63,19 @@ class AuthIn(BaseModel):
     code: str
 
 
-@app.post("/api/leads")
+@app.post("/api/leads", dependencies=[Depends(require_auth)])
 def create_lead(lead: LeadIn):
     lid = store.add(lead.name, lead.email, lead.phone, lead.business,
                     lead.product, lead.value, lead.notes)
     return {"id": lid, **store.get(lid)}
 
 
-@app.get("/api/leads")
+@app.get("/api/leads", dependencies=[Depends(require_auth)])
 def list_leads():
     return store.all()
 
 
-@app.get("/api/leads/{lid}")
+@app.get("/api/leads/{lid}", dependencies=[Depends(require_auth)])
 def get_lead(lid: int):
     lead = store.get(lid)
     if not lead:
@@ -75,7 +83,7 @@ def get_lead(lid: int):
     return lead
 
 
-@app.post("/api/quote")
+@app.post("/api/quote", dependencies=[Depends(require_auth)])
 def make_quote(doc: DocIn):
     lead = store.get(doc.lead_id)
     if not lead:
@@ -86,7 +94,7 @@ def make_quote(doc: DocIn):
     return {"pdf": f"{PUBLIC_DOCS}/{os.path.basename(path)}"}
 
 
-@app.post("/api/invoice")
+@app.post("/api/invoice", dependencies=[Depends(require_auth)])
 def make_invoice(doc: DocIn):
     lead = store.get(doc.lead_id)
     if not lead:
@@ -98,8 +106,8 @@ def make_invoice(doc: DocIn):
 
 @app.post("/api/auth")
 def auth(a: AuthIn):
-    ok, msg = pin_gate.check(a.code)
-    return {"granted": ok, "message": msg}
+    token, msg = pin_gate.issue_token(a.code)
+    return {"granted": token is not None, "message": msg, "token": token}
 
 
 @app.get("/health")

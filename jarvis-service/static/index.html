@@ -47,6 +47,7 @@
 
     <div class="card">
       <h2>📄 Leads</h2>
+      <div id="locked" style="display:none;color:#e53e3e;font-size:.9rem;margin-bottom:.5rem">🔒 Locked — enter your PIN below to access leads.</div>
       <table id="leads"><thead><tr><th>Name</th><th>Product</th><th>Value</th><th>Status</th><th></th></tr></thead><tbody></tbody></table>
     </div>
   </div>
@@ -61,11 +62,22 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const api = (p, o) => fetch(p, o).then(r => r.json());
+let token = localStorage.getItem('jarvis_token') || null;
+const api = (p, o={}) => {
+  o.headers = {...(o.headers||{}), 'Content-Type':'application/json'};
+  if (token) o.headers['Authorization'] = 'Bearer ' + token;
+  return fetch(p, o).then(r => {
+    if (r.status === 401) { token = null; localStorage.removeItem('jarvis_token'); locked(); throw new Error('unauthorized'); }
+    return r.json();
+  });
+};
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2500)}
+function locked(){document.getElementById('locked').style.display='block';document.querySelector('#leads tbody').innerHTML='';}
+function unlocked(){document.getElementById('locked').style.display='none';loadLeads();}
+const val = id => document.getElementById(id).value;
 async function addLead(){
   const body = {name:val('name'),email:val('email'),phone:val('phone'),business:val('business'),product:val('product'),value:+val('value')};
-  const r = await api('/api/leads',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const r = await api('/api/leads',{method:'POST',body:JSON.stringify(body)});
   toast('Lead added #'+r.id); loadLeads();
 }
 async function loadLeads(){
@@ -79,21 +91,22 @@ async function loadLeads(){
 }
 async function quote(id){
   const items=[["AI Reputation Builder — setup & configuration",1,2000],["Onboarding & staff training",1,500]];
-  const r = await api('/api/quote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lead_id:id,items})});
+  const r = await api('/api/quote',{method:'POST',body:JSON.stringify({lead_id:id,items})});
   window.open(r.pdf,'_blank'); toast('Quote generated'); loadLeads();
 }
 async function invoice(id){
   const items=[["AI Reputation Builder — setup & configuration",1,2000],["Onboarding & staff training",1,500]];
-  const r = await api('/api/invoice',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lead_id:id,items})});
+  const r = await api('/api/invoice',{method:'POST',body:JSON.stringify({lead_id:id,items})});
   window.open(r.pdf,'_blank'); toast('Invoice generated');
 }
 async function auth(){
-  const r = await api('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:val('pin')})});
-  document.getElementById('authResult').textContent = r.message;
-  document.getElementById('authResult').style.color = r.granted ? '#2f855a' : '#e53e3e';
+  const r = await api('/api/auth',{method:'POST',body:JSON.stringify({code:val('pin')})});
+  if (r.granted && r.token) { token = r.token; localStorage.setItem('jarvis_token', token); unlocked(); }
+  const el = document.getElementById('authResult');
+  el.textContent = r.message;
+  el.style.color = r.granted ? '#2f855a' : '#e53e3e';
 }
-const val = id => document.getElementById(id).value;
-loadLeads();
+if (token) unlocked(); else locked();
 </script>
 </body>
 </html>
