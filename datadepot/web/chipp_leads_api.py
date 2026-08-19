@@ -26,7 +26,7 @@ LOCK_FILE = Path("/var/lib/psdepot/chipp_leads.lock")
 # Which partner gets notified when a lead is logged for their destination.
 DESTINATION_EMAILS = {
     "psd": "info@psdepot.com",
-    "chipp": "steven@chipp.cc",
+    "chipp": "info@chipp.cc",
     "witzend": "lisa@witzendbeverages.com",
 }
 
