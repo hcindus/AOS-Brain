@@ -36,6 +36,25 @@ python3 cli.py list        # workflow status
 systemctl status darkfactory-worker darkfactory-triage.timer
 ```
 
+## Spec format — GCAO + KPI (house rule)
+Every spec should carry the GCAO fields for traceability (see the
+`gcao-prompting` skill). The build pipeline uses `project_name` / `build_type` /
+`source_path`; the rest are for record-keeping + hold-out validation criteria:
+
+```json
+{
+  "spec_id": "RS80-001",
+  "project_name": "RS-80",
+  "build_type": "apk",
+  "source_path": "/root/.openclaw/workspace/reggiestarr-rs80/",
+  "priority": "high",
+  "goal": "Produce a signed Android APK",
+  "context": "Kotlin POS, gradle 8.5, Android SDK 34",
+  "output": "installable app-debug.apk",
+  "kpi": "BUILD SUCCESSFUL + 14MB APK + hold-out 1/1"
+}
+```
+
 ## Scope (mission.md)
 Allowed products: CREAM, ReggieStarr, cobra_v1, prometheus_v1, nognog, nomad_probe.
 Non-goals (auto-rejected): medical, legal, financial, autonomous prod deploy.
