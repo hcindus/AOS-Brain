@@ -953,6 +953,10 @@ document.addEventListener('pointerlockchange',()=>{
 // Mouse click to fire
 canvas.addEventListener('mousedown',e=>{if(e.button===0&&started)fireActive=true});
 canvas.addEventListener('mouseup',e=>{if(e.button===0)fireActive=false});
+// Document-level safety resets — catch any missed mouse/pointer release (pointer lock, off-canvas)
+document.addEventListener('mouseup',()=>{fireActive=false});
+document.addEventListener('pointerup',()=>{fireActive=false});
+document.addEventListener('pointercancel',()=>{fireActive=false});
 // Right click boost
 canvas.addEventListener('contextmenu',e=>{e.preventDefault()});
 canvas.addEventListener('mousedown',e=>{if(e.button===2)keys['shift']=true});
