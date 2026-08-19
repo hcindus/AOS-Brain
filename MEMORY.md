@@ -618,25 +618,24 @@ curl -X POST http://localhost:8082/api/queue/{email_id}/send
 
 ## TODO: Auth System SendGrid Setup
 **Added:** 2026-08-05
-**Status:** PENDING
+**Status:** DOWNGRADED to OPTIONAL (SMTP fallback verified working) — 2026-08-19
 
-### Problem
-Auth system live mode login broken — email verification and password reset flows require SendGrid, which isn't configured for the auth system.
+### Finding (2026-08-19)
+Auth system email is NOT actually broken. `backend/utils/email.js` has a full transport priority chain (SendGrid → AWS SES → Mailgun → SMTP → Ethereal), and the Hostinger SMTP fallback is fully configured in `.env` and **verified working** (`nodemailer.verify()` → OK, 2026-08-19). So verification + password-reset emails already deliver via SMTP.
 
-### Tasks
-1. Get SendGrid API key (or reuse existing one)
-2. Add DNS records for auth system domain (CNAME + DKIM + DMARC)
-3. Add `SENDGRID_API_KEY` to auth system `.env`
-4. Test email delivery (verification emails, password resets)
+### Remaining SendGrid work (optional, better deliverability only — requires Captain's credentials)
+1. Get a SendGrid API key (blocked on Captain — needs a SendGrid account/API key; none stored)
+2. Add DNS records (CNAME + DKIM + DMARC) — Captain action on DNS provider
+3. Add `SENDGRID_API_KEY` to `.env` (currently commented out)
+4. Test delivery
 
 ### Reference
-DepotChaos already has SendGrid integration patterns:
-- `/datadepot/web/sendgrid_sender.py`
-- `/datadepot/cron/process_email_queue.py`
+- DepotChaos SendGrid: `/datadepot/web/sendgrid_sender.py`, `/datadepot/cron/process_email_queue.py`
+- Auth email logic: `/root/.openclaw/workspace/auth-system/backend/utils/email.js`
 
 ### Files
-- `/root/.openclaw/workspace/auth-system/.env`
+- `/root/.openclaw/workspace/auth-system/.env` (SMTP Hostinger configured; SENDGRID_API_KEY commented)
 - `/root/.openclaw/workspace/auth-system/backend/`
 
 ### Reminder
-Cron job `auth-system-sendgrid-setup` set for daily.
+Cron job `auth-system-sendgrid-setup` — daily. (Downgraded; no longer blocking login.)
