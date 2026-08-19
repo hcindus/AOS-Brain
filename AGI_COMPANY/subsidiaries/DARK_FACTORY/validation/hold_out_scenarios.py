@@ -134,6 +134,9 @@ class HoldOutValidator:
         if check == "artifact_present":
             # target is a glob pattern, e.g. "*.apk" within output_path
             base = Path(output_path) if output_path else Path(".")
+            # If output is a single file (e.g. a built .apk), search its parent dir
+            if base.is_file():
+                base = base.parent
             matches = list(base.rglob(target)) if target else []
             return len(matches) >= min_matches
 

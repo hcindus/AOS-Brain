@@ -31,6 +31,33 @@
         { "id": "SC-001", "name": "Bill of materials exists", "check": "artifact_present", "target": "BOM*.md", "min_matches": 1, "weight": 1.0 },
         { "id": "SC-002", "name": "3D design output (STL) generated", "check": "artifact_present", "target": "*.stl", "min_matches": 1, "weight": 1.0 }
       ]
+    },
+    "RS-80": {
+      "product": "RS-80",
+      "scenarios": [
+        { "id": "SC-001", "name": "APK artifact generated", "check": "artifact_present", "target": "*.apk", "min_matches": 1, "weight": 1.0 }
+      ]
+    },
+    "nognog": {
+      "product": "nognog",
+      "scenarios": [
+        { "id": "SC-001", "name": "Entry point index.html present", "check": "artifact_present", "target": "index.html", "min_matches": 1, "weight": 1.0 },
+        { "id": "SC-002", "name": "Game JS present", "check": "artifact_present", "target": "*.js", "min_matches": 1, "weight": 1.0 }
+      ]
+    },
+    "neon-courier": {
+      "product": "neon-courier",
+      "scenarios": [
+        { "id": "SC-001", "name": "Entry point index.html present", "check": "artifact_present", "target": "index.html", "min_matches": 1, "weight": 1.0 },
+        { "id": "SC-002", "name": "Game JS present", "check": "artifact_present", "target": "*.js", "min_matches": 1, "weight": 1.0 }
+      ]
+    },
+    "quantum-defender": {
+      "product": "quantum-defender",
+      "scenarios": [
+        { "id": "SC-001", "name": "Entry point index.html present", "check": "artifact_present", "target": "index.html", "min_matches": 1, "weight": 1.0 },
+        { "id": "SC-002", "name": "Game JS present", "check": "artifact_present", "target": "*.js", "min_matches": 1, "weight": 1.0 }
+      ]
     }
   }
 }

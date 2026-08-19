@@ -23,7 +23,10 @@ ACCEPTED = BASE / "specs" / "accepted"
 REJECTED = BASE / "specs" / "rejected"
 
 # Scope — synced with mission.md (single source of truth).
-ALLOWED_PRODUCTS = {"cobra_v1", "prometheus_v1", "CREAM", "ReggieStarr", "nognog", "nomad_probe"}
+ALLOWED_PRODUCTS = {
+    "cobra_v1", "prometheus_v1", "CREAM", "ReggieStarr", "nognog", "nomad_probe",
+    "RS-80", "neon-courier", "quantum-defender", "laser-pistol",
+}
 NON_GOAL_KEYWORDS = ["medical", "legal", "financial", "autonomous deploy", "production deploy"]
 
 TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "localhost:7233")
