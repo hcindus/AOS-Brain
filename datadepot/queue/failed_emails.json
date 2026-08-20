@@ -418,5 +418,20 @@
     "created_at": "2026-06-05T15:41:18.476877",
     "failed_at": "2026-06-11T18:50:54.265374",
     "error": "(451, b'4.7.1 Ratelimit \"hostinger_out_ratelimit\" exceeded for key \"RLnxigg46w84qqxnok68pwkzh4\"')"
+  },
+  {
+    "id": "10c9956d-740e-4e02-b129-5702abde8c1f",
+    "to_email": "info@teriyakimadnessvernonhills.com",
+    "subject": "Thermal Paper & POS Supplies Available \u2014 Performance Supply Depot",
+    "body": "Hello,\n\nI hope this email finds you well. My name is Miles with Performance Supply Depot LLC.\n\nI'm reaching out because we specialize in restaurant POS supplies, including thermal paper rolls, receipt paper, and related equipment at competitive prices.\n\nWe currently have thermal paper in stock and ready to ship:\n\u2022 2 1/4\" x 50' thermal rolls (standard credit card terminals)\n\u2022 3 1/8\" x 230' thermal rolls (common POS systems)\n\u2022 Bulk pricing available for multi-location operators\n\u2022 Fast shipping nationwide\n\nWould you be interested in receiving a quote for your location? We work with restaurants and franchises across the country and pride ourselves on reliability and quick turnaround.\n\nIf you're happy with your current supplier, no worries at all. Just wanted to introduce ourselves in case there's a fit.\n\nBest regards,\nMiles\nPerformance Supply Depot LLC\ninfo@psdepot.com\nhttps://psdepot.com\n",
+    "lead_id": 6069,
+    "campaign_id": "teriyaki_thermal_paper_q2_2026",
+    "scheduled_time": null,
+    "from_name": "Miles",
+    "from_email": "info@psdepot.com",
+    "status": "pending",
+    "created_at": "2026-06-05T15:41:22.076879",
+    "failed_at": "2026-08-20T13:54:29.785366",
+    "error": "SendGrid API error 401: {\"errors\":[{\"message\":\"The provided authorization grant is invalid, expired, or revoked\",\"field\":null,\"help\":null}]}"
   }
 ]
