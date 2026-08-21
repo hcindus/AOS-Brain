@@ -29,6 +29,10 @@
 - **Nova** 🎥 — can contribute video-embedded posts
 - **Max** 🎬 — schedules topics into the calendar; feeds the Trend Radar's rising signals into article ideas
 
+### Blog categories
+- **PSD operational** — paper, printers, POS hardware, maintenance (existing focus)
+- **AGI thought leadership** — autonomy, agent safety, "Intelligence Engineered" (new, added 2026-08-21)
+
 ## Content Mix (per pillar)
 
 - **Operational excellence (PSD):** 40%
