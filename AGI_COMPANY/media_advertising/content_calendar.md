@@ -17,6 +17,18 @@
 
 **Long-form YouTube:** 1 per 2 weeks (Sundays).
 
+**Blog articles (psdepot.com/blog):** 2 per month (~24/year). Channel #6 — the owned home for long-form.
+
+### Blog workflow (existing infra)
+- Template: `/var/www/psdepot.com/blog/_template.html` (BlogPosting schema, brand voice baked in)
+- Drafts → `/var/www/psdepot.com/blog/DRAFTS/` → `BLOG_MANAGER_CRON.sh` publishes Tuesday 9AM + updates sitemap
+- **All articles still route through the review gate** (Jordan → Patricia → Captain) before touching the live site.
+
+### Blog owner
+- **Sage** 🐦 — lead long-form writer (X short-form + blog long-form = the writing desk)
+- **Nova** 🎥 — can contribute video-embedded posts
+- **Max** 🎬 — schedules topics into the calendar; feeds the Trend Radar's rising signals into article ideas
+
 ## Content Mix (per pillar)
 
 - **Operational excellence (PSD):** 40%
