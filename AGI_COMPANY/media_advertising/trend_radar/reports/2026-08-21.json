@@ -3,121 +3,121 @@
   "keyword_interest": [
     {
       "keyword": "cash drawer",
-      "first_half": 0.8,
+      "first_half": 1.0,
       "second_half": 1.0,
-      "delta": 0.2,
+      "delta": 0.0,
       "trend": "flat"
     },
     {
       "keyword": "receipt paper",
-      "first_half": 1.5,
-      "second_half": 1.7,
-      "delta": 0.1,
+      "first_half": 1.8,
+      "second_half": 1.8,
+      "delta": 0.0,
       "trend": "flat"
     },
     {
       "keyword": "thermal printer",
-      "first_half": 7.9,
-      "second_half": 9.4,
-      "delta": 1.5,
+      "first_half": 8.3,
+      "second_half": 9.1,
+      "delta": 0.8,
       "trend": "flat"
     },
     {
       "keyword": "barcode scanner",
       "first_half": 5.6,
-      "second_half": 5.8,
-      "delta": 0.3,
+      "second_half": 6.2,
+      "delta": 0.6,
       "trend": "flat"
     },
     {
       "keyword": "point of sale",
-      "first_half": 10.4,
-      "second_half": 9.1,
-      "delta": -1.3,
+      "first_half": 10.6,
+      "second_half": 9.4,
+      "delta": -1.2,
       "trend": "flat"
     },
     {
       "keyword": "POS system",
-      "first_half": 14.9,
-      "second_half": 14.1,
-      "delta": -0.8,
+      "first_half": 14.5,
+      "second_half": 14.2,
+      "delta": -0.2,
       "trend": "flat"
     },
     {
       "keyword": "pour spout",
-      "first_half": 0.8,
-      "second_half": 0.7,
-      "delta": -0.1,
+      "first_half": 0.7,
+      "second_half": 0.6,
+      "delta": -0.0,
       "trend": "flat"
     },
     {
       "keyword": "liquor pourer",
       "first_half": 0.0,
       "second_half": 0.0,
-      "delta": 0.0,
+      "delta": -0.0,
       "trend": "flat"
     },
     {
       "keyword": "restaurant supplies",
-      "first_half": 1.5,
-      "second_half": 3.1,
-      "delta": 1.7,
+      "first_half": 1.6,
+      "second_half": 2.7,
+      "delta": 1.1,
       "trend": "flat"
     },
     {
       "keyword": "bar supplies",
       "first_half": 0.3,
-      "second_half": 0.5,
-      "delta": 0.2,
+      "second_half": 0.7,
+      "delta": 0.3,
       "trend": "flat"
     },
     {
       "keyword": "AI agents",
-      "first_half": 39.3,
-      "second_half": 36.3,
-      "delta": -3.0,
+      "first_half": 39.9,
+      "second_half": 38.3,
+      "delta": -1.5,
       "trend": "flat"
     },
     {
       "keyword": "autonomous agents",
-      "first_half": 1.3,
-      "second_half": 0.6,
-      "delta": -0.7,
+      "first_half": 0.8,
+      "second_half": 0.7,
+      "delta": -0.1,
       "trend": "flat"
     },
     {
       "keyword": "agentic AI",
-      "first_half": 25.2,
-      "second_half": 26.7,
-      "delta": 1.5,
+      "first_half": 25.9,
+      "second_half": 28.5,
+      "delta": 2.6,
       "trend": "flat"
     },
     {
       "keyword": "AI automation",
-      "first_half": 25.9,
-      "second_half": 21.1,
-      "delta": -4.9,
+      "first_half": 26.4,
+      "second_half": 22.4,
+      "delta": -4.0,
       "trend": "falling"
     },
     {
       "keyword": "artificial general intelligence",
-      "first_half": 0.0,
-      "second_half": 0.2,
-      "delta": 0.1,
+      "first_half": 0.4,
+      "second_half": 0.1,
+      "delta": -0.3,
       "trend": "flat"
     },
     {
       "keyword": "large language model",
-      "first_half": 25.4,
-      "second_half": 20.9,
-      "delta": -4.5,
-      "trend": "falling"
+      "first_half": 23.1,
+      "second_half": 21.1,
+      "delta": -2.0,
+      "trend": "flat"
     },
     {
       "keyword": "AI workforce",
-      "first_half": 19.6,
-      "second_half": 18.0,
-      "delta": -1.6,
+      "first_half": 18.9,
+      "second_half": 18.2,
+      "delta": -0.7,
       "trend": "flat"
     }
   ],
@@ -151,13 +151,6 @@
       "url": "https://opencode.ai/"
     },
     {
-      "scope": "front page",
-      "title": "Aaron Swartz was prosecuted for scraping, while Meta does it without consequence",
-      "points": 1223,
-      "comments": 274,
-      "url": "https://blog.curiousquail.com/im-upset-again-about-a-co-creator-of-rss-being-prosecuted-for-something-meta-is-doing-with-little-consequence/"
-    },
-    {
       "scope": "search: \"restaurant\"",
       "title": "A small restaurant owner on Google, DoorDash, and Grubhub",
       "points": 975,
@@ -181,8 +174,8 @@
     {
       "scope": "front page",
       "title": "AliExpress runs silent WebAudio fingerprinting that breaks Bluetooth multipoint",
-      "points": 929,
-      "comments": 295,
+      "points": 946,
+      "comments": 297,
       "url": "https://blog.laserphile.com/2026/08/aliexpress-webpage-keeping-multipoint.html"
     },
     {
@@ -221,6 +214,13 @@
       "url": "https://www.latimes.com/politics/story/2019-10-07/blind-person-dominos-ada-supreme-court-disabled"
     },
     {
+      "scope": "front page",
+      "title": "HTML Can Do That",
+      "points": 711,
+      "comments": 178,
+      "url": "https://chrisburnell.com/html-can-do-that/"
+    },
+    {
       "scope": "search: \"AI agents\"",
       "title": "Windows 11 adds AI agent that runs in background with access to personal folders",
       "points": 703,
@@ -236,10 +236,10 @@
     },
     {
       "scope": "front page",
-      "title": "HTML Can Do That",
-      "points": 644,
-      "comments": 171,
-      "url": "https://chrisburnell.com/html-can-do-that/"
+      "title": "I like 'em thick: an apology to my English teachers",
+      "points": 683,
+      "comments": 283,
+      "url": "https://www.experimental-history.com/p/i-like-em-thick"
     },
     {
       "scope": "search: \"retail\"",
@@ -247,13 +247,6 @@
       "points": 638,
       "comments": 134,
       "url": "http://arstechnica.com/tech-policy/2013/01/how-newegg-crushed-the-shopping-cart-patent-and-saved-online-retail/"
-    },
-    {
-      "scope": "front page",
-      "title": "I like 'em thick: an apology to my English teachers",
-      "points": 628,
-      "comments": 270,
-      "url": "https://www.experimental-history.com/p/i-like-em-thick"
     },
     {
       "scope": "search: \"restaurant\"",
@@ -305,6 +298,20 @@
       "url": "https://www.theverge.com/2020/6/26/21297400/microsoft-retail-stores-closing-cities-open"
     },
     {
+      "scope": "front page",
+      "title": "Malicious Rust crate Arrayref runs a build-time payload",
+      "points": 467,
+      "comments": 394,
+      "url": "https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/"
+    },
+    {
+      "scope": "front page",
+      "title": "The August 17 outage",
+      "points": 458,
+      "comments": 517,
+      "url": "https://github.blog/news-insights/company-news/the-august-17-outage-and-the-work-ahead/"
+    },
+    {
       "scope": "search: \"retail\"",
       "title": "Google and Mastercard Cut Ad Deal to Track Retail Sales",
       "points": 449,
@@ -327,31 +334,10 @@
     },
     {
       "scope": "front page",
-      "title": "Malicious Rust crate Arrayref runs a build-time payload",
-      "points": 426,
-      "comments": 377,
-      "url": "https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/"
-    },
-    {
-      "scope": "front page",
-      "title": "The August 17 outage",
-      "points": 404,
-      "comments": 443,
-      "url": "https://github.blog/news-insights/company-news/the-august-17-outage-and-the-work-ahead/"
-    },
-    {
-      "scope": "front page",
       "title": "CIA funding helped keep NeXT afloat in the 80s",
-      "points": 372,
-      "comments": 225,
+      "points": 391,
+      "comments": 233,
       "url": "https://www.wsj.com/tech/steve-jobs-apple-next-cia-161b65f9?st=NWWds1&reflink=desktopwebshare_permalink"
-    },
-    {
-      "scope": "front page",
-      "title": "Mojo is now open source",
-      "points": 371,
-      "comments": 85,
-      "url": "https://www.modular.com/blog/mojo-open-source"
     },
     {
       "scope": "search: \"point of sale\"",
@@ -370,8 +356,8 @@
     {
       "scope": "front page",
       "title": "Git at any scale",
-      "points": 302,
-      "comments": 99,
+      "points": 320,
+      "comments": 103,
       "url": "https://cursor.com/blog/git-at-any-scale"
     },
     {
@@ -383,31 +369,52 @@
     },
     {
       "scope": "front page",
-      "title": "Consumer Rights Wiki",
-      "points": 259,
-      "comments": 43,
-      "url": "https://consumerrights.wiki/w/Main_Page"
-    },
-    {
-      "scope": "front page",
       "title": "Show HN: Huzzah \u2013 a novel approach to coding with AI",
-      "points": 245,
-      "comments": 139,
+      "points": 283,
+      "comments": 149,
       "url": "https://www.danielvaughn.dev/posts/huzzah/"
     },
     {
       "scope": "front page",
+      "title": "AI companies destroy physical books \u2013 let's scan rare books before it's too late",
+      "points": 269,
+      "comments": 194,
+      "url": "https://annas-archive.gl/blog/physical-destruction.html"
+    },
+    {
+      "scope": "front page",
+      "title": "Consumer Rights Wiki",
+      "points": 267,
+      "comments": 49,
+      "url": "https://consumerrights.wiki/w/Main_Page"
+    },
+    {
+      "scope": "front page",
       "title": "I should have loved biology (2020)",
-      "points": 218,
-      "comments": 83,
+      "points": 251,
+      "comments": 98,
       "url": "https://jsomers.net/i-should-have-loved-biology/"
     },
     {
       "scope": "front page",
+      "title": "Vomit: Clean up Claude 5's token output with a separate LLM",
+      "points": 235,
+      "comments": 235,
+      "url": "https://github.com/zachahn/vomit"
+    },
+    {
+      "scope": "front page",
       "title": "Linux 7.2",
-      "points": 216,
-      "comments": 73,
+      "points": 233,
+      "comments": 78,
       "url": "https://www.igalia.com/2026/08/19/Linux-72-Released.html"
+    },
+    {
+      "scope": "front page",
+      "title": "Stop Anthropomorphizing Intermediate Tokens as Reasoning/Thinking Traces",
+      "points": 223,
+      "comments": 138,
+      "url": "https://arxiv.org/abs/2504.09762"
     },
     {
       "scope": "search: \"autonomous agents\"",
@@ -415,27 +422,6 @@
       "points": 216,
       "comments": 66,
       "url": "https://github.com/kingjulio8238/memary"
-    },
-    {
-      "scope": "front page",
-      "title": "Vomit: Clean up Claude 5's token output with a separate LLM",
-      "points": 211,
-      "comments": 222,
-      "url": "https://github.com/zachahn/vomit"
-    },
-    {
-      "scope": "front page",
-      "title": "Stop Anthropomorphizing Intermediate Tokens as Reasoning/Thinking Traces",
-      "points": 204,
-      "comments": 122,
-      "url": "https://arxiv.org/abs/2504.09762"
-    },
-    {
-      "scope": "front page",
-      "title": "AI companies destroy physical books \u2013 let's scan rare books before it's too late",
-      "points": 158,
-      "comments": 102,
-      "url": "https://annas-archive.gl/blog/physical-destruction.html"
     },
     {
       "scope": "search: \"autonomous agents\"",
@@ -446,31 +432,38 @@
     },
     {
       "scope": "front page",
-      "title": "DiffusionGemma Technical Report",
-      "points": 142,
-      "comments": 34,
-      "url": "https://arxiv.org/abs/2608.00146"
-    },
-    {
-      "scope": "front page",
-      "title": "Anti-AI fonts are useless and harmful",
-      "points": 135,
-      "comments": 89,
-      "url": "https://blog.yaros.ae/anti-ai-fonts-are-useless-and-harmful/"
-    },
-    {
-      "scope": "front page",
       "title": "How to compromise your system with a job interview",
-      "points": 133,
-      "comments": 120,
+      "points": 151,
+      "comments": 132,
       "url": "https://www.codedge.de/posts/how-to-compromise-your-system-with-a-job-interview"
     },
     {
       "scope": "front page",
       "title": "Why aren't smart people happier? (2022)",
-      "points": 122,
-      "comments": 171,
+      "points": 147,
+      "comments": 199,
       "url": "https://www.experimental-history.com/p/why-arent-smart-people-happier"
+    },
+    {
+      "scope": "front page",
+      "title": "Anti-AI fonts are useless and harmful",
+      "points": 146,
+      "comments": 105,
+      "url": "https://blog.yaros.ae/anti-ai-fonts-are-useless-and-harmful/"
+    },
+    {
+      "scope": "front page",
+      "title": "Ox Alpha",
+      "points": 101,
+      "comments": 81,
+      "url": "https://openrouter.ai/stealth/ox-alpha"
+    },
+    {
+      "scope": "front page",
+      "title": "Codex on AWS bedrock bug causing 10x charges",
+      "points": 99,
+      "comments": 31,
+      "url": "https://github.com/openai/codex/issues/37674"
     },
     {
       "scope": "search: \"autonomous agents\"",
@@ -485,6 +478,13 @@
       "points": 98,
       "comments": 26,
       "url": "https://blog.langchain.dev/agents-round/"
+    },
+    {
+      "scope": "front page",
+      "title": "Every Model Cheats",
+      "points": 96,
+      "comments": 76,
+      "url": "https://dreadnode.io/research/every-model-cheats-prompt-level-mitigation-of-cheating-on-offensive-cyber-tasks/"
     },
     {
       "scope": "search: \"autonomous agents\"",
