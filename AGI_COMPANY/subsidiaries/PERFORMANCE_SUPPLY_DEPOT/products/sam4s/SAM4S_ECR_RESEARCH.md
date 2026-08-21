@@ -1,3 +1,13 @@
+# SAM4S Line — Site Prep
+
+## Carry policy (final, 2026-08-21)
+
+- **Default stock:** Standalone ECR (proprietary firmware) + Android devices + printers/drawers.
+- **Special order (on request):** Windows models (SAPPHIRE, FORZA, TITAN-S, ASTRA, SK). Not default — fetched when a customer explicitly wants Windows.
+- **Rationale:** lowest-dependency default; Windows = licensing/update/driver overhead → special-order only.
+
+---
+
 # SAM4S ECR Line — Site Prep
 
 **Source:** sam4s.com (ECR category, `KCA02` / legacy `ECA02`)
