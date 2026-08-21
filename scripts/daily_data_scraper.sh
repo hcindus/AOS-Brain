@@ -36,6 +36,9 @@ echo "  - Total queue items: $QUEUE_COUNT"
 
 echo "[6/7] Creating daily data summary..."
 
+BRAIN_CYCLES=$(grep -o "Cycle [0-9]*" /var/log/syslog 2>/dev/null | tail -1 | awk '{print $2}')
+BRAIN_CYCLES=${BRAIN_CYCLES:-0}
+
 cat > /root/.openclaw/workspace/data/DAILY_DATA_$(date -u +%Y%m%d).json << EOF
 {
   "date": "$(date -u -Iseconds)",
@@ -46,7 +49,7 @@ cat > /root/.openclaw/workspace/data/DAILY_DATA_$(date -u +%Y%m%d).json << EOF
     "agent_files": $AGENT_COUNT,
     "queue_items": $QUEUE_COUNT,
     "reports_generated": $(ls /root/.openclaw/workspace/reports/*.md 2>/dev/null | wc -l),
-    "brain_cycles": $(grep -o "Cycle [0-9]*" /var/log/syslog 2>/dev/null | tail -1 | awk '{print $2}' || echo "0")
+    "brain_cycles": $BRAIN_CYCLES
   },
   "security": {
     "probes_installed": true,

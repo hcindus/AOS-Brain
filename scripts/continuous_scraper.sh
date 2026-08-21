@@ -76,6 +76,8 @@ PYEOF
     
     # 2. Gather system metrics
     log "[2/6] Collecting system metrics..."
+    BRAIN_CYCLES=$(grep -o "Cycle [0-9]*" /var/log/syslog 2>/dev/null | tail -1 | awk '{print $2}')
+    BRAIN_CYCLES=${BRAIN_CYCLES:-0}
     cat > "$DATA_DIR/system_metrics.json" << EOF
 {
   "timestamp": "$(date -u -Iseconds)",
@@ -83,7 +85,7 @@ PYEOF
   "memory_percent": $(free | grep Mem | awk '{printf "%.0f", $3/$2 * 100}'),
   "disk_percent": $(df / | tail -1 | awk '{print $5}' | tr -d '%'),
   "load_average": [$(uptime | awk -F'load average:' '{print $2}' | tr -d ' ')],
-  "brain_cycles": $(grep -o "Cycle [0-9]*" /var/log/syslog 2>/dev/null | tail -1 | awk '{print $2}' || echo "0")
+  "brain_cycles": $BRAIN_CYCLES
 }
 EOF
     log "  ✓ System metrics saved"
