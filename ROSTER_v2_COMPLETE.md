@@ -106,6 +106,22 @@
 
 ---
 
+## MEDIA & ADVERTISING
+
+| # | Name | Title | Platform | Model | Status | Reports To |
+|---|------|-------|----------|-------|--------|------------|
+| — | **Max** | Director of Media & Advertising | — (lead) | qwen2.5:14b | 🟢 Active | Aurora |
+| — | **Sage** | X/Twitter Content Strategist | X | nous-hermes2 | 🟢 Active | Max |
+| — | **Nova** | YouTube Content Producer | YouTube | qwen3.5 | 🟢 Active | Max |
+| — | **Iris** | Instagram Creative Lead | Instagram | qwen3.5 | 🟢 Active | Max |
+| — | **Reed** | Facebook Community & Ads Manager | Facebook | nous-hermes2 | 🟢 Active | Max |
+| — | **Echo** | TikTok Content Creator | TikTok | qwen3.5 | 🟢 Active | Max |
+
+**Media & Advertising Count: 6**
+**Review Gate:** Jordan (first-pass) → Patricia (second-pass) → Captain (final approve)
+
+---
+
 ## FINANCE / CRYPTO
 
 | # | Name | Title | Specialty | Status | Reports To |
@@ -147,9 +163,10 @@
 | **Myl Family** | 7 | Dusty |
 | **Technical** | 10 | Forge |
 | **Creative** | 7 | Aurora |
+| **Media & Advertising** | 6 | Max |
 | **Finance** | 7 | Captain/Chelios |
 | **Specialized** | 6 | Various |
-| **TOTAL** | **58+** | - |
+| **TOTAL** | **64+** | - |
 
 ---
 
@@ -184,7 +201,10 @@ Captain (You)
 │   └── Harper, Mill, Boxtron
 │
 ├── Creative (Aurora)
-│   └── Blender, Unity, Unreal, SFX, Scribble, Feelix
+│   ├── Blender, Unity, Unreal, SFX, Scribble, Feelix
+│   └── Media & Advertising (Max)
+│       ├── Sage (X), Nova (YouTube), Iris (Instagram)
+│       └── Reed (Facebook), Echo (TikTok)
 │
 └── Finance (Direct)
     ├── Cryptonio, The-Great-Cryptonio

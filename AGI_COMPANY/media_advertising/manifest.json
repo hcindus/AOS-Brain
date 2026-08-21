@@ -1,0 +1,61 @@
+{
+  "department": "Media & Advertising",
+  "version": "1.0",
+  "created_at": "2026-08-21T04:28:26",
+  "head": "max_001",
+  "reports_to": "aurora_001",
+  "brands": [
+    "Performance Supply Depot LLC",
+    "AGI Company Services"
+  ],
+  "voice": "elegant, professional, topical",
+  "review_gate": [
+    "jordan_001 (first-pass)",
+    "patricia_001 (second-pass)",
+    "Captain (final approve)"
+  ],
+  "agents": [
+    {
+      "agent_id": "max_001",
+      "name": "Max",
+      "title": "Director of Media & Advertising",
+      "model": "qwen2.5:14b",
+      "reports_to": "aurora_001"
+    },
+    {
+      "agent_id": "sage_001",
+      "name": "Sage",
+      "title": "X/Twitter Content Strategist",
+      "model": "nous-hermes2",
+      "reports_to": "max_001"
+    },
+    {
+      "agent_id": "nova_001",
+      "name": "Nova",
+      "title": "YouTube Content Producer",
+      "model": "qwen3.5",
+      "reports_to": "max_001"
+    },
+    {
+      "agent_id": "iris_001",
+      "name": "Iris",
+      "title": "Instagram Creative Lead",
+      "model": "qwen3.5",
+      "reports_to": "max_001"
+    },
+    {
+      "agent_id": "reed_001",
+      "name": "Reed",
+      "title": "Facebook Community & Ads Manager",
+      "model": "nous-hermes2",
+      "reports_to": "max_001"
+    },
+    {
+      "agent_id": "echo_001",
+      "name": "Echo",
+      "title": "TikTok Content Creator",
+      "model": "qwen3.5",
+      "reports_to": "max_001"
+    }
+  ]
+}
