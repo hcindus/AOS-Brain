@@ -97,6 +97,8 @@ def page(m):
     sku = m.get("sku", f"SAM4S-{m['slug'].upper().replace('-','')}")
     condition = m.get("condition", "New")
     sam4pos = m.get("sam4pos", False)
+    img = m.get("img", f"{m['slug']}.webp")
+    img_html = f'<div class="product-image-section"><img src="/images/sam4s/{img}" alt="{m["name"]} — SAM4S {m["category"]}" style="max-width:100%;height:auto;border-radius:8px;display:block;"></div>'
 
     # Description: prepend SAM4POS angle if applicable
     desc = m["desc"]
@@ -147,6 +149,7 @@ def page(m):
 {HEADER.format(phone=PHONE)}
 <div class="breadcrumb"><a href="/">Home</a> › <a href="/products/">Products</a> › <a href="/staging/sam4s/">SAM4S</a> › {m['name']}</div>
 <div class="product-container">
+  {img_html}
   <div class="product-info">
     <span class="sku-badge">SKU: {sku} · MPN: {m['name']}</span>
     <h1 class="product-title">{m['name']} — {m['subtitle']}</h1>
@@ -201,6 +204,30 @@ M.append(dict(slug="er-230ej", name="ER-230EJ", subtitle="Full-Featured Fiscal C
          "Tax": "4", "Electronic Journal": "Yes (SD card)", "Fiscal Memory": "EPROM 2/4Mbit OTPROM",
          "Interfaces": "Ethernet, 2× RS-232C (RJ45), USB host+device, GPRS (opt.), SD ×2", "Drawer": "1 port RJ11 (12V/24V)"},
   verticals=["Restaurants", "Retail", "Bars", "Cafés", "Fiscal / tax compliance", "Hospitality"]))
+
+M.append(dict(slug="er-940", name="ER-940", subtitle="Food-Service Electronic Cash Register",
+  category="Electronic Cash Register (ECR)", condition="New", sam4pos=False,
+  sku="SAM4S-ER940", img="er-940.png", meta="SAM4S ER-940 food-service electronic cash register — flat spill-resistant keyboard, dual receipt + journal printers.",
+  desc="A multi-use commercial-grade electronic cash register with a flat, spill-resistant keyboard for food service, plus dual receipt and journal printers. Standalone proprietary firmware — no OS to manage. Supports integrated credit/debit/gift payment.",
+  features=["Flat spill-resistant keyboard (150 keys / 100 programmable)", "Dual receipt + journal printers", "22 lines/sec thermal printing, drop-and-print loading", "2-line alphanumeric operator LCD + 9-digit customer LED", "2× RS-232C (expandable to 4)", "Optional integrated dual-track card reader (MCR)", "Integrated credit/debit/gift payment", "SD card for program, logos, firmware"],
+  specs={"Printer": "Direct thermal, dual-station (receipt + journal), 22 lines/sec", "Paper": "2-1/4\" (58mm)",
+         "Display": "Operator 2-line × 16-char LCD · Customer 9-digit LED", "Keyboard": "Flat 150 keys / 100 programmable",
+         "Serial": "2 standard (D-Sub-9M), optional 2 more (RJ45)", "Drawer": "1 RJ11 (24V)", "SD Port": "Standard",
+         "Card Reader": "Optional integrated dual-track MCR", "Dimensions": "16-1/2\"W × 11-13/16\"H × 16-1/2\"D",
+         "Weight": "24.15 lbs", "Power": "120V AC ±10%, 50/60Hz, ~25W", "Memory": "90-day protection"},
+  verticals=["Food service", "Restaurants", "Cafés", "Quick service", "Spill-prone counters"]))
+
+M.append(dict(slug="er-945", name="ER-945", subtitle="Retail Electronic Cash Register",
+  category="Electronic Cash Register (ECR)", condition="In stock", sam4pos=False,
+  sku="SAM4S-ER945", img="er-945.png", meta="SAM4S ER-945 retail electronic cash register — raised-key keyboard, dual receipt + journal printers.",
+  desc="A multi-use commercial-grade electronic cash register with a raised-key keyboard for retail environments, plus dual receipt and journal printers. Standalone proprietary firmware — no OS to manage. Supports integrated credit/debit/gift payment.",
+  features=["Raised-key keyboard (up to 94 keys / 78 programmable)", "Dual receipt + journal printers", "22 lines/sec thermal printing, drop-and-print loading", "2-line alphanumeric operator LCD + 9-digit customer LED", "2× RS-232C (expandable to 4)", "Optional integrated dual-track card reader (MCR)", "Integrated credit/debit/gift payment", "SD card for program, logos, firmware"],
+  specs={"Printer": "Direct thermal, dual-station (receipt + journal), 22 lines/sec", "Paper": "2-1/4\" (58mm)",
+         "Display": "Operator 2-line × 16-char LCD · Customer 9-digit LED", "Keyboard": "Raised up to 94 keys / 78 programmable",
+         "Serial": "2 standard (D-Sub-9M), optional 2 more (RJ45)", "Drawer": "1 RJ11 (24V)", "SD Port": "Standard",
+         "Card Reader": "Optional integrated dual-track MCR", "Dimensions": "16-1/2\"W × 11-13/16\"H × 16-1/2\"D",
+         "Weight": "24.15 lbs", "Power": "120V AC ±10%, 50/60Hz, ~25W", "Memory": "90-day protection"},
+  verticals=["Retail", "Grocery", "Convenience", "Boutiques", "General merchandising"]))
 
 M.append(dict(slug="nr-300-400", name="NR-300 / NR-400", subtitle="Compact Fiscal Cash Register",
   category="Electronic Cash Register (ECR)", condition="New", sam4pos=False,
