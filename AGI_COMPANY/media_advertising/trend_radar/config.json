@@ -1,0 +1,33 @@
+{
+  "brand_keywords": {
+    "PSD": [
+      "cash drawer", "receipt paper", "thermal printer", "barcode scanner",
+      "point of sale", "POS system", "pour spout", "liquor pourer",
+      "restaurant supplies", "bar supplies"
+    ],
+    "AGI": [
+      "AI agents", "autonomous agents", "agentic AI", "AI automation",
+      "artificial general intelligence", "large language model", "AI workforce"
+    ]
+  },
+  "hn_queries": [
+    "AI agents",
+    "autonomous agents",
+    "point of sale",
+    "restaurant",
+    "retail"
+  ],
+  "hn_front_page_limit": 20,
+  "hn_search_limit": 8,
+  "rss_feeds": {
+    "MIT Tech Review - AI": "https://www.technologyreview.com/topic/artificial-intelligence/feed",
+    "VentureBeat - AI": "https://venturebeat.com/category/ai/feed/",
+    "Ars Technica - AI": "https://arstechnica.com/ai/feed/",
+    "Retail Dive": "https://www.retaildive.com/feeds/news/",
+    "Payments Dive": "https://www.paymentsdive.com/feeds/news/",
+    "PYMNTS": "https://www.pymnts.com/feed/"
+  },
+  "reddit_post_limit": 8,
+  "rss_item_limit": 6,
+  "trending_limit": 20
+}
