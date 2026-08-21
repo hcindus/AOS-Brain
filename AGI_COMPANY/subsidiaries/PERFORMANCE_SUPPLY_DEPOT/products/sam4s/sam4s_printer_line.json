@@ -1,0 +1,13 @@
+{
+  "source": "https://www.sam4s.com/eng/products?cate=KCA04",
+  "category": "Receipt Printer",
+  "brand": "SAM4S",
+  "pulled_at": "2026-08-21",
+  "models": [
+    {"model": "Hcube", "flag": "NEW", "method": "Direct thermal 203dpi", "print_width": "72mm (576 dots)", "speed": "230mm/s", "interfaces": ["USB+Serial+Ethernet"], "cutter": "auto (partial cut only)", "emulation": "ESC/POS", "dimensions": "140x179x117mm", "weight": "0.92kg", "notes": "Slim entry printer; ESC/POS only."},
+    {"model": "Gcube", "flag": "HOT", "method": "Thermal 180/203dpi", "print_width": "80mm/58mm", "speed": "80mm @250mm/s; 58mm @150mm/s", "interfaces": ["USB+Serial(25)", "USB+BT+Ethernet", "USB+Wi-Fi+Ethernet", "USB+Serial(9)+Ethernet"], "cutter": "auto 1.5M cuts", "emulation": "EPSON/STAR", "dimensions": "123x123x123mm", "weight": "0.75kg", "options": ["kitchen bell", "wall/under-shelf mount", "paper near-end sensor", "58mm separator"], "notes": "Compact cube; kitchen-bell + under-shelf = restaurant/bar."},
+    {"model": "GIANT-100", "method": "Thermal 180dpi", "print_width": "80mm/58mm", "speed": "80mm @250mm/s", "interfaces": ["USB+Serial(25)", "USB+Serial(9)", "USB+Wi-Fi", "USB+Serial+Ethernet"], "cutter": "auto 1.5M cuts", "emulation": "EPSON/STAR", "dimensions": "131x155x133mm", "weight": "1.0kg", "options": ["splash cover", "wall mount (default)", "kitchen bell", "58mm separator (default)"], "notes": "Splash-proof; wall-mount default."},
+    {"model": "ELLIX30III", "method": "Thermal 180dpi", "print_width": "80mm/58mm", "speed": "80mm @230mm/s", "interfaces": ["USB+Serial(25)", "USB+Serial(9+RJ45)", "USB+Parallel", "USB+Wi-Fi", "USB+Serial+Ethernet"], "cutter": "auto 1.5M cuts", "emulation": "EPSON/STAR", "dimensions": "144x195x137mm", "weight": "2.0kg", "options": ["NFC tag", "kitchen bell", "wall mount", "splash cover"], "notes": "NFC tag option."},
+    {"model": "ELLIX40II", "method": "Thermal 180dpi", "print_width": "80mm/58mm", "speed": "80mm @270mm/s (fastest)", "interfaces": ["USB", "USB+Serial(25)", "USB+Serial(9+RJ45)", "USB+Parallel", "USB+BT", "USB+Wi-Fi", "USB+Serial+Ethernet"], "cutter": "auto 1.5M cuts", "emulation": "EPSON/STAR", "dimensions": "144x195x137mm", "weight": "2.0kg", "options": ["kitchen bell + LCD", "wall mount", "splash cover", "paper near-end (default)"], "notes": "Flagship speed (270mm/s); kitchen bell + LCD."}
+  ]
+}

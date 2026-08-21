@@ -1,0 +1,15 @@
+{
+  "source": "https://www.sam4s.com/eng/products?cate=KCA08 & KCA05",
+  "brand": "SAM4S",
+  "pulled_at": "2026-08-21",
+  "kiosks": [
+    {"model": "ASTRA Android", "flag": "NEW", "os": "Android 13", "cpu": "ARM Cortex-A72 1.8GHz + A53 1.4GHz", "ram": "4GB LPDDR4", "storage": "64GB eMMC", "display": "21.5\" FHD (1920x1080), 10-pt PCAP", "io": "Serial 5, USB 4, GbE, Wi-Fi ac, BT 5.0, NFC (opt.)", "peripherals": "2D barcode scanner (opt.), integrated/external receipt printer, 2MP camera, MSR/IC/NFC", "install": "floor-standing / wall-mount", "notes": "Android 13 self-service kiosk."},
+    {"model": "ASTRA", "flag": "HOT", "os": "Windows 10/11 IoT LTSC", "cpu": "Intel Celeron J6412 (2.6GHz)", "ram": "DDR4 4GB (up to 32GB)", "storage": "M.2 SSD 128GB (up to 512GB)", "display": "21.5\" FHD, PCAP", "io": "Serial 5, USB 4, GbE, DP 1", "peripherals": "MSR 1/2/3, rear display (2-line LCD / 9.7\" / 15\")", "install": "VESA wall mount", "notes": "Windows kiosk."},
+    {"model": "SK", "os": "Windows 10/11 IoT LTSC", "cpu": "Intel Celeron J6412 (2.6GHz)", "ram": "DDR4 up to 32GB", "storage": "M.2 SSD 128GB (up to 512GB)", "display": "15\" (1024x768) / 32\" FHD / 43\" FHD, PCAP", "io": "Serial up to 6, USB 6, Ethernet, DP 1", "peripherals": "MSR 1/2/3, rear display", "install": "VESA wall mount", "notes": "Large-format kiosk (up to 43\")."}
+  ],
+  "drawers": [
+    {"model": "K-Drawer", "color": "Black", "dimensions": "400x440x112mm", "material": "steel top/bottom/till", "bill_coin": "4B8C (bill 87/180/54; coin 78/67/39)", "lock": "2-position (3-position opt.)", "interface": "RJ11", "solenoid": "12V/24V", "life": "1,000,000 cycles", "weight": "6.7kg", "notes": "Heavy-duty steel drawer."},
+    {"model": "Bplus-Drawer", "color": "Black", "dimensions": "325x420x95mm", "material": "steel top, plastic bottom/till", "bill_coin": "3B4C / 4B4C", "lock": "3-position key", "interface": "RJ11", "solenoid": "7V/12V/24V", "life": "300,000 cycles", "weight": "3.1kg", "notes": "Mid-tier drawer."},
+    {"model": "H-Drawer", "notes": "(no specs published on sam4s.com)"}
+  ]
+}
