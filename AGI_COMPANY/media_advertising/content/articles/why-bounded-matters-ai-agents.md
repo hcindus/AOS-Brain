@@ -28,7 +28,7 @@ Autonomy does not mean unbounded. A well-designed agent acts on its own within a
 
 **The five properties that separate a production agent from a demo**
 
-We build agents around five principles, and the order matters:
+AGI Company — a division of Performance Supply Depot LLC — builds agents around five principles, and the order matters:
 
 - **Bounded** — every agent has an explicit scope. It cannot act outside it.
 - **Explicit** — decisions are stated, not implicit. Nothing happens "because it felt right."
