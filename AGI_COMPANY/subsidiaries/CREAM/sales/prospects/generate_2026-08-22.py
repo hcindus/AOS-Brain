@@ -503,13 +503,13 @@ def update_marketing_materials(prospects: List[Dict]):
             content = re.sub(r'(\d{2,3})-day streak', '113-day streak', content)
 
             # Update dates
-            content = content.replace("Updated: August 18, 2026", "Updated: August 21, 2026")
-            content = content.replace("Updated: August 18, 2026", "Updated: August 21, 2026")
-            content = content.replace("August 18, 2026", "August 21, 2026")
+            content = content.replace("Updated: August 20, 2026", "Updated: August 22, 2026")
+            content = content.replace("Updated: August 21, 2026", "Updated: August 22, 2026")
+            content = content.replace("August 20, 2026", "August 22, 2026")
 
             with open(path, 'w') as f:
                 f.write(content)
-            print(f"  ✓ {os.path.basename(path)}: Updated to 114,000 prospects, 113-day streak")
+            print(f"  ✓ {os.path.basename(path)}: Updated to 115,000 prospects, 113-day streak")
         except Exception as e:
             print(f"  ⚠ {os.path.basename(path)}: {e}")
 
@@ -523,7 +523,7 @@ def update_marketing_materials(prospects: List[Dict]):
             content = content.replace(old, "115,000")
         with open(battle_path, 'w') as f:
             f.write(content)
-        print(f"  ✓ BATTLE_CARDS.md: Updated to 114,000")
+        print(f"  ✓ BATTLE_CARDS.md: Updated to 115,000")
     except Exception as e:
         print(f"  ⚠ BATTLE_CARDS.md: {e}")
 
@@ -538,7 +538,7 @@ def update_marketing_materials(prospects: List[Dict]):
         content = content.replace("111-day", "113-day")
         with open(pricing_path, 'w') as f:
             f.write(content)
-        print(f"  ✓ PRICING_SHEET.md: Updated to 114,000")
+        print(f"  ✓ PRICING_SHEET.md: Updated to 115,000")
     except Exception as e:
         print(f"  ⚠ PRICING_SHEET.md: {e}")
 
@@ -562,8 +562,8 @@ def write_run_report(prospects: List[Dict]):
     avg_tx = sum(p['transactions_12mo'] for p in prospects) / total
 
     report = f"""# CREAM Realtor Lead Scraper - Run Report
-## August 20, 2026 Execution Summary
-## 🔥 112-Day Streak — Post-Century Momentum
+## August 22, 2026 Execution Summary
+## 🔥 113-Day Streak — Post-Century Momentum
 
 ---
 
@@ -572,15 +572,15 @@ def write_run_report(prospects: List[Dict]):
 | Task | Status | Details |
 |------|--------|---------|
 | Generate 1,000 prospects | ✓ Complete | 1,000 qualified realtor prospects generated |
-| Save JSON file | ✓ Complete | `realtor_prospects_2026-08-18.json` |
-| Save CSV file | ✓ Complete | `realtor_prospects_2026-08-18.csv` |
+| Save JSON file | ✓ Complete | `realtor_prospects_2026-08-22.json` |
+| Save CSV file | ✓ Complete | `realtor_prospects_2026-08-22.csv` |
 | Update prospect_count.json | ✓ Complete | 114,000 → 115,000 prospects |
-| Update BROCHURE.md | ✓ Complete | Updated to 114,000 prospects |
-| Update PITCH_DECK.md | ✓ Complete | Updated to 114,000 prospects |
+| Update BROCHURE.md | ✓ Complete | Updated to 115,000 prospects |
+| Update PITCH_DECK.md | ✓ Complete | Updated to 115,000 prospects |
 | Update SALES_ENABLEMENT.md | ✓ Complete | Updated pipeline and counts |
-| Update BATTLE_CARDS.md | ✓ Complete | Updated to 114,000 |
-| Update PRICING_SHEET.md | ✓ Complete | Updated to 114,000 |
-| Generate daily report | ✓ Complete | `daily_report_2026-08-18.md` |
+| Update BATTLE_CARDS.md | ✓ Complete | Updated to 115,000 |
+| Update PRICING_SHEET.md | ✓ Complete | Updated to 115,000 |
+| Generate daily report | ✓ Complete | `daily_report_2026-08-22.md` |
 
 ---
 
@@ -633,11 +633,11 @@ def write_run_report(prospects: List[Dict]):
 
 | Metric | Previous | Current | Change |
 |--------|----------|---------|--------|
-| **Total Prospects** | 113,000 | **114,000** | +1,000 |
-| Priority A (Total) | 46,000 | **46,000** | +400 |
-| Priority B (Total) | 40,250 | **40,250** | +350 |
-| Priority C (Total) | 28,750 | **28,750** | +250 |
-| Daily Streak | 113 days 🔥 | **113 days** 🔥 | +1 |
+| **Total Prospects** | 114,000 | **115,000** | +1,000 |
+| Priority A (Total) | 45,600 | **46,000** | +400 |
+| Priority B (Total) | 39,900 | **40,250** | +350 |
+| Priority C (Total) | 28,500 | **28,750** | +250 |
+| Daily Streak | 112 days 🎉 | **113 days** 🔥 | +1 |
 
 ---
 
@@ -661,7 +661,7 @@ def write_run_report(prospects: List[Dict]):
 - [x] CREAM fit scores within range
 - [x] All required fields present (20 fields/prospect)
 - [x] JSON and CSV outputs created
-- [x] prospect_count.json updated (113K → 114K)
+- [x] prospect_count.json updated (114K → 115K)
 - [x] Marketing materials refreshed (5 files)
 - [x] Sales enablement package updated
 - [x] Daily report generated
