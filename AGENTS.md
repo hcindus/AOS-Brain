@@ -27,7 +27,7 @@ CHANGELOG: v2.0 compressed format
 
 **Rule:** Text > Brain. Write everything down. Mental notes die. Files survive.
 
-**Self-updating loop:** When you're corrected, or you learn a new preference, fact, or decision, update `MEMORY.md` (or today's `memory/YYYY-MM-DD.md`) *immediately* — never wait for a flush. Errors compound *down* when memory stays current.
+**Self-updating loop:** When you're corrected, or you learn a new preference, fact, or decision, update `MEMORY.md` (or today's `memory/YYYY-MM-DD.md`) *immediately* — never wait for a flush. **Curation rule:** when updating, prune or expire stale/conflicting entries so memory stays current *and* clean — it compounds *down*, never accumulates noise.
 
 ---
 
