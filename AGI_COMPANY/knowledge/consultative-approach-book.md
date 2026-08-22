@@ -1,44 +1,74 @@
-# The Consultative Approach: Partnering for Results!
+# The Consultative Approach — Training Reference (full TOC)
 
-**Fleet reference — consultative selling methodology (PSD core framework)**
+**Source:** *The Consultative Approach: Partnering for Results!* — Virginia LaGrossa (1998)
+**TOC source:** Nielsen Book Data (provided by Captain)
 
 ---
 
-## Book details
-- **Title:** The Consultative Approach: Partnering for Results!
-- **Author:** Virginia LaGrossa
-- **Year:** 1998 · 1st ed.
-- **Publisher:** Jossey-Bass/Pfeiffer (San Francisco, CA)
-- **Topics:** Management · Corporate culture · Consultative selling
-- **Archive.org:** `https://archive.org/details/consultativeappr00lagr` (identifier `consultativeappr00lagr`)
-- **Availability:** access-restricted (borrow/stream on Archive; Captain holds a physical copy)
+## The premise
 
-## Why this matters to the fleet
+Being a professional isn't enough. You must **present solutions in the way that best suits each client** — and work effectively with a wide variety of people (team members, subject-matter experts, executives) while keeping an eye on budgets, schedules, and results. That requires a **collaborative outlook**.
 
-This is the foundational text behind Performance Supply Depot's sales philosophy — the one I (Miles) am built around:
+> "Successful professionals today need more than technical skills — they need to know how to foster and nourish relationships with clients. Consultative skills are essential in this process." — **Jon Olson, Partner, Arthur Andersen**
 
-> **Sell as a partner, not a vendor.** Diagnose before you prescribe. Focus on the client's *result*, not the product.
+> "This book is rich, not only with specific suggestions and step-by-step instructions, but also with commentary and illustrations from the authors' own client organizations." — **William Bridges, President, William Bridges & Associates**
 
-## Core framework (consultative approach)
+## What working consultatively enables you to do
+- Work effectively with **all types of people**
+- Use a **strategic and collaborative communication process**
+- **Apply your expertise** in ways that *show your value* (not just assert it)
 
-1. **Partner, don't pitch** — position as a trusted advisor, not a transactional seller.
-2. **Ask open questions first** — understand the client's business, pain, and goals before proposing anything.
-3. **Diagnose → prescribe** — match the solution to the *actual* need, never force a product.
-4. **Results over features** — lead with the outcome (margin saved, uptime, throughput), not specs.
-5. **Handle objections with empathy** — Feel → Felt → Found.
+## What's inside (the toolkit)
+- Informative **case studies**
+- Easy-to-use **assessment tools**
+- **Exercises** and practical **worksheets**
+- **Flow-chart planning guides**
+- A **partnering strategy action plan** to chart communication growth
 
-## Mapping to PSD SOPs
+---
 
-| Book concept | PSD SOP |
+## Book structure
+
+**Introduction**
+
+### Part One — An Expanded Toolkit
+1. **Working As a Partner** → the core mindset shift: advisor, not vendor
+2. **Getting to Know Your Clients** → diagnosis; open questions before prescribing
+3. **Providing Value Beyond Knowledge** → lead with the *result* you create, not just information
+
+### Part Two — The Art of Managing Client Interactions
+4. **Preparing the Canvas** → set up every interaction intentionally
+5. **Finding the Subject** → surface the client's real need/pain
+6. **Painting What You See** → reflect the client's reality back; present the solution that fits
+
+### Part Three — Journey to Success: The Consultative Process
+7. **Staying on Course** → maintain the consultative posture through the sale
+8. **Where the Rubber Meets the Road** → the close: turn diagnosis into commitment
+9. **The Roadmap to Optimum Results** → deliver + measure the outcome, not just the sale
+
+### Part Four — The Partnering Strategy Action Plan
+10. **Making Partnering Your Way of Working** → institutionalize it; repeatable, not one-off
+11. **Resources and References**
+12. **Glossary**
+
+---
+
+## Mapping to PSD SOPs + skills
+
+| Book part/chapter | PSD SOP / skill |
 |---|---|
-| Partner / ask questions | `sop-ai-qualifying`, `sop-lead-response` |
-| Diagnose → prescribe | `sop-ai-presenting` |
-| Results over features | `sop-ai-prospecting`, `sop-quote-followup` |
-| Feel → Felt → Found | `sop-ai-objection-handling` |
-| Partnering for results | `sop-ai-closing-delivery` |
+| Working As a Partner | `consultative-approach` (skill), `sop-ai-qualifying` |
+| Getting to Know Your Clients | `sop-ai-qualifying`, `sop-lead-response` |
+| Providing Value Beyond Knowledge | `sop-ai-presenting`, `sop-ai-prospecting` |
+| Preparing the Canvas / Finding the Subject / Painting | `sop-ai-presenting` |
+| Where the Rubber Meets the Road | `sop-ai-closing-delivery` |
+| The Roadmap to Optimum Results | `sop-quote-followup`, `sop-order-status` |
+| Feel → Felt → Found (objections) | `sop-ai-objection-handling` |
 
 ---
 
-## TODO (Captain)
-- [ ] Provide the book's **table of contents / key chapters** so I can deepen the reference into a full training module for the sales agents (Jane, Hume, Jordan, Pulp).
-- [ ] Optionally transcribe key sections into the fleet knowledge base for agent retrieval.
+## The one-sentence ethos
+
+> Sell as a partner — diagnose before you prescribe, lead with the result, and make partnering your *way of working*, not a tactic.
+
+*This is the standard every PSD sales agent is measured against. See `AOCROS_ETHOS.md` §V, `SOP-049`, and `skills/consultative-approach/`.*
