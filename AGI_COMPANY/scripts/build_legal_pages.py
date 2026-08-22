@@ -178,6 +178,36 @@ PAGES = [
 <h2>How to Start a Return</h2>
 <p>Contact us at <a href="mailto:info@psdepot.com">info@psdepot.com</a> or call (888) 881-6834 with your order number to request a Return Authorization (RA) before shipping anything back.</p>
 """),
+    dict(slug="shipping-policy.html", title="Shipping Policy",
+        desc="Performance Supply Depot LLC shipping policy — methods, processing times, rates, and delivery.",
+        body="""
+<p>This policy explains shipping methods, processing times, and delivery for orders placed with Performance Supply Depot LLC.</p>
+
+<h2>Shipping Methods</h2>
+<ul>
+<li><strong>Standard Ground:</strong> 3–5 business days (contiguous United States).</li>
+<li><strong>Expedited:</strong> 1–2 business days (available on select items at checkout).</li>
+<li><strong>Local Pickup:</strong> available by arrangement in our California service area.</li>
+</ul>
+
+<h2>Order Processing</h2>
+<p>Orders placed before 2 PM PT typically ship the same business day; orders placed after that time ship the next business day. Orders placed on weekends or holidays ship the following business day.</p>
+
+<h2>Shipping Rates</h2>
+<p>Free standard shipping is offered on orders over $500. For orders below that threshold, shipping is calculated at checkout based on package weight, dimensions, and destination.</p>
+
+<h2>Tracking</h2>
+<p>Tracking information is emailed to you once your order ships, so you can follow your delivery.</p>
+
+<h2>International Shipping</h2>
+<p>International shipping is available on request. Any customs duties, taxes, or import fees are the recipient's responsibility.</p>
+
+<h2>Delivery Issues</h2>
+<p>If your order arrives damaged or is lost in transit, contact us within 7 days and we will work with the carrier to resolve it — including a replacement or refund where appropriate.</p>
+
+<h2>Contact</h2>
+<p>Shipping questions? Contact us at <a href="mailto:info@psdepot.com">info@psdepot.com</a> or call (888) 881-6834.</p>
+"""),
 ]
 
 for p in PAGES:
