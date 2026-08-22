@@ -5,7 +5,7 @@ from temporalio.client import Client
 from temporalio.worker import Worker
 
 from workflows import MediaAgentWorkflow, MediaBatchWorkflow, MediaCalendarWorkflow
-from activities import generate_content
+from activities import generate_content, jordan_review, patricia_review
 
 
 async def main():
@@ -15,7 +15,7 @@ async def main():
         client,
         task_queue="media-queue",
         workflows=[MediaAgentWorkflow, MediaBatchWorkflow, MediaCalendarWorkflow],
-        activities=[generate_content],
+        activities=[generate_content, jordan_review, patricia_review],
         max_concurrent_activities=2,
     )
     print(f"🚀 Media worker on {host} (queue: media-queue)")
