@@ -1,0 +1,26 @@
+{
+  "source": "https://www.cas-usa.com (CAS Corporation — scales)",
+  "note": "CAS = SCALES (cas-usa.com). SAM4S registers = CRS-USA (crs-usa.com). Captain clarified 2026-08-22.",
+  "pulled_at": "2026-08-22",
+  "scales": [
+    {"model": "CL7200", "type": "Touchscreen label-printing scale", "price": 3069.00,
+     "display": "LCD (10.2\" color touch)", "printer": "Thermal label", "barcode": "UPC-A, EAN13, Code39/93/128, Codabar",
+     "interface": "USB, Serial, Ethernet, Wi-Fi", "platter": "15\" x 9.75\"", "ntep": true, "canada": true, "warranty": "1 yr"},
+    {"model": "CL3000 Series", "type": "Label-printing scale", "price": 1744.00,
+     "software": "CL Works Pro", "note": "label printing for retail/grocery"},
+    {"model": "PDN Series", "type": "POS interface scale", "price": 619.00,
+     "note": "links to POS/ECR, weight transfers to transaction", "source": "pos-interface"},
+    {"model": "PD-2Z", "type": "POS interface scale", "price": 661.00, "price_150lb": 699.00,
+     "capacity": "15/30/60/150 lb", "display": "VFD", "units": "LB/OZ", "platter": "15.3\" x 11.06\"",
+     "ups_worldship": true, "ntep": true, "warranty": "2 yr", "country": "China"},
+    {"model": "SW-RS Series", "type": "POS + portion control scale", "price": 486.00,
+     "capacity": "10/20 lb, 10/5 kg", "display": "5-digit LCD", "units": "LB/KG/OZ/Grams",
+     "platter": "9.1\" x 7.5\"", "ntep": true, "canada": true, "warranty": "1 yr", "note": "restaurants/cafeterias — ties to Capton/bar"},
+    {"model": "S2000 Jr", "type": "Price-computing scale", "price": 374.00,
+     "capacity": "3 capacities", "display": "LCD dual", "battery": "200 hr rechargeable",
+     "options": "DT2X label printer, produce/fish platter", "ntep": true, "warranty": "2 yr"},
+    {"model": "Tracker-R457", "type": "Label + traceability (washdown)", "price": null,
+     "display": "R457 SMART stainless indicator", "barcode": "UPC/EAN/Code39/Code128/QR/GTIN/GS1-128",
+     "label_types": "piece/box/case/pallet", "note": "industrial, meat/seafood/produce"}
+  ]
+}
