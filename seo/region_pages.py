@@ -199,6 +199,31 @@ REGIONS = [
         "cta_head": "East Coast Speed",
         "cta_body": "In the densest retail market in America, downtime isn't an option. We ship POS supplies fast across the entire Eastern Seaboard.",
     },
+    {
+        "slug": "canada-mexico",
+        "region_name": "Canada & Mexico",
+        "title": "POS Supplies in Canada & Mexico | Thermal Paper & Receipt Paper",
+        "meta": "Thermal paper, receipt paper, and printer ribbons shipped to Canada and Mexico — 13 provinces & territories + 30 states. Call (888) 881-6834.",
+        "hero_bg": "linear-gradient(135deg,#7c2d12,#b45309,#14532d)",
+        "hero_h1": "POS Supplies for Canada & Mexico",
+        "hero_tag": "Cross-border service for our neighbors — from Toronto and Vancouver to Mexico City and Monterrey, plus every province and state between.",
+        "states": ["Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland & Labrador", "Northwest Territories", "Nova Scotia", "Nunavut", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan", "Yukon", "Aguascalientes", "Baja California", "Campeche", "Chiapas", "Chihuahua", "Coahuila", "Colima", "Durango", "Guanajuato", "Guerrero", "Hidalgo", "Jalisco", "Michoacán", "Morelos", "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro", "Quintana Roo", "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala", "Veracruz", "Yucatán", "Zacatecas", "Ciudad de México"],
+        "metros": ["Toronto", "Vancouver", "Montreal", "Calgary", "Edmonton", "Ottawa", "Winnipeg", "Halifax", "Mexico City", "Guadalajara", "Monterrey", "Cancún", "Tijuana", "Puebla", "Querétaro", "Mérida"],
+        "intro": (
+            "Performance Supply Depot serves businesses across North America — not just the U.S. Canada's economy spans Toronto's finance hub, "
+            "Vancouver's trade and tech, Montreal's aerospace, and the resource-rich prairies and North. Mexico is a manufacturing and trade "
+            "powerhouse: Monterrey is an industrial anchor, Guadalajara is the country's tech capital, and Cancún and the Riviera Maya drive "
+            "a massive hospitality economy. Cross-border operators need a supply partner who understands duties, freight, and the importance "
+            "of never running dry."
+        ),
+        "cards": [
+            ("Cross-Border Ready", "We handle documentation, duties, and reliable freight so Canadian and Mexican operators get the same fast, dependable supply as our U.S. customers."),
+            ("Manufacturing & Maquilas", "From Ontario's auto plants to Mexico's maquiladora corridor, industrial B2B operators rely on our bulk thermal paper, ribbons, and impact rolls."),
+            ("Tourism & Hospitality", "Cancún, Vancouver, and Quebec City process relentless transaction volume. Emergency and volume shipping keep resorts and restaurants stocked."),
+        ],
+        "cta_head": "North America-Wide Supply",
+        "cta_body": "One partner for the U.S., Canada, and Mexico — reliable POS supplies with the logistics know-how to cross borders cleanly.",
+    },
 ]
 
 

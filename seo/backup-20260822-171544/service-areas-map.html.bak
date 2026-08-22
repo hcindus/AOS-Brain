@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Areas Map — Performance Supply Depot LLC</title>
+<meta name="description" content="Interactive map of Performance Supply Depot's service areas across the United States, Canada, and México — states, provinces, and cities we serve.">
+<link rel="canonical" href="https://psdepot.com/service-areas-map.html">
+<meta property="og:image" content="https://psdepot.com/assets/images/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/leaflet/leaflet.css">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; }
+  body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; background:#0A1A2F; color:#fff; }
+  header { background:#0A1A2F; padding:14px 24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; box-shadow:0 2px 6px rgba(0,0,0,0.3); position:relative; z-index:1000; }
+  header .logo { font-size:22px; font-weight:800; color:#fff; text-decoration:none; }
+  header .logo span { color:#63b3ed; }
+  header nav a { color:#bee3f8; text-decoration:none; font-weight:600; font-size:14px; margin-left:20px; }
+  header nav a:hover { color:#fff; }
+  #map { position:absolute; top:60px; bottom:0; left:0; right:0; background:#0A1A2F; }
+  .legend { position:absolute; bottom:20px; left:20px; background:rgba(10,26,47,0.92); color:#fff; padding:12px 16px; border-radius:10px; font-size:13px; z-index:1000; box-shadow:0 4px 12px rgba(0,0,0,0.4); }
+  .legend .row { display:flex; align-items:center; margin:5px 0; }
+  .legend .dot { width:12px; height:12px; border-radius:50%; margin-right:8px; display:inline-block; }
+  .leaflet-popup-content-wrapper { background:#0A1A2F; color:#fff; border-radius:10px; }
+  .leaflet-popup-content a { color:#63b3ed; font-weight:600; }
+  .leaflet-popup-tip { background:#0A1A2F; }
+  @media (max-width:600px) { header nav a { margin-left:10px; font-size:12px; } #map { top:104px; } }
+</style>
+<script src="/js/cookie-consent.js" defer></script></head>
+<body>
+<header>
+  <a href="/" class="logo">Performance<span>Supply</span>Depot</a>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/locations.html">Service Areas</a>
+    <a href="/contact.html">Contact</a>
+  </nav>
+</header>
+<div id="map"></div>
+<div class="legend">
+  <div class="row"><span class="dot" style="background:#2563eb;"></span> U.S. States</div>
+  <div class="row"><span class="dot" style="background:#8b5cf6;"></span> U.S. Cities</div>
+  <div class="row"><span class="dot" style="background:#dc2626;"></span> Canada</div>
+  <div class="row"><span class="dot" style="background:#16a34a;"></span> México</div>
+  <div class="row"><span class="dot" style="background:#f59e0b;"></span> Español</div>
+</div>
+<script src="/assets/leaflet/leaflet.js"></script>
+<script>
+var map = L.map('map').setView([45, -100], 4);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 18,
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+var countriesLayer = L.layerGroup().addTo(map);
+var statesLayer = L.layerGroup().addTo(map);
+var citiesLayer = L.layerGroup().addTo(map);
+
+function countryIcon(color) {
+  return L.divIcon({ html:'<div style="width:18px;height:18px;border-radius:50%;background:'+color+';border:3px solid #fff;box-shadow:0 0 8px rgba(0,0,0,0.5);"></div>', className:'', iconSize:[18,18], iconAnchor:[9,9] });
+}
+var usIcon = countryIcon('#2563eb');
+var caIcon = countryIcon('#dc2626');
+var mxIcon = countryIcon('#16a34a');
+
+// Countries
+L.marker([39.8, -98.6], {icon: usIcon}).bindPopup('<b>United States</b><br>50 states + 50 cities').addTo(countriesLayer);
+L.marker([56.1, -106.3], {icon: caIcon}).bindPopup('<b>Canada</b><br>13 provinces &amp; territories').addTo(countriesLayer);
+L.marker([23.6, -102.5], {icon: mxIcon}).bindPopup('<b>México</b><br>30 states').addTo(countriesLayer);
+
+L.circleMarker([32.8,-86.8], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Alabama</b><br><a href="/alabama.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([64.0,-152.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Alaska</b><br><a href="/alaska.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([34.3,-111.7], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Arizona</b><br><a href="/arizona.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([34.9,-92.4], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Arkansas</b><br><a href="/arkansas.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([37.2,-119.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>California</b><br><a href="/california.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([39.0,-105.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Colorado</b><br><a href="/colorado.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([41.6,-72.7], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Connecticut</b><br><a href="/connecticut.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([39.0,-75.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Delaware</b><br><a href="/delaware.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([28.6,-82.4], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Florida</b><br><a href="/florida.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([32.6,-83.4], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Georgia</b><br><a href="/georgia.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([20.5,-157.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Hawaii</b><br><a href="/hawaii.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([44.4,-114.4], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Idaho</b><br><a href="/idaho.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([40.0,-89.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Illinois</b><br><a href="/illinois.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([39.9,-86.2], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Indiana</b><br><a href="/indiana.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([42.0,-93.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Iowa</b><br><a href="/iowa.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([38.5,-98.3], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Kansas</b><br><a href="/kansas.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([37.5,-85.3], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Kentucky</b><br><a href="/kentucky.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([31.1,-92.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Louisiana</b><br><a href="/louisiana.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([45.4,-69.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Maine</b><br><a href="/maine.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([39.0,-76.8], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Maryland</b><br><a href="/maryland.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([42.3,-71.8], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Massachusetts</b><br><a href="/massachusetts.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([44.3,-85.4], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Michigan</b><br><a href="/michigan.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([46.3,-94.3], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Minnesota</b><br><a href="/minnesota.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([32.7,-89.7], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Mississippi</b><br><a href="/mississippi.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([38.5,-92.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Missouri</b><br><a href="/missouri.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([47.0,-110.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Montana</b><br><a href="/montana.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([41.5,-99.8], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Nebraska</b><br><a href="/nebraska.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([39.3,-116.6], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Nevada</b><br><a href="/nevada.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([43.7,-71.6], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>New Hampshire</b><br><a href="/new-hampshire.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([40.2,-74.7], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>New Jersey</b><br><a href="/new-jersey.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([34.4,-106.1], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>New Mexico</b><br><a href="/new-mexico.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([43.0,-75.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>New York</b><br><a href="/new-york.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([35.5,-79.4], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>North Carolina</b><br><a href="/north-carolina.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([47.5,-100.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>North Dakota</b><br><a href="/north-dakota.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([40.3,-82.7], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Ohio</b><br><a href="/ohio.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([35.5,-97.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Oklahoma</b><br><a href="/oklahoma.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([43.9,-120.6], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Oregon</b><br><a href="/oregon.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([40.9,-77.8], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Pennsylvania</b><br><a href="/pennsylvania.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([41.6,-71.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Rhode Island</b><br><a href="/rhode-island.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([33.9,-80.9], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>South Carolina</b><br><a href="/south-carolina.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([44.4,-100.2], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>South Dakota</b><br><a href="/south-dakota.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([35.8,-86.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Tennessee</b><br><a href="/tennessee.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([31.5,-99.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Texas</b><br><a href="/texas.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([39.3,-111.7], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Utah</b><br><a href="/utah.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([44.0,-72.7], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Vermont</b><br><a href="/vermont.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([37.5,-78.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Virginia</b><br><a href="/virginia.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([47.4,-121.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Washington</b><br><a href="/washington.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([38.6,-80.7], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>West Virginia</b><br><a href="/west-virginia.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([44.6,-89.8], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Wisconsin</b><br><a href="/wisconsin.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([42.9,-107.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Wyoming</b><br><a href="/wyoming.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([38.9,-77.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Washington DC</b><br><a href="/washington-dc.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([54.5,-115.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Alberta</b><br><a href="/alberta.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([53.7,-124.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>British Columbia</b><br><a href="/british-columbia.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([54.5,-97.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Manitoba</b><br><a href="/manitoba.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([46.5,-66.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>New Brunswick</b><br><a href="/new-brunswick.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([53.1,-60.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Newfoundland & Labrador</b><br><a href="/newfoundland-labrador.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([64.5,-118.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Northwest Territories</b><br><a href="/northwest-territories.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([45.0,-63.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Nova Scotia</b><br><a href="/nova-scotia.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([68.0,-90.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Nunavut</b><br><a href="/nunavut.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([50.0,-85.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Ontario</b><br><a href="/ontario.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([46.3,-63.1], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Prince Edward Island</b><br><a href="/prince-edward-island.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([52.0,-72.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Quebec</b><br><a href="/quebec.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([54.0,-106.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Saskatchewan</b><br><a href="/saskatchewan.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([63.0,-136.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Yukon</b><br><a href="/yukon.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([22.0,-102.4], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Aguascalientes</b><br><a href="/aguascalientes.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([30.0,-115.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Baja California</b><br><a href="/baja-california.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([25.5,-111.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Baja California Sur</b><br><a href="/baja-california-sur.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([18.8,-90.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Campeche</b><br><a href="/campeche.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([16.5,-92.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Chiapas</b><br><a href="/chiapas.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([28.6,-106.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Chihuahua</b><br><a href="/chihuahua.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([19.4,-99.1], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Ciudad de México</b><br><a href="/ciudad-de-mexico.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([27.0,-102.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Coahuila</b><br><a href="/coahuila.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([19.1,-103.9], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Colima</b><br><a href="/colima.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([24.8,-104.8], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Durango</b><br><a href="/durango.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([20.9,-101.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Guanajuato</b><br><a href="/guanajuato.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([17.6,-99.8], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Guerrero</b><br><a href="/guerrero.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([20.4,-98.7], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Hidalgo</b><br><a href="/hidalgo.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([20.7,-103.3], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Jalisco</b><br><a href="/jalisco.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([19.2,-101.9], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Michoacán</b><br><a href="/michoacan.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([18.7,-99.1], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Morelos</b><br><a href="/morelos.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([22.0,-104.8], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Nayarit</b><br><a href="/nayarit.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([25.6,-99.7], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Nuevo León</b><br><a href="/nuevo-leon.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([17.0,-96.7], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Oaxaca</b><br><a href="/oaxaca.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([19.0,-97.8], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Puebla</b><br><a href="/puebla.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([20.6,-100.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Querétaro</b><br><a href="/queretaro.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([19.8,-88.0], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Quintana Roo</b><br><a href="/quintana-roo.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([25.0,-107.5], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Sinaloa</b><br><a href="/sinaloa.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([29.3,-110.7], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Sonora</b><br><a href="/sonora.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([17.8,-92.6], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Tabasco</b><br><a href="/tabasco.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([24.0,-98.7], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Tamaulipas</b><br><a href="/tamaulipas.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([19.4,-98.2], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Tlaxcala</b><br><a href="/tlaxcala.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([19.2,-96.1], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Veracruz</b><br><a href="/veracruz.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([20.7,-89.1], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Yucatán</b><br><a href="/yucatan.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([23.0,-102.7], {radius:7, color:"#1e40af", weight:2, fillColor:"#2563eb", fillOpacity:0.85}).bindPopup(`<b>Zacatecas</b><br><a href="/zacatecas.html">View &rarr;</a>`).addTo(statesLayer);
+    L.circleMarker([35.1,-106.6], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Albuquerque</b><br><a href="/albuquerque.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([33.8,-117.9], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Anaheim</b><br><a href="/anaheim.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([32.7,-97.1], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Arlington</b><br><a href="/arlington.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([33.7,-84.4], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Atlanta</b><br><a href="/atlanta.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([30.3,-97.7], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Austin</b><br><a href="/austin.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([35.4,-119.0], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Bakersfield</b><br><a href="/bakersfield.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([39.3,-76.6], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Baltimore</b><br><a href="/baltimore.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([37.8,-122.3], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Bay Area</b><br><a href="/bay-area-pos-supplies.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([42.4,-71.1], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Boston</b><br><a href="/boston.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([35.2,-80.8], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Charlotte</b><br><a href="/charlotte.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([41.9,-87.6], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Chicago</b><br><a href="/chicago.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([38.8,-104.8], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Colorado Springs</b><br><a href="/colorado-springs.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([40.0,-83.0], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Columbus</b><br><a href="/columbus.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([32.8,-96.8], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Dallas</b><br><a href="/dallas.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([39.7,-105.0], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Denver</b><br><a href="/denver.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([42.3,-83.0], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Detroit</b><br><a href="/detroit.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([31.8,-106.5], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>El Paso</b><br><a href="/el-paso.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([32.8,-97.3], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Fort Worth</b><br><a href="/fort-worth.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([36.7,-119.8], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Fresno</b><br><a href="/fresno.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([29.8,-95.4], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Houston</b><br><a href="/houston.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([39.8,-86.2], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Indianapolis</b><br><a href="/indianapolis.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([30.3,-81.7], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Jacksonville</b><br><a href="/jacksonville.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([39.1,-94.6], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Kansas City</b><br><a href="/kansas-city.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([36.2,-115.1], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Las Vegas</b><br><a href="/las-vegas.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([33.8,-118.2], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Long Beach</b><br><a href="/long-beach-pos-supplies.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([34.05,-118.24], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Los Angeles</b><br><a href="/los-angeles.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([38.3,-85.8], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Louisville</b><br><a href="/louisville.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([33.4,-111.8], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Mesa</b><br><a href="/mesa.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([25.8,-80.2], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Miami</b><br><a href="/miami.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([43.0,-87.9], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Milwaukee</b><br><a href="/milwaukee.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([45.0,-93.3], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Minneapolis</b><br><a href="/minneapolis.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([36.2,-86.8], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Nashville</b><br><a href="/nashville.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([30.0,-90.1], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>New Orleans</b><br><a href="/new-orleans.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([40.7,-74.0], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>New York City</b><br><a href="/new-york-city.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([37.8,-122.3], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Oakland</b><br><a href="/oakland.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([35.5,-97.5], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Oklahoma City</b><br><a href="/oklahoma-city.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([41.3,-95.9], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Omaha</b><br><a href="/omaha.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([40.0,-75.2], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Philadelphia</b><br><a href="/philadelphia.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([33.4,-112.1], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Phoenix</b><br><a href="/phoenix.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([45.5,-122.7], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Portland</b><br><a href="/portland.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([35.8,-78.6], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Raleigh</b><br><a href="/raleigh.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([38.6,-121.5], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Sacramento</b><br><a href="/sacramento.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([29.4,-98.5], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>San Antonio</b><br><a href="/san-antonio.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([32.7,-117.2], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>San Diego</b><br><a href="/san-diego.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([37.8,-122.4], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>San Francisco</b><br><a href="/san-francisco.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([37.3,-121.9], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>San Jose</b><br><a href="/san-jose.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([47.6,-122.3], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Seattle</b><br><a href="/seattle.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([32.2,-110.9], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Tucson</b><br><a href="/tucson.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([36.2,-95.9], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Tulsa</b><br><a href="/tulsa.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([36.9,-76.0], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Virginia Beach</b><br><a href="/virginia-beach.html">View &rarr;</a>`).addTo(citiesLayer);
+    L.circleMarker([37.7,-97.3], {radius:5, color:"#7c3aed", weight:1.5, fillColor:"#8b5cf6", fillOpacity:0.9}).bindPopup(`<b>Wichita</b><br><a href="/wichita.html">View &rarr;</a>`).addTo(citiesLayer);
+
+var spanishLayer = L.layerGroup().addTo(map);
+var spanishPlaces = [
+  ["Alabama", 32.8, -86.8, "/alabama-spanish.html", 7],
+  ["Alaska", 64.0, -152.0, "/alaska-spanish.html", 7],
+  ["Arizona", 34.3, -111.7, "/arizona-spanish.html", 7],
+  ["Arkansas", 34.9, -92.4, "/arkansas-spanish.html", 7],
+  ["California", 37.2, -119.5, "/california-spanish.html", 7],
+  ["Carolina del Norte", 35.5, -79.4, "/carolina-del-norte-spanish.html", 7],
+  ["Carolina del Sur", 33.9, -80.9, "/carolina-del-sur-spanish.html", 7],
+  ["Colorado", 39.0, -105.5, "/colorado-spanish.html", 7],
+  ["Connecticut", 41.6, -72.7, "/connecticut-spanish.html", 7],
+  ["Dakota del Norte", 47.5, -100.5, "/dakota-del-norte-spanish.html", 7],
+  ["Dakota del Sur", 44.4, -100.2, "/dakota-del-sur-spanish.html", 7],
+  ["Delaware", 39.0, -75.5, "/delaware-spanish.html", 7],
+  ["Florida", 28.6, -82.4, "/florida-spanish.html", 7],
+  ["Georgia", 32.6, -83.4, "/georgia-spanish.html", 7],
+  ["Hawái", 20.5, -157.5, "/hawaii-spanish.html", 7],
+  ["Idaho", 44.4, -114.4, "/idaho-spanish.html", 7],
+  ["Illinois", 40.0, -89.0, "/illinois-spanish.html", 7],
+  ["Indiana", 39.9, -86.2, "/indiana-spanish.html", 7],
+  ["Kansas", 38.5, -98.3, "/kansas-spanish.html", 7],
+  ["Kentucky", 37.5, -85.3, "/kentucky-spanish.html", 7],
+  ["Luisiana", 31.1, -92.0, "/louisiana-spanish.html", 7],
+  ["Maine", 45.4, -69.0, "/maine-spanish.html", 7],
+  ["Maryland", 39.0, -76.8, "/maryland-spanish.html", 7],
+  ["Massachusetts", 42.3, -71.8, "/massachusetts-spanish.html", 7],
+  ["Míchigan", 44.3, -85.4, "/michigan-spanish.html", 7],
+  ["Minnesota", 46.3, -94.3, "/minnesota-spanish.html", 7],
+  ["Misisipi", 32.7, -89.7, "/mississippi-spanish.html", 7],
+  ["Misuri", 38.5, -92.5, "/missouri-spanish.html", 7],
+  ["Montana", 47.0, -110.0, "/montana-spanish.html", 7],
+  ["Nebraska", 41.5, -99.8, "/nebraska-spanish.html", 7],
+  ["Nevada", 39.3, -116.6, "/nevada-spanish.html", 7],
+  ["Nuevo Hampshire", 43.7, -71.6, "/new-hampshire-spanish.html", 7],
+  ["Nueva Jersey", 40.2, -74.7, "/nueva-jersey-spanish.html", 7],
+  ["Nueva York", 43.0, -75.5, "/nueva-york-spanish.html", 7],
+  ["Nuevo México", 34.4, -106.1, "/nuevo-mexico-spanish.html", 7],
+  ["Ohio", 40.3, -82.7, "/ohio-spanish.html", 7],
+  ["Oklahoma", 35.5, -97.5, "/oklahoma-spanish.html", 7],
+  ["Oregón", 43.9, -120.6, "/oregon-spanish.html", 7],
+  ["Pensilvania", 40.9, -77.8, "/pennsylvania-spanish.html", 7],
+  ["Rhode Island", 41.6, -71.5, "/rhode-island-spanish.html", 7],
+  ["Tennessee", 35.8, -86.0, "/tennessee-spanish.html", 7],
+  ["Texas", 31.5, -99.5, "/texas-spanish.html", 7],
+  ["Utah", 39.3, -111.7, "/utah-spanish.html", 7],
+  ["Vermont", 44.0, -72.7, "/vermont-spanish.html", 7],
+  ["Virginia Occidental", 38.6, -80.7, "/virginia-occidental-spanish.html", 7],
+  ["Virginia", 37.5, -78.5, "/virginia-spanish.html", 7],
+  ["Washington", 47.4, -121.5, "/washington-spanish.html", 7],
+  ["Wisconsin", 44.6, -89.8, "/wisconsin-spanish.html", 7],
+  ["Wyoming", 42.9, -107.5, "/wyoming-spanish.html", 7],
+  ["Atlanta", 33.7, -84.4, "/atlanta-spanish.html", 5],
+  ["Austin", 30.3, -97.7, "/austin-spanish.html", 5],
+  ["Boston", 42.4, -71.1, "/boston-spanish.html", 5],
+  ["Charlotte", 35.2, -80.8, "/charlotte-spanish.html", 5],
+  ["Chicago", 41.9, -87.6, "/chicago-spanish.html", 5],
+  ["Dallas", 32.8, -96.8, "/dallas-spanish.html", 5],
+  ["Denver", 39.7, -105.0, "/denver-spanish.html", 5],
+  ["Detroit", 42.3, -83.0, "/detroit-spanish.html", 5],
+  ["Filadelfia", 40.0, -75.2, "/filadelfia-spanish.html", 5],
+  ["Houston", 29.8, -95.4, "/houston-spanish.html", 5],
+  ["Kansas City", 39.1, -94.6, "/kansas-city-spanish.html", 5],
+  ["Las Vegas", 36.2, -115.1, "/las-vegas-spanish.html", 5],
+  ["Los Ángeles", 34.05, -118.24, "/los-angeles-spanish.html", 5],
+  ["Miami", 25.8, -80.2, "/miami-spanish.html", 5],
+  ["Mineápolis", 45.0, -93.3, "/minneapolis-spanish.html", 5],
+  ["Nashville", 36.2, -86.8, "/nashville-spanish.html", 5],
+  ["Nueva Orleans", 30.0, -90.1, "/nueva-orleans-spanish.html", 5],
+  ["Phoenix", 33.4, -112.1, "/phoenix-spanish.html", 5],
+  ["San Francisco", 37.8, -122.4, "/san-francisco-spanish.html", 5],
+  ["Seattle", 47.6, -122.3, "/seattle-spanish.html", 5]
+];
+spanishPlaces.forEach(function(p){
+  L.circleMarker([p[1], p[2]], {radius:p[4], color:"#b45309", weight:1.5, fillColor:"#f59e0b", fillOpacity:0.85}).bindPopup('<b>'+p[0]+'</b> (Español)<br><a href="'+p[3]+'">Ver &rarr;</a>').addTo(spanishLayer);
+});
+
+var overlay = {
+  "Countries": countriesLayer,
+  "States &amp; Provinces": statesLayer,
+  "Cities": citiesLayer,
+  "Español": spanishLayer
+};
+L.control.layers(null, overlay, { collapsed:false }).addTo(map);
+</script>
+</body>
+</html>

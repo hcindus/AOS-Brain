@@ -1,0 +1,452 @@
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name www.psdepot.com;
+    ssl_certificate /etc/letsencrypt/live/psdepot.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/psdepot.com/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    return 301 https://psdepot.com$request_uri;
+}
+
+server {
+    server_name psdepot.com;
+    
+    # Security Headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "geolocation=(self), microphone=(), camera=()" always;
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-src https://js.stripe.com;" always;
+    
+    # HSTS (HTTPS Strict Transport Security)
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+    
+    root /var/www/psdepot.com;
+    index index.html;
+    
+    # Custom 404 page
+    error_page 404 /404.html;
+    
+    # Static assets with caching
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+    
+    # RS-80 Product Page
+    location /rs-80 {
+        alias /var/www/psdepot.com/rs-80;
+        try_files $uri $uri/ =404;
+    }
+    
+    # CREAM - Real Estate Agent Management
+    location = /cream {
+        return 301 /cream/;
+    }
+    location /cream/ {
+        alias /var/www/psdepot.com/cream/;
+        try_files $uri $uri/ =404;
+        index index.html;
+    }
+    
+    # POS Systems Demo Page
+    location /pos {
+        alias /var/www/psdepot.com/pos;
+        try_files $uri $uri/ =404;
+    }
+
+    # Partner leads portal — redirect old chipp-* names to new leads-* names
+    location = /chipp-portal { return 301 /leads-portal/; }
+    location /chipp-portal/ { return 301 /leads-portal/; }
+    location = /chipp-dashboard { return 301 /leads-dashboard/; }
+    location /chipp-dashboard/ { return 301 /leads-dashboard/; }
+    
+    # HTML files — never cache (so nav/content edits show immediately)
+    location ~* \.html$ {
+        try_files $uri =404;
+        add_header Cache-Control "no-cache, no-store, must-revalidate" always;
+        add_header Pragma "no-cache" always;
+        add_header X-Frame-Options "SAMEORIGIN" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header X-XSS-Protection "1; mode=block" always;
+        add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+        add_header Permissions-Policy "geolocation=(self), microphone=(), camera=()" always;
+        add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-src https://js.stripe.com;" always;
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+    }
+
+    # Main location
+    location / {
+        try_files $uri $uri/ =404;
+    }
+    
+    # CGI for contact form
+    location /cgi-bin/ {
+        gzip off;
+        include fastcgi_params;
+        fastcgi_pass unix:/run/fcgiwrap.socket;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+    
+    # DepotChaos API (must be before generic /api/)
+    location /depotchaos/api/ {
+        proxy_pass http://127.0.0.1:8082/api/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+    
+    # Payment API (Stripe integration)
+    location /api/create-payment-intent {
+        proxy_pass http://127.0.0.1:4242/api/create-payment-intent;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'Content-Type' always;
+    }
+    
+    location /api/calculate-tax {
+        proxy_pass http://127.0.0.1:4242/api/calculate-tax;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'Content-Type' always;
+    }
+    
+    location /api/config {
+        proxy_pass http://127.0.0.1:4242/api/config;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'Content-Type' always;
+    }
+    
+    # Testimonials API
+    location /api/testimonials {
+        proxy_pass http://127.0.0.1:8087/api/testimonials;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+        proxy_read_timeout 86400;
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'Content-Type' always;
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS';
+            add_header 'Access-Control-Allow-Headers' 'Content-Type';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+
+# Chipp Leads API
+    location /api/leads {
+        proxy_pass http://127.0.0.1:8086/api/leads;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+        proxy_read_timeout 86400;
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'Content-Type' always;
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS';
+            add_header 'Access-Control-Allow-Headers' 'Content-Type';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+
+    # Generic API - must be after specific routes
+    location /api/ {
+        proxy_pass http://127.0.0.1:8082/api/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+        proxy_read_timeout 86400;
+    }
+    
+    # PSD Dashboard API
+    location /psd-api/ {
+        proxy_pass http://127.0.0.1:8081/api/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # PSD Appointments Static Files
+    location /appointments/ {
+        alias /var/www/psdepot.com/appointments/;
+        index index.html;
+        try_files $uri $uri/ =404;
+    }
+
+    # PSD Appointments API (separate path to avoid conflict)
+    location /appointments/api/ {
+        proxy_pass http://127.0.0.1:8083/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+    
+    # PSD Orders API
+    location /psdepot/api/ {
+        proxy_pass http://127.0.0.1:8084/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+    
+    # Collections API
+    location /collections/api {
+        proxy_pass http://127.0.0.1:8085/collections/api;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'Content-Type' always;
+    }
+    
+    # Collections Page
+    location /collections {
+        alias /var/www/psdepot.com/collections;
+        index index.html;
+        try_files $uri $uri/ =404;
+    }
+
+    # Orders Web Interface
+    location /orders {
+        alias /var/www/psdepot.com/orders;
+        index index.html;
+        try_files $uri $uri/ =404;
+    }
+    
+    # DepotChaos Web Interface
+    location /depotchaos {
+        alias /var/www/psdepot.com/depotchaos;
+        index index.html;
+        try_files $uri $uri/ =404;
+    }
+    
+    # DepotChaos Static Files (for holiday pages, etc)
+    location /static {
+        alias /var/www/psdepot.com/depotchaos;
+        index index.html;
+        try_files $uri $uri/ =404;
+    }
+
+    # Auth Service (Sentinel-Dusty)
+    location /auth/ {
+        proxy_pass http://127.0.0.1:3001/api/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    # Auth API direct
+    location /auth-api/ {
+        proxy_pass http://127.0.0.1:3001/api/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    # Admin API (Enterprise Auth)
+    location /api/admin/ {
+        proxy_pass http://127.0.0.1:3002/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+        
+        # CORS headers for admin API
+        add_header 'Access-Control-Allow-Origin' 'https://psdepot.com' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, X-CSRF-Token' always;
+        
+        # Handle preflight
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' 'https://psdepot.com';
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS';
+            add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, X-CSRF-Token';
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain; charset=utf-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+
+    # Admin Web Interface
+    location /appointments/admin/ {
+        alias /var/www/psdepot.com/appointments/admin/;
+        index index.html;
+        try_files $uri $uri/ /appointments/admin/index.html;
+    }
+
+    # Sentinel Shield Marketing Site
+    location /sentinel-shield {
+        alias /var/www/psdepot.com/sentinel-shield;
+        index index.html;
+        try_files $uri $uri/ =404;
+    }
+
+    # Sentinel Shield Docs
+    location /sentinel-shield/docs {
+        alias /var/www/psdepot.com/sentinel-shield/docs;
+        try_files $uri $uri/ =404;
+        add_header Content-Type text/markdown;
+    }
+
+    # Sentinel Shield API Spec
+    location /sentinel-shield/api.yaml {
+        alias /var/www/psdepot.com/sentinel-shield/api.yaml;
+        add_header Content-Type application/x-yaml;
+    }
+    
+    # Ivoire Auto - ICON4x4 Partnership
+    location /ivoire-auto {
+        alias /var/www/psdepot.com/ivoire-auto;
+        index index.html;
+        try_files $uri $uri/ =404;
+    }
+
+    # E-Commerce Landing Page
+    location /ecom {
+        alias /var/www/psdepot.com/ecom;
+        index index.html;
+        try_files $uri $uri/ =404;
+    }
+    
+    # Events Landing Pages
+    location /events {
+        alias /var/www/psdepot.com/events;
+        index calendar.html;
+        try_files $uri $uri/ =404;
+    }
+    
+    # Credit Card Page
+    location /credit-card {
+        alias /var/www/psdepot.com/credit-card;
+        index index.html;
+        try_files $uri $uri/ =404;
+    }
+    
+    # NET30 Application Page
+    location /net30 {
+        alias /var/www/psdepot.com/net30;
+        index index.html;
+        try_files $uri $uri/ =404;
+    }
+    
+    # Newsletter Signup Page
+    location /newsletter {
+        alias /var/www/psdepot.com/newsletter;
+        index index.html;
+        try_files $uri $uri/ =404;
+    }
+    
+    # Sales Promotion Pages
+    location /sales {
+        alias /var/www/psdepot.com/sales;
+        try_files $uri $uri/ =404;
+    }
+    
+    # Alternative Landing Page
+    location /landing {
+        alias /var/www/psdepot.com/landing;
+        index index.html;
+        try_files $uri $uri/ =404;
+    }
+    
+    # Security headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+
+    listen [::]:443 ssl;
+    listen 443 ssl;
+    ssl_certificate /etc/letsencrypt/live/psdepot.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/psdepot.com/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+}
+
+# Redirect performancesupplydepot.com to psdepot.com
+server {
+    listen [::]:443 ssl;
+    listen 443 ssl;
+    server_name performancesupplydepot.com www.performancesupplydepot.com;
+    ssl_certificate /etc/letsencrypt/live/psdepot.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/psdepot.com/privkey.pem;
+    return 301 https://psdepot.com$request_uri;
+}
+
+server {
+    if ($host = psdepot.com) {
+        return 301 https://$host$request_uri;
+    }
+    if ($host = www.psdepot.com) {
+        return 301 https://psdepot.com$request_uri;
+    }
+    if ($host = performancesupplydepot.com) {
+        return 301 https://psdepot.com$request_uri;
+    }
+    if ($host = www.performancesupplydepot.com) {
+        return 301 https://psdepot.com$request_uri;
+    }
+
+    listen 80;
+    listen [::]:80;
+    server_name psdepot.com www.psdepot.com performancesupplydepot.com www.performancesupplydepot.com;
+    return 404;
+}
