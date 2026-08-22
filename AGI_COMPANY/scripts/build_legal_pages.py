@@ -60,8 +60,23 @@ PAGES = [
 <li><strong>Technical data:</strong> IP address, browser type, device, and pages visited (via cookies and server logs).</li>
 </ul>
 
-<h2>Cookies</h2>
-<p>We use cookies and similar technologies to operate the site, remember your cart, analyze traffic, and improve your experience. You can disable cookies in your browser, though some site features (such as the shopping cart) may not function correctly without them.</p>
+<h2>Cookies & Tracking Technologies</h2>
+<p>We use cookies and similar technologies (pixels, local storage) to operate the site and improve your experience. Cookies are small text files stored on your device when you visit.</p>
+
+<h3>Cookie Categories</h3>
+<ul>
+<li><strong>Strictly Necessary:</strong> required for core functionality such as the shopping cart, checkout, and security. These cannot be disabled.</li>
+<li><strong>Functional / Preferences:</strong> remember your choices (e.g., recently viewed products) to personalize your experience.</li>
+<li><strong>Analytics / Performance:</strong> measure traffic and usage (page views, referring pages) to improve the site.</li>
+<li><strong>Marketing / Advertising:</strong> if used, deliver relevant offers and measure the effectiveness of campaigns.</li>
+</ul>
+
+<h3>Third-Party Cookies</h3>
+<p>Some cookies may be set by third-party services we use (e.g., analytics, payment processors, or embedded content). These third parties have their own privacy policies and cookie practices.</p>
+
+<h3>Managing Cookies & Consent</h3>
+<p>You can control or delete cookies through your browser settings. Where required by law (e.g., GDPR for EU/UK visitors), we seek consent before placing non-essential cookies, and you may withdraw consent at any time. Under CCPA, California residents may opt out of the "sale" or "sharing" of personal information used for cross-context behavioral advertising — we do not sell personal data.</p>
+<p>Disabling strictly necessary cookies may affect site functionality, including the shopping cart and checkout.</p>
 
 <h2>How We Use Your Information</h2>
 <ul>
