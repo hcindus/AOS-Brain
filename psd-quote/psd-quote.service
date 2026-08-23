@@ -1,0 +1,14 @@
+[Unit]
+Description=PSD Quote Agent (internal + external quoting engine)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/.openclaw/workspace/psd-quote
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/psd-quote/quote_engine.py
+Restart=always
+RestartSec=3
+User=root
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "business": "Performance Supply Depot LLC",
+    "updated": "2026-08-23",
+    "note": "cost == null means 'backfill from price sheet'. price == null means 'not yet priced'."
+  },
+  "config": {
+    "tax_rate": 0.085,
+    "tax_rate_label": "8.5%",
+    "currency": "USD"
+  },
+  "services": {
+    "programming": {
+      "name": "POS Programming & Setup",
+      "rate_per_hour": 195,
+      "minimum_hours": 1,
+      "per_station": true,
+      "note": "1 hr minimum per register @ $195/hr"
+    },
+    "delivery": {
+      "name": "Delivery",
+      "flat": 90,
+      "note": "flat delivery fee per order"
+    }
+  },
+  "hardware": {
+    "terminals": [
+      {"key": "A70", "sku": "A70", "name": "A70 Android POS Terminal", "brand": "PSD", "price": null, "cost": null},
+      {"key": "SAP-630", "sku": "30-214", "name": "SAM4S SAP-630 Android POS Terminal", "brand": "SAM4S", "price": 1395.00, "cost": null}
+    ],
+    "cash_drawers": [
+      {"key": "DRAWER-FULL", "sku": "DRAWER-FULL", "name": "Full Cash Drawer", "brand": "PSD", "price": null, "cost": null}
+    ],
+    "printers": [
+      {"key": "TM-T88", "sku": "TM-T88", "name": "Epson TM-T88 Receipt Printer", "brand": "Epson", "price": null, "cost": null},
+      {"key": "PRINTER-GEN", "sku": "PRINTER-GEN", "name": "Generic Thermal Receipt Printer", "brand": "Generic", "price": null, "cost": null}
+    ],
+    "scanners": [
+      {"key": "SCANNER", "sku": "SCANNER", "name": "Barcode Scanner", "brand": "PSD", "price": null, "cost": null}
+    ]
+  },
+  "software": [
+    {"key": "SAM4POS", "sku": "SAM4POS", "name": "SAM4POS POS Software", "brand": "SAM4S", "price": null, "cost": null, "monthly": null, "pricing_model": "recurring", "note": "Recurring software license for SAP-630 / A70"}
+  ]
+}

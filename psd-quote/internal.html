@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSD Quote Agent — Staff</title>
+<style>
+  :root { --psd:#1a56db; --bg:#0f1420; --card:#161d2c; --border:#232c40; --text:#e6e9f0; --muted:#8b93a7; --green:#3fb950; --red:#f85149; --amber:#d29922; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--text); }
+  .wrap { max-width:1100px; margin:auto; padding:24px; }
+  h1 { font-size:20px; margin:0 0 4px; }
+  .sub { color:var(--muted); font-size:13px; margin-bottom:20px; }
+  .grid { display:grid; grid-template-columns: 340px 1fr; gap:20px; }
+  @media(max-width:860px){ .grid{grid-template-columns:1fr;} }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:18px; }
+  label { display:block; font-size:12px; color:var(--muted); margin:12px 0 4px; text-transform:uppercase; letter-spacing:.4px; }
+  select, input[type=number], input[type=text] { width:100%; padding:9px 10px; background:#0b0f18; border:1px solid var(--border); border-radius:6px; color:var(--text); font-size:14px; }
+  .row { display:flex; gap:12px; }
+  .row > div { flex:1; }
+  .chk { display:flex; align-items:center; gap:8px; margin-top:10px; font-size:14px; }
+  .chk input { width:auto; }
+  button { width:100%; margin-top:18px; padding:12px; background:var(--psd); color:#fff; border:none; border-radius:8px; font-size:15px; font-weight:600; cursor:pointer; }
+  button:hover { filter:brightness(1.1); }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th,td { text-align:right; padding:8px 10px; border-bottom:1px solid var(--border); }
+  th:first-child, td:first-child { text-align:left; }
+  th { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.4px; }
+  .qty { color:var(--muted); }
+  .muted { color:var(--muted); }
+  .green { color:var(--green); font-weight:600; }
+  .red { color:var(--red); }
+  .tot { font-weight:700; }
+  .tabs { display:flex; gap:8px; margin-bottom:14px; }
+  .tabs button { width:auto; padding:8px 14px; background:var(--card); border:1px solid var(--border); color:var(--muted); border-radius:6px; font-size:13px; margin-top:0; }
+  .tabs button.active { background:var(--psd); color:#fff; border-color:var(--psd); }
+  .panel { display:none; }
+  .panel.active { display:block; }
+  .note { font-size:12px; color:var(--amber); margin-top:8px; }
+  .gate { max-width:400px; margin:120px auto; }
+  .badge { display:inline-block; font-size:11px; padding:2px 8px; border-radius:10px; background:#1d2a45; color:#7fa6ff; margin-left:8px; }
+</style>
+</head>
+<body>
+<div class="wrap" id="gate" style="display:none;">
+  <div class="card gate">
+    <h1>PSD Quote Agent</h1>
+    <p class="sub">Staff access only</p>
+    <label>Password</label>
+    <input type="password" id="pw" placeholder="Enter staff password" onkeydown="if(event.key==='Enter')gate()">
+    <button onclick="gate()">Unlock</button>
+    <p class="note" id="pwErr" style="display:none;">Incorrect password.</p>
+  </div>
+</div>
+
+<div class="wrap" id="app" style="display:none;">
+  <h1>PSD Quote Agent <span class="badge">STAFF</span></h1>
+  <p class="sub">Build a full POS station quote — internal view shows cost & margin, external view shows retail only.</p>
+
+  <div class="grid">
+    <div class="card">
+      <label>Number of stations / registers</label>
+      <input type="number" id="stations" value="1" min="1">
+
+      <label>Terminal</label>
+      <select id="terminal"></select>
+
+      <label>Receipt printer</label>
+      <select id="printer"></select>
+
+      <div class="chk"><input type="checkbox" id="drawer" checked> Cash drawer (per station)</div>
+      <div class="chk"><input type="checkbox" id="scanner" checked> Barcode scanner (per station)</div>
+
+      <label>Software</label>
+      <select id="software"></select>
+
+      <label>Programming hours (auto = 1 hr/station minimum)</label>
+      <input type="number" id="progHours" value="0" min="0" step="0.5">
+
+      <div class="chk"><input type="checkbox" id="delivery" checked> Delivery ($90 flat)</div>
+
+      <button onclick="buildQuote()">Build Quote</button>
+      <p class="note" id="hint"></p>
+    </div>
+
+    <div>
+      <div class="tabs">
+        <button class="active" onclick="switchTab('internal',this)">Internal (cost/margin)</button>
+        <button onclick="switchTab('external',this)">External (retail)</button>
+      </div>
+
+      <div class="card panel active" id="internal">
+        <div id="internalBody"><p class="muted">Build a quote to see the breakdown.</p></div>
+      </div>
+      <div class="card panel" id="external">
+        <div id="externalBody"><p class="muted">Build a quote to see the customer view.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let catalog = null;
+
+function gate(){
+  fetch('/health').catch(()=>{});
+  // simple client-side gate against server password (production: use a real auth route)
+  if(document.getElementById('pw').value === 'psd-staff-2026'){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('app').style.display='block';
+    loadCatalog();
+  } else {
+    document.getElementById('pwErr').style.display='block';
+  }
+}
+
+async function loadCatalog(){
+  const r = await fetch('/api/catalog');
+  catalog = await r.json();
+  fill('terminal', catalog.hardware.terminals);
+  fill('printer', catalog.hardware.printers);
+  fill('software', catalog.software);
+}
+
+function fill(id, items){
+  const s = document.getElementById(id);
+  s.innerHTML = '';
+  items.forEach(i=>{
+    const o = document.createElement('option');
+    o.value = i.key;
+    o.textContent = i.name + (i.price!=null ? ' — $'+i.price : ' (unpriced)');
+    s.appendChild(o);
+  });
+}
+
+function switchTab(name, el){
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(name).classList.add('active');
+}
+
+function rowHtml(name, qty, unit, ext, extra=''){
+  return `<tr><td>${name}</td><td class="qty">×${qty}</td><td>${unit}</td><td>${ext}</td>${extra}</tr>`;
+}
+
+function fmt(v){ return v==null||v===undefined ? '—' : '$'+Number(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+function renderInternal(q){
+  const i = q.internal;
+  let h = `<table><tr><th>Item</th><th>Qty</th><th>Unit price</th><th>Ext</th><th>Cost</th><th>Margin</th><th>Margin %</th></tr>`;
+  i.lines.forEach(l=>{
+    const m = l.margin!=null ? `<span class="green">${fmt(l.margin)}</span>` : '<span class="muted">—</span>';
+    const mp = l.margin_pct!=null ? `${l.margin_pct}%` : '<span class="muted">—</span>';
+    h += `<tr><td>${l.name}</td><td class="qty">×${l.qty}</td><td>${fmt(l.unit_price)}</td><td>${fmt(l.ext_price)}</td><td>${fmt(l.ext_cost)}</td><td>${m}</td><td>${mp}</td></tr>`;
+  });
+  h += `<tr class="tot"><td>Subtotal</td><td></td><td></td><td>${fmt(i.subtotal)}</td><td>${fmt(i.total_cost)}</td><td>${i.profit!=null?'<span class="green">'+fmt(i.profit)+'</span>':'<span class="muted">—</span>'}</td><td></td></tr>`;
+  h += `<tr><td>Tax (${(q.tax_rate*100).toFixed(2)}%)</td><td></td><td></td><td>${fmt(i.tax)}</td><td></td><td></td><td></td></tr>`;
+  h += `<tr class="tot"><td>Total</td><td></td><td></td><td class="green">${fmt(i.total)}</td><td></td><td></td><td></td></tr></table>`;
+  if(i.recurring && i.recurring.length){
+    h += `<p class="muted" style="margin-top:12px;">Recurring: ${i.recurring.map(r=>r.name+' ×'+r.qty+' @ '+fmt(r.monthly)+'/mo').join(', ')} = <strong>${fmt(i.recurring_monthly)}/mo</strong></p>`;
+  }
+  document.getElementById('internalBody').innerHTML = h;
+}
+
+function renderExternal(q){
+  const e = q.external;
+  let h = `<table><tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr>`;
+  e.lines.forEach(l=>{
+    h += `<tr><td>${l.name}</td><td class="qty">×${l.qty}</td><td>${fmt(l.unit_price)}</td><td>${fmt(l.ext_price)}</td></tr>`;
+  });
+  h += `<tr class="tot"><td>Subtotal</td><td></td><td></td><td>${fmt(e.subtotal)}</td></tr>`;
+  h += `<tr><td>Tax</td><td></td><td></td><td>${fmt(e.tax)}</td></tr>`;
+  h += `<tr class="tot"><td>Total</td><td></td><td></td><td class="green">${fmt(e.total)}</td></tr></table>`;
+  if(e.recurring && e.recurring.length){
+    h += `<p class="muted" style="margin-top:12px;">+ ${e.recurring.map(r=>r.name+' @ '+fmt(r.monthly)+'/mo').join(', ')}</p>`;
+  }
+  document.getElementById('externalBody').innerHTML = h;
+}
+
+async function buildQuote(){
+  const spec = {
+    stations: parseInt(document.getElementById('stations').value)||1,
+    terminal: document.getElementById('terminal').value,
+    printer: document.getElementById('printer').value,
+    cash_drawer: document.getElementById('drawer').checked,
+    scanner: document.getElementById('scanner').checked,
+    software: document.getElementById('software').value,
+    programming_hours: parseFloat(document.getElementById('progHours').value)||0,
+    delivery: document.getElementById('delivery').checked,
+  };
+  const r = await fetch('/api/quote', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(spec)});
+  const q = await r.json();
+  renderInternal(q);
+  renderExternal(q);
+  document.getElementById('hint').textContent = `Programming: ${q.programming_hours.toFixed(1)} hrs @ $195/hr`;
+}
+
+// show gate by default
+document.getElementById('gate').style.display='block';
+</script>
+</body>
+</html>
