@@ -532,10 +532,10 @@ def update_marketing_materials(prospects: List[Dict]):
     try:
         with open(pricing_path, 'r') as f:
             content = f.read()
-        old_vals = ["115,000", "114,000+", "114,000", "114,000+"]
+        old_vals = ["115,000", "114,000+", "114,000", "113,000+"]
         for old in old_vals:
             content = content.replace(old, "116,000")
-        content = content.replace("112-day", "114-day")
+        content = content.replace("113-day", "114-day")
         with open(pricing_path, 'w') as f:
             f.write(content)
         print(f"  ✓ PRICING_SHEET.md: Updated to 116,000")
