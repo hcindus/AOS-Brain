@@ -44,6 +44,11 @@
     ],
     "scanners": [
       {"key": "SCANNER", "sku": "SCANNER", "name": "Barcode Scanner", "brand": "PSD", "price": null, "cost": null}
+    ],
+    "scales": [
+      {"key": "SCALE-LP1000N", "sku": "30-155", "name": "CAS LP-1000N Label Printing Scale", "brand": "CAS", "price": 1495.00, "cost": null},
+      {"key": "SCALE-PDN", "sku": "PDN-12", "name": "CAS PDN Series POS Interface Scale", "brand": "CAS", "price": 599.00, "cost": null},
+      {"key": "SCALE-INT", "sku": "30-150", "name": "Integrated POS Scale", "brand": "PSD", "price": 795.00, "cost": null}
     ]
   },
   "software": [

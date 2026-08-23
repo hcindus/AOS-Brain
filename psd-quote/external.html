@@ -52,6 +52,9 @@
       <label>Software</label>
       <select id="software"></select>
 
+      <label>Scale (optional add-on)</label>
+      <select id="scale"></select>
+
       <div class="chk"><input type="checkbox" id="delivery" checked> Include delivery ($90)</div>
 
       <button onclick="buildQuote()">Get My Quote</button>
@@ -85,6 +88,9 @@ async function loadCatalog(){
   fill('terminal', catalog.hardware.terminals);
   fill('printer', catalog.hardware.printers);
   fill('software', catalog.software);
+  const sc = document.getElementById('scale');
+  sc.innerHTML = '<option value="">— None —</option>';
+  (catalog.hardware.scales||[]).forEach(i=>{ const o=document.createElement('option'); o.value=i.key; o.textContent=i.name+(i.price!=null?' — $'+i.price:''); sc.appendChild(o); });
 }
 function fill(id, items){
   const s=document.getElementById(id); s.innerHTML='';
@@ -104,6 +110,8 @@ async function buildQuote(){
     programming_hours: 0,
     delivery: document.getElementById('delivery').checked,
   };
+  const scaleKey = document.getElementById('scale').value;
+  if(scaleKey){ lastSpec.add_ons = [{key:scaleKey, qty:1}]; }
   const r = await fetch('/api/quote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(lastSpec)});
   lastQuote = await r.json();
   const e = lastQuote.external;

@@ -102,6 +102,7 @@ def build_quote(spec: dict) -> dict:
     include_drawer = bool(spec.get("cash_drawer", True))
     include_scanner = bool(spec.get("scanner", True))
     software_key = spec.get("software", "SAM4POS")
+    add_ons = spec.get("add_ons", [])  # list of {"key": ..., "qty": ...} optional add-ons (e.g. scales)
     include_delivery = bool(spec.get("delivery", True))
     programming_hours = float(spec.get("programming_hours", 0))
 
@@ -154,6 +155,14 @@ def build_quote(spec: dict) -> dict:
             })
         else:
             add_line(software_key, software["name"], software["sku"], stations, software["price"], software["cost"], "Software")
+
+    # Optional add-ons (e.g. scales)
+    for a in add_ons:
+        key = a.get("key")
+        qty = int(a.get("qty", 1))
+        item = next((x for x in cat["hardware"].get("scales", []) if x["key"] == key), None)
+        if item:
+            add_line(key, item["name"], item["sku"], qty, item["price"], item["cost"], "Add-on")
 
     # Programming line (labor, in-house)
     add_line("programming", prog["name"], "SERVICE", prog_hours, prog_rate, None, "Labor",
