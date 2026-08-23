@@ -11,11 +11,18 @@
   },
   "services": {
     "programming": {
-      "name": "POS Programming & Setup",
+      "name": "In-House POS Programming & Setup",
       "rate_per_hour": 195,
-      "minimum_hours": 1,
-      "per_station": true,
-      "note": "1 hr minimum per register @ $195/hr"
+      "hours": 2,
+      "per_station": false,
+      "note": "2 hrs in-house @ $195/hr"
+    },
+    "installation": {
+      "name": "On-Site Installation",
+      "rate_per_hour": 180,
+      "hours": 1,
+      "per_station": false,
+      "note": "1 hr on-site @ $180/hr"
     },
     "delivery": {
       "name": "Delivery",

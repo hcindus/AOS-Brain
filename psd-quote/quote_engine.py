@@ -119,11 +119,13 @@ def build_quote(spec: dict) -> dict:
 
     software = next((s for s in cat["software"] if s["key"] == software_key), None)
 
-    # Programming minimum (per station by default)
+    # Labor: in-house programming + on-site installation (fixed hours per order)
     prog = cat["services"]["programming"]
-    min_hours = prog["minimum_hours"] * stations if prog.get("per_station", True) else prog["minimum_hours"]
-    prog_hours = max(min_hours, programming_hours) if programming_hours > 0 else min_hours
+    install = cat["services"]["installation"]
     prog_rate = prog["rate_per_hour"]
+    prog_hours = max(prog.get("hours", 2), programming_hours) if programming_hours > 0 else prog.get("hours", 2)
+    install_rate = install["rate_per_hour"]
+    install_hours = install.get("hours", 1)
 
     # Build line items (per station hardware × stations)
     lines = []  # one-time hardware/software
@@ -153,9 +155,13 @@ def build_quote(spec: dict) -> dict:
         else:
             add_line(software_key, software["name"], software["sku"], stations, software["price"], software["cost"], "Software")
 
-    # Programming line (labor)
+    # Programming line (labor, in-house)
     add_line("programming", prog["name"], "SERVICE", prog_hours, prog_rate, None, "Labor",
              note=f"{prog_hours:.1f} hrs @ ${prog_rate}/hr")
+
+    # Installation line (labor, on-site)
+    add_line("installation", install["name"], "SERVICE", install_hours, install_rate, None, "Labor",
+             note=f"{install_hours:.1f} hrs @ ${install_rate}/hr")
 
     # Delivery line
     delivery = cat["services"]["delivery"]
