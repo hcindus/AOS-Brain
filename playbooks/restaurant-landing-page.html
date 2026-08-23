@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Never Miss Another Reservation — AI Front Desk for Restaurants</title>
+<meta name="description" content="AI voice agents that answer every call, take reservations, and handle after-hours — so your restaurant never loses a table to voicemail.">
+<style>
+  :root{
+    --bg:#0e1117; --panel:#161b22; --panel2:#1c2230; --border:#2a3140;
+    --text:#e6edf3; --muted:#9aa4b2; --accent:#58a6ff; --green:#3fb950; --pink:#f778ba;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6}
+  .wrap{max-width:760px;margin:0 auto;padding:48px 20px}
+  h1{font-size:2rem;line-height:1.25;margin-bottom:12px}
+  h2{font-size:1.3rem;margin:32px 0 12px}
+  .sub{color:var(--muted);font-size:1.1rem;margin-bottom:24px}
+  .accent{color:var(--accent)} .green{color:var(--green)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:24px;margin:16px 0}
+  .row{display:flex;gap:12px;align-items:flex-start}
+  .stat{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:16px;flex:1;text-align:center}
+  .stat b{display:block;font-size:1.6rem;color:var(--green)}
+  .stat span{color:var(--muted);font-size:.85rem}
+  button{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:14px 24px;font-size:1rem;font-weight:600;cursor:pointer;width:100%}
+  button:hover{filter:brightness(1.1)}
+  .ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
+  .demo{background:var(--panel2);border-radius:12px;padding:20px;margin:16px 0}
+  .demo .call{border:1px solid var(--border);border-radius:8px;padding:12px;margin:8px 0;font-size:.95rem}
+  .demo .bot{color:var(--accent)} .demo .caller{color:var(--pink)}
+  .chat{border:1px solid var(--border);border-radius:12px;background:var(--panel);overflow:hidden}
+  .chat-log{height:280px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px}
+  .msg{max-width:80%;padding:10px 14px;border-radius:12px;font-size:.95rem}
+  .msg.bot{background:var(--panel2);align-self:flex-start;border-bottom-left-radius:4px}
+  .msg.user{background:var(--accent);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+  .chat-input{display:flex;border-top:1px solid var(--border)}
+  .chat-input input{flex:1;background:var(--panel2);border:none;color:var(--text);padding:14px;font-size:1rem;outline:none}
+  .chat-input button{width:auto;border-radius:0;padding:0 20px}
+  .fine{color:var(--muted);font-size:.8rem;text-align:center;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Never miss another <span class="accent">reservation</span> — even after hours.</h1>
+  <p class="sub">An AI voice agent that answers every call, takes reservations, and handles takeout orders — so no table walks to the place next door.</p>
+
+  <div class="row">
+    <div class="stat"><b>40%</b><span>of after-hours calls hit voicemail</span></div>
+    <div class="stat"><b>100%</b><span>answered with our AI front desk</span></div>
+    <div class="stat"><b>7 days</b><span>from signup to live</span></div>
+  </div>
+
+  <div class="card">
+    <h2>You don't need to automate everything.</h2>
+    <p>Just the <strong>top 3 questions</strong> you get every day — hours, reservations, takeout. That's 80% of your calls, handled instantly.</p>
+    <p style="margin-top:12px;color:var(--muted)">Minimum viable agent first. Expand later. No boiling the ocean.</p>
+  </div>
+
+  <h2>Hear it handle a real call 👇</h2>
+  <div class="demo">
+    <div class="call"><span class="caller">Caller:</span> Hi, are you open tonight?</div>
+    <div class="call"><span class="bot">AI Agent:</span> Yes! We're open until 10pm tonight. Would you like to make a reservation?</div>
+    <div class="call"><span class="caller">Caller:</span> Sure, table for four at 7.</div>
+    <div class="call"><span class="bot">AI Agent:</span> You're booked — table for four at 7pm under what name?</div>
+    <div class="call"><span class="caller">Caller:</span> Rodriguez.</div>
+    <div class="call"><span class="bot">AI Agent:</span> Done, Mr. Rodriguez. We'll see you at 7pm. Anything else?</div>
+  </div>
+  <p class="fine">☎️ Live demo agent available on request — call it yourself before you buy.</p>
+
+  <h2>How it works</h2>
+  <div class="card">
+    <p><strong>1. We build it</strong> — top questions, your tone, your systems.</p>
+    <p><strong>2. You test it</strong> — call the demo, hear it live.</p>
+    <p><strong>3. It goes live</strong> — in 7 days, 24/7, including holidays.</p>
+  </div>
+
+  <h2>The offer</h2>
+  <div class="card">
+    <p><strong>We build + run your AI front desk — starting at $8K.</strong></p>
+    <p style="color:var(--muted);margin-top:8px">Recurring maintenance from $500/mo. 30-day money-back guarantee.</p>
+    <button style="margin-top:16px" onclick="buy()">Build My Agent →</button>
+  </div>
+
+  <h2>Questions? Ask below.</h2>
+  <div class="chat">
+    <div class="chat-log" id="log"></div>
+    <div class="chat-input">
+      <input id="inp" placeholder="Ask anything about the agent..." onkeydown="if(event.key==='Enter')send()">
+      <button onclick="send()">Send</button>
+    </div>
+  </div>
+
+  <p class="fine">Performance Supply Depot LLC · Voice agents, robotics &amp; POS supplies for hospitality.</p>
+</div>
+
+<script>
+  const qa = {
+    "price": "The build starts at $8K, with maintenance from $500/mo. Want me to tell you more about what's included?",
+    "pricing": "Starts at $8K to build, $500/mo to maintain. What kind of business do you run?",
+    "cost": "Starts at $8K build + $500/mo. Tell me more about your business and I can give you a tighter range.",
+    "how": "We build your agent from your top 3–5 questions (hours, reservations, takeout), configure it to your systems, and it goes live in 7 days — 24/7 including after-hours and holidays.",
+    "time": "Live in 7 days from signup.",
+    "long": "7 days from signup to live.",
+    "work": "It answers every call, takes reservations, handles takeout, and routes the rest — including after-hours when you're closed.",
+    "reservation": "Yes — it takes reservations live and books them straight into your calendar or POS.",
+    "after hours": "After-hours is the #1 use case. It answers every call when you're closed or on holidays.",
+    "guarantee": "30-day money-back guarantee. If it's not a fit, you're covered.",
+    "refund": "30-day money-back guarantee.",
+    "demo": "Yes — I can send you a live demo agent you can call yourself. Want me to set that up?",
+    "try": "You can call a live demo agent before buying. Want the link?",
+    "business": "What kind of business do you run? Restaurant, bar, retail, or something else?",
+    "restaurant": "Great — restaurants are our sweet spot. How many calls do you typically miss after hours?",
+    "bar": "Bars work great too — reservations + after-hours pickup. How do you currently handle after-hours calls?"
+  };
+
+  const log = document.getElementById('log');
+  const inp = document.getElementById('inp');
+
+  function add(text, who){
+    const d = document.createElement('div');
+    d.className = 'msg ' + who;
+    d.textContent = text;
+    log.appendChild(d);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function botReply(q){
+    const key = Object.keys(qa).find(k => q.toLowerCase().includes(k));
+    if(key) return qa[key];
+    if(q.toLowerCase().includes("call") || q.toLowerCase().includes("talk")){
+      return "If you want, we can keep this over email — or I can hop on a quick 15-min call just to align. Want to tell me a bit about your business first?";
+    }
+    return "Good question. Let me get you a clear answer — tell me a bit more about your business (restaurant, bar, retail?), and I'll point you to exactly what applies.";
+  }
+
+  function send(){
+    const q = inp.value.trim();
+    if(!q) return;
+    add(q, 'user');
+    inp.value = '';
+    setTimeout(() => add(botReply(q), 'bot'), 500);
+  }
+
+  function buy(){
+    add("I'd like to build my agent.", 'user');
+    setTimeout(() => add("Love it. What kind of business, and what's your #1 challenge with calls right now?", 'bot'), 500);
+  }
+
+  add("Hi! I'm your AI front-desk guide. Ask me anything about the agent — pricing, how it works, after-hours, reservations.", 'bot');
+</script>
+</body>
+</html>
