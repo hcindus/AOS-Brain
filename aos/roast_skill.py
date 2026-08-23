@@ -11,9 +11,81 @@ Usage: Trigger before Patricia delegates complex tasks
 
 import json
 import time
+import os
 from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
+
+import requests
+
+# --- Ollama LLM wiring for real adversarial analysis ---
+# Point ROAST_OLLAMA_URL at a remote GPU host (e.g. Nebius/Lambda/Vast.ai
+# running Ollama) to use big models; falls back to localhost otherwise.
+OLLAMA_URL = os.environ.get(
+    "ROAST_OLLAMA_URL", "http://localhost:11434"
+).rstrip("/") + "/api/generate"
+# NOTE: host has no GPU + ~1GB free RAM, so the 9GB qwen2.5:14b can't run here.
+# Use small CPU-friendly models; the deep models need a GPU/VPS.
+ROAST_MODEL = "gemma2:2b"            # fast, fits constrained CPU host
+ROAST_MODEL_FALLBACKS = ["tinyllama:latest", "mistral:latest"]
+ROAST_TIMEOUT = 60
+
+
+def _query_ollama(prompt: str, model: str = ROAST_MODEL, timeout: int = ROAST_TIMEOUT) -> Optional[str]:
+    """Call Ollama and return raw text, or None on any failure."""
+    try:
+        resp = requests.post(
+            OLLAMA_URL,
+            json={
+                "model": model,
+                "prompt": prompt,
+                "stream": False,
+                "options": {
+                    "temperature": 0.4,   # enough for divergent personas, still coherent
+                    "num_predict": 250,   # 3 findings + score, kept lean for CPU
+                },
+            },
+            timeout=timeout,
+        )
+        if resp.status_code == 200:
+            return resp.json().get("response", "").strip()
+    except Exception:
+        pass
+    return None
+
+
+def _llm_query_with_fallback(prompt: str) -> Optional[str]:
+    """Try primary model, then fallbacks. Return None if all fail."""
+    for model in [ROAST_MODEL] + ROAST_MODEL_FALLBACKS:
+        out = _query_ollama(prompt, model=model)
+        if out:
+            return out
+    return None
+
+
+def _parse_llm_json(text: str) -> Optional[Dict]:
+    """Extract a JSON object from an LLM response (tolerates prose + code fences)."""
+    if not text:
+        return None
+    # Strip markdown code fences if present
+    stripped = text.strip()
+    if stripped.startswith("```"):
+        stripped = stripped.split("\n", 1)[-1] if "\n" in stripped else stripped[3:]
+        stripped = stripped.strip()
+        if stripped.endswith("```"):
+            stripped = stripped[:-3].strip()
+    # Try the whole thing first, then the first { ... } block
+    candidates = [stripped]
+    start = stripped.find("{")
+    end = stripped.rfind("}")
+    if start != -1 and end > start:
+        candidates.append(stripped[start:end + 1])
+    for c in candidates:
+        try:
+            return json.loads(c)
+        except Exception:
+            continue
+    return None
 
 
 class RoastVerdict(Enum):
@@ -31,20 +103,77 @@ class RoastPersona:
     weight: float  # Influence on final score
     
     def evaluate(self, task: Dict) -> Dict:
-        """Generate this persona's evaluation"""
+        """Generate this persona's evaluation (LLM-backed, template fallback)."""
+        findings, score, used_llm = self._llm_evaluate(task)
+        if findings is None:
+            findings = self._template_findings()
+            score = self._template_score()
+            used_llm = False
         return {
             "persona": self.name,
             "role": self.role,
-            "findings": self._generate_findings(task),
-            "score": self._calculate_score(task),  # 0-10
-            "confidence": 0.85,
+            "findings": findings,
+            "score": score,  # 0-10
+            "confidence": 0.85 if used_llm else 0.4,
+            "llm_backed": used_llm,
             "timestamp": time.time()
         }
-    
-    def _generate_findings(self, task: Dict) -> List[str]:
-        """Generate findings based on persona type"""
-        # In production, this would call actual LLM
-        # For now, return template based on persona
+
+    def _llm_evaluate(self, task: Dict) -> Tuple[Optional[List[str]], Optional[float], bool]:
+        """Ask Ollama for real findings + score, with one retry. Returns (findings, score, used_llm)."""
+        prompt = self._build_prompt(task)
+        for _ in range(2):  # retry once — small models are flaky on strict JSON
+            raw = _llm_query_with_fallback(prompt)
+            if raw is None:
+                continue
+            parsed = _parse_llm_json(raw)
+            if not parsed:
+                continue
+            findings = parsed.get("findings")
+            score = parsed.get("score")
+            if isinstance(findings, list) and findings and isinstance(score, (int, float)):
+                score = max(0.0, min(10.0, float(score)))
+                return findings, round(score, 1), True
+        return None, None, False
+
+    # Persona-specific output guidance — keeps each critic in its lane.
+    _PERSONA_HINTS = {
+        "Contrarian": "Find what will fail, why it fails, and the hidden assumption that breaks it. Be harsh — a score below 5 is expected if there are real risks.",
+        "Expansionist": "Find the biggest upside, the adjacent market, and how it scales. Be optimistic — a score above 6 is expected if upside is real.",
+        "FirstPrinciples": "Strip assumptions to the core truth, then reason from it. Give the simplest version that would work.",
+        "Researcher": "Give market size, competitor intel, and timing. Cite the specific data you'd need to verify.",
+        "Buyer": "Answer as the actual paying customer: would YOU buy this, what is YOUR objection, and what price feels right? Do NOT describe the offer — react to it.",
+        "Judge": "Synthesize all findings into a clear verdict.",
+    }
+
+    def _build_prompt(self, task: Dict) -> str:
+        """Persona-specific prompt instructing the model to roleplay the critic."""
+        title = task.get("title", "Untitled")
+        objective = task.get("objective", "")
+        budget = task.get("budget", "n/a")
+        time_estimate = task.get("time_estimate", "n/a")
+        hint = self._PERSONA_HINTS.get(self.name, "")
+        return (
+            f'You are the "{self.name}" member of an adversarial review council. '
+            f"Your role: {self.role}.\n"
+            f"Your mandate: {self.objective}\n"
+            f"Your angle: {hint}\n\n"
+            f"TASK BEING EVALUATED:\n"
+            f"Title: {title}\n"
+            f"Objective: {objective}\n"
+            f"Budget: {budget}\n"
+            f"Time estimate (hours): {time_estimate}\n\n"
+            f"IMPORTANT: Do NOT restate or summarize the task. Speak AS {self.name} and "
+            f"deliver YOUR OWN judgment about THIS idea, using the angle above. "
+            f"Be specific and concrete; do NOT be sycophantic — genuinely stress-test.\n\n"
+            f'Respond with ONLY a JSON object in this exact shape (no markdown, no prose):\n'
+            f'{{"findings": ["...", "...", "..."], "score": <0.0 to 10.0>}}\n\n'
+            f'"findings" must be exactly 3 concise, specific findings relevant to your angle.\n'
+            f'"score" is your 0-10 rating of the idea\'s viability from your perspective.'
+        )
+
+    def _template_findings(self) -> List[str]:
+        """Offline fallback findings (only used if Ollama is unreachable)."""
         templates = {
             "Contrarian": [
                 "Critical flaw: [specific risk]",
@@ -62,7 +191,7 @@ class RoastPersona:
                 "Simpler path: [minimal version]"
             ],
             "Researcher": [
-                f"Market size: [TAM/SAM/SOM data]",
+                "Market size: [TAM/SAM/SOM data]",
                 "Competitor intel: [pricing/features]",
                 "Trend alignment: [market timing]"
             ],
@@ -78,11 +207,9 @@ class RoastPersona:
             ]
         }
         return templates.get(self.name, ["Analysis complete"])
-    
-    def _calculate_score(self, task: Dict) -> float:
-        """Calculate persona-specific score"""
-        # In production, use actual evaluation
-        # For demo, return realistic scores
+
+    def _template_score(self) -> float:
+        """Offline fallback scores (only used if Ollama is unreachable)."""
         scores = {
             "Contrarian": 3.0,      # Harsh critic
             "Expansionist": 8.5,   # Optimist
