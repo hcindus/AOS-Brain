@@ -53,7 +53,16 @@ Single SKU, exact + phrase match, tight ad group. Bid on **long-tail modifiers**
 
 ---
 
-## 3. 90-day sequence
+## 3. AOV / free-shipping math (the critical correction)
+
+A single Capton pourer = **$49.00**, but free shipping kicks in at **$500**. A one-unit order never clears the bar, and paid clicks on a $49 item with thin margin + shipping cost = no ROAS.
+
+**Fix — bundle/upsell to protect AOV:**
+- Ad landing page leads with the **Capton Variety Pack (12-pack, $558.00)** → clears $500 free-shipping automatically.
+- Or a multi-unit offer ("bar kit": 6× 1.5oz pourers + cleaning kit) to push AOV over the threshold.
+- Bid on bundle-intent terms too: `capton variety pack`, `capton 12 pack`, `capton pourer wholesale`.
+
+### 90-day sequence
 1. **Week 1–2:** launch exact/phrase ads, collect search-query report.
-2. **Week 3–4:** publish the buying guide fed by real queries; add FAQ schema.
-3. **Week 5+:** optimize bids, prune negatives, scale only ROAS-positive terms.
+2. **Week 3–4:** publish the buying guide fed by real queries; add FAQ schema; test Variety-Pack landing page vs single-SKU.
+3. **Week 5+:** optimize bids, prune negatives, scale only ROAS-positive terms and bundle offers.
