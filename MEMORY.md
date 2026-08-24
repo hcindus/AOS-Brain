@@ -239,6 +239,23 @@ grep -r "localStorage.*psdepot_cart" /var/www/psdepot.com --include="*.html" | g
 
 ---
 
+## Omarchy Manual (2026-08-24)
+- **Omarchy** = DHH's omakase Linux distro (Arch + Hyprland tiling WM + Quickshell). Keyboard-first, TUI-heavy, full-disk encryption mandatory.
+- **Manual** (condensed field guide, with Miles's notes) at `workspace/manuals/omarchy-manual.md` — emailed to Antonio.hudnall@gmail.com.
+- **Key facts to remember:**
+  - `Super + K` = show all hotkeys (the one to memorize).
+  - `Super + Space` = Omarchy menu (everything). `Super + Return` = terminal. `Super + W` = close.
+  - Unified clipboard: `Super+C/X/V` (works in terminal too).
+  - **Never `pacman -Syu`** — use `omarchy update` (does snapshots + migrations + config).
+  - **`omarchy` CLI = agent hook** — exposes all internal tooling; use it to let agents (Beets, etc.) customize the system.
+  - **`omarchy reinstall` wipes user config changes** (unlike snapshots which preserve /home + ~/.config). Reach for it carefully.
+  - Tmux prefix = `Ctrl+Space`. AI-agent layouts: `tdl [agent]`, `tds`, `tdlm`, `tsl N [cmd]`.
+  - Neovim (LazyVim-based, leader = Space). Snapshots via Limine bootloader (auto on update, rollback from boot menu).
+  - Full-disk install WIPES the drive — backup first. Wired/2.4GHz keyboard required (BT can't enter encryption pw at boot).
+  - 22 themes. Security: firewall on by default, SSH off until enabled, ufw-docker locks Docker.
+
+---
+
 ## Quick Reference
 
 ### Brain Status Commands
