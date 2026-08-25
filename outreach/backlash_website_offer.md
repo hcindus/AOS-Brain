@@ -1,26 +1,16 @@
-Subject: Your shop deserves better than a GoDaddy template — especially 20 miles from Sturgis
+Subject: Love what Backlash is doing — wanted to show you something
 
-Hi Nicole,
+Hi there,
 
-I was looking at Backlash Motorcycle Shop's site and wanted to reach out, because you're sitting on something most shops would kill for: you're 20 minutes from the Sturgis Motorcycle Rally, with 50+ years of combined wrenching experience, in-house powder coating, and full Harley motor rebuilds. That's a hell of a story.
+I came across Backlash Motorcycle Shop and just wanted to say — you've got a great thing going. Fifty-plus years of combined wrenching, in-house powder coating, full Harley motor rebuilds, and you're sitting right in the middle of the Black Hills, 20 minutes from Sturgis. That's a shop with a real story.
 
-But the website doesn't tell it.
+We liked your site, and it got us thinking about what it *could* look like if you ever wanted to take it further. Nothing wrong with what you have — but there's room to show off a bit more: a "Get a Quote" button so riders coming through for the rally can reach you in one tap, a clean photo gallery of your rebuilds and powder coat work, and a services page where someone can see at a glance that you do everything from oil changes to full motor builds.
 
-Right now it's built on a GoDaddy Website Builder template, and it's costing you business in three specific ways:
+We build sites like this fast and affordably — not a big-agency price tag, and you keep full ownership with no monthly platform fees.
 
-1. **No way for a rider to book or request a quote.** Someone who just limped in from Sturgis with a blown motor has to find your phone number and call during business hours. By then they've clicked to the next shop.
+If you're ever curious about what we could do, we'd love to show you a quick preview — no pressure, no obligation. Just something we thought might fit a shop like yours.
 
-2. **The Sturgis traffic is invisible to you.** Thousands of riders search "motorcycle repair near Sturgis" every rally season, and your site isn't optimized to show up when they do.
-
-3. **Your services are buried in a wall of text.** Motor rebuilds, powder coating, sandblasting, 20+ parts suppliers — that's a full-service shop, but a visitor has to read a paragraph to figure out you can actually do all of it.
-
-What I'd build for you:
-
-A modern, fast site that puts a "Request Service / Get a Quote" button in front of every visitor, showcases your work (rebuilds + powder coat jobs with photos), and is tuned so riders searching near Sturgis actually find you. Plus a clean Services page that lists everything at a glance — so nobody has to guess whether you do motor work or just oil changes.
-
-And here's the part I think you'll like: it's not a $5,000 agency project. We do this fast and affordable, and you keep 100% ownership — no monthly platform fees, no "we host it so you're stuck with us."
-
-If this sounds worth a quick call, just reply and we'll talk. Worst case you get a few free ideas for what's possible; best case you're the shop every Sturgis rider finds first.
+Either way, keep up the great work out there.
 
 — Performance Supply Depot
 (888) 881-6834
