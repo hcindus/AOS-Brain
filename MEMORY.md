@@ -1,5 +1,18 @@
 # MEMORY.md - Curated Knowledge
 
+## Strategic Enrichment — Steve Jobs @ NeXT (Stanford GSB talk) — 2026-08-25
+Captain shared transcript → distilled into North Star for AGI Company positioning.
+
+**Core frame: management vs. operational productivity.** PCs/Macs only ever attacked *management* productivity (shrink-wrapped apps). Real moat + money = *operational* apps — custom mission-critical tools that ARE the product ("an idea, a sales force, and a custom app to bang on databases"). No app → no product. **This is literally our Dark Factory value prop: custom agents as the "custom app" that makes a client's product real.**
+
+**Three pullable principles:**
+1. **Software > hardware as durable moat** (hardware churns 18mo; software takes 8-9yrs to catch up). Our edge = agents/manifests/orchestration, not boxes.
+2. **"20% of the code" = reusable objects.** NeXTSTEP won by writing ~20% of competitor code. Our skill library + Temporal + Hold-Out/Kidneys = same leverage. Don't re-plumb.
+3. **Direct sales creates demand; channels only fulfill it.** Revolutionary product can't ride a channel that can't demo it. Ties to consultative, demo-first agent selling.
+
+**Secondary notes:** "code you don't write is fastest/easiest to maintain"; technology windows ≈5yrs to open + 5yrs to exploit; JIT/manufacturing-as-software; policy-team consensus on ~25 truly-important decisions/yr.
+*Full note: `memory/2026-08-25.md`*
+
 ## Temporal Dark Factory — LIVE (2026-08-18)
 **Status:** ✅ DEPLOYED on Miles VPS (this host). Server + worker running.
 
