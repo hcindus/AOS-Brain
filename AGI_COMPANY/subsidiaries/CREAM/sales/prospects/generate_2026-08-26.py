@@ -503,10 +503,10 @@ def update_marketing_materials(prospects: List[Dict]):
             content = re.sub(r'(\d{2,3})-day streak', '117-day streak', content)
 
             # Update dates
-            content = content.replace("Updated: August 26, 2026", "Updated: August 26, 2026")
-            content = content.replace("Updated: August 26, 2026", "Updated: August 26, 2026")
-            content = content.replace("August 26, 2026", "August 26, 2026")
-            content = content.replace("August 26, 2026", "August 26, 2026")
+            content = content.replace("Updated: August 25, 2026", "Updated: August 26, 2026")
+            content = content.replace("Updated: August 24, 2026", "Updated: August 26, 2026")
+            content = content.replace("August 25, 2026", "August 26, 2026")
+            content = content.replace("August 24, 2026", "August 26, 2026")
 
             with open(path, 'w') as f:
                 f.write(content)
