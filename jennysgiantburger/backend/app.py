@@ -39,6 +39,13 @@ BUSINESS_NAME = _env("JENNY_BUSINESS_NAME", "Jenny's Giant Burger")
 BUSINESS_PHONE = _env("JENNY_BUSINESS_PHONE", "(707) 964-2235")
 BUSINESS_ADDRESS = _env("JENNY_BUSINESS_ADDRESS", "940 Main St N, Fort Bragg, CA 95437")
 
+# Ordering options (best-practice delivery/pickup flow)
+DELIVERY_FEE = float(_env("JENNY_DELIVERY_FEE", "3.99"))       # flat delivery fee
+DELIVERY_MIN_ORDER = float(_env("JENNY_DELIVERY_MIN", "0.0"))  # 0 = no minimum
+PICKUP_ETA_MIN = int(_env("JENNY_PICKUP_ETA", "15"))           # minutes
+DELIVERY_ETA_MIN = int(_env("JENNY_DELIVERY_ETA", "35"))       # minutes
+BUSINESS_HOURS = _env("JENNY_BUSINESS_HOURS", "Open daily 10:30am–9:00pm")
+
 # Twilio (SMS)
 TWILIO_SID = _env("TWILIO_ACCOUNT_SID")
 TWILIO_TOKEN = _env("TWILIO_AUTH_TOKEN")
@@ -202,9 +209,12 @@ def send_sms(to: str, body: str) -> dict:
 
 
 def _kitchen_sms(order: dict) -> str:
+    is_delivery = order.get("order_type") == "delivery"
     lines = [f"🔥 NEW ORDER #{order['id']}", ""]
-    lines.append(f"{order['customer_name']} · {order['order_type'].upper()}")
-    if order.get("pickup_time"):
+    lines.append(f"{order['customer_name']} · {'DELIVERY' if is_delivery else 'PICKUP'}")
+    if is_delivery and order.get("delivery_address"):
+        lines.append(f"Deliver to: {order['delivery_address']}")
+    if order.get("pickup_time") and not is_delivery:
         lines.append(f"Pickup: {order['pickup_time']}")
     lines.append("")
     for it in order["items"]:
@@ -217,17 +227,24 @@ def _kitchen_sms(order: dict) -> str:
 
 
 def _receipt_sms(order: dict) -> str:
+    is_delivery = order.get("order_type") == "delivery"
+    eta = order.get("eta_minutes", PICKUP_ETA_MIN)
     lines = [f"{BUSINESS_NAME}", "Your order receipt", ""]
     lines.append(f"Order #{order['id']}")
+    lines.append(f"{'Delivery' if is_delivery else 'Pickup'} · ~{eta} min")
+    if is_delivery and order.get("delivery_address"):
+        lines.append(f"To: {order['delivery_address']}")
     lines.append("")
     for it in order["items"]:
         lines.append(f"  {it['qty']}x {it['name']}  {_money(it['line_total'])}")
     lines.append("")
     lines.append(f"Subtotal: {_money(order['subtotal'])}")
     lines.append(f"Tax:      {_money(order['tax'])}")
+    if order.get("delivery_fee", 0) > 0:
+        lines.append(f"Delivery: {_money(order['delivery_fee'])}")
     lines.append(f"TOTAL:    {_money(order['total'])}")
     lines.append("")
-    lines.append(f"Pay at pickup · {BUSINESS_PHONE}")
+    lines.append(f"Pay at {'delivery' if is_delivery else 'pickup'} · {BUSINESS_PHONE}")
     lines.append("Thank you!")
     return "\n".join(lines)
 
@@ -243,8 +260,9 @@ class OrderItem(BaseModel):
 class OrderRequest(BaseModel):
     customer_name: str = Field(..., min_length=1, max_length=80)
     phone: str = Field(..., min_length=7, max_length=20)
-    order_type: str = Field("pickup")           # "pickup" | "dine-in"
+    order_type: str = Field("pickup")           # "pickup" | "delivery"
     pickup_time: Optional[str] = None
+    delivery_address: Optional[str] = Field(None, max_length=200)
     notes: Optional[str] = Field(None, max_length=300)
     items: List[OrderItem]
 
@@ -283,6 +301,16 @@ def menu():
 
 @app.post("/api/order")
 def create_order(req: OrderRequest):
+    # Validate order type
+    order_type = (req.order_type or "pickup").strip().lower()
+    if order_type not in ("pickup", "delivery"):
+        raise HTTPException(status_code=400, detail="order_type must be 'pickup' or 'delivery'")
+
+    is_delivery = order_type == "delivery"
+    delivery_address = (req.delivery_address or "").strip() if is_delivery else ""
+    if is_delivery and not delivery_address:
+        raise HTTPException(status_code=400, detail="Delivery address is required")
+
     # Validate items
     resolved = []
     for line in req.items:
@@ -304,7 +332,16 @@ def create_order(req: OrderRequest):
 
     subtotal = round(sum(i["line_total"] for i in resolved), 2)
     tax = round(subtotal * TAX_RATE, 2)
-    total = round(subtotal + tax, 2)
+    delivery_fee = round(DELIVERY_FEE, 2) if is_delivery else 0.0
+
+    if is_delivery and DELIVERY_MIN_ORDER > 0 and subtotal < DELIVERY_MIN_ORDER:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Delivery orders require a minimum of {_money(DELIVERY_MIN_ORDER)}",
+        )
+
+    total = round(subtotal + tax + delivery_fee, 2)
+    eta_minutes = DELIVERY_ETA_MIN if is_delivery else PICKUP_ETA_MIN
 
     order_id = str(uuid.uuid4())[:6].upper()
     now = datetime.now(timezone.utc).isoformat()
@@ -313,13 +350,16 @@ def create_order(req: OrderRequest):
         "id": order_id,
         "customer_name": req.customer_name.strip(),
         "phone": req.phone.strip(),
-        "order_type": req.order_type,
-        "pickup_time": req.pickup_time,
+        "order_type": order_type,
+        "pickup_time": (req.pickup_time or "").strip() if not is_delivery else "",
+        "delivery_address": delivery_address,
         "notes": (req.notes or "").strip(),
         "items": resolved,
         "subtotal": subtotal,
         "tax": tax,
+        "delivery_fee": delivery_fee,
         "total": total,
+        "eta_minutes": eta_minutes,
         "status": "new",
         "created_at": now,
     }
