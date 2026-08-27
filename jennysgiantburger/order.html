@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Order Online — Jenny's Giant Burger</title>
+<meta name="description" content="Order online from Jenny's Giant Burger, Fort Bragg. Jumbo burgers, fries, and real shakes. Pay at pickup." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --beef:#c0392b; --beef-dark:#8f2718;
+    --mustard:#e3a53b; --mustard-light:#f0c46a;
+    --pickle:#6f8f3a;
+    --cream:#fdf6ec; --cream-2:#f5e6cf;
+    --bun:#e8b46a; --brown:#3d2b1a; --brown-soft:#6b5136;
+    --ink:#241505; --white:#fff;
+    --shadow:0 12px 40px rgba(61,43,26,.16);
+    --radius:20px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;color:var(--ink);background:var(--cream);line-height:1.5;padding-bottom:90px}
+  h1,h2,h3,.display{font-family:'Lilita One','Nunito',sans-serif;font-weight:400;letter-spacing:.5px}
+  a{text-decoration:none;color:inherit}
+
+  /* header */
+  header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px 22px;background:rgba(253,246,236,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(61,43,26,.08)}
+  header .brand{display:flex;align-items:center;gap:12px}
+  header .logo{width:44px;height:44px;border-radius:12px;background:var(--beef);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Lilita One',sans-serif;font-size:1.1rem}
+  header .name{font-family:'Lilita One',sans-serif;color:var(--beef);font-size:1.1rem;line-height:1}
+  header .name small{display:block;font-family:'Nunito',sans-serif;font-weight:700;font-size:.6rem;color:var(--brown-soft);letter-spacing:2px;text-transform:uppercase}
+  .cart-btn{position:relative;display:inline-flex;align-items:center;gap:8px;background:var(--beef);color:#fff;border:none;border-radius:999px;padding:11px 18px;font-weight:800;font-size:.95rem;cursor:pointer;box-shadow:0 8px 22px rgba(192,57,43,.35)}
+  .cart-btn .count{background:var(--mustard);color:var(--brown);border-radius:999px;min-width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;padding:0 6px}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+  .hero{text-align:center;padding:34px 0 8px}
+  .hero h1{font-size:clamp(2rem,6vw,3.4rem);color:var(--beef);text-shadow:0 3px 0 rgba(255,255,255,.6)}
+  .hero p{color:var(--brown-soft);font-weight:600;max-width:520px;margin:8px auto 0}
+
+  .category{margin-top:34px}
+  .category h2{display:flex;align-items:center;gap:10px;font-size:1.6rem;color:var(--brown);margin-bottom:16px}
+  .category h2 .em{font-size:1.6rem}
+
+  .items{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+  .item{background:#fff;border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px;transition:transform .2s}
+  .item:hover{transform:translateY(-3px)}
+  .item .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+  .item .fan{background:var(--mustard);color:var(--brown);font-weight:800;font-size:.62rem;padding:3px 9px;border-radius:999px;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap}
+  .item h3{font-size:1.08rem;color:var(--brown)}
+  .item .desc{color:var(--brown-soft);font-weight:600;font-size:.85rem;flex:1}
+  .item .foot{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+  .item .price{font-family:'Lilita One',sans-serif;font-size:1.4rem;color:var(--beef)}
+  .add-btn{background:var(--beef);color:#fff;border:none;border-radius:999px;padding:8px 16px;font-weight:800;cursor:pointer;font-size:.9rem;transition:transform .12s,background .15s}
+  .add-btn:hover{background:var(--beef-dark)}
+  .add-btn:active{transform:scale(.95)}
+
+  /* cart drawer */
+  .overlay{position:fixed;inset:0;background:rgba(36,21,5,.45);z-index:90;opacity:0;pointer-events:none;transition:opacity .25s}
+  .overlay.show{opacity:1;pointer-events:auto}
+  .cart{position:fixed;right:0;top:0;bottom:0;width:min(420px,100vw);background:var(--cream);z-index:95;transform:translateX(105%);transition:transform .3s ease;display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(0,0,0,.2)}
+  .cart.open{transform:none}
+  .cart-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;background:#fff;border-bottom:1px solid rgba(61,43,26,.08)}
+  .cart-head h2{font-size:1.4rem;color:var(--brown)}
+  .close-btn{background:none;border:none;font-size:1.6rem;cursor:pointer;color:var(--brown-soft);line-height:1}
+  .cart-items{flex:1;overflow-y:auto;padding:16px 22px}
+  .cart-empty{text-align:center;color:var(--brown-soft);font-weight:700;padding:40px 10px;font-size:1.05rem}
+  .cart-line{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px dashed rgba(61,43,26,.12)}
+  .cart-line .info{flex:1}
+  .cart-line .nm{font-weight:800;color:var(--brown)}
+  .cart-line .pr{font-weight:700;color:var(--beef);font-size:.9rem}
+  .qty{display:flex;align-items:center;gap:8px}
+  .qty button{width:28px;height:28px;border-radius:8px;border:1px solid rgba(61,43,26,.2);background:#fff;font-weight:800;cursor:pointer;font-size:1rem;line-height:1}
+  .qty span{min-width:22px;text-align:center;font-weight:800}
+  .rm{background:none;border:none;color:var(--brown-soft);cursor:pointer;font-size:1rem}
+  .cart-foot{padding:18px 22px;background:#fff;border-top:1px solid rgba(61,43,26,.08)}
+  .totals{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+  .totals .row{display:flex;justify-content:space-between;font-weight:700;color:var(--brown-soft);font-size:.95rem}
+  .totals .grand{font-family:'Lilita One',sans-serif;font-size:1.5rem;color:var(--beef);font-weight:400;border-top:2px dashed rgba(61,43,26,.15);padding-top:10px;margin-top:4px}
+  .checkout-btn{width:100%;background:var(--beef);color:#fff;border:none;border-radius:999px;padding:16px;font-weight:800;font-size:1.1rem;cursor:pointer;box-shadow:0 8px 22px rgba(192,57,43,.4)}
+  .checkout-btn:disabled{opacity:.5;cursor:not-allowed}
+
+  /* checkout form */
+  .form label{display:block;font-weight:800;color:var(--brown);font-size:.85rem;margin:14px 0 5px}
+  .form input,.form select,.form textarea{width:100%;padding:12px 14px;border:2px solid rgba(61,43,26,.15);border-radius:12px;font-family:inherit;font-size:1rem;background:#fff}
+  .form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--mustard)}
+  .otype{display:flex;gap:10px;margin-top:6px}
+  .otype button{flex:1;padding:12px;border:2px solid rgba(61,43,26,.15);border-radius:12px;background:#fff;font-weight:800;cursor:pointer;color:var(--brown)}
+  .otype button.sel{border-color:var(--beef);background:#fff5f3;color:var(--beef)}
+
+  /* confirmation */
+  .confirm{text-align:center;padding:20px}
+  .confirm .tick{font-size:4rem}
+  .confirm h2{color:var(--brown);font-size:1.8rem;margin:10px 0}
+  .confirm .oid{display:inline-block;background:var(--mustard);color:var(--brown);font-weight:800;border-radius:999px;padding:8px 20px;font-size:1.3rem;margin:10px 0}
+  .receipt{background:#fff;border-radius:var(--radius);padding:24px;text-align:left;box-shadow:var(--shadow);margin:20px 0;font-family:monospace;font-size:.95rem;white-space:pre-wrap;color:var(--brown)}
+  .note{color:var(--brown-soft);font-weight:700;font-size:.9rem}
+
+  .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--brown);color:#fff;padding:12px 22px;border-radius:999px;font-weight:800;z-index:120;opacity:0;transition:.3s;pointer-events:none;box-shadow:var(--shadow)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo">JGB</div>
+    <div class="name">Jenny's Giant Burger<small>Order Online</small></div>
+  </div>
+  <a href="index.html" style="font-weight:800;color:var(--brown-soft);font-size:.9rem">← Back</a>
+  <button class="cart-btn" onclick="openCart()">🛒 Cart <span class="count" id="cartCount">0</span></button>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <h1>Order Online</h1>
+    <p>Pick your favorites, we'll have it hot and ready. Pay at pickup.</p>
+  </div>
+
+  <div id="menuRoot"></div>
+
+  <div class="note" style="text-align:center;margin-top:36px">
+    Takeout &amp; dine-in only (no delivery) · Pay at pickup · <a href="tel:+17079642235" style="color:var(--beef);font-weight:800">(707) 964-2235</a>
+  </div>
+</div>
+
+<!-- CART DRAWER -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<aside class="cart" id="cart">
+  <div class="cart-head">
+    <h2>Your Order</h2>
+    <button class="close-btn" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-foot" id="cartFoot"></div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = '/api/jenny';
+const TAX_RATE_DEFAULT = 0.0875;
+
+// Menu (mirrors backend — graceful fallback if API is unreachable)
+const MENU = {
+  "giant_burgers": {label:"Giant Burgers",emoji:"🍔",items:[
+    {id:"giant_hamburger",name:"Giant Hamburger",desc:"1/3 lb jumbo patty, old-fashioned style",price:5.40,fan:true},
+    {id:"giant_cheeseburger",name:"Giant Cheeseburger",desc:"1/3 lb giant with melty cheese",price:5.80},
+    {id:"double_giant_hamburger",name:"Double Giant Hamburger",desc:"Two jumbo patties",price:6.75},
+    {id:"double_giant_cheeseburger",name:"Double Giant Cheeseburger",desc:"Two jumbo patties, double cheese",price:6.95,fan:true},
+  ]},
+  "classic_burgers": {label:"Classic Burgers",emoji:"🧀",items:[
+    {id:"regular_hamburger",name:"Regular Hamburger",desc:"Classic single patty",price:3.90},
+    {id:"regular_cheeseburger",name:"Regular Cheeseburger",desc:"Classic patty with cheese",price:4.10},
+    {id:"double_regular_hamburger",name:"Double Regular Hamburger",desc:"Two classic patties",price:5.20},
+    {id:"double_regular_cheeseburger",name:"Double Regular Cheeseburger",desc:"Two classic patties, cheese",price:5.35},
+  ]},
+  "veggie": {label:"Veggie",emoji:"🥬",items:[
+    {id:"gardenburger",name:"Gardenburger",desc:"Grilled meat-free patty",price:4.95},
+    {id:"gardenburger_cheese",name:"Gardenburger With Cheese",desc:"Garden patty + melty cheese",price:5.35},
+    {id:"veggie_sandwich",name:"Veggie Sandwich",desc:"Fresh veggie stack",price:2.50},
+    {id:"veggie_sandwich_cheese",name:"Veggie Sandwich With Cheese",desc:"Fresh veggie stack + cheese",price:2.75},
+  ]},
+  "sides": {label:"Sides",emoji:"🍟",items:[
+    {id:"french_fries",name:"French Fries",desc:"Golden & crisp",price:2.20},
+    {id:"cookies",name:"Cookies",desc:"A sweet little something",price:1.25},
+  ]},
+  "ice_cream": {label:"Ice Cream",emoji:"🍦",items:[
+    {id:"shakes",name:"Shakes",desc:"Thick, made to order",price:3.55,fan:true},
+    {id:"malts",name:"Malts",desc:"Classic malted shake",price:3.75},
+    {id:"sundaes",name:"Sundaes",desc:"Ice cream with the good stuff",price:3.55},
+    {id:"cone",name:"Cone",desc:"Old-fashioned scoop",price:1.95},
+  ]},
+  "soft_drinks": {label:"Soft Drinks",emoji:"🥤",items:[
+    {id:"pepsi",name:"Pepsi",desc:"",price:2.75},
+    {id:"diet_pepsi",name:"Diet Pepsi",desc:"",price:2.75},
+    {id:"mountain_dew",name:"Mountain Dew",desc:"",price:2.75},
+    {id:"root_beer",name:"Root Beer",desc:"",price:2.75},
+    {id:"lemonade",name:"Lemonade",desc:"",price:2.75},
+    {id:"ice_tea",name:"Ice Tea",desc:"",price:2.75},
+  ]},
+};
+
+let taxRate = TAX_RATE_DEFAULT;
+let cart = {};          // id -> qty
+let orderType = 'pickup';
+
+const money = v => '$' + v.toFixed(2);
+
+function renderMenu(){
+  const root = document.getElementById('menuRoot');
+  root.innerHTML = '';
+  for (const [key, cat] of Object.entries(MENU)) {
+    const sec = document.createElement('div');
+    sec.className = 'category';
+    sec.innerHTML = `<h2><span class="em">${cat.emoji}</span>${cat.label}</h2>`;
+    const grid = document.createElement('div');
+    grid.className = 'items';
+    for (const it of cat.items) {
+      const card = document.createElement('div');
+      card.className = 'item';
+      const fan = it.fan ? '<span class="fan">Fan Fav</span>' : '';
+      card.innerHTML = `
+        <div class="top">${fan}<span class="price">${money(it.price)}</span></div>
+        <h3>${it.name}</h3>
+        <div class="desc">${it.desc || '&nbsp;'}</div>
+        <div class="foot"><span></span><button class="add-btn" onclick="addItem('${it.id}')">+ Add</button></div>`;
+      grid.appendChild(card);
+    }
+    sec.appendChild(grid);
+    root.appendChild(sec);
+  }
+}
+
+function addItem(id){ cart[id] = (cart[id]||0)+1; renderCart(); toast('Added ✓'); }
+function decItem(id){ if(cart[id]){ cart[id]--; if(cart[id]<=0) delete cart[id]; } renderCart(); }
+function incItem(id){ cart[id] = (cart[id]||0)+1; renderCart(); }
+function rmItem(id){ delete cart[id]; renderCart(); }
+
+function cartLines(){
+  const lines = [];
+  for (const [id,qty] of Object.entries(cart)) {
+    const it = findItem(id);
+    if (it) lines.push({...it, qty});
+  }
+  return lines;
+}
+function findItem(id){
+  for (const cat of Object.values(MENU)) for (const it of cat.items) if (it.id===id) return it;
+  return null;
+}
+function subtotal(){ return cartLines().reduce((s,l)=>s+l.price*l.qty,0); }
+function tax(){ return subtotal()*taxRate; }
+function total(){ return subtotal()+tax(); }
+
+function renderCart(){
+  const lines = cartLines();
+  const count = lines.reduce((s,l)=>s+l.qty,0);
+  document.getElementById('cartCount').textContent = count;
+
+  const itemsEl = document.getElementById('cartItems');
+  const footEl = document.getElementById('cartFoot');
+
+  if (lines.length === 0) {
+    itemsEl.innerHTML = '<div class="cart-empty">🛒 Your cart is empty.<br>Add something tasty!</div>';
+    footEl.innerHTML = '';
+    return;
+  }
+
+  itemsEl.innerHTML = lines.map(l => `
+    <div class="cart-line">
+      <div class="info">
+        <div class="nm">${l.name}</div>
+        <div class="pr">${money(l.price)} each</div>
+      </div>
+      <div class="qty">
+        <button onclick="decItem('${l.id}')">−</button>
+        <span>${l.qty}</span>
+        <button onclick="incItem('${l.id}')">+</button>
+      </div>
+      <button class="rm" onclick="rmItem('${l.id}')" title="remove">🗑</button>
+    </div>`).join('');
+
+  footEl.innerHTML = `
+    <div class="totals">
+      <div class="row"><span>Subtotal</span><span>${money(subtotal())}</span></div>
+      <div class="row"><span>Tax (${(taxRate*100).toFixed(2)}%)</span><span>${money(tax())}</span></div>
+      <div class="row grand"><span>Total</span><span>${money(total())}</span></div>
+    </div>
+    <button class="checkout-btn" onclick="showCheckout()">Checkout →</button>`;
+}
+
+function openCart(){ document.getElementById('cart').classList.add('open'); document.getElementById('overlay').classList.add('show'); }
+function closeCart(){ document.getElementById('cart').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
+
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1600); }
+
+function showCheckout(){
+  const lines = cartLines();
+  if (!lines.length) return;
+  const foot = document.getElementById('cartFoot');
+  foot.innerHTML = `
+    <form class="form" onsubmit="submitOrder(event)">
+      <label>Your name *</label>
+      <input id="f_name" required maxlength="80" placeholder="Denise" />
+      <label>Mobile number (for your receipt) *</label>
+      <input id="f_phone" type="tel" required maxlength="20" placeholder="(707) 555-0123" />
+      <label>Order type</label>
+      <div class="otype">
+        <button type="button" class="sel" id="ot_pickup" onclick="setType('pickup')">🥡 Pickup</button>
+        <button type="button" id="ot_dine" onclick="setType('dine-in')">🍽 Dine-in</button>
+      </div>
+      <label>Pickup time (optional)</label>
+      <input id="f_time" placeholder="e.g. 12:30 PM" />
+      <label>Notes (optional)</label>
+      <textarea id="f_notes" maxlength="300" rows="2" placeholder="No onions, extra sauce…"></textarea>
+      <div style="display:flex;gap:10px;margin-top:18px">
+        <button type="button" onclick="renderCart()" style="flex:1;background:transparent;border:2px solid rgba(61,43,26,.15);border-radius:999px;padding:14px;font-weight:800;cursor:pointer;color:var(--brown)">Back</button>
+        <button type="submit" class="checkout-btn" style="flex:2">Place Order · ${money(total())}</button>
+      </div>
+    </form>`;
+}
+
+function setType(t){
+  orderType = t;
+  document.getElementById('ot_pickup').classList.toggle('sel', t==='pickup');
+  document.getElementById('ot_dine').classList.toggle('sel', t==='dine-in');
+}
+
+async function submitOrder(e){
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type=submit]');
+  btn.disabled = true; btn.textContent = 'Placing order…';
+
+  const payload = {
+    customer_name: document.getElementById('f_name').value.trim(),
+    phone: document.getElementById('f_phone').value.trim(),
+    order_type: orderType,
+    pickup_time: document.getElementById('f_time').value.trim() || null,
+    notes: document.getElementById('f_notes').value.trim() || null,
+    items: cartLines().map(l => ({id: l.id, qty: l.qty})),
+  };
+
+  try {
+    const r = await fetch(API + '/order', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+    });
+    const data = await r.json();
+    if (!r.ok || !data.ok) throw new Error(data.detail || data.error || 'Order failed');
+    showConfirm(data.order);
+  } catch(err) {
+    toast('⚠️ ' + err.message);
+    btn.disabled = false; btn.textContent = 'Place Order · ' + money(total());
+  }
+}
+
+function showConfirm(order){
+  closeCart();
+  cart = {};
+  renderCart();
+  const root = document.getElementById('menuRoot');
+  const receiptText = [
+    `JENNY'S GIANT BURGER`,
+    `940 Main St N, Fort Bragg, CA`,
+    `(707) 964-2235`,
+    ``,
+    `Order #${order.id}`,
+    `Name: ${order.customer_name}`,
+    `Type: ${order.order_type}`,
+    ...(order.pickup_time ? [`Pickup: ${order.pickup_time}`] : []),
+    `--------------------------------`,
+    ...order.items.map(i => `${i.qty}x ${i.name}   ${money(i.line_total)}`),
+    `--------------------------------`,
+    `Subtotal: ${money(order.subtotal)}`,
+    `Tax:      ${money(order.tax)}`,
+    `TOTAL:    ${money(order.total)}`,
+    `--------------------------------`,
+    `PAY AT PICKUP`,
+    `Thank you! 🍔`,
+  ].join('\n');
+
+  root.innerHTML = `
+    <div class="confirm">
+      <div class="tick">✅</div>
+      <h2>Order placed!</h2>
+      <div class="oid">#${order.id}</div>
+      <p class="note">We've texted the kitchen. You'll get a receipt SMS at <strong>${order.phone}</strong>.</p>
+      <div class="receipt">${receiptText.replace(/</g,'&lt;')}</div>
+      <button class="checkout-btn" onclick="location.reload()">Order Again</button>
+    </div>`;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// Boot
+(async function(){
+  try {
+    const h = await fetch(API + '/health').then(r=>r.json());
+    if (h && h.tax_rate) taxRate = h.tax_rate;
+  } catch(e) { /* fallback to default */ }
+  renderMenu();
+  renderCart();
+})();
+</script>
+</body>
+</html>
