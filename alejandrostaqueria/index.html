@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Alejandro's Taqueria — Fairfield's Home of Birria &amp; Quesabirrias</title>
+<meta name="description" content="Alejandro's Taqueria, Fairfield CA. Birria, quesabirrias, burritos, tacos &amp; more — made fresh, family owned. (707) 429-2155" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --chili:#c0392b;
+    --chili-dark:#8e2420;
+    --salsa:#2f7d32;
+    --salsa-soft:#5aa65c;
+    --maize:#e3a53b;
+    --maize-light:#f0c46a;
+    --cream:#fdf6ec;
+    --cream-2:#f5e6cf;
+    --brown:#3d2b1a;
+    --brown-soft:#6b5136;
+    --ink:#241505;
+    --white:#fff;
+    --shadow:0 12px 40px rgba(61,43,26,.16);
+    --radius:20px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Nunito',system-ui,-apple-system,sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    overflow-x:hidden;
+    line-height:1.6;
+  }
+  h1,h2,h3,.display{font-family:'Lilita One','Nunito',sans-serif;font-weight:400;letter-spacing:.5px}
+  a{text-decoration:none;color:inherit}
+  img{max-width:100%;display:block}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 28px;
+    background:rgba(253,246,236,.85);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(61,43,26,.08);
+    transition:box-shadow .3s;
+  }
+  nav.scrolled{box-shadow:0 6px 24px rgba(61,43,26,.12)}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand .logo{width:50px;height:50px;border-radius:14px;background:var(--chili);box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;color:#fff;font-family:'Lilita One',sans-serif;font-size:1.3rem}
+  .brand .name{font-family:'Lilita One',sans-serif;font-size:1.15rem;color:var(--chili);line-height:1}
+  .brand .name small{display:block;font-family:'Nunito',sans-serif;font-weight:700;font-size:.6rem;color:var(--brown-soft);letter-spacing:2px;text-transform:uppercase}
+  .nav-links{display:flex;gap:26px;font-weight:800;color:var(--brown)}
+  .nav-links a{position:relative;padding:4px 0;font-size:.95rem}
+  .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:3px;background:var(--salsa);border-radius:2px;transition:width .25s}
+  .nav-links a:hover::after{width:100%}
+  .nav-cta{display:flex;align-items:center;gap:12px}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;
+    padding:12px 22px;border-radius:999px;border:none;cursor:pointer;
+    transition:transform .18s,box-shadow .18s,background .18s;
+    white-space:nowrap;
+  }
+  .btn:active{transform:scale(.97)}
+  .btn-red{background:var(--chili);color:#fff;box-shadow:0 8px 22px rgba(192,57,43,.4)}
+  .btn-red:hover{background:var(--chili-dark);transform:translateY(-2px)}
+  .btn-green{background:var(--salsa);color:#fff;box-shadow:0 8px 22px rgba(47,125,50,.35)}
+  .btn-green:hover{background:#256228;transform:translateY(-2px)}
+  .btn-maize{background:var(--maize);color:var(--brown);box-shadow:0 8px 22px rgba(227,165,59,.4)}
+  .btn-maize:hover{background:var(--maize-light);transform:translateY(-2px)}
+  .btn-ghost{background:transparent;color:var(--chili);border:2px solid var(--chili)}
+  .btn-ghost:hover{background:var(--chili);color:#fff}
+  .nav-cta .phone-btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;color:var(--chili);font-size:.95rem}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;padding:150px 24px 90px;
+    text-align:center;overflow:hidden;
+    background:
+      radial-gradient(circle at 15% 20%,rgba(227,165,59,.18),transparent 40%),
+      radial-gradient(circle at 85% 15%,rgba(47,125,50,.14),transparent 40%),
+      radial-gradient(circle at 50% 80%,rgba(192,57,43,.12),transparent 45%),
+      linear-gradient(180deg,var(--cream-2),var(--cream));
+  }
+  .hero-logo{width:150px;height:150px;margin:0 auto 20px;border-radius:30px;background:var(--chili);box-shadow:0 16px 50px rgba(61,43,26,.18);overflow:hidden;display:flex;align-items:center;justify-content:center;animation:pop .7s .05s ease both;color:#fff;font-family:'Lilita One',sans-serif;font-size:3.6rem}
+  .hero .badge{
+    display:inline-block;background:var(--salsa);color:#fff;
+    font-weight:800;font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;
+    padding:8px 18px;border-radius:999px;margin-bottom:22px;
+    animation:pop .6s ease both;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem,7vw,5.2rem);color:var(--chili);
+    line-height:1.02;margin-bottom:18px;text-shadow:0 3px 0 rgba(255,255,255,.6);
+    animation:rise .7s .1s ease both;
+  }
+  .hero h1 span{color:var(--brown)}
+  .hero .sub{
+    max-width:620px;margin:0 auto 34px;font-size:1.15rem;font-weight:600;color:var(--brown-soft);
+    animation:rise .7s .2s ease both;
+  }
+  .hero .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:rise .7s .3s ease both}
+  .hero .cta-row .btn{font-size:1.1rem;padding:16px 30px}
+  .hero-illo{position:relative;width:min(340px,80vw);margin:48px auto 0;animation:rise .8s .35s ease both}
+  .hero-illo svg{width:100%;height:auto}
+  .steam{position:absolute;top:-18px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
+  .steam span{
+    width:14px;height:40px;border-radius:50%;
+    background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.85));
+    animation:steamUp 2.4s infinite ease-in-out;
+  }
+  .steam span:nth-child(2){animation-delay:.4s;height:34px}
+  .steam span:nth-child(3){animation-delay:.8s;height:46px}
+
+  .float-bits{position:absolute;inset:0;pointer-events:none}
+  .bit{position:absolute;font-size:1.8rem;opacity:.5;animation:floaty 6s ease-in-out infinite}
+  .bit.b1{top:18%;left:8%;animation-delay:0s}
+  .bit.b2{top:24%;right:9%;animation-delay:1.2s;font-size:2.4rem}
+  .bit.b3{bottom:16%;left:14%;animation-delay:2s}
+  .bit.b4{bottom:20%;right:16%;animation-delay:.6s;font-size:2.2rem}
+
+  /* ---------- TICKER ---------- */
+  .ticker{background:var(--chili);color:#fff;overflow:hidden;padding:12px 0;border-top:3px solid var(--salsa);border-bottom:3px solid var(--salsa)}
+  .ticker-track{display:flex;gap:48px;white-space:nowrap;animation:scroll 28s linear infinite;width:max-content}
+  .ticker span{font-family:'Lilita One',sans-serif;font-size:1.05rem;letter-spacing:1px;display:inline-flex;align-items:center;gap:12px}
+  .ticker span::after{content:'🌮';font-size:1.3rem}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:80px 24px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .sec-head{text-align:center;margin-bottom:52px}
+  .sec-head .eyebrow{color:var(--chili);font-weight:800;letter-spacing:2px;text-transform:uppercase;font-size:.8rem}
+  .sec-head h2{font-size:clamp(1.9rem,4.5vw,3rem);color:var(--brown);margin:10px 0 12px}
+  .sec-head p{color:var(--brown-soft);font-weight:600;max-width:560px;margin:0 auto}
+
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- TRUST / STATS ---------- */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px}
+  .stat{background:#fff;border-radius:var(--radius);padding:26px 18px;text-align:center;box-shadow:var(--shadow);border-top:5px solid var(--salsa);transition:transform .25s}
+  .stat:hover{transform:translateY(-6px)}
+  .stat .num{font-family:'Lilita One',sans-serif;font-size:2.2rem;color:var(--chili)}
+  .stat .lbl{font-weight:800;color:var(--brown);font-size:.95rem;margin-top:2px}
+  .stat .sub{font-size:.78rem;color:var(--brown-soft);font-weight:600}
+
+  /* ---------- STORY ---------- */
+  .story{background:#fff;border-radius:calc(var(--radius)*1.4);box-shadow:var(--shadow);padding:56px 40px}
+  .story-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+  .story h2{color:var(--brown);font-size:clamp(1.8rem,3.5vw,2.6rem);margin-bottom:18px}
+  .story h2 em{color:var(--chili);font-style:normal}
+  .story p{color:var(--brown-soft);font-weight:600;margin-bottom:16px;font-size:1.05rem}
+  .story .fresh-list{list-style:none;margin-top:20px}
+  .story .fresh-list li{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed rgba(61,43,26,.12);font-weight:700;color:var(--brown)}
+  .story .fresh-list li span{font-size:1.3rem;flex-shrink:0}
+  .story-illo{display:flex;justify-content:center}
+
+  /* ---------- MENU ---------- */
+  .menu{background:linear-gradient(180deg,var(--cream),var(--cream-2))}
+  .menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+  .menu-card{background:#fff;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s}
+  .menu-card:hover{transform:translateY(-6px);box-shadow:0 18px 48px rgba(61,43,26,.22)}
+  .menu-card .tag{position:absolute;top:14px;right:14px;background:var(--maize);color:var(--brown);font-weight:800;font-size:.7rem;padding:4px 10px;border-radius:999px;letter-spacing:.5px}
+  .menu-card .cat{font-weight:800;font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--salsa)}
+  .menu-card .emoji{font-size:2.2rem;display:block;margin-top:4px}
+  .menu-card h3{font-size:1.25rem;color:var(--brown);margin:8px 0 4px}
+  .menu-card .desc{color:var(--brown-soft);font-weight:600;font-size:.9rem;min-height:42px}
+  .menu-card .price{font-family:'Lilita One',sans-serif;font-size:1.6rem;color:var(--chili);margin-top:8px}
+  .menu-card .price small{font-family:'Nunito',sans-serif;font-size:.75rem;color:var(--brown-soft);font-weight:700}
+  .menu-note{text-align:center;margin-top:26px;color:var(--brown-soft);font-weight:700;font-size:.9rem;max-width:680px;margin-left:auto;margin-right:auto}
+  .menu-note .chip{display:inline-block;background:var(--cream-2);border:1px solid rgba(61,43,26,.1);border-radius:999px;padding:6px 16px;margin-top:10px;color:var(--brown)}
+
+  /* ---------- GALLERY ---------- */
+  .gallery{background:#fff}
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .gallery-item{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);cursor:pointer;aspect-ratio:1/1}
+  .gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+  .gallery-item:hover img{transform:scale(1.08)}
+  .gallery-item .cap{position:absolute;left:0;right:0;bottom:0;padding:34px 18px 16px;background:linear-gradient(transparent,rgba(36,21,5,.88));color:#fff;font-weight:800;font-size:.95rem;transform:translateY(105%);transition:transform .35s ease}
+  .gallery-item:hover .cap{transform:none}
+  .gallery-item.feature{grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
+  .gallery-item.feature .cap{font-size:1.15rem}
+  @media(max-width:760px){
+    .gallery-grid{grid-template-columns:repeat(2,1fr)}
+    .gallery-item.feature{grid-column:span 2;grid-row:span 1;aspect-ratio:16/10}
+  }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+  .quote{background:#fff;border-radius:var(--radius);padding:30px;box-shadow:var(--shadow);position:relative}
+  .quote::before{content:'“';font-family:'Lilita One',sans-serif;font-size:4rem;color:var(--salsa);line-height:0;position:absolute;top:30px;left:20px}
+  .quote p{font-weight:700;color:var(--brown);font-style:italic;padding-top:18px;position:relative;z-index:1}
+  .quote .by{margin-top:14px;font-weight:800;color:var(--chili);font-size:.85rem;letter-spacing:.5px;text-transform:uppercase}
+
+  /* ---------- CTA BANNER ---------- */
+  .cta-banner{background:linear-gradient(135deg,var(--chili),var(--chili-dark));color:#fff;text-align:center;border-radius:calc(var(--radius)*1.4);padding:64px 32px;box-shadow:0 20px 60px rgba(192,57,43,.4);position:relative;overflow:hidden}
+  .cta-banner::before,.cta-banner::after{content:'🌮';position:absolute;font-size:4rem;opacity:.18;animation:floaty 7s ease-in-out infinite}
+  .cta-banner::before{top:14%;left:8%}
+  .cta-banner::after{bottom:10%;right:8%;animation-delay:1.5s}
+  .cta-banner h2{font-size:clamp(2rem,5vw,3.2rem);margin-bottom:14px;text-shadow:0 3px 0 rgba(0,0,0,.15)}
+  .cta-banner p{font-weight:600;max-width:560px;margin:0 auto 30px;font-size:1.1rem}
+  .cta-banner .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .cta-banner .btn-maize{font-size:1.15rem;padding:18px 34px}
+  .cta-banner .btn-white{background:#fff;color:var(--chili);box-shadow:0 8px 22px rgba(0,0,0,.2)}
+  .cta-banner .btn-white:hover{transform:translateY(-2px)}
+
+  /* ---------- INFO / FOOTER ---------- */
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:48px}
+  .info-card{background:#fff;border-radius:var(--radius);padding:26px;box-shadow:var(--shadow);text-align:center}
+  .info-card .ic{font-size:2rem}
+  .info-card h4{color:var(--brown);margin:10px 0 6px}
+  .info-card p{color:var(--brown-soft);font-weight:600;font-size:.95rem}
+  .info-card a{color:var(--chili);font-weight:800}
+  footer{background:var(--brown);color:var(--cream-2);text-align:center;padding:40px 24px;margin-top:80px}
+  footer .flogo{font-family:'Lilita One',sans-serif;font-size:1.5rem;color:#fff}
+  footer p{font-weight:600;opacity:.8;font-size:.9rem;margin-top:10px}
+  footer .socials{margin-top:16px;display:flex;gap:14px;justify-content:center}
+  footer .socials a{background:rgba(255,255,255,.1);width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:background .2s}
+  footer .socials a:hover{background:var(--chili)}
+
+  /* ---------- STICKY MOBILE CTA ---------- */
+  .sticky-cta{position:fixed;bottom:0;left:0;right:0;z-index:90;display:none;gap:10px;padding:12px 16px;background:rgba(253,246,236,.95);backdrop-filter:blur(10px);border-top:1px solid rgba(61,43,26,.1)}
+  .sticky-cta .btn{flex:1;justify-content:center}
+  @media(max-width:760px){
+    .nav-links{display:none}
+    .nav-cta .phone-btn{display:none}
+    .story-grid{grid-template-columns:1fr}
+    .sticky-cta{display:flex}
+    body{padding-bottom:70px}
+    .story{padding:40px 24px}
+  }
+
+  /* ---------- ANIMATIONS ---------- */
+  @keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+  @keyframes pop{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+  @keyframes steamUp{0%{opacity:0;transform:translateY(10px) scaleX(.7)}30%{opacity:.8}100%{opacity:0;transform:translateY(-26px) scaleX(1.1)}}
+  @keyframes floaty{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-18px) rotate(4deg)}}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-2deg)}75%{transform:rotate(2deg)}}
+  .wiggle{animation:wiggle 3s ease-in-out infinite;transform-origin:center}
+  @keyframes pulse{0%,100%{box-shadow:0 8px 22px rgba(227,165,59,.4)}50%{box-shadow:0 8px 34px rgba(227,165,59,.75)}}
+  .pulse{animation:pulse 2s ease-in-out infinite}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="brand">
+    <div class="logo">AT</div>
+    <div class="name">Alejandro's Taqueria<small>Fairfield, CA</small></div>
+  </div>
+  <div class="nav-links">
+    <a href="#story">Our Story</a>
+    <a href="#menu">Menu</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#visit">Visit Us</a>
+  </div>
+  <div class="nav-cta">
+    <a class="phone-btn" href="tel:+17074292155">📞 (707) 429-2155</a>
+    <a class="btn btn-red" href="#visit">Order Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="float-bits">
+    <span class="bit b1">🌮</span><span class="bit b2">🌶️</span><span class="bit b3">🥑</span><span class="bit b4">🫔</span>
+  </div>
+  <div class="hero-logo">AT</div>
+  <span class="badge">🌮 A Fairfield Favorite for Birria</span>
+  <h1>Home of the<br><span>Birria &amp; Quesabirria</span></h1>
+  <p class="sub">Slow-braised birria, handmade tacos and burritos piled high — plus quesabirrias dipped in rich consomé. Family owned and made fresh daily.</p>
+  <div class="cta-row">
+    <a class="btn btn-red" href="tel:+17074292155">📞 Call to Order</a>
+    <a class="btn btn-green pulse" href="https://www.google.com/maps/dir/?api=1&destination=936+Texas+St+Fairfield+CA+94533" target="_blank" rel="noopener">📍 Get Directions</a>
+  </div>
+
+  <div class="hero-illo">
+    <div class="steam"><span></span><span></span><span></span></div>
+    <svg class="wiggle" viewBox="0 0 320 170" xmlns="http://www.w3.org/2000/svg">
+      <!-- taco shell -->
+      <path d="M40 78 Q160 150 280 78 Q160 118 40 78 Z" fill="#e3a53b"/>
+      <path d="M40 78 Q160 150 280 78" fill="none" stroke="#c98a2b" stroke-width="6" stroke-linecap="round"/>
+      <!-- fillings -->
+      <rect x="70" y="70" width="180" height="16" rx="8" fill="#8e2420"/>
+      <rect x="80" y="84" width="160" height="12" rx="6" fill="#2f7d32"/>
+      <circle cx="110" cy="72" r="8" fill="#b3473d"/>
+      <circle cx="160" cy="76" r="8" fill="#f0c46a"/>
+      <circle cx="205" cy="72" r="8" fill="#b3473d"/>
+      <!-- cilantro / onion flecks -->
+      <g fill="#5aa65c">
+        <circle cx="130" cy="88" r="3"/><circle cx="175" cy="90" r="3"/><circle cx="215" cy="87" r="3"/>
+      </g>
+      <!-- lime wedge -->
+      <path d="M250 52 A22 22 0 0 1 272 74 L250 74 Z" fill="#8fb35c"/>
+      <path d="M250 52 A22 22 0 0 1 272 74" fill="none" stroke="#6f8f3a" stroke-width="2"/>
+    </svg>
+  </div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span>Slow-Braised Birria</span><span>Quesabirrias &amp; Consomé</span><span>Handmade Tortillas</span><span>Salsa Fresca Daily</span><span>Family Owned</span><span>Open 6 Days a Week</span><span>Fairfield's Taco Spot</span><span>Carnitas · Asada · Al Pastor</span>
+    <span>Slow-Braised Birria</span><span>Quesabirrias &amp; Consomé</span><span>Handmade Tortillas</span><span>Salsa Fresca Daily</span><span>Family Owned</span><span>Open 6 Days a Week</span><span>Fairfield's Taco Spot</span><span>Carnitas · Asada · Al Pastor</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section>
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat reveal"><div class="num">188+</div><div class="lbl">Yelp Reviews</div><div class="sub">The taqueria Fairfield talks about</div></div>
+      <div class="stat reveal"><div class="num">30+</div><div class="lbl">Menu Items</div><div class="sub">Tacos, burritos, birria, seafood &amp; more</div></div>
+      <div class="stat reveal"><div class="num">6</div><div class="lbl">Days a Week</div><div class="sub">Serving fresh, hot &amp; fast</div></div>
+      <div class="stat reveal"><div class="num">0</div><div class="lbl">Shortcuts</div><div class="sub">Braised fresh, never pre-made</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section id="story">
+  <div class="wrap">
+    <div class="story reveal">
+      <div class="story-grid">
+        <div>
+          <span class="eyebrow" style="color:var(--chili);font-weight:800;letter-spacing:2px;text-transform:uppercase;font-size:.8rem">Our Story</span>
+          <h2>Real Mexican food, made the <em>old-school way</em>.</h2>
+          <p>Alejandro's Taqueria is the kind of spot Fairfield locals point you to when you ask "where's the best birria in town?" We keep it simple and do it right — slow-braised meats, handmade tortillas, and honest portions at a fair price.</p>
+          <p>The star is our <strong>Birria</strong> — tender, slow-cooked beef served as a plate or folded into crispy, cheesy <strong>quesabirrias</strong> with a cup of rich consomé for dipping. Once you try it, you'll be back.</p>
+          <ul class="fresh-list">
+            <li><span>🥩</span><span>Slow-braised birria — tender and full of flavor.</span></li>
+            <li><span>🫔</span><span>Handmade tortillas, pressed and griddled fresh.</span></li>
+            <li><span>🌮</span><span>Tacos, burritos, tortas &amp; quesadillas — your way.</span></li>
+            <li><span>🦐</span><span>Seafood plates: 7 Mares, camarones &amp; more.</span></li>
+            <li><span>👨‍👩‍👧‍👦</span><span>Family owned and run, loved by generations.</span></li>
+          </ul>
+        </div>
+        <div class="story-illo">
+          <svg class="wiggle" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" width="100%">
+            <path d="M36 96 Q140 170 244 96 Q140 136 36 96 Z" fill="#e3a53b"/>
+            <path d="M36 96 Q140 170 244 96" fill="none" stroke="#c98a2b" stroke-width="6" stroke-linecap="round"/>
+            <rect x="66" y="88" width="148" height="16" rx="8" fill="#8e2420"/>
+            <rect x="76" y="102" width="128" height="12" rx="6" fill="#2f7d32"/>
+            <circle cx="100" cy="90" r="8" fill="#b3473d"/>
+            <circle cx="140" cy="94" r="8" fill="#f0c46a"/>
+            <circle cx="180" cy="90" r="8" fill="#b3473d"/>
+            <g fill="#5aa65c">
+              <circle cx="120" cy="106" r="3"/><circle cx="155" cy="108" r="3"/><circle cx="190" cy="105" r="3"/>
+            </g>
+            <path d="M224 72 A20 20 0 0 1 244 92 L224 92 Z" fill="#8fb35c"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu" class="menu">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The Menu</span>
+      <h2>Fresh. Flavorful. Fair Prices.</h2>
+      <p>No gimmicks — just the tacos, burritos and birria Fairfield has been lining up for.</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card reveal"><span class="tag">Fan Favorite</span><span class="cat">Special Plates</span><span class="emoji">🥩🍚</span><h3>Birria Plate</h3><p class="desc">With rice &amp; refried beans.</p><div class="price">$17.99</div></div>
+      <div class="menu-card reveal"><span class="cat">Burritos</span><span class="emoji">🫔</span><h3>Small Burrito</h3><p class="desc">Beans and cheese or rice and beans.</p><div class="price">$4.99</div></div>
+      <div class="menu-card reveal"><span class="cat">Burritos</span><span class="emoji">🌯</span><h3>Regular Burrito</h3><p class="desc">Choice of meat, rice, beans and salsa.</p><div class="price">$9.49</div></div>
+      <div class="menu-card reveal"><span class="tag">Fan Favorite</span><span class="cat">Burritos</span><span class="emoji">🌯🧀</span><h3>Super Burrito</h3><p class="desc">Choice of meat, rice, beans, sour cream, guacamole, cheese, salsa.</p><div class="price">$11.49</div></div>
+      <div class="menu-card reveal"><span class="cat">Burritos</span><span class="emoji">🌯🫕</span><h3>Burrito Mojado</h3><p class="desc">Meat, rice, beans, sour cream, guacamole and salsa topped with enchilada sauce and cheese.</p><div class="price">$12.49</div></div>
+      <div class="menu-card reveal"><span class="cat">Burritos</span><span class="emoji">🥬🌯</span><h3>Vegetarian Burrito</h3><p class="desc">Rice, whole beans, sour cream, guacamole, cheese, salsa and lettuce.</p><div class="price">$8.99</div></div>
+      <div class="menu-card reveal"><span class="cat">Burritos</span><span class="emoji">🫔✨</span><h3>Chimichanga</h3><p class="desc">Deep fried burrito with choice of meat, rice, beans and cheese. Topped with guacamole, sour cream and salsa.</p><div class="price">$12.49</div></div>
+      <div class="menu-card reveal"><span class="cat">Nachos</span><span class="emoji">🧀🍟</span><h3>Super Nachos</h3><p class="desc">Corn chips, refried beans, cheese, guacamole, sour cream and salsa.</p><div class="price">$14.99</div></div>
+      <div class="menu-card reveal"><span class="cat">Nachos</span><span class="emoji">🥑🧀</span><h3>Veggie Nachos</h3><p class="desc">Corn chips, refried beans, cheese, guacamole, sour cream, lettuce and salsa.</p><div class="price">$11.56</div></div>
+      <div class="menu-card reveal"><span class="cat">Nachos</span><span class="emoji">🥩🍟</span><h3>Asada Fries</h3><p class="desc">Stuffed with cheese, guacamole, sour cream and salsa.</p><div class="price">$14.99</div></div>
+      <div class="menu-card reveal"><span class="cat">Tacos</span><span class="emoji">🌮</span><h3>Soft Tacos</h3><p class="desc">Corn tortilla, choice of meat, onions, cilantro and hot sauce.</p><div class="price">$3.74</div></div>
+      <div class="menu-card reveal"><span class="cat">Tacos</span><span class="emoji">🌮</span><h3>Crispy Taco</h3><p class="desc">Crunchy shell, your choice of meat and toppings.</p><div class="price">$4.60</div></div>
+      <div class="menu-card reveal"><span class="cat">Tacos</span><span class="emoji">🦐🌮</span><h3>Shrimp or Fish Soft Taco</h3><p class="desc">Cilantro, onions and salsa.</p><div class="price">$4.99</div></div>
+      <div class="menu-card reveal"><span class="cat">Tacos</span><span class="emoji">🐟🌮</span><h3>Shrimp or Fish Crispy Taco</h3><p class="desc">Lettuce and beans.</p><div class="price">$4.99</div></div>
+      <div class="menu-card reveal"><span class="cat">Tacos</span><span class="emoji">🌮🥑</span><h3>Super Soft Taco</h3><p class="desc">Choice of meat, sour cream, cheese and guacamole.</p><div class="price">$5.94</div></div>
+      <div class="menu-card reveal"><span class="cat">Tacos</span><span class="emoji">🥬🌮</span><h3>Veggie Soft Taco</h3><p class="desc">Rice, whole beans, lettuce, sour cream, guacamole and cheese.</p><div class="price">$5.31</div></div>
+      <div class="menu-card reveal"><span class="cat">Tacos</span><span class="emoji">🥗🌮</span><h3>Taco Salad</h3><p class="desc">A big flour tortilla shell with refried beans, lettuce, sour cream, guacamole, cheese, tomato, and meat.</p><div class="price">$13.11</div></div>
+      <div class="menu-card reveal"><span class="tag">Fan Favorite</span><span class="cat">Quesabirrias</span><span class="emoji">🧀🥩</span><h3>3 Quesabirrias</h3><p class="desc">Crispy, cheesy birria tacos served with consomé for dipping.</p><div class="price">$18.44</div></div>
+      <div class="menu-card reveal"><span class="cat">Quesabirrias</span><span class="emoji">🧀🥩</span><h3>1 Quesabirria</h3><p class="desc">A single crispy, cheesy birria taco.</p><div class="price">$6.24</div></div>
+      <div class="menu-card reveal"><span class="cat">Tortas</span><span class="emoji">🥪</span><h3>Torta / Mexican Sandwich</h3><p class="desc">Mexican bread, cheese, avocado, sour cream, lettuce, tomatoes, jalapeños and meat.</p><div class="price">$11.86</div></div>
+      <div class="menu-card reveal"><span class="cat">Quesadillas</span><span class="emoji">🧀🫓</span><h3>Quesadilla</h3><p class="desc">Melted cheese in a griddled tortilla.</p><div class="price">$4.69</div></div>
+      <div class="menu-card reveal"><span class="cat">Quesadillas</span><span class="emoji">🧀🥩</span><h3>Quesadilla with Meat</h3><p class="desc">Choice of meat and cheese only.</p><div class="price">$7.19</div></div>
+      <div class="menu-card reveal"><span class="cat">Quesadillas</span><span class="emoji">🧀🥑</span><h3>Super Quesadilla</h3><p class="desc">Big flour tortilla with choice of meat, cheese, sour cream, guacamole and salsa.</p><div class="price">$14.99</div></div>
+      <div class="menu-card reveal"><span class="cat">Dinner Plates</span><span class="emoji">🍽️</span><h3>Mexican Dinner Plate</h3><p class="desc">Choice of meat with rice, beans and tortillas.</p><div class="price">$22.49</div></div>
+      <div class="menu-card reveal"><span class="cat">Dinner Plates</span><span class="emoji">🫑🍗</span><h3>Fajitas</h3><p class="desc">Grilled chicken or steak strips with onions, bell peppers, and tomato.</p><div class="price">$24.99</div></div>
+      <div class="menu-card reveal"><span class="cat">Dinner Plates</span><span class="emoji">🫑🍤</span><h3>Fajita Mix</h3><p class="desc">Shrimp, grilled chicken, steak strips with onions, bell peppers, and tomato.</p><div class="price">$27.49</div></div>
+      <div class="menu-card reveal"><span class="cat">Dinner Plates</span><span class="emoji">🌶️🧀</span><h3>Chile Relleno</h3><p class="desc">A stuffed, battered poblano pepper.</p><div class="price">$19.99</div></div>
+      <div class="menu-card reveal"><span class="cat">Dinner Plates</span><span class="emoji">🫔🧀</span><h3>Enchiladas</h3><p class="desc">Three enchiladas, choice of meat or cheese.</p><div class="price">$21.24</div></div>
+      <div class="menu-card reveal"><span class="cat">Dinner Plates</span><span class="emoji">🥩🌶️</span><h3>Bistek Ranchero</h3><p class="desc">Ranch style steak with jalapeños, onions and tomato.</p><div class="price">$23.74</div></div>
+      <div class="menu-card reveal"><span class="cat">Seafood</span><span class="emoji">🍤🥣</span><h3>Caldo De Camarón</h3><p class="desc">Shrimp soup.</p><div class="price">$22.49</div></div>
+      <div class="menu-card reveal"><span class="cat">Seafood</span><span class="emoji">🦞🥣</span><h3>7 Mares</h3><p class="desc">Vegetable soup with 7 different seafood — fish, octopus, calamari, crab legs, clams, mussels &amp; shrimp.</p><div class="price">$27.49</div></div>
+      <div class="menu-card reveal"><span class="cat">Seafood</span><span class="emoji">🦐🌶️</span><h3>Camarones Rancheros</h3><p class="desc">Ranchero style shrimp with jalapeño pepper, onions and tomato.</p><div class="price">$23.74</div></div>
+      <div class="menu-card reveal"><span class="cat">Seafood</span><span class="emoji">🐟</span><h3>Filete De Pescado</h3><p class="desc">Fish filet — al mojo de ajo, a la diabla, a la plancha, or empanizado.</p><div class="price">$23.74</div></div>
+      <div class="menu-card reveal"><span class="cat">Breakfast</span><span class="emoji">🍳🌮</span><h3>Huevos Con Chorizo</h3><p class="desc">Scrambled eggs with Mexican chorizo.</p><div class="price">$15.61</div></div>
+      <div class="menu-card reveal"><span class="cat">Breakfast</span><span class="emoji">🍳🥓</span><h3>Huevos Con Jamón</h3><p class="desc">Scrambled eggs with ham.</p><div class="price">$15.61</div></div>
+      <div class="menu-card reveal"><span class="cat">Tortas</span><span class="emoji">🫓</span><h3>Tostada</h3><p class="desc">Corn tortilla shell with your choice of meat, cheese, guacamole, sour cream and salsa.</p><div class="price">$5.94</div></div>
+      <div class="menu-card reveal"><span class="cat">Quesadillas</span><span class="emoji">🌮🥑</span><h3>Flautas</h3><p class="desc">4 fried rolled corn tortillas with chicken over lettuce, topped with guacamole, sour cream and salsa.</p><div class="price">$11.24</div></div>
+    </div>
+    <p class="menu-note">
+      Cash &amp; cards accepted · Prices may change — call for today's menu.
+      <br><span class="chip">💡 Weekend (Sat &amp; Sun) menu prices shown — the full all-day menu has even more plates, seafood &amp; breakfast. Call to confirm.</span>
+    </p>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="gallery">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Gallery</span>
+      <h2>Fresh From the Kitchen</h2>
+      <p>A little taste of what's waiting for you at Alejandro's.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item feature reveal"><img src="photo1.jpg" alt="Birria and quesabirrias" loading="lazy"><div class="cap">Birria &amp; Quesabirrias</div></div>
+      <div class="gallery-item reveal"><img src="photo2.jpg" alt="Alejandro's Taqueria" loading="lazy"><div class="cap">Fresh Tacos</div></div>
+      <div class="gallery-item reveal"><img src="photo3.jpg" alt="Made fresh" loading="lazy"><div class="cap">Made to Order</div></div>
+      <div class="gallery-item reveal"><img src="photo4.jpg" alt="Alejandro's dish" loading="lazy"><div class="cap">From the Line</div></div>
+      <div class="gallery-item reveal"><img src="photo5.jpg" alt="Alejandro's Taqueria" loading="lazy"><div class="cap">Welcome to Alejandro's</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Word of Mouth</span>
+      <h2>What Fairfield Says</h2>
+      <p>Don't take our word for it — take theirs.</p>
+    </div>
+    <div class="quotes">
+      <div class="quote reveal"><p>The birria and quesabirrias are the real deal — tender meat and that consomé is unreal.</p><div class="by">— Yelp Review</div></div>
+      <div class="quote reveal"><p>Best tacos in Fairfield, hands down. Fresh tortillas make all the difference.</p><div class="by">— Yelp Review</div></div>
+      <div class="quote reveal"><p>Great portions, fair prices, and super friendly family running the place.</p><div class="by">— Local Regular</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section>
+  <div class="wrap">
+    <div class="cta-banner reveal">
+      <h2>Hungry yet? 🌮</h2>
+      <p>Come taste the birria Fairfield has been talking about. Call ahead or swing by — we'll have it hot and ready.</p>
+      <div class="cta-row">
+        <a class="btn btn-maize" href="tel:+17074292155">📞 Call (707) 429-2155</a>
+        <a class="btn btn-white" href="https://www.google.com/maps/dir/?api=1&destination=936+Texas+St+Fairfield+CA+94533" target="_blank" rel="noopener">📍 Get Directions</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section id="visit">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Visit Us</span>
+      <h2>Find Alejandro's</h2>
+    </div>
+    <div class="info-grid">
+      <div class="info-card reveal"><div class="ic">📍</div><h4>Location</h4><p>936 Texas St<br>Fairfield, CA 94533</p><a href="https://www.google.com/maps/dir/?api=1&destination=936+Texas+St+Fairfield+CA+94533" target="_blank" rel="noopener">Get Directions →</a></div>
+      <div class="info-card reveal"><div class="ic">📞</div><h4>Call Us</h4><p>Order ahead or ask about today's specials.</p><a href="tel:+17074292155">(707) 429-2155</a></div>
+      <div class="info-card reveal"><div class="ic">⏰</div><h4>Hours</h4><p>Mon–Tue · 9am–8pm<br>Wed · Closed<br>Thu–Fri · 9am–8pm<br>Sat–Sun · 8am–8pm</p></div>
+      <div class="info-card reveal"><div class="ic">🌮</div><h4>Good to Know</h4><p>Takeout-friendly · Cards accepted<br>Quesabirrias with consomé<br>Family run</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="flogo" style="width:64px;height:64px;border-radius:16px;background:var(--chili);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Lilita One',sans-serif;font-size:1.6rem;box-shadow:0 8px 20px rgba(0,0,0,.35)">AT</div>
+  <div class="flogo">🌮 Alejandro's Taqueria</div>
+  <p>936 Texas St, Fairfield, CA 94533 · (707) 429-2155 · Open 6 days · Closed Wednesdays</p>
+  <div class="socials">
+    <a href="https://www.yelp.com/biz/alejandros-taqueria-fairfield" target="_blank" rel="noopener" title="Yelp">⭐</a>
+    <a href="https://www.google.com/maps/search/?api=1&query=Alejandro%27s+Taqueria+936+Texas+St+Fairfield+CA" target="_blank" rel="noopener" title="Google Maps">📍</a>
+  </div>
+  <p style="margin-top:18px;font-size:.75rem;opacity:.6">Slow-braised birria. Handmade tortillas. Family loved.</p>
+</footer>
+
+<!-- STICKY MOBILE CTA -->
+<div class="sticky-cta">
+  <a class="btn btn-red" href="tel:+17074292155">📞 Call</a>
+  <a class="btn btn-green" href="https://www.google.com/maps/dir/?api=1&destination=936+Texas+St+Fairfield+CA+94533" target="_blank" rel="noopener">📍 Directions</a>
+</div>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  document.querySelectorAll('.stat').forEach((el,i)=> el.style.transitionDelay = (i*0.08)+'s');
+  document.querySelectorAll('.menu-card').forEach((el,i)=> el.style.transitionDelay = (i*0.06)+'s');
+</script>
+</body>
+</html>
