@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Menu | Corner Market &amp; Deli</title>
-<meta name="description" content="Breakfast, specialty sandwiches, pizza, snacks, and drinks — the full Corner Market & Deli menu." />
+<title>Menu | Tonio's Market &amp; Deli</title>
+<meta name="description" content="Breakfast, specialty sandwiches, pizza, snacks, and drinks — the full Tonio's Market & Deli menu." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lilita+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
 <nav id="nav">
   <div class="brand">
-    <div class="logo">CM</div>
-    <div class="name">Corner Market<small>&amp; Deli · Your Town, CA</small></div>
+    <div class="logo">T</div>
+    <div class="name">Tonio's Market<small>&amp; Deli · Your Town, CA</small></div>
   </div>
   <div class="nav-links">
     <a href="index.html">Home</a>
@@ -58,8 +58,8 @@
     <div class="menu-cat">
       <div class="menu-cat-head reveal">
         <span class="emoji">🥪</span>
-        <h3>Specialty Sandwiches</h3>
-        <p>Made to order with quality deli meats and fixings.</p>
+        <h3>Italian Deli Sandwiches</h3>
+        <p>Made to order with imported Italian cold cuts and cheeses.</p>
       </div>
       <div class="menu-grid">
         <div class="menu-card reveal"><span class="tag">Fan Favorite</span><span class="cat">Specialty</span><span class="emoji">🧀</span><h3>Turkey &amp; Smoked Gouda</h3><p class="desc">Hot oven-gold turkey, smoked gouda &amp; bacon. Served hot.</p><div class="price">$9.95</div></div>
@@ -110,12 +110,12 @@
 </section>
 
 <footer>
-  <div class="flogo" style="width:64px;height:64px;border-radius:16px;background:var(--green);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Lilita One',sans-serif;font-size:1.6rem;box-shadow:0 8px 20px rgba(0,0,0,.35)">CM</div>
-  <div class="flogo">🧺 Corner Market &amp; Deli</div>
+  <div class="flogo" style="width:64px;height:64px;border-radius:16px;background:var(--green);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Great Vibes',cursive;font-size:2.4rem;box-shadow:0 8px 20px rgba(0,0,0,.35)">T</div>
+  <div class="flogo">🧺 Tonio's Market &amp; Deli</div>
   <p>123 Market Street, Your Town, CA 90000 · (555) 555-0100 · Open Daily · Late Night</p>
   <div class="socials">
     <a href="#" target="_blank" rel="noopener" title="Yelp">⭐</a>
-    <a href="https://www.google.com/maps/search/?api=1&query=Corner+Market+Your+Town+CA" target="_blank" rel="noopener" title="Google Maps">📍</a>
+    <a href="https://www.google.com/maps/search/?api=1&query=Tonio%27s+Market+Your+Town+CA" target="_blank" rel="noopener" title="Google Maps">📍</a>
   </div>
   <p style="margin-top:18px;font-size:.75rem;opacity:.6">Fresh produce. In-house deli. Open late.</p>
 </footer>
@@ -128,7 +128,48 @@
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-head">
-      <h3>Order for Pickup<small>Corner Market &amp; Deli</small></h3>
+      <h3>Order for Pickup<small>Tonio's Market &amp; Deli</small></h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="step-label">How would you like it?</div>
+      <div class="seg">
+        <button class="active" id="segPickup" onclick="setMode('pickup')">🛍️ Pickup</button>
+        <button id="segDelivery" onclick="setMode('delivery')">🛵 Delivery</button>
+      </div>
+      <div class="step-label">When would you like your order?</div>
+      <div class="choice">
+        <div class="choice-card active" id="cardNow" onclick="setTiming('now')">
+          <span class="big">⚡</span><span class="t">Order Now</span><span class="d">Ready in ~15 mins</span>
+        </div>
+        <div class="choice-card" id="cardLater" onclick="setTiming('later')">
+          <span class="big">📅</span><span class="t">Schedule for Later</span><span class="d">Pick a date &amp; time</span>
+        </div>
+      </div>
+      <div class="schedule" id="scheduleBox" style="display:none">
+        <div class="date-chips">
+          <span class="date-chip active" onclick="setDate(this)">Today</span>
+          <span class="date-chip" onclick="setDate(this)">Tomorrow</span>
+          <span class="date-chip" onclick="setDate(this)">Pick a Date</span>
+        </div>
+        <div class="time-row"><input type="time" id="timeInput" value="17:30" /></div>
+      </div>
+      <button class="confirm" onclick="confirmOrder()">Continue to Menu →</button>
+      <p class="confirm-note" id="confirmNote">Ready in ~15 mins · No payment until pickup</p>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+">📞 Call</a>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Order for Pickup<small>Tonio's Market &amp; Deli</small></h3>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-body">

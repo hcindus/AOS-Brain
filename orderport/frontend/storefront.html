@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Order Online</title>
+<style>
+  :root{--ink:#1a1a2e;--accent:#e23e57;--accent2:#2f7d32;--bg:#faf6f0;--card:#fff;--muted:#7a7a8a}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5}
+  header{background:var(--ink);color:#fff;padding:18px 24px;display:flex;justify-content:space-between;align-items:center}
+  header h1{font-size:1.2rem}
+  .wrap{max-width:900px;margin:0 auto;padding:20px}
+  .cat{margin:24px 0 10px;font-size:1.1rem;font-weight:700;border-bottom:2px solid var(--accent);padding-bottom:6px}
+  .item{display:flex;justify-content:space-between;align-items:center;background:var(--card);border-radius:12px;padding:14px 16px;margin:8px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+  .item .name{font-weight:600}
+  .item .desc{font-size:.85rem;color:var(--muted)}
+  .item .price{font-weight:700;color:var(--accent)}
+  .item button{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-weight:600;cursor:pointer}
+  #cart{position:fixed;bottom:0;left:0;right:0;background:#fff;box-shadow:0 -4px 20px rgba(0,0,0,.12);padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
+  #cart .total{font-weight:800;font-size:1.1rem}
+  #cart button{background:var(--accent2);color:#fff;border:none;border-radius:10px;padding:12px 22px;font-weight:700;cursor:pointer}
+  #count{background:var(--accent);color:#fff;border-radius:20px;padding:2px 10px;font-size:.8rem;font-weight:700}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:50}
+  .modal .box{background:#fff;border-radius:16px;padding:24px;width:min(440px,92vw)}
+  .modal input,.modal textarea{width:100%;margin:8px 0;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:1rem}
+  .modal h2{margin-bottom:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1 id="bizName">Loading…</h1>
+  <span id="hours"></span>
+</header>
+<div class="wrap" id="menu"></div>
+
+<div id="cart">
+  <div><span id="count">0</span> items · <span class="total" id="total">$0.00</span></div>
+  <button onclick="openCheckout()">Checkout</button>
+</div>
+
+<div class="modal" id="checkoutModal">
+  <div class="box">
+    <h2>Checkout</h2>
+    <input id="cName" placeholder="Your name" />
+    <input id="cPhone" placeholder="Phone" />
+    <input id="cEmail" placeholder="Email (optional)" />
+    <textarea id="cNote" placeholder="Order note (optional)"></textarea>
+    <h3 style="margin:8px 0">Total: <span id="cTotal"></span></h3>
+    <button style="width:100%;background:var(--accent2);color:#fff;border:none;border-radius:10px;padding:14px;font-weight:700;cursor:pointer" onclick="placeOrder()">Place Pickup Order</button>
+    <button style="width:100%;margin-top:8px;background:#eee;border:none;border-radius:10px;padding:10px;cursor:pointer" onclick="closeCheckout()">Cancel</button>
+  </div>
+</div>
+
+<script>
+const slug = location.pathname.split('/').filter(Boolean).pop() || 'prm';
+const API = '/api/orderport';
+let cart = [];
+let menuData = [];
+
+async function loadMenu(){
+  const r = await fetch(`${API}/s/${slug}`);
+  const d = await r.json();
+  menuData = d;
+  document.getElementById('bizName').textContent = d.business.business_name;
+  document.getElementById('hours').textContent = d.business.pickup_hours || '';
+  const cats = {};
+  d.items.forEach(i => {
+    const c = i.category_name || 'Menu';
+    (cats[c] = cats[c] || []).push(i);
+  });
+  const el = document.getElementById('menu');
+  el.innerHTML = '';
+  Object.keys(cats).forEach(c => {
+    el.innerHTML += `<div class="cat">${c}</div>`;
+    cats[c].forEach(i => {
+      el.innerHTML += `<div class="item">
+        <div><div class="name">${i.name}</div><div class="desc">${i.description||''}</div></div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="price">$${(i.price_cents/100).toFixed(2)}</span>
+          <button onclick="add(${i.id})">+</button>
+        </div></div>`;
+    });
+  });
+}
+function add(id){
+  const it = menuData.items.find(x=>x.id===id);
+  const found = cart.find(x=>x.id===id);
+  found ? found.quantity++ : cart.push({id, quantity:1});
+  renderCart();
+}
+function renderCart(){
+  const n = cart.reduce((s,x)=>s+x.quantity,0);
+  const t = cart.reduce((s,x)=>{const it=menuData.items.find(i=>i.id===x.id);return s+(it.price_cents*x.quantity)},0);
+  document.getElementById('count').textContent = n;
+  document.getElementById('total').textContent = '$'+(t/100).toFixed(2);
+  document.getElementById('cTotal').textContent = '$'+(t/100).toFixed(2);
+}
+function openCheckout(){ document.getElementById('checkoutModal').style.display='flex'; }
+function closeCheckout(){ document.getElementById('checkoutModal').style.display='none'; }
+async function placeOrder(){
+  const payload = {
+    name: document.getElementById('cName').value,
+    phone: document.getElementById('cPhone').value,
+    email: document.getElementById('cEmail').value,
+    note: document.getElementById('cNote').value,
+    items: cart,
+  };
+  const r = await fetch(`${API}/s/${slug}/order`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const d = await r.json();
+  alert(`Order placed! Ref: ${d.order_ref}`);
+  cart=[]; renderCart(); closeCheckout();
+}
+loadMenu();
+</script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Merchant Portal</title>
+<style>
+  :root{--ink:#1a1a2e;--accent:#2f7d32;--bg:#faf6f0;--card:#fff;--muted:#7a7a8a;--danger:#c0392b}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+  header{background:var(--ink);color:#fff;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
+  .wrap{max-width:1000px;margin:0 auto;padding:20px}
+  .tabs{display:flex;gap:8px;margin-bottom:20px}
+  .tabs button{padding:10px 18px;border:none;border-radius:8px;background:#ddd;cursor:pointer;font-weight:600}
+  .tabs button.active{background:var(--accent);color:#fff}
+  .card{background:var(--card);border-radius:12px;padding:18px;margin:10px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #eee}
+  th{color:var(--muted);font-size:.8rem;text-transform:uppercase}
+  input,textarea{width:100%;padding:8px;border:1px solid #ddd;border-radius:6px;margin:4px 0}
+  .btn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 16px;font-weight:700;cursor:pointer}
+  .btn.small{padding:6px 10px;font-size:.8rem}
+  .btn.danger{background:var(--danger)}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .row>*{flex:1;min-width:120px}
+  #login{max-width:380px;margin:80px auto}
+</style>
+</head>
+<body>
+<div id="login" class="card">
+  <h2>Merchant Login</h2>
+  <input id="lEmail" placeholder="Email" />
+  <input id="lPass" type="password" placeholder="Password" />
+  <button class="btn" onclick="login()" style="width:100%">Login</button>
+</div>
+
+<div id="app" style="display:none">
+<header><h1>Merchant Portal</h1><button class="btn danger small" onclick="logout()">Logout</button></header>
+<div class="wrap">
+  <div class="tabs">
+    <button class="active" onclick="show('menu')">Menu</button>
+    <button onclick="show('orders')">Orders</button>
+    <button onclick="show('settings')">Settings</button>
+  </div>
+
+  <div id="menuPane">
+    <div class="card">
+      <h3>Add Item</h3>
+      <div class="row">
+        <input id="iName" placeholder="Name" />
+        <input id="iPrice" type="number" placeholder="Price ($)" step="0.01" />
+        <input id="iDesc" placeholder="Description" />
+      </div>
+      <button class="btn" onclick="addItem()">Add</button>
+    </div>
+    <div class="card">
+      <table><thead><tr><th>Name</th><th>Price</th><th>Available</th><th></th></tr></thead>
+      <tbody id="itemRows"></tbody></table>
+    </div>
+  </div>
+
+  <div id="ordersPane" style="display:none">
+    <table><thead><tr><th>Ref</th><th>Customer</th><th>Total</th><th>Status</th></tr></thead>
+    <tbody id="orderRows"></tbody></table>
+  </div>
+
+  <div id="settingsPane" style="display:none">
+    <div class="card">
+      <h3>Business Settings</h3>
+      <input id="sName" placeholder="Business name" />
+      <input id="sHours" placeholder="Pickup hours (e.g. 9am-9pm)" />
+      <input id="sPhone" placeholder="Phone" />
+      <input id="sEmail" placeholder="Email" />
+      <button class="btn" onclick="saveSettings()">Save</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+const API = '/api/orderport';
+let token = localStorage.getItem('op_token');
+let menu = {items:[], categories:[]};
+
+if(token) { document.getElementById('login').style.display='none'; document.getElementById('app').style.display='block'; loadAll(); }
+
+async function login(){
+  const r = await fetch(`${API}/auth/login`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:document.getElementById('lEmail').value,password:document.getElementById('lPass').value})});
+  if(!r.ok){alert('Login failed');return;}
+  const d = await r.json();
+  if(d.user.role !== 'merchant'){alert('Not a merchant account');return;}
+  token = d.token; localStorage.setItem('op_token',token);
+  document.getElementById('login').style.display='none';
+  document.getElementById('app').style.display='block';
+  loadAll();
+}
+function logout(){localStorage.removeItem('op_token');location.reload();}
+function auth(){return {Authorization:'Bearer '+token};}
+async function loadAll(){ await loadMenu(); await loadOrders(); }
+
+async function loadMenu(){
+  const r = await fetch(`${API}/m/menu`,{headers:auth()});
+  menu = await r.json();
+  document.getElementById('itemRows').innerHTML = menu.items.map(i=>`
+    <tr><td>${i.name}</td><td>$${(i.price_cents/100).toFixed(2)}</td>
+    <td>${i.available?'✅':'❌'}</td>
+    <td><button class="btn small danger" onclick="delItem(${i.id})">Del</button></td></tr>`).join('');
+}
+async function addItem(){
+  const price = Math.round(parseFloat(document.getElementById('iPrice').value)*100);
+  await fetch(`${API}/m/menu/item`,{method:'POST',headers:{...auth(),'Content-Type':'application/json'},body:JSON.stringify({name:document.getElementById('iName').value,price_cents:price,description:document.getElementById('iDesc').value})});
+  document.getElementById('iName').value='';document.getElementById('iPrice').value='';document.getElementById('iDesc').value='';
+  loadMenu();
+}
+async function delItem(id){
+  await fetch(`${API}/m/menu/item/${id}`,{method:'DELETE',headers:auth()});
+  loadMenu();
+}
+async function loadOrders(){
+  const r = await fetch(`${API}/m/orders`,{headers:auth()});
+  const d = await r.json();
+  document.getElementById('orderRows').innerHTML = d.orders.map(o=>`
+    <tr><td>${o.order_ref}</td><td>${o.customer_name}</td><td>$${(o.total_cents/100).toFixed(2)}</td><td>${o.status}</td></tr>`).join('');
+}
+async function saveSettings(){
+  await fetch(`${API}/m/settings`,{method:'POST',headers:{...auth(),'Content-Type':'application/json'},body:JSON.stringify({business_name:document.getElementById('sName').value,pickup_hours:document.getElementById('sHours').value,phone:document.getElementById('sPhone').value,email:document.getElementById('sEmail').value})});
+  alert('Saved');
+}
+function show(p){
+  ['menu','orders','settings'].forEach(x=>document.getElementById(x+'Pane').style.display = x===p?'block':'none');
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

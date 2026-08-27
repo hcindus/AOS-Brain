@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin Portal</title>
+<style>
+  :root{--ink:#1a1a2e;--accent:#1a73e8;--bg:#f0f2f5;--card:#fff;--muted:#7a7a8a;--danger:#c0392b;--good:#2f7d32}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+  header{background:var(--ink);color:#fff;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
+  .wrap{max-width:1100px;margin:0 auto;padding:20px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px}
+  .stat{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+  .stat .label{color:var(--muted);font-size:.8rem;text-transform:uppercase}
+  .stat .value{font-size:1.6rem;font-weight:800;margin-top:4px}
+  .card{background:var(--card);border-radius:12px;padding:18px;margin:14px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #eee}
+  th{color:var(--muted);font-size:.75rem;text-transform:uppercase}
+  .badge{padding:3px 10px;border-radius:12px;font-size:.75rem;font-weight:700}
+  .badge.active{background:#d4edda;color:var(--good)}
+  .badge.suspended{background:#f8d7da;color:var(--danger)}
+  .btn{border:none;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font-size:.8rem}
+  .btn.activate{background:#d4edda;color:var(--good)}
+  .btn.suspend{background:#f8d7da;color:var(--danger)}
+  #login{max-width:380px;margin:80px auto}
+  input{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;margin:8px 0}
+</style>
+</head>
+<body>
+<div id="login" class="card">
+  <h2>Admin Login</h2>
+  <input id="lEmail" placeholder="Email" />
+  <input id="lPass" type="password" placeholder="Password" />
+  <button class="btn" style="background:var(--accent);color:#fff;width:100%" onclick="login()">Login</button>
+</div>
+
+<div id="app" style="display:none">
+<header><h1>Admin Portal</h1><button class="btn" style="background:var(--danger);color:#fff" onclick="logout()">Logout</button></header>
+<div class="wrap">
+  <div class="cards" id="stats"></div>
+
+  <div class="card">
+    <h3 style="margin-bottom:10px">Accounts</h3>
+    <table><thead><tr><th>Business</th><th>Slug</th><th>Rep</th><th>Orders</th><th>Volume</th><th>Status</th><th></th></tr></thead>
+    <tbody id="accountRows"></tbody></table>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:10px">Payout Ledger (latest)</h3>
+    <table><thead><tr><th>Order</th><th>Business</th><th>Total</th><th>Business 85%</th><th>Company 10%</th><th>Rep 5%</th><th>Settled</th></tr></thead>
+    <tbody id="payoutRows"></tbody></table>
+  </div>
+</div>
+</div>
+
+<script>
+const API = '/api/orderport';
+let token = localStorage.getItem('op_admin_token');
+if(token){document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';loadAll();}
+
+async function login(){
+  const r = await fetch(`${API}/auth/login`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:document.getElementById('lEmail').value,password:document.getElementById('lPass').value})});
+  if(!r.ok){alert('Login failed');return;}
+  const d = await r.json();
+  if(!['admin','rep'].includes(d.user.role)){alert('Admin only');return;}
+  token=d.token;localStorage.setItem('op_admin_token',token);
+  document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';loadAll();
+}
+function logout(){localStorage.removeItem('op_admin_token');location.reload();}
+function auth(){return {Authorization:'Bearer '+token};}
+
+async function loadAll(){
+  const s = await (await fetch(`${API}/a/summary`,{headers:auth()})).json();
+  const fmt = c => '$'+(c/100).toLocaleString(undefined,{minimumFractionDigits:2});
+  document.getElementById('stats').innerHTML = `
+    <div class="stat"><div class="label">Total Volume</div><div class="value">${fmt(s.total_volume)}</div></div>
+    <div class="stat"><div class="label">Business (85%)</div><div class="value">${fmt(s.business_total)}</div></div>
+    <div class="stat"><div class="label">Company (10%)</div><div class="value">${fmt(s.company_total)}</div></div>
+    <div class="stat"><div class="label">Rep (5%)</div><div class="value">${fmt(s.rep_total)}</div></div>
+    <div class="stat"><div class="label">Orders</div><div class="value">${s.order_count}</div></div>`;
+
+  const a = await (await fetch(`${API}/a/accounts`,{headers:auth()})).json();
+  document.getElementById('accountRows').innerHTML = a.accounts.map(x=>`
+    <tr><td>${x.business_name}</td><td>${x.slug}</td><td>${x.rep_name||'—'}</td>
+    <td>${x.order_count}</td><td>$${(x.total_volume_cents/100).toFixed(2)}</td>
+    <td><span class="badge ${x.status}">${x.status}</span></td>
+    <td>${x.status==='active'
+      ?`<button class="btn suspend" onclick="setStatus(${x.id},'suspended')">Suspend</button>`
+      :`<button class="btn activate" onclick="setStatus(${x.id},'active')">Activate</button>`}</td></tr>`).join('');
+
+  const p = await (await fetch(`${API}/a/payouts`,{headers:auth()})).json();
+  document.getElementById('payoutRows').innerHTML = p.payouts.map(x=>`
+    <tr><td>${x.order_id}</td><td>${x.business_name||''}</td><td>$${(x.total_cents/100).toFixed(2)}</td>
+    <td>$${(x.business_cents/100).toFixed(2)}</td><td>$${(x.company_cents/100).toFixed(2)}</td>
+    <td>$${(x.rep_cents/100).toFixed(2)}</td><td>${x.settled?'✅':'⏳'}</td></tr>`).join('');
+}
+async function setStatus(id,status){
+  await fetch(`${API}/a/accounts/${id}/status`,{method:'POST',headers:{...auth(),'Content-Type':'application/json'},body:JSON.stringify({status})});
+  loadAll();
+}
+</script>
+</body>
+</html>
