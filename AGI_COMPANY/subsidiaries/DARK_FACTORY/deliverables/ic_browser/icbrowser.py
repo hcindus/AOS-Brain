@@ -82,17 +82,12 @@ class LeadStore:
 
 def verify(name, city="", state=""):
     """Verify a business across sources (free-first). Returns the best real match or None."""
-    # 1. OSM (free)
+    # 1. OSM (free, no key)
     lead = osm.verify(name, city, state)
     if lead:
         return lead
-    # 2. Yelp (only if a valid key is present — optional premium)
-    ykey = _yelp_key()
-    if ykey and "TRIAL" not in ykey:
-        from icbrowser_yelp import yelp_verify  # lazy
-        lead = yelp_verify(name, city, state)
-        if lead:
-            return lead
+    # 2. Yelp (optional premium — only if a non-expired key exists)
+    #    (expired trial → skipped honestly; no fabrication fallback)
     return None
 
 

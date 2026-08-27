@@ -18,6 +18,7 @@ from typing import Optional
 
 UA = "PSDepot-LeadVerifier/1.0 (miles@myl0nr0s.cloud)"
 MIRRORS = [
+    "http://localhost:12345/api/interpreter",   # self-hosted Overpass (primary, no flakiness)
     "https://overpass-api.de/api/interpreter",
     "https://overpass.kumi.systems/api/interpreter",
     "https://overpass.private.coffee/api/interpreter",
