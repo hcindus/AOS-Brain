@@ -75,7 +75,7 @@ if [ -n "$GITHUB_TOKEN" ]; then
     git commit -m "Daily data sync: $(date -u +%Y-%m-%d) - Auto-scraper" 2>/dev/null || echo "  Nothing new to commit"
     
     # Push to GitHub
-    git push origin master 2>/dev/null && echo "  ✓ Pushed to GitHub" || echo "  ⚠ Push pending (may need manual approval)"
+    git push origin main 2>/dev/null && echo "  ✓ Pushed to GitHub" || echo "  ⚠ Push pending (may need manual approval)"
 else
     echo "  ⚠ GITHUB_TOKEN not set, skipping push"
 fi
