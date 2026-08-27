@@ -64,6 +64,9 @@ A registry of **every** AgentSkill in the repo. Each entry: name · purpose · K
 ### 🛠️ Tooling
 `email-sender`, `game-creator`, `browser-agent`, `browser-automation`, `agent-browser-clawdbot`, `cmp`, `depotchaos`, `skill-builder`, `audit`
 
+### 🌐 Web / Demo
+`restaurant-landing-page` — build a single-page demo landing site for a local restaurant from a Yelp listing (menu + photos + contact) · KPI: live in <10 min
+
 ---
 
 ## Proposed (to codify next)
