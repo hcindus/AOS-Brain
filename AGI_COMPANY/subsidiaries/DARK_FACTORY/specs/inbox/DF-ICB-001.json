@@ -1,0 +1,30 @@
+{
+  "spec_id": "DF-ICB-001",
+  "project_name": "IC-Browser",
+  "title": "IC Browser — Intelligence Collection browser agent",
+  "build_type": "python",
+  "priority": "high",
+  "max_duration_minutes": 240,
+  "source_path": "/root/.openclaw/workspace/AGI_COMPANY/subsidiaries/DARK_FACTORY/specs/DF-ICB-001_ic_browser.md",
+  "gor_verdict": "RESHAPE",
+  "gor_notes": "APIs FIRST (Google Places + Yelp Fusion, keys exist) before stealth scraping. Scrape only abc.ca.gov + public registries. Honest provenance, verified flag, source_url, zero fabrication.",
+  "objective": "Fleet-deployable IC Browser (Playwright + stealth) collecting REAL business/license data to replace the synthetic DataDepot pipeline. Never fabricates.",
+  "deliverables": [
+    "ic_browser Python package (engine + scraper modules + verifier + dedupe)",
+    "Scraper modules: google_places.py, yelp.py, abc_ca.py, ca_sos.py",
+    "icbrowser CLI + ic-browser.service systemd unit",
+    "verified_leads schema with provenance columns",
+    "Integration test: real scrape → real lead → DepotChaos insert",
+    "deploy_fleet.sh rollout script"
+  ],
+  "success_criteria": [
+    "Scrapes 500 REAL CA ABC licenses, zero fabrication",
+    "Google Places/Yelp enrichment returns real phone/address",
+    "Every lead has source_url + verified flag",
+    "Survives basic bot-detection without crashing",
+    "Deployed on 2+ fleet VPS nodes"
+  ],
+  "requested_by": "Captain",
+  "requested_at": "2026-08-27",
+  "fleet_rollout": "after 2-node verified test"
+}
