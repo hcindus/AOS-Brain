@@ -47,8 +47,11 @@ def lookup_by_address(address: str) -> Optional[dict]:
         return None
     x = data[0]
     ad = x.get("address", {})
+    # STRICT: only a genuine shop/amenity/POI name counts as a business.
+    # Never fall back to street name or house number (that's not a business).
+    biz_name = ad.get("shop") or ad.get("amenity") or ad.get("name") or ad.get("tourism") or ""
     return {
-        "business_name": ad.get("shop") or ad.get("amenity") or ad.get("name") or x.get("display_name", "").split(",")[0],
+        "business_name": biz_name,
         "category": x.get("type", ""),          # e.g. dry_cleaning, restaurant, fast_food
         "class": x.get("class", ""),            # shop, amenity, building
         "city": ad.get("city") or ad.get("town") or ad.get("village", ""),
