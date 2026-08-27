@@ -1,0 +1,12 @@
+{
+  "spec_id": "SPEC-orderport-20260827",
+  "project_name": "agentic-software",
+  "build_type": "web",
+  "source_path": "/root/.openclaw/workspace/orderport",
+  "priority": "normal",
+  "max_duration_minutes": 60,
+  "objective": "Generic multi-tenant online ordering API. Per-account storefront endpoints (public menu + order intake), merchant portal endpoints (menu/item/pricing CRUD, order listing, settings), admin portal endpoints (account list, activate/deactivate, summary, reps). Auth via signed tokens with merchant/admin roles. A pluggable 'provider' interface for order notifications (email/sms/printer stubs) and a pluggable settlement/payout interface to be implemented later.",
+  "stack": "FastAPI + SQLite",
+  "domains": ["psdepot.com"],
+  "notes": "Reference implementation exists at /root/.openclaw/workspace/orderport (hand-written). Factory should produce the generic API scaffolding; payment provider + settlement details are filled in later by the requester."
+}
