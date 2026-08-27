@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Menu | Corner Market &amp; Deli</title>
+<meta name="description" content="Breakfast, specialty sandwiches, pizza, snacks, and drinks — the full Corner Market & Deli menu." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<nav id="nav">
+  <div class="brand">
+    <div class="logo">CM</div>
+    <div class="name">Corner Market<small>&amp; Deli · Your Town, CA</small></div>
+  </div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">Our Story</a>
+    <a href="menu.html" class="active">Menu</a>
+    <a href="gallery.html">Gallery</a>
+  </div>
+  <div class="nav-cta">
+    <a class="phone-btn" href="tel:+15555550100">📞 (555) 555-0100</a>
+    <button class="btn btn-green" onclick="openModal()">Order for Pickup</button>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <h1>The Menu</h1>
+  <p>Fresh, made-to-order, and priced right. Order online for pickup and save 5% on your first order.</p>
+</header>
+
+<section class="menu">
+  <div class="wrap">
+
+    <!-- BREAKFAST -->
+    <div class="menu-cat">
+      <div class="menu-cat-head reveal">
+        <span class="emoji">🥯</span>
+        <h3>Breakfast</h3>
+        <p>Served all day on your choice of bagel, roll, or croissant.</p>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-card reveal"><span class="tag">Fan Favorite</span><span class="cat">Breakfast</span><span class="emoji">🥓</span><h3>Bacon, Egg &amp; Cheese</h3><p class="desc">Crispy bacon, egg &amp; melted cheese.</p><div class="price">$6.95</div></div>
+        <div class="menu-card reveal"><span class="cat">Breakfast</span><span class="emoji">🍖</span><h3>Ham, Egg &amp; Cheese</h3><p class="desc">Smoked ham, egg &amp; melted cheese.</p><div class="price">$6.95</div></div>
+        <div class="menu-card reveal"><span class="cat">Breakfast</span><span class="emoji">🌭</span><h3>Sausage, Egg &amp; Cheese</h3><p class="desc">Savory sausage patty, egg &amp; cheese.</p><div class="price">$6.95</div></div>
+        <div class="menu-card reveal"><span class="cat">Breakfast</span><span class="emoji">🥑</span><h3>Egg, Cheese &amp; Avocado</h3><p class="desc">Creamy avocado, egg &amp; cheese.</p><div class="price">$6.50</div></div>
+        <div class="menu-card reveal"><span class="cat">Breakfast</span><span class="emoji">🥗</span><h3>Veggie Bagel</h3><p class="desc">Cream cheese, tomato, red onion &amp; cucumber.</p><div class="price">$5.95</div></div>
+        <div class="menu-card reveal"><span class="cat">Breakfast</span><span class="emoji">🍳</span><h3>The Everything</h3><p class="desc">Ham, bacon, egg, sausage &amp; cheese with mayo, lettuce &amp; tomato.</p><div class="price">$8.25</div></div>
+      </div>
+    </div>
+
+    <!-- SPECIALTY SANDWICHES -->
+    <div class="menu-cat">
+      <div class="menu-cat-head reveal">
+        <span class="emoji">🥪</span>
+        <h3>Specialty Sandwiches</h3>
+        <p>Made to order with quality deli meats and fixings.</p>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-card reveal"><span class="tag">Fan Favorite</span><span class="cat">Specialty</span><span class="emoji">🧀</span><h3>Turkey &amp; Smoked Gouda</h3><p class="desc">Hot oven-gold turkey, smoked gouda &amp; bacon. Served hot.</p><div class="price">$9.95</div></div>
+        <div class="menu-card reveal"><span class="cat">Specialty</span><span class="emoji">🥩</span><h3>BBQ Roast Beef</h3><p class="desc">Hot roast beef, cheddar &amp; BBQ sauce.</p><div class="price">$10.95</div></div>
+        <div class="menu-card reveal"><span class="cat">Specialty</span><span class="emoji">🥗</span><h3>Chicken Salad Sandwich</h3><p class="desc">House-made chicken salad, served cold.</p><div class="price">$8.95</div></div>
+        <div class="menu-card reveal"><span class="cat">Specialty</span><span class="emoji">🦃</span><h3>Turkey Cranberry</h3><p class="desc">Turkey &amp; cranberry sauce with Swiss. Served cold.</p><div class="price">$9.50</div></div>
+        <div class="menu-card reveal"><span class="cat">Specialty</span><span class="emoji">🔥</span><h3>Fire House</h3><p class="desc">Hot roast beef, smoked gouda &amp; avocado. Served hot.</p><div class="price">$11.50</div></div>
+        <div class="menu-card reveal"><span class="cat">Specialty</span><span class="emoji">🧑‍🍳</span><h3>Daily Special</h3><p class="desc">Ask at the counter what's on special today.</p><div class="price"><small>varies</small></div></div>
+      </div>
+    </div>
+
+    <!-- PIZZA -->
+    <div class="menu-cat">
+      <div class="menu-cat-head reveal">
+        <span class="emoji">🍕</span>
+        <h3>Pizza</h3>
+        <p>Whole pies, baked to order.</p>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-card reveal"><span class="tag">Fan Favorite</span><span class="cat">Pizza</span><span class="emoji">🍕</span><h3>Whole Pepperoni</h3><p class="desc">Classic pepperoni with melted mozzarella.</p><div class="price">$18.00</div></div>
+        <div class="menu-card reveal"><span class="cat">Pizza</span><span class="emoji">🍕</span><h3>Whole Combo</h3><p class="desc">Loaded with pepperoni, veggies &amp; more.</p><div class="price">$20.00</div></div>
+        <div class="menu-card reveal"><span class="cat">Pizza</span><span class="emoji">🥦</span><h3>Whole Vegetarian</h3><p class="desc">Fresh veggies, no meat.</p><div class="price">$19.00</div></div>
+      </div>
+    </div>
+
+    <!-- SNACKS & DRINKS -->
+    <div class="menu-cat">
+      <div class="menu-cat-head reveal">
+        <span class="emoji">🍿</span>
+        <h3>Snacks, Drinks &amp; Dry Goods</h3>
+        <p>A varied, interesting selection — come explore the aisles.</p>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-card reveal"><span class="cat">Snacks</span><span class="emoji">🥔</span><h3>Kettle Chips</h3><p class="desc">Sea salt, dill pickle, salt &amp; vinegar, jalapeño, honey dijon.</p><div class="price">$2.50</div></div>
+        <div class="menu-card reveal"><span class="cat">Deli</span><span class="emoji">🥚</span><h3>Deviled Eggs</h3><p class="desc">Store-made, creamy &amp; classic.</p><div class="price">$4.25</div></div>
+        <div class="menu-card reveal"><span class="cat">Bakery</span><span class="emoji">🫓</span><h3>Garlic Naan</h3><p class="desc">Warm, fresh &amp; garlicky.</p><div class="price">$2.95</div></div>
+        <div class="menu-card reveal"><span class="cat">Produce</span><span class="emoji">🍉</span><h3>Fresh Fruit</h3><p class="desc">Seasonal watermelon, citrus &amp; more.</p><div class="price"><small>market</small></div></div>
+        <div class="menu-card reveal"><span class="cat">Drinks</span><span class="emoji">🥤</span><h3>Cold Drinks</h3><p class="desc">Sodas, juices, waters &amp; more.</p><div class="price">$2.25</div></div>
+        <div class="menu-card reveal"><span class="cat">Drinks</span><span class="emoji">☕</span><h3>Hot Drinks</h3><p class="desc">Coffee &amp; tea, brewed fresh.</p><div class="price">$2.75</div></div>
+      </div>
+    </div>
+
+    <p class="menu-note">
+      Cash &amp; cards accepted · Prices may change — call for today's menu.
+      <br><span class="chip">💡 Order online for pickup &amp; save 5% on your first order.</span>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="flogo" style="width:64px;height:64px;border-radius:16px;background:var(--green);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Lilita One',sans-serif;font-size:1.6rem;box-shadow:0 8px 20px rgba(0,0,0,.35)">CM</div>
+  <div class="flogo">🧺 Corner Market &amp; Deli</div>
+  <p>123 Market Street, Your Town, CA 90000 · (555) 555-0100 · Open Daily · Late Night</p>
+  <div class="socials">
+    <a href="#" target="_blank" rel="noopener" title="Yelp">⭐</a>
+    <a href="https://www.google.com/maps/search/?api=1&query=Corner+Market+Your+Town+CA" target="_blank" rel="noopener" title="Google Maps">📍</a>
+  </div>
+  <p style="margin-top:18px;font-size:.75rem;opacity:.6">Fresh produce. In-house deli. Open late.</p>
+</footer>
+
+<div class="sticky-cta">
+  <button class="btn btn-green" onclick="openModal()">🛒 Order Pickup</button>
+  <a class="btn btn-citrus" href="tel:+15555550100">📞 Call</a>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Order for Pickup<small>Corner Market &amp; Deli</small></h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="step-label">How would you like it?</div>
+      <div class="seg">
+        <button class="active" id="segPickup" onclick="setMode('pickup')">🛍️ Pickup</button>
+        <button id="segDelivery" onclick="setMode('delivery')">🛵 Delivery</button>
+      </div>
+      <div class="step-label">When would you like your order?</div>
+      <div class="choice">
+        <div class="choice-card active" id="cardNow" onclick="setTiming('now')">
+          <span class="big">⚡</span><span class="t">Order Now</span><span class="d">Ready in ~15 mins</span>
+        </div>
+        <div class="choice-card" id="cardLater" onclick="setTiming('later')">
+          <span class="big">📅</span><span class="t">Schedule for Later</span><span class="d">Pick a date &amp; time</span>
+        </div>
+      </div>
+      <div class="schedule" id="scheduleBox" style="display:none">
+        <div class="date-chips">
+          <span class="date-chip active" onclick="setDate(this)">Today</span>
+          <span class="date-chip" onclick="setDate(this)">Tomorrow</span>
+          <span class="date-chip" onclick="setDate(this)">Pick a Date</span>
+        </div>
+        <div class="time-row"><input type="time" id="timeInput" value="17:30" /></div>
+      </div>
+      <button class="confirm" onclick="confirmOrder()">Continue to Menu →</button>
+      <p class="confirm-note" id="confirmNote">Ready in ~15 mins · No payment until pickup</p>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
