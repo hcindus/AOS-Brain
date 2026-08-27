@@ -1,0 +1,16 @@
+services:
+  overpass:
+    image: wiktorn/overpass-api:latest
+    container_name: overpass
+    ports:
+      - "12345:80"
+    environment:
+      - OVERPASS_META=yes
+      - OVERPASS_MODE=init
+      - OVERPASS_DIFF_URL=https://planet.openstreetmap.org/replication/minute/
+      - OVERPASS_PLANET_URL=https://download.geofabrik.de/north-america/us/california-latest.osm.bz2
+    volumes:
+      - overpass_db:/db
+    restart: unless-stopped
+volumes:
+  overpass_db:
