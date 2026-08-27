@@ -8,7 +8,7 @@ services:
       - OVERPASS_META=yes
       - OVERPASS_MODE=init
       - OVERPASS_DIFF_URL=https://planet.openstreetmap.org/replication/minute/
-      - OVERPASS_PLANET_URL=https://download.geofabrik.de/north-america/us/california-latest.osm.pbf
+      - OVERPASS_PLANET_URL=https://download.geofabrik.de/north-america/us/california-260826.osm.pbf
     volumes:
       - overpass_db:/db
     restart: unless-stopped
