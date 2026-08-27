@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Order Online — Jenny's Giant Burger</title>
-<meta name="description" content="Order online from Jenny's Giant Burger, Fort Bragg. Jumbo burgers, fries, and real shakes. Pay at pickup." />
+<meta name="description" content="Order online from Jenny's Giant Burger, Fort Bragg. Pickup or delivery. Jumbo burgers, fries, and real shakes." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
@@ -23,34 +23,50 @@
   body{font-family:'Nunito',sans-serif;color:var(--ink);background:var(--cream);line-height:1.5;padding-bottom:90px}
   h1,h2,h3,.display{font-family:'Lilita One','Nunito',sans-serif;font-weight:400;letter-spacing:.5px}
   a{text-decoration:none;color:inherit}
+  button{font-family:inherit}
 
-  /* header */
-  header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px 22px;background:rgba(253,246,236,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(61,43,26,.08)}
-  header .brand{display:flex;align-items:center;gap:12px}
-  header .logo{width:44px;height:44px;border-radius:12px;background:var(--beef);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Lilita One',sans-serif;font-size:1.1rem}
-  header .name{font-family:'Lilita One',sans-serif;color:var(--beef);font-size:1.1rem;line-height:1}
-  header .name small{display:block;font-family:'Nunito',sans-serif;font-weight:700;font-size:.6rem;color:var(--brown-soft);letter-spacing:2px;text-transform:uppercase}
-  .cart-btn{position:relative;display:inline-flex;align-items:center;gap:8px;background:var(--beef);color:#fff;border:none;border-radius:999px;padding:11px 18px;font-weight:800;font-size:.95rem;cursor:pointer;box-shadow:0 8px 22px rgba(192,57,43,.35)}
-  .cart-btn .count{background:var(--mustard);color:var(--brown);border-radius:999px;min-width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;padding:0 6px}
+  header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:rgba(253,246,236,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(61,43,26,.08);gap:10px}
+  header .brand{display:flex;align-items:center;gap:10px;min-width:0}
+  header .logo{width:42px;height:42px;border-radius:12px;background:var(--beef);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Lilita One',sans-serif;font-size:1rem;flex-shrink:0}
+  header .name{font-family:'Lilita One',sans-serif;color:var(--beef);font-size:1.05rem;line-height:1;white-space:nowrap}
+  header .name small{display:block;font-family:'Nunito',sans-serif;font-weight:700;font-size:.58rem;color:var(--brown-soft);letter-spacing:2px;text-transform:uppercase}
+  .back{font-weight:800;color:var(--brown-soft);font-size:.85rem;white-space:nowrap}
+  .cart-btn{position:relative;display:inline-flex;align-items:center;gap:8px;background:var(--beef);color:#fff;border:none;border-radius:999px;padding:10px 16px;font-weight:800;font-size:.9rem;cursor:pointer;box-shadow:0 8px 22px rgba(192,57,43,.35);white-space:nowrap}
+  .cart-btn .count{background:var(--mustard);color:var(--brown);border-radius:999px;min-width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;padding:0 6px}
 
   .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
-  .hero{text-align:center;padding:34px 0 8px}
-  .hero h1{font-size:clamp(2rem,6vw,3.4rem);color:var(--beef);text-shadow:0 3px 0 rgba(255,255,255,.6)}
-  .hero p{color:var(--brown-soft);font-weight:600;max-width:520px;margin:8px auto 0}
 
-  .category{margin-top:34px}
-  .category h2{display:flex;align-items:center;gap:10px;font-size:1.6rem;color:var(--brown);margin-bottom:16px}
-  .category h2 .em{font-size:1.6rem}
+  /* MODE SELECT (greeting) */
+  .mode-screen{max-width:620px;margin:0 auto;padding:30px 0}
+  .mode-screen h1{font-size:clamp(2rem,6vw,3rem);color:var(--beef);text-align:center;text-shadow:0 3px 0 rgba(255,255,255,.6);margin-bottom:8px}
+  .mode-screen .sub{text-align:center;color:var(--brown-soft);font-weight:600;margin-bottom:28px}
+  .mode-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:520px){.mode-cards{grid-template-columns:1fr}}
+  .mode-card{background:#fff;border-radius:calc(var(--radius)*1.2);padding:30px 22px;text-align:center;box-shadow:var(--shadow);cursor:pointer;border:3px solid transparent;transition:transform .18s,border-color .18s;display:flex;flex-direction:column;align-items:center;gap:8px}
+  .mode-card:hover{transform:translateY(-4px);border-color:var(--mustard)}
+  .mode-card .ic{font-size:3.4rem}
+  .mode-card h2{font-size:1.6rem;color:var(--brown)}
+  .mode-card .eta{font-weight:800;color:var(--beef);font-size:1rem}
+  .mode-card .meta{font-weight:700;color:var(--brown-soft);font-size:.85rem}
+  .mode-card .pill{background:var(--mustard);color:var(--brown);border-radius:999px;padding:4px 14px;font-weight:800;font-size:.8rem;margin-top:6px}
 
-  .items{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+  /* MENU */
+  .mode-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:22px 0 4px;padding:14px 18px;background:#fff;border-radius:14px;box-shadow:var(--shadow)}
+  .mode-bar .cur{font-weight:800;color:var(--brown)}
+  .mode-bar .cur .badge{background:var(--beef);color:#fff;border-radius:999px;padding:4px 12px;font-size:.8rem;margin-left:6px}
+  .mode-bar .switch{background:none;border:none;color:var(--beef);font-weight:800;cursor:pointer;font-size:.9rem;text-decoration:underline}
+
+  .category{margin-top:30px}
+  .category h2{display:flex;align-items:center;gap:10px;font-size:1.5rem;color:var(--brown);margin-bottom:14px}
+  .items{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
   .item{background:#fff;border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px;transition:transform .2s}
   .item:hover{transform:translateY(-3px)}
   .item .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
   .item .fan{background:var(--mustard);color:var(--brown);font-weight:800;font-size:.62rem;padding:3px 9px;border-radius:999px;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap}
-  .item h3{font-size:1.08rem;color:var(--brown)}
-  .item .desc{color:var(--brown-soft);font-weight:600;font-size:.85rem;flex:1}
+  .item h3{font-size:1.05rem;color:var(--brown)}
+  .item .desc{color:var(--brown-soft);font-weight:600;font-size:.84rem;flex:1}
   .item .foot{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
-  .item .price{font-family:'Lilita One',sans-serif;font-size:1.4rem;color:var(--beef)}
+  .item .price{font-family:'Lilita One',sans-serif;font-size:1.35rem;color:var(--beef)}
   .add-btn{background:var(--beef);color:#fff;border:none;border-radius:999px;padding:8px 16px;font-weight:800;cursor:pointer;font-size:.9rem;transition:transform .12s,background .15s}
   .add-btn:hover{background:var(--beef-dark)}
   .add-btn:active{transform:scale(.95)}
@@ -58,46 +74,48 @@
   /* cart drawer */
   .overlay{position:fixed;inset:0;background:rgba(36,21,5,.45);z-index:90;opacity:0;pointer-events:none;transition:opacity .25s}
   .overlay.show{opacity:1;pointer-events:auto}
-  .cart{position:fixed;right:0;top:0;bottom:0;width:min(420px,100vw);background:var(--cream);z-index:95;transform:translateX(105%);transition:transform .3s ease;display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(0,0,0,.2)}
+  .cart{position:fixed;right:0;top:0;bottom:0;width:min(430px,100vw);background:var(--cream);z-index:95;transform:translateX(105%);transition:transform .3s ease;display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(0,0,0,.2)}
   .cart.open{transform:none}
   .cart-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;background:#fff;border-bottom:1px solid rgba(61,43,26,.08)}
-  .cart-head h2{font-size:1.4rem;color:var(--brown)}
+  .cart-head h2{font-size:1.35rem;color:var(--brown)}
   .close-btn{background:none;border:none;font-size:1.6rem;cursor:pointer;color:var(--brown-soft);line-height:1}
   .cart-items{flex:1;overflow-y:auto;padding:16px 22px}
   .cart-empty{text-align:center;color:var(--brown-soft);font-weight:700;padding:40px 10px;font-size:1.05rem}
   .cart-line{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px dashed rgba(61,43,26,.12)}
   .cart-line .info{flex:1}
   .cart-line .nm{font-weight:800;color:var(--brown)}
-  .cart-line .pr{font-weight:700;color:var(--beef);font-size:.9rem}
+  .cart-line .pr{font-weight:700;color:var(--beef);font-size:.88rem}
   .qty{display:flex;align-items:center;gap:8px}
   .qty button{width:28px;height:28px;border-radius:8px;border:1px solid rgba(61,43,26,.2);background:#fff;font-weight:800;cursor:pointer;font-size:1rem;line-height:1}
   .qty span{min-width:22px;text-align:center;font-weight:800}
   .rm{background:none;border:none;color:var(--brown-soft);cursor:pointer;font-size:1rem}
   .cart-foot{padding:18px 22px;background:#fff;border-top:1px solid rgba(61,43,26,.08)}
-  .totals{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
-  .totals .row{display:flex;justify-content:space-between;font-weight:700;color:var(--brown-soft);font-size:.95rem}
-  .totals .grand{font-family:'Lilita One',sans-serif;font-size:1.5rem;color:var(--beef);font-weight:400;border-top:2px dashed rgba(61,43,26,.15);padding-top:10px;margin-top:4px}
-  .checkout-btn{width:100%;background:var(--beef);color:#fff;border:none;border-radius:999px;padding:16px;font-weight:800;font-size:1.1rem;cursor:pointer;box-shadow:0 8px 22px rgba(192,57,43,.4)}
+  .totals{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+  .totals .row{display:flex;justify-content:space-between;font-weight:700;color:var(--brown-soft);font-size:.93rem}
+  .totals .row.fee{color:var(--beef)}
+  .totals .grand{font-family:'Lilita One',sans-serif;font-size:1.45rem;color:var(--beef);font-weight:400;border-top:2px dashed rgba(61,43,26,.15);padding-top:10px;margin-top:4px}
+  .checkout-btn{width:100%;background:var(--beef);color:#fff;border:none;border-radius:999px;padding:16px;font-weight:800;font-size:1.05rem;cursor:pointer;box-shadow:0 8px 22px rgba(192,57,43,.4)}
   .checkout-btn:disabled{opacity:.5;cursor:not-allowed}
 
-  /* checkout form */
+  /* forms */
   .form label{display:block;font-weight:800;color:var(--brown);font-size:.85rem;margin:14px 0 5px}
   .form input,.form select,.form textarea{width:100%;padding:12px 14px;border:2px solid rgba(61,43,26,.15);border-radius:12px;font-family:inherit;font-size:1rem;background:#fff}
   .form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--mustard)}
-  .otype{display:flex;gap:10px;margin-top:6px}
-  .otype button{flex:1;padding:12px;border:2px solid rgba(61,43,26,.15);border-radius:12px;background:#fff;font-weight:800;cursor:pointer;color:var(--brown)}
-  .otype button.sel{border-color:var(--beef);background:#fff5f3;color:var(--beef)}
+  .form .hint{font-size:.78rem;color:var(--brown-soft);font-weight:600;margin-top:3px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
   /* confirmation */
-  .confirm{text-align:center;padding:20px}
+  .confirm{text-align:center;padding:16px}
   .confirm .tick{font-size:4rem}
   .confirm h2{color:var(--brown);font-size:1.8rem;margin:10px 0}
-  .confirm .oid{display:inline-block;background:var(--mustard);color:var(--brown);font-weight:800;border-radius:999px;padding:8px 20px;font-size:1.3rem;margin:10px 0}
-  .receipt{background:#fff;border-radius:var(--radius);padding:24px;text-align:left;box-shadow:var(--shadow);margin:20px 0;font-family:monospace;font-size:.95rem;white-space:pre-wrap;color:var(--brown)}
+  .confirm .oid{display:inline-block;background:var(--mustard);color:var(--brown);font-weight:800;border-radius:999px;padding:8px 20px;font-size:1.3rem;margin:8px 0}
+  .confirm .eta{font-weight:800;color:var(--beef);font-size:1.2rem}
+  .receipt{background:#fff;border-radius:var(--radius);padding:24px;text-align:left;box-shadow:var(--shadow);margin:20px 0;font-family:monospace;font-size:.92rem;white-space:pre-wrap;color:var(--brown)}
   .note{color:var(--brown-soft);font-weight:700;font-size:.9rem}
 
   .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--brown);color:#fff;padding:12px 22px;border-radius:999px;font-weight:800;z-index:120;opacity:0;transition:.3s;pointer-events:none;box-shadow:var(--shadow)}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .hidden{display:none !important}
 </style>
 </head>
 <body>
@@ -107,30 +125,51 @@
     <div class="logo">JGB</div>
     <div class="name">Jenny's Giant Burger<small>Order Online</small></div>
   </div>
-  <a href="index.html" style="font-weight:800;color:var(--brown-soft);font-size:.9rem">← Back</a>
-  <button class="cart-btn" onclick="openCart()">🛒 Cart <span class="count" id="cartCount">0</span></button>
+  <a href="index.html" class="back">← Back</a>
+  <button class="cart-btn" onclick="openCart()">🛒 <span class="count" id="cartCount">0</span></button>
 </header>
 
 <div class="wrap">
-  <div class="hero">
-    <h1>Order Online</h1>
-    <p>Pick your favorites, we'll have it hot and ready. Pay at pickup.</p>
+
+  <!-- GREETING: pickup vs delivery -->
+  <div id="modeScreen" class="mode-screen">
+    <h1>How do you want your order?</h1>
+    <p class="sub">Jumbo burgers, golden fries &amp; real shakes — hot and ready.</p>
+    <div class="mode-cards">
+      <div class="mode-card" onclick="chooseMode('pickup')">
+        <div class="ic">🥡</div>
+        <h2>Pickup</h2>
+        <div class="eta">~<span id="pickupEta">15</span> min</div>
+        <div class="meta">Swing by and grab it</div>
+        <span class="pill">No fee</span>
+      </div>
+      <div class="mode-card" onclick="chooseMode('delivery')">
+        <div class="ic">🛵</div>
+        <h2>Delivery</h2>
+        <div class="eta">~<span id="deliveryEta">35</span> min</div>
+        <div class="meta">Straight to your door</div>
+        <span class="pill" id="deliveryFeePill">$3.99 fee</span>
+      </div>
+    </div>
   </div>
 
-  <div id="menuRoot"></div>
-
-  <div class="note" style="text-align:center;margin-top:36px">
-    Takeout &amp; dine-in only (no delivery) · Pay at pickup · <a href="tel:+17079642235" style="color:var(--beef);font-weight:800">(707) 964-2235</a>
+  <!-- MENU -->
+  <div id="menuScreen" class="hidden">
+    <div class="mode-bar">
+      <div class="cur">Ordering for <span class="badge" id="modeBadge">Pickup</span></div>
+      <button class="switch" onclick="backToMode()">Change</button>
+    </div>
+    <div id="menuRoot"></div>
+    <div class="note" style="text-align:center;margin-top:36px;padding-bottom:20px">
+      Questions? <a href="tel:+17079642235" style="color:var(--beef);font-weight:800">(707) 964-2235</a>
+    </div>
   </div>
 </div>
 
 <!-- CART DRAWER -->
 <div class="overlay" id="overlay" onclick="closeCart()"></div>
 <aside class="cart" id="cart">
-  <div class="cart-head">
-    <h2>Your Order</h2>
-    <button class="close-btn" onclick="closeCart()">✕</button>
-  </div>
+  <div class="cart-head"><h2>Your Order</h2><button class="close-btn" onclick="closeCart()">✕</button></div>
   <div class="cart-items" id="cartItems"></div>
   <div class="cart-foot" id="cartFoot"></div>
 </aside>
@@ -139,9 +178,7 @@
 
 <script>
 const API = '/api/jenny';
-const TAX_RATE_DEFAULT = 0.0875;
 
-// Menu (mirrors backend — graceful fallback if API is unreachable)
 const MENU = {
   "giant_burgers": {label:"Giant Burgers",emoji:"🍔",items:[
     {id:"giant_hamburger",name:"Giant Hamburger",desc:"1/3 lb jumbo patty, old-fashioned style",price:5.40,fan:true},
@@ -181,119 +218,121 @@ const MENU = {
   ]},
 };
 
-let taxRate = TAX_RATE_DEFAULT;
-let cart = {};          // id -> qty
-let orderType = 'pickup';
+const LS = 'jgb_order_v1';
+let cfg = { tax_rate:0.0875, delivery_fee:3.99, delivery_min_order:0, pickup_eta_minutes:15, delivery_eta_minutes:35 };
+let mode = 'pickup';       // 'pickup' | 'delivery'
+let cart = {};             // id -> qty
 
 const money = v => '$' + v.toFixed(2);
 
-function renderMenu(){
-  const root = document.getElementById('menuRoot');
-  root.innerHTML = '';
-  for (const [key, cat] of Object.entries(MENU)) {
-    const sec = document.createElement('div');
-    sec.className = 'category';
-    sec.innerHTML = `<h2><span class="em">${cat.emoji}</span>${cat.label}</h2>`;
-    const grid = document.createElement('div');
-    grid.className = 'items';
-    for (const it of cat.items) {
-      const card = document.createElement('div');
-      card.className = 'item';
-      const fan = it.fan ? '<span class="fan">Fan Fav</span>' : '';
-      card.innerHTML = `
-        <div class="top">${fan}<span class="price">${money(it.price)}</span></div>
-        <h3>${it.name}</h3>
-        <div class="desc">${it.desc || '&nbsp;'}</div>
-        <div class="foot"><span></span><button class="add-btn" onclick="addItem('${it.id}')">+ Add</button></div>`;
-      grid.appendChild(card);
-    }
-    sec.appendChild(grid);
-    root.appendChild(sec);
-  }
-}
-
-function addItem(id){ cart[id] = (cart[id]||0)+1; renderCart(); toast('Added ✓'); }
-function decItem(id){ if(cart[id]){ cart[id]--; if(cart[id]<=0) delete cart[id]; } renderCart(); }
-function incItem(id){ cart[id] = (cart[id]||0)+1; renderCart(); }
-function rmItem(id){ delete cart[id]; renderCart(); }
-
-function cartLines(){
-  const lines = [];
-  for (const [id,qty] of Object.entries(cart)) {
-    const it = findItem(id);
-    if (it) lines.push({...it, qty});
-  }
-  return lines;
-}
-function findItem(id){
-  for (const cat of Object.values(MENU)) for (const it of cat.items) if (it.id===id) return it;
-  return null;
-}
+function findItem(id){ for (const c of Object.values(MENU)) for (const it of c.items) if (it.id===id) return it; return null; }
+function cartLines(){ const l=[]; for (const [id,qty] of Object.entries(cart)){ const it=findItem(id); if(it) l.push({...it,qty}); } return l; }
 function subtotal(){ return cartLines().reduce((s,l)=>s+l.price*l.qty,0); }
-function tax(){ return subtotal()*taxRate; }
-function total(){ return subtotal()+tax(); }
+function tax(){ return subtotal()*cfg.tax_rate; }
+function deliveryFee(){ return mode==='delivery' ? cfg.delivery_fee : 0; }
+function total(){ return subtotal()+tax()+deliveryFee(); }
+
+// persistence
+function saveState(){ try{ localStorage.setItem(LS, JSON.stringify({mode, cart})); }catch(e){} }
+function loadState(){ try{ const s=JSON.parse(localStorage.getItem(LS)||'{}'); if(s.mode) mode=s.mode; if(s.cart) cart=s.cart; }catch(e){} }
+
+function renderMenu(){
+  const root=document.getElementById('menuRoot'); root.innerHTML='';
+  for(const [k,cat] of Object.entries(MENU)){
+    const sec=document.createElement('div'); sec.className='category';
+    sec.innerHTML=`<h2>${cat.emoji} ${cat.label}</h2>`;
+    const grid=document.createElement('div'); grid.className='items';
+    for(const it of cat.items){
+      const c=document.createElement('div'); c.className='item';
+      c.innerHTML=`<div class="top">${it.fan?'<span class="fan">Fan Fav</span>':''}<span class="price">${money(it.price)}</span></div>
+        <h3>${it.name}</h3><div class="desc">${it.desc||'&nbsp;'}</div>
+        <div class="foot"><span></span><button class="add-btn" onclick="addItem('${it.id}')">+ Add</button></div>`;
+      grid.appendChild(c);
+    }
+    sec.appendChild(grid); root.appendChild(sec);
+  }
+}
+
+function addItem(id){ cart[id]=(cart[id]||0)+1; saveState(); renderCart(); toast('Added ✓'); }
+function decItem(id){ if(cart[id]){ cart[id]--; if(cart[id]<=0) delete cart[id]; } saveState(); renderCart(); }
+function incItem(id){ cart[id]=(cart[id]||0)+1; saveState(); renderCart(); }
+function rmItem(id){ delete cart[id]; saveState(); renderCart(); }
 
 function renderCart(){
-  const lines = cartLines();
-  const count = lines.reduce((s,l)=>s+l.qty,0);
-  document.getElementById('cartCount').textContent = count;
+  const lines=cartLines();
+  const count=lines.reduce((s,l)=>s+l.qty,0);
+  document.getElementById('cartCount').textContent=count;
+  const itemsEl=document.getElementById('cartItems'), footEl=document.getElementById('cartFoot');
 
-  const itemsEl = document.getElementById('cartItems');
-  const footEl = document.getElementById('cartFoot');
-
-  if (lines.length === 0) {
-    itemsEl.innerHTML = '<div class="cart-empty">🛒 Your cart is empty.<br>Add something tasty!</div>';
-    footEl.innerHTML = '';
-    return;
+  if(!lines.length){
+    itemsEl.innerHTML='<div class="cart-empty">🛒 Your cart is empty.<br>Add something tasty!</div>';
+    footEl.innerHTML=''; return;
   }
 
-  itemsEl.innerHTML = lines.map(l => `
+  itemsEl.innerHTML=lines.map(l=>`
     <div class="cart-line">
-      <div class="info">
-        <div class="nm">${l.name}</div>
-        <div class="pr">${money(l.price)} each</div>
-      </div>
-      <div class="qty">
-        <button onclick="decItem('${l.id}')">−</button>
-        <span>${l.qty}</span>
-        <button onclick="incItem('${l.id}')">+</button>
-      </div>
-      <button class="rm" onclick="rmItem('${l.id}')" title="remove">🗑</button>
+      <div class="info"><div class="nm">${l.name}</div><div class="pr">${money(l.price)} each</div></div>
+      <div class="qty"><button onclick="decItem('${l.id}')">−</button><span>${l.qty}</span><button onclick="incItem('${l.id}')">+</button></div>
+      <button class="rm" onclick="rmItem('${l.id}')">🗑</button>
     </div>`).join('');
 
-  footEl.innerHTML = `
+  const feeRow = mode==='delivery' ? `<div class="row fee"><span>Delivery fee</span><span>${money(deliveryFee())}</span></div>` : '';
+  const minWarn = (mode==='delivery' && cfg.delivery_min_order>0 && subtotal()<cfg.delivery_min_order)
+    ? `<div class="row" style="color:var(--beef)"><span>Min for delivery: ${money(cfg.delivery_min_order)}</span><span></span></div>` : '';
+
+  footEl.innerHTML=`
     <div class="totals">
       <div class="row"><span>Subtotal</span><span>${money(subtotal())}</span></div>
-      <div class="row"><span>Tax (${(taxRate*100).toFixed(2)}%)</span><span>${money(tax())}</span></div>
+      <div class="row"><span>Tax (${(cfg.tax_rate*100).toFixed(2)}%)</span><span>${money(tax())}</span></div>
+      ${feeRow}${minWarn}
       <div class="row grand"><span>Total</span><span>${money(total())}</span></div>
     </div>
     <button class="checkout-btn" onclick="showCheckout()">Checkout →</button>`;
 }
 
+function chooseMode(m){
+  mode=m; saveState();
+  document.getElementById('modeScreen').classList.add('hidden');
+  document.getElementById('menuScreen').classList.remove('hidden');
+  document.getElementById('modeBadge').textContent = m==='delivery' ? 'Delivery' : 'Pickup';
+  renderCart();
+  window.scrollTo({top:0});
+}
+function backToMode(){
+  document.getElementById('menuScreen').classList.add('hidden');
+  document.getElementById('modeScreen').classList.remove('hidden');
+  window.scrollTo({top:0});
+}
+
 function openCart(){ document.getElementById('cart').classList.add('open'); document.getElementById('overlay').classList.add('show'); }
 function closeCart(){ document.getElementById('cart').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
-
-function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1600); }
+function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1700); }
 
 function showCheckout(){
-  const lines = cartLines();
-  if (!lines.length) return;
-  const foot = document.getElementById('cartFoot');
-  foot.innerHTML = `
+  if(!cartLines().length) return;
+  const isDel = mode==='delivery';
+  const foot=document.getElementById('cartFoot');
+  const addrFields = isDel ? `
+    <label>Delivery address *</label>
+    <input id="f_street" required maxlength="120" placeholder="Street address" />
+    <div class="row2">
+      <input id="f_city" required maxlength="60" placeholder="City" />
+      <input id="f_zip" required maxlength="12" placeholder="ZIP" />
+    </div>
+    <div class="hint">We deliver around Fort Bragg — ~${cfg.delivery_eta_minutes} min.</div>` : `
+    <label>Pickup time (optional)</label>
+    <input id="f_time" placeholder="ASAP or e.g. 12:30 PM" />`;
+
+  foot.innerHTML=`
     <form class="form" onsubmit="submitOrder(event)">
       <label>Your name *</label>
-      <input id="f_name" required maxlength="80" placeholder="Denise" />
-      <label>Mobile number (for your receipt) *</label>
-      <input id="f_phone" type="tel" required maxlength="20" placeholder="(707) 555-0123" />
-      <label>Order type</label>
-      <div class="otype">
-        <button type="button" class="sel" id="ot_pickup" onclick="setType('pickup')">🥡 Pickup</button>
-        <button type="button" id="ot_dine" onclick="setType('dine-in')">🍽 Dine-in</button>
-      </div>
-      <label>Pickup time (optional)</label>
-      <input id="f_time" placeholder="e.g. 12:30 PM" />
+      <input id="f_name" required maxlength="80" placeholder="Denise" autocomplete="name" />
+      <label>Mobile number * <span class="hint">(we text your receipt here)</span></label>
+      <input id="f_phone" type="tel" required maxlength="20" placeholder="(707) 555-0123" autocomplete="tel" />
+      ${addrFields}
       <label>Notes (optional)</label>
       <textarea id="f_notes" maxlength="300" rows="2" placeholder="No onions, extra sauce…"></textarea>
+      <div class="hint" style="margin-top:10px">${isDel ? 'Pay on delivery' : 'Pay at pickup'} — cash or card.</div>
       <div style="display:flex;gap:10px;margin-top:18px">
         <button type="button" onclick="renderCart()" style="flex:1;background:transparent;border:2px solid rgba(61,43,26,.15);border-radius:999px;padding:14px;font-weight:800;cursor:pointer;color:var(--brown)">Back</button>
         <button type="submit" class="checkout-btn" style="flex:2">Place Order · ${money(total())}</button>
@@ -301,84 +340,89 @@ function showCheckout(){
     </form>`;
 }
 
-function setType(t){
-  orderType = t;
-  document.getElementById('ot_pickup').classList.toggle('sel', t==='pickup');
-  document.getElementById('ot_dine').classList.toggle('sel', t==='dine-in');
-}
-
 async function submitOrder(e){
   e.preventDefault();
-  const btn = e.target.querySelector('button[type=submit]');
-  btn.disabled = true; btn.textContent = 'Placing order…';
+  const btn=e.target.querySelector('button[type=submit]');
+  btn.disabled=true; btn.textContent='Placing order…';
+  const isDel = mode==='delivery';
 
   const payload = {
     customer_name: document.getElementById('f_name').value.trim(),
     phone: document.getElementById('f_phone').value.trim(),
-    order_type: orderType,
-    pickup_time: document.getElementById('f_time').value.trim() || null,
+    order_type: mode,
     notes: document.getElementById('f_notes').value.trim() || null,
-    items: cartLines().map(l => ({id: l.id, qty: l.qty})),
+    items: cartLines().map(l=>({id:l.id, qty:l.qty})),
   };
+  if(isDel){
+    const street=document.getElementById('f_street').value.trim();
+    const city=document.getElementById('f_city').value.trim();
+    const zip=document.getElementById('f_zip').value.trim();
+    payload.delivery_address = [street, city, 'CA ' + zip].filter(Boolean).join(', ');
+  } else {
+    payload.pickup_time = document.getElementById('f_time').value.trim() || null;
+  }
 
-  try {
-    const r = await fetch(API + '/order', {
-      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
-    });
-    const data = await r.json();
-    if (!r.ok || !data.ok) throw new Error(data.detail || data.error || 'Order failed');
+  try{
+    const r=await fetch(API+'/order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    const data=await r.json();
+    if(!r.ok || !data.ok) throw new Error(data.detail || data.error || 'Order failed');
     showConfirm(data.order);
-  } catch(err) {
-    toast('⚠️ ' + err.message);
-    btn.disabled = false; btn.textContent = 'Place Order · ' + money(total());
+  }catch(err){
+    toast('⚠️ '+err.message); btn.disabled=false; btn.textContent='Place Order · '+money(total());
   }
 }
 
 function showConfirm(order){
-  closeCart();
-  cart = {};
-  renderCart();
-  const root = document.getElementById('menuRoot');
-  const receiptText = [
+  closeCart(); cart={}; saveState(); renderCart();
+  const root=document.getElementById('menuRoot');
+  const isDel=order.order_type==='delivery';
+  const lines=[
     `JENNY'S GIANT BURGER`,
     `940 Main St N, Fort Bragg, CA`,
     `(707) 964-2235`,
     ``,
     `Order #${order.id}`,
     `Name: ${order.customer_name}`,
-    `Type: ${order.order_type}`,
-    ...(order.pickup_time ? [`Pickup: ${order.pickup_time}`] : []),
+    `Type: ${isDel?'DELIVERY':'PICKUP'}`,
+    ...(isDel&&order.delivery_address?[`To: ${order.delivery_address}`]:[]),
+    ...(!isDel&&order.pickup_time?[`Pickup: ${order.pickup_time}`]:[]),
     `--------------------------------`,
-    ...order.items.map(i => `${i.qty}x ${i.name}   ${money(i.line_total)}`),
+    ...order.items.map(i=>`${i.qty}x ${i.name}   ${money(i.line_total)}`),
     `--------------------------------`,
     `Subtotal: ${money(order.subtotal)}`,
     `Tax:      ${money(order.tax)}`,
+    ...(order.delivery_fee>0?[`Delivery: ${money(order.delivery_fee)}`]:[]),
     `TOTAL:    ${money(order.total)}`,
     `--------------------------------`,
-    `PAY AT PICKUP`,
+    `PAY ${isDel?'ON DELIVERY':'AT PICKUP'}`,
     `Thank you! 🍔`,
   ].join('\n');
 
-  root.innerHTML = `
+  root.innerHTML=`
     <div class="confirm">
       <div class="tick">✅</div>
       <h2>Order placed!</h2>
       <div class="oid">#${order.id}</div>
-      <p class="note">We've texted the kitchen. You'll get a receipt SMS at <strong>${order.phone}</strong>.</p>
-      <div class="receipt">${receiptText.replace(/</g,'&lt;')}</div>
+      <div class="eta">🕒 Ready in ~${order.eta_minutes} min</div>
+      <p class="note" style="margin-top:8px">We've texted the kitchen. Your receipt is on its way to <strong>${order.phone}</strong>.</p>
+      <div class="receipt">${lines.replace(/</g,'&lt;')}</div>
       <button class="checkout-btn" onclick="location.reload()">Order Again</button>
     </div>`;
-  window.scrollTo({top:0, behavior:'smooth'});
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// Boot
+// boot
 (async function(){
-  try {
-    const h = await fetch(API + '/health').then(r=>r.json());
-    if (h && h.tax_rate) taxRate = h.tax_rate;
-  } catch(e) { /* fallback to default */ }
-  renderMenu();
-  renderCart();
+  loadState();
+  try{
+    const c=await fetch(API+'/config').then(r=>r.json());
+    if(c && typeof c.delivery_fee==='number') cfg=c;
+    document.getElementById('pickupEta').textContent=cfg.pickup_eta_minutes;
+    document.getElementById('deliveryEta').textContent=cfg.delivery_eta_minutes;
+    document.getElementById('deliveryFeePill').textContent= money(cfg.delivery_fee)+' fee';
+  }catch(e){}
+  renderMenu(); renderCart();
+  if(mode==='delivery' || cartLines().length){ chooseMode(mode); }
 })();
 </script>
 </body>

@@ -282,6 +282,23 @@ def health():
     }
 
 
+@app.get("/api/config")
+def config():
+    """Public ordering config: fees, minimums, ETAs, hours, contact."""
+    return {
+        "business": BUSINESS_NAME,
+        "phone": BUSINESS_PHONE,
+        "address": BUSINESS_ADDRESS,
+        "hours": BUSINESS_HOURS,
+        "tax_rate": TAX_RATE,
+        "delivery_fee": DELIVERY_FEE,
+        "delivery_min_order": DELIVERY_MIN_ORDER,
+        "pickup_eta_minutes": PICKUP_ETA_MIN,
+        "delivery_eta_minutes": DELIVERY_ETA_MIN,
+        "payment_note": "Pay at pickup or on delivery (cash or card).",
+    }
+
+
 @app.get("/api/menu")
 def menu():
     return {
