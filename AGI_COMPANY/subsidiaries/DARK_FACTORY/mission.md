@@ -17,6 +17,7 @@
 4. **Vendor sourcing & procurement** — outsourced manufacturing, vendor onboarding.
 5. **Agent training** — Myl training system, curriculum, progression gates.
 6. **Simulation** — physics/cobra simulation environments for pre-build validation.
+7. **Agentic software & agent infrastructure** — browser/scraper agents, intelligence-collection tools (e.g. IC Browser), and fleet infrastructure that other agents use to operate. Captain directive 2026-08-27.
 
 ## 🚫 NON-GOALS (out of scope → REJECT)
 
