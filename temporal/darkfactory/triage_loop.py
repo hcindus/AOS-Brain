@@ -26,6 +26,8 @@ REJECTED = BASE / "specs" / "rejected"
 ALLOWED_PRODUCTS = {
     "cobra_v1", "prometheus_v1", "CREAM", "ReggieStarr", "nognog", "nomad_probe",
     "RS-80", "neon-courier", "quantum-defender", "laser-pistol",
+    # Agentic software & infrastructure (mission.md GOAL #7, Captain 2026-08-27)
+    "IC-Browser", "IC-Browser-v1", "agentic-software",
 }
 NON_GOAL_KEYWORDS = ["medical", "legal", "financial", "autonomous deploy", "production deploy"]
 
