@@ -147,7 +147,7 @@
         <div class="ic">🛵</div>
         <h2>Delivery</h2>
         <div class="eta">~<span id="deliveryEta">35</span> min</div>
-        <div class="meta">Straight to your door</div>
+        <div class="meta">Now delivering across Fort Bragg</div>
         <span class="pill" id="deliveryFeePill">$3.99 fee</span>
       </div>
     </div>
@@ -319,7 +319,7 @@ function showCheckout(){
       <input id="f_city" required maxlength="60" placeholder="City" />
       <input id="f_zip" required maxlength="12" placeholder="ZIP" />
     </div>
-    <div class="hint">We deliver around Fort Bragg — ~${cfg.delivery_eta_minutes} min.</div>` : `
+    <div class="hint">✅ We deliver all over ${cfg.delivery_area} (${(cfg.delivery_zips||[]).join(', ')}).</div>` : `
     <label>Pickup time (optional)</label>
     <input id="f_time" placeholder="ASAP or e.g. 12:30 PM" />`;
 
@@ -340,6 +340,29 @@ function showCheckout(){
     </form>`;
 }
 
+function showOutOfArea(){
+  const foot=document.getElementById('cartFoot');
+  foot.innerHTML = `
+    <div style="background:#fff5f3;border:2px solid var(--beef);border-radius:14px;padding:16px;text-align:center;margin-bottom:12px">
+      <div style="font-weight:800;color:var(--beef);margin-bottom:4px">🛵 Delivery doesn't reach this address yet</div>
+      <div style="color:var(--brown-soft);font-weight:600;font-size:.9rem;margin-bottom:12px">But no worries — pickup is always available at our Fort Bragg location!</div>
+      <button class="checkout-btn" onclick="switchToPickup()">Switch to Pickup 🥡</button>
+    </div>`;
+}
+
+function switchToPickup(){
+  const name = document.getElementById('f_name')?.value || '';
+  const phone = document.getElementById('f_phone')?.value || '';
+  const notes = document.getElementById('f_notes')?.value || '';
+  mode='pickup'; saveState();
+  document.getElementById('modeBadge').textContent='Pickup';
+  showCheckout();
+  if(document.getElementById('f_name')) document.getElementById('f_name').value = name;
+  if(document.getElementById('f_phone')) document.getElementById('f_phone').value = phone;
+  if(document.getElementById('f_notes')) document.getElementById('f_notes').value = notes;
+  toast('Switched to Pickup 🥡');
+}
+
 async function submitOrder(e){
   e.preventDefault();
   const btn=e.target.querySelector('button[type=submit]');
@@ -357,11 +380,11 @@ async function submitOrder(e){
     const street=document.getElementById('f_street').value.trim();
     const city=document.getElementById('f_city').value.trim();
     const zip=document.getElementById('f_zip').value.trim();
-    // client-side delivery radius check (fast feedback)
+    // client-side delivery radius check (graceful fallback to pickup)
     const zips = cfg.delivery_zips || [];
     const zip5 = (zip.match(/\d{5}/)||[])[0];
     if(zips.length && zip5 && !zips.includes(zip5)){
-      toast('⚠️ Sorry, we only deliver in ' + cfg.delivery_area + ' (' + zips.join(', ') + ')');
+      showOutOfArea();
       btn.disabled=false; btn.textContent='Place Order · '+money(total());
       return;
     }

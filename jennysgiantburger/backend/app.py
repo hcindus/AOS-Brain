@@ -343,7 +343,7 @@ def create_order(req: OrderRequest):
         if zip_code not in DELIVERY_ZIPS:
             raise HTTPException(
                 status_code=400,
-                detail=f"Sorry, we only deliver in {DELIVERY_AREA} (ZIP {', '.join(DELIVERY_ZIPS)})",
+                detail=f"Delivery currently covers {DELIVERY_AREA} (ZIP {', '.join(DELIVERY_ZIPS)}). Pickup is always available!",
             )
 
     # Validate items
