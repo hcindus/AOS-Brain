@@ -17,6 +17,7 @@ log-only "dry-run" mode when credentials are missing/placeholder.
 """
 
 import os
+import re
 import json
 import uuid
 import base64
@@ -45,6 +46,10 @@ DELIVERY_MIN_ORDER = float(_env("JENNY_DELIVERY_MIN", "0.0"))  # 0 = no minimum
 PICKUP_ETA_MIN = int(_env("JENNY_PICKUP_ETA", "15"))           # minutes
 DELIVERY_ETA_MIN = int(_env("JENNY_DELIVERY_ETA", "35"))       # minutes
 BUSINESS_HOURS = _env("JENNY_BUSINESS_HOURS", "Open daily 10:30am–9:00pm")
+
+# Delivery radius (ZIP allowlist)
+DELIVERY_ZIPS = [z.strip() for z in _env("JENNY_DELIVERY_ZIPS", "95437").split(",") if z.strip()]
+DELIVERY_AREA = _env("JENNY_DELIVERY_AREA", "Fort Bragg, CA")
 
 # Twilio (SMS)
 TWILIO_SID = _env("TWILIO_ACCOUNT_SID")
@@ -293,6 +298,8 @@ def config():
         "tax_rate": TAX_RATE,
         "delivery_fee": DELIVERY_FEE,
         "delivery_min_order": DELIVERY_MIN_ORDER,
+        "delivery_zips": DELIVERY_ZIPS,
+        "delivery_area": DELIVERY_AREA,
         "pickup_eta_minutes": PICKUP_ETA_MIN,
         "delivery_eta_minutes": DELIVERY_ETA_MIN,
         "payment_note": "Pay at pickup or on delivery (cash or card).",
@@ -327,6 +334,17 @@ def create_order(req: OrderRequest):
     delivery_address = (req.delivery_address or "").strip() if is_delivery else ""
     if is_delivery and not delivery_address:
         raise HTTPException(status_code=400, detail="Delivery address is required")
+
+    if is_delivery and DELIVERY_ZIPS:
+        m = re.search(r'(\d{5})(?:-\d{4})?$', delivery_address)
+        zip_code = m.group(1) if m else ""
+        if not zip_code:
+            raise HTTPException(status_code=400, detail="Please include a valid ZIP code")
+        if zip_code not in DELIVERY_ZIPS:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Sorry, we only deliver in {DELIVERY_AREA} (ZIP {', '.join(DELIVERY_ZIPS)})",
+            )
 
     # Validate items
     resolved = []

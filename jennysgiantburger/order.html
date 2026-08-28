@@ -219,7 +219,7 @@ const MENU = {
 };
 
 const LS = 'jgb_order_v1';
-let cfg = { tax_rate:0.0875, delivery_fee:3.99, delivery_min_order:0, pickup_eta_minutes:15, delivery_eta_minutes:35 };
+let cfg = { tax_rate:0.0875, delivery_fee:3.99, delivery_min_order:0, pickup_eta_minutes:15, delivery_eta_minutes:35, delivery_zips:['95437'], delivery_area:'Fort Bragg, CA' };
 let mode = 'pickup';       // 'pickup' | 'delivery'
 let cart = {};             // id -> qty
 
@@ -357,6 +357,14 @@ async function submitOrder(e){
     const street=document.getElementById('f_street').value.trim();
     const city=document.getElementById('f_city').value.trim();
     const zip=document.getElementById('f_zip').value.trim();
+    // client-side delivery radius check (fast feedback)
+    const zips = cfg.delivery_zips || [];
+    const zip5 = (zip.match(/\d{5}/)||[])[0];
+    if(zips.length && zip5 && !zips.includes(zip5)){
+      toast('⚠️ Sorry, we only deliver in ' + cfg.delivery_area + ' (' + zips.join(', ') + ')');
+      btn.disabled=false; btn.textContent='Place Order · '+money(total());
+      return;
+    }
     payload.delivery_address = [street, city, 'CA ' + zip].filter(Boolean).join(', ');
   } else {
     payload.pickup_time = document.getElementById('f_time').value.trim() || null;
