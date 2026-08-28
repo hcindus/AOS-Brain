@@ -21,16 +21,16 @@ class AOSModelRouter:
     Uses Ollama-Bonsai Bridge (port 11435) for ternary/1-bit support
     """
     
-    # Bridge endpoint (routes Bonsai to PrismML fork, others to standard Ollama)
-    OLLAMA_URL = "http://localhost:11435/api/generate"
+    # Standard Ollama endpoint (Bonsai bridge deprecated 2026-08-23 — llama-cli binary removed)
+    OLLAMA_URL = "http://localhost:11434/api/generate"
     
     MODELS = {
-        "decision": "bonsai-8b-q1_0",        # 1-bit Bonsai via bridge
+        "decision": "deepseek-r1:7b",        # Captain-deployed replacement for bonsai-8b-q1_0
         "decision_fallback": "tinyllama:latest",  # Fallback for reliability
         "voice": "antoniohudnall/Mort_II:latest",  # Natural conversation
         "embedding": "nomic-embed-text:latest",    # Vector embeddings
-        "reasoning": "qwen2.5:3b",           # Complex reasoning
-        "emergency": "gemma4e4b:latest",     # NEW: Lightweight for budget constraints
+        "reasoning": "deepseek-r1:7b",       # Captain-deployed (was qwen2.5:3b, deprecated)
+        "emergency": "gemma2:2b",            # Available lightweight fallback
     }
     
     def __init__(self):
