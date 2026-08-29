@@ -25,11 +25,21 @@ dup_groups = cur.execute("""
 
 exact_removed = 0
 for g in dup_groups:
-    rows = cur.execute("""
-        SELECT * FROM leads WHERE deleted=0
-        AND lower(business_name)=lower(?) AND lower(city)=lower(?) AND lower(state)=lower(?)
-        ORDER BY id
-    """, (g["business_name"], g["city"], g["state"])).fetchall()
+    b, ci, st = g["business_name"], g["city"], g["state"]
+    q = "SELECT * FROM leads WHERE deleted=0 AND lower(business_name)=lower(?)"
+    args = [b]
+    if ci is None:
+        q += " AND city IS NULL"
+    else:
+        q += " AND lower(city)=lower(?)"
+        args.append(ci)
+    if st is None:
+        q += " AND state IS NULL"
+    else:
+        q += " AND lower(state)=lower(?)"
+        args.append(st)
+    q += " ORDER BY id"
+    rows = cur.execute(q, args).fetchall()
     best = max(rows, key=score)
     for r in rows:
         if r["id"] != best["id"]:
