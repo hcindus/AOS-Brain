@@ -31,6 +31,7 @@ body: same essence, now with tracks and a gripper.
 | 7 | Essence | **Mortimer** — `mortimer_brain.py` + `myl0n-ros.js` + Ollama model |
 | 8 | Source of truth | **AGI Company repo** |
 | 9 | Inference | **Local** (offline autonomy) + dock sync for upgrades/heavy inference |
+| 10 | Mind | **AOS Complete Brain v4.5** + Mortimer essence + curriculum/enrichment |
 
 ---
 
@@ -135,6 +136,37 @@ cloud model (Claude/Codex/Miles) ──propose diff──▶ Pi (on cube)
 - Run Pi + Mortimer + Termux on an **existing Android tablet**.
 - **No GPIO on Android** → bridge via USB-OTG to Arduino/ESP32 → PCA9685 → arm.
 - Serial: tablet sends "shoulder 45°, gripper close"; Arduino does PWM.
+- Goal: prove "Pi harness → Mortimer essence → move the arm" end-to-end.
+- Termux: `termux-usb` / USB-serial.
+
+### v2 — Pi 5 native cube (the real body)
+- ALARM + Pi + Mortimer, GPIO wired **directly** (no Arduino bridge).
+- Full sensor suite, tracks, park-then-reach, battery + UPS.
+- IK in Python; later RL for *learned* motion.
+
+The brain code is identical across v1 → v2; only the spine changes
+(USB-serial → native GPIO).
+
+---
+
+## Power Budget (v2)
+
+- Under load: ~15–25W (inference + motors + arm + camera).
+- Target: full lab shift. LiFePO4 or larger 18650 pack.
+- Hardcoded reflexes: **return-to-dock @ 20% battery** = same priority as **stop @ cliff edge**.
+
+---
+
+## Open Items / Next Steps
+
+- [ ] Confirm arm kit exact model + servos (buy 2× genuine MG996R spares).
+- [ ] Order PCA9685, sensors, Pi 5 16GB, Geekworm X735.
+- [ ] Get "Make: Robotic Arms" (Matthew Eaton) for inverse-kinematics reference.
+- [ ] v1: flash tablet with Pi + Mortimer, wire Arduino bridge to arm.
+- [ ] Codename for the cube (suggest: "CUBE-1" / "Mortimer Cube" — Captain to name).
+- [ ] Decide M715q dock-brain role (future: on-prem heavy inference + upgrade server).
+heavy inference + upgrade server).
+ence + upgrade server).
 - Goal: prove "Pi harness → Mortimer essence → move the arm" end-to-end.
 - Termux: `termux-usb` / USB-serial.
 
