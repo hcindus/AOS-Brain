@@ -75,3 +75,9 @@ audit_repos/hcindus/depotcrm/
 *.hprof
 *.heap
 reggiestarr-rs80/*.hprof
+
+# Brain runtime state (changes every 60s — never commit)
+brain/state/
+data/scraper/
+data/depot_chaos/
+DepotChaos/depot_chaos.db
