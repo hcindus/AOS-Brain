@@ -27,6 +27,9 @@ package-lock.json
 *.swo
 *~
 
+# Nested clone of this repo (embedded git repo) — do not track
+aocros/
+
 # Large archives
 archive/backups/
 *.mp4
