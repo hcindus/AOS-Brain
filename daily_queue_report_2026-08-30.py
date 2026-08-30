@@ -23,12 +23,12 @@ Generated: {now.strftime('%Y-%m-%d %H:%M UTC')}
 ════════════════════════════════════════════
   SYSTEM HEALTH
 ════════════════════════════════════════════
-• Uptime:   102 days, 21h08m
-• CPU Load: 1.71 / 1.24 / 1.20  🟢 healthy
-• Memory:   3.8 Gi used / 15 Gi total (26%)  🟢 healthy
-• Available: 11 Gi
+• Uptime:   103 days, 2h46m
+• CPU Load: 1.23 / 1.33 / 1.32  🟢 healthy
+• Memory:   4.7 Gi used / 15 Gi total (31%)  🟢 healthy
+• Available: 10 Gi
 • Swap:     5.2 Gi / 29 Gi
-• Disk:     133G / 193G (69%)  🟢 healthy
+• Disk:     132G / 193G (69%)  🟢 healthy
 
 Core services: ✅ depotchaos-api, aos-brain-v4, aos-bhsi-v4,
 mission-control, ollama, darkfactory-worker, collections-worker,
@@ -98,3 +98,4 @@ with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT, context=ctx) as s:
     s.sendmail(EMAIL, RECIPIENT, msg.as_string())
 
 print("SENT to", RECIPIENT, "|", subject)
+
