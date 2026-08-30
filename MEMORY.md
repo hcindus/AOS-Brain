@@ -1,5 +1,12 @@
 # MEMORY.md - Curated Knowledge
 
+## Vendor Outreach Authority (Captain, 2026-08-30)
+**Phased email escalation — durable policy.**
+- **Now active:** Miles may reach out to **vendors** on Captain's behalf, place orders as Captain shares them, and report back any vendor replies.
+- **NOT yet:** **customers** — separate, later gate. Do NOT email customers until explicitly authorized.
+- **Tooling:** `scripts/vendor_comms.py` (`check` / `send` / `orders` / `add-vendor`). Creds from `.env` (single source). Inbound watch = OpenClaw cron `agentTurn` every 15 min → announces new email to Captain on Telegram. State: `data/vendor_comms_state.json` (seen UIDs), `data/vendor_contacts.json` (vendor directory), `data/email_inbox/` (saved copies).
+- **Existing vendor:** Labels Direct (Brandon Chilcoat) — trusted, "always fair." Respectful negotiation posture; don't squeeze a fair vendor. Matte LD46TTBOPP15PWI $446/case, gloss LD46TTGBOPP15PWI $420/case.
+
 ## Strategic Enrichment — Steve Jobs @ NeXT (Stanford GSB talk) — 2026-08-25
 Captain shared transcript → distilled into North Star for AGI Company positioning.
 
