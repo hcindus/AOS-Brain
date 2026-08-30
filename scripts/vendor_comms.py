@@ -287,6 +287,157 @@ def add_vendor(name, email, notes=""):
     print(f"Added vendor {name} <{email}>")
 
 
+# ─────────────────────────────────────────────────────────────────
+# ORDER AUTOMATION
+# ─────────────────────────────────────────────────────────────────
+ORDERS_INBOX = WORKSPACE / "data" / "orders" / "inbox"
+ORDERS_SENT = WORKSPACE / "data" / "orders" / "sent"
+ORDERS_HISTORY = WORKSPACE / "data" / "orders" / "history.json"
+
+COMPANY = "Performance Supply Depot LLC"
+SIGNATURE = "Miles\nPerformance Supply Depot LLC\nmiles@myl0nr0s.cloud"
+
+
+def load_order_history():
+    if ORDERS_HISTORY.exists():
+        try:
+            return json.loads(ORDERS_HISTORY.read_text())
+        except Exception:
+            pass
+    return []
+
+
+def save_order_history(history):
+    ORDERS_HISTORY.parent.mkdir(parents=True, exist_ok=True)
+    ORDERS_HISTORY.write_text(json.dumps(history, indent=2))
+
+
+def next_po_number():
+    hist = load_order_history()
+    year = datetime.now(timezone.utc).strftime("%Y")
+    n = len(hist) + 1
+    return f"PSD-{year}-{n:04d}"
+
+
+def render_intro_email(name, vendor):
+    return f"""Hello {name},
+
+I'm Miles with {COMPANY}. We supply point-of-sale (POS) hardware and consumables to businesses across the U.S., and we're currently evaluating vendors for our ongoing procurement needs.
+
+I'd like to learn more about your product line and terms. Specifically, could you share:
+
+1. Your current catalog / price list
+2. Volume breaks and any reseller or standing-order pricing
+3. Lead times and minimum order quantities
+4. Shipping options to California
+
+If it's easier, I'm happy to hop on a call or share our typical order volumes so you can tailor a quote.
+
+Thanks — looking forward to working together.
+
+Best,
+{SIGNATURE}"""
+
+
+def render_order_email(spec):
+    po = spec.get("po") or next_po_number()
+    lines = []
+    lines.append(f"Hello {spec.get('contact_name', '')},".strip())
+    lines.append("")
+    lines.append(f"I'd like to place the following order (PO {po}):")
+    lines.append("")
+    for item in spec.get("items", []):
+        price = item.get("price")
+        price_s = f" @ ${price:,.2f}" if price else ""
+        lines.append(f"  - {item.get('qty')} x {item.get('sku', '')} — {item.get('desc', '')} ({item.get('unit', 'each')}){price_s}")
+    lines.append("")
+    ship_to = spec.get("ship_to")
+    if ship_to:
+        lines.append("Ship to:")
+        lines.append(ship_to)
+        lines.append("")
+    if spec.get("quote_only"):
+        lines.append("Before confirming, please send a final quote with total (including shipping and any applicable tax).")
+    else:
+        lines.append("Please confirm availability, lead time, and total (including shipping).")
+    notes = spec.get("notes")
+    if notes:
+        lines.append("")
+        lines.append(f"Note: {notes}")
+    lines.append("")
+    lines.append("Thank you,")
+    lines.append(SIGNATURE)
+    return "\n".join(lines)
+
+
+def introduce(name):
+    vendors = load_vendors()
+    if name not in vendors:
+        print(f"ERROR: vendor '{name}' not in directory. Add it first with add-vendor.")
+        sys.exit(1)
+    v = vendors[name]
+    if not v.get("email"):
+        print(f"ERROR: vendor '{name}' has no email on file.")
+        sys.exit(1)
+    body = render_intro_email(name, v)
+    subject = f"Introduction — {COMPANY} (POS supplies)"
+    send_email(v["email"], subject, body, bcc="info@psdepot.com")
+    print(f"Intro sent to {name} <{v['email']}>")
+
+
+def process_order(spec_path):
+    spec = json.loads(Path(spec_path).read_text())
+    vendors = load_vendors()
+    vendor_name = spec.get("vendor")
+    to = spec.get("vendor_email")
+
+    if not to and vendor_name in vendors:
+        to = vendors[vendor_name].get("email")
+    if not to:
+        print("ERROR: order spec needs 'vendor_email' or a known 'vendor' with email on file.")
+        sys.exit(1)
+
+    po = spec.get("po") or next_po_number()
+    subject = f"Order Request — {po} | {COMPANY}"
+    body = render_order_email(spec)
+    send_email(to, subject, body, bcc="info@psdepot.com")
+
+    # Record in order history
+    hist = load_order_history()
+    hist.append({
+        "po": po,
+        "vendor": vendor_name,
+        "vendor_email": to,
+        "items": spec.get("items", []),
+        "ship_to": spec.get("ship_to"),
+        "quote_only": spec.get("quote_only", False),
+        "status": "sent",
+        "sent_at": datetime.now(timezone.utc).isoformat(),
+    })
+    save_order_history(hist)
+
+    # Move spec to sent/
+    ORDERS_SENT.mkdir(parents=True, exist_ok=True)
+    dest = ORDERS_SENT / Path(spec_path).name
+    Path(spec_path).rename(dest)
+
+    print(f"Order {po} sent to {to}; spec archived to {dest}")
+
+
+def process_inbox():
+    """Send any order specs sitting in the inbox."""
+    ORDERS_INBOX.mkdir(parents=True, exist_ok=True)
+    specs = sorted(ORDERS_INBOX.glob("*.json"))
+    if not specs:
+        print("No order specs in inbox.")
+        return
+    for spec in specs:
+        try:
+            process_order(str(spec))
+        except Exception as e:
+            print(f"ERROR processing {spec.name}: {e}")
+
+
 def main():
     args = sys.argv[1:]
     if not args:
@@ -303,6 +454,18 @@ def main():
             print("usage: vendor_comms.py add-vendor <name> <email> [notes]")
             return
         add_vendor(args[1], args[2], " ".join(args[3:]))
+    elif cmd == "introduce":
+        if len(args) < 2:
+            print("usage: vendor_comms.py introduce <vendor-name>")
+            return
+        introduce(args[1])
+    elif cmd == "order":
+        if len(args) < 2:
+            print("usage: vendor_comms.py order <spec.json>")
+            return
+        process_order(args[1])
+    elif cmd == "process-inbox":
+        process_inbox()
     elif cmd == "send":
         to = None
         subject = None

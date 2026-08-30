@@ -4,7 +4,8 @@
 **Phased email escalation — durable policy.**
 - **Now active:** Miles may reach out to **vendors** on Captain's behalf, place orders as Captain shares them, and report back any vendor replies.
 - **NOT yet:** **customers** — separate, later gate. Do NOT email customers until explicitly authorized.
-- **Tooling:** `scripts/vendor_comms.py` (`check` / `send` / `orders` / `add-vendor`). Creds from `.env` (single source). Inbound watch = OpenClaw cron `agentTurn` every 15 min → announces new email to Captain on Telegram. State: `data/vendor_comms_state.json` (seen UIDs), `data/vendor_contacts.json` (vendor directory), `data/email_inbox/` (saved copies).
+- **Tooling:** `scripts/vendor_comms.py` (`check` / `send` / `orders` / `add-vendor` / `introduce` / `order <spec>` / `process-inbox`). Creds from `.env` (single source). Inbound watch = OpenClaw cron `agentTurn` every 15 min → announces new email to Captain on Telegram. State: `data/vendor_comms_state.json` (seen UIDs), `data/vendor_contacts.json` (vendor directory), `data/email_inbox/` (saved copies).
+- **Order automation:** drop order spec JSON → `data/orders/inbox/` → auto-sent (BCC info@psdepot.com) + logged to `data/orders/history.json` (status: sent→awaiting-reply→confirmed/shipped/closed) + archived to `data/orders/sent/`. Auto PO `PSD-YYYY-NNNN`. Schema + usage in `data/orders/README.md`.
 - **Existing vendor:** Labels Direct (Brandon Chilcoat) — trusted, "always fair." Respectful negotiation posture; don't squeeze a fair vendor. Matte LD46TTBOPP15PWI $446/case, gloss LD46TTGBOPP15PWI $420/case.
 
 ## Strategic Enrichment — Steve Jobs @ NeXT (Stanford GSB talk) — 2026-08-25
