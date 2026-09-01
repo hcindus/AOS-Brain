@@ -23,11 +23,11 @@ Generated: {now.strftime('%Y-%m-%d %H:%M UTC')}
 ════════════════════════════════════════════
   SYSTEM HEALTH
 ════════════════════════════════════════════
-• Uptime:   104 days, 21h08m
-• CPU Load: 2.65 / 2.29 / 2.14  🟢 healthy
-• Memory:   6.4 Gi used / 15 Gi total (40%)  🟢 healthy
-• Available: 9.3 Gi
-• Swap:     5.3 Gi / 29 Gi
+• Uptime:   105 days, 2h46m
+• CPU Load: 1.05 / 0.97 / 1.00  🟢 healthy
+• Memory:   7.2 Gi used / 15 Gi total (48%)  🟢 healthy
+• Available: 8.5 Gi
+• Swap:     4.9 Gi / 29 Gi
 • Disk:     133G / 193G (69%)  🟢 healthy
 
 Core services: ✅ depotchaos-api, aos-brain-v4, aos-bhsi-v4,
