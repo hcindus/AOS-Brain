@@ -19,3 +19,12 @@
 - [ ] 3. Software tab
 - [ ] 4. DepotChaos test/debug
 - [ ] 5. Geo coverage (US EN+ES, MX, CA)
+
+## Progress Update 2026-09-02 (08:40 UTC)
+- ✅ Demo section (/demo/) + sitemap
+- ✅ Software landing (/software/) + nav links
+- ✅ DepotChaos verified (200)
+- ✅ Geo: 11 city pages (OH + IL) + 80 more cities (full US + MX + CA)
+- ✅ Sitemap: 715 → 806 URLs
+- ⏳ Duplicate reuse (cream.html×3 etc.) — pending product mapping
+- ⏳ Clean /locations/ hierarchy — pending
