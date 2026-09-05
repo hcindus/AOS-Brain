@@ -23,10 +23,10 @@ Generated: {now.strftime('%Y-%m-%d %H:%M UTC')}
 ════════════════════════════════════════════
   SYSTEM HEALTH
 ════════════════════════════════════════════
-• Uptime:   108 days, 21h
-• CPU Load: 3.80 / 2.17 / 1.60  ⚠️ elevated (was ~0.6 yesterday)
-• Memory:   7.4 Gi used / 15 Gi total (49%)  🟢 healthy
-• Available: 8.2 Gi
+• Uptime:   109 days, 2h46m
+• CPU Load: 1.40 / 1.62 / 1.57  🟢 moderate (down from 3.80 spike earlier today)
+• Memory:   8.9 Gi used / 15 Gi total (59%)  🟢 healthy
+• Available: 6.7 Gi
 • Swap:     2.9 Gi / 29 Gi
 • Disk:     133G / 193G (69%)  🟢 healthy
 
@@ -74,8 +74,9 @@ again overnight).
      miles@myl0nr0s.cloud. Confirm DKIM/SPF/DMARC for myl0nr0s.cloud.
 
 🟡 IMPORTANT
-  2. CPU load spiked to 3.80 (1-min) from ~0.6 yesterday — worth a
-     quick check for a runaway scraper/worker. Memory still fine.
+  2. CPU load spiked earlier today (3.80 1-min) but has settled to
+     ~1.4 — no runaway process persisting. Worth a glance if it
+     re-spikes. Memory still fine.
   3. mission-control dropped to INACTIVE again overnight (it recovered
      yesterday). Likely needs a systemd enable/restart to stay up.
   4. Four services in FAILED state — aos-ternary, certbot,
