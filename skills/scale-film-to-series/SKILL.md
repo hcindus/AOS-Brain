@@ -49,3 +49,23 @@ A season is one story cut at nine deliberate points. If episode four ends somewh
 - Lock references before shooting; consistency across episodes is the product.
 - Edit scene prompts pre-render, never post.
 - Feed your existing film's script as episode one — it already has a working first act.
+
+## Costs, ceilings & exports
+
+**Cost (pay per render, no "series price"):**
+- Look image (Nano Banana 2 @ 2K) ≈ 24 credits.
+- Scene (Seedance 2.5) ≈ 37 credits/sec @ 480p, 79 @ 720p.
+- Writing stages are language-model turns — cheap.
+- The studio quotes a **whole-series estimate up front** — look at that number, not the per-scene rate.
+
+**Ceilings (know before planning):**
+- Up to 12 episodes / series, 8 scenes / episode, 60 total entities (chars + env + props).
+- 6-ep series = 48 scene renders; 12-ep = 96. Forty-eight renders is a serious spend → **start with 3–4 episodes** and test the format with your audience before committing to twelve.
+
+**Sound is not included** — audio off by default (prompts explicitly request no music/ambient). Same separation as always: picture first, sound after. Finishing pass = Voice (dialogue) + Music (score) + Sound Design (foley) + Lipsync if a character speaks on camera.
+
+**Two exports (use both):**
+1. Video editor — open the episode on a timeline; cut, title, score as with the film.
+2. **Project package** — series bible + every episode script + every scene prompt + char/env/prop sheets. This is a documented, reusable format: a series bible + prompt library sells as a template, and it's the strongest single portfolio item you can show.
+
+**Note:** downloading finished files requires a paid plan. The free tier generates/previews only — a series you can't export is a series you can't post.
