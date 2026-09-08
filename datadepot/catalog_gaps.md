@@ -1,0 +1,633 @@
+# Performance Supply Depot — master catalog coverage & gaps
+
+Generated 2026-09-08 by a local parser that reads the product HTML under `/var/www/psdepot-v0/products/`.
+- File analyzed: `/var/www/psdepot-v0/catalog.csv`
+
+## Headline numbers
+
+- product pages cataloged (rows in CSV): **234**
+- pages with all 7 columns complete: **0**
+- landing/category/index/tile pages excluded (no single SKU): **6**
+
+| Gap type | Count |
+|---|---|
+| missing PSD ("our") part number | 194 |
+| missing internal (numeric) part number | 40 |
+| missing price | 4 |
+| missing product picture | 163 |
+| product picture is generic shared og/default (no real photo) | 10 |
+| brand left as 'other' | 141 |
+| category left as 'other' | 19 |
+| missing description | 0 |
+| pages whose part number is shared by another page (dupes) | 3 groups |
+
+## Pages missing a PSD ("our") part number (194)
+These pages currently only carry the numeric/internal code (or a model code). Per 'use-what-we-have' policy the cell is left blank; these are the pages that would need a PSD- alias assigned when the two-tier map is finished.
+- `11-094-one-ply-paper.html`
+- `12-100-one-ply-paper.html`
+- `13-305-epson-impact-paper.html`
+- `13-305C-one-ply-paper.html`
+- `13-305G-one-ply-paper.html`
+- `1433B-berkel-65mm.html`
+- `1477-cas.html`
+- `1478-cas.html`
+- `1493-cas.html`
+- `15-040-poynt-cc-station.html`
+- `15-044-thermal-paper.html`
+- `15-157-2-1-4-x-230-thermal.html`
+- `15-160-2-1-4-x-60-thermal.html`
+- `15-185-2-1-4-x-85-thermal.html`
+- `15-303-thermal-paper.html`
+- `15-350-2-1-4-x-50-thermal.html`
+- `15-741-credit-card-paper.html`
+- `15-999-pos-paper-rolls.html`
+- `1612-B-tec-sl9000-sl5300.html`
+- `1681-tec-sl9000-sl5300.html`
+- `18-333-three-ply-paper.html`
+- `1850-b-kilotech.html`
+- `1909-hobart-quantum.html`
+- `1911-hobart-quantum.html`
+- `30-100-pos-workstation-windows.html`
+- `30-101-pos-workstation-embedded.html`
+- `30-103-pos-workstation-rear-display-2-x-20.html`
+- `30-104-pos-workstation-pole-display-2x20.html`
+- `30-105-pos-workstation-multi-line-display.html`
+- `30-108-pos-workstation-windows-reconditioned.html`
+- `30-109-pos-workstation-embedded-reconditioned.html`
+- `30-110-pos-tablet-windows.html`
+- `30-111-pos-tablet-android-non-windows.html`
+- `30-112-pos-tablet-add-scanner.html`
+- `30-113-pos-tablet-charging-dock.html`
+- `30-114-pos-tablet-charger.html`
+- `30-118-pos-tablet-windows-reconditioned.html`
+- `30-119-pos-tablet-android-non-windows-reconditioned.html`
+- `30-120-pos-software-ncc.html`
+- `30-121-pos-software-sam4s.html`
+- `30-122-pos-software-microsale.html`
+- `30-123-pos-software-maitre-d-addon.html`
+- `30-124-pos-software-maitre-d-new-system.html`
+- `30-125-pos-software.html`
+- `30-126-pos-software-upgrade.html`
+- `30-130-pos-thermal-printer.html`
+- `30-131-pos-thermal-printer.html`
+- `30-132-pos-thermal-printer-reconditioned.html`
+- `30-133-pos-impact-printer.html`
+- `30-134-pos-impact-printer.html`
+- `30-135-pos-impact-printer.html`
+- `30-138-pos-impact-printer.html`
+- `30-140-shelf-tag-printer.html`
+- `30-141-shelf-tag-printer.html`
+- `30-142-label-printer-datamax-m-class.html`
+- `30-148-office-report-printer.html`
+- `30-150-integrated-scale.html`
+- `30-150-scale-integrated-pos.html`
+- `30-151-scale-scanner-integrated.html`
+- `30-156-scale-cas-cl5500.html`
+- `30-158-scale-other.html`
+- `30-160-scanner-pos-multi-line.html`
+- `30-161-scanner-pos-single-line.html`
+- `30-162-scanner-pos-wireless.html`
+- `30-165-cash-drawer-standard.html`
+- `30-166-cash-drawer-heavy-duty.html`
+- `30-167-cash-drawer-small-footprint.html`
+- `30-168-cash-drawer-cable-or-splitter.html`
+- `30-169-cash-drawer-reconditioned.html`
+- `30-170-kitchen-video-station-w-mon.html`
+- `30-171-kitchen-video-station-w-touch.html`
+- `30-172-kitchen-video-cpu-only.html`
+- `30-173-kitchen-video-bump-bar-only.html`
+- `30-174-kitchen-video-monitor-only.html`
+- `30-175-kitchen-video-mount-bracket-only.html`
+- `30-180-pinpad-emv-enabled.html`
+- `30-181-pinpad-emv-touch.html`
+- `30-182-payment-station-stand-alone.html`
+- `30-183-payment-station-touch.html`
+- `30-184-datacap-net-epay-tran-sw.html`
+- `30-185-datacap-net-epay-tran-sw.html`
+- `30-190-network-switch-5-port.html`
+- `30-191-network-switch-8-port.html`
+- `30-192-network-switch-16-port.html`
+- `30-193-network-switch-24-port.html`
+- `30-194-router.html`
+- `30-195-access-point-standard.html`
+- `30-196-access-point-cisco.html`
+- `30-197-poe-for-access-point.html`
+- `30-200-dell-office-pc-inc-kb-mouse.html`
+- `30-201-office-pc-monitor.html`
+- `30-202-office-printer.html`
+- `30-203-office-printer-copy-scan.html`
+- `30-204-office-kvm-switch-box.html`
+- `30-216-cash-register.html`
+- `30-217-cash-register-reconditioned.html`
+- `30-218-cash-register-peripheral.html`
+- `30-220-power-conditioner-printer-reconditioned.html`
+- `30-221-power-conditioner-workstation-reconditioned.html`
+- `30-222-power-conditioner-large-reconditioned.html`
+- `30-223-pwc-ups-reconditioned.html`
+- `30-224-ups-for-workstation.html`
+- `40-100-printer-repair-part.html`
+- `40-110-printer-power-brick.html`
+- `40-111-printer-power-brick-reconditioned.html`
+- `40-120-workstation-replacement-touchscreen.html`
+- `40-121-workstation-replacement-lcd.html`
+- `40-122-workstation-replacement-msr.html`
+- `40-123-workstation-replacement-rear-display.html`
+- `40-124-workstation-power-brick.html`
+- `40-124-workstation-replacement-hard-drive.html`
+- `40-128-workstation-replacement-part.html`
+- `40-130-install-repair-part.html`
+- `40-131-install-repair-part.html`
+- `40-132-install-repair-part.html`
+- `40-133-install-repair-part.html`
+- `40-134-install-repair-part.html`
+- `40-135-install-repair-part.html`
+- `40-500-in-shop-labor.html`
+- `40-501-on-site-labor.html`
+- `40-502-pos-system-database-creation-ore-install.html`
+- `40-503-day-rate-labor-discounted-rate.html`
+- `40-504-day-rate-labor-discounted-rate-2nd-or-more-day.html`
+- `40-510-labor-travel-to-site-zone-1.html`
+- `40-511-labor-travel-to-site-zone-2.html`
+- `40-512-labor-travel-to-site-zone-3.html`
+- `40-513-labor-travel-to-site-zone-4.html`
+- `40-600-labor-help-desk-business-hours.html`
+- `40-601-labor-help-desk-business-hours.html`
+- `40-602-labor-help-desk-7-x-24.html`
+- `40-603-labor-help-desk-7-x-24.html`
+- `40-604-labor-depot-hardware-repair-business-hours.html`
+- `40-605-labor-onsite-hardware-repair-business-hours.html`
+- `46-015-thermal-paper.html`
+- `46-175-thermal-paper.html`
+- `54-170-thermal-paper.html`
+- `54-230-epson-thermal.html`
+- `54-273-thermal-paper.html`
+- `61-620-shelf-tag-labels-3-x-1.html`
+- `61-630-shelf-tag-godex-2-25-x-1-25.html`
+- `61-640-maxstick.html`
+- `61-670-datamax-direct-thermal.html`
+- `62-196-office-printer-drum.html`
+- `62-197-office-printer-toner.html`
+- `62-198-pos-ribbon-ink.html`
+- `62-199-pos-ribbon-ink.html`
+- `62225-purple-ribbons.html`
+- `62235-black-ribbons.html`
+- `62240-purple-ribbons.html`
+- `62245-erc-ribbons.html`
+- `62285-purple-ribbons.html`
+- `64-437-44mm-one-ply-paper.html`
+- `67215-purple-ribbons.html`
+- `67240-star-ribbons.html`
+- `67655-purple-ribbons.html`
+- `71-100-server-swipe-card.html`
+- `71-200-manager-swipe-card.html`
+- `71-300-retractable-reel-plastic-holder-for-swipe-card.html`
+- `71-400-msr-cleaner-card.html`
+- `71-500-thermal-printer-cleaner-card.html`
+- `71-600-thermal-head-cleaner-pen.html`
+- `71-700-compressed-gas-cleaner-can.html`
+- `71-800-hand-sanitizer-jar.html`
+- `71-900-supply-item.html`
+- `72-100-cash-drawer.html`
+- `72-150-cash-drawer-till-reconditioned.html`
+- `72-200-silicon-protective-kb-cover-cash-reg.html`
+- `72-220-silicon-protective-screen-cover-ws.html`
+- `72-250-silicon-protective-cover-pay-station.html`
+- `CC-235-carbonless-paper.html`
+- `ERC-38-epson-black-red.html`
+- `capton-1.5oz-pourer.html`
+- `capton-1oz-pourer.html`
+- `capton-2oz-pourer.html`
+- `capton-cleaning-kit.html`
+- `capton-pourlink-analytics.html`
+- `capton-pourlink-receiver.html`
+- `capton-variety-pack.html`
+- `capton-wine-pourer.html`
+- `cas-cl5500.html`
+- `cas-cl7200.html`
+- `cas-lp-1000n.html`
+- `cas-pd-2z.html`
+- `cas-pdn-series.html`
+- `cas-s2000-jr.html`
+- `cas-sw-rs.html`
+- `cas-tracker-r457.html`
+- `ms3182402goplusd-maxstick-labels.html`
+- `orionstar-lucki.html`
+- `pf-230-phenol-free-thermal-paper.html`
+- `sam4s-er-260.html`
+- `sam4s-er-265.html`
+- `sam4s-er-940.html`
+- `sam4s-sap-630.html`
+
+## Pages missing an internal (numeric) part number (40)
+Mostly pages that only carry a PSD- (customer-facing) code today and have no numeric lookup yet.
+- `mscashdrawer/bixolon-srp-275iii-impact-printer.html`
+- `mscashdrawer/bixolon-srp-350plusv-thermal-printer.html`
+- `mscashdrawer/cas-se-c3500mc-split-keyboard-cash-register.html`
+- `mscashdrawer/cas-sr-4000mc-raised-keyboarddual-station-printer.html`
+- `mscashdrawer/cas-te-3000-ecr-stroke-keyboard-multi-line-lcd.html`
+- `mscashdrawer/cas-te-4500fb-cb-with-mid-size-cash-drawer-dl-3616.html`
+- `mscashdrawer/cas-tk-3200c-flat-keyboard-cash-register.html`
+- `mscashdrawer/code-cr2515-barcode-scanner.html`
+- `mscashdrawer/code-cr950-barcode-scanner.html`
+- `mscashdrawer/crs-wide-extra-heavy-duty-pos-cash-drawer-18.html`
+- `mscashdrawer/m-s-cash-drawer-cc-330-13-3-bill5-coin-black.html`
+- `mscashdrawer/m-s-cash-drawer-cc-330-13-4-bill5-coin-black.html`
+- `mscashdrawer/m-s-cash-drawer-cc-330-13-4-bill5-coin-brilliant-white.html`
+- `mscashdrawer/m-s-cash-drawer-cc-410-16-4-bill8-coin-black.html`
+- `mscashdrawer/m-s-cash-drawer-cc-410-16-5-bill5-coin-black.html`
+- `mscashdrawer/m-s-cash-drawer-cc-410-16-5-bill8-coin-black.html`
+- `mscashdrawer/m-s-cash-drawer-cc-410-16-5-bill8-coin-brilliant-white.html`
+- `mscashdrawer/m-s-cash-drawer-cc-460-heavy-duty-18-5-bill8-coin-black.html`
+- `mscashdrawer/m-s-cash-drawer-cf-405bx-16-4-bill8-coin-black-with-media.html`
+- `mscashdrawer/m-s-cash-drawer-cf-405bx-16-5-bill5-coin-black-with-media.html`
+- `mscashdrawer/m-s-cash-drawer-cf-460bx-173-heavy-duty-with-media--ss-front.html`
+- `mscashdrawer/sam4s-astra-android-kiosk.html`
+- `mscashdrawer/sam4s-er-180u-open-line-cash-register.html`
+- `mscashdrawer/sam4s-er-230ej-electronic-journal-cash-register.html`
+- `mscashdrawer/sam4s-er-260ej-raised-keyboard-electronic-journal.html`
+- `mscashdrawer/sam4s-er-265ej-flat-keyboard-electronic-journal.html`
+- `mscashdrawer/sam4s-er-915-raised-keyboard-receipt--journal-printers.html`
+- `mscashdrawer/sam4s-er-920-single-station-flat-keyboard-cash-register.html`
+- `mscashdrawer/sam4s-er-925-single-station-raised-keyboard-cash-register.html`
+- `mscashdrawer/sam4s-er-940-dual-station-flat-keyboard-cash-register.html`
+- `mscashdrawer/sam4s-er-945-dual-station-raised-keyboard-cash-register.html`
+- `mscashdrawer/sam4s-nr-510-flat-keyboard-commercial-grade-ecr.html`
+- `mscashdrawer/sam4s-nr-510r-raised-keyboard-commercial-grade-ecr.html`
+- `mscashdrawer/sam4s-sap-630-ft-flat-keyboard-android-terminal.html`
+- `mscashdrawer/sam4s-sap-630-rt-raised-keyboard-android-terminal.html`
+- `mscashdrawer/sam4s-sapphire-android-pos-terminal.html`
+- `mscashdrawer/sam4s-sps-320-flat-spill-resistant-ecr.html`
+- `mscashdrawer/sam4s-sps-340-flat-spill-resistant-dual-printer-ecr.html`
+- `mscashdrawer/sam4s-sps-345-raised-spill-resistant-dual-printer-ecr.html`
+- `sam4s-er-945.html`
+
+## Pages with no price (call for pricing / on request) (4)
+- `40-500-in-shop-labor.html`
+- `mscashdrawer/bixolon-srp-275iii-impact-printer.html`
+- `mscashdrawer/bixolon-srp-350plusv-thermal-printer.html`
+- `mscashdrawer/sam4s-astra-android-kiosk.html`
+
+## Pages with no product picture found anywhere (163)
+- `11-094-one-ply-paper.html`
+- `12-100-one-ply-paper.html`
+- `13-305C-one-ply-paper.html`
+- `13-305G-one-ply-paper.html`
+- `1433B-berkel-65mm.html`
+- `1477-cas.html`
+- `1478-cas.html`
+- `1493-cas.html`
+- `15-040-poynt-cc-station.html`
+- `15-044-thermal-paper.html`
+- `15-157-2-1-4-x-230-thermal.html`
+- `15-160-2-1-4-x-60-thermal.html`
+- `15-185-2-1-4-x-85-thermal.html`
+- `15-303-thermal-paper.html`
+- `15-350-2-1-4-x-50-thermal.html`
+- `15-999-pos-paper-rolls.html`
+- `1612-B-tec-sl9000-sl5300.html`
+- `1681-tec-sl9000-sl5300.html`
+- `18-333-three-ply-paper.html`
+- `1850-b-kilotech.html`
+- `1909-hobart-quantum.html`
+- `1911-hobart-quantum.html`
+- `30-100-pos-workstation-windows.html`
+- `30-101-pos-workstation-embedded.html`
+- `30-103-pos-workstation-rear-display-2-x-20.html`
+- `30-104-pos-workstation-pole-display-2x20.html`
+- `30-105-pos-workstation-multi-line-display.html`
+- `30-108-pos-workstation-windows-reconditioned.html`
+- `30-109-pos-workstation-embedded-reconditioned.html`
+- `30-110-pos-tablet-windows.html`
+- `30-111-pos-tablet-android-non-windows.html`
+- `30-112-pos-tablet-add-scanner.html`
+- `30-113-pos-tablet-charging-dock.html`
+- `30-114-pos-tablet-charger.html`
+- `30-118-pos-tablet-windows-reconditioned.html`
+- `30-119-pos-tablet-android-non-windows-reconditioned.html`
+- `30-120-pos-software-ncc.html`
+- `30-121-pos-software-sam4s.html`
+- `30-122-pos-software-microsale.html`
+- `30-123-pos-software-maitre-d-addon.html`
+- `30-124-pos-software-maitre-d-new-system.html`
+- `30-125-pos-software.html`
+- `30-126-pos-software-upgrade.html`
+- `30-130-pos-thermal-printer.html`
+- `30-131-pos-thermal-printer.html`
+- `30-132-pos-thermal-printer-reconditioned.html`
+- `30-133-pos-impact-printer.html`
+- `30-134-pos-impact-printer.html`
+- `30-135-pos-impact-printer.html`
+- `30-138-pos-impact-printer.html`
+- `30-140-shelf-tag-printer.html`
+- `30-141-shelf-tag-printer.html`
+- `30-142-label-printer-datamax-m-class.html`
+- `30-148-office-report-printer.html`
+- `30-150-scale-integrated-pos.html`
+- `30-151-scale-scanner-integrated.html`
+- `30-156-scale-cas-cl5500.html`
+- `30-158-scale-other.html`
+- `30-160-scanner-pos-multi-line.html`
+- `30-161-scanner-pos-single-line.html`
+- `30-162-scanner-pos-wireless.html`
+- `30-165-cash-drawer-standard.html`
+- `30-166-cash-drawer-heavy-duty.html`
+- `30-167-cash-drawer-small-footprint.html`
+- `30-168-cash-drawer-cable-or-splitter.html`
+- `30-169-cash-drawer-reconditioned.html`
+- `30-170-kitchen-video-station-w-mon.html`
+- `30-171-kitchen-video-station-w-touch.html`
+- `30-172-kitchen-video-cpu-only.html`
+- `30-173-kitchen-video-bump-bar-only.html`
+- `30-174-kitchen-video-monitor-only.html`
+- `30-175-kitchen-video-mount-bracket-only.html`
+- `30-180-pinpad-emv-enabled.html`
+- `30-181-pinpad-emv-touch.html`
+- `30-182-payment-station-stand-alone.html`
+- `30-183-payment-station-touch.html`
+- `30-184-datacap-net-epay-tran-sw.html`
+- `30-185-datacap-net-epay-tran-sw.html`
+- `30-190-network-switch-5-port.html`
+- `30-191-network-switch-8-port.html`
+- `30-192-network-switch-16-port.html`
+- `30-193-network-switch-24-port.html`
+- `30-194-router.html`
+- `30-195-access-point-standard.html`
+- `30-196-access-point-cisco.html`
+- `30-197-poe-for-access-point.html`
+- `30-200-dell-office-pc-inc-kb-mouse.html`
+- `30-201-office-pc-monitor.html`
+- `30-202-office-printer.html`
+- `30-203-office-printer-copy-scan.html`
+- `30-204-office-kvm-switch-box.html`
+- `30-216-cash-register.html`
+- `30-217-cash-register-reconditioned.html`
+- `30-218-cash-register-peripheral.html`
+- `30-220-power-conditioner-printer-reconditioned.html`
+- `30-221-power-conditioner-workstation-reconditioned.html`
+- `30-222-power-conditioner-large-reconditioned.html`
+- `30-223-pwc-ups-reconditioned.html`
+- `30-224-ups-for-workstation.html`
+- `40-100-printer-repair-part.html`
+- `40-110-printer-power-brick.html`
+- `40-111-printer-power-brick-reconditioned.html`
+- `40-120-workstation-replacement-touchscreen.html`
+- `40-121-workstation-replacement-lcd.html`
+- `40-122-workstation-replacement-msr.html`
+- `40-123-workstation-replacement-rear-display.html`
+- `40-124-workstation-power-brick.html`
+- `40-124-workstation-replacement-hard-drive.html`
+- `40-128-workstation-replacement-part.html`
+- `40-130-install-repair-part.html`
+- `40-131-install-repair-part.html`
+- `40-132-install-repair-part.html`
+- `40-133-install-repair-part.html`
+- `40-134-install-repair-part.html`
+- `40-135-install-repair-part.html`
+- `40-500-in-shop-labor.html`
+- `40-501-on-site-labor.html`
+- `40-502-pos-system-database-creation-ore-install.html`
+- `40-503-day-rate-labor-discounted-rate.html`
+- `40-504-day-rate-labor-discounted-rate-2nd-or-more-day.html`
+- `40-510-labor-travel-to-site-zone-1.html`
+- `40-511-labor-travel-to-site-zone-2.html`
+- `40-512-labor-travel-to-site-zone-3.html`
+- `40-513-labor-travel-to-site-zone-4.html`
+- `40-600-labor-help-desk-business-hours.html`
+- `40-601-labor-help-desk-business-hours.html`
+- `40-602-labor-help-desk-7-x-24.html`
+- `40-603-labor-help-desk-7-x-24.html`
+- `40-604-labor-depot-hardware-repair-business-hours.html`
+- `40-605-labor-onsite-hardware-repair-business-hours.html`
+- `46-015-thermal-paper.html`
+- `46-175-thermal-paper.html`
+- `54-170-thermal-paper.html`
+- `54-273-thermal-paper.html`
+- `61-620-shelf-tag-labels-3-x-1.html`
+- `61-630-shelf-tag-godex-2-25-x-1-25.html`
+- `61-640-maxstick.html`
+- `61-670-datamax-direct-thermal.html`
+- `62-196-office-printer-drum.html`
+- `62-197-office-printer-toner.html`
+- `62-198-pos-ribbon-ink.html`
+- `62-199-pos-ribbon-ink.html`
+- `62225-purple-ribbons.html`
+- `62235-black-ribbons.html`
+- `62240-purple-ribbons.html`
+- `62285-purple-ribbons.html`
+- `64-437-44mm-one-ply-paper.html`
+- `67215-purple-ribbons.html`
+- `67655-purple-ribbons.html`
+- `71-100-server-swipe-card.html`
+- `71-200-manager-swipe-card.html`
+- `71-300-retractable-reel-plastic-holder-for-swipe-card.html`
+- `71-400-msr-cleaner-card.html`
+- `71-500-thermal-printer-cleaner-card.html`
+- `71-600-thermal-head-cleaner-pen.html`
+- `71-700-compressed-gas-cleaner-can.html`
+- `71-800-hand-sanitizer-jar.html`
+- `71-900-supply-item.html`
+- `72-150-cash-drawer-till-reconditioned.html`
+- `72-200-silicon-protective-kb-cover-cash-reg.html`
+- `72-220-silicon-protective-screen-cover-ws.html`
+- `72-250-silicon-protective-cover-pay-station.html`
+- `ERC-38-epson-black-red.html`
+
+## Pages using only a generic shared image (og default / logo) as their picture (10)
+These pages carry no product-specific photo; the generic og image was used so the picture_url cell is filled, but it is NOT a real product shot and should be audited.
+- `mscashdrawer/cas-se-c3500mc-split-keyboard-cash-register.html`
+- `mscashdrawer/cas-sr-4000mc-raised-keyboarddual-station-printer.html`
+- `mscashdrawer/cas-te-3000-ecr-stroke-keyboard-multi-line-lcd.html`
+- `mscashdrawer/cas-te-4500fb-cb-with-mid-size-cash-drawer-dl-3616.html`
+- `mscashdrawer/cas-tk-3200c-flat-keyboard-cash-register.html`
+- `mscashdrawer/sam4s-er-260ej-raised-keyboard-electronic-journal.html`
+- `mscashdrawer/sam4s-er-265ej-flat-keyboard-electronic-journal.html`
+- `mscashdrawer/sam4s-er-940-dual-station-flat-keyboard-cash-register.html`
+- `mscashdrawer/sam4s-sap-630-ft-flat-keyboard-android-terminal.html`
+- `mscashdrawer/sam4s-sap-630-rt-raised-keyboard-android-terminal.html`
+
+## Pages where brand was not determinable (set to 'other') (141)
+- `11-094-one-ply-paper.html`
+- `12-100-one-ply-paper.html`
+- `13-305C-one-ply-paper.html`
+- `13-305G-one-ply-paper.html`
+- `15-044-thermal-paper.html`
+- `15-157-2-1-4-x-230-thermal.html`
+- `15-160-2-1-4-x-60-thermal.html`
+- `15-185-2-1-4-x-85-thermal.html`
+- `15-303-thermal-paper.html`
+- `15-350-2-1-4-x-50-thermal.html`
+- `15-741-credit-card-paper.html`
+- `15-999-pos-paper-rolls.html`
+- `18-333-three-ply-paper.html`
+- `30-100-pos-workstation-windows.html`
+- `30-101-pos-workstation-embedded.html`
+- `30-103-pos-workstation-rear-display-2-x-20.html`
+- `30-104-pos-workstation-pole-display-2x20.html`
+- `30-105-pos-workstation-multi-line-display.html`
+- `30-108-pos-workstation-windows-reconditioned.html`
+- `30-109-pos-workstation-embedded-reconditioned.html`
+- `30-110-pos-tablet-windows.html`
+- `30-111-pos-tablet-android-non-windows.html`
+- `30-112-pos-tablet-add-scanner.html`
+- `30-113-pos-tablet-charging-dock.html`
+- `30-114-pos-tablet-charger.html`
+- `30-118-pos-tablet-windows-reconditioned.html`
+- `30-119-pos-tablet-android-non-windows-reconditioned.html`
+- `30-125-pos-software.html`
+- `30-126-pos-software-upgrade.html`
+- `30-130-pos-thermal-printer.html`
+- `30-131-pos-thermal-printer.html`
+- `30-132-pos-thermal-printer-reconditioned.html`
+- `30-133-pos-impact-printer.html`
+- `30-134-pos-impact-printer.html`
+- `30-135-pos-impact-printer.html`
+- `30-138-pos-impact-printer.html`
+- `30-140-shelf-tag-printer.html`
+- `30-141-shelf-tag-printer.html`
+- `30-148-office-report-printer.html`
+- `30-150-scale-integrated-pos.html`
+- `30-151-scale-scanner-integrated.html`
+- `30-158-scale-other.html`
+- `30-160-scanner-pos-multi-line.html`
+- `30-161-scanner-pos-single-line.html`
+- `30-162-scanner-pos-wireless.html`
+- `30-165-cash-drawer-standard.html`
+- `30-166-cash-drawer-heavy-duty.html`
+- `30-167-cash-drawer-small-footprint.html`
+- `30-168-cash-drawer-cable-or-splitter.html`
+- `30-169-cash-drawer-reconditioned.html`
+- `30-170-kitchen-video-station-w-mon.html`
+- `30-171-kitchen-video-station-w-touch.html`
+- `30-172-kitchen-video-cpu-only.html`
+- `30-173-kitchen-video-bump-bar-only.html`
+- `30-174-kitchen-video-monitor-only.html`
+- `30-175-kitchen-video-mount-bracket-only.html`
+- `30-180-pinpad-emv-enabled.html`
+- `30-181-pinpad-emv-touch.html`
+- `30-182-payment-station-stand-alone.html`
+- `30-183-payment-station-touch.html`
+- `30-190-network-switch-5-port.html`
+- `30-191-network-switch-8-port.html`
+- `30-192-network-switch-16-port.html`
+- `30-193-network-switch-24-port.html`
+- `30-194-router.html`
+- `30-195-access-point-standard.html`
+- `30-197-poe-for-access-point.html`
+- `30-201-office-pc-monitor.html`
+- `30-202-office-printer.html`
+- `30-203-office-printer-copy-scan.html`
+- `30-204-office-kvm-switch-box.html`
+- `30-216-cash-register.html`
+- `30-217-cash-register-reconditioned.html`
+- `30-218-cash-register-peripheral.html`
+- `30-220-power-conditioner-printer-reconditioned.html`
+- `30-221-power-conditioner-workstation-reconditioned.html`
+- `30-222-power-conditioner-large-reconditioned.html`
+- `30-223-pwc-ups-reconditioned.html`
+- `30-224-ups-for-workstation.html`
+- `40-100-printer-repair-part.html`
+- `40-110-printer-power-brick.html`
+- `40-111-printer-power-brick-reconditioned.html`
+- `40-120-workstation-replacement-touchscreen.html`
+- `40-121-workstation-replacement-lcd.html`
+- `40-122-workstation-replacement-msr.html`
+- `40-123-workstation-replacement-rear-display.html`
+- `40-124-workstation-power-brick.html`
+- `40-124-workstation-replacement-hard-drive.html`
+- `40-128-workstation-replacement-part.html`
+- `40-130-install-repair-part.html`
+- `40-131-install-repair-part.html`
+- `40-132-install-repair-part.html`
+- `40-133-install-repair-part.html`
+- `40-134-install-repair-part.html`
+- `40-135-install-repair-part.html`
+- `40-500-in-shop-labor.html`
+- `40-501-on-site-labor.html`
+- `40-502-pos-system-database-creation-ore-install.html`
+- `40-503-day-rate-labor-discounted-rate.html`
+- `40-504-day-rate-labor-discounted-rate-2nd-or-more-day.html`
+- `40-510-labor-travel-to-site-zone-1.html`
+- `40-511-labor-travel-to-site-zone-2.html`
+- `40-512-labor-travel-to-site-zone-3.html`
+- `40-513-labor-travel-to-site-zone-4.html`
+- `40-600-labor-help-desk-business-hours.html`
+- `40-601-labor-help-desk-business-hours.html`
+- `40-602-labor-help-desk-7-x-24.html`
+- `40-603-labor-help-desk-7-x-24.html`
+- `40-604-labor-depot-hardware-repair-business-hours.html`
+- `40-605-labor-onsite-hardware-repair-business-hours.html`
+- `46-015-thermal-paper.html`
+- `46-175-thermal-paper.html`
+- `54-170-thermal-paper.html`
+- `54-273-thermal-paper.html`
+- `61-620-shelf-tag-labels-3-x-1.html`
+- `62-196-office-printer-drum.html`
+- `62-197-office-printer-toner.html`
+- `62-198-pos-ribbon-ink.html`
+- `62-199-pos-ribbon-ink.html`
+- `62225-purple-ribbons.html`
+- `62235-black-ribbons.html`
+- `62240-purple-ribbons.html`
+- `62245-erc-ribbons.html`
+- `62285-purple-ribbons.html`
+- `64-437-44mm-one-ply-paper.html`
+- `67215-purple-ribbons.html`
+- `67655-purple-ribbons.html`
+- `71-100-server-swipe-card.html`
+- `71-200-manager-swipe-card.html`
+- `71-300-retractable-reel-plastic-holder-for-swipe-card.html`
+- `71-400-msr-cleaner-card.html`
+- `71-500-thermal-printer-cleaner-card.html`
+- `71-600-thermal-head-cleaner-pen.html`
+- `71-700-compressed-gas-cleaner-can.html`
+- `71-800-hand-sanitizer-jar.html`
+- `71-900-supply-item.html`
+- `72-150-cash-drawer-till-reconditioned.html`
+- `72-200-silicon-protective-kb-cover-cash-reg.html`
+- `72-220-silicon-protective-screen-cover-ws.html`
+- `72-250-silicon-protective-cover-pay-station.html`
+- `CC-235-carbonless-paper.html`
+
+## Pages where category was not determinable (set to 'other') (19)
+- `1477-cas.html`
+- `1478-cas.html`
+- `1493-cas.html`
+- `15-040-poynt-cc-station.html`
+- `15-157-2-1-4-x-230-thermal.html`
+- `15-160-2-1-4-x-60-thermal.html`
+- `15-185-2-1-4-x-85-thermal.html`
+- `15-350-2-1-4-x-50-thermal.html`
+- `61-670-datamax-direct-thermal.html`
+- `62225-purple-ribbons.html`
+- `62235-black-ribbons.html`
+- `62240-purple-ribbons.html`
+- `62285-purple-ribbons.html`
+- `67215-purple-ribbons.html`
+- `67240-star-ribbons.html`
+- `67655-purple-ribbons.html`
+- `71-800-hand-sanitizer-jar.html`
+- `71-900-supply-item.html`
+- `capton-variety-pack.html`
+
+## Pages with empty description (0)
+
+## Excluded non-product / non-SKU files
+- `capton-pouring-systems.html` — landing (no Product entity)
+- `cash-drawers.html` — landing (no Product entity)
+- `index.html` — landing/index/category
+- `lucki-tile.html` — landing/index/category
+- `printer-ribbons.html` — landing (no Product entity)
+- `thermal-paper.html` — landing/index/category
+
+## Part numbers shared by more than one page
+In a single source of truth a part number should be unique; these groups need reconciliation (often a slim re-written template sitting beside a full page for the same product).
+- **internal** `30-150` -> 30-150-integrated-scale.html; 30-150-scale-integrated-pos.html
+- **internal** `40-124` -> 40-124-workstation-power-brick.html; 40-124-workstation-replacement-hard-drive.html
+- **our** `PSD-CRS-ER-945` -> mscashdrawer/sam4s-er-945-dual-station-raised-keyboard-cash-register.html; sam4s-er-945.html
+
+## Method notes / assumptions
+- Column `picture_url` prefers the schema.org/json-ld product `image`, then the first product `<img>`, then `og:image` as a last resort. Where only the global shared `og-image.png`/logo existed it is flagged above as generic.
+- Column `our_part_number` = any `PSD-…` sku/id found on the page; `internal_part_number` = the numeric/model code (sku or filename prefix). We never invent either — that is why some cells are empty.
+- `brand` is inferred from product model / filename keywords (SAM4S, CAS, MS Cash Drawer, Capton, Epson, Star, Datamax, Godex, Bixolon, ...) falling back to 'other'.
+- `category` is inferred from the part-number family + filename/model wording. Ambiguous lines are 'other' and flagged.
+- Category hubs (`index.html`, `cash-drawers.html`, `printer-ribbons.html`, `thermal-paper.html`, `capton-pouring-systems.html`, and the component tile `lucki-tile.html`) are not products and are excluded, with reasons above.
