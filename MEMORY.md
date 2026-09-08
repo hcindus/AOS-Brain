@@ -1,5 +1,25 @@
 # MEMORY.md - Curated Knowledge
 
+## AI Filmmaking Course → Skills Index (Captain, 2026-09-08)
+Captain fed me a full AI-filmmaking course (notes Mortimer was taking) and I captured it as 9 skills under `skills/`. The through-line: **quality comes from process, not luck** — clear script → structured prompts → trained character → intentional edits. Pipeline: Claude (script) + 7ART (production) + CapCut (edit).
+
+**Launch system (4):**
+- `trailer-export-self-review` — export 16:9 + 9:16 before reviewing; 3-watch QA (scroll/beat/want-more).
+- `youtube-publish-film` — full film + vertical Short; searchable title/desc/tags/thumbnail.
+- `short-form-social-posting` — TikTok + Reels captions/hashtags/first-hour engagement.
+- `cross-platform-publish-order` — YouTube first, then link-everywhere move.
+
+**Monetization paths (3):**
+- `freelance-ai-video-production` (A) — pricing by deliverable, Upwork/Fiverr/cold outreach, retainers.
+- `youtube-content-creation` (B) — AI character host, batch workflow, monetization milestones.
+- `sell-digital-products` (C) — prompt packs, presets, guides, templates; one product first.
+
+**Scaling + first revenue (2):**
+- `first-500-launch-plan` — 14-day plan + pricing ladder (50%→200% market rate).
+- `scale-film-to-series` — pilot → season (writing stages, cliffhanger chain, cast-once, costs/ceilings/exports).
+
+Captain's course project: short film (Option B), uploaded to YouTube. Grading rubric (5 criteria, "finished beats flawless") in `memory/2026-09-08.md`.
+
 ## Vendor Outreach Authority (Captain, 2026-08-30)
 **Phased email escalation — durable policy.**
 - **Now active:** Miles may reach out to **vendors** on Captain's behalf, place orders as Captain shares them, and report back any vendor replies.
