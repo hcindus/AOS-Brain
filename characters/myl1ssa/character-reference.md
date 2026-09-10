@@ -48,6 +48,7 @@ Paste this block into every prompt to lock her identity:
 - **Isolated (clean background)** — `Photorealistic portrait of Myl1Ssa, a glamorous woman with long dark wavy hair, elegant black dress and dark fur coat, holding champagne. Isolated on a clean neutral background, character only, warm cinematic lighting.`
 - **Professional** — `Photorealistic portrait of Myl1Ssa, a glamorous woman with long dark wavy hair. Wearing a white satin long-sleeved blouse with a plunging V-neckline tucked into a high-waisted black pencil skirt, black pointed-toe pumps, and elegant gold jewelry. Professional and poised. Warm cinematic lighting.`
 - **Beach** — `Photorealistic shot of Myl1Ssa, a glamorous woman with long dark wavy hair. Wearing a yellow polka-dot bikini, holding a coconut and a sun hat, smiling brightly on a sunny tropical beach with ocean and palm trees behind her. Warm golden sunlight.`
+- **Athletic** — `Photorealistic shot of Myl1Ssa, a glamorous woman with long dark wavy hair. Wearing a black sports bra, matching leggings, and Nike sneakers, gold earrings, performing a squat on a paved park path. Golden sunlight filtering through lush trees. Athletic and fit.`
 
 ---
 
