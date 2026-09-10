@@ -8,7 +8,7 @@
 
 Paste this block into every prompt to lock her identity:
 
-> Photorealistic portrait of Myl1Ssa, a glamorous woman with short dark hair. She wears an elegant black dress and a luxurious dark fur coat, with high heels. She holds a glass of champagne. High-end, sophisticated, effortless elegance. Set against a vibrant city street at night with blurred traffic and city lights, or a modern plush indoor interior. Warm cinematic lighting. Keep her face shape, short dark hairstyle, black dress, fur coat, and champagne-glass style exactly consistent across every image.
+> Photorealistic portrait of Myl1Ssa, a glamorous woman with long dark wavy hair. She wears an elegant black dress and a luxurious dark fur coat, with high heels. She holds a glass of champagne. High-end, sophisticated, effortless elegance. Set against a vibrant city street at night with blurred traffic and city lights, or a modern plush indoor interior. Warm cinematic lighting. Keep her face shape, long dark wavy hairstyle, black dress, fur coat, and champagne-glass style exactly consistent across every image.
 
 ---
 
@@ -16,7 +16,7 @@ Paste this block into every prompt to lock her identity:
 
 | Feature | Locked Detail |
 |---------|---------------|
-| Hair | Short, dark, sleek |
+| Hair | Long, dark, wavy |
 | Face | Glamorous, sophisticated, relaxed confidence |
 | Dress | Elegant black, form-fitting |
 | Outerwear | Luxurious dark fur coat |
@@ -40,12 +40,14 @@ Paste this block into every prompt to lock her identity:
 
 ## Variation Prompts (self-contained — paste individually)
 
-- **On the street** — `Photorealistic shot of Myl1Ssa, a glamorous woman with short dark hair in an elegant black dress and dark fur coat, high heels, holding champagne. Standing on a vibrant city street at night, blurred traffic and neon city lights behind her, warm cinematic lighting. High-end effortless elegance.`
-- **Indoors, relaxed** — `Photorealistic shot of Myl1Ssa, a glamorous woman with short dark hair in an elegant black dress and dark fur coat. Relaxing in a plush modern interior, high heels removed beside her, sipping champagne. Warm cinematic lighting. High-end effortless elegance.`
-- **Smiling** — `Photorealistic portrait of Myl1Ssa, a glamorous woman with short dark hair, elegant black dress and dark fur coat, holding champagne. Warm confident smile, front close-up, warm cinematic lighting.`
-- **Serious / direct** — `Photorealistic portrait of Myl1Ssa, a glamorous woman with short dark hair, elegant black dress and dark fur coat. Neutral serious expression, direct gaze, three-quarter view, warm cinematic lighting.`
-- **Full body** — `Photorealistic full-length shot of Myl1Ssa, a glamorous woman with short dark hair, elegant black dress and dark fur coat, high heels, champagne in hand. Standing head-to-toe, warm cinematic lighting, high-end effortless elegance.`
-- **Isolated (clean background)** — `Photorealistic portrait of Myl1Ssa, a glamorous woman with short dark hair, elegant black dress and dark fur coat, holding champagne. Isolated on a clean neutral background, character only, warm cinematic lighting.`
+- **On the street** — `Photorealistic shot of Myl1Ssa, a glamorous woman with long dark wavy hair in an elegant black dress and dark fur coat, high heels, holding champagne. Standing on a vibrant city street at night, blurred traffic and neon city lights behind her, warm cinematic lighting. High-end effortless elegance.`
+- **Indoors, relaxed** — `Photorealistic shot of Myl1Ssa, a glamorous woman with long dark wavy hair in an elegant black dress and dark fur coat. Relaxing in a plush modern interior, high heels removed beside her, sipping champagne. Warm cinematic lighting. High-end effortless elegance.`
+- **Smiling** — `Photorealistic portrait of Myl1Ssa, a glamorous woman with long dark wavy hair, elegant black dress and dark fur coat, holding champagne. Warm confident smile, front close-up, warm cinematic lighting.`
+- **Serious / direct** — `Photorealistic portrait of Myl1Ssa, a glamorous woman with long dark wavy hair, elegant black dress and dark fur coat. Neutral serious expression, direct gaze, three-quarter view, warm cinematic lighting.`
+- **Full body** — `Photorealistic full-length shot of Myl1Ssa, a glamorous woman with long dark wavy hair, elegant black dress and dark fur coat, high heels, champagne in hand. Standing head-to-toe, warm cinematic lighting, high-end effortless elegance.`
+- **Isolated (clean background)** — `Photorealistic portrait of Myl1Ssa, a glamorous woman with long dark wavy hair, elegant black dress and dark fur coat, holding champagne. Isolated on a clean neutral background, character only, warm cinematic lighting.`
+- **Professional** — `Photorealistic portrait of Myl1Ssa, a glamorous woman with long dark wavy hair. Wearing a white satin long-sleeved blouse with a plunging V-neckline tucked into a high-waisted black pencil skirt, black pointed-toe pumps, and elegant gold jewelry. Professional and poised. Warm cinematic lighting.`
+- **Beach** — `Photorealistic shot of Myl1Ssa, a glamorous woman with long dark wavy hair. Wearing a yellow polka-dot bikini, holding a coconut and a sun hat, smiling brightly on a sunny tropical beach with ocean and palm trees behind her. Warm golden sunlight.`
 
 ---
 
