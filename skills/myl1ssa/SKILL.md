@@ -21,7 +21,7 @@ Regenerate Myl1Ssa consistently by pasting the **Master Likeness Anchor** into e
 
 | Feature | Locked Detail |
 |---------|---------------|
-| Hair | Long, dark, wavy |
+| Hair | Long, dark, wavy (primary) · short pixie bob (alternate) |
 | Face | Glamorous, sophisticated, relaxed confidence |
 | Dress | Elegant black, form-fitting |
 | Outerwear | Luxurious dark fur coat |
@@ -61,6 +61,11 @@ Regenerate Myl1Ssa consistently by pasting the **Master Likeness Anchor** into e
 
 1. Generate the **front close-up** first — this becomes the master face.
 2. Feed that front image back to Grok as a reference ("match this exact face") before the other views.
+3. Generate the three-quarter and profiles from that locked face.
+4. Do variations last, always referencing the master face.
+
+**Rule:** If a render drifts, fix the prompt against this sheet — never change the sheet to match a drifted render.
+her views.
 3. Generate the three-quarter and profiles from that locked face.
 4. Do variations last, always referencing the master face.
 
