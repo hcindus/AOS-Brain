@@ -3,7 +3,7 @@ name: myl1ssa
 description: Regenerate Myl1Ssa (Raven) — the glamorous, high-end Velvet Cabaret character — with locked consistency. Includes the master likeness anchor, design anchors, and ready-to-paste Grok prompts for all base views and variations. Use whenever generating, describing, or referencing Myl1Ssa (Raven).
 ---
 
-# Myl1Ssa (Raven) — Character Regeneration
+# Myl1Ssa.R8s (Raven) — Character Regeneration
 
 **Vibe:** Glamorous / high-end / "effortless elegance" · **Generator:** Grok (natural language, no flags)
 

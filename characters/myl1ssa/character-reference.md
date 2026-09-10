@@ -1,4 +1,4 @@
-# Myl1Ssa (Raven) — Character Reference Sheet
+# Myl1Ssa.R8s (Raven) — Character Reference Sheet
 
 **Era:** Contemporary high-fashion | **Vibe:** Glamorous / high-end / "effortless elegance" | **Generator:** Grok (natural language)
 
