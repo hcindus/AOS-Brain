@@ -23,10 +23,10 @@ Generated: {now.strftime('%Y-%m-%d %H:%M UTC')}
 ════════════════════════════════════════════
   SYSTEM HEALTH
 ════════════════════════════════════════════
-• Uptime:   113 days, 21h08m
-• CPU Load: 1.11 / 0.95 / 0.92  🟢 healthy
-• Memory:   9.7 Gi used / 15 Gi total (65%)  🟢 healthy
-• Available: 6.0 Gi
+• Uptime:   114 days, 2h46m
+• CPU Load: 0.87 / 1.03 / 1.02  🟢 healthy
+• Memory:   7.6 Gi used / 15 Gi total (51%)  🟢 healthy
+• Available: 8.1 Gi
 • Swap:     1.7 Gi / 29 Gi
 • Disk:     135G / 193G (70%)  🟢 healthy
 
