@@ -38,6 +38,7 @@ They meet at the export: Mortimer produces a finished, consistent film; Miles tu
 - `sell-digital-products` — Path C: prompt packs, presets, guides, templates
 - `first-500-launch-plan` — 14-day plan + pricing ladder (50%→200% market)
 - `scale-film-to-series` — pilot → season (writing stages, cliffhanger chain, costs/ceilings)
+- `scene-builder` — the canonical 5-point prompt (Voice/Character, Setting, Structure, Direction, Tone & pacing) for every scene across all media — music videos, film scenes, comedy, dance
 
 ## Rules
 - Process over luck — never skip the script or the outline; frames are where the credits go.
