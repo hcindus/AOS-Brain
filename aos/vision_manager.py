@@ -55,14 +55,24 @@ class VisionManager:
         # Feature detection
         self.features_detected = 0
         
+        # Camera availability cache — avoids a retry loop on headless hosts (no /dev/video*)
+        self._camera_checked = False
+        self._camera_available = False
+        
         print(f"[VisionManager] Initialized ({width}x{height})")
         if not CV2_AVAILABLE:
             print("[VisionManager] Running in stub mode (no OpenCV)")
     
     def open(self) -> bool:
-        """Open camera"""
+        """Open camera (cached — only probes once to avoid retry-looping on headless hosts)"""
         if not CV2_AVAILABLE:
             return False
+        
+        # Already probed: return the cached result instead of re-hitting the missing device
+        if self._camera_checked:
+            return self._camera_available
+        
+        self._camera_checked = True
         
         try:
             self.cap = cv2.VideoCapture(self.camera_id)
@@ -70,12 +80,14 @@ class VisionManager:
             self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
             
             if self.cap.isOpened():
+                self._camera_available = True
                 print(f"[VisionManager] Camera opened")
                 return True
         except:
             pass
         
-        print("[VisionManager] Failed to open camera")
+        self._camera_available = False
+        print("[VisionManager] Camera unavailable (no /dev/video* device); vision disabled")
         return False
     
     def capture_frame(self) -> Optional[VisionFrame]:
@@ -209,6 +221,31 @@ class VisionManager:
         if self.cap:
             self.cap.release()
             print("[VisionManager] Camera closed")
+
+    def describe_image_file(self, image_path: str, prompt: str = "Describe this image in detail: subject, appearance, clothing, setting, lighting, and mood.") -> str:
+        """Describe an image FILE using the qwen3.5 vision model via Ollama (replaces camera-based vision)."""
+        import base64
+        import requests
+
+        try:
+            with open(image_path, 'rb') as f:
+                img_b64 = base64.b64encode(f.read()).decode('utf-8')
+        except Exception as e:
+            return f"Error reading image {image_path}: {e}"
+
+        payload = {
+            "model": "qwen3.5:latest",
+            "prompt": prompt,
+            "images": [img_b64],
+            "stream": False,
+        }
+
+        try:
+            resp = requests.post("http://localhost:11434/api/generate", json=payload, timeout=180)
+            resp.raise_for_status()
+            return resp.json().get("response", "")
+        except Exception as e:
+            return f"Error describing image: {e}"
 
 
 class VisionInterface:
