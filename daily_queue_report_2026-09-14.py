@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Daily Queue Email Report - September 14, 2026 (live data)."""
+"""Daily Queue Email Report - September 14, 2026 (live data @ 11:38 UTC)."""
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -23,10 +23,10 @@ Generated: {now.strftime('%Y-%m-%d %H:%M UTC')}
 ════════════════════════════════════════════
   SYSTEM HEALTH
 ════════════════════════════════════════════
-• Uptime:   117 days, 21h08m
-• CPU Load: 2.30 / 1.42 / 1.19  🟡 slightly elevated (settling)
-• Memory:   8.9 Gi used / 15 Gi total (59%)  🟢 healthy
-• Available: 6.7 Gi
+• Uptime:   118 days, 2h46m
+• CPU Load: 1.13 / 1.20 / 1.23  🟢 healthy (settled)
+• Memory:   6.9 Gi used / 15 Gi total (46%)  🟢 healthy
+• Available: 8.7 Gi
 • Swap:     2.3 Gi / 29 Gi
 • Disk:     136G / 193G (71%)  🟢 healthy
 
@@ -46,7 +46,7 @@ society-agents.service remains disabled/inactive.
     - scheduled_at present, sent_at ALL NULL
 • Sent last 24h / 7d / all-time:  0 / 0 / 0  🔴 still stalled
 
-• PENDING_TASKS.json:  3,150 tasks (unchanged from yesterday)
+• PENDING_TASKS.json:  3,150 tasks (unchanged)
     - source: CA_SOS_Scraper  (100% — synthetic/mock leads, do not send)
     - lastUpdated: 2026-09-11 11:15 UTC (NOT refreshed today)
 
@@ -54,8 +54,12 @@ society-agents.service remains disabled/inactive.
     - unified_leads:           1,460
     - leads:                  32,542
     - ca_abc_licenses:        74,521
+    - datadepot_intelligence: 74,518
     - enriched_leads:            919
     - psd_customers:             501
+    - psd_customer_sales:        503
+    - address_crossref:        3,535
+    - verified_leads:              1
 
 ════════════════════════════════════════════
   ACTION ITEMS
@@ -82,8 +86,8 @@ society-agents.service remains disabled/inactive.
   6. PENDING_TASKS at 3,150 are all CA_SOS_Scraper mock leads — no real
      outreach needed; do not inject more synthetic leads.
      (lastUpdated unchanged since 2026-09-11 — scraper did not run.)
-  7. System otherwise healthy: memory 59%, disk 71%, load slightly
-     elevated but settling — no OOM/disk/CPU risk.
+  7. System otherwise healthy: memory 46%, disk 71%, load settled at
+     ~1.1 — no OOM/disk/CPU risk.
 
 All core systems operational. Primary concerns remain the stalled
 207-email queue (sender-address rejection), the four failed services,
