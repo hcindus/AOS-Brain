@@ -50,6 +50,8 @@ Paste this block into every image prompt:
 | Lighting | Low, diffused cold light; hard edges softened by grime |
 | Palette | Weathered earth tones, faded olive and grey, pale grey, cold industrial blue |
 
+**Environment:** For any orbital-yard scene, use the **`orbital-shipyard` skill** (locked setting anchor + zoned layout + ready-to-paste environment prompts). Combine its Master Setting Anchor with Kael's Master Likeness Anchor when rendering him in the yard.
+
 ---
 
 ## Persona / Voice Anchor
