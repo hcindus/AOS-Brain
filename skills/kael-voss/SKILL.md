@@ -11,6 +11,23 @@ Regenerate him consistently by pasting the **Master Likeness Anchor** into every
 
 ---
 
+## Locked Reference Images (master face — first renders)
+
+Four reference images are saved and locked as the master face. **Point Grok at these files** for every future Kael render — never regenerate from text alone.
+
+| File | View |
+|------|------|
+| `kael-front-01.jpg` | Front close-up (anchor face) |
+| `kael-02.jpg` | View 2 |
+| `kael-03.jpg` | View 3 |
+| `kael-04.jpg` | View 4 |
+
+**Path:** `tappylewis.cloud/assets/characters/kael-voss/`
+
+**⚠️ Drift flag (2026-09-15):** The first Grok renders read as **dark hair + striking eyes, younger face** — a departure from the text anchor below (pale grey eyes, mid-30s). The saved images are now canonical; if they diverge from the written anchors, **the images win** and the written anchor should be updated to match. (Captain to confirm final eye/hair lock.)
+
+---
+
 ## Master Likeness Anchor
 
 Paste this block into every image prompt:
