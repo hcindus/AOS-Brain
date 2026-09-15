@@ -15,6 +15,7 @@ inner_clear_dia = 82;
 truss_size     = 44;
 truss_length   = 480;
 deck_thickness = 2.5;
+habitat_radius = 155; // centerline radius of habitat ring
 
 // -------------------- Modules --------------------
 
@@ -113,22 +114,39 @@ module assembly_bay() {
     }
 }
 
-// --- Detailed Habitat Ring with Interior Modules ---
+// --- Detailed Habitat Ring with Modular Interiors + Artificial Gravity Cues ---
 module habitat_ring() {
+    // Main structural torus
     color("DarkOliveGreen") {
         rotate([90, 0, 0])
         rotate_extrude()
-        translate([155, 0, 0])
-        square([42, 24], center = true);
+        translate([habitat_radius, 0, 0])
+        square([44, 26], center = true);
     }
-    // Habitat interior modules
+    // Modular interior units (floor oriented outward = spin gravity "down")
     for (a = [0 : 30 : 330]) {
         rotate([0, a, 0]) {
-            translate([155, 0, 0]) {
-                color("OliveDrab") rotate([90, 0, 0]) cube([20, 30, 18], center = true);
-                color("Khaki") rotate([90, 0, 0]) cube([16, 26, 14], center = true);
-                color("SaddleBrown") translate([0, 0, -5]) rotate([90, 0, 0]) cube([15, 25, 1.2], center = true);
-                color("LightSkyBlue") translate([10.5, 0, 0]) rotate([90, 0, 0]) cube([1.5, 18, 8], center = true);
+            translate([habitat_radius, 0, 0]) {
+                if (a % 90 == 0) {
+                    // Crew quarters (with bunks)
+                    color("OliveDrab") rotate([90, 0, 0]) cube([22, 32, 20], center = true);
+                    color("SaddleBrown") translate([9, 0, 0]) rotate([90, 0, 0]) cube([2, 28, 18], center = true);
+                    color("Tan") translate([5, 8, 0]) rotate([90, 0, 0]) cube([8, 10, 6], center = true);
+                    color("Tan") translate([5, -8, 0]) rotate([90, 0, 0]) cube([8, 10, 6], center = true);
+                }
+                else if (a % 60 == 0) {
+                    // Workstation / lab
+                    color("DarkKhaki") rotate([90, 0, 0]) cube([22, 32, 20], center = true);
+                    color("SaddleBrown") translate([9, 0, 0]) rotate([90, 0, 0]) cube([2, 28, 18], center = true);
+                    color("DimGray") translate([4, 0, 0]) rotate([90, 0, 0]) cube([6, 20, 8], center = true);
+                }
+                else {
+                    // Corridor / life support
+                    color("Olive") rotate([90, 0, 0]) cube([18, 30, 16], center = true);
+                    color("SaddleBrown") translate([7, 0, 0]) rotate([90, 0, 0]) cube([2, 26, 14], center = true);
+                }
+                // Window strip
+                color("LightSkyBlue") translate([11.5, 0, 0]) rotate([90, 0, 0]) cube([1.2, 16, 9], center = true);
             }
         }
     }
@@ -136,6 +154,22 @@ module habitat_ring() {
     color("LightYellow") {
         for (a = [0 : 30 : 330]) {
             rotate([0, a, 0]) translate([178, 0, 0]) sphere(d = 3.5);
+        }
+    }
+    // --- Artificial gravity visual cues ---
+    // Red arrows pointing outward = gravity vector ("down")
+    color("Red") {
+        for (a = [0 : 60 : 300]) {
+            rotate([0, a, 0]) translate([habitat_radius + 28, 0, 0]) {
+                rotate([0, 90, 0]) cylinder(h = 12, d = 1.8);
+                translate([12, 0, 0]) rotate([0, 90, 0]) cylinder(h = 6, d1 = 4.5, d2 = 0);
+            }
+        }
+    }
+    // Cyan spin direction indicators
+    color("Cyan") {
+        for (a = [15 : 60 : 360]) {
+            rotate([0, a, 0]) translate([habitat_radius + 22, 8, 0]) rotate([90, 0, 0]) cylinder(h = 5, d = 1.5);
         }
     }
 }
