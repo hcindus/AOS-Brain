@@ -86,54 +86,50 @@ module habitat_ring() {
     square([ring_width, ring_height], center = true);
 }
 
-// -------------------- Multi-segment Robotic Arm (angle, length) --------------------
-module robotic_arm(angle = 0, len = 95) {
-    rotate([0, 0, angle]) {
+// -------------------- Multi-segment Robotic Arm (base_rot, arm_len) --------------------
+module robotic_arm(base_rot = 0, arm_len = 95) {
+    rotate([0, 0, base_rot]) {
         // Base mount
         cylinder(h = 16, d = 14, center = true);
-        // Shoulder joint
-        translate([0, 0, 12]) sphere(d = 12);
-        // Upper arm (angled out)
+        // Shoulder joint + upper arm
+        translate([0, 0, 12])
         rotate([0, 28, 0]) {
-            translate([0, 0, len*0.25]) cube([10, 10, len*0.5], center = true);
-            // Elbow joint
-            translate([0, 0, len*0.5]) sphere(d = 9);
-            // Forearm
-            rotate([0, -45, 0]) {
-                translate([0, 0, len*0.18]) cube([7, 7, len*0.36], center = true);
-                // Wrist + end effector
-                translate([0, 0, len*0.36]) {
-                    sphere(d = 7);
-                    translate([0, 0, 4]) {
-                        // Two-finger gripper
-                        cube([6, 2.5, 8], center = true);
-                        translate([3, 0, 0]) cube([2.5, 6, 8], center = true);
-                        translate([-3, 0, 0]) cube([2.5, 6, 8], center = true);
-                    }
+            cylinder(h = 10, d = 11, center = true);
+            translate([0, 0, arm_len * 0.38]) cube([9, 9, arm_len * 0.55], center = true);
+            // Elbow + forearm
+            translate([0, 0, arm_len * 0.55])
+            rotate([0, -48, 0]) {
+                cylinder(h = 9, d = 9, center = true);
+                translate([0, 0, arm_len * 0.28]) cube([7, 7, arm_len * 0.38], center = true);
+                // Wrist + gripper jaws
+                translate([0, 0, arm_len * 0.38]) {
+                    cylinder(h = 7, d = 7, center = true);
+                    translate([4, 0, 5]) cube([2, 6, 9], center = true);
+                    translate([-4, 0, 5]) cube([2, 6, 9], center = true);
                 }
             }
         }
     }
 }
 
-// -------------------- Solar Array (thick + segmented) --------------------
-module solar_array(length = 150, width = 48) {
-    // Backing panel
-    cube([length, width, 2.5], center = true);
-    // Frame rails
-    translate([0, width/2 - 2, 0]) cube([length, 2, 2.5], center = true);
-    translate([0, -(width/2 - 2), 0]) cube([length, 2, 2.5], center = true);
-    // Panel segmentation
-    for (i = [-length/2 + 12 : 24 : length/2 - 12]) {
-        translate([i, 0, 1.3]) cube([2, width - 6, 0.6], center = true);
+// -------------------- Solar Array (thick + framed + segmented) --------------------
+module solar_array(length = 150, width = 48, thickness = 3) {
+    // Main panel
+    cube([length, width, thickness], center = true);
+    // Raised frame
+    translate([0, 0, thickness/2 + 0.4]) cube([length + 2, width + 2, 0.8], center = true);
+    // Panel segmentation lines
+    for (i = [-length/2 + 12 : 18 : length/2 - 12]) {
+        translate([i, 0, thickness/2 + 0.1]) cube([1.2, width - 3, 0.6], center = true);
     }
 }
 
 // -------------------- Radiator (thick + framed) --------------------
-module radiator(length = 90, width = 32) {
-    cube([length, width, 1.6], center = true);
-    translate([0, width/2 - 2, 0]) cube([length, 2.5, 1.6], center = true);
-    translate([0, -(width/2 - 2), 0]) cube([length, 2.5, 1.6], center = true);
+module radiator(length = 90, width = 32, thickness = 2.2) {
+    cube([length, width, thickness], center = true);
+    // Support frame (both faces)
+    translate([0, 0,  thickness/2 + 0.5]) cube([length + 3, 4, 1], center = true);
+    translate([0, 0, -thickness/2 - 0.5]) cube([length + 3, 4, 1], center = true);
     for (i = [-length/2 + 8 : 16 : length/2 - 8]) {
         translate([i, 0, 0.9]) cube([2, width - 4, 0.6], center = true);
     }
@@ -144,11 +140,15 @@ module service_module() {
     rounded_cube([module_size, module_size, module_size*1.5], 2);
 }
 
-// -------------------- Docking Port / Adapter --------------------
+// -------------------- Docking Port / Adapter (with petals) --------------------
 module docking_port() {
     cylinder(h = 16, d = 32, center = true);
     translate([0, 0, 10]) cylinder(h = 8, d = 26, center = true);
     translate([0, 0, 15]) cylinder(h = 3, d = 30, center = true);
+    // Docking ring petals
+    for (a = [0 : 60 : 300]) {
+        rotate([0, 0, a]) translate([14, 0, 12]) cube([5, 3, 4], center = true);
+    }
 }
 
 // -------------------- Antenna / Sensor --------------------
@@ -180,12 +180,16 @@ translate([0,  truss_size/2 + 22,  110]) color("SlateGray") rounded_cube([38, 32
 translate([0, -(truss_size/2 + 22), -85]) color("SlateGray") rounded_cube([38, 32, 44], 2);
 
 // Solar arrays
-translate([0,  165, 0]) rotate([0, 0, 90]) color("MidnightBlue") solar_array(150, 48);
-translate([0, -165, 0]) rotate([0, 0, 90]) color("MidnightBlue") solar_array(150, 48);
+translate([0,  165, 20]) rotate([0, 0, 90]) color("MidnightBlue") solar_array(150, 48, 3);
+translate([0, -165, 20]) rotate([0, 0, 90]) color("MidnightBlue") solar_array(150, 48, 3);
+
+// Secondary smaller arrays (perpendicular winglets)
+translate([ 110, 0,  160]) rotate([0, 90, 0]) color("MidnightBlue") solar_array(70, 35, 2.5);
+translate([-110, 0, -160]) rotate([0, 90, 0]) color("MidnightBlue") solar_array(70, 35, 2.5);
 
 // Radiators
-translate([ 95, 0,  145]) rotate([0, 90, 0]) color("Silver") radiator(90, 32);
-translate([-95, 0, -145]) rotate([0, 90, 0]) color("Silver") radiator(90, 32);
+translate([ 105, 0,  150]) rotate([0, 90, 0]) color("Silver") radiator(100, 34, 2.4);
+translate([-105, 0, -150]) rotate([0, 90, 0]) color("Silver") radiator(100, 34, 2.4);
 
 // Robotic arms (articulated, angle + length)
 translate([ assembly_dia/2 - 14, 0,  50]) color("DarkOrange") robotic_arm(0, 100);
