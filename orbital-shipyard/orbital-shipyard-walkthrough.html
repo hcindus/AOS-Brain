@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OSY-7 Orbital Shipyard — In Orbit Above Mars</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+  body { font-family: 'JetBrains Mono', monospace; }
+  canvas { display: block; }
+
+  #overlay {
+    position: fixed; inset: 0; z-index: 10;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; cursor: pointer;
+    background: radial-gradient(ellipse at 50% 40%, rgba(0,60,120,0.12), transparent 60%), #05070d;
+    color: #cfe0ee; user-select: none;
+  }
+  #overlay h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(30px, 5vw, 64px); font-weight: 700; letter-spacing: 4px; color: #eaf3fb;
+    text-shadow: 0 0 12px #4a90d9, 0 0 40px #4a90d9;
+  }
+  #overlay .sub { font-size: clamp(14px, 2vw, 20px); letter-spacing: 5px; margin-top: 8px; color: #8ab4d9; }
+  #overlay .hint { margin-top: 48px; color: #d4af37; font-size: 13px; letter-spacing: 2px; }
+  #overlay .keys { margin-top: 14px; color: #7a8595; font-size: 12px; letter-spacing: 1px; line-height: 1.8; }
+  #overlay .loading { margin-top: 30px; color: #4a90d9; font-size: 12px; letter-spacing: 2px; }
+
+  #hud {
+    position: fixed; bottom: 16px; left: 18px; z-index: 5;
+    font-size: 11px; letter-spacing: 2px; color: rgba(180,210,235,0.6); pointer-events: none;
+  }
+  #cabaret-tag {
+    position: fixed; z-index: 6; padding: 8px 14px;
+    background: rgba(20,8,14,0.85); border: 1px solid #d4af37; color: #ffe9c4;
+    font-size: 11px; letter-spacing: 2px; cursor: pointer; border-radius: 4px;
+    box-shadow: 0 0 20px rgba(255,26,60,0.35);
+    display: none; transform: translate(-50%,-50%);
+  }
+  #cabaret-tag:hover { background: rgba(60,20,30,0.9); }
+</style>
+</head>
+<body>
+
+<div id="overlay">
+  <h1>OSY-7 ORBITAL SHIPYARD</h1>
+  <div class="sub">IN LOW ORBIT · ABOVE MARS</div>
+  <div class="loading" id="loadstatus">LOADING ASSETS…</div>
+  <div class="hint">CLICK TO ENTER</div>
+  <div class="keys">W A S D — move &nbsp;·&nbsp; MOUSE — look &nbsp;·&nbsp; SHIFT — boost &nbsp;·&nbsp; SPACE / C — up / down</div>
+</div>
+
+<div id="cabaret-tag">✦ THE VELVET CABARET — ENTER</div>
+<div id="hud">OSY-7 · MARS ORBIT</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x02030a);
+
+const camera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 200000);
+camera.position.set(0, 4500, 2600);
+camera.lookAt(0, 4400, 0);
+
+// ---------------- Stars ----------------
+{
+  const g = new THREE.BufferGeometry();
+  const N = 4000, pos = new Float32Array(N*3);
+  for (let i=0;i<N;i++){ const r = 30000 + Math.random()*50000;
+    const t = Math.random()*Math.PI*2, p = Math.acos(2*Math.random()-1);
+    pos[i*3]=r*Math.sin(p)*Math.cos(t); pos[i*3+1]=r*Math.sin(p)*Math.sin(t); pos[i*3+2]=r*Math.cos(p);
+  }
+  g.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  const m = new THREE.PointsMaterial({ color:0xffffff, size:2.5, sizeAttenuation:false, transparent:true, opacity:0.8 });
+  scene.add(new THREE.Points(g,m));
+}
+
+// ---------------- Lighting ----------------
+const ambient = new THREE.AmbientLight(0x203040, 1.2); scene.add(ambient);
+const sun = new THREE.DirectionalLight(0xfff2e0, 2.5); sun.position.set(3000, 8000, 2000); scene.add(sun);
+const marsBounce = new THREE.DirectionalLight(0x8a4a30, 0.6); marsBounce.position.set(0,-1000,0); scene.add(marsBounce);
+
+// ---------------- Mars (GLB with embedded texture + normal) ----------------
+const marsGroup = new THREE.Group();
+scene.add(marsGroup);
+loader.load('./assets/characters/mars/mars.glb', (gltf)=>{
+  const mars = gltf.scene;
+  mars.scale.setScalar(8);   // GLB radius ~500 -> planet radius ~4000
+  mars.position.set(0, -6000, 0);
+  marsGroup.add(mars);
+});
+
+// ---------------- Shipyard ----------------
+const shipyard = new THREE.Group();
+scene.add(shipyard);
+shipyard.position.set(0, 4400, 0);
+
+const loader = new GLTFLoader();
+let cabaretMarker = null;
+
+loader.load('./assets/characters/mars/osy7_shipyard.glb', (gltf)=>{
+  const model = gltf.scene;
+  // scale to meters (STL was already meters) — keep 1:1
+  shipyard.add(model);
+  document.getElementById('loadstatus').textContent = 'ASSETS READY';
+  addCabaretMarker();
+}, undefined, (e)=>{ document.getElementById('loadstatus').textContent = 'LOADING SHIPYARD…'; });
+
+// ---------------- Velvet Cabaret marker (in habitat ring) ----------------
+// Habitat ring sits at shipyard stern (local Z ≈ -215), radius ≈155 in X/Y plane.
+// World pos = shipyard.position + local offset (since shipyard is at origin rotation).
+function addCabaretMarker(){
+  const ringLocal = new THREE.Vector3(0, 0, -215);
+  // pick a point on the ring's outer edge
+  const ang = Math.PI * 0.25;
+  const r = 165;
+  const local = new THREE.Vector3(Math.cos(ang)*r, Math.sin(ang)*r, -215);
+  const world = local.clone().add(shipyard.position);
+
+  const grp = new THREE.Group();
+  // glowing entrance sign
+  const sign = new THREE.Mesh(
+    new THREE.CylinderGeometry(18, 18, 6, 32),
+    new THREE.MeshStandardMaterial({ color:0xff1a3c, roughness:0.3, metalness:0.4, emissive:0xff1a3c, emissiveIntensity:2.0 })
+  );
+  grp.add(sign);
+  const halo = new THREE.Mesh(
+    new THREE.SphereGeometry(22, 32, 32),
+    new THREE.MeshBasicMaterial({ color:0xff1a3c, transparent:true, opacity:0.12 })
+  );
+  grp.add(halo);
+  grp.position.copy(world);
+  shipyard.add(grp);
+  cabaretMarker = grp;
+}
+
+// ---------------- Controls ----------------
+const controls = new PointerLockControls(camera, document.body);
+const overlay = document.getElementById('overlay');
+overlay.addEventListener('click', ()=>{ controls.lock(); });
+controls.addEventListener('lock', ()=>{ overlay.style.display = 'none'; });
+controls.addEventListener('unlock', ()=>{ overlay.style.display = 'flex'; document.getElementById('loadstatus').textContent = 'CLICK TO RESUME'; });
+
+const keys = {};
+window.addEventListener('keydown', e=>{ keys[e.code]=true; });
+window.addEventListener('keyup', e=>{ keys[e.code]=false; });
+
+const vel = new THREE.Vector3();
+let moveSpeed = 120;
+
+function update(dt){
+  const dir = new THREE.Vector3();
+  const forward = new THREE.Vector3(); camera.getWorldDirection(forward); forward.y = 0; forward.normalize();
+  const right = new THREE.Vector3().crossVectors(forward, new THREE.Vector3(0,1,0)).normalize();
+
+  if (keys['KeyW']) dir.add(forward);
+  if (keys['KeyS']) dir.sub(forward);
+  if (keys['KeyA']) dir.sub(right);
+  if (keys['KeyD']) dir.add(right);
+  if (keys['Space']) dir.add(new THREE.Vector3(0,1,0));
+  if (keys['KeyC']) dir.sub(new THREE.Vector3(0,1,0));
+
+  const boost = keys['ShiftLeft'] || keys['ShiftRight'] ? 4 : 1;
+  if (dir.length()>0) dir.normalize().multiplyScalar(moveSpeed*boost);
+  camera.position.addScaledVector(dir, dt);
+
+  // Cabaret tag projection
+  if (cabaretMarker){
+    const wp = cabaretMarker.position.clone();
+    const sp = wp.project(camera);
+    const tag = document.getElementById('cabaret-tag');
+    const onScreen = sp.z < 1 && Math.abs(sp.x) < 1.2 && Math.abs(sp.y) < 1.2;
+    if (onScreen){
+      tag.style.display = 'block';
+      tag.style.left = ((sp.x*0.5+0.5)*innerWidth)+'px';
+      tag.style.top = ((-sp.y*0.5+0.5)*innerHeight)+'px';
+      tag.onclick = ()=>{ window.location.href = 'velvet-cabaret-3d.html'; };
+    } else tag.style.display = 'none';
+  }
+}
+
+document.getElementById('cabaret-tag').addEventListener('click', ()=>{
+  window.location.href = 'velvet-cabaret-3d.html';
+});
+
+let last = performance.now();
+function loop(){
+  const now = performance.now();
+  const dt = Math.min((now-last)/1000, 0.1); last = now;
+  update(dt);
+  renderer.render(scene, camera);
+  requestAnimationFrame(loop);
+}
+loop();
+
+window.addEventListener('resize', ()=>{
+  camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+</script>
+</body>
+</html>
