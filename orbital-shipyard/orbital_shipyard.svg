@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
+ <!-- Background -->
+ <rect width="1200" height="700" fill="#0a0e17"/>
+ 
+ <!-- Title -->
+ <text x="600" y="40" font-family="Arial" font-size="22" fill="#a0b0c0" text-anchor="middle">ORBITAL SHIPYARD – SIDE ELEVATION (Scale 1:2000)</text>
+ 
+ <!-- Main Assembly Cylinder -->
+ <rect x="250" y="220" width="480" height="220" rx="15" fill="none" stroke="#4a90d9" stroke-width="6"/>
+ <text x="490" y="340" font-family="Arial" font-size="16" fill="#4a90d9" text-anchor="middle">ASSEMBLY BAY Ø180 m × 240 m</text>
+ 
+ <!-- Central Truss -->
+ <rect x="200" y="310" width="700" height="40" fill="#8a9aaa" stroke="#ccddee" stroke-width="2"/>
+ <text x="550" y="335" font-family="Arial" font-size="14" fill="#111" text-anchor="middle">MAIN TRUSS SPINE</text>
+ 
+ <!-- Habitat Ring (offset) -->
+ <circle cx="180" cy="330" r="95" fill="none" stroke="#5a7a4a" stroke-width="14"/>
+ <text x="180" y="460" font-family="Arial" font-size="14" fill="#8aba6a" text-anchor="middle">HABITAT RING Ø300 m</text>
+ 
+ <!-- Solar Arrays -->
+ <rect x="320" y="120" width="30" height="90" fill="#1a3a6a" stroke="#4af" stroke-width="1"/>
+ <rect x="380" y="100" width="30" height="110" fill="#1a3a6a" stroke="#4af" stroke-width="1"/>
+ <rect x="620" y="100" width="30" height="110" fill="#1a3a6a" stroke="#4af" stroke-width="1"/>
+ <rect x="680" y="120" width="30" height="90" fill="#1a3a6a" stroke="#4af" stroke-width="1"/>
+ <text x="530" y="90" font-family="Arial" font-size="13" fill="#6af" text-anchor="middle">SOLAR ARRAYS</text>
+ 
+ <!-- Radiators -->
+ <rect x="850" y="250" width="80" height="20" fill="#bbb" stroke="#eee" stroke-width="1"/>
+ <rect x="850" y="290" width="80" height="20" fill="#bbb" stroke="#eee" stroke-width="1"/>
+ <rect x="850" y="330" width="80" height="20" fill="#bbb" stroke="#eee" stroke-width="1"/>
+ <text x="890" y="380" font-family="Arial" font-size="13" fill="#ccc" text-anchor="middle">RADIATORS</text>
+ 
+ <!-- Service Modules -->
+ <rect x="300" y="370" width="40" height="50" fill="#555" stroke="#999"/>
+ <rect x="380" y="370" width="40" height="50" fill="#555" stroke="#999"/>
+ <rect x="560" y="370" width="40" height="50" fill="#555" stroke="#999"/>
+ <rect x="640" y="370" width="40" height="50" fill="#555" stroke="#999"/>
+ 
+ <!-- Robotic Arms (simplified) -->
+ <line x1="280" y1="280" x2="220" y2="200" stroke="#e67e22" stroke-width="6" stroke-linecap="round"/>
+ <line x1="220" y1="200" x2="180" y2="160" stroke="#e67e22" stroke-width="5" stroke-linecap="round"/>
+ <line x1="700" y1="280" x2="780" y2="200" stroke="#e67e22" stroke-width="6" stroke-linecap="round"/>
+ 
+ <!-- Docking Ports -->
+ <circle cx="200" cy="330" r="18" fill="none" stroke="#aaa" stroke-width="4"/>
+ <circle cx="900" cy="330" r="18" fill="none" stroke="#aaa" stroke-width="4"/>
+ 
+ <!-- Scale bar -->
+ <line x1="50" y1="650" x2="250" y2="650" stroke="#ccc" stroke-width="3"/>
+ <text x="150" y="675" font-family="Arial" font-size="14" fill="#ccc" text-anchor="middle">100 m</text>
+ 
+ <!-- Labels -->
+ <text x="50" y="50" font-family="Arial" font-size="14" fill="#888">OSY-7 Concept</text>
+</svg>
