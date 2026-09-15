@@ -188,23 +188,33 @@ function update(dt){
   if (dir.length()>0) dir.normalize().multiplyScalar(moveSpeed*boost);
   camera.position.addScaledVector(dir, dt);
 
-  // Cabaret tag projection
+  // Cabaret tag projection + proximity
   if (cabaretMarker){
     const wp = cabaretMarker.position.clone();
     const sp = wp.project(camera);
     const tag = document.getElementById('cabaret-tag');
     const onScreen = sp.z < 1 && Math.abs(sp.x) < 1.2 && Math.abs(sp.y) < 1.2;
+    const dist = camera.position.distanceTo(wp);
+    // Show tag when on screen; show "press E" hint when close enough to enter
     if (onScreen){
       tag.style.display = 'block';
       tag.style.left = ((sp.x*0.5+0.5)*innerWidth)+'px';
       tag.style.top = ((-sp.y*0.5+0.5)*innerHeight)+'px';
-      tag.onclick = ()=>{ window.location.href = 'velvet-cabaret-3d.html'; };
+      tag.textContent = dist < 900 ? '✦ THE VELVET CABARET — PRESS E TO ENTER' : '✦ THE VELVET CABARET';
     } else tag.style.display = 'none';
   }
 }
 
-document.getElementById('cabaret-tag').addEventListener('click', ()=>{
+function enterCabaret(){
   window.location.href = 'velvet-cabaret-3d.html';
+}
+document.getElementById('cabaret-tag').addEventListener('click', enterCabaret);
+
+// Keyboard: E (or Enter) to enter cabaret when near
+window.addEventListener('keydown', (e)=>{
+  if ((e.code === 'KeyE' || e.code === 'Enter') && cabaretMarker){
+    if (camera.position.distanceTo(cabaretMarker.position) < 900) enterCabaret();
+  }
 });
 
 let last = performance.now();
