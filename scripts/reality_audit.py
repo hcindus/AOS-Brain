@@ -77,10 +77,10 @@ def classify(name, source, phone, email):
     phone = (phone or "").strip()
     email = (email or "").strip()
 
-    # 1. Source is the strongest signal
-    if source in REAL_SOURCES:
+    # 1. Source is the strongest signal (prefix/substring match — sources carry date suffixes)
+    if any(source.startswith(r) or r in source for r in REAL_SOURCES):
         return "real"
-    if source in DEMO_SOURCES:
+    if any(source.startswith(d) or d in source for d in DEMO_SOURCES):
         return "demo"
 
     # 2. Synthetic name pattern
