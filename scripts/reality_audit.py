@@ -41,6 +41,8 @@ SYNTHETIC_NAME = [
     r"TheClub .* Valley \d+$", r"^Place Group \d+", r"^House Group",
     r"^NewPlace \d+", r"^Grill San Diego", r"^Spot San Diego",
     r"^Grill$", r"^LOCATION$", r"^WORLDPAY",
+    # multi_state_scraper: "<CityName> Restaurant" / "The <CityName> Bar & Grill"
+    r"^(?:[A-Z][a-z]+ )?Restaurant$", r"^The [A-Z][a-z]+ Bar & Grill$",
 ]
 
 # Valid NANP area codes: 200–989, excluding 9xx (9xx is reserved)
