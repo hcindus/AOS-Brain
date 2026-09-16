@@ -36,6 +36,9 @@ archive/backups/
 *.mov
 *.avi
 
+# Transient data backups (client backfill snapshots, etc.)
+data/*.bak_*
+
 # Data files that should be generated
 logs/*.log
 *.pid
