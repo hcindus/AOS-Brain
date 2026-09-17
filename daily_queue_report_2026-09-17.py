@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Daily Queue Email Report - September 17, 2026 (live data @ 06:00 UTC)."""
+"""Daily Queue Email Report - September 17, 2026 (live data @ 11:38 UTC)."""
 import smtplib, ssl, os
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 
-# Load SMTP credentials from secrets file (not hardcoded)
 def load_env(filepath):
     if os.path.exists(filepath):
         for line in open(filepath):
@@ -23,45 +22,44 @@ PASSWORD = os.getenv("HOSTINGER_SMTP_PASS", "")
 RECIPIENT = "Antonio.hudnall@gmail.com"
 
 now = datetime.utcnow()
-subject = f"📊 Daily Queue Report — {now.strftime('%B %d, %Y')}"
+subject = f"📊 Daily Queue Report — {now.strftime('%B %d, %Y')} (11:38 UTC)"
 
 body = f"""Good morning, Captain!
 
-Daily queue & system status report for {now.strftime('%A, %B %d, %Y')}.
+Daily queue & system status report for {now.strftime('%A, %B %d, %Y')} (midday refresh).
 
 Generated: {now.strftime('%Y-%m-%d %H:%M UTC')}
 
 ════════════════════════════════════════════
   SYSTEM HEALTH
 ════════════════════════════════════════════
-• Uptime:   120 days, 21h08m
-• CPU Load: 2.03 / 1.20 / 1.01  🟢 healthy, settled
-• Memory:   5.1 Gi used / 15 Gi total (34%)  🟢 healthy
-• Available: 10 Gi
-• Swap:     5.4 Gi / 29 Gi
-• Disk:     137G / 193G (71%)  🟢 healthy
+• Uptime:   121 days, 2h47m
+• CPU Load: 1.01 / 0.97 / 1.52  🟢 healthy, settled
+• Memory:   2.9 Gi used / 15 Gi total (19%)  🟢 healthy
+• Available: 12 Gi
+• Swap:     5.1 Gi / 29 Gi
+• Disk:     138G / 193G (72%)  🟢 healthy
 
 Core services: ✅ aos-brain-v4, aos-bhsi-v4, aos-mission-control, ollama
-— ALL ACTIVE. ⚠️ depotchaos = "activating" (was ACTIVE yesterday —
-re-check whether it fully came up).
+✅ depotchaos = ACTIVE (recovered from "activating" this morning).
 
 ⚠️ 4 services in FAILED state — aos-ternary, certbot, dailyaidecheck,
-and minecraft. mission-control remains "inactive".
-society-agents.service remains disabled/inactive.
+and minecraft. mission-control remains "inactive" (note: aos-mission-control
+is separately ACTIVE). society-agents.service remains disabled/inactive.
 
 ════════════════════════════════════════════
   QUEUE STATUS
 ════════════════════════════════════════════
 • Email queue (unified.db → email_queue):  207 emails — ALL status "ready"
     - campaign_id: capton_hospitality_202607  (207)
-    - scheduled_at present, sent_at ALL NULL
+    - sent_at ALL NULL
 • Sent last 24h / 7d / all-time:  0 / 0 / 0  🔴 still stalled
 
 • PENDING_TASKS.json:  3,150 tasks (unchanged)
     - source: CA_SOS_Scraper  (100% — synthetic/mock leads, do not send)
     - scraped_at: 2026-06-16 11:13 UTC (NOT refreshed today)
 
-• DepotChaos DB (data/depot_chaos/unified.db):  73.7 MB
+• DepotChaos DB (data/depot_chaos/unified.db):  77.2 MB (was 73.7 MB)
     - unified_leads:           1,460
     - leads:                  32,542
     - ca_abc_licenses:        74,521
@@ -85,26 +83,24 @@ society-agents.service remains disabled/inactive.
      miles@myl0nr0s.cloud. Confirm DKIM/SPF/DMARC for myl0nr0s.cloud.
 
 🟡 IMPORTANT
-  2. Four services still in FAILED state — aos-ternary, certbot,
-     dailyaidecheck, and minecraft. Worth a `systemctl restart` (or a
-     decision to leave them disabled) to confirm they come back clean.
+  2. Four services still FAILED — aos-ternary, certbot, dailyaidecheck,
+     and minecraft. Worth a `systemctl restart` (or a decision to leave
+     them disabled) to confirm they come back clean.
   3. mission-control remains "inactive" — re-check whether it should be
-     enabled (note: aos-mission-control is ACTIVE).
+     enabled (aos-mission-control is separately ACTIVE).
   4. society-agents.service remains disabled/inactive.
-  5. depotchaos reverted to "activating" (was ACTIVE yesterday) —
-     monitor to confirm it settles back to ACTIVE.
 
 🟢 NOTE
+  5. ✅ depotchaos recovered to ACTIVE (was "activating" at 06:00) — resolved.
   6. PENDING_TASKS at 3,150 are all CA_SOS_Scraper mock leads — no real
      outreach needed; do not inject more synthetic leads.
      (scraped_at unchanged since 2026-06-16 — scraper did not run.)
-  7. System otherwise healthy: memory 34%, disk 71%, load settled
-     ~1.0-2.0 — no OOM/disk/CPU risk.
+  7. System otherwise healthy: memory 19%, disk 72%, load settled
+     ~1.0-1.5 — no OOM/disk/CPU risk.
 
 All core systems operational. Primary concern remains the stalled
 207-email queue (sender-address rejection). Secondary: the four failed
-services, mission-control not in ACTIVE state, and depotchaos reverting
-to "activating". Standing by for your directives.
+services and mission-control not in ACTIVE state. Standing by.
 
 — Miles 🚀
 Autonomous Operations Engine
