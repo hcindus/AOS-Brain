@@ -1,0 +1,37 @@
+DepotChaos Intake — paste format
+================================
+
+Drop a record here and it auto-syncs to the CRM (unified.db leads table).
+Two ways to write it:
+
+1) JSON (best — drop as a .json file in inbox/)
+
+{
+  "business_name": "Bellam Self Storage",
+  "phone": "415-454-1983",
+  "contact_name": "Andree",
+  "address": "24 Bellam Blvd",
+  "city": "San Rafael",
+  "state": "CA",
+  "zip": "94901",
+  "amount": 1179.81,
+  "invoice": "3106102",
+  "status": "contacted",
+  "callback_date": "2026-11-15"
+}
+
+2) Pipe-delimited line (one record per line, .txt file)
+Fields in order (leave empty between pipes to skip):
+
+business_name | email | phone | phone_alt | contact_name | contact_title | website | address | city | state | zip | amount | invoice | status | callback_date | notes
+
+Example:
+Bellam Self Storage ||415-454-1983||Andree|||24 Bellam Blvd|San Rafael|CA|94901|1179.81|3106102|contacted|2026-11-15|
+
+Rules:
+- business_name is required (everything else optional).
+- Existing records are UPDATED (only non-empty fields overwrite); new ones are INSERTED.
+- amount + invoice auto-formatted into the notes field.
+- status "contacted" sets last_contact = today; callback_date sets next_contact.
+
+The processor runs every 15 min and archives processed files to processed/.
