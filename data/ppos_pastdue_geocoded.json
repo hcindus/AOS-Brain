@@ -797,20 +797,15 @@
     "phone": "415-456-5808",
     "geocode_query": "LOTUS INDIAN CUISINE, San Rafael, CA",
     "geocode": {
-      "name": "Lotus Indian Cuisine",
-      "formatted": "Lotus Indian Cuisine, Praceta José Maria Bomtempo 5, 2675-651 Odivelas, Portugal",
-      "street": "Praceta José Maria Bomtempo",
-      "housenumber": "5",
-      "city": "Odivelas",
-      "state": "Lisbon",
-      "postcode": "2675-651",
-      "lat": 38.7924955,
-      "lon": -9.1937119,
-      "confidence": 0.3,
-      "match_type": "full_match",
-      "result_type": "amenity",
-      "category": "catering.restaurant"
-    }
+      "city": "San Rafael",
+      "state": "CA",
+      "formatted": "LOTUS INDIAN CUISINE, San Rafael, CA",
+      "lat": null,
+      "lon": null,
+      "confidence": null,
+      "source": "region_code_manual"
+    },
+    "geocode_manual": true
   },
   {
     "prefix": "DK",
@@ -912,20 +907,15 @@
     "phone": "",
     "geocode_query": "MI CASA CAFÉ, San Rafael, CA",
     "geocode": {
-      "name": "Mi Casa Cafe",
-      "formatted": "Mi Casa Cafe, South Brisbane QLD 4101, Australia",
-      "street": null,
-      "housenumber": null,
-      "city": "South Brisbane",
-      "state": "Queensland",
-      "postcode": "4101",
-      "lat": -27.481868,
-      "lon": 153.023464,
-      "confidence": 0.25,
-      "match_type": "full_match",
-      "result_type": "amenity",
-      "category": null
-    }
+      "city": "San Rafael",
+      "state": "CA",
+      "formatted": "MI CASA CAFÉ, San Rafael, CA",
+      "lat": null,
+      "lon": null,
+      "confidence": null,
+      "source": "region_code_manual"
+    },
+    "geocode_manual": true
   },
   {
     "prefix": "DK",
@@ -950,20 +940,15 @@
     "phone": "",
     "geocode_query": "MI CASA CAFÉ, San Rafael, CA",
     "geocode": {
-      "name": "Mi Casa Cafe",
-      "formatted": "Mi Casa Cafe, South Brisbane QLD 4101, Australia",
-      "street": null,
-      "housenumber": null,
-      "city": "South Brisbane",
-      "state": "Queensland",
-      "postcode": "4101",
-      "lat": -27.481868,
-      "lon": 153.023464,
-      "confidence": 0.25,
-      "match_type": "full_match",
-      "result_type": "amenity",
-      "category": null
-    }
+      "city": "San Rafael",
+      "state": "CA",
+      "formatted": "MI CASA CAFÉ, San Rafael, CA",
+      "lat": null,
+      "lon": null,
+      "confidence": null,
+      "source": "region_code_manual"
+    },
+    "geocode_manual": true
   },
   {
     "prefix": "AH",
@@ -1417,20 +1402,15 @@
     "phone": "",
     "geocode_query": "SALT AND PEPPER, Marin, CA",
     "geocode": {
-      "name": "Salt and Pepper",
-      "formatted": "Salt and Pepper, J.E. Irausquin Boulevard, Bubali, Aruba",
-      "street": "J.E. Irausquin Boulevard",
-      "housenumber": null,
-      "city": "Bubali",
-      "state": "Aruba",
-      "postcode": null,
-      "lat": 12.569883,
-      "lon": -70.044634,
-      "confidence": 0,
-      "match_type": "full_match",
-      "result_type": "amenity",
-      "category": null
-    }
+      "city": "Tiburon",
+      "state": "CA",
+      "formatted": "SALT AND PEPPER TIBURON, Tiburon, CA",
+      "lat": null,
+      "lon": null,
+      "confidence": null,
+      "source": "region_code_manual"
+    },
+    "geocode_manual": true
   },
   {
     "prefix": "AH",
