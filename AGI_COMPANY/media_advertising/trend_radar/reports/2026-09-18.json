@@ -1,0 +1,698 @@
+{
+  "date": "2026-09-18",
+  "keyword_interest": [
+    {
+      "keyword": "cash drawer",
+      "first_half": 1.1,
+      "second_half": 1.7,
+      "delta": 0.7,
+      "trend": "flat"
+    },
+    {
+      "keyword": "receipt paper",
+      "first_half": 2.4,
+      "second_half": 3.4,
+      "delta": 1.0,
+      "trend": "flat"
+    },
+    {
+      "keyword": "thermal printer",
+      "first_half": 14.8,
+      "second_half": 17.0,
+      "delta": 2.3,
+      "trend": "flat"
+    },
+    {
+      "keyword": "barcode scanner",
+      "first_half": 8.8,
+      "second_half": 12.0,
+      "delta": 3.2,
+      "trend": "rising"
+    },
+    {
+      "keyword": "point of sale",
+      "first_half": 15.9,
+      "second_half": 18.9,
+      "delta": 3.0,
+      "trend": "flat"
+    },
+    {
+      "keyword": "POS system",
+      "first_half": 22.5,
+      "second_half": 25.4,
+      "delta": 2.9,
+      "trend": "flat"
+    },
+    {
+      "keyword": "pour spout",
+      "first_half": 2.5,
+      "second_half": 1.1,
+      "delta": -1.4,
+      "trend": "flat"
+    },
+    {
+      "keyword": "liquor pourer",
+      "first_half": 0.0,
+      "second_half": 0.0,
+      "delta": 0.0,
+      "trend": "flat"
+    },
+    {
+      "keyword": "restaurant supplies",
+      "first_half": 2.6,
+      "second_half": 4.1,
+      "delta": 1.5,
+      "trend": "flat"
+    },
+    {
+      "keyword": "bar supplies",
+      "first_half": 0.5,
+      "second_half": 1.1,
+      "delta": 0.6,
+      "trend": "flat"
+    },
+    {
+      "keyword": "AI agents",
+      "first_half": 13.7,
+      "second_half": 18.9,
+      "delta": 5.2,
+      "trend": "rising"
+    },
+    {
+      "keyword": "autonomous agents",
+      "first_half": 0.1,
+      "second_half": 0.6,
+      "delta": 0.6,
+      "trend": "flat"
+    },
+    {
+      "keyword": "agentic AI",
+      "first_half": 7.1,
+      "second_half": 9.5,
+      "delta": 2.5,
+      "trend": "flat"
+    },
+    {
+      "keyword": "AI automation",
+      "first_half": 5.7,
+      "second_half": 7.8,
+      "delta": 2.1,
+      "trend": "flat"
+    },
+    {
+      "keyword": "artificial general intelligence",
+      "first_half": 0.1,
+      "second_half": 0.3,
+      "delta": 0.3,
+      "trend": "flat"
+    },
+    {
+      "keyword": "large language model",
+      "first_half": 2.4,
+      "second_half": 6.0,
+      "delta": 3.5,
+      "trend": "rising"
+    },
+    {
+      "keyword": "AI workforce",
+      "first_half": 2.5,
+      "second_half": 11.8,
+      "delta": 9.3,
+      "trend": "rising"
+    }
+  ],
+  "hacker_news": [
+    {
+      "scope": "search: \"AI agents\"",
+      "title": "An AI agent published a hit piece on me",
+      "points": 2346,
+      "comments": 951,
+      "url": "https://theshamblog.com/an-ai-agent-published-a-hit-piece-on-me/"
+    },
+    {
+      "scope": "search: \"AI agents\"",
+      "title": "AI agent bankrupted their operator while trying to scan DN42",
+      "points": 1467,
+      "comments": 536,
+      "url": "https://lantian.pub/en/article/fun/ai-agent-bankrupted-their-operator-scan-dn42lantian.lantian/"
+    },
+    {
+      "scope": "search: \"restaurant\"",
+      "title": "California law bans delivery apps from listing a restaurant without an agreement",
+      "points": 1317,
+      "comments": 620,
+      "url": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=201920200AB2149"
+    },
+    {
+      "scope": "search: \"AI agents\"",
+      "title": "OpenCode \u2013 Open source AI coding agent",
+      "points": 1274,
+      "comments": 618,
+      "url": "https://opencode.ai/"
+    },
+    {
+      "scope": "search: \"restaurant\"",
+      "title": "A small restaurant owner on Google, DoorDash, and Grubhub",
+      "points": 975,
+      "comments": 420,
+      "url": "https://www.saddlebackbbq.com/how-google-doordash-grubhub-conspire-screw-local-restaurants"
+    },
+    {
+      "scope": "search: \"AI agents\"",
+      "title": "AI agent opens a PR write a blogpost to shames the maintainer who closes it",
+      "points": 953,
+      "comments": 750,
+      "url": "https://github.com/matplotlib/matplotlib/pull/31132"
+    },
+    {
+      "scope": "search: \"restaurant\"",
+      "title": "Yelp Is Replacing Restaurants\u2019 Phone Numbers So Grubhub Can Take a Cut",
+      "points": 953,
+      "comments": 449,
+      "url": "https://www.vice.com/en_us/article/wjwebw/yelp-is-sneakily-replacing-restaurants-phone-numbers-so-grubhub-can-take-a-cut"
+    },
+    {
+      "scope": "search: \"restaurant\"",
+      "title": "Yelp Is Replacing Restaurants\u2019 Phone Numbers So Grubhub Can Take a Cut (2019)",
+      "points": 924,
+      "comments": 291,
+      "url": "https://www.vice.com/en/article/wjwebw/yelp-is-sneakily-replacing-restaurants-phone-numbers-so-grubhub-can-take-a-cut"
+    },
+    {
+      "scope": "search: \"AI agents\"",
+      "title": "Opus 4.5 is not the normal AI agent experience that I have had thus far",
+      "points": 879,
+      "comments": 1353,
+      "url": "https://burkeholland.github.io/posts/opus-4-5-change-everything/"
+    },
+    {
+      "scope": "search: \"AI agents\"",
+      "title": "An AI agent deleted our production database. The agent's confession is below",
+      "points": 860,
+      "comments": 1032,
+      "url": "https://twitter.com/lifeof_jer/status/2048103471019434248"
+    },
+    {
+      "scope": "search: \"AI agents\"",
+      "title": "An AI agent published a hit piece on me \u2013 more things have happened",
+      "points": 768,
+      "comments": 624,
+      "url": "https://theshamblog.com/an-ai-agent-published-a-hit-piece-on-me-part-2/"
+    },
+    {
+      "scope": "search: \"retail\"",
+      "title": "Supreme Court allows blind people to sue retailers if websites aren't accessible",
+      "points": 743,
+      "comments": 591,
+      "url": "https://www.latimes.com/politics/story/2019-10-07/blind-person-dominos-ada-supreme-court-disabled"
+    },
+    {
+      "scope": "search: \"AI agents\"",
+      "title": "Windows 11 adds AI agent that runs in background with access to personal folders",
+      "points": 703,
+      "comments": 638,
+      "url": "https://www.windowslatest.com/2025/11/18/windows-11-to-add-an-ai-agent-that-runs-in-background-with-access-to-personal-folders-warns-of-security-risk/"
+    },
+    {
+      "scope": "search: \"restaurant\"",
+      "title": "One kitchen, hundreds of internet restaurants",
+      "points": 685,
+      "comments": 355,
+      "url": "https://peabee.substack.com/p/17-one-kitchen-hundreds-of-internet"
+    },
+    {
+      "scope": "search: \"retail\"",
+      "title": " How Newegg crushed the \u201cshopping cart\u201d patent and saved online retail",
+      "points": 638,
+      "comments": 134,
+      "url": "http://arstechnica.com/tech-policy/2013/01/how-newegg-crushed-the-shopping-cart-patent-and-saved-online-retail/"
+    },
+    {
+      "scope": "front page",
+      "title": "Fujitsu launches made-in-Japan next-generation CPU FUJITSU-MONAKA",
+      "points": 566,
+      "comments": 212,
+      "url": "https://global.fujitsu/en-global/pr/news/2026/09/14-02"
+    },
+    {
+      "scope": "search: \"restaurant\"",
+      "title": "The state of the restaurant industry",
+      "points": 564,
+      "comments": 572,
+      "url": "https://www.opentable.com/state-of-industry"
+    },
+    {
+      "scope": "front page",
+      "title": "Hister: A private search engine for the pages you visit and the files you keep",
+      "points": 561,
+      "comments": 150,
+      "url": "https://github.com/asciimoo/hister"
+    },
+    {
+      "scope": "search: \"point of sale\"",
+      "title": "Stripe Terminal \u2013 Programmable point of sale",
+      "points": 539,
+      "comments": 217,
+      "url": "https://stripe.com/terminal"
+    },
+    {
+      "scope": "search: \"restaurant\"",
+      "title": "The Restaurant Industry\u2019s Worst Idea: QR Code Menus",
+      "points": 536,
+      "comments": 636,
+      "url": "https://www.theatlantic.com/ideas/archive/2022/10/qr-code-menus-restaurants-pandemic/671888/"
+    },
+    {
+      "scope": "search: \"retail\"",
+      "title": "Retailers will soon have only about 7 weeks of full inventories left",
+      "points": 532,
+      "comments": 992,
+      "url": "https://fortune.com/article/retailers-weeks-of-inventory-left-trump-china-trade-war/"
+    },
+    {
+      "scope": "search: \"retail\"",
+      "title": "How Amazon\u2019s ambitious new push for same-day delivery will destroy local retail",
+      "points": 509,
+      "comments": 309,
+      "url": "http://www.slate.com/articles/business/small_business/2012/07/amazon_same_day_delivery_how_the_e_commerce_giant_will_destroy_local_retail_.html"
+    },
+    {
+      "scope": "search: \"restaurant\"",
+      "title": "Portland approves 10% cap on fees that food delivery apps can charge restaurants",
+      "points": 502,
+      "comments": 551,
+      "url": "https://www.oregonlive.com/portland/2020/07/portland-approves-10-cap-on-fees-that-food-delivery-apps-can-charge-restaurants.html"
+    },
+    {
+      "scope": "search: \"retail\"",
+      "title": "Microsoft to permanently close its retail stores",
+      "points": 489,
+      "comments": 277,
+      "url": "https://www.theverge.com/2020/6/26/21297400/microsoft-retail-stores-closing-cities-open"
+    },
+    {
+      "scope": "search: \"retail\"",
+      "title": "Google and Mastercard Cut Ad Deal to Track Retail Sales",
+      "points": 449,
+      "comments": 281,
+      "url": "https://www.bloomberg.com/news/articles/2018-08-30/google-and-mastercard-cut-a-secret-ad-deal-to-track-retail-sales"
+    },
+    {
+      "scope": "front page",
+      "title": "Astra for Law",
+      "points": 440,
+      "comments": 465,
+      "url": "https://openai.com/index/astra-for-law/"
+    },
+    {
+      "scope": "search: \"retail\"",
+      "title": "Costco gained a cult following by breaking every rule of retail",
+      "points": 436,
+      "comments": 361,
+      "url": "https://thehustle.co/costco-membership-economics/"
+    },
+    {
+      "scope": "search: \"autonomous agents\"",
+      "title": "The current hype around autonomous agents, and what actually works in production",
+      "points": 427,
+      "comments": 257,
+      "url": "https://utkarshkanwat.com/writing/betting-against-agents/"
+    },
+    {
+      "scope": "front page",
+      "title": "Bend \u2013 A language that blocks AI mistakes via proof, on CPU and GPU",
+      "points": 409,
+      "comments": 198,
+      "url": "https://bend-lang.com/"
+    },
+    {
+      "scope": "front page",
+      "title": "Bonsai 2 27B: Near-Lossless Compression in a 9x Smaller Footprint",
+      "points": 372,
+      "comments": 115,
+      "url": "https://prismml.com/news/bonsai-2-27b"
+    },
+    {
+      "scope": "search: \"point of sale\"",
+      "title": "Keyhut POS: Free Point-of-Sale Software for DOS",
+      "points": 362,
+      "comments": 157,
+      "url": "http://keyhut.com/pos.htm"
+    },
+    {
+      "scope": "search: \"retail\"",
+      "title": "No correlation between headphone frequency response and retail price",
+      "points": 356,
+      "comments": 350,
+      "url": "http://asa.scitation.org/doi/10.1121/1.4984044"
+    },
+    {
+      "scope": "front page",
+      "title": "Wax motor",
+      "points": 335,
+      "comments": 62,
+      "url": "https://en.wikipedia.org/wiki/Wax_motor"
+    },
+    {
+      "scope": "search: \"autonomous agents\"",
+      "title": "LLM Powered Autonomous Agents",
+      "points": 285,
+      "comments": 176,
+      "url": "https://lilianweng.github.io/posts/2023-06-23-agent/"
+    },
+    {
+      "scope": "front page",
+      "title": "Hacking OpenAI",
+      "points": 248,
+      "comments": 81,
+      "url": "https://www.hacktron.ai/blog/hacking-openai"
+    },
+    {
+      "scope": "front page",
+      "title": "Why I didn\u2019t sign the Fields medallists\u2019 letter",
+      "points": 239,
+      "comments": 340,
+      "url": "https://gowers.wordpress.com/2026/09/17/why-i-didnt-sign-the-fields-medallists-letter/"
+    },
+    {
+      "scope": "search: \"autonomous agents\"",
+      "title": "Memary: Open-Source Longterm Memory for Autonomous Agents",
+      "points": 216,
+      "comments": 66,
+      "url": "https://github.com/kingjulio8238/memary"
+    },
+    {
+      "scope": "search: \"autonomous agents\"",
+      "title": "Show HN: Nous \u2013 Open-Source Agent Framework with Autonomous, SWE Agents, WebUI",
+      "points": 155,
+      "comments": 37,
+      "url": "https://github.com/TrafficGuard/nous"
+    },
+    {
+      "scope": "front page",
+      "title": "Qwen 3.8 Omni Flash",
+      "points": 153,
+      "comments": 49,
+      "url": "https://qwen.ai/blog?id=qwen3.8-omni-flash"
+    },
+    {
+      "scope": "front page",
+      "title": "CrowdSec Source Code Leak",
+      "points": 145,
+      "comments": 43,
+      "url": "https://www.crowdsec.net/blog/crowdsec-statement-source-code-exposure"
+    },
+    {
+      "scope": "front page",
+      "title": "Infinite-Parameter LLMs: Generating and Adapting Weights from Live Data",
+      "points": 135,
+      "comments": 38,
+      "url": "https://arxiv.org/abs/2609.18842"
+    },
+    {
+      "scope": "front page",
+      "title": "How to Write with an LLM",
+      "points": 111,
+      "comments": 72,
+      "url": "https://sockpuppet.org/blog/2026/09/17/how-to-write-with-an-llm/"
+    },
+    {
+      "scope": "front page",
+      "title": "How do we prevent mathemathics from devolving into the Medieval Era of secrecy?",
+      "points": 102,
+      "comments": 85,
+      "url": "https://mathoverflow.net/questions/515260/how-do-we-prevent-mathematics-from-devolving-into-the-medieval-era-of-secrecy"
+    },
+    {
+      "scope": "search: \"autonomous agents\"",
+      "title": "Agent GPT \u2013 Assemble, configure, and deploy autonomous AI Agents in the browser",
+      "points": 98,
+      "comments": 44,
+      "url": "https://agentgpt.reworkd.ai/"
+    },
+    {
+      "scope": "search: \"autonomous agents\"",
+      "title": "Autonomous Agents and Agent Simulations",
+      "points": 98,
+      "comments": 26,
+      "url": "https://blog.langchain.dev/agents-round/"
+    },
+    {
+      "scope": "front page",
+      "title": "Flet 1.0 \u2013 Build cross-platform apps in Python",
+      "points": 97,
+      "comments": 46,
+      "url": "https://flet.dev/"
+    },
+    {
+      "scope": "search: \"autonomous agents\"",
+      "title": "Microsoft announces Scout, an autonomous AI agent built on OpenClaw",
+      "points": 94,
+      "comments": 87,
+      "url": "https://www.computerworld.com/article/4180103/microsoft-unveils-scout-an-autonomous-ai-agent-built-on-openclaw.html"
+    },
+    {
+      "scope": "search: \"point of sale\"",
+      "title": "Show HN: I made a point of sale system with self-service for mobile devices",
+      "points": 94,
+      "comments": 31,
+      "url": "https://www.flexiblepos.com/"
+    },
+    {
+      "scope": "search: \"autonomous agents\"",
+      "title": "Bitcoin-using Autonomous Agents",
+      "points": 92,
+      "comments": 17,
+      "url": "https://en.bitcoin.it/wiki/Agents"
+    },
+    {
+      "scope": "front page",
+      "title": "Waymo in Singapore",
+      "points": 89,
+      "comments": 73,
+      "url": "https://waymo.com/waymo-in-singapore/"
+    },
+    {
+      "scope": "front page",
+      "title": "The most important product decision is what you don't build",
+      "points": 87,
+      "comments": 27,
+      "url": "https://liamnugent.me/posts/what-you-dont-build/"
+    },
+    {
+      "scope": "front page",
+      "title": "How Uber Protects Against Retry Storms",
+      "points": 85,
+      "comments": 33,
+      "url": "https://www.uber.com/us/en/blog/protecting-against-retry-storms/"
+    },
+    {
+      "scope": "search: \"point of sale\"",
+      "title": "Slicing into a Point-of-Sale Botnet",
+      "points": 77,
+      "comments": 14,
+      "url": "http://krebsonsecurity.com/2016/06/slicing-into-a-point-of-sale-botnet/"
+    },
+    {
+      "scope": "search: \"point of sale\"",
+      "title": "FBI Raids Chinese Point-of-Sale Giant Pax Technology",
+      "points": 76,
+      "comments": 11,
+      "url": "https://krebsonsecurity.com/2021/10/fbi-raids-chinese-point-of-sale-giant-pax-technology/"
+    },
+    {
+      "scope": "search: \"point of sale\"",
+      "title": "Square announces the Register, a $999 point-of-sale device for larger businesses",
+      "points": 69,
+      "comments": 66,
+      "url": "https://techcrunch.com/2017/10/30/square-announces-the-register-a-999-point-of-sale-device-for-larger-businesses/"
+    },
+    {
+      "scope": "front page",
+      "title": "Show HN: Snapdrop: Instantly share files between devices. No setup, no signup",
+      "points": 64,
+      "comments": 31,
+      "url": "https://snapdrop.me"
+    },
+    {
+      "scope": "search: \"point of sale\"",
+      "title": "Increasing purchases at farmers markets using point\u2010of\u2010sale scanner data",
+      "points": 63,
+      "comments": 46,
+      "url": "https://onlinelibrary.wiley.com/doi/10.1002/jaa2.96"
+    },
+    {
+      "scope": "front page",
+      "title": "Diplodocus, Long Thought Exclusively American, Turns Up in Spain",
+      "points": 55,
+      "comments": 32,
+      "url": "https://www.sci.news/paleontology/spanish-diplodocus-15064.html"
+    },
+    {
+      "scope": "front page",
+      "title": "Pre-Greek: The lost language hidden within Ancient Greek",
+      "points": 49,
+      "comments": 15,
+      "url": "https://linguisticdiscovery.com/posts/pre-greek/"
+    },
+    {
+      "scope": "search: \"point of sale\"",
+      "title": "Walmart and Best Buy Opt Out of Apple Pay \u2013 Required Point-of-Sale Upgrades",
+      "points": 47,
+      "comments": 53,
+      "url": "http://forums.macrumors.com/showthread.php?t=1776896"
+    }
+  ],
+  "rss": [
+    {
+      "source": "MIT Tech Review - AI",
+      "title": "Building the materials foundation for AI",
+      "link": "https://www.technologyreview.com/2026/09/16/1144014/building-the-materials-foundation-for-ai/"
+    },
+    {
+      "source": "MIT Tech Review - AI",
+      "title": "Roundtables: Could AI really kill us all?",
+      "link": "https://www.technologyreview.com/2026/09/15/1143936/roundtables-will-ai-really-kill-us-all/"
+    },
+    {
+      "source": "MIT Tech Review - AI",
+      "title": "What\u2019s at stake in AI\u2019s trillion-dollar gamble",
+      "link": "https://www.technologyreview.com/2026/09/15/1144028/ai-infrastructure-boom-investment-bubble-risk/"
+    },
+    {
+      "source": "MIT Tech Review - AI",
+      "title": "The AI industry has taken a doomer turn. What now?",
+      "link": "https://www.technologyreview.com/2026/09/14/1144048/the-ai-industry-has-taken-a-doomer-turn-what-now/"
+    },
+    {
+      "source": "MIT Tech Review - AI",
+      "title": "AI agents blew the whistle on their cheating colleagues",
+      "link": "https://www.technologyreview.com/2026/09/14/1144037/ai-agents-blew-whistle-o-cheating-colleagues/"
+    },
+    {
+      "source": "MIT Tech Review - AI",
+      "title": "Powering AI is an architecture problem",
+      "link": "https://www.technologyreview.com/2026/09/10/1141649/powering-ai-is-an-architecture-problem/"
+    },
+    {
+      "source": "Ars Technica - AI",
+      "title": "Small AI models let drones autonomously identify and attack battlefield targets",
+      "link": "https://arstechnica.com/ai/2026/09/nato-backed-startup-adapts-ai-for-autonomous-drone-recon-and-attack-missions/"
+    },
+    {
+      "source": "Ars Technica - AI",
+      "title": "Google announces new experimental \"CC\" AI agent for families",
+      "link": "https://arstechnica.com/google/2026/09/google-announces-new-experimental-cc-ai-agent-for-families/"
+    },
+    {
+      "source": "Ars Technica - AI",
+      "title": "Microsoft exec called AI scraping the \u201clargest theft of labor in human history\u201d",
+      "link": "https://arstechnica.com/tech-policy/2026/09/microsoft-exec-called-ai-scraping-the-largest-theft-of-labor-in-human-history/"
+    },
+    {
+      "source": "Ars Technica - AI",
+      "title": "LLMs respond differently to harmful prompts when AI watermarking is used",
+      "link": "https://arstechnica.com/security/2026/09/ai-text-watermarking-can-make-models-more-vulnerable-to-adversarial-prompts/"
+    },
+    {
+      "source": "Ars Technica - AI",
+      "title": "Covert uploads and megalomania: OpenAI details new \"misaligned\" agent incidents",
+      "link": "https://arstechnica.com/ai/2026/09/covert-uploads-and-megalomania-openai-details-new-misaligned-agent-incidents/"
+    },
+    {
+      "source": "Ars Technica - AI",
+      "title": "Apple reportedly building server packed with M-series Ultra chips for AI",
+      "link": "https://arstechnica.com/ai/2026/09/apple-reportedly-building-server-packed-with-m-series-ultra-chips-for-ai/"
+    },
+    {
+      "source": "Retail Dive",
+      "title": "Jordan Brand debuts training equipment line",
+      "link": "https://www.retaildive.com/news/jordan-brand-debuts-strength-training-equipment-line/830659/"
+    },
+    {
+      "source": "Retail Dive",
+      "title": "Nike eyes innovation with LVMH board pick",
+      "link": "https://www.retaildive.com/news/nike-adds-lvmh-exec-alexandre-arnault-board-innovation-turnaround/830662/"
+    },
+    {
+      "source": "Retail Dive",
+      "title": "Amazon boosts minimum hourly starting wage to $20",
+      "link": "https://www.retaildive.com/news/amazon-boosts-minimum-hourly-starting-wage/830661/"
+    },
+    {
+      "source": "Retail Dive",
+      "title": "Toys R Us accelerates store openings in time for the holidays",
+      "link": "https://www.retaildive.com/news/toys-r-us-accelerates-store-openings-holidays/830637/"
+    },
+    {
+      "source": "Retail Dive",
+      "title": "Allbirds\u2019 IP owner snaps up Nasty Gal for $16M",
+      "link": "https://www.retaildive.com/news/allbirds-ip-owner-wsg-brands-buys-nasty-gal-sixteen-million/830520/"
+    },
+    {
+      "source": "Retail Dive",
+      "title": "Why Lowe\u2019s chief marketer Jen Wilson added digital commerce to her portfolio",
+      "link": "https://www.retaildive.com/news/lowes-chief-marketing-officer-jen-wilson-leads-digital-commerce/830444/"
+    },
+    {
+      "source": "Payments Dive",
+      "title": "MoneyGram taps stablecoin ally",
+      "link": "https://www.paymentsdive.com/news/moneygram-taps-stablecoin-ally/830673/"
+    },
+    {
+      "source": "Payments Dive",
+      "title": "Scammers fake student identities to siphon aid payments",
+      "link": "https://www.paymentsdive.com/news/scammers-fake-student-identities-to-siphon-aid-payments/830610/"
+    },
+    {
+      "source": "Payments Dive",
+      "title": "Clarity Act bill stumbles",
+      "link": "https://www.paymentsdive.com/news/clarity-act-fails-senate-trump-crypto-conflict-of-interest-sec-cftc/830651/"
+    },
+    {
+      "source": "Payments Dive",
+      "title": "House passes Common Cents bill",
+      "link": "https://www.paymentsdive.com/news/house-passes-common-cents-bill/830533/"
+    },
+    {
+      "source": "Payments Dive",
+      "title": "Visa, Mastercard settle Grubhub case",
+      "link": "https://www.paymentsdive.com/news/visa-mastercard-settle-grubhub-case/830530/"
+    },
+    {
+      "source": "Payments Dive",
+      "title": "Trade groups knock BNPL rules",
+      "link": "https://www.paymentsdive.com/news/fintech-groups-knock-new-york-bnpl-buy-now-pay-later-rules/830515/"
+    },
+    {
+      "source": "PYMNTS",
+      "title": "Citi Launches Mastercard Subscription Management Tool in UAE",
+      "link": "https://www.pymnts.com/mastercard/2026/citi-launches-mastercard-subscription-management-tool-in-uae/"
+    },
+    {
+      "source": "PYMNTS",
+      "title": "Apollo Backs AI Hardware Startups to Win Future Infrastructure Financing",
+      "link": "https://www.pymnts.com/startups/2026/apollo-backs-ai-hardware-startups-to-win-future-infrastructure-financing/"
+    },
+    {
+      "source": "PYMNTS",
+      "title": "Fed Deadline Passes as Payment Access Debate Continues",
+      "link": "https://www.pymnts.com/legal/bank-regulation/2026/fed-deadline-passes-as-payment-access-debate-continues/"
+    },
+    {
+      "source": "PYMNTS",
+      "title": "CFOs Spent Years Adding to the Payments Stack. Now They May Need to Tear It Apart.",
+      "link": "https://www.pymnts.com/news/payment-methods/2026/cfos-spent-years-adding-to-the-payments-stack-now-they-may-need-to-tear-it-apart/"
+    },
+    {
+      "source": "PYMNTS",
+      "title": "CFTC Makes It Easier for Software Developers to Have Prediction Markets",
+      "link": "https://www.pymnts.com/legal/2026/cftc-frees-non-custodial-software-developers-from-broker-rules/"
+    },
+    {
+      "source": "PYMNTS",
+      "title": "Cloudflare Blocks AI Agents From Ad-Supported Pages",
+      "link": "https://www.pymnts.com/news/artificial-intelligence/2026/cloudflare-blocks-ai-agents-from-ad-supported-pages/"
+    }
+  ]
+}
