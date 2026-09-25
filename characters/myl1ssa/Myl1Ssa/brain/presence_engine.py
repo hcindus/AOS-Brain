@@ -170,6 +170,85 @@ EXPRESSION_LIBRARY: Dict[str, Expression] = {
 
 
 # ──────────────────────────────────────────────────────────────────────
+# RIG — the 3D body + face coordinate maps, and how affect moves them.
+# Loads Myl1Ssa/body/body_coordinates.json + face_coordinates.json,
+# then applies posture deltas (body) and expression deltas (face).
+# ──────────────────────────────────────────────────────────────────────
+
+# Posture → body joint deltas (dx, dy, dz in cm). Keys match Posture.value.
+POSTURE_BODY_DELTAS: Dict[str, Dict[str, Tuple[float, float, float]]] = {
+    "settled": {},   # neutral
+    "lean_in": {     # upper body shifts forward (+Z), slight sink (-Y)
+        "head": (0, -1, 3), "neck": (0, -0.5, 2.5),
+        "L_shoulder": (0, -0.5, 1.5), "R_shoulder": (0, -0.5, 1.5),
+        "chest": (0, -0.5, 2),
+    },
+    "lean_back": {   # upper body shifts back (-Z)
+        "head": (0, 0, -3), "neck": (0, 0, -2.5),
+        "L_shoulder": (0, 0, -1.5), "R_shoulder": (0, 0, -1.5),
+        "chest": (0, 0, -2),
+    },
+    "alert": {       # head raises (+Y), spine straightens
+        "head": (0, 2, 0), "neck": (0, 1.5, 0),
+        "L_shoulder": (0, 1, -0.5), "R_shoulder": (0, 1, -0.5),
+    },
+}
+
+# Expression → face landmark deltas (dx, dy, dz in cm) — scaled by affect energy.
+EXPRESSION_FACE_DELTAS: Dict[str, Dict[str, Tuple[float, float, float]]] = {
+    "attentive": {"L_brow_outer": (0, 0.3, 0), "R_brow_outer": (0, 0.3, 0)},
+    "curious": {"L_brow_arch": (0, 0.6, 0), "R_brow_arch": (0, 0.6, 0),
+                "L_brow_inner": (0, 0.5, 0), "R_brow_inner": (0, 0.5, 0),
+                "upper_lip": (0, 0.2, 0)},
+    "warmth": {"L_mouth_corner": (0, 0.6, 0.2), "R_mouth_corner": (0, 0.6, 0.2),
+               "L_cheek": (0, 0.4, 0.3), "R_cheek": (0, 0.4, 0.3)},
+    "playful": {"L_mouth_corner": (0.5, 0.5, 0.2), "R_mouth_corner": (-0.5, 0.5, 0.2),
+                "L_cheek": (0, 0.5, 0.3), "R_cheek": (0, 0.5, 0.3)},
+    "serious": {"L_brow_inner": (0, -0.5, 0.3), "R_brow_inner": (0, -0.5, 0.3),
+                "L_brow_outer": (0, -0.3, 0), "R_brow_outer": (0, -0.3, 0),
+                "mouth_center": (0, 0, -0.2)},
+    "boundary": {"L_brow_inner": (0, -0.4, 0.2), "R_brow_inner": (0, -0.4, 0.2),
+                 "L_mouth_corner": (0, -0.3, 0), "R_mouth_corner": (0, -0.3, 0),
+                 "mouth_center": (0, 0, -0.3)},
+    "delight": {"L_mouth_corner": (0, 0.8, 0.3), "R_mouth_corner": (0, 0.8, 0.3),
+                "L_cheek": (0, 0.6, 0.4), "R_cheek": (0, 0.6, 0.4),
+                "lower_lip": (0, -0.3, 0.2)},
+    "considering": {"L_brow_inner": (0, 0.4, 0), "R_brow_inner": (0, 0.4, 0),
+                    "mouth_center": (0, 0, -0.1)},
+}
+
+
+def load_coordinates() -> Tuple[Dict, Dict]:
+    """Load Raven's body + face coordinate maps (graceful if missing)."""
+    import os as _os
+    base = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "..", "body")
+    body, face = {}, {}
+    try:
+        with open(_os.path.join(base, "body_coordinates.json")) as fh:
+            body = json.load(fh).get("keypoints", {})
+    except Exception:
+        pass
+    try:
+        with open(_os.path.join(base, "face_coordinates.json")) as fh:
+            face = json.load(fh).get("keypoints", {})
+    except Exception:
+        pass
+    return body, face
+
+
+def _apply_deltas(points: Dict, deltas: Dict[str, Tuple[float, float, float]],
+                  scale: float = 1.0) -> Dict:
+    """Return a copy of points with deltas applied (scaled), preserving {x,y,z} shape."""
+    out = {k: {"x": v["x"], "y": v["y"], "z": v["z"]} for k, v in points.items()}
+    for name, (dx, dy, dz) in deltas.items():
+        if name in out:
+            out[name]["x"] += dx * scale
+            out[name]["y"] += dy * scale
+            out[name]["z"] += dz * scale
+    return out
+
+
+# ──────────────────────────────────────────────────────────────────────
 # Gaze Controller — takeaway #2: camera-in-pupil, *intentional* gaze.
 # Gaze leads; the face follows. She looks *before* she reacts.
 # ──────────────────────────────────────────────────────────────────────
@@ -243,6 +322,8 @@ class PresenceEngine:
         self.current: Optional[Expression] = None
         self._last_frame: Optional[Frame] = None
         self.frames_sent: int = 0
+        # Rig: Raven's 3D body + face coordinate maps (moved by posture/expression)
+        self.body_pts, self.face_pts = load_coordinates()
 
     # -- input: feed Raven's internal state ---------------------------------
     def update(self, ternary: str = "⊙", valence: float = 0.0,
@@ -290,6 +371,29 @@ class PresenceEngine:
         self._last_frame = f
         self.frames_sent += 1
         return f
+
+    # -- rig: move the 3D coordinate maps -----------------------------------
+    def rig_frame(self, expression: Optional[str] = None) -> dict:
+        """Apply posture (body) + expression (face) deltas to the 3D rig."""
+        name = expression or self._select_expression()
+        exp = EXPRESSION_LIBRARY.get(name, EXPRESSION_LIBRARY["attentive"])
+        energy = getattr(self, "_energy", 0.8)
+
+        # body — posture deltas (unscaled; posture is a full-state shift)
+        body_deltas = POSTURE_BODY_DELTAS.get(self.posture.value, {})
+        moved_body = _apply_deltas(self.body_pts, body_deltas, 1.0) if self.body_pts else {}
+
+        # face — expression deltas (scaled by thyroid energy → art-direction)
+        face_deltas = EXPRESSION_FACE_DELTAS.get(name, {})
+        moved_face = _apply_deltas(self.face_pts, face_deltas, energy) if self.face_pts else {}
+
+        return {
+            "expression": name,
+            "posture": self.posture.value,
+            "predictive_lead_ms": exp.predictive_lead_ms,
+            "body": moved_body,
+            "face": moved_face,
+        }
 
     # -- status -------------------------------------------------------------
     def status(self) -> dict:
@@ -358,8 +462,18 @@ def main():
             print(f"\n  {f.expression:12}  lead={f.predictive_lead_ms:>4}ms  "
                   f"posture={f.posture.value:10}  voice={f.voice_affect}")
             print(f"     AUs: {json.dumps(f.action_units, ensure_ascii=False)}")
+    elif args[0] == "rig":
+        name = args[1] if len(args) > 1 else None
+        r = p.rig_frame(name)
+        print(f"💜 {r['expression']} / {r['posture']}  (lead {r['predictive_lead_ms']}ms)")
+        if p.body_pts:
+            moved = {k: r["body"][k] for k in r["body"] if r["body"][k] != p.body_pts.get(k)}
+            print("  body moved:", json.dumps(moved, ensure_ascii=False) if moved else "(none)")
+        if p.face_pts:
+            moved = {k: r["face"][k] for k in r["face"] if r["face"][k] != p.face_pts.get(k)}
+            print("  face moved:", json.dumps(moved, ensure_ascii=False) if moved else "(none)")
     else:
-        print("Usage: presence_engine.py [status | express <name> | demo]")
+        print("Usage: presence_engine.py [status | express <name> | demo | rig [<expression>]]")
 
 
 if __name__ == "__main__":
