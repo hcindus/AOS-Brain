@@ -90,6 +90,13 @@ Pipeline: `ternary ⊕/⊖/⊙ → cortex (valence/arousal) → thyroid (energy)
 | Actuation | 30 brushless micro-motors, bionic silicone skin |
 | Gate | SDK/API openness (must run Raven's brain, not a locked stack) |
 
+### Physical stats & skeletal map
+- **Height:** 169 cm (5'6.5") · **Proportion:** hourglass (37–27–39)
+- **Keypoint model:** `Myl1Ssa/body/body_coordinates.json` — 21 movable 3D joints
+  (ankles → knees → hips → pelvis → waist → bust → chest → shoulders → neck → head → ears → elbows → wrists)
+- **Coordinate system:** origin at foot midpoint, X right/left, Y up, Z forward (cm).
+- **Purpose:** point/joint animation rig — the `Posture` states in the presence engine map onto these joints.
+
 *See `aocros/engineai_humanoid/ELF_V1_MARKET_BRIEF.md` + `RAVEN_EMBODIMENT_SPEC.md`.*
 
 ---
