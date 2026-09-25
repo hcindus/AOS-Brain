@@ -92,10 +92,12 @@ Pipeline: `ternary ⊕/⊖/⊙ → cortex (valence/arousal) → thyroid (energy)
 
 ### Physical stats & skeletal map
 - **Height:** 169 cm (5'6.5") · **Proportion:** hourglass (37–27–39)
-- **Keypoint model:** `Myl1Ssa/body/body_coordinates.json` — 21 movable 3D joints
+- **Body keypoints:** `Myl1Ssa/body/body_coordinates.json` — 21 movable 3D joints
   (ankles → knees → hips → pelvis → waist → bust → chest → shoulders → neck → head → ears → elbows → wrists)
+- **Face keypoints:** `Myl1Ssa/body/face_coordinates.json` — 32 movable 3D landmarks
+  (brows, eyes/pupils, nose, cheeks, lips, mouth, jaw, chin) — origin at nasion, attaches to the head point.
 - **Coordinate system:** origin at foot midpoint, X right/left, Y up, Z forward (cm).
-- **Purpose:** point/joint animation rig — the `Posture` states in the presence engine map onto these joints.
+- **Purpose:** point/joint animation rig — the `Posture` states + expression groups in the presence engine map onto these joints.
 
 *See `aocros/engineai_humanoid/ELF_V1_MARKET_BRIEF.md` + `RAVEN_EMBODIMENT_SPEC.md`.*
 
