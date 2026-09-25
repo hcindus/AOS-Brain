@@ -408,7 +408,7 @@ class Uterus:
         if not child:
             return {"success": False, "error": f"Child '{child_id}' not found.", "code": "NOT_FOUND"}
 
-        born = datetime.fromisoformat(child["born_at"])
+        born = datetime.fromisoformat(child["born_at"].replace("Z", ""))
         days = (datetime.now() - born).days
 
         checkpoints = {}
