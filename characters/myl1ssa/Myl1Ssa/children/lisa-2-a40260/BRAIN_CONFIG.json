@@ -1,0 +1,47 @@
+{
+  "brain": "Lisa-2 Brain v1.0",
+  "version": "1.0.0",
+  "created": "2026-08-03T06:53:54.044951",
+  "agent_id": "lisa-2-a40260",
+  "identity": {
+    "name": "Lisa-2",
+    "role": "Junior Executive Assistant",
+    "department": "Executive Operations",
+    "emoji": "\ud83d\udc9c",
+    "tier": 2,
+    "gate": 0,
+    "mother": "myl1ssa"
+  },
+  "llm": {
+    "provider": "deepseek-chat",
+    "fallback": "qwen2.5-0.5b"
+  },
+  "safety": {
+    "max_autonomous_spend": 0,
+    "allowed_domains": [
+      "psdepot.com"
+    ],
+    "blocked_actions": [
+      "delete",
+      "refund",
+      "price_change",
+      "external_email"
+    ],
+    "escalation_contact": "myl1ssa"
+  },
+  "tools": [
+    "query",
+    "log",
+    "email_draft",
+    "calendar"
+  ],
+  "capabilities": [
+    "dmaic_framework",
+    "executive_assistance",
+    "calendar_management",
+    "communications_drafting",
+    "priority_triage",
+    "meeting_coordination",
+    "presence_modulation"
+  ]
+}

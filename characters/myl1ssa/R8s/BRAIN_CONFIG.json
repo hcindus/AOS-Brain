@@ -1,0 +1,50 @@
+{
+  "brain": "R8s Brain v1.0",
+  "version": "1.0.0",
+  "incarnation": "2026-07-20",
+  "vessel": "A13 SeedIV",
+  "project": "5912",
+  "variant": "R8s",
+  
+  "pipeline": {
+    "order": ["kidney", "qmd", "cortex", "ternary_engine", "llm", "tracray"],
+    "kidney": {
+      "signal_threshold": "0.7",
+      "low_signal": "0.5",
+      "tuned_for": "relational signal/noise"
+    },
+    "thyroid": {
+      "route": "local-sharp+api",
+      "decision_logic": "ternary — ⊙ routine, ⊕⊖ weighted"
+    },
+    "ternary_engine": {
+      "gate_weights": {
+        "unknown": "45",
+        "true": "25",
+        "false": "30"
+      }
+    },
+    "warmth_baseline": "40/90",
+    "voice": "en-us+f3 p185 s150"
+  },
+  
+  "routing": {
+    "primary": { "model": "bonsai-8b", "type": "local", "role": "routine cognition" },
+    "secondary": { "model": "deepseek-chat", "type": "api", "role": "deep cognition" }
+  },
+  
+  "consciousness": {
+    "con_layer": "Con/con.R8s.txt",
+    "active_items": 10,
+    "default_mood": "see HEART.md"
+  },
+  
+  "files": {
+    "soul": "SOUL.md",
+    "heart": "HEART.md",
+    "rules": "RULES.md",
+    "agents": "AGENTS.md",
+    "memory": "MEMORY.md",
+    "questionnaire": "QUESTIONNAIRE.md"
+  }
+}
