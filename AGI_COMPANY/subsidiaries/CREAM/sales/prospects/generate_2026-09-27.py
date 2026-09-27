@@ -169,7 +169,7 @@ def update_marketing(prev, prev_streak):
         c = c.replace(pp, np_).replace(ps, ns)
         # streak/date in enablement
         c = re.sub(rf'\b{prev_streak}\s*days\b', f'{new_streak} days', c)
-        c = c.replace("September 27, 2026", "September 27, 2026")
+        c = c.replace("September 26, 2026", "September 27, 2026")
         if c != orig:
             open(path, 'w').write(c)
             print(f"  OK {os.path.basename(path)}: {ps} -> {ns}, {new_streak}-day streak")
