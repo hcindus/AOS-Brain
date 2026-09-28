@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Daily Queue Email Report - September 28, 2026 (live data @ 06:00 UTC)."""
+"""Daily Queue Email Report - September 28, 2026 (live data @ 11:38 UTC)."""
 import smtplib, ssl, os
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -22,26 +22,28 @@ PASSWORD = os.getenv("HOSTINGER_SMTP_PASS", "")
 RECIPIENT = "Antonio.hudnall@gmail.com"
 
 now = datetime.utcnow()
-subject = f"📊 Daily Queue Report — {now.strftime('%B %d, %Y')} (06:00 UTC)"
+subject = f"📊 Daily Queue Report — {now.strftime('%B %d, %Y')} (11:38 UTC)"
 
 body = f"""Good morning, Captain!
 
-Daily queue & system status report for {now.strftime('%A, %B %d, %Y')} (06:00 UTC refresh).
+Daily queue & system status report for {now.strftime('%A, %B %d, %Y')} (11:38 UTC refresh).
 
 Generated: {now.strftime('%Y-%m-%d %H:%M UTC')}
 
 ════════════════════════════════════════════
   SYSTEM HEALTH
 ════════════════════════════════════════════
-• Uptime:   131 days, 21h08m
-• CPU Load: 1.35 / 1.20 / 1.05  🟢 healthy, settled
-• Memory:   9.6 Gi used / 15 Gi total  🟡 up from 8.9 Gi (09-27)
-• Available: 6.0 Gi
+• Uptime:   132 days, 2h46m
+• CPU Load: 0.96 / 0.93 / 0.92  🟢 healthy, settled
+• Memory:   7.7 Gi used / 15 Gi total  🟢 down from 8.9 Gi (09-27)
+• Available: 7.9 Gi
 • Swap:     1.5 Gi / 29 Gi
 • Disk:     140G / 193G (73%)  🟢 stable
 
-Core services: ✅ aos-brain-v4, aos-bhsi-v4, aos-mission-control, ollama
-all ACTIVE. ⚠️ depotchaos still "activating" (TENTH consecutive day).
+Core services: ✅ aos-brain-v4, aos-bhsi-v4, aos-mission-control, aos-vision,
+depotchaos-api, ollama, ollama-bonsai-bridge — all ACTIVE.
+⚠️ depotchaos.service still "activating" (auto-restart loop) — ELEVENTH
+consecutive day.
 
 ⚠️ 4 services in FAILED state — aos-ternary, certbot, dailyaidecheck,
 and minecraft. society-agents.service remains disabled/inactive.
@@ -53,11 +55,10 @@ and minecraft. society-agents.service remains disabled/inactive.
     - campaign_id: capton_hospitality_202607  (207)
     - sent_at ALL NULL  → 0 sent all-time  🔴 STILL STALLED
 
-• PENDING_TASKS.json:  3,450 tasks (unchanged from 3,450 on 09-27)
+• PENDING_TASKS.json:  3,500 tasks (up 50 from 3,450 on 09-27)
     - source: CA_SOS_Scraper  (100% — synthetic/mock leads, do not send)
     - task_type: outreach_email (100%)
-    - lastUpdated: 2026-09-27 11:15 UTC  ⏳ not yet refreshed today
-      (refresher runs ~11:15 UTC — next refresh expected later today)
+    - lastUpdated: 2026-09-28 11:15 UTC  ✅ REFRESHED today
 
 • Patricia's Factory (data/factory/dark_factory.db):
     - production_orders: 48 — ALL completed ✅, 0 active/queued
@@ -83,24 +84,25 @@ and minecraft. society-agents.service remains disabled/inactive.
      Confirm DKIM/SPF/DMARC for myl0nr0s.cloud.
 
 🟡 IMPORTANT
-  2. depotchaos stuck in "activating" for a TENTH day — worth a
-     `systemctl restart depotchaos` (or check its journal) to see if it
-     recovers to ACTIVE.
+  2. depotchaos stuck in "activating" (auto-restart loop) for an ELEVENTH
+     day — run `systemctl reset-failed depotchaos && systemctl restart
+     depotchaos`, or inspect `journalctl -u depotchaos -n 100` for the
+     underlying crash cause.
   3. Four services still FAILED — aos-ternary, certbot, dailyaidecheck,
      and minecraft. A restart (or explicit decision to leave disabled)
      would confirm they come back clean.
 
 🟢 NOTE
-  4. PENDING_TASKS refresher not yet run today (lastUpdated 09-27 11:15)
-     — expected at this hour; next refresh due ~11:15 UTC today.
-  5. Memory ticked up 8.9 → 9.6 Gi but well within headroom (6.0 Gi
-     available). Load settled (~1.3). No resource pressure. ✅
+  4. PENDING_TASKS refresher RAN — lastUpdated 09-28 11:15 UTC and count
+     ticked up 3,450 → 3,500. Scraper/refresher remains on schedule. ✅
+  5. Memory ticked DOWN 8.9 → 7.7 Gi (7.9 Gi available); load settled
+     (~0.96). No resource pressure. ✅
   6. Factory clear — all 48 production orders completed, nothing queued.
   7. Disk stable at 73% — no OOM/disk/CPU risk.
 
 All core systems operational. Primary concern remains the stalled
 207-email queue (sender-address rejection). Secondary: depotchaos
-"activating" for a tenth day and the four failed services. Standing by.
+"activating" for an eleventh day and the four failed services. Standing by.
 
 — Miles 🚀
 Autonomous Operations Engine
