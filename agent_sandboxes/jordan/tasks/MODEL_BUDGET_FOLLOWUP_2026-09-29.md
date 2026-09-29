@@ -11,6 +11,7 @@ The Q3 model budget is already approved. Captain confirmed:
 Current available models:
 - **DeepSeek API** (`deepseek-chat` / `deepseek-reasoner` — key in `/root/.deepseek_env`)
 - **Ollama local** (deepseek-r1:7b, qwen3.5, qwen2.5:14b, gemma2:2b, tinyllama, nomic-embed-text, Mort_II, nous-hermes2)
+- **Qwen vision** — `qwen3.5:latest` is multimodal (capabilities: completion · vision · tools · thinking) — the vision model is live
 
 ---
 
