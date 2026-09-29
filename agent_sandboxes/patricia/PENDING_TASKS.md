@@ -9,7 +9,7 @@
 | Task | Status | Age | Owner |
 |------|--------|-----|-------|
 | DNS Records (psdepot.com) | ⏳ GATHERING | 28 days | Captain |
-| Brain v4 Port 8000 | ⏳ INVESTIGATING | Ongoing | Forge |
+| Brain v4 Port 8000 | ✅ DEPRECATED | — | Miles |
 | ACM API | ⏳ WAITING | 50 days | Deprioritized |
 
 ## 🟡 HIGH
