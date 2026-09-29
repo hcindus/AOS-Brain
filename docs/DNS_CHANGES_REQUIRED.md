@@ -42,4 +42,4 @@
 
 ---
 
-## TOTAL: 10 records (4 critical SendGrid + 6 product subdomains)
+## TOTAL: 6 records (product subdomains only — SendGrid account EXPIRED 2026-09-29)
