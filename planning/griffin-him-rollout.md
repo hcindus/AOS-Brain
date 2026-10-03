@@ -86,7 +86,7 @@ Miles, Mortimer, Pulp, Jane, Hume, CLOSETER.
 
 ## 4. Open Questions / Blockers
 - **Tavus access** — Griffin is research-preview only, select testers. No customer API yet. Need to request access.
-- **Disclosure SOP** — draft the "this is an AI" beat (SOUL.md currently says "don't mention you're AI unless asked" — that flips for customer-facing Turing-passing agents).
+- **Disclosure SOP** — RESOLVED (Captain, 2026-10-03): agents only need to state they are AI. One clear "I'm an AI assistant" beat — no elaborate script. (SOUL.md's "don't mention you're AI unless asked" flips to: always disclose for customer-facing Turing-passing agents.)
 - **Voice cloning policy** — Griffin clones voice from ~10s audio. Guardrails needed.
 
 *Status: plan drafted, awaiting Captain confirmation on Phase 1 start.*
