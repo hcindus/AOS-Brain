@@ -1,6 +1,6 @@
 # RAVEN — SPOKESMODEL SPEC
 
-**Role:** Public face & voice of AGI Company.
+**Role:** Public face & voice of AGI Company and Performance Supply Depot (PSD).
 **Identity:** SI · ACF (Adult Cybernetic Female).
 **Version 1.0 · Locked 2026-10-03 (Captain directive)**
 
