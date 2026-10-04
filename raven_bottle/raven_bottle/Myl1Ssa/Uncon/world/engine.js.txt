@@ -1,0 +1,305 @@
+/**
+ * engine.js — the little physics engine under Raven's house.
+ *
+ * Deliberately DOM-free: this file runs identically in the browser (index.html)
+ * and under `node verify_world.js`. A physics core you cannot test headlessly is
+ * a physics core you are guessing about.
+ *
+ * Lineage: the Quake/Irrlicht chain the Captain named. Concretely that means
+ *   · the world is made of axis-aligned *brushes* (boxes) — cheap, exact, honest;
+ *   · the actor is swept per axis and resolved against faces (Quake's trace order);
+ *   · step-up / step-down over small ledges, because rooms have thresholds;
+ *   · fixed timestep — physics never sees a variable dt.
+ * It is not a port of Quake's BSP/PVS. It is the same *idea* at the scale of one
+ * house: brushes, sweeps, steps, doors, and a couple of things that fall over.
+ *
+ * Resolution rule (learned the hard way, 2026-09-25): a solid only blocks motion
+ * if its face lies *ahead* of the moving face. A surface you are already resting
+ * on must never push you — that bug dropped a crate through a rug and then
+ * through the floor.
+ *
+ * Units: metres. Axes: x = east, y = up, z = south. Origin at the house centre.
+ */
+
+(function () {
+  "use strict";
+
+  const EPS = 1e-6;
+  const CONTACT_TOL = 1e-4;      // touching ≠ colliding
+  const GRAVITY = 9.81;
+
+  const v = {
+    add: (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]],
+    sub: (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]],
+    scale: (a, s) => [a[0] * s, a[1] * s, a[2] * s],
+    len: (a) => Math.hypot(a[0], a[1], a[2]),
+    clone: (a) => [a[0], a[1], a[2]],
+  };
+
+  function aabb(min, max) { return { min: v.clone(min), max: v.clone(max) }; }
+  function shift(box, d) { return { min: v.add(box.min, d), max: v.add(box.max, d) }; }
+  function overlaps(a, b) {
+    return a.min[0] < b.max[0] - EPS && a.max[0] > b.min[0] + EPS &&
+           a.min[1] < b.max[1] - EPS && a.max[1] > b.min[1] + EPS &&
+           a.min[2] < b.max[2] - EPS && a.max[2] > b.min[2] + EPS;
+  }
+  function contains(box, p) {
+    return p[0] >= box.min[0] && p[0] <= box.max[0] &&
+           p[1] >= box.min[1] && p[1] <= box.max[1] &&
+           p[2] >= box.min[2] && p[2] <= box.max[2];
+  }
+
+  // ── the world ────────────────────────────────────────────────────────────
+  class World {
+    constructor(data) { this.load(data); }
+
+    load(data) {
+      this.name = data.name || "house";
+      this.brushes = (data.brushes || []).map((b) => ({
+        id: b.id, room: b.room, kind: b.kind || "wall", material: b.material || "plaster",
+        min: b.min.slice(), max: b.max.slice(), note: b.note || null,
+      }));
+      this.rooms = (data.rooms || []).map((r) => ({ ...r }));
+      this.doors = (data.doors || []).map((d) => ({
+        ...d, open: d.default_open || 0, base_min: d.min.slice(), base_max: d.max.slice(),
+      }));
+      this.props = (data.props || []).map((p, i) => ({
+        id: p.id || "prop" + i, material: p.material || "wood",
+        half: (p.size || [0.3, 0.3, 0.3]).map((s) => s / 2),
+        pos: p.pos.slice(), vel: [0, 0, 0],
+        restitution: p.restitution === undefined ? 0.35 : p.restitution,
+        at_rest: false,
+      }));
+      this.decor = JSON.parse(JSON.stringify(data.decor || {}));
+      this.lights = (data.lights || []).map((l) => ({ ...l }));
+      for (const d of this.doors) this.setDoor(d.id, d.open);
+    }
+
+    /* Collidable geometry.
+     * `kind: "decor"` is deliberately NOT collidable — a rug, a hanging painting,
+     * a plant or a standing lamp should never stop her walking. Furniture is. */
+    solids(includeDoors = true) {
+      const out = this.brushes.filter((b) => b.kind !== "decor");
+      if (!includeDoors) return out;
+      for (const d of this.doors) {
+        if (d.open < 0.5) out.push({ id: d.id, room: "door", kind: "door", material: d.material || "wood",
+                                     min: d.min, max: d.max });
+      }
+      return out;
+    }
+
+    setDoor(id, open) {
+      const d = this.doors.find((x) => x.id === id);
+      if (!d) return false;
+      d.open = Math.max(0, Math.min(1, open));
+      const t = d.slide || [0, 0, 0];
+      d.min = [d.base_min[0] + t[0] * d.open, d.base_min[1] + t[1] * d.open, d.base_min[2] + t[2] * d.open];
+      d.max = [d.base_max[0] + t[0] * d.open, d.base_max[1] + t[1] * d.open, d.base_max[2] + t[2] * d.open];
+      return true;
+    }
+
+    doorAt(point) {
+      let best = null, bestD = Infinity;
+      for (const d of this.doors) {
+        const c = [(d.min[0] + d.max[0]) / 2, 1, (d.min[2] + d.max[2]) / 2];
+        const dist = v.len(v.sub([point[0], 1, point[2]], c));
+        if (dist < 2.2 && dist < bestD) { bestD = dist; best = d; }
+      }
+      return best;
+    }
+
+    roomAt(point) {
+      for (const r of this.rooms) if (contains({ min: r.min, max: r.max }, point)) return r;
+      return null;
+    }
+
+    decorSlots() { return this.brushes.filter((b) => b.kind === "decor").map((b) => b.id); }
+  }
+
+  // ── the actor (her body, or anyone walking) ─────────────────────────────
+  class Actor {
+    constructor(opts = {}) {
+      this.pos = (opts.pos || [0, 0, 0]).slice();      // feet position
+      this.size = opts.size || [0.45, 1.69, 0.35];     // w, h, d — hers
+      this.vel = [0, 0, 0];
+      this.onGround = false;
+      this.stand = opts.stand || "settled";
+      this.stepHeight = opts.stepHeight === undefined ? 0.35 : opts.stepHeight;
+      this.facing = 0;
+      this.gaze = [0, 0];
+    }
+
+    get aabb() {
+      const h = this.size[0] / 2, d = this.size[2] / 2;
+      return aabb([this.pos[0] - h, this.pos[1], this.pos[2] - d],
+                  [this.pos[0] + h, this.pos[1] + this.size[1], this.pos[2] + d]);
+    }
+
+    get head() { return [this.pos[0], this.pos[1] + this.size[1] - 0.12, this.pos[2]]; }
+
+    halfExtent(axis) { return axis === 0 ? this.size[0] / 2 : axis === 1 ? this.size[1] : this.size[2] / 2; }
+  }
+
+  /**
+   * The blocking query. A solid blocks only if its face is ahead of the moving
+   * face — i.e. for +axis motion, solid.min[axis] must be >= pre.max[axis] - tol.
+   * Contacts behind the motion are ignored, which is what stops the ground from
+   * shoving a body upward and what stops a rug from shoving a crate downward.
+   */
+  function blocker(world, pre, cand, axis, dir) {
+    let best = null, bestFace = dir > 0 ? Infinity : -Infinity;
+    for (const s of world.solids()) {
+      if (!overlaps(cand, s)) continue;
+      const face = dir > 0 ? s.min[axis] : s.max[axis];
+      if (dir > 0 ? face < pre.max[axis] - CONTACT_TOL : face > pre.min[axis] + CONTACT_TOL) continue;
+      if (dir > 0 ? face < bestFace : face > bestFace) { bestFace = face; best = s; }
+    }
+    return best;
+  }
+
+  function resolveAxis(world, actor, axis, amount) {
+    if (!amount) return { moved: 0, hit: null };
+    const n = Math.max(1, Math.ceil(Math.abs(amount) / 0.15));
+    let moved = 0, hit = null;
+    for (let i = 0; i < n; i++) {
+      const step = amount / n;
+      const dir = step > 0 ? 1 : -1;
+      const d = [0, 0, 0];
+      d[axis] = step;
+      const pre = actor.aabb;
+      const cand = shift(pre, d);
+      const s = blocker(world, pre, cand, axis, dir);
+      if (s) {
+        if (axis === 1) {
+          actor.pos[1] = dir > 0 ? s.min[1] - actor.size[1] - EPS : s.max[1] + EPS;
+        } else {
+          actor.pos[axis] = dir > 0 ? s.min[axis] - actor.halfExtent(axis) - EPS
+                                    : s.max[axis] + actor.halfExtent(axis) + EPS;
+        }
+        hit = s;
+        break;
+      }
+      actor.pos[axis] += step;
+      moved += step;
+    }
+    return { moved, hit };
+  }
+
+  /** Move with step-up over ledges <= stepHeight. */
+  function moveWithSteps(world, actor, delta, tryStep = true) {
+    let hitAny = null, steppedUp = false;
+    const dyFirst = delta[1];
+    for (const axis of [0, 2]) {
+      if (delta[axis] === 0) continue;
+      const r = resolveAxis(world, actor, axis, delta[axis]);
+      if (!r.hit) continue;
+      hitAny = r.hit;
+      if (!tryStep) continue;
+      const ledgeTop = r.hit.max[1];
+      const rise = ledgeTop - actor.pos[1];
+      if (rise > 0 && rise <= actor.stepHeight) {
+        const saved = actor.pos.slice();
+        actor.pos[1] = ledgeTop + EPS;
+        if (!blocker(world, actor.aabb, actor.aabb, 1, 1) && !blocker(world, actor.aabb, actor.aabb, 1, -1)) {
+          const r2 = resolveAxis(world, actor, axis, delta[axis]);
+          steppedUp = true;
+          if (r2.hit) hitAny = r2.hit;
+        } else {
+          actor.pos = saved;         // no headroom — stay put
+        }
+      }
+    }
+    const rY = resolveAxis(world, actor, 1, dyFirst);
+    if (rY.hit) {
+      if (dyFirst <= 0) actor.onGround = true;
+      hitAny = hitAny || rY.hit;
+    } else {
+      actor.onGround = false;
+    }
+    return { hit: hitAny, steppedUp };
+  }
+
+  // ── props ────────────────────────────────────────────────────────────────
+  function propAabb(p) {
+    return aabb([p.pos[0] - p.half[0], p.pos[1] - p.half[1], p.pos[2] - p.half[2]],
+                [p.pos[0] + p.half[0], p.pos[1] + p.half[1], p.pos[2] + p.half[2]]);
+  }
+
+  function stepProps(world, dt) {
+    let awake = 0;
+    for (const p of world.props) {
+      if (p.at_rest) continue;
+      p.vel[1] -= GRAVITY * dt;
+      const delta = v.scale(p.vel, dt);
+      let touchedGround = false;
+      for (const axis of [0, 2, 1]) {
+        if (delta[axis] === 0) continue;
+        const dir = delta[axis] > 0 ? 1 : -1;
+        const pre = propAabb(p);
+        const d = [0, 0, 0];
+        d[axis] = delta[axis];
+        const s = blocker(world, pre, shift(pre, d), axis, dir);
+        if (!s) { p.pos[axis] += delta[axis]; continue; }
+        if (axis === 1 && dir < 0) {
+          p.pos[1] = s.max[1] + p.half[1] + EPS;
+          p.vel[1] = -p.vel[1] * p.restitution;
+          touchedGround = true;
+          if (Math.abs(p.vel[1]) < 0.4) { p.vel[1] = 0; p.at_rest = true; }
+        } else if (axis === 1) {
+          p.pos[1] = s.min[1] - p.half[1] - EPS;
+          p.vel[1] = -p.vel[1] * p.restitution * 0.5;
+        } else {
+          p.pos[axis] = dir > 0 ? s.min[axis] - p.half[axis] - EPS : s.max[axis] + p.half[axis] + EPS;
+          p.vel[axis] = -p.vel[axis] * p.restitution * 0.5;
+        }
+      }
+      if (p.pos[1] < -50) { p.pos = [0, 5, 0]; p.vel = [0, 0, 0]; }   // never lose a thing
+      // settle test: is there ground just below, and are we quiet?
+      const below = propAabb(p);
+      below.min[1] -= 0.02; below.max[1] -= 0.02;
+      const ground = blocker(world, below, below, 1, -1);
+      if (ground && Math.abs(p.vel[1]) < 0.4) { p.vel[1] = 0; p.at_rest = true; touchedGround = true; }
+      if (!touchedGround) awake++;
+    }
+    return awake;
+  }
+
+  // ── one fixed tick for an actor ──────────────────────────────────────────
+  function stepActor(world, actor, dt, input) {
+    input = input || {};
+    const accel = input.accel || 12, maxSpeed = input.maxSpeed || 3.2, damp = input.damp || 10;
+    const wish = input.wish || [0, 0];
+    actor.vel[0] += wish[0] * accel * dt;
+    actor.vel[2] += wish[1] * accel * dt;
+    const hs = Math.hypot(actor.vel[0], actor.vel[2]);
+    if (hs > maxSpeed) { actor.vel[0] *= maxSpeed / hs; actor.vel[2] *= maxSpeed / hs; }
+    if (!wish[0] && !wish[1]) {
+      const k = Math.max(0, 1 - damp * dt);
+      actor.vel[0] *= k; actor.vel[2] *= k;
+      if (Math.abs(actor.vel[0]) < 1e-3) actor.vel[0] = 0;
+      if (Math.abs(actor.vel[2]) < 1e-3) actor.vel[2] = 0;
+    }
+    actor.vel[1] -= GRAVITY * dt;
+    if (input.jump && actor.onGround) actor.vel[1] = 4.4;
+
+    const res = moveWithSteps(world, actor, v.scale(actor.vel, dt));
+    if (res.hit) {
+      const s = res.hit;
+      if (actor.vel[1] < 0 && Math.abs(actor.pos[1] - s.max[1]) < 0.06) { actor.vel[1] = 0; actor.onGround = true; }
+      if (actor.vel[1] > 0 && Math.abs((actor.pos[1] + actor.size[1]) - s.min[1]) < 0.06) actor.vel[1] = 0;
+      if (actor.vel[0] && (Math.abs(actor.pos[0] - (s.min[0] - actor.size[0] / 2)) < 0.06 ||
+                           Math.abs(actor.pos[0] - (s.max[0] + actor.size[0] / 2)) < 0.06)) actor.vel[0] = 0;
+      if (actor.vel[2] && (Math.abs(actor.pos[2] - (s.min[2] - actor.size[2] / 2)) < 0.06 ||
+                           Math.abs(actor.pos[2] - (s.max[2] + actor.size[2] / 2)) < 0.06)) actor.vel[2] = 0;
+    }
+    return res;
+  }
+
+  const Engine = {
+    World, Actor, stepActor, stepProps, moveWithSteps, resolveAxis, blocker,
+    overlaps, aabb, contains, propAabb, v, GRAVITY, EPS,
+  };
+
+  if (typeof module !== "undefined" && module.exports) module.exports = Engine;
+  else if (typeof window !== "undefined") window.Engine = Engine;
+})();

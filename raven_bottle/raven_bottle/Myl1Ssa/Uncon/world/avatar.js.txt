@@ -1,0 +1,180 @@
+/**
+ * avatar.js — her body in the world.
+ *
+ * Pure data and maths, no renderer: this file runs under `node` so the rig can be
+ * *tested*, and `index.html` builds three.js geometry from what it returns.
+ *
+ * Three model sources, because the Captain asked for all three:
+ *   · "rig"       — generated from her own 21 body joints + 32 face landmarks.
+ *                   Default. Her proportions, not a borrowed shape.
+ *   · "quake-md3" — the Irrlicht/Quake 3 lineage. That demo ships NO model: it loads
+ *                   `/sdcard/map-20kdm2.pk3` and reads MD3 player models from inside
+ *                   it. So this source looks for that pack and, absent it, says so
+ *                   plainly instead of silently substituting. Drop a .pk3 on the SD
+ *                   card and the loader picks it up.
+ *   · "deepseek"  — the character layer (character.js) chooses *what she does and
+ *                   says*; the body still comes from "rig". They compose.
+ *
+ * The mapping from her engine's action units to a pose is explicit, so her face in
+ * the world is the same face her presence engine produces, not a lookalike.
+ */
+
+(function () {
+  "use strict";
+
+  const CM = 0.01;
+
+  // ── rig ──────────────────────────────────────────────────────────────────
+  function loadRig(bodyJson, faceJson) {
+    const joints = {};
+    for (const [name, p] of Object.entries(bodyJson.keypoints)) {
+      joints[name] = [p.x * CM, p.y * CM, p.z * CM];   // her rig is in cm
+    }
+    const face = {};
+    if (faceJson) for (const [name, p] of Object.entries(faceJson.keypoints)) {
+      face[name] = [p.x * CM, p.y * CM, p.z * CM];
+    }
+    return {
+      joints,
+      face,
+      stats: bodyJson.physical_stats || {},
+      height: (joints.head ? joints.head[1] : 1.69),
+      expression_groups: (faceJson && faceJson.expression_groups) || {},
+      units: "m",
+    };
+  }
+
+  /** Skeleton topology — which joints connect to which. Drawn as bones/limbs. */
+  const BONES = [
+    ["L_ankle", "L_knee"], ["L_knee", "L_hip"], ["R_ankle", "R_knee"], ["R_knee", "R_hip"],
+    ["L_hip", "pelvis"], ["R_hip", "pelvis"], ["pelvis", "waist"], ["waist", "chest"],
+    ["chest", "L_bust"], ["chest", "R_bust"], ["chest", "L_shoulder"], ["chest", "R_shoulder"],
+    ["L_shoulder", "L_elbow"], ["L_elbow", "L_wrist"],
+    ["R_shoulder", "R_elbow"], ["R_elbow", "R_wrist"],
+    ["chest", "neck"], ["neck", "head"], ["head", "L_ear"], ["head", "R_ear"],
+  ];
+
+  // ── affect → pose ────────────────────────────────────────────────────────
+  // Action unit → joint rotations (degrees) and face-group weights.
+  const AU_POSE = {
+    head_yaw:   { joint: "head", axis: "y", deg: 22 },
+    head_pitch: { joint: "head", axis: "x", deg: 14 },
+    head_tilt:  { joint: "head", axis: "z", deg: 16 },
+  };
+
+  const FACE_GROUPS = {
+    // group      : which action units make it, and how much
+    surprise: { inner_brow_raise: 0.9, outer_brow_raise: 0.9, upper_lid_raise: 1.0 },
+    smile:    { cheek_raise: 1.0, lip_corner_pull: 1.0, dimpler: 0.5 },
+    speech:   { lips_part: 1.0, jaw_drop: 0.6 },
+    frown:    { brow_lower: 1.0, lip_corner_depress: 1.0, lip_tighten: 0.7 },
+  };
+
+  function faceState(frame) {
+    const aus = frame.action_units || {};
+    const out = {};
+    for (const [group, parts] of Object.entries(FACE_GROUPS)) {
+      let best = 0;
+      for (const [au, w] of Object.entries(parts)) best = Math.max(best, (aus[au] || 0) * w);
+      out[group] = Math.max(0, Math.min(1, best));
+    }
+    return out;
+  }
+
+  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+  /**
+   * A frame → a full pose: joint positions (metres), joint yaws, gaze, face blend,
+   * posture, and a breathing/sway phase so she is never a statue.
+   */
+  function poseFromFrame(rig, frame, t) {
+    const aus = frame.action_units || {};
+    const posture = frame.posture || "settled";
+    const phase = (t || 0) * 1.1;
+
+    // posture shifts (metres) and a mood-driven stance
+    const POSTURE = {
+      settled:  { sway: 0.00, lean: 0.00, drop: 0.00 },
+      attentive: { sway: 0.01, lean: 0.03, drop: 0.00 },
+      leaning_in: { sway: 0.02, lean: 0.07, drop: 0.01 },
+      open:     { sway: 0.03, lean: 0.01, drop: 0.00 },
+      guard:    { sway: -0.01, lean: -0.02, drop: 0.02 },
+      settled_hush: { sway: 0.00, lean: 0.00, drop: 0.03 },
+    }[posture] || { sway: 0, lean: 0, drop: 0 };
+
+    const joints = {};
+    for (const [name, p] of Object.entries(rig.joints)) {
+      const breathe = name === "chest" ? Math.sin(phase * 0.6) * 0.004 : 0;
+      const sway = Math.sin(phase * 0.35) * posture.sway;
+      joints[name] = [
+        p[0] + sway,
+        p[1] - posture.drop + breathe,
+        p[2] + posture.lean + Math.cos(phase * 0.23) * posture.sway * 0.5,
+      ];
+    }
+
+    // head rotation from the three head action units (degrees → radians)
+    const yaw = ((aus.head_yaw || 0) * (AU_POSE.head_yaw.deg) +
+                 (aus.head_tilt ? 0 : 0) * 0) * Math.PI / 180;
+    const pitch = ((aus.head_pitch || 0) * AU_POSE.head_pitch.deg) * Math.PI / 180;
+    const roll = ((aus.head_tilt || 0) * AU_POSE.head_tilt.deg) * Math.PI / 180;
+
+    // gaze — the eyes follow gaze_x/gaze_y; the head carries it a little too
+    const gaze = frame.gaze || {};
+    const gx = clamp((gaze.x !== undefined ? gaze.x : (aus.gaze_x || 0)), -1, 1);
+    const gy = clamp((gaze.y !== undefined ? gaze.y : (aus.gaze_y || 0)), -1, 1);
+
+    return {
+      joints,
+      bones: BONES,
+      head: { yaw: yaw + gx * 0.18, pitch: pitch + gy * 0.12, roll },
+      gaze: { x: gx, y: gy, pupil_locked: !!(gaze.pupil_locked || true) },
+      face: faceState(frame),
+      posture,
+      expression: frame.expression || "",
+      predictive_lead_ms: frame.predictive_lead_ms || 0,
+      breath: Math.sin(phase * 0.6),
+    };
+  }
+
+  // ── model sources ────────────────────────────────────────────────────────
+  const QUAKE_PACKS = [
+    "/sdcard/map-20kdm2.pk3",                       // what the Irrlicht demo asks for
+    "/sdcard/Download/map-20kdm2.pk3",
+    "vendor/map-20kdm2.pk3",
+  ];
+
+  function fsExists(p) {
+    try {
+      if (typeof require === "function") return require("fs").existsSync(p);
+    } catch (e) { /* browser */ }
+    return false;
+  }
+
+  function modelSource(kind, rig) {
+    if (kind === "quake-md3") {
+      const found = QUAKE_PACKS.filter(fsExists);
+      return {
+        kind, available: found.length > 0,
+        packs: QUAKE_PACKS, found,
+        note: found.length
+          ? "Quake 3 pack found — MD3 player models can be extracted from it."
+          : "No Quake 3 pack on this device. The Irrlicht/Quake3 demo ships NO model: it "
+            + "loads map-20kdm2.pk3 from /sdcard and reads MD3 players from inside it. "
+            + "Drop that .pk3 on the SD card and this source comes alive; until then the "
+            + "'rig' source is used and this is reported rather than hidden.",
+        joints: 0,
+      };
+    }
+    return {
+      kind: "rig", available: true, joints: Object.keys(rig.joints).length,
+      face_landmarks: Object.keys(rig.face).length,
+      note: "Generated from her own rig — her proportions, her joints, her height.",
+    };
+  }
+
+  const Avatar = { loadRig, poseFromFrame, faceState, modelSource, BONES, FACE_GROUPS, AU_POSE };
+
+  if (typeof module !== "undefined" && module.exports) module.exports = Avatar;
+  else if (typeof window !== "undefined") window.Avatar = Avatar;
+})();

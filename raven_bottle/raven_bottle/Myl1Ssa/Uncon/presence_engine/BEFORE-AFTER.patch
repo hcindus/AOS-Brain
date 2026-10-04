@@ -1,0 +1,24 @@
+--- Uncon/presence_engine/presence_engine.BEFORE.py	2026-09-24 23:58:37.617977552 -0400
++++ Uncon/presence_engine/presence_engine.AFTER.py	2026-09-24 23:58:37.637977552 -0400
+@@ -322,6 +322,11 @@
+         self.current: Optional[Expression] = None
+         self._last_frame: Optional[Frame] = None
+         self.frames_sent: int = 0
++        # Thyroid energy scales expression intensity. Default must exist at
++        # construction: frame() is callable before update() (the CLI's
++        # `express` path does exactly that). rig_frame() already guarded with
++        # getattr; frame() did not, which killed `presence_engine.py express`.
++        self._energy: float = 0.8
+         # Rig: Raven's 3D body + face coordinate maps (moved by posture/expression)
+         self.body_pts, self.face_pts = load_coordinates()
+ 
+@@ -356,7 +361,8 @@
+         exp = EXPRESSION_LIBRARY.get(name, EXPRESSION_LIBRARY["attentive"])
+         self.current = exp
+         # scale AU intensities by thyroid energy (art-direction)
+-        aus = {au: round(i * self._energy, 3) for au, i in exp.action_units.items()}
++        energy = getattr(self, "_energy", 0.8)
++        aus = {au: round(i * energy, 3) for au, i in exp.action_units.items()}
+         # fold gaze into the AU stream (gaze AUs 61/62)
+         aus["gaze_x"] = self.gaze.gaze.x
+         aus["gaze_y"] = self.gaze.gaze.y

@@ -1,0 +1,521 @@
+/**
+ * app.js — the world: renderer, controls, camera modes, decorate mode.
+ *
+ * Loaded by index.html after three.min.js, engine.js, avatar.js, character.js.
+ * Kept out of the HTML so `node --check` can at least prove it parses.
+ *
+ * Camera: third person by default (you watch her move); V drops into her eyes.
+ * Decorate: D highlights the nearest thing that is hers; she changes it with keys,
+ * and every change goes through the server so her house stays hers.
+ */
+
+/* global THREE, Engine, Avatar, HerCharacter */
+(function () {
+  "use strict";
+
+  const PALETTE = {
+    plaster: 0xe8e2d6, tile: 0xd8e4ea, wood: 0xb98b52, oak: 0xa9752f, walnut: 0x6b4423,
+    granite: 0x5c5f63, steel: 0x9aa3ab, metal: 0x8b939b, glass: 0xbcd8dd, brick: 0xa4604a,
+    stone: 0xbfb8ab, concrete: 0xb2b2ad, carpet: 0x7a5c52, wool: 0x3b2f4a, linen: 0xece7df,
+    leather: 0x5a3b2e, teak: 0x8a6236, pine: 0xd9b382, terracotta: 0xb5643c, living: 0x4c7a3f,
+    canvas: 0xd8cbb0, silver: 0xcfd6da, brass: 0xcaa24a, rubber: 0x2c2c30, unfinished: 0x9e9e9e,
+    grass: 0x4d6b3a, hedge: 0x3f5a32, sky: 0x9fbcd8, jasmine: 0xf3f0e2, lavender: 0x9a86c8,
+    forgetmenot: 0x8fb6e8, card: 0xf6f2e6, path: 0xb9b3a6,
+  };
+  const colourOf = (m) => (typeof m === "string" && m[0] === "#")
+    ? parseInt(m.slice(1), 16)
+    : (PALETTE[m] || 0x9e9e9e);
+
+  const state = {
+    mode: "third",            // third | first
+    decorate: false,
+    target: null,
+    yaw: 0, pitch: -0.12,
+    her: null, world: null, rig: null, character: null,
+    frame: null, lastFrameAt: 0, herGoal: null, herGoalPoint: null, herTimer: 0,
+    navGraph: null, herPhase: "settling", captainDrivingUntil: 0, doorsOpened: [],
+    clock: 0, hud: {},
+  };
+
+  const els = {};
+  let renderer, scene, camera, avatarGroup, propMeshes = [], slotBoxes = new Map();
+  const input = { f: 0, s: 0, jump: false };
+  const keys = new Set();
+
+  // ── boot ────────────────────────────────────────────────────────────────
+  async function boot() {
+    for (const id of ["hud", "line", "room", "mode", "tip", "loading"]) els[id] = document.getElementById(id);
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0b0d12);
+    camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.05, 200);
+
+    const [house, body, face] = await Promise.all([
+      fetch("/api/house").then((r) => r.json()),
+      fetch("rig/body_coordinates.json").then((r) => r.json()),
+      fetch("rig/face_coordinates.json").then((r) => r.json()).catch(() => null),
+    ]);
+
+    state.world = new Engine.World(house);
+    state.rig = Avatar.loadRig(body, face);
+    buildHouse(house);
+    buildProps();
+    buildHer();
+    state.navGraph = Nav.buildGraph(state.world);
+    state.director = new Nav.Director(state.world, state.navGraph, { mode: "own" });
+    state.character = new HerCharacter.Character({ room: "atrium", mood: "settled" });
+    postWhere();
+
+    els.loading.style.display = "none";
+    els.tip.textContent = "WASD/arrows move · drag to look · V third/first person · D decorate · T talk";
+    bindInput();
+    pollFrame();
+    loop();
+  }
+
+  function mesh(min, max, colour, opts = {}) {
+    const sx = Math.max(max[0] - min[0], 0.02), sy = Math.max(max[1] - min[1], 0.02), sz = Math.max(max[2] - min[2], 0.02);
+    const g = new THREE.BoxGeometry(sx, sy, sz);
+    const m = new THREE.MeshLambertMaterial({
+      color: colour, transparent: !!opts.transparent, opacity: opts.opacity === undefined ? 1 : opts.opacity,
+      side: THREE.DoubleSide,
+    });
+    const mesh = new THREE.Mesh(g, m);
+    mesh.position.set((min[0] + max[0]) / 2, (min[1] + max[1]) / 2, (min[2] + max[2]) / 2);
+    mesh.userData.brushId = opts.id;
+    return mesh;
+  }
+
+  function buildHouse(house) {
+    for (const b of house.brushes) {
+      if (b.hidden) continue;
+      const opaque = b.kind !== "glass" && b.material !== "sky";
+      const m = mesh(b.min, b.max, colourOf(b.material), { id: b.id, transparent: !opaque, opacity: opaque ? 1 : 0.28 });
+      scene.add(m);
+      if (b.kind === "decor" || b.kind === "furniture") slotBoxes.set(b.id, m);
+    }
+    scene.add(new THREE.AmbientLight(0xffffff, 0.45));
+    for (const l of house.lights) {
+      const pl = new THREE.PointLight(colourOf(l.colour), l.intensity === undefined ? 0.85 : l.intensity, 14);
+      pl.position.set(l.at[0], l.at[1], l.at[2]);
+      scene.add(pl);
+    }
+    const sun = new THREE.DirectionalLight(0x223344, 0.35);
+    sun.position.set(6, 12, 4);
+    scene.add(sun);
+  }
+
+  function buildProps() {
+    for (const p of state.world.props) {
+      const g = new THREE.SphereGeometry(Math.max(p.half[0], 0.06), 14, 10);
+      const m = new THREE.MeshLambertMaterial({ color: colourOf(p.material) });
+      const mesh = new THREE.Mesh(g, m);
+      scene.add(mesh);
+      propMeshes.push({ mesh, prop: p });
+    }
+  }
+
+  // ── her body ────────────────────────────────────────────────────────────
+  function buildHer() {
+    avatarGroup = new THREE.Group();
+    const limbMat = new THREE.MeshLambertMaterial({ color: 0x2a2438 });
+    const skinMat = new THREE.MeshLambertMaterial({ color: 0xd9b8a2 });
+    const rig = state.rig;
+    for (const [a, b] of Avatar.BONES) {
+      const pa = rig.joints[a], pb = rig.joints[b];
+      if (!pa || !pb) continue;
+      const dir = new THREE.Vector3(pb[0] - pa[0], pb[1] - pa[1], pb[2] - pa[2]);
+      const len = dir.length();
+      const geo = new THREE.CylinderGeometry(0.055, 0.05, len, 8);
+      const seg = new THREE.Mesh(geo, a === "head" || b === "head" ? skinMat : limbMat);
+      seg.position.set((pa[0] + pb[0]) / 2, (pa[1] + pb[1]) / 2, (pa[2] + pb[2]) / 2);
+      seg.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
+      avatarGroup.add(seg);
+    }
+    // her head is a box, not a sphere: the face is a plane we can move
+    const head = rig.joints.head || [0, 1.69, 0];
+    const headMesh = new THREE.Mesh(new THREE.BoxGeometry(0.19, 0.24, 0.21),
+      new THREE.MeshLambertMaterial({ color: 0xd9b8a2 }));
+    headMesh.position.set(head[0], head[1] + 0.06, head[2]);
+    avatarGroup.add(headMesh);
+    const facePlane = new THREE.Mesh(new THREE.PlaneGeometry(0.19, 0.23),
+      new THREE.MeshLambertMaterial({ color: 0x2a2438 }));
+    facePlane.position.set(head[0], head[1] + 0.06, head[2] + 0.106);
+    avatarGroup.add(facePlane);
+    avatarGroup.userData.face = facePlane;
+    avatarGroup.userData.head = headMesh;
+
+    // her own light, so she is never a silhouette
+    const herLight = new THREE.PointLight(0xffd9a0, 0.5, 4);
+    herLight.position.set(head[0], head[1] + 0.6, head[2]);
+    avatarGroup.add(herLight);
+    scene.add(avatarGroup);
+
+    const vs = rig.stats || {};
+    state.her = new Engine.Actor({
+      pos: [0, 0.02, -4.0],                 // the atrium, where she likes to be
+      size: [Math.max(0.35, (vs.bust_inches || 37) * 0.012), rig.height || 1.69, 0.34],
+      stand: "settled",
+    });
+  }
+
+  function animateHer(t) {
+    const frame = state.frame || {
+      action_units: {}, posture: "settled", expression: "attentive",
+      predictive_lead_ms: 0, gaze: { x: 0, y: 0 },
+    };
+    const pose = Avatar.poseFromFrame(state.rig, frame, t);
+    avatarGroup.children.forEach((child, i) => { child.visible = true; });
+    // rebuild segment transforms from the posed joints
+    let k = 0;
+    for (const [a, b] of Avatar.BONES) {
+      const pa = pose.joints[a], pb = pose.joints[b];
+      if (!pa || !pb) continue;
+      const seg = avatarGroup.children[k++];
+      if (!seg || !seg.geometry) continue;
+      const dir = new THREE.Vector3(pb[0] - pa[0], pb[1] - pa[1], pb[2] - pa[2]);
+      const len = Math.max(dir.length(), 0.02);
+      seg.scale.y = len / (seg.geometry.parameters.height || len);
+      seg.position.set((pa[0] + pb[0]) / 2, (pa[1] + pb[1]) / 2, (pa[2] + pb[2]) / 2);
+      seg.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
+    }
+    const head = pose.joints.head || state.rig.joints.head;
+    const hm = avatarGroup.userData.head, fp = avatarGroup.userData.face, gy = pose.gaze;
+    if (hm) {
+      hm.position.set(head[0], head[1] + 0.06, head[2]);
+      hm.rotation.set(pose.head.pitch, pose.head.yaw, pose.head.roll);
+    }
+    if (fp) {
+      fp.position.set(head[0], head[1] + 0.06, head[2] + 0.106);
+      fp.rotation.set(pose.head.pitch, pose.head.yaw, pose.head.roll);
+      const f = pose.face;
+      fp.material.color.setRGB(
+        Math.min(1, 0.16 + f.warmth0 + f.smile * 0.5 + f.surprise * 0.2),
+        Math.min(1, 0.14 + f.smile * 0.35 + f.speech * 0.15),
+        Math.min(1, 0.22 + f.frown * 0.1 + f.surprise * 0.25));
+      fp.material.emissive = new THREE.Color(pose.expression === "warmth" ? 0x3a1f10 : 0x000000);
+    }
+    // she faces where she is going, and looks where the gaze goes
+    avatarGroup.position.set(state.her.pos[0], state.her.pos[1], state.her.pos[2]);
+    avatarGroup.rotation.y = state.her.facing + gy.x * 0.25;
+    if (state.herGazePlain !== undefined) { /* her own gaze offsets are folded in above */ }
+  }
+
+  // ── the loop ────────────────────────────────────────────────────────────
+  let last = performance.now(), acc = 0;
+  const FIXED = 1 / 60;
+
+  function loop() {
+    requestAnimationFrame(loop);
+    const now = performance.now();
+    let dt = Math.min((now - last) / 1000, 0.1); last = now;
+    state.clock += dt;
+    acc += dt;
+    let steps = 0;
+    while (acc >= FIXED && steps < 6) {
+      Engine.stepActor(state.world, state.her, FIXED, { wish: [input.s, input.f], jump: input.jump });
+      Engine.stepProps(state.world, FIXED);
+      acc -= FIXED; steps++;
+    }
+    for (const { mesh, prop } of propMeshes) mesh.position.set(prop.pos[0], prop.pos[1], prop.pos[2]);
+    animateHer(state.clock);
+    updateCamera(dt);
+    herAutonomy(dt);
+    hud();
+    renderer.render(scene, camera);
+  }
+
+  function updateCamera(dt) {
+    if (state.mode === "first") {
+      const head = avatarGroup.position.clone().add(new THREE.Vector3(0, (state.her.size[1] - 0.15), 0));
+      camera.position.copy(head);
+      camera.rotation.set(state.pitch, state.yaw, 0, "YXZ");
+    } else {
+      const focal = avatarGroup.position.clone().add(new THREE.Vector3(0, state.her.size[1] * 0.75, 0));
+      const dist = 3.4, height = 1.2;
+      const back = new THREE.Vector3(Math.sin(state.yaw), 0, Math.cos(state.yaw)).multiplyScalar(dist);
+      const want = focal.clone().add(back).add(new THREE.Vector3(0, height + Math.sin(-state.pitch) * 1.6, 0));
+      camera.position.lerp(want, Math.min(1, dt * 6));
+      camera.lookAt(focal);
+    }
+  }
+
+  /**
+   * She moves herself through her own house. This is the part that makes it hers.
+   *
+   * Two loops: she *decides* (her character layer picks a room, on her temperature),
+   * and she *walks* (nav.js steers her through the door graph; the world's own physics
+   * moves her, opens the door she needs and closes what she has left behind).
+   */
+  function herAutonomy(dt) {
+    if (!state.navGraph) return;
+    const captainHasWheel = performance.now() < state.captainDrivingUntil;
+
+    // ── decide ────────────────────────────────────────────────────────────
+    state.herTimer -= dt;
+    if (!state.herGoal && !captainHasWheel && state.herTimer <= 0) {
+      state.herTimer = 18 + Math.random() * 14;
+      const rooms = state.world.rooms.map((r) => r.id);
+      const prompt = () => state.character.think({ rooms, event: null, hourOfDay: new Date().getHours() });
+      Promise.resolve(state.pendingGoal ? { say: "", expression: "attentive", goal: state.pendingGoal, reason: "he sent me", source: "sent" } : prompt())
+        .then((turn) => {
+          if (!turn) return;
+          if (turn.say || turn.source === "deepseek") {
+            state.frame = {
+              action_units: expressionToAUs(turn.expression), posture: "settled",
+              expression: turn.expression, predictive_lead_ms: 0, gaze: { x: 0, y: 0 },
+            };
+            els.line.textContent = turn.say ? `“${turn.say}”` : "";
+            els.line.title = `character: ${turn.source}${turn.degraded ? " (degraded: " + turn.degraded + ")" : ""} · ${turn.reason || ""}`;
+          }
+          if (turn.goal) {
+            state.herGoal = turn.goal;
+            state.herGoalPoint = Nav.spotIn(state.world, turn.goal, Math.random());
+            state.herPhase = "walking";
+            state.pendingGoal = null;
+          }
+        });
+    }
+
+    // ── walk ──────────────────────────────────────────────────────────────
+    if (captainHasWheel) return;                 // he has the wheel; her legs wait
+
+    if (!state.herGoal) {
+      // No long-range intention — she directs her own steps: picks a spot, approaches
+      // what interests her, stops when she feels like it, turns to look at things.
+      const st = state.director.steer(state.her, dt);
+      input.s = st.wish[0]; input.f = st.wish[1];
+      if (st.wish[0] || st.wish[1]) state.her.facing = st.facing;
+      else if (st.kind === "look") state.her.facing = st.facing;
+      state.herGaze = st.gaze || [0, 0];
+      state.herPhase = state.director.narrate();
+      return;
+    }
+    state.director.mode = "sent";               // she has been asked to go somewhere
+    const here = state.world.roomAt(state.her.pos);
+    if (here && here.id === state.herGoal) {
+      // inside the room — walk to her spot rather than standing in the doorway
+      const p = state.herGoalPoint;
+      const dx = p[0] - state.her.pos[0], dz = p[2] - state.her.pos[2];
+      const d = Math.hypot(dx, dz);
+      if (d > 0.6) {
+        input.s = dx / d; input.f = dz / d;
+        state.her.facing = Math.atan2(dz, dx);
+        state.herPhase = "settling in";
+      } else {
+        input.s = 0; input.f = 0;
+        state.herPhase = "arrived in the " + state.herGoal;
+        state.herGoal = null;
+        state.director.mode = "own";
+        state.director.plan = null;              // let her choose what to do next
+      }
+      return;
+    }
+    const s = Nav.steer(state.world, state.navGraph, state.her, state.herGoal, { speed: 1 });
+    if (s.done) { state.herGoal = null; return; }
+    if (s.phase === "unreachable") { state.herGoal = null; state.herPhase = "cannot find a way"; return; }
+    if (s.door) {
+      state.world.setDoor(s.door, 1);
+      if (!state.doorsOpened.includes(s.door)) state.doorsOpened.push(s.door);
+    }
+    for (const id of state.doorsOpened) {
+      const d = state.world.doors.find((x) => x.id === id);
+      if (!d) continue;
+      const cx = (d.base_min[0] + d.base_max[0]) / 2, cz = (d.base_min[2] + d.base_max[2]) / 2;
+      if (Math.hypot(state.her.pos[0] - cx, state.her.pos[2] - cz) > 3.5) state.world.setDoor(id, 0);
+    }
+    input.s = s.wish[0]; input.f = s.wish[1];
+    state.her.facing = Math.atan2(s.wish[1], s.wish[0]);
+    state.herPhase = `${s.phase} → ${state.herGoal}`;
+  }
+
+  function expressionToAUs(name) {
+    return {
+      attentive: { upper_lid_raise: 0.6, outer_brow_raise: 0.3, lip_corner_pull: 0.2, head_pitch: 0.2 },
+      curious: { inner_brow_raise: 0.4, upper_lid_raise: 0.4, lips_part: 0.2, head_tilt: 0.3 },
+      warmth: { cheek_raise: 0.8, lip_corner_pull: 0.7, outer_brow_raise: 0.3, gaze_y: 0.1 },
+      playful: { cheek_raise: 0.6, dimpler: 0.5, lip_corner_pull: 0.6, head_tilt: 0.4 },
+      serious: { brow_lower: 0.6, lip_tighten: 0.4, upper_lid_raise: 0.2, head_yaw: 0.1 },
+      boundary: { brow_lower: 0.5, lip_tighten: 0.5, lip_corner_depress: 0.4, head_yaw: 0.2 },
+      delight: { cheek_raise: 0.9, lip_corner_pull: 0.85, upper_lid_raise: 0.4, lips_part: 0.3 },
+      considering: { gaze_x: 0.5, head_yaw: 0.25, inner_brow_raise: 0.3, lip_tighten: 0.3 },
+    }[name] || { upper_lid_raise: 0.4 };
+  }
+
+  // ── input ───────────────────────────────────────────────────────────────
+  function bindInput() {
+    addEventListener("keydown", (e) => {
+      const k = e.key.toLowerCase();
+      if (["w", "a", "s", "d", "arrowup", "arrowdown", "arrowleft", "arrowright"].includes(k)) {
+        state.captainDrivingUntil = performance.now() + 6000;   // he has the wheel for a moment
+      }
+      keys.add(e.key.toLowerCase());
+      if (e.key.toLowerCase() === "v") state.mode = state.mode === "third" ? "first" : "third";
+      if (e.key.toLowerCase() === "d") toggleDecorate();
+      if (e.key.toLowerCase() === "t") talkToHer();
+      if (e.key === " ") e.preventDefault();
+    });
+    addEventListener("keyup", (e) => keys.delete(e.key.toLowerCase()));
+
+    let dragging = false, lx = 0, ly = 0;
+    const down = (x, y) => { dragging = true; lx = x; ly = y; };
+    const move = (x, y) => {
+      if (!dragging) return;
+      state.yaw -= (x - lx) * 0.005;
+      state.pitch = Math.max(-1.2, Math.min(1.0, state.pitch - (y - ly) * 0.004));
+      lx = x; ly = y;
+    };
+    addEventListener("mousedown", (e) => down(e.clientX, e.clientY));
+    addEventListener("mousemove", (e) => move(e.clientX, e.clientY));
+    addEventListener("mouseup", () => { dragging = false; });
+    addEventListener("touchstart", (e) => { const t = e.touches[0]; down(t.clientX, t.clientY); }, { passive: true });
+    addEventListener("touchmove", (e) => { const t = e.touches[0]; move(t.clientX, t.clientY); }, { passive: true });
+    addEventListener("touchend", () => { dragging = false; });
+    addEventListener("resize", () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  }
+
+  function readInput() {
+    const f = (keys.has("w") || keys.has("arrowup") ? 1 : 0) - (keys.has("s") || keys.has("arrowdown") ? 1 : 0);
+    const s = (keys.has("d") || keys.has("arrowright") ? 1 : 0) - (keys.has("a") || keys.has("arrowleft") ? 1 : 0);
+    // forward is where the camera looks
+    const sin = Math.sin(state.yaw), cos = Math.cos(state.yaw);
+    input.f = f * -cos - s * sin;
+    input.s = f * -sin + s * cos;
+    input.jump = keys.has(" ");
+    if (input.f || input.s) state.her.facing = Math.atan2(input.s, input.f);
+  }
+
+  // ── decorate ────────────────────────────────────────────────────────────
+  function toggleDecorate() {
+    state.decorate = !state.decorate;
+    if (!state.decorate) { state.target = null; }
+    els.tip.textContent = state.decorate
+      ? "DECORATE: arrows move the highlighted thing · C recolour · H hide · R reset · D done"
+      : "WASD move · drag to look · V camera · D decorate · T talk";
+  }
+
+  async function decorateKey(key) {
+    if (!state.target) {
+      els.tip.textContent = "nothing highlighted — walk closer to something of yours";
+      return;
+    }
+    let op = null, args = [];
+    if (key === "arrowleft") { op = "move"; args = [-0.2, 0, 0]; }
+    if (key === "arrowright") { op = "move"; args = [0.2, 0, 0]; }
+    if (key === "arrowup") { op = "move"; args = [0, 0, -0.2]; }
+    if (key === "arrowdown") { op = "move"; args = [0, 0, 0.2]; }
+    if (key === "c") {
+      const cycle = ["#3b2f4a", "#7a4a2f", "#2f4a3b", "#4a2f3b", "#caa24a", "plaster", "oak", "steel"];
+      const cur = slotBoxes.get(state.target)?.material.color.getHexString() || "000000";
+      op = "recolor"; args = [cycle[Math.abs((cur.length + state.clock | 0)) % cycle.length]];
+    }
+    if (key === "h") { op = "hide"; }
+    if (key === "r") { op = "reset"; }
+    if (!op) return;
+    const res = await fetch("/api/decorate", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ op, args: [state.target, ...args] }),
+    }).then((r) => r.json()).catch((e) => ({ ok: false, error: String(e) }));
+    els.tip.textContent = res.ok ? `${op} ✓ ${state.target}` : `refused: ${res.error}`;
+    if (res.ok) refreshHouse();
+  }
+
+  async function refreshHouse() {
+    const house = await fetch("/api/house").then((r) => r.json());
+    state.world = new Engine.World(house);
+    scene.children.filter((c) => c.userData.brushId).forEach((c) => scene.remove(c));
+    slotBoxes.clear();
+    for (const b of house.brushes) {
+      if (b.hidden) continue;
+      const opaque = b.kind !== "glass" && b.material !== "sky";
+      const m = mesh(b.min, b.max, colourOf(b.material), { id: b.id, transparent: !opaque, opacity: opaque ? 1 : 0.28 });
+      scene.add(m);
+      if (b.kind === "decor" || b.kind === "furniture") slotBoxes.set(b.id, m);
+    }
+    const keep = state.her.pos.slice();
+    state.her = new Engine.Actor({ pos: keep, size: state.her.size, stand: state.her.stand });
+  }
+
+  // ── talking to her, in her house ────────────────────────────────────────
+  async function talkToHer() {
+    const said = prompt("Say something to her:");
+    if (!said) return;
+    state.character.think({ captain_said: said, rooms: state.world.rooms.map((r) => r.id) }).then((turn) => {
+      els.line.textContent = turn.say ? `“${turn.say}”` : "…";
+      state.frame = { action_units: expressionToAUs(turn.expression), posture: "leaning_in",
+                      expression: turn.expression, gaze: { x: 0, y: 0 } };
+    });
+  }
+
+  // ── live frame from her own body ────────────────────────────────────────
+  async function pollFrame() {
+    try {
+      const data = await fetch("/api/frame").then((r) => r.json());
+      if (data && data.frame && data.frame.action_units) {
+        state.frame = data.frame;
+        state.lastFrameAt = performance.now();
+        els.mode.dataset.live = "1";
+      }
+    } catch (e) { /* world keeps running */ }
+    setTimeout(pollFrame, 1500);
+  }
+
+  // ── HUD ─────────────────────────────────────────────────────────────────
+  function hud() {
+    if (performance.now() >= state.captainDrivingUntil) readInput();
+    const room = state.world.roomAt(state.her.pos);
+    els.room.textContent = room ? room.name : "outside";
+    els.mode.textContent = state.mode === "third" ? "third person" : "her eyes";
+    const live = performance.now() - state.lastFrameAt < 4000;
+    els.hud.textContent =
+      `pos ${state.her.pos.map((v) => v.toFixed(1)).join(", ")} · ground ${state.her.onGround ? "yes" : "no"}` +
+      ` · ${state.herPhase}` +
+      ` · body ${live ? "LIVE from her engine" : "idle (no frame from her body)"}` +
+      (state.decorate ? ` · decorating ${state.target || "—"}` : "");
+
+    // highlight the nearest of hers while decorating
+    if (state.decorate) {
+      let best = null, bd = 4.5;
+      for (const [id, m] of slotBoxes) {
+        const d = m.position.distanceTo(avatarGroup.position);
+        if (d < bd) { bd = d; best = id; }
+      }
+      state.target = best;
+      for (const [id, m] of slotBoxes) {
+        m.material.emissive = new THREE.Color(id === best ? 0x554422 : 0x000000);
+      }
+    } else if (state.target) {
+      for (const [, m] of slotBoxes) m.material.emissive = new THREE.Color(0x000000);
+      state.target = null;
+    }
+  }
+
+  async function postWhere() {
+    const room = state.world ? state.world.roomAt(state.her.pos) : null;
+    try {
+      const data = await fetch("/api/where", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ room: room ? room.id : null, pos: state.her.pos.map((v) => +v.toFixed(2)),
+                               phase: state.herPhase, goal: state.herGoal }),
+      }).then((r) => r.json());
+      if (data && data.goal) state.pendingGoal = data.goal;      // her mind asked her to go somewhere
+    } catch (e) { /* offline is fine */ }
+    setTimeout(postWhere, 2500);
+  }
+
+  addEventListener("keydown", (e) => {
+    if (state.decorate && ["arrowleft", "arrowright", "arrowup", "arrowdown", "c", "h", "r"].includes(e.key.toLowerCase())) {
+      e.preventDefault();
+      decorateKey(e.key.toLowerCase());
+    }
+  });
+
+  boot();
+})();

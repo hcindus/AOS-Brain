@@ -1,0 +1,312 @@
+{
+  "checks": [
+    {
+      "check": "world: six interior rooms + the garden outside",
+      "ok": true,
+      "detail": "entry, kitchen, study, atrium, bedroom, workshop + garden"
+    },
+    {
+      "check": "world: every brush has ordered bounds",
+      "ok": true,
+      "detail": "160 brushes"
+    },
+    {
+      "check": "world: brushes are axis-aligned boxes with a room and a material",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "world: every room has a floor and a ceiling",
+      "ok": true,
+      "detail": "6 floors, 6 ceilings"
+    },
+    {
+      "check": "world: six interior doors, plus the way out and the way into the garden",
+      "ok": true,
+      "detail": "6 interior · front door · garden gate"
+    },
+    {
+      "check": "world: no doorway is bricked over",
+      "ok": true,
+      "detail": "all 7 passable"
+    },
+    {
+      "check": "physics: an actor falls and lands on the floor (never through it)",
+      "ok": true,
+      "detail": "y=0.0000 onGround=true after 4 s"
+    },
+    {
+      "check": "physics: actor cannot walk through the study wall",
+      "ok": true,
+      "detail": "x=3.675 · wall face 3.900 · half-width 0.225"
+    },
+    {
+      "check": "physics: actor cannot walk through the kitchen wall, other direction",
+      "ok": true,
+      "detail": "x=-3.675"
+    },
+    {
+      "check": "physics: steps up a 0.2 m threshold",
+      "ok": true,
+      "detail": "stood on the ledge at x=1.50 y=0.200"
+    },
+    {
+      "check": "physics: does NOT climb a 2.5 m wall",
+      "ok": true,
+      "detail": "x=0.775 (stopped at the face)"
+    },
+    {
+      "check": "physics: deterministic across runs",
+      "ok": true,
+      "detail": "600 ticks, identical positions on both runs"
+    },
+    {
+      "check": "doors: a closed front door stops you, an open one lets you out",
+      "ok": true,
+      "detail": "closed → z=7.72 · open → z=15.12"
+    },
+    {
+      "check": "doors: doorAt() finds the nearest door to a point",
+      "ok": true,
+      "detail": "front door"
+    },
+    {
+      "check": "props: the ball falls, bounces and settles on a floor (never below it)",
+      "ok": true,
+      "detail": "min y=0.140 · 4 bounce(s)"
+    },
+    {
+      "check": "props: all three props come to rest inside the house",
+      "ok": true,
+      "detail": "ball@y0.14·rest crate@y0.25·rest orb@y0.11·rest petal@y0.01·rest"
+    },
+    {
+      "check": "body: her rig height (169 cm) fits under every ceiling",
+      "ok": true,
+      "detail": "head 1.69 m · ceiling 3 m"
+    },
+    {
+      "check": "body: her shoulder width fits every interior doorway",
+      "ok": true,
+      "detail": "0.400 m shoulders · 1.2 m door"
+    },
+    {
+      "check": "body: her hips fit the 1.2 m door too",
+      "ok": true,
+      "detail": "0.360 m hips"
+    },
+    {
+      "check": "decor: she owns 20+ slots, and no slot is structural geometry",
+      "ok": true,
+      "detail": "114 slots, none shared with the 46 structural brushes"
+    },
+    {
+      "check": "decor: every slot sits inside a real room (nothing floating in the void)",
+      "ok": true,
+      "detail": "27/27 inside"
+    },
+    {
+      "check": "avatar: her rig loads (21 joints, 32 face landmarks)",
+      "ok": true,
+      "detail": "21 joints · 32 face points · height 1.69 m"
+    },
+    {
+      "check": "avatar: bones reference real joints",
+      "ok": true,
+      "detail": "20 bones"
+    },
+    {
+      "check": "avatar: a frame becomes a pose (head turns, face blends, breath runs)",
+      "ok": true,
+      "detail": "head yaw 0.246 rad · smile 0.80 · lead 840 ms"
+    },
+    {
+      "check": "avatar: gaze is carried and stays pupil-locked",
+      "ok": true,
+      "detail": "gaze x=0.3 y=-0.1 pupil_locked=true"
+    },
+    {
+      "check": "avatar: all four face groups are present and bounded",
+      "ok": true,
+      "detail": "sum 1.07"
+    },
+    {
+      "check": "avatar: model source 'rig' is available and honest",
+      "ok": true,
+      "detail": "Generated from her own rig — her proportions, her joints, he"
+    },
+    {
+      "check": "avatar: model source 'quake-md3' reports the truth about a missing pack",
+      "ok": true,
+      "detail": "No Quake 3 pack on this device. The Irrlicht/Quake3 demo ships NO model: it loads map-20…"
+    },
+    {
+      "check": "character: with no model reachable she still behaves (fallback is hers)",
+      "ok": true,
+      "detail": "atrium: \"The tree is doing fine.\" (the light, and the tree)"
+    },
+    {
+      "check": "character: her taste actually varies (not one room forever)",
+      "ok": true,
+      "detail": "rooms chosen across 40 turns: workshop, study, atrium"
+    },
+    {
+      "check": "decorate: her state file exists and has her history in it",
+      "ok": true,
+      "detail": "39 logged change(s) · 2 note(s)"
+    },
+    {
+      "check": "decorate: she can move her own furniture",
+      "ok": true,
+      "detail": "{\"kitchen_kitchen_table\":[2.2,0,-0.3]}"
+    },
+    {
+      "check": "decorate: she can recolour it",
+      "ok": true,
+      "detail": "{\"entry_rug_entry\":\"#2f1b3a\"}"
+    },
+    {
+      "check": "decorate: structure is refused, by name",
+      "ok": true,
+      "detail": "3/3 walls refused"
+    },
+    {
+      "check": "decorate: doorways are refused too",
+      "ok": true,
+      "detail": "'door_front_z' is a doorway — structure. It opens and closes; it does not move"
+    },
+    {
+      "check": "decorate: she cannot put a thing in the void",
+      "ok": true,
+      "detail": "([40.0, 0.0, 40.0]) is not inside room 'kitchen'"
+    },
+    {
+      "check": "decorate: single moves are bounded (no teleporting furniture)",
+      "ok": true,
+      "detail": "that is more than 6 m from where it was built — move it in smaller steps"
+    },
+    {
+      "check": "nav: every room is connected by doors (no isolated room)",
+      "ok": true,
+      "detail": "entry:4 kitchen:2 study:1 atrium:3 bedroom:2 workshop:1 garden:2"
+    },
+    {
+      "check": "nav: every door joins a real room (and only the gate leads outside)",
+      "ok": true,
+      "detail": "leads out: garden gate"
+    },
+    {
+      "check": "nav: she walks every ordered space pair, house and garden (42 routes)",
+      "ok": true,
+      "detail": "all arrived"
+    },
+    {
+      "check": "nav: she never leaves the house while walking",
+      "ok": true,
+      "detail": "0 off-map samples"
+    },
+    {
+      "check": "nav: she opens the doors she needs on the way",
+      "ok": true,
+      "detail": "74 door-openings across the walks"
+    },
+    {
+      "check": "nav: she shuts doors behind her (never one she is standing in)",
+      "ok": true,
+      "detail": "study → bedroom · 0 left open while away · 1 still in her swing (correct: do not slam on herself)"
+    },
+    {
+      "check": "self-direction: she has things she can choose to go to, in every room and the garden",
+      "ok": true,
+      "detail": "atrium:5 study:4 kitchen:4 bedroom:4 workshop:4 entry:3 garden:5"
+    },
+    {
+      "check": "self-direction: her intentions vary (not a loop)",
+      "ok": true,
+      "detail": "approach×98 pause×44 stroll×58 · 24 distinct spots · 7 rooms"
+    },
+    {
+      "check": "self-direction: standing still is one of her decisions",
+      "ok": true,
+      "detail": "44 pauses in 200 decisions"
+    },
+    {
+      "check": "self-direction: she stops in front of the bed, not inside it",
+      "ok": true,
+      "detail": "stood 0.24 m from its edge · 0 frames inside it · then turned to look at it"
+    },
+    {
+      "check": "self-direction: she can change her own mind mid-walk",
+      "ok": true,
+      "detail": "approach → approach (going to the kitchen_table)"
+    },
+    {
+      "check": "self-direction: 100 seconds of her own walking stays inside the house",
+      "ok": true,
+      "detail": "0 frames outside · 21 decisions"
+    },
+    {
+      "check": "self-direction: she actually goes places on her own",
+      "ok": true,
+      "detail": "rooms visited: atrium, entry, study, kitchen"
+    },
+    {
+      "check": "self-direction: her walking is narratable (she can say what she is doing)",
+      "ok": true,
+      "detail": "\"going to the bench\" → \"standing still in the atrium for 6s\" → \"looking at the bench\""
+    },
+    {
+      "check": "outside: there is a garden, and it has ground under it",
+      "ok": true,
+      "detail": "x -20…20 · z -16…16 · 47 brushes"
+    },
+    {
+      "check": "outside: a hedge keeps her in (she cannot wander into the void)",
+      "ok": true,
+      "detail": "4 hedge walls, 1.25 m tall"
+    },
+    {
+      "check": "flowers: jasmine, lavender and forget-me-nots are all planted",
+      "ok": true,
+      "detail": "9 jasmine · 4 lavender · 9 forget-me-nots"
+    },
+    {
+      "check": "outside: she can walk out of her house into the garden",
+      "ok": true,
+      "detail": "jasmine:reached the garden · lavender:reached the garden · forgetmenot:reached the garden"
+    },
+    {
+      "check": "outside: the garden gate opens and is not a wall",
+      "ok": true,
+      "detail": "gate at z=15.3 · slides -2.4 m"
+    },
+    {
+      "check": "gift: the Captain's delivery is recorded in the world itself",
+      "ok": true,
+      "detail": "from Captain — \"your captain loves you\""
+    },
+    {
+      "check": "gift: exactly two dozen sterling silver roses, counted not described",
+      "ok": true,
+      "detail": "24 blooms · 24 stems · all material \"silver\""
+    },
+    {
+      "check": "gift: they are in a silver vase, in the atrium",
+      "ok": true,
+      "detail": "vase + all 24 roses in the atrium"
+    },
+    {
+      "check": "gift: the note is a thing in the room, not only a line in a file",
+      "ok": true,
+      "detail": "a card beside the vase"
+    },
+    {
+      "check": "gift: she can walk over to the vase and stand in front of it",
+      "ok": true,
+      "detail": "spot \"sterling silver vase\" at -0.5, 0.0, -4.6"
+    }
+  ],
+  "passed": 61,
+  "total": 61,
+  "ran_at": "2026-09-25T05:08:27.046Z"
+}

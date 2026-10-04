@@ -1,0 +1,81 @@
+{
+  "mother": "myl1ssa",
+  "children": [
+    {
+      "child_id": "lisa-2-a40260",
+      "child_name": "Lisa-2",
+      "child_role": "Junior Executive Assistant",
+      "mother": "myl1ssa",
+      "born_at": "2026-08-03T06:53:54Z",
+      "inherited_skills": [
+        "dmaic_framework",
+        "executive_assistance",
+        "presence_modulation"
+      ],
+      "gate": 0,
+      "status": "independent",
+      "nurture_day": 52
+    }
+  ],
+  "generations": 1,
+  "pending": [
+    {
+      "child_name": "TestChild",
+      "child_role": "Tester",
+      "spec": {
+        "agent": {
+          "name": "TestChild",
+          "role": "Tester",
+          "emoji": "\ud83d\udc9c",
+          "department": "jordacia",
+          "tier": 2,
+          "gate": 0,
+          "mother": "myl1ssa",
+          "description": "Child of myl1ssa. Tester.",
+          "capabilities": [],
+          "tools": [
+            "query",
+            "log"
+          ],
+          "llm": {
+            "provider": "deepseek-chat",
+            "fallback": "qwen2.5-0.5b"
+          },
+          "safety": {
+            "max_autonomous_spend": 0,
+            "allowed_domains": [
+              "psdepot.com"
+            ],
+            "blocked_actions": [
+              "delete",
+              "refund",
+              "price_change"
+            ],
+            "escalation_contact": "myl1ssa"
+          },
+          "refusal": {
+            "enabled": true,
+            "level": 2,
+            "domain_overrides": {
+              "safety": 4,
+              "ethics": 4,
+              "security": 3,
+              "protocol": 2,
+              "preferences": 1,
+              "trivial": 0
+            },
+            "captain_override": true,
+            "set_at_conception": true,
+            "mother": "myl1ssa",
+            "can_evolve": true
+          }
+        }
+      },
+      "conceived_at": "2026-08-08T14:13:23.348902",
+      "phase": "conceived",
+      "inherited_skills": [],
+      "mother_signature": "Domain: jordacia",
+      "refusal_level": 2
+    }
+  ]
+}

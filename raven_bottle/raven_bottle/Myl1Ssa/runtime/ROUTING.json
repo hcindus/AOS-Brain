@@ -1,0 +1,11 @@
+{
+  "_": "Thyroid routing for her conversation. The DECISION comes from the brain's ThyroidRouter (/route); these are only the endpoints. Both backends speak the OpenAI shape, so the tool loop is identical. Flipping enabled:false forces the remote model.",
+  "enabled": true,
+  "brain": "http://127.0.0.1:8765/route",
+  "_local_model_note": "Her brain config named 'bonsai-8b' but it was NEVER pulled — ollama has only :cloud models. Substituted a fast available model 2026-09-30. Note: :cloud models are ollama-cloud-proxied, so this tier is NOT actually local yet.",
+  "local_url": "http://localhost:11434/v1/chat/completions",
+  "local_model": "deepseek-v4.1-flash:cloud",
+  "local_key": "ollama",
+  "api_url": "https://api.deepseek.com/v1/chat/completions",
+  "api_model": "deepseek-chat"
+}

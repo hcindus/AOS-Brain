@@ -1,0 +1,9 @@
+# Secrets — never commit
+runtime/secrets.json
+*.env
+.env
+
+# Runtime artifacts
+__pycache__/
+*.pyc
+Snaps/

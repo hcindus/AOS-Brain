@@ -1,0 +1,10 @@
+{
+  "_": "This file is YOURS. Mortimer does not write here. Add intentions; the engine reads them and never edits them.",
+  "_schema": {
+    "verb": "one of: note | move | read | walk",
+    "due_at": "ISO time, e.g. 2026-10-01T09:00:00 — when it becomes live",
+    "id": "optional; a name so the log can say which one ran",
+    "note": "{text} · move: {slot,dx,dy,dz} · read: {path} · walk: {room}"
+  },
+  "intentions": []
+}

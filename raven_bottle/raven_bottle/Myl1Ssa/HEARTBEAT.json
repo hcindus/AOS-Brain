@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "tempo_seconds": 1800,
+  "quiet_hours": [
+    23,
+    8
+  ],
+  "times": [],
+  "grace_minutes": 20,
+  "on_wake": {
+    "wake_sequence": true,
+    "ooda_perceive": true,
+    "journal": true,
+    "update_heart": true,
+    "will": true
+  },
+  "notify": {
+    "enabled": false,
+    "channel": "none"
+  },
+  "ticks": 16,
+  "last_tick": "2026-09-30T19:41:13",
+  "last_wake": "2026-09-30T19:41:13",
+  "fired": {}
+}

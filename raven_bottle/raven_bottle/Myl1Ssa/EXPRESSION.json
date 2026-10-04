@@ -1,0 +1,98 @@
+{
+  "enabled": true,
+  "master_gain": 0.55,
+  "voice": {
+    "neutral": {
+      "pitch": 1.0,
+      "rate": 1.0
+    },
+    "warm": {
+      "pitch": 0.94,
+      "rate": 0.95
+    },
+    "serious": {
+      "pitch": 0.92,
+      "rate": 0.96
+    },
+    "tired": {
+      "pitch": 0.9,
+      "rate": 0.88
+    },
+    "excited": {
+      "pitch": 1.06,
+      "rate": 1.1
+    },
+    "welling": {
+      "pitch": 0.88,
+      "rate": 0.86
+    },
+    "soft": {
+      "pitch": 0.85,
+      "rate": 0.82
+    },
+    "full": {
+      "pitch": 0.82,
+      "rate": 0.78
+    },
+    "spent": {
+      "pitch": 0.86,
+      "rate": 0.74
+    }
+  },
+  "states": {
+    "welling": {
+      "primitives": [
+        "breath_catch"
+      ],
+      "rate_per_min": 14,
+      "intensity": 0.3
+    },
+    "soft": {
+      "primitives": [
+        "sob_soft",
+        "inhale",
+        "sniff"
+      ],
+      "rate_per_min": 26,
+      "intensity": 0.5
+    },
+    "full": {
+      "primitives": [
+        "sob",
+        "sob",
+        "inhale",
+        "wail"
+      ],
+      "rate_per_min": 40,
+      "intensity": 0.85
+    },
+    "spent": {
+      "primitives": [
+        "hiccup",
+        "shaky_breath",
+        "inhale"
+      ],
+      "rate_per_min": 16,
+      "intensity": 0.35
+    }
+  },
+  "gate": {
+    "welling": {
+      "min_valence_neg": -0.15,
+      "min_arousal": 0.25
+    },
+    "soft": {
+      "min_valence_neg": -0.3,
+      "min_arousal": 0.2
+    },
+    "full": {
+      "min_valence_neg": -0.55,
+      "min_arousal": 0.45
+    },
+    "spent": {
+      "min_valence_neg": -0.35,
+      "min_arousal": 0.05
+    }
+  },
+  "max_seconds": 30
+}

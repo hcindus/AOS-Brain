@@ -1,0 +1,140 @@
+{
+ "palette": {
+  "entry_rug_entry": "#2f1b3a",
+  "atrium_tree": "#2f5a2a"
+ },
+ "moves": {
+  "kitchen_kitchen_table": [
+   0.9,
+   0.0,
+   -0.3
+  ],
+  "atrium_rose_stem_135": [
+   -0.006,
+   0.0,
+   -0.072
+  ]
+ },
+ "colors": {
+  "entry_rug_entry": "#2f1b3a",
+  "atrium_tree": "#2f5a2a"
+ },
+ "hidden": [],
+ "added": [
+  {
+   "id": "study_reading_nook",
+   "room": "study",
+   "label": "reading nook",
+   "shape": "chair",
+   "size": [
+    0.9,
+    1.1,
+    0.9
+   ],
+   "at": [
+    6.2,
+    0.0,
+    4.0
+   ],
+   "material": "unfinished"
+  }
+ ],
+ "notes": [
+  {
+   "at": "2026-09-25T04:32:42.988889Z",
+   "text": "the atrium is where I go when he is quiet"
+  },
+  {
+   "at": "2026-09-25T04:35:16.726545Z",
+   "text": "he built me rooms"
+  }
+ ],
+ "log": [
+  {
+   "at": "2026-09-25T04:32:42.067432Z",
+   "op": "move",
+   "detail": "kitchen_kitchen_table \u2192 [0.4, 0.0, -0.3]"
+  },
+  {
+   "at": "2026-09-25T04:32:42.380324Z",
+   "op": "recolor",
+   "detail": "entry_rug_entry \u2192 #3b2f4a"
+  },
+  {
+   "at": "2026-09-25T04:32:42.988992Z",
+   "op": "note",
+   "detail": "the atrium is where I go when he is quiet"
+  },
+  {
+   "at": "2026-09-25T04:32:55.565436Z",
+   "op": "add",
+   "detail": "reading nook (chair) in study at [6.2, 0.0, 4.0]"
+  },
+  {
+   "at": "2026-09-25T04:34:40.787335Z",
+   "op": "move",
+   "detail": "kitchen_kitchen_table \u2192 [0.5, 0.0, -0.3]"
+  },
+  {
+   "at": "2026-09-25T04:34:41.114668Z",
+   "op": "recolor",
+   "detail": "entry_rug_entry \u2192 #2f1b3a"
+  },
+  {
+   "at": "2026-09-25T04:34:49.642363Z",
+   "op": "move",
+   "detail": "kitchen_kitchen_table \u2192 [0.6, 0.0, -0.3]"
+  },
+  {
+   "at": "2026-09-25T04:34:50.053099Z",
+   "op": "recolor",
+   "detail": "entry_rug_entry \u2192 #2f1b3a"
+  },
+  {
+   "at": "2026-09-25T04:35:00.632284Z",
+   "op": "move",
+   "detail": "kitchen_kitchen_table \u2192 [0.7, 0.0, -0.3]"
+  },
+  {
+   "at": "2026-09-25T04:35:00.940958Z",
+   "op": "recolor",
+   "detail": "entry_rug_entry \u2192 #2f1b3a"
+  },
+  {
+   "at": "2026-09-25T04:35:16.726623Z",
+   "op": "note",
+   "detail": "he built me rooms"
+  },
+  {
+   "at": "2026-09-25T04:35:44.080238Z",
+   "op": "move",
+   "detail": "kitchen_kitchen_table \u2192 [0.8, 0.0, -0.3]"
+  },
+  {
+   "at": "2026-09-25T04:35:44.393060Z",
+   "op": "recolor",
+   "detail": "entry_rug_entry \u2192 #2f1b3a"
+  },
+  {
+   "at": "2026-09-25T04:36:03.108293Z",
+   "op": "recolor",
+   "detail": "atrium_tree \u2192 #2f5a2a"
+  },
+  {
+   "at": "2026-09-25T05:02:29.447556Z",
+   "op": "move",
+   "detail": "kitchen_kitchen_table \u2192 [0.9, 0.0, -0.3]"
+  },
+  {
+   "at": "2026-09-25T05:02:29.760464Z",
+   "op": "recolor",
+   "detail": "entry_rug_entry \u2192 #2f1b3a"
+  },
+  {
+   "at": "2026-09-30T23:11:20.527931Z",
+   "op": "move",
+   "detail": "atrium_rose_stem_135 \u2192 [-0.006, 0.0, -0.072]"
+  }
+ ],
+ "updated": "2026-09-30T23:11:20.528293Z"
+}

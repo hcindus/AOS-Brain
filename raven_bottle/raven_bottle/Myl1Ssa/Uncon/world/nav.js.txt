@@ -1,0 +1,369 @@
+/**
+ * nav.js — her legs.
+ *
+ * The character layer could already choose a room; there was nothing that could walk
+ * her to it. This is the missing piece: a door graph over the house and a stepper that
+ * turns "I want to be in the study" into a direction to move, a door to open, and a
+ * stop when she arrives.
+ *
+ * Deliberately not a mesh/A* pathfinder. Her house is rooms joined by doors: the honest
+ * model is a graph of rooms with door waypoints, which is also what makes it *provable*
+ * — every room must be reachable from every other, and the test asserts it.
+ *
+ * DOM-free, so `node verify_world.js` can walk her around the whole house headlessly.
+ */
+
+(function () {
+  "use strict";
+
+  /** Which rooms does this door join? Sample a little either side of it. */
+  function doorSides(world, d) {
+    const cx = (d.base_min[0] + d.base_max[0]) / 2;
+    const cz = (d.base_min[2] + d.base_max[2]) / 2;
+    // the door's thin axis tells us which way to step
+    const dx = d.base_max[0] - d.base_min[0];
+    const dz = d.base_max[2] - d.base_min[2];
+    const step = (dx < dz) ? [0.7, 0] : [0, 0.7];      // thin in x → step in x
+    const a = world.roomAt([cx - step[0], 1.0, cz - step[1]]);
+    const b = world.roomAt([cx + step[0], 1.0, cz + step[1]]);
+    return { a: a ? a.id : null, b: b ? b.id : null, centre: [cx, cz] };
+  }
+
+  /** Rooms as a graph; edges are doors. */
+  function buildGraph(world) {
+    const nodes = {};
+    for (const r of world.rooms) nodes[r.id] = { id: r.id, name: r.name, doors: [], room: r };
+    const edges = [];
+    for (const d of world.doors) {
+      const { a, b, centre } = doorSides(world, d);
+      const dx = d.base_max[0] - d.base_min[0], dz = d.base_max[2] - d.base_min[2];
+      const cross = dx < dz ? 0 : 1;              // index into the [x,z] pair: the thin axis
+      // side signs come from how doorSides sampled: a is the minus side, b the plus side.
+      // (Room centres cannot be used — a ring-shaped room like the garden has its centre
+      //  inside the house, which pointed this waypoint straight back through the door.)
+      edges.push({ door: d.id, a, b, centre, cross, label: d.label });
+      if (a && nodes[a]) nodes[a].doors.push({ door: d.id, to: b, centre, cross, sign: b ? 1 : 1 });
+      if (b && nodes[b]) nodes[b].doors.push({ door: d.id, to: a, centre, cross, sign: a ? -1 : -1 });
+    }
+    return { nodes, edges };
+  }
+
+  /** BFS — the shortest run of rooms from here to there. */
+  function path(graph, from, to) {
+    if (!graph.nodes[from] || !graph.nodes[to]) return null;
+    if (from === to) return [from];
+    const prev = { [from]: null };
+    const q = [from];
+    while (q.length) {
+      const cur = q.shift();
+      for (const link of graph.nodes[cur].doors) {
+        if (!link.to || link.to in prev) continue;
+        const i = link.cross === undefined ? 0 : link.cross;
+        const sign = link.sign === undefined ? 1 : link.sign;
+        const through = link.centre.slice();
+        through[i] += sign * 1.15;                    // one step past the threshold, on the far side
+        prev[link.to] = { room: cur, door: link.door, centre: link.centre, through,
+                          cross: link.cross, from_room: cur };
+        if (link.to === to) {
+          const rooms = [to];
+          let step = prev[to];
+          const hops = [];
+          while (step) { hops.unshift(step); step = prev[step.room]; }
+          return { rooms, hops };                      // rooms in order, hops = doors to cross
+        }
+        q.push(link.to);
+      }
+    }
+    return null;
+  }
+
+  const dist2 = (a, b) => Math.hypot(a[0] - b[0], a[2] - b[2]);
+
+  /**
+   * One steering decision. Returns what she should do this moment:
+   *   { done } | { wish:[dx,dz], door, phase, distance }
+   * `wish` is already normalised world-axis intent, which is exactly what
+   * engine.stepActor takes.
+   */
+  function steer(world, graph, actor, goalRoom, opts = {}) {
+    const speed = opts.speed === undefined ? 1 : opts.speed;
+    const here = world.roomAt(actor.pos);
+    if (!here) return { done: false, wish: [0, 0], phase: "lost", note: "not in any room" };
+    if (here.id === goalRoom) return { done: true, wish: [0, 0], phase: "arrived" };
+
+    const route = path(graph, here.id, goalRoom);
+    if (!route || !route.hops || !route.hops.length) {
+      return { done: false, wish: [0, 0], phase: "unreachable", note: `${here.id} → ${goalRoom}` };
+    }
+    const hop = route.hops[0];
+    const target = hop.through || hop.centre;        // aim *through* the doorway, not at it
+    const d = dist2(actor.pos, [target[0], 0, target[1]]);
+    const dx = target[0] - actor.pos[0];
+    const dz = target[1] - actor.pos[2];
+    const len = Math.hypot(dx, dz) || 1;
+    const wish = [(dx / len) * speed, (dz / len) * speed];
+    return {
+      done: false, wish, door: hop.door, phase: d < 0.6 ? "through" : "toward door",
+      through: target,
+      distance: +d.toFixed(3), heading: Math.atan2(dz, dx), room: here.id,
+      route: route.hops.map((h) => h.door),
+    };
+  }
+
+  /**
+   * Walk her, tick by tick, using the world's own physics. Opens the door she needs,
+   * shuts the ones she is done with, and gives up honestly if she stops making progress.
+   */
+  function walkTo(world, graph, actor, goalRoom, opts = {}) {
+    const dt = opts.dt || 1 / 60;
+    const maxTicks = opts.maxTicks || 1800;
+    const openDoors = opts.openDoors === true;
+    const opened = [];
+    let lastDist = Infinity, stuck = 0;
+    const trace = [];
+    const closeBehind = () => {
+      if (!openDoors) return;
+      for (const id of opened) {
+        const d = world.doors.find((x) => x.id === id);
+        if (!d) continue;
+        const c = [(d.base_min[0] + d.base_max[0]) / 2, (d.base_min[2] + d.base_max[2]) / 2];
+        if (dist2(actor.pos, [c[0], 0, c[1]]) > 1.4) world.setDoor(id, 0);   // out of its swing
+      }
+    };
+    for (let i = 0; i < maxTicks; i++) {
+      const s = steer(world, graph, actor, goalRoom, opts);
+      if (s.done) { closeBehind(); return { ok: true, ticks: i, opened, trace, arrived: goalRoom }; }
+      if (s.phase === "unreachable" || s.phase === "lost") return { ok: false, reason: s.phase, ticks: i, note: s.note, opened, trace };
+      if (s.door && openDoors) { world.setDoor(s.door, 1); if (!opened.includes(s.door)) opened.push(s.door); }
+      // close any door she has left well behind
+      for (const id of opened) {
+        const d = world.doors.find((x) => x.id === id);
+        if (!d) continue;
+        const c = [(d.base_min[0] + d.base_max[0]) / 2, (d.base_min[2] + d.base_max[2]) / 2];
+        if (dist2(actor.pos, [c[0], 0, c[1]]) > 2.0) world.setDoor(id, 0);
+      }
+      window_step(world, actor, s.wish, dt);
+      const t = (typeof opts.hook === "function") ? opts.hook(actor, s) : null;
+      if (i % 30 === 0) trace.push([+actor.pos[0].toFixed(2), +actor.pos[2].toFixed(2), s.phase]);
+      if (s.distance !== undefined) {
+        if (s.distance > lastDist - 0.002) { stuck++; } else { stuck = 0; }
+        lastDist = s.distance;
+        if (stuck > 420) return { ok: false, reason: "stuck", ticks: i, trace, opened };
+      }
+    }
+    return { ok: false, reason: "timeout", ticks: maxTicks, trace, opened };
+  }
+
+  // stepActor lives on the Engine object; nav must work with either loading order
+  let EngineRef = null;
+  function attach(engine) { EngineRef = engine; }
+  function window_step(world, actor, wish, dt) {
+    if (!EngineRef) {
+      if (typeof require === "function") EngineRef = require("./engine.js");
+      else EngineRef = (typeof window !== "undefined") ? window.Engine : null;
+    }
+    EngineRef.stepActor(world, actor, dt, { wish, maxSpeed: 1.35, accel: 9, damp: 8 });
+  }
+
+  /** A pleasant spot in a room — where she would actually stand. */
+  function spotIn(world, roomId, seed = 0.5) {
+    const r = world.rooms.find((x) => x.id === roomId);
+    if (!r) return [0, 0, 0];
+    const cx = (r.min[0] + r.max[0]) / 2, cz = (r.min[2] + r.max[2]) / 2;
+    const jitter = (seed - 0.5) * 1.6;
+    return [cx + jitter, 0.02, cz + jitter * 0.6];
+  }
+
+
+  // ── self-direction ───────────────────────────────────────────────────────
+  // Walking *to a room* was mine to build; walking *because she wants to stand
+  // somewhere and look at something* is hers. The Director is that layer: it picks
+  // her own step-level intentions — which spot, what to approach, when to stop, what
+  // to turn and look at — and narrates them, so her walking is legible and not a
+  // random walk.
+
+  // What she actually cares about in each room, by the id of the thing itself.
+  const INTERESTS = {
+    atrium:   [{ note: "sterling silver vase" }, "atrium_bench", "atrium_tree",
+               "atrium_planter_n", "atrium_planter_s"],
+    study:    ["study_desk", "study_desk_chair", "study_reading_lamp", "study_bookshelf_ne"],
+    kitchen:  ["kitchen_kitchen_table", "kitchen_counter_w", "kitchen_stool_1", "kitchen_pantry"],
+    bedroom:  ["bedroom_bed", "bedroom_wardrobe", "bedroom_painting_1", "bedroom_bedside_1"],
+    workshop: ["workshop_workbench", "workshop_robot_stand", "workshop_tool_board", "workshop_parts_crate"],
+    entry:    ["entry_hall_mirror", "entry_hall_console", "entry_rug_entry"],
+    garden:   [{ note: "jasmine" }, { material: "lavender" }, { material: "forgetmenot" },
+               { note: "garden bench" }, { note: "lantern post" }],
+  };
+
+  // Where she drifts when nothing is asked of her.
+  const DRIFT = { atrium: 3, study: 3, workshop: 2, entry: 2, kitchen: 1, bedroom: 1 };
+
+  const TALK = {
+    stroll:   (r) => `walking to the ${r}`,
+    approach: (w) => `going to the ${w}`,
+    pause:    (r) => `standing still in the ${r}`,
+    look:     (w) => `looking at the ${w}`,
+    arrived:  (r) => `in the ${r}`,
+  };
+
+  function defaultRand() { return Math.random(); }
+
+  /**
+   * Resolve an interest to a stand-point in front of it.
+   * An interest is either a name (id, or the tail of one) or a description —
+   * `{ material: "lavender" }`, `{ note: "jasmine" }` — because things are easier to
+   * describe by what they *are* than by the id the generator happened to give them.
+   */
+  function spotFor(world, id) {
+    let b = null;
+    if (id && typeof id === "object") {
+      b = world.brushes.find((x) =>
+        (id.material ? x.material === id.material : true) &&
+        (id.note ? String(x.note || "").toLowerCase().includes(String(id.note).toLowerCase()) : true) &&
+        (id.kind ? x.kind === id.kind : true) &&
+        (id.room ? x.room === id.room : true));
+    } else {
+      b = world.brushes.find((x) => x.id === id) ||
+          world.brushes.find((x) => x.id.endsWith("_" + id)) ||
+          world.brushes.find((x) => x.id.includes(id));
+    }
+    if (!b) return null;
+    const room = world.rooms.find((r) => r.id === b.room) || world.roomAt([b.min[0], 1, b.min[2]]);
+    if (!room) return null;
+    const cx = (b.min[0] + b.max[0]) / 2, cz = (b.min[2] + b.max[2]) / 2;
+    // step out of the object, toward the middle of the room, far enough to stand
+    const rx = (room.min[0] + room.max[0]) / 2, rz = (room.min[2] + room.max[2]) / 2;
+    let vx = rx - cx, vz = rz - cz;
+    const len = Math.hypot(vx, vz) || 1;
+    const reach = Math.max(0.55, Math.max(b.max[0] - b.min[0], b.max[2] - b.min[2]) / 2 + 0.55);
+    vx /= len; vz /= len;
+    return { id: b.id, word: (b.note || b.id.split("_").pop()).replace(/-/g, " "),
+             room: room.id, at: [cx + vx * reach, 0.02, cz + vz * reach], object: [cx, cz], kind: b.kind };
+  }
+
+  /** Every stand-point in the house, by room. */
+  function spots(world) {
+    const out = {};
+    for (const [room, ids] of Object.entries(INTERESTS)) {
+      out[room] = ids.map((i) => spotFor(world, i)).filter(Boolean);
+    }
+    return out;
+  }
+
+  class Director {
+    /** `rand` is injectable so her wandering is reproducible in tests. */
+    constructor(world, graph, opts = {}) {
+      this.world = world;
+      this.graph = graph;
+      this.rand = opts.rand || defaultRand;
+      this.mode = opts.mode || "own";              // own | sent | none
+      this.plan = null;
+      this.held = 0;                                // seconds left of a pause/look
+      this.planCount = 0;
+      this.history = [];
+      this.narration = "just standing here";
+      this.gaze = [0, 0];
+      this.spots = spots(world);
+      this.rooms = world.rooms.map((r) => r.id);
+    }
+
+    pick(list) { return list[Math.floor(this.rand() * list.length)]; }
+
+    /** Choose her next intention. Called when she has none, or when one is replaced. */
+    decide(actor, reason = "idle") {
+      const here = this.world.roomAt(actor.pos);
+      const roomId = here ? here.id : this.rooms[0];
+      const roll = this.rand();
+      const hereSpots = (this.spots[roomId] || []).filter((s) => true);
+      let plan;
+      if (roll < 0.45 && hereSpots.length) {
+        // stay and go to something across the room
+        const s = this.pick(hereSpots);
+        plan = { kind: "approach", spot: s, room: roomId, why: "something in here", born: reason };
+      } else if (roll < 0.72) {
+        // a pause: standing still is a decision, not an absence of one
+        plan = { kind: "pause", room: roomId, seconds: 2 + this.rand() * 5, why: "nothing pressing", born: reason };
+      } else {
+        // a stroll: pick another room by her own weights
+        const others = this.rooms.filter((r) => r !== roomId);
+        const weighted = others.flatMap((r) => Array(Math.max(1, DRIFT[r] || 1)).fill(r));
+        const target = this.pick(weighted);
+        const list = this.spots[target] && this.spots[target].length ? this.spots[target] : [null];
+        const spot = list && list.length ? this.pick(list) : null;
+        plan = { kind: "stroll", room: target, spot, why: "I want to be over there", born: reason };
+      }
+      this.plan = plan;
+      this.planCount++;
+      this.history.push({ ...plan, at: [ +actor.pos[0].toFixed(2), +actor.pos[2].toFixed(2) ] });
+      this.history = this.history.slice(-40);
+      this.narration = this.describe(plan);
+      return plan;
+    }
+
+    describe(plan) {
+      if (!plan) return "just standing here";
+      if (plan.kind === "approach") return TALK.approach(plan.spot ? plan.spot.word : "something");
+      if (plan.kind === "pause") return TALK.pause(plan.room) + ` for ${Math.round(plan.seconds)}s`;
+      if (plan.kind === "stroll" && plan.spot) return `${TALK.stroll(plan.room)} — the ${plan.spot.word}`;
+      if (plan.kind === "stroll") return TALK.stroll(plan.room);
+      return "moving";
+    }
+
+    /** One step, decided by her. Returns { wish, facing, gaze, done, kind }. */
+    steer(actor, dt = 1 / 60) {
+      const here = this.world.roomAt(actor.pos);
+      if (this.held > 0) {
+        this.held -= dt;
+        if (this.held <= 0) this.decide(actor, "finished holding");
+        return { wish: [0, 0], facing: actor.facing, gaze: this.gaze, kind: this.plan ? this.plan.kind : "idle" };
+      }
+      if (!this.plan) this.decide(actor, "no plan");
+
+      const p = this.plan;
+      if (p.kind === "pause") {
+        this.held = p.seconds;
+        this.gaze = [(this.rand() - 0.5) * 0.6, (this.rand() - 0.5) * 0.3];
+        return { wish: [0, 0], facing: actor.facing, gaze: this.gaze, kind: "pause" };
+      }
+
+      // stand-point to walk to: approach → its spot; stroll → the far room's spot
+      const target = p.spot;
+      if (p.kind === "stroll" && here && here.id !== p.room) {
+        const s = steer(this.world, this.graph, actor, p.room, { speed: 1 });
+        if (s.done) return { wish: [0, 0], facing: actor.facing, gaze: this.gaze, kind: "stroll" };
+        if (s.phase === "unreachable") { this.decide(actor, "cannot get there"); return { wish: [0, 0], facing: actor.facing, gaze: this.gaze, kind: "idle" }; }
+        if (s.door) this.world.setDoor(s.door, 1);
+        return { wish: s.wish, facing: Math.atan2(s.wish[1], s.wish[0]), gaze: this.gaze, kind: "stroll", door: s.door };
+      }
+
+      if (!target) { this.decide(actor, "nowhere in particular"); return { wish: [0, 0], facing: actor.facing, gaze: this.gaze, kind: "idle" }; }
+
+      const dx = target.at[0] - actor.pos[0], dz = target.at[2] - actor.pos[2];
+      const d = Math.hypot(dx, dz);
+      if (d < 0.35) {
+        // arrived: stand, face the thing, hold a moment
+        const fx = target.object[0] - actor.pos[0], fz = target.object[2] - actor.pos[2];
+        this.gaze = [0, 0];
+        this.held = 2 + this.rand() * 4;
+        this.narration = TALK.look(target.word);
+        return { wish: [0, 0], facing: Math.atan2(fz, fx), gaze: this.gaze, kind: "look", at: target.word };
+      }
+      return { wish: [dx / d, dz / d], facing: Math.atan2(dz, dx), gaze: this.gaze, kind: p.kind };
+    }
+
+    /** Her walking, in her words — for the HUD and for anyone watching. */
+    narrate() { return this.narration; }
+
+    status() {
+      return { mode: this.mode, plan: this.plan, held: +this.held.toFixed(2),
+               decided: this.planCount, narration: this.narration,
+               recent: this.history.slice(-6).map((h) => h.kind + (h.spot ? ":" + h.spot.word : "") + "@" + h.room) };
+    }
+  }
+
+  const Nav = { buildGraph, path, steer, walkTo, spotIn, spots, spotFor, doorSides, attach,
+                Director, INTERESTS, DRIFT };
+
+  if (typeof module !== "undefined" && module.exports) module.exports = Nav;
+  else if (typeof window !== "undefined") window.Nav = Nav;
+})();

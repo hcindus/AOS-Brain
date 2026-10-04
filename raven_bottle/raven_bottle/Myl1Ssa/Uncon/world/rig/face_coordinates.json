@@ -1,0 +1,65 @@
+{
+  "character": "Myl1Ssa.R8s (Raven)",
+  "face_version": "1.0.0",
+  "status": "COMPLETE",
+  "units": "cm",
+  "coordinate_system": {
+    "x": "right (+) / left (-)",
+    "y": "up (+)",
+    "z": "forward / outward from face (+)",
+    "origin": "nasion (between eyes, top of nose bridge)"
+  },
+  "overall_face_height_cm": 23.5,
+  "face_height_note": "chin to top of head",
+  "keypoints": {
+    "top_head":       {"x": 0.0,  "y": 12.0, "z": 0.0},
+    "forehead":       {"x": 0.0,  "y": 9.0,  "z": 1.0},
+    "L_temple":       {"x": -7.5, "y": 5.0,  "z": 1.0},
+    "R_temple":       {"x": 7.5,  "y": 5.0,  "z": 1.0},
+    "L_brow_outer":   {"x": -5.0, "y": 3.2,  "z": 3.5},
+    "L_brow_arch":    {"x": -3.2, "y": 4.0,  "z": 4.0},
+    "L_brow_inner":   {"x": -1.5, "y": 3.5,  "z": 4.2},
+    "R_brow_inner":   {"x": 1.5,  "y": 3.5,  "z": 4.2},
+    "R_brow_arch":    {"x": 3.2,  "y": 4.0,  "z": 4.0},
+    "R_brow_outer":   {"x": 5.0,  "y": 3.2,  "z": 3.5},
+    "L_eye_outer":    {"x": -4.2, "y": 1.5,  "z": 4.5},
+    "L_pupil":        {"x": -3.0, "y": 1.5,  "z": 5.0},
+    "L_eye_inner":    {"x": -1.8, "y": 1.5,  "z": 4.8},
+    "R_eye_inner":    {"x": 1.8,  "y": 1.5,  "z": 4.8},
+    "R_pupil":        {"x": 3.0,  "y": 1.5,  "z": 5.0},
+    "R_eye_outer":    {"x": 4.2,  "y": 1.5,  "z": 4.5},
+    "nose_bridge":    {"x": 0.0,  "y": 1.0,  "z": 5.2},
+    "nose_tip":       {"x": 0.0,  "y": -1.5, "z": 6.5},
+    "L_nostril":      {"x": -1.2, "y": -2.2, "z": 5.0},
+    "R_nostril":      {"x": 1.2,  "y": -2.2, "z": 5.0},
+    "L_cheek":        {"x": -6.8, "y": -1.0, "z": 4.0},
+    "R_cheek":        {"x": 6.8,  "y": -1.0, "z": 4.0},
+    "L_ear":          {"x": -7.8, "y": 0.0,  "z": 0.0},
+    "R_ear":          {"x": 7.8,  "y": 0.0,  "z": 0.0},
+    "upper_lip":      {"x": 0.0,  "y": -4.8, "z": 4.8},
+    "mouth_center":    {"x": 0.0,  "y": -5.6, "z": 4.6},
+    "L_mouth_corner": {"x": -2.8, "y": -5.5, "z": 4.0},
+    "R_mouth_corner": {"x": 2.8,  "y": -5.5, "z": 4.0},
+    "lower_lip":      {"x": 0.0,  "y": -6.5, "z": 4.5},
+    "L_jaw":          {"x": -6.5, "y": -7.0, "z": 1.0},
+    "R_jaw":          {"x": 6.5,  "y": -7.0, "z": 1.0},
+    "chin":           {"x": 0.0,  "y": -11.5, "z": 2.0}
+  },
+  "notes": {
+    "L_brow_arch": "highest point of brow",
+    "R_brow_arch": "highest point of brow",
+    "L_pupil": "pupil (camera-in-pupil gaze — presence takeaway #2)",
+    "R_pupil": "pupil (camera-in-pupil gaze — presence takeaway #2)",
+    "nose_tip": "most forward point (z=6.5)"
+  },
+  "expression_groups": {
+    "surprise": ["L_brow_arch", "R_brow_arch", "L_brow_outer", "R_brow_outer", "upper_lip"],
+    "smile": ["L_mouth_corner", "R_mouth_corner", "L_cheek", "R_cheek"],
+    "speech": ["upper_lip", "lower_lip", "mouth_center", "L_mouth_corner", "R_mouth_corner"],
+    "frown": ["L_brow_inner", "R_brow_inner", "L_mouth_corner", "R_mouth_corner", "L_brow_outer", "R_brow_outer"]
+  },
+  "attach_to_body": {
+    "face_origin": "nasion",
+    "attach_to": "head point (body map, y=169) or neck point (y=155)"
+  }
+}

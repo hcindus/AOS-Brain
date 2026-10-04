@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Raven's House</title>
+<style>
+  html,body{margin:0;padding:0;overflow:hidden;background:#0b0d12;height:100%;
+    font-family:'Courier New',ui-monospace,monospace;color:#e8dfd0;-webkit-user-select:none;user-select:none}
+  canvas{display:block;touch-action:none}
+  #ui{position:fixed;inset:0;pointer-events:none}
+  #top{position:absolute;top:10px;left:14px;font-size:13px;line-height:1.5;text-shadow:0 0 8px #000}
+  #room{font-size:20px;letter-spacing:.06em;color:#f0d9b5}
+  #mode{color:#9fb8c8}
+  #hud{color:#7f8a96;font-size:11px;margin-top:2px}
+  #line{position:absolute;left:50%;bottom:70px;transform:translateX(-50%);max-width:min(760px,86vw);
+    text-align:center;font-size:15px;line-height:1.5;color:#ffe9c8;text-shadow:0 0 12px #000;font-style:italic}
+  #tip{position:absolute;left:14px;bottom:12px;font-size:11px;color:#6f7a86;max-width:80vw}
+  #tag{position:absolute;right:14px;bottom:12px;font-size:11px;color:#6f7a86;text-align:right}
+  #loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-size:15px;color:#bda88a;background:#0b0d12}
+</style>
+</head>
+<body>
+<div id="loading">waking the house…</div>
+<div id="ui">
+  <div id="top"><div id="room">—</div><div id="mode">third person</div><div id="hud"></div></div>
+  <div id="line"></div>
+  <div id="tip"></div>
+  <div id="tag">her house · her rooms · her taste</div>
+</div>
+
+<script src="vendor/three.min.js"></script>
+<script src="engine.js"></script>
+<script src="avatar.js"></script>
+<script src="nav.js"></script>
+<script src="character.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

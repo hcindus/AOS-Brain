@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "sr": 44100,
+  "resting_bpm": 60.0,
+  "max_bpm": 90.0,
+  "min_bpm": 55.0,
+  "ceiling_bpm": 100.0,
+  "glide_s": 2.5,
+  "s2_offset_ms": 250.0,
+  "base_gain": 0.16,
+  "duck_gain_frac": 0.32,
+  "fade_in_s": 2.0,
+  "fade_out_s": 4.0,
+  "block_s": 0.25,
+  "thyroid_bpm_adj": {
+    "secreting": 4.0,
+    "baseline": 0.0,
+    "suppressed": -4.0
+  }
+}

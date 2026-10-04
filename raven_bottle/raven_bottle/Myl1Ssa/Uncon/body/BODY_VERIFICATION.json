@@ -1,0 +1,106 @@
+{
+  "checks": [
+    {
+      "check": "map: exactly 30 motor channels",
+      "ok": true,
+      "detail": "30 channels"
+    },
+    {
+      "check": "map: channel ids unique",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "map: every channel band is ordered (lo < hi)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "map: every routed AU exists in the engine",
+      "ok": true,
+      "detail": "21 AUs routed"
+    },
+    {
+      "check": "map: every routed channel exists on the rig",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "map: idle channels are declared spares, not accidents",
+      "ok": true,
+      "detail": "1 idle: ['nose_wrinkle']"
+    },
+    {
+      "check": "expressions: all 8 produce packets inside their bands",
+      "ok": true,
+      "detail": "8/8 clean"
+    },
+    {
+      "check": "safety: a step demand is rate-limited, not obeyed instantly",
+      "ok": true,
+      "detail": "max |\u0394| 0.0800 \u2264 allowed 0.1200 after one 20 ms period"
+    },
+    {
+      "check": "safety: watchdog relaxes to rest after silence",
+      "ok": true,
+      "detail": "peak 0.700 \u2192 0.670 \u00b7 trips 1"
+    },
+    {
+      "check": "safety: e-stop refuses commands and holds position",
+      "ok": true,
+      "detail": "refused=estop \u00b7 estop_events=1"
+    },
+    {
+      "check": "safety: e-stop requires an explicit clear",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "transport: null records packets and declares no hardware",
+      "ok": true,
+      "detail": "no hardware attached \u2014 this is a recording, not a body"
+    },
+    {
+      "check": "transport: socket to a dead port fails cleanly (no hang, no crash)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "transport: serial fails in words, never as a raw trace",
+      "ok": true,
+      "detail": "helpful error"
+    },
+    {
+      "check": "transport: BLE refuses loudly rather than pretending",
+      "ok": true,
+      "detail": "refuses loudly"
+    },
+    {
+      "check": "driver: runs all 8 expressions with zero limit violations",
+      "ok": true,
+      "detail": "160 ticks \u00b7 160 packets \u00b7 max step 0.1 \u2264 0.12"
+    },
+    {
+      "check": "driver: predictive lead is carried through to the wire",
+      "ok": true,
+      "detail": "leads seen: [0, 120, 200, 400, 500, 840]"
+    },
+    {
+      "check": "feedback: simulated state is labelled simulated",
+      "ok": true,
+      "detail": "{'sim': True, 'echo': {'t': 1790310141325, 'expr': 'warmth', 'ch': {'n"
+    },
+    {
+      "check": "status: admits there is no hardware",
+      "ok": true,
+      "detail": "state=no_hardware \u00b7 transport=null"
+    },
+    {
+      "check": "status: reports the envelope it will enforce",
+      "ok": true,
+      "detail": "slew + watchdog present"
+    }
+  ],
+  "passed": 20,
+  "total": 20
+}

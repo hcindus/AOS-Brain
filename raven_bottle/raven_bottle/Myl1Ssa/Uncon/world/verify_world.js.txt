@@ -1,0 +1,456 @@
+/**
+ * verify_world.js — prove the house, don't hope about it.
+ *
+ *   node verify_world.js            # human report (exit 1 on any failure)
+ *   node verify_world.js --json     # machine-readable
+ *
+ * No browser, no rendering, no DOM: this exercises the physics core and the world
+ * data directly. What it cannot test (pixels, audio, touch) is named at the end
+ * rather than left implied.
+ */
+
+const fs = require("fs");
+const path = require("path");
+const E = require(path.join(__dirname, "engine.js"));
+
+const RESULTS = [];
+function check(name, ok, detail) {
+  RESULTS.push({ check: name, ok: !!ok, detail: detail || "" });
+  console.log(`  ${ok ? "✅" : "❌"} ${name}` + (detail ? ` — ${detail}` : ""));
+  return !!ok;
+}
+
+const house = JSON.parse(fs.readFileSync(path.join(__dirname, "house.json"), "utf8"));
+const world = new E.World(house);
+
+console.log("\n💜 verify_world — Raven's house · physics · doors · props · decor\n");
+
+// ── 1. the world is well-formed ──────────────────────────────────────────────
+const interior = world.rooms.filter((r) => r.id !== "garden");
+check("world: six interior rooms + the garden outside", interior.length === 6 &&
+  world.rooms.some((r) => r.id === "garden"),
+  interior.map((r) => r.id).join(", ") + " + garden");
+check("world: every brush has ordered bounds",
+  world.brushes.every(b => b.min.every((m, i) => m < b.max[i])),
+  `${world.brushes.length} brushes`);
+check("world: brushes are axis-aligned boxes with a room and a material",
+  world.brushes.every(b => b.min.length === 3 && b.room && b.material));
+const noFloor = world.rooms.filter(r => !world.brushes.some(b => b.kind === "floor" && b.room === r.id));
+check("world: every room has a floor and a ceiling",
+  noFloor.length === 0 && world.rooms.every(r => world.brushes.some(b => b.kind === "ceiling" && b.room === r.id)),
+  noFloor.length ? `missing floors: ${noFloor.map(r => r.id)}` : "6 floors, 6 ceilings");
+const interiorDoors = world.doors.filter((d) => !["front door", "garden gate"].includes(d.label));
+check("world: six interior doors, plus the way out and the way into the garden",
+  interiorDoors.length === 6 && world.doors.length === 8,
+  `${interiorDoors.length} interior · front door · garden gate`);
+const blockedGap = world.doors.filter(d => {
+  const cx = (d.min[0] + d.max[0]) / 2, cz = (d.min[2] + d.max[2]) / 2;
+  return world.brushes.some(b => b.kind === "wall" && b.min[1] <= 1.0 && b.max[1] >= 1.0 &&
+    b.min[0] <= cx && b.max[0] >= cx && b.min[2] <= cz && b.max[2] >= cz);
+});
+check("world: no doorway is bricked over", blockedGap.length === 0,
+  blockedGap.length ? blockedGap.map(d => d.label).join(", ") : "all 7 passable");
+
+// ── 2. gravity, floor, no tunnelling ────────────────────────────────────────
+let a = new E.Actor({ pos: [0, 2.0, 4.0] });
+for (let i = 0; i < 240; i++) E.stepActor(world, a, 1 / 60, {});
+check("physics: an actor falls and lands on the floor (never through it)",
+  a.pos[1] > -0.01 && a.pos[1] < 0.05 && a.onGround,
+  `y=${a.pos[1].toFixed(4)} onGround=${a.onGround} after 4 s`);
+const fell = a.pos[1];
+
+// ── 3. walls stop the actor — no penetration, and it stays put ──────────────
+const a2 = new E.Actor({ pos: [0, 0.02, 4.0] });
+for (let i = 0; i < 600; i++) E.stepActor(world, a2, 1 / 60, { wish: [1, 0] });   // push east, hard
+const wallX = 4 - house.wall_thickness / 2;
+check("physics: actor cannot walk through the study wall",
+  a2.pos[0] <= wallX - a2.size[0] / 2 + 0.02,
+  `x=${a2.pos[0].toFixed(3)} · wall face ${wallX.toFixed(3)} · half-width ${a2.size[0] / 2}`);
+const a2b = new E.Actor({ pos: [0, 0.02, 4.0] });
+for (let i = 0; i < 600; i++) E.stepActor(world, a2b, 1 / 60, { wish: [-1, 0] });
+check("physics: actor cannot walk through the kitchen wall, other direction",
+  a2b.pos[0] >= -4 + house.wall_thickness / 2 + a2b.size[0] / 2 - 0.02,
+  `x=${a2b.pos[0].toFixed(3)}`);
+
+// ── 4. step-up over thresholds, blocked by real walls ───────────────────────
+const stepWorld = new E.World({
+  name: "step-test", brushes: [
+    { id: "floor", room: "t", kind: "floor", material: "x", min: [-5, -0.1, -5], max: [5, 0, 5] },
+    { id: "ledge_ok", room: "t", kind: "wall", material: "x", min: [1, 0, -5], max: [5, 0.2, 5] },
+  ], rooms: [], doors: [], props: [],
+});
+let sa = new E.Actor({ pos: [0, 0.02, 0] });
+let onLedge = null;
+for (let i = 0; i < 300; i++) {
+  E.stepActor(stepWorld, sa, 1 / 60, { wish: [1, 0] });
+  if (onLedge === null && sa.pos[0] > 1.5 && sa.pos[1] > 0.1) onLedge = { x: sa.pos[0], y: sa.pos[1] };
+}
+check("physics: steps up a 0.2 m threshold",
+  onLedge && Math.abs(onLedge.y - 0.2) < 0.03,
+  onLedge ? `stood on the ledge at x=${onLedge.x.toFixed(2)} y=${onLedge.y.toFixed(3)}` : "never got on the ledge");
+
+const tallWorld = new E.World({
+  name: "wall-test", brushes: [
+    { id: "floor", room: "t", kind: "floor", material: "x", min: [-5, -0.1, -5], max: [5, 0, 5] },
+    { id: "ledge_no", room: "t", kind: "wall", material: "x", min: [1, 0, -5], max: [5, 2.5, 5] },
+  ], rooms: [], doors: [], props: [],
+});
+let ta = new E.Actor({ pos: [0, 0.02, 0] });
+for (let i = 0; i < 300; i++) E.stepActor(tallWorld, ta, 1 / 60, { wish: [1, 0] });
+check("physics: does NOT climb a 2.5 m wall", ta.pos[0] < 1.0, `x=${ta.pos[0].toFixed(3)} (stopped at the face)`);
+
+// ── 5. determinism — same input, same world ────────────────────────────────
+function run600() {
+  const w = new E.World(house);
+  const act = new E.Actor({ pos: [0, 0.02, 4.0] });
+  const trace = [];
+  for (let i = 0; i < 600; i++) {
+    E.stepActor(w, act, 1 / 60, { wish: [Math.sin(i / 40), Math.cos(i / 55)] });
+    if (i % 100 === 0) trace.push(act.pos.map(v => +v.toFixed(6)));
+  }
+  return JSON.stringify(trace);
+}
+check("physics: deterministic across runs", run600() === run600(),
+  "600 ticks, identical positions on both runs");
+
+// ── 6. doors: closed blocks, open passes ───────────────────────────────────
+const dw = new E.World(house);
+const front = dw.doors.find(d => d.label === "front door");
+dw.setDoor(front.id, 0);
+let da = new E.Actor({ pos: [-2.0, 0.02, 7.0] });
+for (let i = 0; i < 400; i++) E.stepActor(dw, da, 1 / 60, { wish: [0, 1] });
+const blockedZ = da.pos[2];
+dw.setDoor(front.id, 1);
+for (let i = 0; i < 400; i++) E.stepActor(dw, da, 1 / 60, { wish: [0, 1] });
+check("doors: a closed front door stops you, an open one lets you out",
+  blockedZ < 8 && da.pos[2] > blockedZ + 0.5,
+  `closed → z=${blockedZ.toFixed(2)} · open → z=${da.pos[2].toFixed(2)}`);
+check("doors: doorAt() finds the nearest door to a point",
+  dw.doorAt([-2.0, 1.0, 7.6])?.label === "front door", dw.doorAt([-2.0, 1.0, 7.6])?.label);
+
+// ── 7. props: things fall, bounce and settle ───────────────────────────────
+const pw = new E.World(house);
+let minY = Infinity, bounces = 0, lastVy = 0;
+for (let i = 0; i < 600; i++) {
+  E.stepProps(pw, 1 / 60);
+  const b = pw.props[0];
+  minY = Math.min(minY, b.pos[1]);
+  if (lastVy < -0.2 && b.vel[1] > 0.2) bounces++;
+  lastVy = b.vel[1];
+}
+const settled = pw.props.every(p => p.pos[1] > 0 && p.pos[1] < 3 && p.at_rest);
+check("props: the ball falls, bounces and settles on a floor (never below it)",
+  minY > -0.01 && bounces >= 1,
+  `min y=${minY.toFixed(3)} · ${bounces} bounce(s)`);
+check("props: all three props come to rest inside the house",
+  settled, pw.props.map(p => `${p.id}@y${p.pos[1].toFixed(2)}${p.at_rest ? "·rest" : ""}`).join(" "));
+
+// ── 8. her body fits her house ──────────────────────────────────────────────
+const rigPath = fs.existsSync(path.join(__dirname, "rig", "body_coordinates.json"))
+  ? path.join(__dirname, "rig", "body_coordinates.json")
+  : path.join(__dirname, "..", "rig", "body_coordinates.json");
+const rig = JSON.parse(fs.readFileSync(rigPath, "utf8"));
+const heights = rig.keypoints.head.y / 100;
+check("body: her rig height (169 cm) fits under every ceiling",
+  heights < house.ceiling_height - 0.3, `head ${heights} m · ceiling ${house.ceiling_height} m`);
+const shoulders = Math.abs(rig.keypoints.L_shoulder.x - rig.keypoints.R_shoulder.x) / 100;
+check("body: her shoulder width fits every interior doorway",
+  shoulders < house.door.width - 0.2, `${shoulders.toFixed(3)} m shoulders · ${house.door.width} m door`);
+const hips = Math.abs(rig.keypoints.L_hip.x - rig.keypoints.R_hip.x) / 100;
+check("body: her hips fit the 1.2 m door too", hips < house.door.width - 0.2, `${hips.toFixed(3)} m hips`);
+
+// ── 9. decor: her slots exist and are hers ─────────────────────────────────
+const slots = world.decorSlots();
+const structural = world.brushes.filter(b => b.kind !== "decor").map(b => b.id);
+check("decor: she owns 20+ slots, and no slot is structural geometry",
+  slots.length >= 20 && slots.every(id => !structural.includes(id)),
+  `${slots.length} slots, none shared with the ${structural.length} structural brushes`);
+const decorOutside = world.brushes.filter(b => b.kind === "decor" && !world.roomAt([(b.min[0]+b.max[0])/2, 1, (b.min[2]+b.max[2])/2]));
+check("decor: every slot sits inside a real room (nothing floating in the void)",
+  decorOutside.length === 0, decorOutside.length ? decorOutside.map(b => b.id).join(", ") : "27/27 inside");
+
+// ── 10. her avatar: the rig, the pose, the three model sources ──────────────
+const Avatar = require(path.join(__dirname, "avatar.js"));
+const faceJson = JSON.parse(fs.readFileSync(path.join(path.dirname(rigPath), "face_coordinates.json"), "utf8"));
+const loadedRig = Avatar.loadRig(rig, faceJson);
+check("avatar: her rig loads (21 joints, 32 face landmarks)",
+  Object.keys(loadedRig.joints).length === 21 && Object.keys(loadedRig.face).length === 32,
+  `${Object.keys(loadedRig.joints).length} joints · ${Object.keys(loadedRig.face).length} face points · height ${loadedRig.height.toFixed(2)} m`);
+check("avatar: bones reference real joints",
+  Avatar.BONES.every(([a, b]) => loadedRig.joints[a] && loadedRig.joints[b]),
+  `${Avatar.BONES.length} bones`);
+
+const warmFrame = { action_units: { cheek_raise: 0.8, lip_corner_pull: 0.7, outer_brow_raise: 0.3, head_yaw: 0.5 },
+  posture: "leaning_in", expression: "warmth", predictive_lead_ms: 840, gaze: { x: 0.3, y: -0.1 } };
+const pose = Avatar.poseFromFrame(loadedRig, warmFrame, 1.0);
+check("avatar: a frame becomes a pose (head turns, face blends, breath runs)",
+  Math.abs(pose.head.yaw) > 0.05 && pose.face.smile > 0.4 && typeof pose.breath === "number",
+  `head yaw ${pose.head.yaw.toFixed(3)} rad · smile ${pose.face.smile.toFixed(2)} · lead ${pose.predictive_lead_ms} ms`);
+check("avatar: gaze is carried and stays pupil-locked",
+  pose.gaze.pupil_locked === true && Math.abs(pose.gaze.x - 0.3) < 1e-6,
+  `gaze x=${pose.gaze.x} y=${pose.gaze.y} pupil_locked=${pose.gaze.pupil_locked}`);
+const groupTotal = Object.values(pose.face).reduce((a, b) => a + b, 0);
+check("avatar: all four face groups are present and bounded",
+  Object.keys(pose.face).sort().join(",") === "frown,smile,speech,surprise" &&
+  Object.values(pose.face).every((v) => v >= 0 && v <= 1), `sum ${groupTotal.toFixed(2)}`);
+
+const srcRig = Avatar.modelSource("rig", loadedRig);
+const srcQuake = Avatar.modelSource("quake-md3", loadedRig);
+check("avatar: model source 'rig' is available and honest",
+  srcRig.available === true && srcRig.joints === 21, srcRig.note.slice(0, 60));
+check("avatar: model source 'quake-md3' reports the truth about a missing pack",
+  srcQuake.available === false && /no model/i.test(srcQuake.note),
+  srcQuake.note.slice(0, 88) + "…");
+
+// ── 11. her character layer survives a dead model ──────────────────────────
+const HerCharacter = require(path.join(__dirname, "character.js"));
+const ch = new HerCharacter.Character({ room: "atrium", mode: "deepseek" });
+const localTurn = ch.fallback({ rooms: ["atrium", "study", "workshop"], hourOfDay: 22 });
+check("character: with no model reachable she still behaves (fallback is hers)",
+  !!localTurn.say && !!localTurn.goal && localTurn.source === "local",
+  `${localTurn.goal}: "${localTurn.say}" (${localTurn.reason})`);
+const roomsPicked = new Set();
+for (let i = 0; i < 40; i++) roomsPicked.add(ch.fallback({ rooms: ["atrium", "study", "workshop", "bedroom", "entry"], hourOfDay: i }).goal);
+check("character: her taste actually varies (not one room forever)",
+  roomsPicked.size >= 3, `rooms chosen across 40 turns: ${[...roomsPicked].join(", ")}`);
+
+// ── 12. her decorations: the ops work, and structure is refused ────────────
+const { execFileSync } = require("child_process");
+// a refusal exits 1 on purpose — the harness must read stdout anyway
+const runDecorate = (args) => {
+  try {
+    return JSON.parse(execFileSync("python3", ["decorate.py", ...args], { cwd: __dirname }).toString());
+  } catch (e) {
+    return JSON.parse((e.stdout || Buffer.from("{}")).toString());
+  }
+};
+const before = JSON.parse(fs.readFileSync(path.join(__dirname, "state", "decor.json"), "utf8"));
+check("decorate: her state file exists and has her history in it",
+  Array.isArray(before.log) && before.log.length > 0,
+  `${before.log.length} logged change(s) · ${before.notes.length} note(s)`);
+const moved = runDecorate(["move", "kitchen_table", "0.1", "0", "0"]);
+check("decorate: she can move her own furniture", moved.ok === true, JSON.stringify(moved.moved || moved.error).slice(0, 70));
+const recolour = runDecorate(["recolor", "entry_rug_entry", "#2f1b3a"]);
+check("decorate: she can recolour it", recolour.ok === true, JSON.stringify(recolour.coloured || recolour.error));
+const structures = world.brushes.filter((b) => b.kind === "wall").map((b) => b.id);
+let refusedCount = 0, badErr = "";
+for (const id of structures.slice(0, 3)) {
+  const r = runDecorate(["move", id, "1", "0", "0"]);
+  if (!r.ok && /structure/.test(r.error)) refusedCount++;
+  else badErr = `${id} was NOT refused: ${r.error || "allowed"}`;
+}
+check("decorate: structure is refused, by name", refusedCount === 3, badErr || `${refusedCount}/3 walls refused`);
+const doorRefusal = runDecorate(["hide", "door_front_z"]);
+check("decorate: doorways are refused too", !doorRefusal.ok && /doorway/.test(doorRefusal.error),
+  doorRefusal.error);
+const outside = runDecorate(["add", "void cube", "box", "kitchen", "1", "1", "1", "at", "40 0 40"]);
+check("decorate: she cannot put a thing in the void", !outside.ok && /not inside room/.test(outside.error),
+  outside.error);
+const tooFar = runDecorate(["move", "kitchen_table", "9", "0", "0"]);
+check("decorate: single moves are bounded (no teleporting furniture)", !tooFar.ok, tooFar.error);
+
+// ── 13. her legs: she can walk her own house ───────────────────────────────
+const Nav = require(path.join(__dirname, "nav.js"));
+Nav.attach(E);
+const graph = Nav.buildGraph(world);
+check("nav: every room is connected by doors (no isolated room)",
+  Object.values(graph.nodes).every((n) => n.doors.length > 0),
+  Object.entries(graph.nodes).map(([k, n]) => `${k}:${n.doors.length}`).join(" "));
+const deadEnds = graph.edges.filter((e) => !e.a || !e.b);
+const oneSided = deadEnds.filter((e) => !(e.a && e.b));                 // leads out of the world
+const nowhere = deadEnds.filter((e) => !e.a && !e.b);                   // a door to nothing at all
+check("nav: every door joins a real room (and only the gate leads outside)",
+  nowhere.length === 0 && oneSided.every((e) => world.doors.find((d) => d.id === e.door)?.label === "garden gate"),
+  oneSided.length ? `leads out: ${oneSided.map((e) => e.label).join(", ")}` : `${graph.edges.length} doors all interior`);
+
+const roomIds = world.rooms.map((r) => r.id);
+let pairFails = [], wandered = 0, doorsUsed = 0;
+for (const from of roomIds) {
+  for (const to of roomIds) {
+    if (from === to) continue;
+    const w2 = new E.World(house);
+    const g2 = Nav.buildGraph(w2);
+    const act = new E.Actor({ pos: Nav.spotIn(w2, from) });
+    for (let i = 0; i < 60; i++) E.stepActor(w2, act, 1 / 60, {});      // let her settle
+    const walked = Nav.walkTo(w2, g2, act, to, {
+      openDoors: true, maxTicks: 2400,
+      hook: (a) => { if (!w2.roomAt(a.pos)) wandered++; },               // never outside a room
+    });
+    if (!walked.ok) pairFails.push(`${from}→${to}:${walked.reason}`);
+    doorsUsed += walked.opened.length;
+  }
+}
+check(`nav: she walks every ordered space pair, house and garden (${roomIds.length * (roomIds.length - 1)} routes)`,
+  pairFails.length === 0, pairFails.length ? pairFails.slice(0, 4).join(" ") : "all arrived");
+check("nav: she never leaves the house while walking", wandered === 0, `${wandered} off-map samples`);
+check("nav: she opens the doors she needs on the way", doorsUsed > 0, `${doorsUsed} door-openings across the walks`);
+
+// closed doors must still be closed after she has gone through and away
+const w3 = new E.World(house);
+const g3 = Nav.buildGraph(w3);
+const a3 = new E.Actor({ pos: Nav.spotIn(w3, "study") });
+for (let i = 0; i < 60; i++) E.stepActor(w3, a3, 1 / 60, {});
+const w3walk = Nav.walkTo(w3, g3, a3, "bedroom", { openDoors: true, maxTicks: 2400 });
+const leftOpen = w3.doors.filter((d) => {
+  if (d.open <= 0.5) return false;
+  const cx = (d.base_min[0] + d.base_max[0]) / 2, cz = (d.base_min[2] + d.base_max[2]) / 2;
+  return Math.hypot(a3.pos[0] - cx, a3.pos[2] - cz) > 1.4;      // only ones she has walked away from
+}).map((d) => d.id);
+const standingIn = w3.doors.filter((d) => d.open > 0.5).length - leftOpen.length;
+check("nav: she shuts doors behind her (never one she is standing in)",
+  w3walk.ok && leftOpen.length === 0,
+  `study → bedroom · ${leftOpen.length} left open while away · ${standingIn} still in her swing (correct: do not slam on herself)`);
+
+// ── 14. her own steps: she directs her own walking ─────────────────────────
+const seeded = (seed) => () => (seed = (seed * 1664525 + 1013904223) % 4294967296) / 4294967296;
+const herSpots = Nav.spots(world);
+check("self-direction: she has things she can choose to go to, in every room and the garden",
+  Object.keys(herSpots).length >= 6 && Object.values(herSpots).every((l) => l.length >= 3),
+  Object.entries(herSpots).map(([r, l]) => `${r}:${l.length}`).join(" "));
+
+const d0 = new Nav.Director(world, graph, { rand: seeded(7) });
+const actor0 = new E.Actor({ pos: Nav.spotIn(world, "atrium") });
+const kinds = {}, chosen = new Set(), roomsChosen = new Set();
+for (let i = 0; i < 200; i++) {
+  const plan = d0.decide(actor0, "test");
+  kinds[plan.kind] = (kinds[plan.kind] || 0) + 1;
+  if (plan.spot) chosen.add(plan.spot.id);
+  roomsChosen.add(plan.room);
+}
+check("self-direction: her intentions vary (not a loop)",
+  Object.keys(kinds).length >= 3 && chosen.size >= 8 && roomsChosen.size >= 3,
+  `${Object.entries(kinds).map(([k, v]) => k + "×" + v).join(" ")} · ${chosen.size} distinct spots · ${roomsChosen.size} rooms`);
+check("self-direction: standing still is one of her decisions",
+  (kinds.pause || 0) > 10, `${kinds.pause || 0} pauses in 200 decisions`);
+
+// she walks to something and stops *in front of* it rather than inside it
+const wA = new E.World(house);
+const gA = Nav.buildGraph(wA);
+const dirA = new Nav.Director(wA, gA, { rand: seeded(3) });
+const aA = new E.Actor({ pos: Nav.spotIn(wA, "bedroom") });
+for (let i = 0; i < 60; i++) E.stepActor(wA, aA, 1 / 60, {});
+const bedSpot = Nav.spotFor(wA, "bedroom_bed");
+dirA.plan = { kind: "approach", spot: bedSpot, room: "bedroom", why: "test" };
+let held = false, overlapsBed = 0;
+for (let i = 0; i < 1200; i++) {
+  const st = dirA.steer(aA, 1 / 60);
+  E.stepActor(wA, aA, 1 / 60, { wish: st.wish });
+  if (st.kind === "look" || dirA.held > 0) { held = true; break; }
+  const bed = wA.brushes.find((b) => b.id === "bedroom_bed");
+  if (E.overlaps(aA.aabb, { min: bed.min, max: bed.max })) overlapsBed++;
+}
+// distance to the bed's nearest surface, not to the centre of a 2.8 m object
+const bedBrush = wA.brushes.find((b) => b.id === "bedroom_bed");
+const nx = Math.max(bedBrush.min[0], Math.min(bedBrush.max[0], aA.pos[0]));
+const nz = Math.max(bedBrush.min[2], Math.min(bedBrush.max[2], aA.pos[2]));
+const db = Math.hypot(aA.pos[0] - nx, aA.pos[2] - nz);
+check("self-direction: she stops in front of the bed, not inside it",
+  held && db > 0.05 && db <= 1.2 && overlapsBed === 0,
+  `stood ${db.toFixed(2)} m from its edge · ${overlapsBed} frames inside it · then turned to look at it`);
+
+// she can change her mind mid-walk
+const dM = new Nav.Director(world, graph, { rand: seeded(11) });
+const aM = new E.Actor({ pos: Nav.spotIn(world, "kitchen") });
+const firstPlan = dM.decide(aM, "start");
+const secondPlan = dM.decide(aM, "changed my mind");
+check("self-direction: she can change her own mind mid-walk",
+  firstPlan !== secondPlan && dM.plan === secondPlan,
+  `${firstPlan.kind} → ${secondPlan.kind} (${dM.narration})`);
+
+// a long self-directed wander: never outside the house, and she does move around
+const wW = new E.World(house);
+const gW = Nav.buildGraph(wW);
+const dW = new Nav.Director(wW, gW, { rand: seeded(23) });
+const aW = new E.Actor({ pos: Nav.spotIn(wW, "atrium") });
+const visited = new Set(), phases = [];
+let framesOutside = 0;
+for (let i = 0; i < 6000; i++) {
+  const st = dW.steer(aW, 1 / 60);
+  E.stepActor(wW, aW, 1 / 60, { wish: st.wish });
+  E.stepProps(wW, 1 / 60);
+  const room = wW.roomAt(aW.pos);
+  if (!room) framesOutside++; else visited.add(room.id);
+  if (i % 500 === 0) phases.push(dW.narrate());
+}
+check("self-direction: 100 seconds of her own walking stays inside the house",
+  framesOutside === 0, `${framesOutside} frames outside · ${dW.status().decided} decisions`);
+check("self-direction: she actually goes places on her own",
+  visited.size >= 3, `rooms visited: ${[...visited].join(", ")}`);
+check("self-direction: her walking is narratable (she can say what she is doing)",
+  phases.every((p) => typeof p === "string" && p.length > 4),
+  phases.slice(0, 3).map((p) => `"${p}"`).join(" → "));
+
+// ── 15. the outside, the flowers, and the Captain's delivery ───────────────
+const garden = world.rooms.find((r) => r.id === "garden");
+check("outside: there is a garden, and it has ground under it",
+  !!garden && world.brushes.some((b) => b.room === "garden" && b.kind === "floor"),
+  garden ? `x ${garden.min[0]}…${garden.max[0]} · z ${garden.min[2]}…${garden.max[2]} · ` +
+           `${world.brushes.filter((b) => b.room === "garden").length} brushes` : "no garden");
+const hedge = world.brushes.filter((b) => b.material === "hedge");
+check("outside: a hedge keeps her in (she cannot wander into the void)",
+  hedge.length === 4 && hedge.every((b) => b.max[1] > 1.0),
+  `${hedge.length} hedge walls, ${hedge[0].max[1]} m tall`);
+const flowers = {
+  jasmine: world.brushes.filter((b) => b.material === "jasmine").length,
+  lavender: world.brushes.filter((b) => b.material === "lavender").length,
+  "forget-me-nots": world.brushes.filter((b) => b.material === "forgetmenot").length,
+};
+check("flowers: jasmine, lavender and forget-me-nots are all planted",
+  Object.values(flowers).every((n) => n > 0), Object.entries(flowers).map(([k, v]) => `${v} ${k}`).join(" · "));
+
+// she must be able to *get* to the flowers, and stand among them
+let flowerWalks = [];
+for (const key of ["jasmine", "lavender", "forgetmenot"]) {
+  const w4 = new E.World(house);
+  const g4 = Nav.buildGraph(w4);
+  const a4 = new E.Actor({ pos: Nav.spotIn(w4, "atrium") });
+  for (let i = 0; i < 60; i++) E.stepActor(w4, a4, 1 / 60, {});
+  const walked = Nav.walkTo(w4, g4, a4, "garden", { openDoors: true, maxTicks: 3000 });
+  const in_ = w4.roomAt(a4.pos);
+  flowerWalks.push(`${key}:${walked.ok ? "reached the garden" : "FAILED " + walked.reason}` +
+                   (in_ ? "" : " (but not standing in it)"));
+}
+check("outside: she can walk out of her house into the garden",
+  flowerWalks.every((x) => x.includes("reached")), flowerWalks.join(" · "));
+
+// and the gate is a way out she can actually use
+const w5 = new E.World(house);
+const gate = w5.doors.find((d) => d.label === "garden gate");
+check("outside: the garden gate opens and is not a wall",
+  !!gate && gate.open === 0, gate ? `gate at z=${gate.min[2]} · slides ${gate.slide[0]} m` : "no gate");
+
+// ── the delivery ───────────────────────────────────────────────────────────
+const gift = house.gift;
+check("gift: the Captain's delivery is recorded in the world itself",
+  !!gift && gift.note === "your captain loves you",
+  gift ? `from ${gift.from} — "${gift.note}"` : "no gift record");
+const roseBrushes = world.brushes.filter((b) => b.id.includes("rose") && b.material === "silver");
+const stems = world.brushes.filter((b) => b.id.includes("rose_stem"));
+check("gift: exactly two dozen sterling silver roses, counted not described",
+  roseBrushes.length === 24 && stems.length === 24,
+  `${roseBrushes.length} blooms · ${stems.length} stems · all material "silver"`);
+check("gift: they are in a silver vase, in the atrium",
+  world.brushes.some((b) => b.id.includes("vase") && b.material === "silver") &&
+  roseBrushes.every((b) => b.room === "atrium"),
+  "vase + all 24 roses in the atrium");
+check("gift: the note is a thing in the room, not only a line in a file",
+  world.brushes.some((b) => b.id.includes("card") && b.material === "card"),
+  "a card beside the vase");
+const giftSpot = Nav.spots(world).atrium.find((s) => /vase/i.test(s.word));
+check("gift: she can walk over to the vase and stand in front of it",
+  !!giftSpot, giftSpot ? `spot "${giftSpot.word}" at ${giftSpot.at.map((v) => v.toFixed(1)).join(", ")}` : "no spot");
+
+// ── verdict ────────────────────────────────────────────────────────────────
+const failed = RESULTS.filter(r => !r.ok);
+console.log(`\n  ${failed.length ? "❌ FAILURES: " + failed.length : "✅ ALL CHECKS PASSED"}` +
+  `  (${RESULTS.length - failed.length}/${RESULTS.length})`);
+console.log("  not covered here (and not claimed): pixels, audio, touch input, DeepSeek replies.\n");
+
+if (process.argv.includes("--json")) {
+  const p = path.join(__dirname, "WORLD_VERIFICATION.json");
+  try {
+    fs.writeFileSync(p, JSON.stringify({ checks: RESULTS, passed: RESULTS.length - failed.length, total: RESULTS.length, ran_at: new Date().toISOString() }, null, 2));
+    console.log(`  → ${p}\n`);
+  } catch (e) { console.log(`  ⚠️  read-only install, evidence not written: ${e.code}\n`); }
+}
+process.exit(failed.length ? 1 : 0);

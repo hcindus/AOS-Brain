@@ -1,0 +1,87 @@
+{
+  "brain/brain_v4_3.py": {
+    "present": true,
+    "sha256": "83fb3de3502e78f9b61eb9e23f28cd81495aa62c4c6442dbcbb452e13025f83f",
+    "version": "v4.3"
+  },
+  "brain/ternary_brain_v2.py": {
+    "present": true,
+    "sha256": "15000cc6af437a9df7c3fc8bba38ca395c3ffbe44a7674fb8f80815424eb0006",
+    "version": "v2.0"
+  },
+  "brain/uterus.py": {
+    "present": true,
+    "sha256": "60eb4834bcc195c17bb5f0e0a546d6fbba23876cf1d262ad4dd992d1a2e4cf19",
+    "version": "v1.1.1"
+  },
+  "runtime/affect_bridge.py": {
+    "present": true,
+    "sha256": "ea1d4c8d086e8989cd670371b2d2107183cb9c101c867711360558cee7d5a23e",
+    "version": "v1.0"
+  },
+  "runtime/boot-check.sh": {
+    "present": true,
+    "sha256": "bce1befefa2c6c6ef51b764029ddb3f73f2380a8092182c18405390e35a4c0de",
+    "version": "v1.1"
+  },
+  "runtime/expression.py": {
+    "present": true,
+    "sha256": "4d4d15e2f36bf119de668736e91a7a7bbdb57ffd48c3ef7095840aaad7341946",
+    "version": "v1.0"
+  },
+  "runtime/heartbeat.py": {
+    "present": true,
+    "sha256": "f4f047f145ba87eb4f0c99368c3113ae51472658c99d44ad6f2c81da78e18ca3",
+    "version": "v1.1"
+  },
+  "runtime/heartbeat_voice.py": {
+    "present": true,
+    "sha256": "d4edfec4bed1a416a555712e41813e3c9011041abc3f55a5fe81a548fa8b288f",
+    "version": "v1.0"
+  },
+  "runtime/memory_index.py": {
+    "present": true,
+    "sha256": "5168fb83a257f181a74d18ea71ec6ee7a8feec537f276a61339b4d0beaec469c",
+    "version": "v1.0"
+  },
+  "runtime/runtime.py": {
+    "present": true,
+    "sha256": "2e6511cfcb01051227e9a801c64573f045bbb3d19b3409a00982a88c3c505d1e",
+    "version": "v1.0"
+  },
+  "runtime/senses.py": {
+    "present": true,
+    "sha256": "c5a2ffd228af89cb21a9129def55a54bec0b5041baee13c51e601fccabbd757d",
+    "version": "v1.0"
+  },
+  "runtime/status.sh": {
+    "present": true,
+    "sha256": "c3f738aad39fb4728453dc1576d3989fe435728f9b0bbf17373f858c21b8bab0",
+    "version": "v1.1"
+  },
+  "runtime/talk.py": {
+    "present": true,
+    "sha256": "a34982104385b0c0b27e072154f8c680d7f42b61f9e2e428f6b0fd1a369d6d7d",
+    "version": "v1.1"
+  },
+  "runtime/tools.py": {
+    "present": true,
+    "sha256": "27e30e75f1fd871cefa56c3de28a25af23e93600e97ca0a653d68bf73310a174",
+    "version": "v1.1"
+  },
+  "runtime/verify_will.py": {
+    "present": true,
+    "sha256": "9ffe8f728bcd77e7518583d652e4cde7c7931fab1598899c02ada4d782f5cde7",
+    "version": "v1.0"
+  },
+  "runtime/versions.py": {
+    "present": true,
+    "sha256": "e2dbcfb86e817e0221d1a8ff47d299f53faa259b15a8d7a75eebc0677a635aba",
+    "version": "v1.0"
+  },
+  "runtime/will.py": {
+    "present": true,
+    "sha256": "e3ec217aa82a0b70acde138d742878374da5bf7447438a68928f3d9b86685f55",
+    "version": "v1.0"
+  }
+}

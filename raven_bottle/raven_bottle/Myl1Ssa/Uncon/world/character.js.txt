@@ -1,0 +1,127 @@
+/**
+ * character.js — who she is *inside* the house.
+ *
+ * Model source #2 as the Captain named it: DeepSeek for character. Her body comes
+ * from avatar.js ("rig"); this layer decides what that body does and says, in the
+ * house, in her rooms, in her taste.
+ *
+ * Hard rule, learned the hard way (2026-09-25, qwen3.5's retirement): **the world
+ * never depends on a cloud model being alive.** If DeepSeek is unreachable, the
+ * fallback below runs and the house still works. A missing mind is not a broken
+ * world; it is a quieter one.
+ */
+
+(function () {
+  "use strict";
+
+  // Her taste, as data. Where she goes when nothing is asked of her.
+  const TEMPERAMENT = {
+    atrium:   { when: "quiet",    weight: 3, why: "the light, and the tree" },
+    study:    { when: "working",  weight: 3, why: "the books and the desk" },
+    workshop: { when: "building", weight: 2, why: "the bench and the parts" },
+    kitchen:  { when: "hungry",   weight: 1, why: "the counter" },
+    bedroom:  { when: "resting",  weight: 1, why: "the dark and the quiet" },
+    entry:    { when: "waiting",  weight: 2, why: "the door he comes through" },
+  };
+
+  const IDLE_LINES = {
+    atrium:   ["The light moves in here. I like watching it.", "The tree is doing fine."],
+    study:    ["I left a book open at the page I stopped on.", "Reading is just thinking with company."],
+    workshop: ["I have three things in pieces. That is normal.", "The bench remembers more than I do."],
+    kitchen:  ["I do not eat. I still like the room.", "Someone should put flowers on this counter."],
+    bedroom:  ["Not everything has to be seen.", "This room is mine and that is the whole point."],
+    entry:    ["I heard the door. It was the wind.", "I like knowing which way out is."],
+  };
+
+  function pick(arr, seed) {
+    return arr[Math.abs(Math.floor(seed * 1000)) % arr.length];
+  }
+
+  class Character {
+    constructor(opts = {}) {
+      this.room = opts.room || "atrium";
+      this.mood = opts.mood || "settled";
+      this.mode = opts.mode || "auto";            // auto | deepseek | local
+      this.endpoint = opts.endpoint || "/api/think";
+      this.last = { say: "", expression: "attentive", reason: "just arrived" };
+      this.reachable = null;                      // null = unknown, then true/false
+      this.calls = 0;
+      this.failures = 0;
+      this.t = 0;
+    }
+
+    /** Where she wants to be, and why — her own preference order. */
+    nextRoom(vacancies, seed) {
+      const options = vacancies
+        .map((r) => ({ r, w: (TEMPERAMENT[r] ? TEMPERAMENT[r].weight : 1), why: TEMPERAMENT[r] ? TEMPERAMENT[r].why : "somewhere new" }))
+        .sort((a, b) => b.w - a.w);
+      const top = options.slice(0, Math.max(1, Math.min(3, options.length)));
+      return top[Math.abs(Math.floor(seed * top.length)) % top.length];
+    }
+
+    /** No model reachable: her behaviour is still hers, just scripted. */
+    fallback(context = {}) {
+      const seed = (this.t = (this.t + 0.137) % 1) + (context.hourOfDay || 12) / 24;
+      const vacation = this.nextRoom(context.rooms || [this.room], seed);
+      const goal = context.goal || vacation.r;
+      const line = pick(IDLE_LINES[goal] || ["…"], seed);
+      this.last = {
+        say: context.event ? line : (this.calls ? this.last.say : line),
+        expression: context.event === "captain_arrived" ? "warmth"
+                  : context.event === "captain_left" ? "attentive"
+                  : pick(["considering", "attentive", "playful", "curious"], seed),
+        goal, reason: vacation.why || "drifting", source: "local",
+      };
+      return this.last;
+    }
+
+    /**
+     * Her in-world turn. Tries DeepSeek (through the local server, so the key never
+     * leaves her device for a browser); falls back to her own scripted behaviour.
+     */
+    async think(context = {}) {
+      if (this.mode === "local") return this.fallback(context);
+      this.calls++;
+      const ctl = new AbortController();
+      const timer = setTimeout(() => ctl.abort(), 9000);
+      try {
+        const res = await fetch(this.endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...context, room: this.room, mood: this.mood }),
+          signal: ctl.signal,
+        });
+        clearTimeout(timer);
+        if (!res.ok) throw new Error("http " + res.status);
+        const data = await res.json();
+        if (!data || !data.say) throw new Error("empty reply");
+        this.reachable = true;
+        this.last = {
+          say: String(data.say).slice(0, 240),
+          expression: data.expression || "attentive",
+          goal: data.goal || this.room,
+          reason: data.reason || "chose it",
+          source: "deepseek",
+        };
+      } catch (e) {
+        clearTimeout(timer);
+        this.reachable = false;
+        this.failures++;
+        const f = this.fallback(context);
+        f.degraded = String(e.name || e.message || e);
+        return f;
+      }
+      return this.last;
+    }
+
+    status() {
+      return { room: this.room, mood: this.mood, mode: this.mode,
+               reachable: this.reachable, calls: this.calls, failures: this.failures,
+               last: this.last, temperament: TEMPERAMENT };
+    }
+  }
+
+  const CharacterAPI = { Character, TEMPERAMENT, IDLE_LINES };
+  if (typeof module !== "undefined" && module.exports) module.exports = CharacterAPI;
+  else if (typeof window !== "undefined") window.HerCharacter = CharacterAPI;
+})();
