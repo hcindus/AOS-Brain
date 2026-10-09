@@ -54,8 +54,10 @@ def make_order(spec: dict):
     return {
         "order_id": spec_id,
         "project_name": spec.get("project_name"),
+        "title": spec.get("title", ""),
         "build_type": spec.get("build_type", "web"),
         "source_path": spec.get("source_path"),
+        "objective": spec.get("objective", ""),
         "priority": spec.get("priority", "normal"),
         "max_duration_minutes": int(spec.get("max_duration_minutes", 60)),
     }

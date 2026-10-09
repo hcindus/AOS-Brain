@@ -1,0 +1,10 @@
+{
+  "spec_id": "SPEC-CHARLOADER-004",
+  "title": "Raven Character Loader — presence engine + universal adapter → runnable embodiment stack",
+  "project_name": "agentic-software",
+  "build_type": "codegen",
+  "source_path": "/root/.openclaw/workspace/characters/myl1ssa/Myl1Ssa/",
+  "priority": "high",
+  "max_duration_minutes": 90,
+  "objective": "Write a single runnable Python module that loads a character (Raven) into a body via the universal adapter HAL. Requirements: (1) import the existing PresenceEngine from brain/presence_engine.py; (2) import the universal adapter layer from adapters/ (get_adapter, frame_from_presence); (3) provide a load_character(name, platform) function that instantiates the engine, binds a BodyAdapter, and returns an object with .express(expression) and .status() methods; (4) run end-to-end when executed — a demo that loads 'raven' and expresses 'warmth', 'delight', 'curious', 'boundary' via the blender adapter and prints the result. Keep it self-contained and runnable with `python3 <module>.py`."
+}

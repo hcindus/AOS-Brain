@@ -28,25 +28,25 @@ async def validate_sdk_health(build_type: str) -> dict:
     Raises SDKNotInstalledError or SDKCorruptedError if not.
     """
     activity.logger.info(f"Validating SDK for {build_type}")
-    
+
     if build_type == "apk":
         # Check Android SDK
         sdk_path = os.environ.get("ANDROID_SDK", "/opt/android-sdk")
         if not os.path.exists(sdk_path):
             raise SDKNotInstalledError(f"Android SDK not found at {sdk_path}")
-        
+
         # Quick sanity: can we run sdkmanager?
         sdkmanager = Path(sdk_path) / "cmdline-tools" / "latest" / "bin" / "sdkmanager"
         if not sdkmanager.exists():
             raise SDKCorruptedError("sdkmanager not found")
-        
+
         # Verify build-tools exists
         build_tools = Path(sdk_path) / "build-tools"
         if not build_tools.exists() or not any(build_tools.iterdir()):
             raise SDKCorruptedError("No build-tools installed")
-        
+
         return {"sdk_path": str(sdk_path), "valid": True}
-    
+
     elif build_type == "web":
         # Check Node/npm
         try:
@@ -61,7 +61,7 @@ async def validate_sdk_health(build_type: str) -> dict:
             return {"node_version": result.stdout.strip(), "valid": True}
         except FileNotFoundError:
             raise SDKNotInstalledError("Node.js not installed")
-    
+
     elif build_type == "docker":
         # Check Docker
         try:
@@ -76,7 +76,15 @@ async def validate_sdk_health(build_type: str) -> dict:
             return {"docker_available": True, "valid": True}
         except FileNotFoundError:
             raise SDKNotInstalledError("Docker not installed")
-    
+
+    elif build_type == "codegen":
+        # Check a coding agent (pi) is available for spec→code generation
+        import shutil as _shutil
+        pi_bin = _shutil.which("pi")
+        if not pi_bin:
+            raise SDKNotInstalledError("Coding agent 'pi' not installed")
+        return {"coding_agent": "pi", "path": pi_bin, "valid": True}
+
     return {"valid": True, "message": "No validation needed"}
 
 
@@ -87,14 +95,14 @@ async def allocate_build_resources(order_id: str, build_type: str, priority: str
     Returns resource handles that must be cleaned up.
     """
     activity.logger.info(f"Allocating resources for {order_id}")
-    
+
     # Create workspace
     timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
     workspace = f"/tmp/darkfactory/{order_id}_{timestamp}"
     os.makedirs(workspace, exist_ok=True)
     os.makedirs(f"{workspace}/logs", exist_ok=True)
     os.makedirs(f"{workspace}/output", exist_ok=True)
-    
+
     return {
         "order_id": order_id,
         "workspace": workspace,
@@ -114,6 +122,7 @@ async def execute_build(order, resources) -> dict:
     build_type = order.get("build_type") if isinstance(order, dict) else order.build_type
     source = order.get("source_path") if isinstance(order, dict) else order.source_path
     project = order.get("project_name") if isinstance(order, dict) else order.project_name
+    objective = order.get("objective", "") if isinstance(order, dict) else getattr(order, "objective", "")
 
     activity.logger.info(f"Building {oid}")
 
@@ -131,9 +140,11 @@ async def execute_build(order, resources) -> dict:
             result = await _build_web(source, resources, logs)
         elif build_type == "docker":
             result = await _build_docker(source, project, resources, logs)
+        elif build_type == "codegen":
+            result = await _build_codegen(source, objective, project, resources, logs)
         else:
             raise ValueError(f"Unknown build type: {build_type}")
-        
+
         activity.heartbeat("Build complete, verifying...")
         return {
             "success": result["success"],
@@ -142,7 +153,7 @@ async def execute_build(order, resources) -> dict:
             "logs": logs,
             "error_message": result.get("error"),
         }
-        
+
     except Exception as e:
         activity.logger.error(f"Build failed: {e}")
         return {
@@ -155,7 +166,7 @@ async def execute_build(order, resources) -> dict:
 
 
 async def _build_apk(source, resources, logs):
-    """Build an Android APK — native Gradle first, PWA/Bubblewrap fallback."""
+    """Build an Android APK - native Gradle first, PWA/Bubblewrap fallback."""
     import asyncio
 
     output_dir = resources["output_dir"]
@@ -232,11 +243,11 @@ async def _build_apk(source, resources, logs):
 async def _build_web(source, resources, logs):
     """Build a web app."""
     output_dir = resources["output_dir"]
-    
+
     # Detect build tool
     if (Path(source) / "package.json").exists():
         activity.heartbeat("Running npm build...")
-        
+
         # Install deps
         process = await asyncio.create_subprocess_exec(
             "npm", "ci",
@@ -246,7 +257,7 @@ async def _build_web(source, resources, logs):
         )
         stdout, stderr = await process.communicate()
         logs.append(stdout.decode())
-        
+
         # Build
         process = await asyncio.create_subprocess_exec(
             "npm", "run", "build",
@@ -256,7 +267,7 @@ async def _build_web(source, resources, logs):
         )
         stdout, stderr = await process.communicate()
         logs.append(stdout.decode())
-        
+
         # Find dist/build folder
         for dist_name in ["dist", "build", "out"]:
             dist_path = Path(source) / dist_name
@@ -264,22 +275,22 @@ async def _build_web(source, resources, logs):
                 # Copy to output
                 dest = Path(output_dir) / dist_name
                 shutil.copytree(dist_path, dest, dirs_exist_ok=True)
-                
+
                 # Calculate total size
                 total_size = sum(f.stat().st_size for f in dest.rglob("*") if f.is_file())
-                
+
                 return {
                     "success": True,
                     "output_path": str(dest),
                     "file_size": total_size,
                 }
-    
+
     # Simple static site - just copy
     activity.heartbeat("Copying static files...")
     dest = Path(output_dir) / "site"
     shutil.copytree(source, dest, dirs_exist_ok=True)
     total_size = sum(f.stat().st_size for f in dest.rglob("*") if f.is_file())
-    
+
     return {
         "success": True,
         "output_path": str(dest),
@@ -290,19 +301,19 @@ async def _build_web(source, resources, logs):
 async def _build_docker(source, project, resources, logs):
     """Build a Docker image."""
     tag = f"darkfactory/{project}:{datetime.utcnow().strftime('%Y%m%d')}"
-    
+
     activity.heartbeat(f"Building Docker image {tag}...")
-    
+
     process = await asyncio.create_subprocess_exec(
         "docker", "build", "-t", tag, ".",
         cwd=source,
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,
     )
-    
+
     stdout, stderr = await process.communicate()
     logs.append(stdout.decode())
-    
+
     if process.returncode == 0:
         # Get image size
         size_process = await asyncio.create_subprocess_exec(
@@ -310,17 +321,66 @@ async def _build_docker(source, project, resources, logs):
             stdout=asyncio.subprocess.PIPE,
         )
         size_out, _ = await size_process.communicate()
-        
+
         return {
             "success": True,
             "output_path": tag,
             "file_size": 0,  # Parse from docker output if needed
         }
-    
+
     return {
         "success": False,
         "error": stderr.decode(),
     }
+
+
+async def _build_codegen(source, objective, project, resources, logs):
+    """Generate code from a spec objective using the 'pi' coding agent."""
+    output_dir = resources["output_dir"]
+
+    if not objective:
+        return {"success": False, "error": "No objective provided for codegen build"}
+
+    workdir = Path(output_dir)
+    workdir.mkdir(parents=True, exist_ok=True)
+
+    # If source_path points at existing context, copy it in so the agent extends it.
+    if source and Path(source).exists():
+        shutil.copytree(source, workdir / "context", dirs_exist_ok=True)
+
+    prompt = (
+        f"{objective}\n\n"
+        f"Project: {project}\n"
+        f"Write the code into the current directory. Use read/bash/edit/write tools "
+        f"to produce a complete, runnable implementation, then verify it works."
+    )
+
+    activity.heartbeat("Generating code with pi...")
+    try:
+        process = await asyncio.create_subprocess_exec(
+            "pi", "--print", "--approve", "--mode", "text",
+            "--tools", "read,bash,edit,write",
+            prompt,
+            cwd=str(workdir),
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+        )
+        stdout, stderr = await process.communicate()
+    except FileNotFoundError:
+        return {"success": False, "error": "coding agent 'pi' not found"}
+
+    if stdout:
+        logs.append(stdout.decode()[-4000:])
+    if stderr:
+        logs.append(stderr.decode()[-4000:])
+
+    # Collect files the agent produced (excluding the copied context dir).
+    files = [f for f in workdir.rglob("*") if f.is_file() and "context" not in f.parts]
+    if not files:
+        return {"success": False, "error": "codegen produced no files"}
+
+    total = sum(f.stat().st_size for f in files)
+    return {"success": True, "output_path": str(workdir), "file_size": total}
 
 
 @activity.defn
@@ -330,18 +390,18 @@ async def verify_build_output(output_path: str, expected_size: int) -> bool:
     Patricia's #1 rule: "44 done, 0 files" is NOT okay.
     """
     activity.logger.info(f"Verifying output at {output_path}")
-    
+
     if not output_path:
         activity.logger.error("No output path provided")
         return False
-    
+
     path = Path(output_path)
-    
+
     # Must exist
     if not path.exists():
         activity.logger.error(f"Output does not exist: {output_path}")
         return False
-    
+
     # Must have size > 0
     if path.is_file():
         size = path.stat().st_size
@@ -350,7 +410,7 @@ async def verify_build_output(output_path: str, expected_size: int) -> bool:
             return False
         activity.logger.info(f"Verified file: {size} bytes")
         return True
-    
+
     elif path.is_dir():
         # Directory must contain files
         files = list(path.rglob("*"))
@@ -361,7 +421,7 @@ async def verify_build_output(output_path: str, expected_size: int) -> bool:
         total_size = sum(f.stat().st_size for f in files)
         activity.logger.info(f"Verified directory: {len(files)} files, {total_size} bytes")
         return True
-    
+
     return False
 
 
@@ -465,7 +525,7 @@ async def deploy_blue_green(project_name: str, output_path: str) -> dict:
 async def notify_completion(order_id: str, result: dict) -> None:
     """Send completion notification."""
     activity.logger.info(f"Order {order_id} completed: {result}")
-    
+
     # Could send to Discord, Telegram, email, etc.
     # For now, just log
     print(f"✅ DARK FACTORY: {order_id} COMPLETE")
@@ -477,7 +537,7 @@ async def notify_completion(order_id: str, result: dict) -> None:
 async def notify_escalation(order_id: str, stage: str, reason: str) -> None:
     """Escalate stuck or failed builds."""
     activity.logger.error(f"ESCALATION: {order_id} stuck at {stage}: {reason}")
-    
+
     # This is where you'd:
     # - Send Discord alert
     # - Create PagerDuty incident
@@ -491,7 +551,7 @@ async def notify_escalation(order_id: str, stage: str, reason: str) -> None:
 async def cleanup_resources(order_id: str) -> None:
     """Clean up build workspace."""
     activity.logger.info(f"Cleaning up resources for {order_id}")
-    
+
     # Find and remove workspace directories
     import glob
     workspaces = glob.glob(f"/tmp/darkfactory/{order_id}_*")

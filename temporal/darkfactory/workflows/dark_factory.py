@@ -29,10 +29,12 @@ class DarkFactoryOrder:
     """A job order for Dark Factory."""
     order_id: str
     project_name: str
-    build_type: str  # "apk", "ipa", "web", "docker"
+    build_type: str  # "apk", "ipa", "web", "docker", "codegen"
     source_path: str
     priority: str = "normal"  # "low", "normal", "high", "critical"
     max_duration_minutes: int = 60
+    objective: str = ""  # for codegen builds — what to generate
+    title: str = ""
 
 
 @dataclass
