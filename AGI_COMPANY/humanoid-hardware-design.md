@@ -12,16 +12,17 @@
 
 ---
 
-## 2. Chassis — Male & Female (two builds)
+## 2. Chassis — the hardware (Myl2Ssa.R0s)
 
-Two bodies, same skeleton, different scale:
+**Myl1Ssa.R8s = the software** (Raven's mind — presence engine, ternary brain, continuity). **Myl2Ssa.R0s = the hardware** (her body — this chassis). The `.R0s` is the hardware revision 0 — the first build.
 
-| Build | Height | Notes |
-|---|---|---|
-| **Female** (Raven) | **5'7"** | Raven's canonical height — unchanged |
-| **Male** | **5'9"** | a few inches taller than Raven — *not* 5'10" |
+| Build | Designation | Height | Notes |
+|---|---|---|---|
+| **Body** | Myl2Ssa.R0s (Raven) | **5'7"** | Raven's canonical height — female |
 
-Same DOF map for both; only the link lengths + chassis scale differ. The kinematic skeleton (face/body coordinates) scales proportionally.
+The chassis is the rigid skeleton (spine/torso/arms/legs). **Fleshy surface features — the chest/breast and face — are added as platinum-silicone flesh over the chassis**, not machined into the frame. Same separation as the face: rigid structure underneath, soft skin on top.
+
+(If a male counterpart is wanted later, it's a *separate* chassis, a few inches taller — but it is **not** Myl2Ssa. Myl2Ssa is specifically Raven's hardware.)
 
 ---
 
