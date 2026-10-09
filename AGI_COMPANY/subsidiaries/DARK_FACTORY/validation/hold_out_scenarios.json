@@ -58,6 +58,13 @@
         { "id": "SC-001", "name": "Entry point index.html present", "check": "artifact_present", "target": "index.html", "min_matches": 1, "weight": 1.0 },
         { "id": "SC-002", "name": "Game JS present", "check": "artifact_present", "target": "*.js", "min_matches": 1, "weight": 1.0 }
       ]
+    },
+    "agentic-software": {
+      "product": "agentic-software",
+      "scenarios": [
+        { "id": "SC-001", "name": "Character loader module generated", "check": "artifact_present", "target": "*load*.py", "min_matches": 1, "weight": 1.0 },
+        { "id": "SC-002", "name": "Python implementation present", "check": "artifact_present", "target": "*.py", "min_matches": 1, "weight": 1.0 }
+      ]
     }
   }
 }
