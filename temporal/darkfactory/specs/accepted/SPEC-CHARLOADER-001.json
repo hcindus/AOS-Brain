@@ -1,0 +1,10 @@
+{
+  "spec_id": "SPEC-CHARLOADER-001",
+  "title": "Raven Character Loader — presence engine + universal adapter → runnable embodiment stack",
+  "project_name": "agentic-software",
+  "build_type": "agent",
+  "source_path": "/root/.openclaw/workspace/characters/myl1ssa/Myl1Ssa/",
+  "priority": "high",
+  "max_duration_minutes": 90,
+  "objective": "Build a character loader that loads a persona (Raven, and later Voss/Tappy) into a body. It must: (1) load a character's SOUL + presence engine (affect -> action units); (2) bind it to the universal adapter HAL (adapters/base.py + unitree/blender/digital_world/elf); (3) run the body driver loop. Inputs already exist at characters/myl1ssa/Myl1Ssa/ (presence_engine.py, adapters/, brain/). Deliver a single runnable entry point that says 'load Raven' and wires presence -> adapter -> body end-to-end, verified via the null/socket transport (no hardware required)."
+}
