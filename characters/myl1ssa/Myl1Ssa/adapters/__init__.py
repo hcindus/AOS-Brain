@@ -22,6 +22,7 @@ from .base import (AdapterFrame, BodyAdapter, frame_from_presence,
 from . import digital_world  # noqa: F401  (registers itself)
 from . import blender        # noqa: F401
 from . import unitree        # noqa: F401
+from . import elf            # noqa: F401  (registers itself — AheadForm Elf V1 head)
 
 
 def get_adapter(platform: str) -> BodyAdapter:
