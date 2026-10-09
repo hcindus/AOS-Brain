@@ -65,6 +65,34 @@
         { "id": "SC-001", "name": "Character loader module generated", "check": "artifact_present", "target": "*load*.py", "min_matches": 1, "weight": 1.0 },
         { "id": "SC-002", "name": "Python implementation present", "check": "artifact_present", "target": "*.py", "min_matches": 1, "weight": 1.0 }
       ]
+    },
+    "nomad_probe": {
+      "product": "nomad_probe",
+      "scenarios": [
+        { "id": "SC-001", "name": "Bill of materials exists", "check": "artifact_present", "target": "BOM*.md", "min_matches": 1, "weight": 1.0 },
+        { "id": "SC-002", "name": "3D design output (STL) generated", "check": "artifact_present", "target": "*.stl", "min_matches": 1, "weight": 1.0 }
+      ]
+    },
+    "laser-pistol": {
+      "product": "laser-pistol",
+      "scenarios": [
+        { "id": "SC-001", "name": "Bill of materials exists", "check": "artifact_present", "target": "BOM*.md", "min_matches": 1, "weight": 1.0 },
+        { "id": "SC-002", "name": "3D design output (STL) generated", "check": "artifact_present", "target": "*.stl", "min_matches": 1, "weight": 1.0 }
+      ]
+    },
+    "IC-Browser": {
+      "product": "IC-Browser",
+      "scenarios": [
+        { "id": "SC-001", "name": "Collection module generated", "check": "artifact_present", "target": "*collect*.py", "min_matches": 1, "weight": 1.0 },
+        { "id": "SC-002", "name": "Python implementation present", "check": "artifact_present", "target": "*.py", "min_matches": 1, "weight": 1.0 }
+      ]
+    },
+    "IC-Browser-v1": {
+      "product": "IC-Browser-v1",
+      "scenarios": [
+        { "id": "SC-001", "name": "Collection module generated", "check": "artifact_present", "target": "*collect*.py", "min_matches": 1, "weight": 1.0 },
+        { "id": "SC-002", "name": "Python implementation present", "check": "artifact_present", "target": "*.py", "min_matches": 1, "weight": 1.0 }
+      ]
     }
   }
 }
