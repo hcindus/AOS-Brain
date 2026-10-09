@@ -35,7 +35,7 @@ Same DOF map for both; only the link lengths + chassis scale differ. The kinemat
 | **Elbow** | humerus–ulna + radius | 3 | 2 | high |
 | **Wrist** | carpus | 8 | 2–3 | high |
 | **Hand** | metacarpals + phalanges | 27 | **~20** | 🔴 core |
-| **Torso/spine** | vertebrae | 24 | 2–3 (waist) | med |
+| **Torso/spine** | vertebrae | 25 | **~50 (snake spine)** | ✅ have (COBRA) |
 | **Hip** | pelvis–femur | 1 | 3 | med |
 | **Knee** | femur–tibia | 2 | 1–2 | med |
 | **Ankle** | tibia–talus | 2 | 2–3 | med |
@@ -75,10 +75,12 @@ A rigid torso looks robotic. The human spine's 24 vertebrae give the torso subtl
 - **Face:** 26–30 DOF (Elf V1 architecture) — silicone skin, tendon-driven micro-actuators. Already specced (RAVEN_EMBODIMENT_SPEC.md).
 - **Neck:** 3 DOF (yaw ±180° → pitch ±60° → roll ±45°), wires through a hollow shaft. Designed.
 
-### Torso (spine)
-- **Waist yaw (±45°) + waist pitch (±30°)** — 2 DOF.
-- Houses: compute (Jetson), battery (low, for CoM), the facial servo controller, power distribution.
-- Skin: rigid shell (carbon/ABS) + silicone on high-touch areas.
+### Torso (spine) — ADOPT COBRA
+**We already built this.** The **COBRA robot** (`DARK_FACTORY/production/cobra_robot/`) has a full **25-vertebra snake spine** — C1–C7 cervical → T1–T12 thoracic → L1–L5 lumbar → sacrum, **2 DOF per intervertebral joint** (~50 servos), with **17 Li-ion cells housed inside the vertebrae** + solar panels on the thoracic segments. STL files (183), STM32 firmware, and BOMs already exist.
+
+**Decision:** adopt COBRA's snake spine wholesale for the Male/Female humanoids — it's strictly better than a rigid 2-DOF waist (natural posture, shock absorption, distributed power) and it's already designed. COBRA-MAX = 175cm (1:1 human scale).
+
+The spine replaces my earlier "2-DOF waist" placeholder. Skin: rigid shell (carbon/ABS) + silicone on high-touch areas.
 
 ### Shoulder + arm (the hard part)
 - **Shoulder:** 3 glenohumeral DOF (v1), +2 scapular (v2).
