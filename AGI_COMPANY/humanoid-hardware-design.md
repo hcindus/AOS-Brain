@@ -12,7 +12,20 @@
 
 ---
 
-## 2. The full DOF map (skeleton → robot)
+## 2. Chassis — Male & Female (two builds)
+
+Two bodies, same skeleton, different scale:
+
+| Build | Height | Notes |
+|---|---|---|
+| **Female** (Raven) | **5'7"** | Raven's canonical height — unchanged |
+| **Male** | **5'9"** | a few inches taller than Raven — *not* 5'10" |
+
+Same DOF map for both; only the link lengths + chassis scale differ. The kinematic skeleton (face/body coordinates) scales proportionally.
+
+---
+
+## 3. The full DOF map (skeleton → robot)
 
 | Region | Human anatomy | Bones | Robot DOF | Priority |
 |---|---|---|---|---|
