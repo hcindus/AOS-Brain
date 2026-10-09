@@ -25,7 +25,7 @@ REJECTED = BASE / "specs" / "rejected"
 # Scope — synced with mission.md (single source of truth).
 ALLOWED_PRODUCTS = {
     "cobra_v1", "prometheus_v1", "CREAM", "ReggieStarr", "nognog", "nomad_probe",
-    "RS-80", "neon-courier", "quantum-defender", "laser-pistol",
+    "RS-80", "RS-79", "neon-courier", "quantum-defender", "laser-pistol",
     # Agentic software & infrastructure (mission.md GOAL #7, Captain 2026-08-27)
     "IC-Browser", "IC-Browser-v1", "agentic-software",
 }

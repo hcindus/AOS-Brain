@@ -85,6 +85,12 @@ async def validate_sdk_health(build_type: str) -> dict:
             raise SDKNotInstalledError("Coding agent 'pi' not installed")
         return {"coding_agent": "pi", "path": pi_bin, "valid": True}
 
+    elif build_type == "python":
+        import shutil as _sh
+        if not _sh.which("python3"):
+            raise SDKNotInstalledError("python3 not installed")
+        return {"python": "python3", "valid": True}
+
     return {"valid": True, "message": "No validation needed"}
 
 
@@ -142,6 +148,8 @@ async def execute_build(order, resources) -> dict:
             result = await _build_docker(source, project, resources, logs)
         elif build_type == "codegen":
             result = await _build_codegen(source, objective, project, resources, logs)
+        elif build_type == "python":
+            result = await _build_python(source, project, resources, logs)
         else:
             raise ValueError(f"Unknown build type: {build_type}")
 
@@ -381,6 +389,34 @@ async def _build_codegen(source, objective, project, resources, logs):
 
     total = sum(f.stat().st_size for f in files)
     return {"success": True, "output_path": str(workdir), "file_size": total}
+
+
+async def _build_python(source, project, resources, logs):
+    """Build/verify a Python app: py_compile all modules, copy source to output."""
+    import py_compile
+    output_dir = resources["output_dir"]
+    src = Path(source)
+    if not src.exists():
+        return {"success": False, "error": f"source path not found: {source}"}
+
+    # syntax-check every .py (excluding venv)
+    checked = 0
+    for py in src.rglob("*.py"):
+        if ".venv" in py.parts or "__pycache__" in py.parts:
+            continue
+        try:
+            py_compile.compile(str(py), doraise=True)
+            checked += 1
+        except Exception as e:
+            return {"success": False, "error": f"compile failed {py.name}: {e}"}
+
+    # copy source to output (the "build" artifact is the verified source)
+    dest = Path(output_dir) / project
+    shutil.copytree(src, dest, dirs_exist_ok=True,
+                    ignore=shutil.ignore_patterns(".venv", "__pycache__", "build", "dist"))
+    total = sum(f.stat().st_size for f in dest.rglob("*") if f.is_file())
+    logs.append(f"py_compile verified {checked} modules OK")
+    return {"success": True, "output_path": str(dest), "file_size": total}
 
 
 @activity.defn
