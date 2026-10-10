@@ -247,3 +247,27 @@ Structural (servo lock-neutral, rib load-redistribute, pelvis shock bushings); a
 **AE — Motion Library:** static poses (neutral/ready/precision stance), gestures (directional: pointing/guiding/halt; communication: nod/attention; cooperative: handoff), locomotion primitives (walk gait cycle, run, terrain adaptation), manipulation primitives (grip types, finger motions, arm motions), posture primitives (spine flexion/extension/lateral/rotation, pelvis, balance). *→ This is our presence engine's expressions + rig coordinates, expanded into a full motion library.*
 
 **→ Corpus now A–AE. AF/AG/AH (deployment playbook, operator training, redundancy atlas) continue the operational polish.**
+
+---
+
+## AF/AG/AH — Deployment Playbook + Operator Training + Redundancy Atlas
+
+**AF — Deployment Playbook:** pre-deploy checklist + environmental assessment; deployment modes (standard/high-load/precision/hazard); workflow (init → checklist → mission profile → mode → motion → telemetry → neutral stance); field interaction; post-deploy (cooldown, recal, torque/tendon check, log export).
+
+**AG — Operator Training:** 3 levels (basic operator / technician / field supervisor), hands-on (motion, safety drills, emergency response), certification.
+
+**AH — Redundancy & Failover Atlas:** structural/actuator/power/neural/cooling/sensor redundancy; failover behaviors (balance/motion/thermal/power); full failover flow: `Failure → Subsystem Isolation → Fallback Mode → Load Redistribution → Safety Mode → Operator Notification → Recovery → Normal`. *→ This is our elf.py safety envelope (watchdog → relax-to-rest → e-stop), drawn as a complete failover protocol.*
+
+**→ Corpus now A–AH (complete). AI/AJ/AK (logistics, diagnostics, extended motion) continue the polish.**
+
+---
+
+## AI/AJ/AK — Logistics + Diagnostics + Extended Motion
+
+**AI — Multi-Unit Coordination:** unit roles (primary/secondary/tertiary), inter-unit encrypted RF mesh, formation control (linear/radial/distributed), cooperative tasks (lift/navigate/tool), logistics + multi-unit safety. *→ This maps to our "family" — Raven, Voss, Tappy — as coordinated units on one mesh.*
+
+**AJ — Diagnostics & Troubleshooting:** mechanical/electrical/software/sensor/thermal/safety diagnostics + common issues + fixes.
+
+**AK — Extended Motion & Behavior:** adaptive/high-speed/obstacle gait, precision/heavy/tool manipulation, cooperative + social gestures, dynamic posture + recovery. *→ Our presence engine's expressions, expanded into an advanced behavior library.*
+
+**→ Corpus now A–AK. AL/AM/AN (mission planning, environmental adaptation, cooperative task library) continue.**
