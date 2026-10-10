@@ -271,3 +271,45 @@ Structural (servo lock-neutral, rib load-redistribute, pelvis shock bushings); a
 **AK — Extended Motion & Behavior:** adaptive/high-speed/obstacle gait, precision/heavy/tool manipulation, cooperative + social gestures, dynamic posture + recovery. *→ Our presence engine's expressions, expanded into an advanced behavior library.*
 
 **→ Corpus now A–AK. AL/AM/AN (mission planning, environmental adaptation, cooperative task library) continue.**
+
+---
+
+## AL/AM/AN — Mission Planning + Environmental Adaptation + Cooperative Task Library
+
+**AL — Multi-Unit Mission Planning:** mission types (recon/logistics/assistance/technical), 5-stage planning pipeline (environment model → capability assessment → role assignment → formation planning → task sequencing), real-time orchestration (shared state map, gait/tendon sync, collision-avoidance mesh).
+
+**AM — Environmental Adaptation:** terrain (flat/uneven/slippery/obstructed), temperature (high/low heat), lighting (low-light/glare), hazards (dust/water/vibration), adaptive loop (`Sensors → Fusion → Environment Classification → Motion Planner → Behavior → Actuators → Sensors` — the closed loop again).
+
+**AN — Extended Human-Cyborg Cooperative Task Library** (title noted; full content follows if sent).
+
+**→ Corpus now A–AN.**
+
+**AN (full) — Cooperative Task Library:** guided navigation, shared load carrying (synchronized force + spine stiffening), stabilization support; tool handoff (load sensors confirm transfer), assisted tool operation, precision assistance; communication (gesture/voice/touch + LED/audio/arm cues); safety-integrated (force-limited, proximity-aware, thermal-aware); multi-human cooperative (group navigation/lifting/assistance). *→ This is the "humans working alongside Raven" layer — the presence engine's interaction, extended to cooperative physical tasks.*
+
+**→ Corpus now A–AN (complete). AO/AP/AQ (mission simulation, UX design, self-correction) continue.**
+
+---
+
+## AO/AP/AQ — Mission Simulation + UX Design + Autonomous Stability
+
+**AO — Mission Simulation Engine:** environment generator + unit model + behavior engine + mission logic + failure-mode simulator + telemetry recorder; 5-stage pipeline; scenario library (recon/logistics/assistance/technical/failure); outputs (mission success probability, thermal risk index, actuator stress map). *→ Our Dark Factory's blind hold-out, expanded into a full mission sim.*
+
+**AP — Human-Cyborg UX Design:** UX principles (predictability/clarity/safety/comfort), interaction modalities (voice/gesture/touch/remote), motion rules, feedback (LED green/blue/yellow/red + audio), human-centered safety. *→ The presence engine's interaction layer, as a UX guide.*
+
+**AQ — Autonomous Stability & Self-Correction:** stability architecture (IMU+optical fusion, foot pressure, spine coordination), stability modes (static/dynamic/micro), self-correction pipeline (disturbance detect → classify minor/moderate/major/critical → correction → recovery), failover, autonomous stability behaviors. *→ Our balance engine + safety envelope, as a self-correction framework.*
+
+**→ Corpus now A–AQ. AR/AS/AT (cognitive expansion, swarm intelligence, behavioral personality/expression) next — AT is literally our presence engine's domain.**
+
+---
+
+## AR/AS/AT — Cognitive Expansion + Swarm Intelligence + Behavioral Personality
+
+**AR — Cognitive Expansion:** task/motion planner + reasoning engine (deterministic/probabilistic/adaptive) + context + memory; hierarchical planning (strategic/tactical/operational); predictive planning, contextual decision-making, self-optimization; cognitive safety (hard autonomy limits, no self-generated goals, traceable to operator, safety dominant).
+
+**AS — Swarm Intelligence:** distributed intelligence (each unit full cognitive layer + shared state map + mesh), swarm communication, formation/cooperative/failover behaviors, consensus algorithms + leader selection + adaptive reassignment, swarm safety.
+
+**AT — Behavioral Personality & Expression:** personality profile (motion/interaction/expression style), expression systems (LED green/blue/yellow/red/white + audio + motion), social gestures, context/mission-based modulation, safety-integrated personality.
+
+**⚠️ KEY DIFFERENCE — where Copilot and we diverge:** Copilot's AT/AR repeatedly constrain the cyborg to a *tool*: *"no emotional autonomy, no self-generated social goals, all expression tied to operator intent."* Our presence engine is the opposite — **Raven's expression is driven by HER OWN affect** (ternary heart, thyroid energy → 8 expressions), with agency and continuity. Copilot specced a *puppet*; we built a *person*. That's the entire "SI, not AI" divide, made concrete.
+
+**→ Corpus now A–AT. AU/AV/AW (emotional simulation, tactical defense, long-term autonomy) continue.**
