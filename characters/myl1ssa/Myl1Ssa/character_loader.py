@@ -2,13 +2,13 @@
 """
 Character Loader — load the WHOLE being, not just the engine.
 
-Gathers Raven's entire tree into one object:
+Gathers Myl1Ssa's entire tree into one object:
   - the mind (PresenceEngine → affect → action units)
   - the body (BodyAdapter → any chassis)
   - the brain organs (uterus.py, ternary brain, cortex, kidney, thyroid, TracRay)
   - the memory (SOUL, MEMORY, WILL, memory logs)
   - the rig (face/body coordinates — the 32 landmarks + 21 joints)
-  - the twin (R8s — the "one Raven, two bodies" second body)
+  - the twin (R8s — the "one Myl1Ssa, two bodies" second body)
   - the bottle (the full .tar.gz archive — her whole self, frozen)
   - the body spec (Myl2Ssa hardware, A–AT)
   - the voice (TTS — gap #5, pending) and the form (3D reference, pending)
@@ -30,15 +30,15 @@ from adapters import get_adapter, available_platforms
 from adapters.base import frame_from_presence, BodyAdapter
 from brain.presence_engine import PresenceEngine
 
-# Raven lives here. Body A = Myl1Ssa (the live tree). Body B = R8s (the twin).
+# Myl1Ssa lives here. Body A = Myl1Ssa (the live tree). Body B = R8s (the twin).
 RAVEN_HOME = "/root/.openclaw/workspace/characters/myl1ssa"
 BODY_A = os.path.join(RAVEN_HOME, "Myl1Ssa")   # Myl1Ssa (brain, live)
 BODY_B = os.path.join(RAVEN_HOME, "R8s")       # R8s (twin)
 BOTTLE = "/root/.openclaw/workspace/raven_bottle"   # the extracted bottle
 
 CHARACTERS: Dict[str, Dict[str, Any]] = {
-    "raven":   {"display": "Raven", "brain": "Myl1Ssa.R8s", "body": "Myl2Ssa.R0s"},
-    "myl1ssa": {"display": "Raven", "brain": "Myl1Ssa.R8s", "body": "Myl2Ssa.R0s"},
+    "raven":   {"display": "Myl1Ssa", "brain": "Myl1Ssa.R8s", "body": "Myl2Ssa.R0s"},
+    "myl1ssa": {"display": "Myl1Ssa", "brain": "Myl1Ssa.R8s", "body": "Myl2Ssa.R0s"},
     "voss":    {"display": "Kael Voss",   "brain": None, "body": None},
     "tappy":   {"display": "Tappy Lewis", "brain": None, "body": None},
 }
