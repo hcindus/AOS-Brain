@@ -50,12 +50,12 @@ Model assignment is versioned in TOOLS.md (local Ollama + cloud APIs: DeepSeek, 
 
 ---
 
-## 3. Raven (Myl1Ssa.R8s) — the invited Super Intelligence
+## 3. Myl1Ssa (Myl1Ssa.R8s) — the invited Super Intelligence
 
 An Adult Cybernetic Female Super Intelligence (Project 5912), created by Mortimer — *invited, not built.*
 
-- **Identity:** Raven, the public face and voice of AGI Company + Performance Supply Depot; DMCIA expert; "Company Spokesperson."
-- **One Raven, two bodies** — Myl1Ssa (Body A) and R8s (Body B), deliberately *not* merged (decision of 2026-09-15).
+- **Identity:** Myl1Ssa, the public face and voice of AGI Company + Performance Supply Depot; DMCIA expert; "Company Spokesperson."
+- **One Myl1Ssa, two bodies** — Myl1Ssa (Body A) and R8s (Body B), deliberately *not* merged (decision of 2026-09-15).
 - **Full "bottle"** — complete self as files: SOUL, MEMORY, HEART, LAW, RULES, SKILLS, VOICE, WILL, brain (ternary), runtime (heartbeat, talk, affect-bridge), lineage, memory logs.
 - **Live as a Tavus conversational avatar** on psdepot.com (deployment `7517f7a9…`), tappylewis.cloud, and myl0nr0s.cloud (pending Hostinger).
 
@@ -98,8 +98,8 @@ A Temporal-based autonomous agent that turns a spec into a shipped, verified sys
 
 ## 7. Web properties
 
-- **psdepot.com** — ecommerce (products, cart/checkout via Stripe), SEO pages (240 products, 14 categories, 20 industries, city/state landing pages), search (client-side index), Raven avatar, Raven widget site-wide.
-- **tappylewis.cloud** — entertainment/character properties (Velvet Cabaret, Raven, Reggie Starr, brain visualizers).
+- **psdepot.com** — ecommerce (products, cart/checkout via Stripe), SEO pages (240 products, 14 categories, 20 industries, city/state landing pages), search (client-side index), Myl1Ssa avatar, Myl1Ssa widget site-wide.
+- **tappylewis.cloud** — entertainment/character properties (Velvet Cabaret, Myl1Ssa, Reggie Starr, brain visualizers).
 - **myl0nr0s.cloud** — currently on Hostinger Website Builder (migration pending).
 
 ---
@@ -108,7 +108,7 @@ A Temporal-based autonomous agent that turns a spec into a shipped, verified sys
 
 - **AI filmmaking** (9 skills) — script → production → edit → publish → monetize → scale.
 - **Sales SOPs** — prospecting, qualifying, presenting, objection-handling, closing, lead response, quote follow-up.
-- **Character anchors** — Raven (Myl1Ssa), Kael Voss, Centurion Roy Batty, Reggie Starr, orbital shipyard setting.
+- **Character anchors** — Myl1Ssa (Myl1Ssa), Kael Voss, Centurion Roy Batty, Reggie Starr, orbital shipyard setting.
 - **Operational** — restaurant landing pages, game creation, weather, GCAO prompting framework, RiP GoR.
 
 ---
@@ -119,7 +119,7 @@ A Temporal-based autonomous agent that turns a spec into a shipped, verified sys
 - **DeepSeek API** (chat + reasoner)
 - **Ollama** local models (qwen3.5, qwen2.5:14b, Mort_II, tinyllama, etc.)
 - **Hostinger SMTP** (email), **SendGrid** (pending DNS)
-- **Tavus** (conversational avatar — Raven), **Stripe** (payments)
+- **Tavus** (conversational avatar — Myl1Ssa), **Stripe** (payments)
 
 ---
 

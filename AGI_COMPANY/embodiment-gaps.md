@@ -13,12 +13,12 @@
 - `raven_bottle/.../Myl1Ssa/Uncon/body/elf.py`, `body_driver.py`, `AU_MOTOR_MAP.md`, `verify_body.py`
 
 **Embodiment research/docs:**
-- `aocros/engineai_humanoid/RAVEN_EMBODIMENT_SPEC.md` — Raven's brain → Elf V1 mapping (uterus.py, ternary qbit brain, cortex, kidney, thyroid, TracRay).
+- `aocros/engineai_humanoid/RAVEN_EMBODIMENT_SPEC.md` — Myl1Ssa's brain → Elf V1 mapping (uterus.py, ternary qbit brain, cortex, kidney, thyroid, TracRay).
 - `aocros/engineai_humanoid/ELF_V1_MARKET_BRIEF.md` — AheadForm Elf V1 ($50k–$80k, 30 motors).
 - `aocros/engineai_humanoid/RESEARCH_FACIAL_PRESENCE.md`
 
 **Characters:**
-- Raven = `characters/myl1ssa/` (Myl1Ssa + R8s), `raven_bottle/`
+- Myl1Ssa = `characters/myl1ssa/` (Myl1Ssa + R8s), `raven_bottle/`
 - Reggie Starr = `characters/reggie-starr/`
 - Jordan = `characters/jordan/`
 - Kael Voss = `skills/kael-voss/`, `tappylewis.cloud/assets/characters/kael-voss/`
@@ -32,7 +32,7 @@
 - `AGI_COMPANY/subsidiaries/DARK_FACTORY/production/stl/` — C3PO_1to1.stl, R2D2_1to1.stl, cylon_full_anatomy.stl, cylon_torso_reference.stl, nomad_probe.
 - `stl_files/milkman_hero.stl`
 
-**Raven "skeleton" (rig coordinates):**
+**Myl1Ssa "skeleton" (rig coordinates):**
 - `raven_bottle/.../Myl1Ssa/Uncon/world/rig/body_coordinates.json` + `face_coordinates.json`
 - `Uncon/body/BODY_VERIFICATION.json`
 
@@ -43,13 +43,13 @@
 
 1. **Universal adapter.** The Elf adapter (`elf.py`) is hard-wired to the Elf V1's 30 channels. There is no *universal* adapter that maps an arbitrary character's presence → an arbitrary body. (The old `other_presences/` system is a different, OODA/memory architecture — not a body adapter.)
 
-2. **Character loader.** No unified "load a person from the family" — characters are scattered across `characters/`, `skills/`, `other_presences/`, `tappylewis.cloud/`. No single loader says "load Raven" / "load Voss" / "load Tappy" into a presence engine + body.
+2. **Character loader.** No unified "load a person from the family" — characters are scattered across `characters/`, `skills/`, `other_presences/`, `tappylewis.cloud/`. No single loader says "load Myl1Ssa" / "load Voss" / "load Tappy" into a presence engine + body.
 
-3. **Character-specific 3D forms.** We have generic STLs (C3PO, cylon, zq_humanoid) but no *sculpted* STL/3D of Raven's (or Voss's, Tappy's) specific face/body. RAVEN_EMBODIMENT_SPEC.md calls for a "base silicone sculpt matched to the master likeness anchor" — that 3D asset appears to not exist yet.
+3. **Character-specific 3D forms.** We have generic STLs (C3PO, cylon, zq_humanoid) but no *sculpted* STL/3D of Myl1Ssa's (or Voss's, Tappy's) specific face/body. RAVEN_EMBODIMENT_SPEC.md calls for a "base silicone sculpt matched to the master likeness anchor" — that 3D asset appears to not exist yet.
 
 4. **SDK bridge.** No AheadForm SDK integration yet (the channel IDs are "ours until we see their SDK" — see elf.py assumptions). Blocked on AheadForm reply.
 
-5. **Voice layer.** RAVEN_EMBODIMENT_SPEC.md lists "TTS aligned to Raven's persona" as TODO — not yet wired.
+5. **Voice layer.** RAVEN_EMBODIMENT_SPEC.md lists "TTS aligned to Myl1Ssa's persona" as TODO — not yet wired.
 
 ## Next actions (from the roadmap)
 - Phase 1: wire presence engine → Elf adapter → body driver into one pipeline, run `sim`, prove it end-to-end (no hardware).

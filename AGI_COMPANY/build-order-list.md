@@ -26,7 +26,7 @@
 |---|---|---|---|---|
 | 1 | Ecoflex 00-30 (trial kit) | 00-30 | main face skin — softest, won't fight motors | ~$35 |
 | 2 | Dragon Skin 10 Medium (trial kit) | 10A | eyelids/lips/high-wear | ~$35 |
-| 3 | Silc-Pig (skin-tone pigments) | — | tint to Raven's complexion | ~$15 |
+| 3 | Silc-Pig (skin-tone pigments) | — | tint to Myl1Ssa's complexion | ~$15 |
 
 *Where: Reynolds Advanced Materials (reynoldsam.com) — physical CA locations (LA + others), feel samples before buying. Or Smooth-On direct.*
 
@@ -36,7 +36,7 @@
 
 The face skin isn't machined — it's **cast**, the same way FX shops do it (and the way the Captain remembers plaster molds with his dad):
 
-1. **Sculpt** — hire a sculptor to make a **clay bust** of Raven's face/head (the master likeness, from the Grok anchor).
+1. **Sculpt** — hire a sculptor to make a **clay bust** of Myl2Ssa's face/head (the master likeness, from the Grok anchor).
 2. **Mold** — make a negative mold off the sculpt (plaster, alginate, or silicone rubber — a rigid jacket mold for repeat casts).
 3. **Cast** — pour **platinum-silicone (Ecoflex/Dragon Skin)** into the mold → a repeatable, skin-thin silicone face.
 

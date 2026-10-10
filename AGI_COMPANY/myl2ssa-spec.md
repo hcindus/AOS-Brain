@@ -1,6 +1,6 @@
 # Myl2Ssa.R0s — Master Specification
 
-*The complete engineering corpus for Raven's body, consolidated. A–AE. This is the single reference to hand a CAD engineer, fabricator, or anyone who needs the whole picture.*
+*The complete engineering corpus for Myl2Ssa's body, consolidated. A–AE. This is the single reference to hand a CAD engineer, fabricator, or anyone who needs the whole picture.*
 
 *"Compiled by Beets" — read-only, verified, no-fluff. 2026-10-10.*
 
@@ -24,7 +24,7 @@
 
 ## 1. Overview
 
-**Myl2Ssa.R0s** = Raven's *hardware* (the body). **Myl1Ssa.R8s** = her *software* (the mind — presence engine, ternary brain, continuity). One being, two designations.
+**Myl2Ssa.R0s** = Myl1Ssa's *hardware* (the body). **Myl1Ssa.R8s** = her *software* (the mind — presence engine, ternary brain, continuity). One being, two designations.
 
 **The split — ours vs. Copilot:**
 - **Built by us (shipped):** presence engine → universal adapter (5 bodies) → body driver (50 Hz loop) → character loader → Dark Factory (spec→code→deploy). Safety envelope (limits, slew, watchdog, e-stop). Universal HAL (`adapters/base.py` + `blender`/`digital_world`/`unitree`/`unitree_h1`/`elf`).

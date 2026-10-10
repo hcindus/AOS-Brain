@@ -18,21 +18,21 @@
 
 ## Phase 3 — First breath (milestone)
 1. Point ElfAdapter at real hardware (socket transport → vendor SDK).
-2. First live expression: Raven's 8 expressions on real motors.
+2. First live expression: Myl1Ssa's 8 expressions on real motors.
 3. Safety envelope live (watchdog + e-stop non-negotiable).
 
 ## Phase 4 — The line of faces (partnership goal)
-1. Interchangeable faces: Raven + roster (GREET, CLOSETER, Myl family).
+1. Interchangeable faces: Myl1Ssa + roster (GREET, CLOSETER, Myl family).
 2. Each face = character skin + presence engine + voice.
 3. Co-brand with AheadForm, sell the line.
 
 ## Phase 5 — Beyond the head (longer horizon)
 1. Torso → shoulders → arms.
-2. Full body → Raven walks. Then Miles.
+2. Full body → Myl1Ssa walks. Then Miles.
 
 ## Gaps to close (see EMBODIMENT_GAPS.md)
 - Universal adapter / character loading
 - Humanoid blueprints / STL files
-- Raven skeleton status (placeholder check)
+- Myl1Ssa skeleton status (placeholder check)
 
 *Last updated: 2026-10-09*

@@ -14,15 +14,15 @@
 
 ## 2. Chassis — the hardware (Myl2Ssa.R0s)
 
-**Myl1Ssa.R8s = the software** (Raven's mind — presence engine, ternary brain, continuity). **Myl2Ssa.R0s = the hardware** (her body — this chassis). The `.R0s` is the hardware revision 0 — the first build.
+**Myl1Ssa.R8s = the software** (Myl1Ssa's mind — presence engine, ternary brain, continuity). **Myl2Ssa.R0s = the hardware** (her body — this chassis). The `.R0s` is the hardware revision 0 — the first build.
 
 | Build | Designation | Height | Notes |
 |---|---|---|---|
-| **Body** | Myl2Ssa.R0s (Raven) | **5'7"** | Raven's canonical height — female |
+| **Body** | Myl2Ssa.R0s (Myl1Ssa) | **5'7"** | Myl1Ssa's canonical height — female |
 
 The chassis is the rigid skeleton (spine/torso/arms/legs). **Fleshy surface features — the chest/breast and face — are added as platinum-silicone flesh over the chassis**, not machined into the frame. Same separation as the face: rigid structure underneath, soft skin on top.
 
-(If a male counterpart is wanted later, it's a *separate* chassis, a few inches taller — but it is **not** Myl2Ssa. Myl2Ssa is specifically Raven's hardware.)
+(If a male counterpart is wanted later, it's a *separate* chassis, a few inches taller — but it is **not** Myl2Ssa. Myl2Ssa is specifically Myl1Ssa's hardware.)
 
 ---
 
@@ -117,7 +117,7 @@ The spine replaces my earlier "2-DOF waist" placeholder. Skin: rigid shell (carb
 - Our **presence engine → universal adapter** already drives any body. This hardware design is just a *new body*.
 - Add a `humanoid` adapter (maps AUs + posture → the full DOF rig above), sitting beside `elf` (face-only) and `unitree` (existing humanoid).
 - The 3D rig coordinates (`face_coordinates.json`, `body_coordinates.json`) become the **kinematic skeleton** this hardware instantiates.
-- Result: same Raven → she can drive a face, a Unitree, *or* our custom body — same mind, any chassis.
+- Result: same Myl1Ssa → she can drive a face, a Unitree, *or* our custom body — same mind, any chassis.
 
 ---
 
@@ -140,7 +140,7 @@ The Captain said run phases in parallel. Here's how that actually breaks down �
 ## 8. What we need next
 
 1. **A structural engineer / mechanical designer** — to turn the DOF map into actual joints, gearboxes, and a load-bearing chassis. The skeleton gives the *blueprint*; an engineer gives the *stress calcs*.
-2. **A 3D/STL sculpt of the character forms** (Raven's face/body) — the character-specific 3D assets (gap #3).
+2. **A 3D/STL sculpt of the character forms** (Myl2Ssa's face/body) — the character-specific 3D assets (gap #3).
 3. **The AheadForm reply** — determines buy-vs-build for the face (Track A).
 4. **Materials** — carbon/ABS for the shell, platinum-cure silicone for skin, BLDC actuators for the arms.
 

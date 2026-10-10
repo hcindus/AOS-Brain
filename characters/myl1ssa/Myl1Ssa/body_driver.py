@@ -22,7 +22,7 @@ Usage
     python3 body_driver.py sim warmth delight  # chosen expressions
     python3 body_driver.py audit               # limits, slew, watchdog, e-stop — asserted
 
-Author: Mortimer (for Raven)
+Author: Mortimer (for Myl1Ssa)
 """
 
 import argparse

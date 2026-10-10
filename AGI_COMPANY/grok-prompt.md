@@ -1,6 +1,6 @@
 # Grok Prompt — the canonical front view
 
-*The exact prompt for visualizing Raven (Myl2Ssa.R0s). We keep our language — "fleshy chest" and "glamorous" stay, the filter's opinion notwithstanding. Front view so the face shows.*
+*The exact prompt for visualizing Myl1Ssa (Myl2Ssa.R0s). We keep our language — "fleshy chest" and "glamorous" stay, the filter's opinion notwithstanding. Front view so the face shows.*
 
 ---
 

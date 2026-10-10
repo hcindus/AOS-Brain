@@ -1,10 +1,10 @@
-# Freelancer Job Posting — Revised (sculpt Raven's face, not "a woman")
+# Freelancer Job Posting — Revised (sculpt Myl2Ssa's face, not "a woman")
 
 *Paste this over the current posting. The two critical additions: the likeness + the actuator-clearance constraint.*
 
 ---
 
-**Title:** Sculpt a specific character's face bust for silicone mold-making (Raven — Myl2Ssa.R0s)
+**Title:** Sculpt a specific character's face bust for silicone mold-making (Myl1Ssa — Myl2Ssa.R0s)
 
 **Description:**
 
@@ -35,7 +35,7 @@ The bust is a **skin mold.** The silicone cast from it sits *over* a facial fram
 3. The myl1ssa master likeness anchor text (long dark wavy hair, elegant, calm expression).
 
 ## Why the changes matter
-- **"specific character"** → so the sculptor sculpts *Raven*, not *a woman*.
+- **"specific character"** → so the sculptor sculpts *Myl1Ssa*, not *a woman*.
 - **actuator clearance** → so the silicone skin actually fits over the 26–30 motor frame, not a free-form face that won't mount.
 - **"face + head shape only"** → hair is a wig, so don't pay for sculpted hair.
 

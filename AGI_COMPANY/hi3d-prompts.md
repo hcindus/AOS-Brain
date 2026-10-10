@@ -1,4 +1,4 @@
-# Hi3D AI — Generation List (Raven's 3D reference library)
+# Hi3D AI — Generation List (Myl1Ssa's 3D reference library)
 
 *Text-to-3D prompts to build the 3D reference assets for Myl2Ssa.R0s. Generate in priority order.*
 
@@ -13,11 +13,11 @@ matcap. Full head only, shoulders down to the collarbone. High-poly, watertight,
 sculpting.
 ```
 
-**Why:** becomes the *exact* base the sculptor sculpts Raven's face onto — closes the "head STL" gap, de-risks the $1000 sculpt.
+**Why:** becomes the *exact* base the sculptor sculpts Myl2Ssa's face onto — closes the "head STL" gap, de-risks the $1000 sculpt.
 
 ---
 
-## 2. Raven's body — the chassis (matches our spec)
+## 2. Myl2Ssa's body — the chassis (matches our spec)
 
 ```
 Female humanoid robot, exposed biomechanical skeleton: a segmented articulated vertebral

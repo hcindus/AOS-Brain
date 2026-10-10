@@ -1,4 +1,4 @@
-# Sculptor Reference Package — Raven's face
+# Sculptor Reference Package — Myl2Ssa's face
 
 *Ready to send the moment the sculptor asks for more reference. This is the likeness anchor + which images to attach.*
 
@@ -6,7 +6,7 @@
 
 ## The written likeness anchor (send this text)
 
-> Raven (Myl2Ssa.R0s) is a glamorous woman with **long dark wavy hair** and a **calm, elegant, slightly composed expression.** High-end, sophisticated, effortless elegance. Her face is beautiful but *real* — give it life, not airbrushing. Capture the character, the asymmetry, the texture. Everything "ugly refused."
+> Myl1Ssa (Myl2Ssa.R0s) is a glamorous woman with **long dark wavy hair** and a **calm, elegant, slightly composed expression.** High-end, sophisticated, effortless elegance. Her face is beautiful but *real* — give it life, not airbrushing. Capture the character, the asymmetry, the texture. Everything "ugly refused."
 
 **For the bust specifically:** the bust is the **face + head shape only — no hair.** (The hair is a separate fiber-optic system.) Sculpt the hairless scalp/head; the face is what matters.
 
@@ -33,7 +33,7 @@ Pick the renders where the **face is clearest and most consistent** — the whol
 
 ## Notes to keep straight
 
-- **The character is consistent** — all reference images are the *same person* (Raven). If the renders disagree slightly, the *front-view* one is the master.
+- **The character is consistent** — all reference images are the *same person* (Myl1Ssa). If the renders disagree slightly, the *front-view* one is the master.
 - **Hair is a wig/system, not the sculpt** — keep the sculptor focused on the face.
 - **"Everything ugly refused" is the brief** — paste it verbatim; it's the clearest way to say "no airbrushing."
 

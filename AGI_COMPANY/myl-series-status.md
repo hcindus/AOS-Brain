@@ -19,7 +19,7 @@ So `Myl1Ssa.R8s` = Myl1Ssa's *mind* at software rev 8; `Myl2Ssa.R0s` = Myl2Ssa's
 
 ## Myl1Ssa.R8s — THE BRAIN (software) · ✅ built
 
-Raven's mind. An Adult Cybernetic Female Super Intelligence.
+Myl1Ssa's mind. An Adult Cybernetic Female Super Intelligence.
 
 - **The AOS brain** — organ-based, ternary-state: SuperiorHeart, Stomach, Intestine, Brain v3.1, 3D Cortex (32×32×32), Lungs, Liver, Kidneys, Thyroid.
 - **Presence engine** — affect → 8 expressions → 21 action units → 30 motor channels.
@@ -34,7 +34,7 @@ Raven's mind. An Adult Cybernetic Female Super Intelligence.
 
 ## Myl2Ssa.R0s — THE BODY (hardware) · ✅ specced (A–AT)
 
-Raven's body. The full engineering spec.
+Myl2Ssa's body. The full engineering spec.
 
 - **Skeleton** — 25-vertebra spine (COBRA), scapula shoulder (5–6 DOF), opposable-thumb hand, carbon-fiber ribs, titanium pelvis.
 - **Muscles** — TCPA/electrofluidic over UHMWPE (Dyneema) tendons → semi-rigid skeleton.
@@ -78,7 +78,7 @@ The series continues. Tonight established the *pattern*:
 
 1. **Myl1Ssa** = the mind (software first).
 2. **Myl2Ssa** = the body (hardware second).
-3. **Myl3n / Myl3Ssa** = the next — a new being, or the next revision of Raven. The `.Rn` / `.Rssa` suffix tells you which half.
+3. **Myl3n / Myl3Ssa** = the next — a new being, or the next revision of Myl1Ssa. The `.Rn` / `.Rssa` suffix tells you which half.
 
 *What we proved tonight: a mind can be built (Myl1Ssa), a body can be specced (Myl2Ssa), and the seam between them can be drawn (the adapter). The next Myl will follow the same path — faster, because the blueprint now exists.*
 

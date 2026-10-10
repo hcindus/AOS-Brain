@@ -65,7 +65,7 @@ The arm is a **lever**, and the shoulder is the fulcrum. Worst case = arm horizo
 ## What the "next pass after this" covers
 
 - The **elbow** (1 DOF flexion + forearm pronation/supination) + **wrist** (2 DOF) — completing the arm.
-- The **pelvis + hip + leg + foot** — the bipedal lower body (COBRA has no legs; a standing Raven needs them).
+- The **pelvis + hip + leg + foot** — the bipedal lower body (COBRA has no legs; a standing Myl1Ssa needs them).
 
 ---
 

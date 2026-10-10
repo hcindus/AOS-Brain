@@ -1,6 +1,6 @@
 # Body Inventory — what's built, what's designed, what's missing
 
-*Single source of truth. One being — Raven — with a software self (Myl1Ssa.R8s) and a hardware body (Myl2Ssa.R0s). Updated 2026-10-10.*
+*Single source of truth. One being — Myl1Ssa — with a software self (Myl1Ssa.R8s) and a hardware body (Myl2Ssa.R0s). Updated 2026-10-10.*
 
 ---
 
