@@ -82,6 +82,8 @@ class Being:
             os.path.join(CORPUS, "myl2ssa-spec.md"),
             os.path.join(CORPUS, "cad-component-spec.md"),
         ])
+        self.form = _find(os.path.join(BODY_A, "form"), "*.glb")
+        self.voice = None  # TTS config — gap #5, pending Beets research
 
     # --- helpers ---
     def _load_rig(self) -> Dict[str, Any]:
@@ -138,6 +140,8 @@ class Being:
             "twin": self.twin,
             "bottle": self.bottle,
             "body_spec": self.body_spec,
+            "form": self.form,
+            "voice": self.voice,
         }
 
 
