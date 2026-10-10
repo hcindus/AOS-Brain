@@ -91,4 +91,19 @@ Two Tinies in a sealed plastic case will **cook**. Plan for airflow:
 2. **Lenovo connector tip** — confirm it's the slim-tip (rectangular), not the older yellow barrel, before buying the DC cables.
 3. **M715q power draw under load** — 65W is the adapter rating; real load is lower, but size the leads for the worst case.
 
+---
+
+## Pre-install refinements (from a second review — all good)
+
+1. **BIOS update** — flash the latest Lenovo BIOS for the M715q Gen 1 (v M1AKTxxA) *before* installing Omarchy; improves stability with 32 GB RAM kits.
+2. **Fan curve** — in BIOS, set "Smart Cooling" to **Performance** (keeps the Ryzen GE APUs cooler under sustained load — matters in a sealed case).
+3. **Power profile** — disable **ErP** and **Deep Sleep** so the nodes stay reachable over Tailscale even after idle.
+4. **SSD alignment** — after install, run `lsblk -o NAME,ALIGNMENT`; Netac drives sometimes ship misaligned, and a quick `fdisk` re-create fixes it.
+
+---
+
+## Startup automation (systemd + health check)
+
+So each node auto-registers its Pi agent on boot and reports status. See `cyberdeck-agent-startup.md` for the full systemd unit + health-check script.
+
 *This + the muscle + the face = a busy workbench, Captain. But a good kind of busy.*
