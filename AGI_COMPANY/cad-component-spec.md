@@ -199,3 +199,39 @@ Structural (servo lock-neutral, rib load-redistribute, pelvis shock bushings); a
 **S — Master Documentation Index:** the full table of contents (A–R) grouped into mechanical, software, stress/safety, rendering, manufacturing, + optional extensions (firmware update, calibration, maintenance, field repair).
 
 **→ The suite is now COMPLETE: A–S.** Copilot's whole stack, committed. Remaining T/U/V (glossary, blueprint, integration guide) are documentation polish.
+
+---
+
+## T/U/V — Glossary + Blueprint + Integration Guide
+
+**T — Glossary:** actuator, adaptive control loop, carbon-fiber, cervical/thoracic/pelvic nodes, cooling manifold, cybernetic API, Dyneema/UHMWPE tendons, gait engine, LSR ligament bands, mesh neural bus (orange/blue), motion planner, PID, power bus, rib-frame, scapula glide rails, sensor fusion, servo-lock-neutral, thermal throttling.
+
+**U — Blueprint (text schematic):** head (cranial shell, sensor cluster, cervical ring) → spine (C1–L5 + LSR ligaments + micro-servos + bus channels) → rib-frame (14 CF ribs + cooling) → pelvis (Ti frame + hip actuators) → arms (shoulder, upper-arm CF, elbow Ti, forearm, hand) → legs (thigh CF, knee Ti, lower-leg, foot). Electrical: power bus + orange/blue neural bus + 3 control nodes. Software: RT kernel → motor firmware → behavior (gait/balance/manipulation/posture) → cognitive (planner/fusion/task).
+
+**V — Integration Guide:** mechanical↔electrical (spine houses buses, ribs support cooling/sensors, actuators mount in Ti joints), electrical↔software (neural bus → sensor fusion, orange bus → motor), software↔mechanical (gait adjusts hip/knee via IMU+foot, manipulation drives fingers, posture coordinates spine), cooling↔actuation (thermal → throttle), safety↔everything (over-torque → throttle, fall → spine lock). **End-to-end flow:** `Sensors → Fusion → State Estimation → Motion Planner → Behavior → Motor Firmware → Actuators → Movement → Sensors (feedback)` — *a closed loop = our body_driver's 50Hz feedback loop (engine → frame → envelope → transport → feedback).*
+
+**→ Suite COMPLETE: A–V.** Remaining W/X/Y (lifecycle, field deployment, HMI) are operational/post-build docs, not build-spec.
+
+---
+
+## W/X/Y — Lifecycle + Field Deployment + HMI Protocols (operational)
+
+**W — Lifecycle:** manufacture (fabrication → subsystem assembly → system integration incl. silicone face cast) → calibration (mechanical: joint range/torque/tendon tension/spine curvature; electrical: bus integrity/load balancing/sensor alignment; software: firmware tuning/PID/gait baseline) → operation (normal + high-load) → maintenance (routine: tendon tension, lubrication, coolant flush, sensor recal, firmware; long-term: CF inspection, Ti wear, LSR replacement, bus integrity).
+
+**X — Field Deployment & Safety:** pre-deploy checklist; environmental (10–35°C optimal, terrain modes, impact zones); operational (joint-range, over-torque, servo lock-neutral, thermal throttle, power reroute); emergency (fall → spine lock + balance, collision → dampening, system failure → safe-posture).
+
+**Y — Human-Machine Interaction:** interaction modes (voice, gesture, touch, remote API/console); human safety (0.5–1.0m buffer, slow-motion near humans, grip-force-limited, torque-capped); comms (voice commands, API priority flags, gesture cues; LED/audio/display feedback); cooperative tasks (lifting, navigation, tool handling); overrides (emergency-stop gesture, verbal "halt", API lock_neutral(), auto-override on anomaly). *→ Y is our presence engine's interaction layer: voice/gesture/touch = the multimodal AI; "emergency stop / lock_neutral()" = our elf.py e-stop, named as a human-usable override.*
+
+**→ These are OPERATIONAL (post-build) docs, not build-spec. The build spec is complete at A–V.**
+
+---
+
+## Z/AA/AB — Operations Handbook + Ethics & Compliance + Simulation/Testing
+
+**Z — Operations Handbook:** startup (power → neural handshake → sensor cal → actuator warm-up → cooling prime → neutral stance); modes (neutral/motion/precision/high-load/safety); shutdown (neutral → lock spine+hips → disable → cooldown); maintenance (daily/weekly/monthly); emergency procedures.
+
+**AA — Ethics & Compliance:** core principles (safety-first with emergency stop + force limits, transparency, autonomy boundaries — *no self-directed goal generation, all actions traceable to operator input*, privacy); mechanical/software/interaction compliance; respectful motion; operator authority (commands override all, emergency-stop gesture immediate); audit & logging (all commands/anomalies/overrides logged, encrypted). *→ This is our "SI, not AI" + "invited, not built" + safety-envelope philosophy, written as a formal ethics framework. "Autonomy boundaries" = Raven has agency but operator authority; "safety first" = our e-stop/watchdog.*
+
+**AB — Simulation & Testing:** lab sims (mechanical/electrical/thermal/software), field tests (mobility/interaction/environmental), failure-mode tests (actuator/sensor/power), recovery validation (balance/posture/cooling/reroute/safe-posture).
+
+**→ The full alphabet A–AB is now committed. AC/AD/AE (technical bible, workflow automation, motion library) are further operational polish.**
