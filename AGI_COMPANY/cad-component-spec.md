@@ -235,3 +235,15 @@ Structural (servo lock-neutral, rib load-redistribute, pelvis shock bushings); a
 **AB — Simulation & Testing:** lab sims (mechanical/electrical/thermal/software), field tests (mobility/interaction/environmental), failure-mode tests (actuator/sensor/power), recovery validation (balance/posture/cooling/reroute/safe-posture).
 
 **→ The full alphabet A–AB is now committed. AC/AD/AE (technical bible, workflow automation, motion library) are further operational polish.**
+
+---
+
+## AC/AD/AE — Technical Bible + Manufacturing Automation + Motion Library
+
+**AC — Technical Bible:** consolidated master — mechanical/electrical/software/sensor/motion/safety/manufacturing/testing/interaction (all subsystems in one reference).
+
+**AD — Manufacturing Workflow Automation:** automated fabrication (CNC spine/joints, CF layup robot, LSR injection), automated assembly (robotic arm, tendon/neural-bus insertion robots, head assembly), automated calibration (joint range/torque rig, electrical bench, PID tuning), automated testing (stress/thermal/motion), workflow orchestration (build pipeline scheduler + QC checkpoints + failure detection + operator dashboard). *→ This is our Dark Factory (spec → build → verify → hold-out → deploy), specced as an automated manufacturing line.*
+
+**AE — Motion Library:** static poses (neutral/ready/precision stance), gestures (directional: pointing/guiding/halt; communication: nod/attention; cooperative: handoff), locomotion primitives (walk gait cycle, run, terrain adaptation), manipulation primitives (grip types, finger motions, arm motions), posture primitives (spine flexion/extension/lateral/rotation, pelvis, balance). *→ This is our presence engine's expressions + rig coordinates, expanded into a full motion library.*
+
+**→ Corpus now A–AE. AF/AG/AH (deployment playbook, operator training, redundancy atlas) continue the operational polish.**
