@@ -87,3 +87,6 @@ DepotChaos/depot_chaos.db
 
 # Transient 3D asset downloads
 data/hi3d_torso/
+
+# Merged 3D print outputs (generated; often exceed GitHub 100MB limit)
+stl_files/*/merged/
