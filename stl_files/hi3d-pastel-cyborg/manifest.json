@@ -1,0 +1,602 @@
+{
+  "1": {
+    "part": 1,
+    "file": "part01.3mf",
+    "size_bytes": 5200968,
+    "transform": "1 0 0 0 1 0 0 0 1 127.5933 126.3388 -19.7370",
+    "colors": [
+      "#EEA39DFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 166439,
+    "triangles": 342088
+  },
+  "2": {
+    "part": 2,
+    "file": "part02.3mf",
+    "size_bytes": 199190,
+    "transform": "1 0 0 0 1 0 0 0 1 132.7622 126.0429 0.5065",
+    "colors": [
+      "#EEA39DFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 6308,
+    "triangles": 13500
+  },
+  "3": {
+    "part": 3,
+    "file": "part03.3mf",
+    "size_bytes": 151819,
+    "transform": "1 0 0 0 1 0 0 0 1 135.5699 129.0128 19.9170",
+    "colors": [
+      "#EEA39DFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 4874,
+    "triangles": 10246
+  },
+  "4": {
+    "part": 4,
+    "file": "part04.3mf",
+    "size_bytes": 124943,
+    "transform": "1 0 0 0 1 0 0 0 1 133.4917 131.9466 20.7939",
+    "colors": [
+      "#EEA39DFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 3977,
+    "triangles": 8432
+  },
+  "5": {
+    "part": 5,
+    "file": "part05.3mf",
+    "size_bytes": 629004,
+    "transform": "1 0 0 0 1 0 0 0 1 128.1450 129.9687 -1.5483",
+    "colors": [
+      "#EEA39DFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 20070,
+    "triangles": 43860
+  },
+  "6": {
+    "part": 6,
+    "file": "part06.3mf",
+    "size_bytes": 214225,
+    "transform": "1 0 0 0 1 0 0 0 1 123.2583 126.1275 0.5542",
+    "colors": [
+      "#EEA39DFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 6840,
+    "triangles": 14626
+  },
+  "7": {
+    "part": 7,
+    "file": "part07.3mf",
+    "size_bytes": 72299,
+    "transform": "1 0 0 0 1 0 0 0 1 119.3296 129.7414 -28.5608",
+    "colors": [
+      "#EEA39DFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 2237,
+    "triangles": 4740
+  },
+  "8": {
+    "part": 8,
+    "file": "part08.3mf",
+    "size_bytes": 159119,
+    "transform": "1 0 0 0 1 0 0 0 1 124.7962 128.9585 20.1619",
+    "colors": [
+      "#EEA39DFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 5122,
+    "triangles": 10734
+  },
+  "9": {
+    "part": 9,
+    "file": "part09.3mf",
+    "size_bytes": 686546,
+    "transform": "1 0 0 0 1 0 0 0 1 113.8112 130.1434 7.5239",
+    "colors": [
+      "#EEC69DFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 22348,
+    "triangles": 45930
+  },
+  "10": {
+    "part": 10,
+    "file": "part10.3mf",
+    "size_bytes": 548835,
+    "transform": "1 0 0 0 1 0 0 0 1 127.6494 132.3945 -37.6103",
+    "colors": [
+      "#EEE29DFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 17634,
+    "triangles": 37090
+  },
+  "11": {
+    "part": 11,
+    "file": "part11.3mf",
+    "size_bytes": 2854124,
+    "transform": "1 0 0 0 1 0 0 0 1 127.9345 129.9970 -16.6111",
+    "colors": [
+      "#C7EE9DFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 91859,
+    "triangles": 192434
+  },
+  "12": {
+    "part": 12,
+    "file": "part12.3mf",
+    "size_bytes": 1792722,
+    "transform": "1 0 0 0 1 0 0 0 1 137.2760 130.3350 -1.8639",
+    "colors": [
+      "#A4EE9DFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 58072,
+    "triangles": 123342
+  },
+  "13": {
+    "part": 13,
+    "file": "part13.3mf",
+    "size_bytes": 1037791,
+    "transform": "1 0 0 0 1 0 0 0 1 134.1948 131.2458 51.1971",
+    "colors": [
+      "#A4EE9DFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 33823,
+    "triangles": 69476
+  },
+  "14": {
+    "part": 14,
+    "file": "part14.3mf",
+    "size_bytes": 1681408,
+    "transform": "1 0 0 0 1 0 0 0 1 133.5687 127.7204 43.1080",
+    "colors": [
+      "#A4EE9DFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 55120,
+    "triangles": 114422
+  },
+  "15": {
+    "part": 15,
+    "file": "part15.3mf",
+    "size_bytes": 3427959,
+    "transform": "1 0 0 0 1 0 0 0 1 121.6618 129.4052 45.6607",
+    "colors": [
+      "#A4EE9DFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 111239,
+    "triangles": 231580
+  },
+  "16": {
+    "part": 16,
+    "file": "part16.3mf",
+    "size_bytes": 409882,
+    "transform": "1 0 0 0 1 0 0 0 1 121.7723 134.4547 51.2000",
+    "colors": [
+      "#A4EE9DFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 13391,
+    "triangles": 27790
+  },
+  "17": {
+    "part": 17,
+    "file": "part17.3mf",
+    "size_bytes": 577468,
+    "transform": "1 0 0 0 1 0 0 0 1 115.2393 126.7995 -1.8673",
+    "colors": [
+      "#A4EE9DFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 18683,
+    "triangles": 39930
+  },
+  "18": {
+    "part": 18,
+    "file": "part18.3mf",
+    "size_bytes": 205622,
+    "transform": "1 0 0 0 1 0 0 0 1 138.9130 126.9303 -17.0650",
+    "colors": [
+      "#9DEEBBFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 6543,
+    "triangles": 14356
+  },
+  "19": {
+    "part": 19,
+    "file": "part19.3mf",
+    "size_bytes": 1150911,
+    "transform": "1 0 0 0 1 0 0 0 1 125.5536 130.1788 -16.6648",
+    "colors": [
+      "#9DEEBBFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 37156,
+    "triangles": 77844
+  },
+  "20": {
+    "part": 20,
+    "file": "part20.3mf",
+    "size_bytes": 282114,
+    "transform": "1 0 0 0 1 0 0 0 1 136.5649 130.5815 0.2031",
+    "colors": [
+      "#9DEEBBFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 9149,
+    "triangles": 19442
+  },
+  "21": {
+    "part": 21,
+    "file": "part21.3mf",
+    "size_bytes": 266497,
+    "transform": "1 0 0 0 1 0 0 0 1 134.1038 132.6784 16.9548",
+    "colors": [
+      "#9DEEBBFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 8425,
+    "triangles": 18712
+  },
+  "22": {
+    "part": 22,
+    "file": "part22.3mf",
+    "size_bytes": 278384,
+    "transform": "1 0 0 0 1 0 0 0 1 127.9831 135.3997 -12.1344",
+    "colors": [
+      "#9DEEBBFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 8924,
+    "triangles": 19386
+  },
+  "23": {
+    "part": 23,
+    "file": "part23.3mf",
+    "size_bytes": 207689,
+    "transform": "1 0 0 0 1 0 0 0 1 133.4804 129.3510 41.3494",
+    "colors": [
+      "#9DEEBBFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 6456,
+    "triangles": 14670
+  },
+  "24": {
+    "part": 24,
+    "file": "part24.3mf",
+    "size_bytes": 156226,
+    "transform": "1 0 0 0 1 0 0 0 1 128.0505 135.2393 -8.3578",
+    "colors": [
+      "#9DEEBBFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 4898,
+    "triangles": 10808
+  },
+  "25": {
+    "part": 25,
+    "file": "part25.3mf",
+    "size_bytes": 117827,
+    "transform": "1 0 0 0 1 0 0 0 1 127.9590 135.0265 -4.5563",
+    "colors": [
+      "#9DEEBBFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 3661,
+    "triangles": 8092
+  },
+  "26": {
+    "part": 26,
+    "file": "part26.3mf",
+    "size_bytes": 145016,
+    "transform": "1 0 0 0 1 0 0 0 1 123.3743 133.8045 9.1996",
+    "colors": [
+      "#9DEEBBFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 4565,
+    "triangles": 9972
+  },
+  "27": {
+    "part": 27,
+    "file": "part27.3mf",
+    "size_bytes": 559520,
+    "transform": "1 0 0 0 1 0 0 0 1 121.7719 130.9335 17.7591",
+    "colors": [
+      "#9DEEBBFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 17932,
+    "triangles": 39000
+  },
+  "28": {
+    "part": 28,
+    "file": "part28.3mf",
+    "size_bytes": 186239,
+    "transform": "1 0 0 0 1 0 0 0 1 122.7214 134.0425 50.9629",
+    "colors": [
+      "#9DEEBBFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 5907,
+    "triangles": 12898
+  },
+  "29": {
+    "part": 29,
+    "file": "part29.3mf",
+    "size_bytes": 228659,
+    "transform": "1 0 0 0 1 0 0 0 1 122.6368 126.4422 47.6063",
+    "colors": [
+      "#9DEEBBFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 7422,
+    "triangles": 15800
+  },
+  "30": {
+    "part": 30,
+    "file": "part30.3mf",
+    "size_bytes": 188100,
+    "transform": "1 0 0 0 1 0 0 0 1 122.5019 129.2760 41.2519",
+    "colors": [
+      "#9DEEBBFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 5811,
+    "triangles": 13280
+  },
+  "31": {
+    "part": 31,
+    "file": "part31.3mf",
+    "size_bytes": 94398,
+    "transform": "1 0 0 0 1 0 0 0 1 122.6063 125.3147 50.4052",
+    "colors": [
+      "#9DEEBBFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 2949,
+    "triangles": 6362
+  },
+  "32": {
+    "part": 32,
+    "file": "part32.3mf",
+    "size_bytes": 174377,
+    "transform": "1 0 0 0 1 0 0 0 1 120.4970 129.0915 20.6124",
+    "colors": [
+      "#9DEEBBFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 5605,
+    "triangles": 11888
+  },
+  "33": {
+    "part": 33,
+    "file": "part33.3mf",
+    "size_bytes": 78171,
+    "transform": "1 0 0 0 1 0 0 0 1 112.9991 128.9215 -2.7433",
+    "colors": [
+      "#9DEEBBFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 2379,
+    "triangles": 5302
+  },
+  "34": {
+    "part": 34,
+    "file": "part34.3mf",
+    "size_bytes": 587883,
+    "transform": "1 0 0 0 1 0 0 0 1 142.1860 130.1069 7.4797",
+    "colors": [
+      "#9DEED9FF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 19149,
+    "triangles": 39144
+  },
+  "35": {
+    "part": 35,
+    "file": "part35.3mf",
+    "size_bytes": 512988,
+    "transform": "1 0 0 0 1 0 0 0 1 133.5994 127.5326 48.7935",
+    "colors": [
+      "#9DEED9FF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 16512,
+    "triangles": 35334
+  },
+  "36": {
+    "part": 36,
+    "file": "part36.3mf",
+    "size_bytes": 574321,
+    "transform": "1 0 0 0 1 0 0 0 1 121.9428 130.3620 51.0261",
+    "colors": [
+      "#9DEED9FF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 18670,
+    "triangles": 38934
+  },
+  "37": {
+    "part": 37,
+    "file": "part37.3mf",
+    "size_bytes": 61993,
+    "transform": "1 0 0 0 1 0 0 0 1 121.4248 131.6983 20.7251",
+    "colors": [
+      "#9DEED9FF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 1881,
+    "triangles": 4100
+  },
+  "38": {
+    "part": 38,
+    "file": "part38.3mf",
+    "size_bytes": 236612,
+    "transform": "1 0 0 0 1 0 0 0 1 131.4112 129.7692 20.6521",
+    "colors": [
+      "#9DD0EEFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 7671,
+    "triangles": 16138
+  },
+  "39": {
+    "part": 39,
+    "file": "part39.3mf",
+    "size_bytes": 368608,
+    "transform": "1 0 0 0 1 0 0 0 1 141.5375 126.8839 -4.0356",
+    "colors": [
+      "#9DB0EEFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 11924,
+    "triangles": 25500
+  },
+  "40": {
+    "part": 40,
+    "file": "part40.3mf",
+    "size_bytes": 1454983,
+    "transform": "1 0 0 0 1 0 0 0 1 134.3981 130.1958 20.5942",
+    "colors": [
+      "#9DB0EEFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 47479,
+    "triangles": 99374
+  },
+  "41": {
+    "part": 41,
+    "file": "part41.3mf",
+    "size_bytes": 795419,
+    "transform": "1 0 0 0 1 0 0 0 1 119.6926 127.1091 -16.5885",
+    "colors": [
+      "#9DB0EEFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 25853,
+    "triangles": 54672
+  },
+  "42": {
+    "part": 42,
+    "file": "part42.3mf",
+    "size_bytes": 161796,
+    "transform": "1 0 0 0 1 0 0 0 1 122.3739 126.5987 48.7594",
+    "colors": [
+      "#9DB0EEFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 5153,
+    "triangles": 11314
+  },
+  "43": {
+    "part": 43,
+    "file": "part43.3mf",
+    "size_bytes": 614688,
+    "transform": "1 0 0 0 1 0 0 0 1 114.9407 126.7506 -3.1667",
+    "colors": [
+      "#9DB0EEFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 19918,
+    "triangles": 42242
+  },
+  "44": {
+    "part": 44,
+    "file": "part44.3mf",
+    "size_bytes": 110013,
+    "transform": "1 0 0 0 1 0 0 0 1 141.4467 127.7478 -3.1022",
+    "colors": [
+      "#B09DEEFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 3490,
+    "triangles": 7512
+  },
+  "45": {
+    "part": 45,
+    "file": "part45.3mf",
+    "size_bytes": 346643,
+    "transform": "1 0 0 0 1 0 0 0 1 139.3628 125.7593 -9.0165",
+    "colors": [
+      "#B09DEEFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 11262,
+    "triangles": 23798
+  },
+  "46": {
+    "part": 46,
+    "file": "part46.3mf",
+    "size_bytes": 5747281,
+    "transform": "1 0 0 0 1 0 0 0 1 128.0017 130.4061 15.3322",
+    "colors": [
+      "#B09DEEFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 184474,
+    "triangles": 387636
+  },
+  "47": {
+    "part": 47,
+    "file": "part47.3mf",
+    "size_bytes": 166051,
+    "transform": "1 0 0 0 1 0 0 0 1 128.0449 136.4413 -21.1700",
+    "colors": [
+      "#B09DEEFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 5348,
+    "triangles": 11550
+  },
+  "48": {
+    "part": 48,
+    "file": "part48.3mf",
+    "size_bytes": 478604,
+    "transform": "1 0 0 0 1 0 0 0 1 133.1583 127.1322 45.7640",
+    "colors": [
+      "#B09DEEFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 15590,
+    "triangles": 32900
+  },
+  "49": {
+    "part": 49,
+    "file": "part49.3mf",
+    "size_bytes": 788991,
+    "transform": "1 0 0 0 1 0 0 0 1 120.3083 130.8017 -16.6950",
+    "colors": [
+      "#B09DEEFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 25443,
+    "triangles": 54020
+  },
+  "50": {
+    "part": 50,
+    "file": "part50.3mf",
+    "size_bytes": 251946,
+    "transform": "1 0 0 0 1 0 0 0 1 122.4156 129.0504 46.9901",
+    "colors": [
+      "#B09DEEFF",
+      "#FFFFFFFF"
+    ],
+    "vertices": 8183,
+    "triangles": 17456
+  }
+}
