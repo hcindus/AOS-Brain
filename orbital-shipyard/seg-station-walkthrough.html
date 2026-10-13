@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SEG-1 Segmented Orbital Station — In Orbit Above Mars</title>
+<title>Hi3D Pastel Segmented Modular Space Station — In Orbit Above Mars</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
@@ -19,14 +19,14 @@
   }
   #overlay h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: clamp(30px, 5vw, 64px); font-weight: 700; letter-spacing: 4px; color: #eaf3fb;
+    font-size: clamp(28px, 4.5vw, 56px); font-weight: 700; letter-spacing: 3px; color: #eaf3fb;
     text-shadow: 0 0 12px #4a90d9, 0 0 40px #4a90d9;
   }
-  #overlay .sub { font-size: clamp(14px, 2vw, 20px); letter-spacing: 5px; margin-top: 8px; color: #8ab4d9; }
-  #overlay .hint { margin-top: 48px; color: #d4af37; font-size: 13px; letter-spacing: 2px; }
+  #overlay .sub { font-size: clamp(13px, 2vw, 18px); letter-spacing: 5px; margin-top: 8px; color: #8ab4d9; }
+  #overlay .hint { margin-top: 44px; color: #d4af37; font-size: 13px; letter-spacing: 2px; }
   #overlay .keys { margin-top: 14px; color: #7a8595; font-size: 12px; letter-spacing: 1px; line-height: 1.8; }
-  #overlay .loading { margin-top: 30px; color: #4a90d9; font-size: 12px; letter-spacing: 2px; }
-  #overlay .collection { margin-top: 40px; }
+  #overlay .loading { margin-top: 28px; color: #4a90d9; font-size: 12px; letter-spacing: 2px; }
+  #overlay .collection { margin-top: 38px; }
   #overlay .collection a {
     color: #8ab4d9; font-size: 12px; letter-spacing: 2px; text-decoration: none;
     border-bottom: 1px solid #3a5a7a; padding-bottom: 2px;
@@ -42,15 +42,15 @@
 <body>
 
 <div id="overlay">
-  <h1>SEG-1 ORBITAL STATION</h1>
-  <div class="sub">SEGMENTED WHEEL · IN ORBIT ABOVE MARS</div>
+  <h1>SEGMENTED MODULAR STATION</h1>
+  <div class="sub">HI3D PASTEL · IN ORBIT ABOVE MARS</div>
   <div class="loading" id="loadstatus">LOADING ASSETS…</div>
   <div class="hint">CLICK TO ENTER</div>
   <div class="keys">W A S D — move &nbsp;·&nbsp; MOUSE — look &nbsp;·&nbsp; SHIFT — boost &nbsp;·&nbsp; SPACE / C — up / down</div>
   <div class="collection"><a href="orbital-shipyard.html">← VIEW OSY-7 ORBITAL SHIPYARD</a></div>
 </div>
 
-<div id="hud">SEG-1 · MARS ORBIT · SPIN ACTIVE</div>
+<div id="hud">HI3D SEGMENTED STATION · MARS ORBIT</div>
 
 <script type="importmap">
 {
@@ -64,6 +64,7 @@
 <script type="module">
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -77,7 +78,7 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x02030a);
 
 const camera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 200000);
-camera.position.set(0, 4550, 1600);
+camera.position.set(0, 4550, 1700);
 camera.lookAt(0, 4450, 0);
 
 // ---------------- Stars ----------------
@@ -94,13 +95,11 @@ camera.lookAt(0, 4450, 0);
 }
 
 // ---------------- Lighting ----------------
-const ambient = new THREE.AmbientLight(0x203040, 1.2); scene.add(ambient);
-const sun = new THREE.DirectionalLight(0xfff2e0, 2.6); sun.position.set(3000, 8000, 2000); scene.add(sun);
-const marsBounce = new THREE.DirectionalLight(0x8a4a30, 0.6); marsBounce.position.set(0,-1000,0); scene.add(marsBounce);
+const ambient = new THREE.AmbientLight(0xffffff, 1.4); scene.add(ambient);
+const sun = new THREE.DirectionalLight(0xfff2e0, 2.4); sun.position.set(3000, 8000, 2000); scene.add(sun);
+const marsBounce = new THREE.DirectionalLight(0x8a4a30, 0.7); marsBounce.position.set(0,-1000,0); scene.add(marsBounce);
 
 // ---------------- Mars (lightweight textured sphere) ----------------
-const marsGroup = new THREE.Group();
-scene.add(marsGroup);
 {
   const texLoader = new THREE.TextureLoader();
   const diff = texLoader.load('./assets/characters/mars/mars_diff.jpg');
@@ -109,22 +108,43 @@ scene.add(marsGroup);
   const mat = new THREE.MeshStandardMaterial({ color:0xffffff, roughness:0.95, metalness:0.0, map:diff, normalMap:norm, normalScale:new THREE.Vector2(0.6,0.6) });
   const mars = new THREE.Mesh(geo, mat);
   mars.position.set(0, -6000, 0);
-  marsGroup.add(mars);
+  scene.add(mars);
 }
 
-// ---------------- SEG-1 Station (spinning) ----------------
+// ---------------- Hi3D Segmented Station ----------------
 const station = new THREE.Group();
 scene.add(station);
 station.position.set(0, 4450, 0);
-// tilt the wheel so its spin axis is angled toward the camera
-station.rotation.x = 0.9;
 
+// normalized model: long axis = Y (1.0), width X (0.32), depth Z (0.47)
+const SCALE = 340;
+station.scale.setScalar(SCALE);
+// lay the long axis (model Y) horizontal: rotate so +Y -> +X
+station.rotation.z = Math.PI / 2;
+
+const draco = new DRACOLoader();
+draco.setDecoderPath('https://unpkg.com/three@0.160.0/examples/jsm/libs/draco/');
 const loader = new GLTFLoader();
-loader.load('./assets/characters/mars/seg_station.glb', (gltf)=>{
+loader.setDRACOLoader(draco);
+
+loader.load('./assets/characters/mars/seg_station_hi3d.glb', (gltf)=>{
   const model = gltf.scene;
+  // enable vertex colors (the pastel palette) on all materials
+  model.traverse(o => {
+    if (o.isMesh && o.material) {
+      const mats = Array.isArray(o.material) ? o.material : [o.material];
+      mats.forEach(m => {
+        m.vertexColors = true;
+        m.needsUpdate = true;
+      });
+    }
+  });
   station.add(model);
   document.getElementById('loadstatus').textContent = 'ASSETS READY';
-}, undefined, (e)=>{ document.getElementById('loadstatus').textContent = 'LOADING STATION…'; });
+}, (x)=>{
+  const pct = Math.floor(x.loaded / x.total * 100);
+  document.getElementById('loadstatus').textContent = 'LOADING STATION… ' + pct + '%';
+}, (e)=>{ document.getElementById('loadstatus').textContent = 'LOADING STATION…'; });
 
 // ---------------- Controls ----------------
 const controls = new PointerLockControls(camera, document.body);
@@ -138,7 +158,6 @@ window.addEventListener('keydown', e=>{ keys[e.code]=true; });
 window.addEventListener('keyup', e=>{ keys[e.code]=false; });
 
 const moveSpeed = 140;
-let spinSpeed = 0.12;   // radians/sec
 
 function update(dt){
   const dir = new THREE.Vector3();
@@ -156,8 +175,8 @@ function update(dt){
   if (dir.length()>0) dir.normalize().multiplyScalar(moveSpeed*boost);
   camera.position.addScaledVector(dir, dt);
 
-  // spin the wheel around its own (tilted) axis
-  station.rotation.z += spinSpeed * dt;
+  // slow roll around the long axis to showcase the segments
+  station.rotation.y += 0.08 * dt;
 }
 
 let last = performance.now();
