@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hi3D Pastel Segmented Modular Space Station — In Orbit Above Mars</title>
+<title>Estonian Segmented Modular Space Station — In Orbit Above Mars</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
@@ -43,14 +43,14 @@
 
 <div id="overlay">
   <h1>SEGMENTED MODULAR STATION</h1>
-  <div class="sub">HI3D PASTEL · IN ORBIT ABOVE MARS</div>
+  <div class="sub">ESTONIAN TRICOLOR · IN ORBIT ABOVE MARS</div>
   <div class="loading" id="loadstatus">LOADING ASSETS…</div>
   <div class="hint">CLICK TO ENTER</div>
   <div class="keys">W A S D — move &nbsp;·&nbsp; MOUSE — look &nbsp;·&nbsp; SHIFT — boost &nbsp;·&nbsp; SPACE / C — up / down</div>
   <div class="collection"><a href="orbital-shipyard.html">← VIEW OSY-7 ORBITAL SHIPYARD</a></div>
 </div>
 
-<div id="hud">HI3D SEGMENTED STATION · MARS ORBIT</div>
+<div id="hud">ESTONIAN SEGMENTED STATION · MARS ORBIT</div>
 
 <script type="importmap">
 {
@@ -127,14 +127,14 @@ draco.setDecoderPath('https://unpkg.com/three@0.160.0/examples/jsm/libs/draco/')
 const loader = new GLTFLoader();
 loader.setDRACOLoader(draco);
 
-loader.load('./assets/characters/mars/seg_station_hi3d.glb', (gltf)=>{
+loader.load('./assets/characters/mars/seg_station_estonia.glb', (gltf)=>{
   const model = gltf.scene;
-  // enable vertex colors (the pastel palette) on all materials
+  // materials now carry the Estonian tricolor (no vertex colors) — ensure flat color
   model.traverse(o => {
     if (o.isMesh && o.material) {
       const mats = Array.isArray(o.material) ? o.material : [o.material];
       mats.forEach(m => {
-        m.vertexColors = true;
+        m.vertexColors = false;
         m.needsUpdate = true;
       });
     }
