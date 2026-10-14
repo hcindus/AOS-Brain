@@ -77,7 +77,7 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x02030a);
 
 const camera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 200000);
-camera.position.set(0, 4550, 1700);
+camera.position.set(0, 4550, 1100);
 camera.lookAt(0, 4450, 0);
 
 // ---------------- Stars ----------------
@@ -115,11 +115,11 @@ const station = new THREE.Group();
 scene.add(station);
 station.position.set(0, 4450, 0);
 
-// normalized model: long axis = Y (1.0), width X (0.32), depth Z (0.47)
-const SCALE = 340;
+// normalized model: long axis = Z (1.0), width X (0.32), depth Y (0.47) — glTF Y-up
+const SCALE = 400;
 station.scale.setScalar(SCALE);
-// lay the long axis (model Y) horizontal: rotate so +Y -> +X
-station.rotation.z = Math.PI / 2;
+// lay the long axis (model Z) horizontal: rotate so +Z -> +X
+station.rotation.y = Math.PI / 2;
 
 const loader = new GLTFLoader();
 
@@ -171,7 +171,7 @@ function update(dt){
   if (dir.length()>0) dir.normalize().multiplyScalar(moveSpeed*boost);
   camera.position.addScaledVector(dir, dt);
 
-  // slow roll around the long axis to showcase the segments
+  // slow turntable spin to showcase the station from all sides
   station.rotation.y += 0.08 * dt;
 }
 
