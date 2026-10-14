@@ -20,8 +20,12 @@ EMAIL_PASSWORD = "Myl0n.R0s"  # From vault
 IMAP_SERVER = "imap.hostinger.com"
 IMAP_PORT = 993
 
-# Captain's email (only actionable source)
-CAPTAIN_EMAIL = "antonio.hudnall@gmail.com"
+# Captain's emails (authorized senders)
+CAPTAIN_EMAILS = [
+    "antonio.hudnall@gmail.com",
+    "performacedepot@gmail.com",
+    "info@psdepot.com",
+]
 
 # Teams for routing
 TEAMS = {
