@@ -55,8 +55,24 @@
 <script src="./three-bundle-iife.js" onerror="document.getElementById('loadstatus').textContent='ERROR: failed to load three-bundle-iife.js'"></script>
 <script>
 const { THREE, GLTFLoader, PointerLockControls } = window.THREE_BUNDLE;
+
+// --- WebGL availability check + graceful fallback ---
+try {
+  var _c = document.createElement('canvas');
+  var _gl = _c.getContext('webgl') || _c.getContext('experimental-webgl');
+  if (!_gl) throw new Error('WebGL unavailable');
+} catch (_e) {
+  var _ov = document.getElementById('overlay');
+  _ov.innerHTML = '<h1>3D UNAVAILABLE</h1>'
+    + '<div class="sub">THIS BROWSER/DESKTOP CANNOT RENDER WEBGL</div>'
+    + '<img src="./assets/characters/mars/station-hero.png" alt="Station" style="max-width:86%;max-height:56%;margin:22px auto 0;border:1px solid #3a5a7a;border-radius:4px">'
+    + '<div class="keys" style="margin-top:18px">ENABLE HARDWARE ACCELERATION (CHROME: SETTINGS &rarr; SYSTEM) OR TRY FIREFOX / SAFARI / UPDATED CHROME.</div>';
+  throw new Error('WEBGL_UNAVAILABLE');
+}
+
 window.addEventListener('error', (e) => {
-  document.getElementById('loadstatus').textContent = 'ERROR: ' + (e.message || 'script failed');
+  const el = document.getElementById('loadstatus');
+  if (el) el.textContent = 'ERROR: ' + (e.message || 'script failed');
 });
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
