@@ -64,7 +64,6 @@
 <script type="module">
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -122,12 +121,9 @@ station.scale.setScalar(SCALE);
 // lay the long axis (model Y) horizontal: rotate so +Y -> +X
 station.rotation.z = Math.PI / 2;
 
-const draco = new DRACOLoader();
-draco.setDecoderPath('https://unpkg.com/three@0.160.0/examples/jsm/libs/draco/');
 const loader = new GLTFLoader();
-loader.setDRACOLoader(draco);
 
-loader.load('./assets/characters/mars/seg_station_hi3d.glb', (gltf)=>{
+loader.load('./assets/characters/mars/seg_station_nodraco.glb', (gltf)=>{
   const model = gltf.scene;
   // enable vertex colors (the pastel palette) on all materials
   model.traverse(o => {
