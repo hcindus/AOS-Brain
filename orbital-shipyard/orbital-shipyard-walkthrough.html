@@ -54,8 +54,12 @@
 <div id="cabaret-tag">✦ THE VELVET CABARET — ENTER</div>
 <div id="hud">OSY-7 · MARS ORBIT</div>
 
-<script type="module">
-import { THREE, GLTFLoader, PointerLockControls } from './three-bundle.js';
+<script src="./three-bundle-iife.js" onerror="document.getElementById('loadstatus').textContent='ERROR: failed to load three-bundle-iife.js'"></script>
+<script>
+const { THREE, GLTFLoader, PointerLockControls } = window.THREE_BUNDLE;
+window.addEventListener('error', (e) => {
+  document.getElementById('loadstatus').textContent = 'ERROR: ' + (e.message || 'script failed');
+});
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
