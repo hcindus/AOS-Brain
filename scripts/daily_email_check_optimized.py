@@ -18,8 +18,12 @@ EMAIL_PASSWORD = "Myl0n.R0s"
 IMAP_SERVER = "imap.hostinger.com"
 IMAP_PORT = 993
 
-# Captain's email (only actionable source)
-CAPTAIN_EMAIL = "antonio.hudnall@gmail.com"
+# Captain's emails (authorized senders)
+CAPTAIN_EMAILS = [
+    "antonio.hudnall@gmail.com",
+    "performacedepot@gmail.com",
+    "info@psdepot.com",
+]
 
 def log_message(msg):
     """Log with timestamp"""
@@ -43,8 +47,8 @@ def check_emails():
         # Select inbox
         mail.select("inbox")
         
-        # Search for emails from Captain only (more efficient)
-        status, messages = mail.search(None, f'FROM "{CAPTAIN_EMAIL}" UNSEEN')
+        # Search for unread emails (filter sender in Python to support multiple addresses)
+        status, messages = mail.search(None, 'UNSEEN')
         
         if status != "OK":
             log_message("No new messages from Captain")
@@ -69,6 +73,18 @@ def check_emails():
             # Parse email
             msg = email.message_from_bytes(msg_data[0][1])
             
+            # Get sender
+            from_header = decode_header(msg.get("From"))[0][0]
+            if isinstance(from_header, bytes):
+                from_email = from_header.decode()
+            else:
+                from_email = from_header
+
+            matched_sender = next((e for e in CAPTAIN_EMAILS if e in from_email), None)
+            if not matched_sender:
+                log_message(f"   ↪ Skipped (not Captain): {from_email}")
+                continue
+
             # Get subject
             subject_header = decode_header(msg.get("Subject"))[0][0]
             if isinstance(subject_header, bytes):
@@ -97,7 +113,7 @@ def check_emails():
                     pass
             
             # Analyze and route
-            route_email(subject, body)
+            route_email(subject, body, matched_sender)
         
         # Close connection
         mail.close()
@@ -108,7 +124,7 @@ def check_emails():
     
     log_message(f"✅ Processed {actionable_count} actionable email(s)")
 
-def route_email(subject, body):
+def route_email(subject, body, sender_email):
     """Analyze email and route to appropriate team"""
     subject_lower = subject.lower()
     body_lower = body.lower()
@@ -153,7 +169,7 @@ def route_email(subject, body):
     # Create action item
     action_item = {
         "timestamp": datetime.now().isoformat(),
-        "from": CAPTAIN_EMAIL,
+        "from": sender_email,
         "subject": subject,
         "routes": routes,
         "status": "pending_review",

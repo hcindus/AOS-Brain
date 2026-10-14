@@ -180,7 +180,12 @@ Performance Supply Depot LLC
                     continue
                 
                 # Check if from Captain
-                is_captain = 'antonio.hudnall' in from_addr.lower() or 'hcindus' in from_addr.lower()
+                captain_tokens = [
+                    'antonio.hudnall', 'hcindus',
+                    'performacedepot@gmail.com',
+                    'info@psdepot.com',
+                ]
+                is_captain = any(t in from_addr.lower() for t in captain_tokens)
                 
                 if is_captain:
                     self.log(f"🔴 EMAIL FROM CAPTAIN: {subject}")

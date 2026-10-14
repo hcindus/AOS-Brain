@@ -100,7 +100,8 @@ def check_emails():
                 subject = subject_header
             
             # Check if from Captain
-            if CAPTAIN_EMAIL in from_email:
+            matched_sender = next((e for e in CAPTAIN_EMAILS if e in from_email), None)
+            if matched_sender:
                 actionable_count += 1
                 log_message(f"🎯 ACTIONABLE from Captain: '{subject}'")
                 
@@ -122,7 +123,7 @@ def check_emails():
                         pass
                 
                 # Analyze and route
-                route_email(subject, body)
+                route_email(subject, body, matched_sender)
                 
                 # Mark as processed (but keep for reference)
                 # mail.store(msg_id, '+FLAGS', '\\Seen')
@@ -138,7 +139,7 @@ def check_emails():
     except Exception as e:
         log_message(f"❌ Error checking emails: {e}")
 
-def route_email(subject, body):
+def route_email(subject, body, sender_email):
     """Analyze email and route to appropriate team"""
     subject_lower = subject.lower()
     body_lower = body.lower()
@@ -183,7 +184,7 @@ def route_email(subject, body):
     # Create action item
     action_item = {
         "timestamp": datetime.now().isoformat(),
-        "from": CAPTAIN_EMAIL,
+        "from": sender_email,
         "subject": subject,
         "routes": routes,
         "status": "pending_review",
