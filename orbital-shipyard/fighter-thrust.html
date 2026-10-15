@@ -132,13 +132,37 @@ station.scale.setScalar(SCALE);
 
 const loader = new GLTFLoader();
 
-loader.load('./assets/fleet/x302_fighter_thrust.glb', (gltf)=>{
+loader.load('./assets/fleet/x302_fighter_opt.glb', (gltf)=>{
   // textured "realistic hard sci-fi" station (base color + metal/rough maps)
   station.add(gltf.scene);
   document.getElementById('loadstatus').textContent = 'ASSETS READY';
 }, (x)=>{
   if (x.total) document.getElementById('loadstatus').textContent = 'LOADING STATION… ' + Math.floor(x.loaded/x.total*100) + '%';
 }, (e)=>{ document.getElementById('loadstatus').textContent = 'ERROR LOADING: ' + (e && e.message ? e.message : 'network'); });
+
+// ---------------- Thrust fire (additive-blended cones) ----------------
+const thrustFires = [];
+function addThrustFire(pos, radius, length, tint) {
+  const geo = new THREE.ConeGeometry(radius, length, 16, 1, true); // open cone
+  const mat = new THREE.MeshBasicMaterial({
+    color: tint,
+    transparent: true,
+    opacity: 0.75,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+  });
+  const fire = new THREE.Mesh(geo, mat);
+  fire.rotation.z = Math.PI / 2;          // point the cone along -X (backward)
+  fire.position.set(pos[0] - length/2, pos[1], pos[2]); // base at thruster, point extends back
+  station.add(fire);
+  thrustFires.push(fire);
+  return fire;
+}
+// 2 small flanking + 1 large center (rear = -X)
+addThrustFire([-0.50, -0.16, 0], 0.12, 0.7, 0x5599ff);
+addThrustFire([-0.50,  0.16, 0], 0.12, 0.7, 0x5599ff);
+addThrustFire([-0.50,  0.0,  0], 0.22, 1.1, 0x88ccff);
 
 // ---------------- Controls ----------------
 const controls = new PointerLockControls(camera, document.body);
@@ -171,6 +195,14 @@ function update(dt){
 
   // slow turntable spin to showcase the station from all sides
   station.rotation.y += 0.08 * dt;
+
+  // thrust fire pulse
+  const t = performance.now() / 1000;
+  thrustFires.forEach((f, i) => {
+    const pulse = 1 + Math.sin(t * 10 + i * 2.1) * 0.18;
+    f.scale.set(pulse, pulse, pulse);
+    f.material.opacity = 0.65 + Math.sin(t * 14 + i) * 0.2;
+  });
 }
 
 let last = performance.now();
