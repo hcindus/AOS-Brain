@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hi3D Pastel Segmented Modular Space Station — In Orbit Above Mars</title>
+<title>Realistic Hard Sci-Fi Space Station — In Orbit Above Mars</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
@@ -43,7 +43,7 @@
 
 <div id="overlay">
   <h1>SEGMENTED MODULAR STATION</h1>
-  <div class="sub">HI3D PASTEL · IN ORBIT ABOVE MARS</div>
+  <div class="sub">REALISTIC HARD SCI-FI · IN ORBIT ABOVE MARS</div>
   <div class="loading" id="loadstatus">LOADING ASSETS…</div>
   <div class="hint">CLICK TO ENTER</div>
   <div class="keys">W A S D — move &nbsp;·&nbsp; MOUSE — look &nbsp;·&nbsp; SHIFT — boost &nbsp;·&nbsp; SPACE / C — up / down</div>
@@ -132,23 +132,12 @@ station.rotation.y = Math.PI / 2;
 
 const loader = new GLTFLoader();
 
-loader.load('./assets/characters/mars/seg_station_nodraco.glb', (gltf)=>{
-  const model = gltf.scene;
-  // enable vertex colors (the pastel palette) on all materials
-  model.traverse(o => {
-    if (o.isMesh && o.material) {
-      const mats = Array.isArray(o.material) ? o.material : [o.material];
-      mats.forEach(m => {
-        m.vertexColors = true;
-        m.needsUpdate = true;
-      });
-    }
-  });
-  station.add(model);
+loader.load('./assets/characters/mars/station_opt.glb', (gltf)=>{
+  // textured "realistic hard sci-fi" station (base color + metal/rough maps)
+  station.add(gltf.scene);
   document.getElementById('loadstatus').textContent = 'ASSETS READY';
 }, (x)=>{
-  const pct = Math.floor(x.loaded / x.total * 100);
-  document.getElementById('loadstatus').textContent = 'LOADING STATION… ' + pct + '%';
+  if (x.total) document.getElementById('loadstatus').textContent = 'LOADING STATION… ' + Math.floor(x.loaded/x.total*100) + '%';
 }, (e)=>{ document.getElementById('loadstatus').textContent = 'LOADING STATION…'; });
 
 // ---------------- Controls ----------------
