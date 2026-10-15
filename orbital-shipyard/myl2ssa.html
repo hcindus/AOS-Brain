@@ -133,13 +133,16 @@ station.position.set(0, 0, 0);
 
 const SCALE = 2.2;
 station.scale.setScalar(SCALE);
-station.rotation.x = -Math.PI / 2;
+
+const upright = new THREE.Group();
+upright.rotation.x = -Math.PI / 2;   // stand the Z-up character upright
+station.add(upright);
 
 const loader = new GLTFLoader();
 
-loader.load('./assets/fleet/android_rigged.glb', (gltf)=>{
+loader.load('./assets/fleet/android_merged.glb', (gltf)=>{
   // textured "realistic hard sci-fi" station (base color + metal/rough maps)
-  station.add(gltf.scene);
+  upright.add(gltf.scene);
   document.getElementById('loadstatus').textContent = 'ASSETS READY';
 }, (x)=>{
   if (x.total) document.getElementById('loadstatus').textContent = 'LOADING STATION… ' + Math.floor(x.loaded/x.total*100) + '%';
