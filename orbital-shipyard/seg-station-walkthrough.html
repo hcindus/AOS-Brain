@@ -140,15 +140,6 @@ loader.load('./assets/characters/mars/station_opt.glb', (gltf)=>{
   if (x.total) document.getElementById('loadstatus').textContent = 'LOADING STATION… ' + Math.floor(x.loaded/x.total*100) + '%';
 }, (e)=>{ document.getElementById('loadstatus').textContent = 'LOADING STATION…'; });
 
-// ---------------- Worker (mercenary) — placed for scale ----------------
-const worker = new THREE.Group();
-scene.add(worker);
-worker.position.set(0, 4543, 0);   // standing on top of the hull
-worker.scale.setScalar(1.8);        // human height (~1.8m)
-loader.load('./assets/characters/mars/mercenary_opt.glb', (gltf)=>{
-  worker.add(gltf.scene);
-});
-
 // ---------------- Controls ----------------
 const controls = new PointerLockControls(camera, document.body);
 const overlay = document.getElementById('overlay');
