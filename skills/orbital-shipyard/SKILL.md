@@ -106,6 +106,33 @@ Power, propulsion, logistics, docking.
 
 ---
 
+## Standard Door Sizes (canonical, station-wide)
+
+| Door type | Width × Height | Notes |
+|-----------|----------------|-------|
+| Standard personnel | 1.0 m × 2.1 m | Single occupant |
+| Wide / equipment | 1.6 m × 2.1 m | Stretchers, carts, equipment |
+| Double / bulkhead | 2.0 m × 2.2 m | Compartment isolation |
+| Large hangar / cargo | 6–8 m × 5–6 m | Sliding or biparting |
+
+---
+
+## Interior Compartment Specifications (canonical)
+
+Volumes are approximate internal *clear* volumes, excluding structural thickness.
+
+| # | Compartment | Doors | Corridor connections | Volume |
+|---|-------------|-------|----------------------|--------|
+| 1 | **Command & Operations Center** (Habitat Ring) | 2 × standard personnel + 1 × wide equipment | Primary: 2.8 m ring corridor (inner side); Secondary: Admin offices + short radial spoke | ≈ 1 480 m³ |
+| 2 | **Medical Bay / Sickbay** (Habitat Ring) | 3 × standard personnel + 1 × wide equipment (stretchers/gurneys) + 1 × isolation bulkhead | Main: 2.8 m ring corridor; Emergency: high-speed access to nearest spoke elevator | ≈ 1 190 m³ |
+| 3 | **Galley & Mess Hall** (Habitat Ring) | 4 × standard personnel + 2 × wide service (kitchen→storage) | Main: 2.8 m ring corridor (both sector ends); Service: 2.0 m corridor to hydroponics + storage | ≈ 2 140 m³ |
+| 4 | **Private Crew Quarters** (Habitat Ring) | 1 × standard personnel per cabin | Each cabin opens directly onto 2.8 m ring corridor; no secondary (privacy) | ≈ 32 m³ std / 41 m³ senior |
+| 5 | **Aft Docking Hangar & Shuttle Bay** | 2 × large hangar (7 m × 5.5 m) + 4 × wide equipment + 2 × standard personnel | Main: 4 m zero-g transfer tube to Central Spine; Secondary: two 2.5 m service corridors to utility modules | ≈ 20 200 m³ |
+| 6 | **Power Generation & Utility Core** | 2 × wide equipment + 2 × standard personnel + 1 × heavy bulkhead (radiation/pressure) | Primary: 3 m utility corridor along aft cluster; Secondary: cable/coolant galleries to Central Spine | ≈ 8 600 m³ |
+| 7 | **Observation Deck** | 3 × standard personnel + 1 × wide (furniture/equipment) | Main: 2.8 m ring corridor (inner radius); Secondary: short radial link to recreation area | ≈ 1 790 m³ |
+
+---
+
 ## Visual Character (locked)
 
 - **Lighting:** muted / overcast — Earth albedo, reflected light, or artificial sources; cool industrial tones (greys, blues, faded metallics); hard edges softened by grime.
