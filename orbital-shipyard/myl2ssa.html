@@ -133,16 +133,13 @@ station.position.set(0, 0, 0);
 
 const SCALE = 2.2;
 station.scale.setScalar(SCALE);
-
-const upright = new THREE.Group();
-upright.rotation.x = -Math.PI / 2;   // stand the Z-up character upright
-station.add(upright);
+// upright — the GLB's node already applies the Z-up→Y-up rotation
 
 const loader = new GLTFLoader();
 
 loader.load('./assets/fleet/android_merged.glb', (gltf)=>{
   // textured "realistic hard sci-fi" station (base color + metal/rough maps)
-  upright.add(gltf.scene);
+  station.add(gltf.scene);
   document.getElementById('loadstatus').textContent = 'ASSETS READY';
 }, (x)=>{
   if (x.total) document.getElementById('loadstatus').textContent = 'LOADING STATION… ' + Math.floor(x.loaded/x.total*100) + '%';
