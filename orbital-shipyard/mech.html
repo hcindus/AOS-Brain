@@ -107,14 +107,23 @@ const ambient = new THREE.AmbientLight(0xffffff, 1.4); scene.add(ambient);
 const sun = new THREE.DirectionalLight(0xfff2e0, 2.4); sun.position.set(3000, 8000, 2000); scene.add(sun);
 const marsBounce = new THREE.DirectionalLight(0x8a4a30, 0.7); marsBounce.position.set(0,-1000,0); scene.add(marsBounce);
 
-// ---------------- Ground (flat surface) ----------------
+// ---------------- Mars terrain (height-displaced surface) ----------------
 {
-  const geo = new THREE.PlaneGeometry(40, 40, 1, 1);
-  const mat = new THREE.MeshStandardMaterial({ color: 0x2a303a, roughness: 0.85, metalness: 0.25 });
-  const ground = new THREE.Mesh(geo, mat);
-  ground.rotation.x = -Math.PI / 2;   // lay flat, facing up
-  ground.position.y = -1.02;          // just under the mech's feet
-  scene.add(ground);
+  const texLoader = new THREE.TextureLoader();
+  const diff = texLoader.load('./assets/characters/mars/mars_diff.jpg');
+  const height = texLoader.load('./assets/fleet/mars_height.jpg');
+  const geo = new THREE.PlaneGeometry(60, 60, 220, 220);
+  const mat = new THREE.MeshStandardMaterial({
+    color: 0xffffff, roughness: 0.95, metalness: 0.0,
+    map: diff,
+    displacementMap: height,
+    displacementScale: 1.2,
+    displacementBias: -0.1,
+  });
+  const terrain = new THREE.Mesh(geo, mat);
+  terrain.rotation.x = -Math.PI / 2;
+  terrain.position.y = -1.55;
+  scene.add(terrain);
 }
 
 // ---------------- Mech ----------------
