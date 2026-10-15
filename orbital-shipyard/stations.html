@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Space Station Collection — tappylewis.cloud</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'JetBrains Mono', monospace;
+    background: #05070d;
+    color: #cfe0ee;
+    min-height: 100vh;
+    padding: 40px 24px 60px;
+  }
+  header { text-align: center; margin-bottom: 40px; }
+  header h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(30px, 5vw, 52px); font-weight: 700; letter-spacing: 4px; color: #eaf3fb;
+    text-shadow: 0 0 12px #4a90d9, 0 0 40px #4a90d9;
+  }
+  header .sub { letter-spacing: 4px; color: #8ab4d9; margin-top: 8px; font-size: 14px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 22px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .card {
+    display: block; text-decoration: none; color: inherit;
+    background: #0a0f18; border: 1px solid #1a2636; border-radius: 10px; overflow: hidden;
+    transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px); border-color: #4a90d9;
+    box-shadow: 0 0 24px rgba(74,144,217,0.25);
+  }
+  .card img { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; background:#000; }
+  .card .body { padding: 14px 16px 16px; }
+  .card .name { font-size: 15px; letter-spacing: 2px; color: #eaf3fb; font-weight: 600; }
+  .card .orbit { font-size: 11px; letter-spacing: 2px; color: #6a7c90; margin-top: 6px; }
+  .card .go { font-size: 11px; letter-spacing: 2px; color: #d4af37; margin-top: 10px; }
+  footer { text-align: center; margin-top: 40px; color: #4a5a6a; font-size: 12px; letter-spacing: 2px; }
+  footer a { color: #8ab4d9; text-decoration: none; }
+</style>
+</head>
+<body>
+<header>
+  <h1>SPACE STATION COLLECTION</h1>
+  <div class="sub">SIX STATIONS · ORBITAL FLEET</div>
+</header>
+
+<div class="grid">
+  <a class="card" href="orbital-shipyard.html">
+    <img src="assets/stations/shipyard.jpg" alt="OSY-7 Orbital Shipyard">
+    <div class="body"><div class="name">OSY-7 ORBITAL SHIPYARD</div><div class="orbit">LOW ORBIT · MARS</div><div class="go">ENTER →</div></div>
+  </a>
+  <a class="card" href="seg-station.html">
+    <img src="assets/stations/realistic.jpg" alt="Realistic Hard Sci-Fi Station">
+    <div class="body"><div class="name">REALISTIC HARD SCI-FI STATION</div><div class="orbit">ORBIT · MARS</div><div class="go">ENTER →</div></div>
+  </a>
+  <a class="card" href="seg-earth.html">
+    <img src="assets/stations/seg-earth.jpg" alt="SEG-EARTH Station">
+    <div class="body"><div class="name">SEG-EARTH STATION</div><div class="orbit">LOW ORBIT · EARTH</div><div class="go">ENTER →</div></div>
+  </a>
+  <a class="card" href="station-modular.html">
+    <img src="assets/stations/modular.jpg" alt="Modular Space Station">
+    <div class="body"><div class="name">MODULAR STATION</div><div class="orbit">ORBIT · MARS</div><div class="go">ENTER →</div></div>
+  </a>
+  <a class="card" href="station-rotating.html">
+    <img src="assets/stations/rotating.jpg" alt="Rotating Space Station">
+    <div class="body"><div class="name">ROTATING STATION</div><div class="orbit">ORBIT · MARS</div><div class="go">ENTER →</div></div>
+  </a>
+  <a class="card" href="station-detailed.html">
+    <img src="assets/stations/detailed.jpg" alt="Detailed Space Station">
+    <div class="body"><div class="name">DETAILED STATION</div><div class="orbit">ORBIT · MARS</div><div class="go">ENTER →</div></div>
+  </a>
+</div>
+
+<footer>tappylewis.cloud · space station fleet</footer>
+</body>
+</html>
