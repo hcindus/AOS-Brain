@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Myl2ssa</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+  body { font-family: 'JetBrains Mono', monospace; }
+  canvas { display: block; }
+
+  #overlay {
+    position: fixed; inset: 0; z-index: 10;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; cursor: pointer;
+    background: radial-gradient(ellipse at 50% 40%, rgba(0,60,120,0.12), transparent 60%), #05070d;
+    color: #cfe0ee; user-select: none;
+  }
+  #overlay h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(28px, 4.5vw, 56px); font-weight: 700; letter-spacing: 3px; color: #eaf3fb;
+    text-shadow: 0 0 12px #4a90d9, 0 0 40px #4a90d9;
+  }
+  #overlay .sub { font-size: clamp(13px, 2vw, 18px); letter-spacing: 5px; margin-top: 8px; color: #8ab4d9; }
+  #overlay .hint { margin-top: 44px; color: #d4af37; font-size: 13px; letter-spacing: 2px; }
+  #overlay .keys { margin-top: 14px; color: #7a8595; font-size: 12px; letter-spacing: 1px; line-height: 1.8; }
+  #overlay .loading { margin-top: 28px; color: #4a90d9; font-size: 12px; letter-spacing: 2px; }
+  #overlay .collection { margin-top: 38px; }
+  #overlay .collection a {
+    color: #8ab4d9; font-size: 12px; letter-spacing: 2px; text-decoration: none;
+    border-bottom: 1px solid #3a5a7a; padding-bottom: 2px;
+  }
+  #overlay .collection a:hover { color: #cfe0ee; }
+
+  #hud {
+    position: fixed; bottom: 16px; left: 18px; z-index: 5;
+    font-size: 11px; letter-spacing: 2px; color: rgba(180,210,235,0.6); pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<div id="overlay">
+  <h1>MYL2SSA</h1>
+  <div class="sub">SEGMENTED FEMALE ANDROID · MARS</div>
+  <div class="loading" id="loadstatus">LOADING ASSETS…</div>
+  <div class="hint">CLICK TO ENTER</div>
+  <div class="keys">W A S D — move &nbsp;·&nbsp; MOUSE — look &nbsp;·&nbsp; SHIFT — boost &nbsp;·&nbsp; SPACE / C — up / down</div>
+  <div class="collection"><a href="stations.html">← FLEET</a></div>
+</div>
+
+<div id="hud">MYL2SSA · FLEET</div>
+
+<script src="./three-bundle-iife.js" onerror="document.getElementById('loadstatus').textContent='ERROR: failed to load three-bundle-iife.js'"></script>
+<script>
+const { THREE, GLTFLoader, PointerLockControls } = window.THREE_BUNDLE;
+
+// --- WebGL availability check + graceful fallback ---
+try {
+  var _c = document.createElement('canvas');
+  var _gl = _c.getContext('webgl') || _c.getContext('experimental-webgl');
+  if (!_gl) throw new Error('WebGL unavailable');
+} catch (_e) {
+  var _ov = document.getElementById('overlay');
+  _ov.innerHTML = '<h1>3D UNAVAILABLE</h1>'
+    + '<div class="sub">THIS BROWSER/DESKTOP CANNOT RENDER WEBGL</div>'
+    + '<img src="./assets/characters/mars/station-hero.png" alt="Station" style="max-width:86%;max-height:56%;margin:22px auto 0;border:1px solid #3a5a7a;border-radius:4px">'
+    + '<div class="keys" style="margin-top:18px">ENABLE HARDWARE ACCELERATION (CHROME: SETTINGS &rarr; SYSTEM) OR TRY FIREFOX / SAFARI / UPDATED CHROME.</div>';
+  throw new Error('WEBGL_UNAVAILABLE');
+}
+
+window.addEventListener('error', (e) => {
+  const el = document.getElementById('loadstatus');
+  if (el) el.textContent = 'ERROR: ' + (e.message || 'script failed');
+});
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.15;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x02030a);
+
+const camera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 200000);
+camera.position.set(0, 0.3, 2.6);
+camera.lookAt(0, 0, 0);
+
+// ---------------- Stars ----------------
+{
+  const g = new THREE.BufferGeometry();
+  const N = 4000, pos = new Float32Array(N*3);
+  for (let i=0;i<N;i++){ const r = 30000 + Math.random()*50000;
+    const t = Math.random()*Math.PI*2, p = Math.acos(2*Math.random()-1);
+    pos[i*3]=r*Math.sin(p)*Math.cos(t); pos[i*3+1]=r*Math.sin(p)*Math.sin(t); pos[i*3+2]=r*Math.cos(p);
+  }
+  g.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  const m = new THREE.PointsMaterial({ color:0xffffff, size:2.5, sizeAttenuation:false, transparent:true, opacity:0.8 });
+  scene.add(new THREE.Points(g,m));
+}
+
+// ---------------- Lighting ----------------
+const ambient = new THREE.AmbientLight(0xffffff, 1.4); scene.add(ambient);
+const sun = new THREE.DirectionalLight(0xfff2e0, 2.4); sun.position.set(3000, 8000, 2000); scene.add(sun);
+const marsBounce = new THREE.DirectionalLight(0x8a4a30, 0.7); marsBounce.position.set(0,-1000,0); scene.add(marsBounce);
+
+// ---------------- Mars terrain (height-displaced surface) ----------------
+{
+  const texLoader = new THREE.TextureLoader();
+  const diff = texLoader.load('./assets/characters/mars/mars_diff.jpg');
+  const height = texLoader.load('./assets/fleet/mars_height.jpg');
+  const geo = new THREE.PlaneGeometry(60, 60, 220, 220);
+  const mat = new THREE.MeshStandardMaterial({
+    color: 0xffffff, roughness: 0.95, metalness: 0.0,
+    map: diff,
+    displacementMap: height,
+    displacementScale: 1.2,
+    displacementBias: -0.1,
+  });
+  const terrain = new THREE.Mesh(geo, mat);
+  terrain.rotation.x = -Math.PI / 2;
+  terrain.position.y = -1.55;
+  scene.add(terrain);
+}
+
+// ---------------- Mech ----------------
+const station = new THREE.Group();
+scene.add(station);
+station.position.set(0, 0, 0);
+
+const SCALE = 2.2;
+station.scale.setScalar(SCALE);
+station.rotation.x = -Math.PI / 2;
+
+const loader = new GLTFLoader();
+
+loader.load('./assets/fleet/android_rigged.glb', (gltf)=>{
+  // textured "realistic hard sci-fi" station (base color + metal/rough maps)
+  station.add(gltf.scene);
+  document.getElementById('loadstatus').textContent = 'ASSETS READY';
+}, (x)=>{
+  if (x.total) document.getElementById('loadstatus').textContent = 'LOADING STATION… ' + Math.floor(x.loaded/x.total*100) + '%';
+}, (e)=>{ document.getElementById('loadstatus').textContent = 'ERROR LOADING: ' + (e && e.message ? e.message : 'network'); });
+
+// ---------------- Controls ----------------
+const controls = new PointerLockControls(camera, document.body);
+const overlay = document.getElementById('overlay');
+overlay.addEventListener('click', ()=>{ controls.lock(); });
+controls.addEventListener('lock', ()=>{ overlay.style.display = 'none'; });
+controls.addEventListener('unlock', ()=>{ overlay.style.display = 'flex'; document.getElementById('loadstatus').textContent = 'CLICK TO RESUME'; });
+
+const keys = {};
+window.addEventListener('keydown', e=>{ keys[e.code]=true; });
+window.addEventListener('keyup', e=>{ keys[e.code]=false; });
+
+const moveSpeed = 140;
+
+function update(dt){
+  const dir = new THREE.Vector3();
+  const forward = new THREE.Vector3(); camera.getWorldDirection(forward); forward.y = 0; forward.normalize();
+  const right = new THREE.Vector3().crossVectors(forward, new THREE.Vector3(0,1,0)).normalize();
+
+  if (keys['KeyW']) dir.add(forward);
+  if (keys['KeyS']) dir.sub(forward);
+  if (keys['KeyA']) dir.sub(right);
+  if (keys['KeyD']) dir.add(right);
+  if (keys['Space']) dir.add(new THREE.Vector3(0,1,0));
+  if (keys['KeyC']) dir.sub(new THREE.Vector3(0,1,0));
+
+  const boost = keys['ShiftLeft'] || keys['ShiftRight'] ? 4 : 1;
+  if (dir.length()>0) dir.normalize().multiplyScalar(moveSpeed*boost);
+  camera.position.addScaledVector(dir, dt);
+
+  // slow turntable spin to showcase the station from all sides
+  station.rotation.y += 0.08 * dt;
+}
+
+let last = performance.now();
+function loop(){
+  const now = performance.now();
+  const dt = Math.min((now-last)/1000, 0.1); last = now;
+  update(dt);
+  renderer.render(scene, camera);
+  requestAnimationFrame(loop);
+}
+loop();
+
+window.addEventListener('resize', ()=>{
+  camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+</script>
+</body>
+</html>
