@@ -132,13 +132,13 @@ station.rotation.y = Math.PI / 2;
 
 const loader = new GLTFLoader();
 
-loader.load('./assets/characters/mars/station_opt.glb', (gltf)=>{
+loader.load('./assets/characters/mars/station_opt.glb?v=3', (gltf)=>{
   // textured "realistic hard sci-fi" station (base color + metal/rough maps)
   station.add(gltf.scene);
   document.getElementById('loadstatus').textContent = 'ASSETS READY';
 }, (x)=>{
   if (x.total) document.getElementById('loadstatus').textContent = 'LOADING STATION… ' + Math.floor(x.loaded/x.total*100) + '%';
-}, (e)=>{ document.getElementById('loadstatus').textContent = 'LOADING STATION…'; });
+}, (e)=>{ document.getElementById('loadstatus').textContent = 'ERROR LOADING: ' + (e && e.message ? e.message : 'network'); });
 
 // ---------------- Controls ----------------
 const controls = new PointerLockControls(camera, document.body);
