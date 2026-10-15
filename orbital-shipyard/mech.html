@@ -137,7 +137,7 @@ station.scale.setScalar(SCALE);
 
 const loader = new GLTFLoader();
 
-loader.load('./assets/fleet/mech_opt.glb', (gltf)=>{
+loader.load('./assets/fleet/mech_rigged.glb', (gltf)=>{
   // textured "realistic hard sci-fi" station (base color + metal/rough maps)
   station.add(gltf.scene);
   document.getElementById('loadstatus').textContent = 'ASSETS READY';
