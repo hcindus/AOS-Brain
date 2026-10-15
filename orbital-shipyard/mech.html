@@ -107,27 +107,23 @@ const ambient = new THREE.AmbientLight(0xffffff, 1.4); scene.add(ambient);
 const sun = new THREE.DirectionalLight(0xfff2e0, 2.4); sun.position.set(3000, 8000, 2000); scene.add(sun);
 const marsBounce = new THREE.DirectionalLight(0x8a4a30, 0.7); marsBounce.position.set(0,-1000,0); scene.add(marsBounce);
 
-// ---------------- Mars (lightweight textured sphere) ----------------
+// ---------------- Ground (flat surface) ----------------
 {
-  const texLoader = new THREE.TextureLoader();
-  const diff = texLoader.load('./assets/characters/mars/mars_diff.jpg');
-  const norm = texLoader.load('./assets/characters/mars/mars_norm.jpg');
-  const geo = new THREE.SphereGeometry(4000, 128, 96);
-  const mat = new THREE.MeshStandardMaterial({ color:0xffffff, roughness:0.95, metalness:0.0, map:diff, normalMap:norm, normalScale:new THREE.Vector2(0.6,0.6) });
-  const mars = new THREE.Mesh(geo, mat);
-  mars.position.set(0, -6000, 0);
-  scene.add(mars);
+  const geo = new THREE.PlaneGeometry(40, 40, 1, 1);
+  const mat = new THREE.MeshStandardMaterial({ color: 0x2a303a, roughness: 0.85, metalness: 0.25 });
+  const ground = new THREE.Mesh(geo, mat);
+  ground.rotation.x = -Math.PI / 2;   // lay flat, facing up
+  ground.position.y = -1.02;          // just under the mech's feet
+  scene.add(ground);
 }
 
-// ---------------- Hi3D Segmented Station ----------------
+// ---------------- Mech ----------------
 const station = new THREE.Group();
 scene.add(station);
 station.position.set(0, 0, 0);
 
-// normalized model: long axis = Z (1.0), width X (0.32), depth Y (0.47) — glTF Y-up
 const SCALE = 2.2;
 station.scale.setScalar(SCALE);
-// lay the long axis (model Z) horizontal: rotate so +Z -> +X
 // upright — no rotation
 
 const loader = new GLTFLoader();
