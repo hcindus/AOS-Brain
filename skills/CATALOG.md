@@ -67,6 +67,9 @@ A registry of **every** AgentSkill in the repo. Each entry: name · purpose · K
 ### 🌐 Web / Demo
 `restaurant-landing-page` — build a single-page demo landing site for a local restaurant from a Yelp listing (menu + photos + contact) · KPI: live in <10 min
 
+### 🎨 3D / Film
+`blender-spaceship-alpha-maps` — build a huge-looking sci-fi ship in Blender from primitives + JSplacement alpha maps (no hard-surface modeling) · KPI: ship ready to render in <1 session
+
 ---
 
 ## Proposed (to codify next)
