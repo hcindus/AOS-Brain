@@ -18,19 +18,19 @@ ts = now.strftime("%Y-%m-%d %H:%M UTC")
 report = f"""📊 Daily Queue Report — {date_str}
 Generated: {ts}
 
-Key stats (live @ 06:00 UTC):
-- Uptime 149d 21h08m | Load 4.46/3.11/2.79 🟡 elevated (baseline ~2.2) | Mem 5.2Gi/15Gi (10Gi avail) | Disk 76%
-- Swap 5.9Gi/29Gi
+Key stats (live @ {ts}):
+- Uptime 150d 2h47m | Load 2.02/2.29/2.33 🟢 back to baseline (~2.2) | Mem 10Gi/15Gi (5.0Gi avail) 🟢 | Disk 76%
+- Swap 2.4Gi/29Gi
 - Email queue (email_queue table): 207 "ready" (capton_hospitality_202607), 0 sent all-time 🔴 STILL STALLED since July 2026
-- DepotChaos queue API: 99 pending (teriyaki thermal + outreach), sent_today 0, failed_today 0 (SendGrid not configured)
-- PENDING_TASKS: 4,000 (all CA_SOS_Scraper mock leads — do NOT send); lastUpdated 10-15 11:15 UTC ✅ fresh (was 3,950 — +50 new)
-- Active unified.db (data/depot_chaos/unified.db, 90MB): unified_leads 1,460 | leads 32,588 | ca_abc_licenses 77,390 | enriched_leads 919 | psd_customers 501 | psd_customer_sales 503 | datadepot_intelligence 74,518 | address_crossref 3,535 | email_queue 207 | verified_leads 1
+- DepotChaos enrichment_queue: 1000 available, 0 pending (no SendGrid configured)
+- PENDING_TASKS: 4,050 (all CA_SOS_Scraper mock leads — do NOT send); lastUpdated 10-16 11:15 UTC ✅ fresh (was 4,000 — +50 new)
+- Active unified.db (data/depot_chaos/unified.db, 94.3MB): unified_leads 1,460 | leads 32,588 | ca_abc_licenses 77,390 | enriched_leads 919 | psd_customers 501 | psd_customer_sales 503 | datadepot_intelligence 74,518 | address_crossref 3,535 | email_queue 207 | verified_leads 1
 - ⚠️ datadepot/unified.db still 0 bytes (truncated Oct 3) — active DB at data/depot_chaos/unified.db
 - 3 FAILED services: aos-ternary, certbot, dailyaidecheck
 
 Action items:
-1. 🔴 Email queue still stalled — 207 ready (capton_hospitality_202607) + 99 pending (teriyaki) never sent. Needs a decision: send or clear.
-2. 🟡 Load elevated at 4.46 (baseline ~2.2) — worth a quick look at CPU consumers.
+1. 🔴 Email queue still stalled — 207 ready (capton_hospitality_202607) never sent. Needs a decision: send or clear.
+2. 🟡 Load back to normal (2.02) after being elevated (~4.4) earlier this week.
 3. 3 failed services (aos-ternary, certbot, dailyaidecheck) still down.
 4. Confirm intended location of unified.db — datadepot/ copy truncated to 0 bytes since Oct 3.
 
