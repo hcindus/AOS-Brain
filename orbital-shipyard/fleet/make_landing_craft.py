@@ -122,6 +122,19 @@ for i in range(20):
     y = R*1.01 * math.sin(a)
     cyl(f"Window_{i}", 0.16, 0.10, loc=(x,y,wz), rot=(math.radians(90),0,a), verts=16, m=window_m)
 
+# Emissive corridor light band (transcript "light map" technique):
+# dense tiny glowing dots suggesting lit rooms/corridors inside the hull.
+# 4 rows x 24 columns of small emissive boxes wrapped around the mid-hull.
+corridor_m = mat("Corridor", (0.0,0.0,0.0), metallic=0.2, rough=0.3,
+                 emit=(0.95, 0.55, 0.15), emit_strength=6.0)
+for row in range(4):
+    rz = -H*0.05 + row*H*0.16   # spread rows down the mid-hull
+    for i in range(24):
+        a = math.radians(i*15 + row*4)
+        x = R*1.005 * math.cos(a)
+        y = R*1.005 * math.sin(a)
+        box(f"Corr_{row}_{i}", (0.14, 0.05, 0.05), (x,y,rz), corridor_m)
+
 # ---------------------------------------------------------------------------
 # Export GLB
 # ---------------------------------------------------------------------------

@@ -69,6 +69,7 @@ A registry of **every** AgentSkill in the repo. Each entry: name · purpose · K
 
 ### 🎨 3D / Film
 `blender-spaceship-alpha-maps` — build a huge-looking sci-fi ship in Blender from primitives + JSplacement alpha maps (no hard-surface modeling) · KPI: ship ready to render in <1 session
+`blender-blockout-modeling` — calm, low-pressure hard-surface workflow: primary → secondary → tertiary shapes, small toolset · KPI: finish a model without getting lost
 
 ---
 
