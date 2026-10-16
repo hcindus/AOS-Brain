@@ -89,10 +89,12 @@ class Hi3D:
 
     # ---- query ----
     def query(self, task_id: str):
-        r = requests.post(
+        # NOTE: endpoint is GET with `task_id` query param (underscore), NOT POST.
+        # Status lives in data.state (values: queueing -> processing -> success/failed).
+        r = requests.get(
             f"{API}/query-task",
             headers=self._headers(),
-            json={"taskId": task_id},
+            params={"task_id": task_id},
             timeout=30,
         )
         return r.json()
@@ -114,11 +116,11 @@ class Hi3D:
             time.sleep(poll_seconds)
             waited += poll_seconds
             q = self.query(task_id)
-            # status codes vary; look for a finished/result state
-            status = q.get("data", {}).get("status") or q.get("status")
-            if status in ("success", "succeeded", "done", "completed", 2, "2"):
+            # status lives in data.state
+            state = (q.get("data", {}) or {}).get("state") or q.get("state")
+            if state in ("success", "succeeded", "done", "completed", "finished", 2, "2"):
                 return q.get("data", {})
-            if status in ("failed", "error", 3, "3"):
+            if state in ("failed", "error", "fail", 3, "3"):
                 raise RuntimeError(f"task failed: {q}")
         raise TimeoutError(f"task {task_id} did not finish in {max_wait}s")
 
