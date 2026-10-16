@@ -35,7 +35,49 @@ Modeling doesn't have to be stressful. The trick is a strict **primary → secon
 | Bevel | Ctrl+B | round/soften edges |
 | Bridge | — | connect edge loops |
 
+## Techniques & shortcuts (from the full walkthrough)
+
+### Pipe / frame modeling via curves (huge for trusses & ship frames)
+1. Model the frame as flat edge geometry first, then **Convert to Curve** (right-click).
+2. In the curve's Object Data → **Bevel → Depth** to give the pipe radius.
+3. Tune **Resolution** (in the curve's geometry) so polygons are ~square (not stretched).
+4. **Convert back to Mesh** when happy, then shade smooth.
+5. **Hold Alt** while dragging a property to apply it to ALL selected objects at once (Alt+Shift for fine).
+
+### Bevel
+- **Ctrl+B** = bevel edges. **Ctrl+Shift+B** = bevel VERTICES (rounds corners — great for curved leg/arm corners).
+- **Always Apply Scale (Ctrl+A → Scale) before beveling** — otherwise Blender's stored transform history makes bevel spacing uneven. Applying scale "deletes the history" so future ops are clean.
+
+### Inset / outset / extrude
+- **I** = inset. **I then O** = OUTSET (add edge loop on the *outside* — little-known).
+- **Alt+E → Extrude Faces Along Normals** = bump faces outward evenly (caps, grip bumps). Hold Shift for fine control.
+
+### Flat surfaces & the "engon isn't the problem" lesson
+- A giant flat n-gon shaded smooth looks broken NOT because it's an n-gon, but because it lacks **bracing edges** — smooth shading averages across the 3 nearest edges, and a huge span tries to "sphere" a flat face.
+- Fixes (pick one): **Inset (I)** to brace the border, **Ctrl+F → Grid Fill**, or **Ctrl+E → Mark Sharp** (only if the edge won't be seen / doesn't deform).
+- If the surface must DEFORM (animate/bend), add real edge loops for square topology instead of a bracing n-gon.
+
+### Local vs global axis
+- **G then X/Y/Z once** = global axis. **Double-tap (G, Y, Y)** = LOCAL axis (follows the object's orientation). Global axis never changes with object rotation.
+
+### Reusing geometry (don't add a new primitive when you can duplicate)
+- **Alt+click** select an edge loop → **Shift+D** duplicate → **P → Separate by Selection** → extrude/scale the copy. Faster and already matched to surrounding shape.
+
+### Modifiers
+- **Solidify** (with **Even Thickness**) for shell thickness.
+- **Mirror** — set a **target object** (not the object's own origin) to mirror across another object's axis.
+- **Shrink Wrap** + a **vertex group ("pin")** to snap specific vertices onto a target surface (rivets/screws flush against a pole).
+- **Apply modifiers (Ctrl+A) before joining (Ctrl+J)**.
+
+### Detail bits
+- **Knife (K)** + hold **Shift** to snap the cut to an edge midpoint.
+- **Shift+S** to place the 3D cursor on a selection, then add a primitive there.
+- Low-poly circles for tiny details (8 verts, not 32).
+- **Alt+Z** = X-ray (see through to select hidden verts); **Shift+Alt+Z** = toggle overlays off to judge silhouette.
+- **Shift+N** = recalculate normals (fix flipped faces).
+
 ## Rules
+- **Check proportions with a scale reference** (a sitting/standing human) before finalizing — it's far easier to fix proportions early than after detail is added.
 - **Primary → secondary → tertiary.** Never detail before the silhouette is locked.
 - **Block out first so you never feel lost.** If proportions are wrong at the end, it's because you skipped the block-out.
 - **Small toolset, repeated.** Master 5 tools instead of hunting through 100.
