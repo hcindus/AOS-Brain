@@ -14,7 +14,7 @@ import os
 
 # Configuration
 SMTP_SERVER = "localhost"  # Will use local mail relay or API
-FROM_EMAIL = "info@psdepot.com"
+FROM_EMAIL = "miles@myl0nr0s.cloud"
 FROM_NAME = "Miles - Performance Supply Depot"
 DAILY_EMAIL_TARGET = 50
 DAILY_LINKEDIN_TARGET = 20
