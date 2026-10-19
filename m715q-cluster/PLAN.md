@@ -32,6 +32,16 @@ Two Lenovo ThinkCentre M715q Gen 1 (Type 10M3) Tiny PCs, each running **Omarchy*
 - **Total: 4× 16GB** sticks for both nodes
 - Buy **matched 2×16GB kits** (two kits), not mixed single sticks
 - DDR4-2666 is the sweet spot; 3200 will just downclock, don't pay extra
+- **Top pick:** Crucial **CT2K16G4SFD8266** (2×16GB DDR4-2666 kit). Alt: Kingston **KVR26S19D8/16**
+
+### 1b. NVMe boot drive — 500GB per node (RECOMMENDED, added 2026-10-19)
+
+- **WD Blue SN580 500GB** (M.2 2280, single-sided — fits the thin Tiny chassis)
+- PCIe 3.0 x4 slot, so the Gen 4 drive runs at full ~3,500 MB/s — no bottleneck, no wasted money
+- TLC + 5-yr warranty, ~$35–45 each. One per node as the **boot/OS drive**
+- Alt (max reliability): Samsung **970 EVO Plus 500GB** (single-sided at 500GB, DRAM cache)
+- **Avoid:** Kingston NV2 (QLC + inconsistent controllers — fine for scratch, not boot)
+- Keep the existing Netac 128GB SATA as the data/scratch disk
 
 ### 2. Thermal paste
 
