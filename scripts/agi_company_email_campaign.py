@@ -811,7 +811,7 @@ Sales Consultant | AOS"""
             # Add signature with role
             body = template['body']
             if not body.endswith(template['agent']):
-                body += f"\n\n---\n{template['agent']}\n{template['role']}\nAGI COMPANY"
+                body += f"\n\n---\n{template['agent']}\n{template['role']}\nPerformance Supply Depot\npsdepot.com"
             
             msg.attach(MIMEText(body, 'plain'))
             
