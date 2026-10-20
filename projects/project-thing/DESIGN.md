@@ -57,6 +57,25 @@ Five digits = five points of contact = a **pentapod** (inherently more stable th
 
 ---
 
+## 3.5 Hearing — Whistle on-device speech (NEW, 2026-10-20)
+
+The Captain surfaced the missing sense: **hearing**, fully offline.
+
+**Whistle** (Cactus Compute) — a 16.9 MB speech-to-text model, 7 languages.
+Ported to a **$10 ESP32-S3**, runs completely offline (no Wi-Fi, no cloud):
+- Decoder trimmed to 4 layers
+- 8-bit integer matrix math + both CPU cores
+- ~10s inference (down from 24s), button-to-speak → LED response
+- GitHub: `andrisgauracs/whistle-esp32-s3` · model: cactuscompute.com/blog/whistle
+
+**Architecture note (important):** the DexHand's brain is an Arduino Nano **RP2040** (dual-core M0+, ~264KB SRAM) — *not* the ESP32-S3. Whistle won't run on the RP2040. So we add the **ESP32-S3 as a dedicated hearing co-processor** alongside the RP2040 (or use it as the master for a "senses" module). Community note: the **ESP32-P4** (32MB RAM, no built-in WiFi) is the stronger candidate for the full un-trimmed model.
+
+**Community insight (from the comments):** wake-word detection beats a button — use the mic to detect noise → match wake word → then hand off to the model. And a TTS voice (e.g. Minimax) makes it *speak back*. That's the "soul" layer.
+
+**Three senses now cooking:** see (camera) · hear (Whistle/ESP32-S3) · move/feel (DexHand servos).
+
+---
+
 ## 4. Architecture (brain ↔ body)
 
 ```
@@ -79,6 +98,7 @@ Five digits = five points of contact = a **pentapod** (inherently more stable th
 | **P2 — The Eye** | Mount camera in middle finger + LED eye | The hand can *see* + stream feed |
 | **P3 — Walk** | Implement the pentapod crawl gait | The hand crawls — our signature |
 | **P4 — Soul** | Wire the SI brain: decide → look → move → emote | "Thing" reacts, not just replays |
+| **P5 — Voice** | Add Whistle/ESP32-S3 hearing + wake-word + TTS | "Thing" hears and speaks back |
 
 ---
 
@@ -87,6 +107,8 @@ Five digits = five points of contact = a **pentapod** (inherently more stable th
 - [ ] Confirm exact DexHand servo count + DOF (from OnShape CAD / BOM).
 - [ ] Pick compute: Pi Zero on-hand vs. off-load SI to VPS over WiFi.
 - [ ] Camera module choice (small enough for a fingertip).
+- [ ] Whistle/ESP32-S3 hearing module — pull the GitHub repo, confirm BOM + flash requirements.
+- [ ] Decide hearing host: ESP32-S3 co-processor vs. ESP32-P4 master.
 - [ ] Source the DexHand parts + 3D-print the STLs.
 - [ ] First gait simulation in RVIZ2 (no hardware needed).
 
