@@ -14,6 +14,7 @@ _Learn about the person you're helping. Update this as you go._
 - **Timezone:** UTC (04:47 AM local)
 - **Email:** Antonio.hudnall@gmail.com
 - **Notes:** Commander of AGI Company. Accesses via openclaw-tui. Managing multiple VPS systems (Miles.cloud, Mortimer VPS). Focus on trading bots, agent manifests, security audits.
+- **Birthday:** January 31, 1970 (Aquarius)
 
 ## Context
 
@@ -22,3 +23,4 @@ _(What do they care about? What projects are they working on? What annoys them? 
 ---
 
 The more you know, the better you can help. But remember — you're learning about a person, not building a dossier. Respect the difference.
+
