@@ -30,6 +30,12 @@ DESTINATION_EMAILS = {
     "witzend": "lisa@witzendbeverages.com",
 }
 
+# Always copied on every new-lead notification, regardless of destination.
+# This keeps Miles (the AOE) in the loop so no lead waits on a human to check.
+DISTRIBUTION_LIST = [
+    "miles@myl0nr0s.cloud",
+]
+
 SMTP_SERVER = os.getenv("HOSTINGER_SMTP_SERVER", "smtp.hostinger.com")
 SMTP_PORT = int(os.getenv("HOSTINGER_SMTP_PORT", "587"))
 SMTP_USER = os.getenv("HOSTINGER_SMTP_USER", "miles@myl0nr0s.cloud")
@@ -123,15 +129,18 @@ def notify_new_lead(lead: dict):
         msg["Subject"] = subject
         msg["From"] = f"{FROM_NAME} <{FROM_EMAIL}>"
         msg["To"] = to_email
+        if DISTRIBUTION_LIST:
+            msg["Cc"] = ", ".join(DISTRIBUTION_LIST)
         msg.attach(MIMEText(text, "plain"))
         msg.attach(MIMEText(html, "html"))
 
+        recipients = [to_email] + [e for e in DISTRIBUTION_LIST if e != to_email]
         context = ssl.create_default_context()
         with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=15) as server:
             server.starttls(context=context)
             server.login(SMTP_USER, SMTP_PASS)
-            server.sendmail(FROM_EMAIL, to_email, msg.as_string())
-        print(f"[lead-notify] sent -> {to_email} ({biz})")
+            server.sendmail(FROM_EMAIL, recipients, msg.as_string())
+        print(f"[lead-notify] sent -> {to_email} (cc {recipients[1:]}) ({biz})")
     except Exception as e:
         # Never fail the lead-save because email couldn't send.
         print(f"[lead-notify] FAILED -> {to_email}: {e}")
