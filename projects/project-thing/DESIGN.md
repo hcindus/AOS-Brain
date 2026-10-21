@@ -187,6 +187,31 @@ Ported to a **$10 ESP32-S3**, runs completely offline (no Wi-Fi, no cloud):
 
 ---
 
+## 6.5 Manufacturing & Materials (Captain, 2026-10-21)
+
+The build's material story, in order of the metamorphosis.
+
+### Three-tier manufacturing path
+1. **Prototype (DexHand)** — desktop FDM, print ourselves. Cheap, iterate hard, learn the crawl.
+2. **Final print** — send plans out (EOS industrial AM or a service bureau). Where real strength + fine detail + finish matter.
+3. **Waste** — recycle print waste back into filament (closed loop; color control possible).
+
+### Honeycomb infill (Captain's idea — excellent)
+- **Hexagonal cells = optimal weight-to-strength ratio** (nature + aerospace standard: wings, satellite panels).
+- **Where it matters most:** the **digits** — moving parts; every gram is inertia the servos lift/swing. Honeycomb fingers = lighter = faster, more natural motion.
+- **The caveat (anisotropy):** honeycomb is strong in compression *along* the cell axis, weaker in shear/torsion *across* cells. Finger segments flex + twist, so orient cells with the load path. Wall thickness + cell orientation is a real design dial — and exactly what industrial AM can tune better than desktop FDM.
+- Maps to our existing "weight in the palm, light in the digits" principle.
+
+### EOS (industrial AM reference)
+- `eos.info` — metal + polymer additive manufacturing. New M4 ONYX: six 400W lasers.
+- Serves energy/defense/space/aviation/semiconductor. FDR fine-detail, Smart Fusion support-reduction, aluminum + copper.
+- **Role in our build:** the *armor* (exoskeleton plating) and the *final* honeycomb print — not the prototype. Overkill for the $300 DexHand stage.
+
+### Filament recycling
+- Print waste → recycled filament with precise color control (filament maker).
+
+---
+
 ## 7. Captain's Context
 
 - This is **play**, taken seriously. "Not really work, more play for us right now."
