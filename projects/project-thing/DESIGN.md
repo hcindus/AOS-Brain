@@ -121,6 +121,34 @@ Ported to a **$10 ESP32-S3**, runs completely offline (no Wi-Fi, no cloud):
 
 ---
 
+## ⚠️ PRIOR ART #2 — Wuji Hand 2.2 (the premium target, 2026-10-21)
+
+**WUJI TECH** (`wuji.tech`, Shenzhen/Beijing) — the *exact* hand ETH Zurich walked on. This is our **premium upgrade target** once the DexHand proves the SI brain + soul.
+
+**Specs (Hand 2.2 Beta, non-tactile):**
+- **20 active DoF** (4/finger), full opposition + lateral abduction, back-drivable direct-drive
+- **MIT force-position hybrid control** — same paradigm ETH Zurich used for the walk
+- **1000 Hz × 20 axes** control, FOC vector control, all brushless
+- **800g** curb weight (650g bare + 70g base), 180×80×40mm
+- **RJ45 Ethernet (100BASE-TX)** + **12V 20A (200W)** wall power — *tethered*, not battery
+- SDK: Python + C, joint-level; URDF/MJCF/USD sim models (MuJoCo + Isaac Sim, no hardware needed)
+- Wuji Glove–based teleop demo included
+
+**The two gifts that map to OUR vision:**
+1. **Three-layer structure: Skeleton / Soft Pad / Skin — and the Skin is "user-removable and replaceable."** → This is literally our leather-glove idea, built into the product. The "skin" is the intended customization point.
+2. **Back-of-hand RGB status light that *breathes*** (white breathing = ready, blue = powering up, white solid = running). → The "alive" heartbeat indicator we wanted, already there.
+
+**The honest reality check:**
+- **Tethered** (Ethernet + 200W). ETH Zurich had to build an **80g battery + Pi Zero backpack** to make it *walk* — that's the piece they added, and the piece we'd replicate for our crawl.
+- **Beta (2.2), non-tactile** — skin/soft-pad not finalized. Early-adopter territory.
+- **Price unknown** (contact `sales@wuji.tech`) — clearly thousands (20 brushless DOFs + 1000Hz + Ethernet + 200W).
+
+**Strategy (unchanged, now stronger):** DexHand first (learn the crawl + soul cheaply) → Wuji Hand 2.2 as the premium body when we graduate. The removable-skin + breathing-light means our "leather glove + soul" plugs straight in.
+
+**Wuji contact:** sales@wuji.tech (pricing), support@wuji.tech. HQ Shenzhen (Bao'an) + Beijing (Haidian). Docs: docs.wuji.tech.
+
+---
+
 ## 4. Architecture (brain ↔ body)
 
 ```
