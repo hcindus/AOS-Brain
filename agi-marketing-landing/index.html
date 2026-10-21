@@ -53,6 +53,8 @@
   .price-table td.price { font-weight: 700; color: var(--navy); white-space: nowrap; }
   .price-table tr:nth-child(even) { background: #f8fafc; }
   .price-note { font-size: 13px; color: var(--muted); margin-top: 12px; }
+  .btn.add { background: var(--navy); color: #fff; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .btn.add:hover { background: #1a365d; }
 
   .honesty { background: var(--navy); color: #fff; padding: 48px 0; }
   .honesty h2 { color: #fff; }
@@ -92,6 +94,7 @@
       <a href="#how">How it works</a>
       <a href="#honest">Our promise</a>
       <a href="#contact">Start a project</a>
+      <a href="/checkout.html" style="background:#c53030;color:#fff;padding:6px 14px;border-radius:20px;font-weight:600;">🛒 Cart (<span id="cart-count">0</span>)</a>
     </nav>
   </div>
 </header>
@@ -140,14 +143,14 @@
     <p class="lede">Fair, straightforward, and priced by deliverable — not by the hour. You know exactly what you're getting.</p>
     <table class="price-table">
       <thead>
-        <tr><th>Service</th><th>What you get</th><th>Price</th></tr>
+        <tr><th>Service</th><th>What you get</th><th>Price</th><th></th></tr>
       </thead>
       <tbody>
-        <tr><td>Landing page</td><td>Mobile-friendly single page, menu/photos/hours/phone, live in 1–2 days</td><td class="price">$399</td></tr>
-        <tr><td>Product ad (15–30s)</td><td>Short AI video, ready to post</td><td class="price">$350</td></tr>
-        <tr><td>Brand explainer (30–60s)</td><td>Longer video that tells your story</td><td class="price">$550</td></tr>
-        <tr><td>Social package</td><td>4 videos/mo, posted on schedule</td><td class="price">$750/mo</td></tr>
-        <tr><td>Lead response retainer</td><td>Fast answers + consistent follow-up on your inquiries</td><td class="price">$500/mo</td></tr>
+        <tr><td>Landing page</td><td>Mobile-friendly single page, menu/photos/hours/phone, live in 1–2 days</td><td class="price">$399</td><td><button class="btn add" onclick="addItem('MKT-LANDING','Landing Page — $399',399)">Add</button></td></tr>
+        <tr><td>Product ad (15–30s)</td><td>Short AI video, ready to post</td><td class="price">$350</td><td><button class="btn add" onclick="addItem('MKT-AD','Product Ad (15-30s) — $350',350)">Add</button></td></tr>
+        <tr><td>Brand explainer (30–60s)</td><td>Longer video that tells your story</td><td class="price">$550</td><td><button class="btn add" onclick="addItem('MKT-EXPLAINER','Brand Explainer (30-60s) — $550',550)">Add</button></td></tr>
+        <tr><td>Social package</td><td>4 videos/mo, posted on schedule</td><td class="price">$750/mo</td><td><button class="btn add" onclick="addItem('MKT-SOCIAL','Social Package (4 vids/mo) — $750',750)">Add</button></td></tr>
+        <tr><td>Lead response retainer</td><td>Fast answers + consistent follow-up on your inquiries</td><td class="price">$500/mo</td><td><button class="btn add" onclick="addItem('MKT-LEADS','Lead Response Retainer — $500/mo',500)">Add</button></td></tr>
       </tbody>
     </table>
     <p class="price-note">Every project includes review before it ships. Retainers cancel anytime. First-time customers: we'll show you a sample before you commit.</p>
@@ -218,6 +221,23 @@
 </footer>
 
 <script>
+  // ── Cart (mirrors main site: localStorage 'psdepot_cart', items {sku,name,price,quantity}) ──
+  function getCart() { try { return JSON.parse(localStorage.getItem('psdepot_cart')) || []; } catch(e) { return []; } }
+  function saveCart(c) { localStorage.setItem('psdepot_cart', JSON.stringify(c)); renderCart(); }
+  function renderCart() {
+    const cart = getCart();
+    const el = document.getElementById('cart-count');
+    if (el) el.textContent = cart.reduce((s,i) => s + (i.quantity||1), 0);
+  }
+  function addItem(sku, name, price) {
+    let cart = getCart();
+    const existing = cart.find(i => i.sku === sku);
+    if (existing) existing.quantity += 1;
+    else cart.push({ sku: sku, name: name, price: price, quantity: 1 });
+    saveCart(cart);
+  }
+  renderCart();
+
   document.getElementById('lead-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     const msg = document.getElementById('form-msg');
