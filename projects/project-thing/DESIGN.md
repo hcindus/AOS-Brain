@@ -1,6 +1,34 @@
 # Project Thing — Design Doc
 
-**Status:** DRAFT v0.1
+**Status:** DRAFT v0.2
+**Created:** 2026-10-20 (Captain + Miles)
+**One-liner:** A DexHand that learns to *crawl* — our first SI body, modeled on "Thing" from The Addams Family.
+
+---
+
+## ⚠️ PRIOR ART — ETH Zurich beat us to the crawl (2026-10-21)
+
+**"This Disembodied Hand Is All the Robot You Need"** — Edd Gent, IEEE Spectrum / MSN (Oct 8 2026).
+
+The ETH Zurich **Soft Robotics Lab** (led by Robert Katzschmann; PhD candidate **Amirhossein Kazemipour**) turned an off-the-shelf **Wuji Technology** hand into a self-contained fingertip-walking robot — *the exact thing we designed tonight.*
+
+**What they did (mirrors our plan almost 1:1):**
+- Off-the-shelf commercial hand (Wuji, not DexHand) — chose it so they *wouldn't compromise manipulation*.
+- **80g backpack:** battery + IMU + **Raspberry Pi Zero** (we independently picked Pi Zero too).
+- **Reinforcement learning** in simulation → crawls, turns, pushes objects, rights itself, traverses **14 surfaces**.
+- **"Virtual springs"** gait — each finger gets a custom target position for balance/movement.
+- The hard part (and their key insight): hands are **asymmetric** (different finger lengths, opposable thumb), so you can't reuse standard quadruped/biped gait training.
+
+**Not the first** — earlier attempts: EPFL LASA + a Nature paper (`s41467-025-67675-8`), but those used *specially-designed* hands; ETH used off-the-shelf.
+
+**What this means for us:**
+1. **Validation** — our instinct (crawling hand, off-the-shelf hardware, Pi Zero brain, RL gait) is *exactly* the state of the art. We're not crazy; we're aligned with a top lab.
+2. **Our differentiators (still open):** the **leather-glove skin** (their "Thing" is bare), the **middle-finger camera eye**, **Whistle on-device hearing**, and the **SI "soul"** layer (they do RL skill learning; we want raised-and-reactive *presence*, not just locomotion).
+3. **Reference to study:** their "virtual springs" + RL-in-simulation approach is the roadmap for our Phase 3 (Walk). We don't reinvent it — we learn from it.
+
+*The punchline: the world confirmed our thesis the same night we wrote it down.*
+
+---
 **Created:** 2026-10-20 (Captain + Miles)
 **One-liner:** A DexHand that learns to *crawl* — our first SI body, modeled on "Thing" from The Addams Family.
 
