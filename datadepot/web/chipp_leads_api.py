@@ -40,6 +40,46 @@ FROM_NAME = "Performance Supply Depot — Lead Portal"
 DEST_LABELS = {"psd": "PSDepot", "chipp": "Chipp", "witzend": "WitzEnd"}
 
 
+def notify_customer_ack(lead: dict):
+    """Send an instant acknowledgment to the person who submitted the lead,
+    so they're not left waiting on a human to reply. Fires only for new leads
+    that have a customer email and a source we recognize as our own form."""
+    if lead.get("source") != "marketing-landing":
+        return
+    to_email = lead.get("email")
+    if not to_email:
+        return
+
+    biz = lead.get("businessName", "your business")
+    contact = (lead.get("contactName", "") or "").split(" ")[0]
+
+    subject = "Got your inquiry — Performance Supply Depot"
+    html = f"""<div style="font-family:Arial,sans-serif;max-width:560px;margin:auto;color:#1a1a1a;">
+<h2 style="margin:0 0 8px;">Thanks, {contact or 'there'} — we got your message.</h2>
+<p style="color:#444;margin:0 0 16px;">We received your inquiry about <strong>{biz}</strong> and someone from our team will be in touch within one business day.</p>
+<p style="color:#666;font-size:14px;">If you need us sooner, call <a href="tel:888-881-6834" style="color:#c53030;text-decoration:none;font-weight:600;">(888) 881-6834</a>.</p>
+<p style="color:#999;font-size:12px;margin-top:24px;">Performance Supply Depot · <a href="https://psdepot.com" style="color:#999;">psdepot.com</a></p>
+</div>"""
+    text = f"Thanks, {contact or 'there'} — we got your message about {biz}. We'll be in touch within one business day. Need us sooner? Call (888) 881-6834."
+
+    try:
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = subject
+        msg["From"] = f"{FROM_NAME} <{FROM_EMAIL}>"
+        msg["To"] = to_email
+        msg.attach(MIMEText(text, "plain"))
+        msg.attach(MIMEText(html, "html"))
+
+        context = ssl.create_default_context()
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=15) as server:
+            server.starttls(context=context)
+            server.login(SMTP_USER, SMTP_PASS)
+            server.sendmail(FROM_EMAIL, to_email, msg.as_string())
+        print(f"[lead-ack] sent -> {to_email} ({biz})")
+    except Exception as e:
+        print(f"[lead-ack] FAILED -> {to_email}: {e}")
+
+
 def notify_new_lead(lead: dict):
     """Email the destination partner when a new lead is logged.
     Fires ONLY here (new-lead path), never on bulk sync or update."""
@@ -190,6 +230,9 @@ async def add_lead(request: Request):
 
     # Notify destination partner (new lead only — not on bulk sync/update)
     notify_new_lead(lead)
+
+    # Instant acknowledgment to the customer (new lead only)
+    notify_customer_ack(lead)
 
     return JSONResponse({"ok": True, "id": lead["id"], "total": len(leads)})
 

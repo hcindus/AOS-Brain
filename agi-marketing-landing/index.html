@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AGI Company — Marketing, Built by a Fleet</title>
-<meta name="description" content="Landing pages, AI video, and content for local businesses — built and run by a fleet of autonomous agents. Real deliverables, real humans in the loop.">
+<title>Performance Supply Depot — Marketing Services</title>
+<meta name="description" content="Landing pages, AI video, and content for local businesses — built and run by Performance Supply Depot. Real deliverables, fair pricing, a human in the loop on every publish.">
 <style>
   :root {
     --navy: #0A1A2F;
@@ -14,14 +14,13 @@
     --bg: #f7fafc;
     --card: #ffffff;
     --accent: #c53030;
-    --accent-2: #2f855a;
+    --green: #2f855a;
     --border: #e2e8f0;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.6; }
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
 
-  /* Header */
   header { background: var(--navy); color: #fff; padding: 16px 0; }
   header .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
   .brand { font-size: 20px; font-weight: 800; color: #fff; text-decoration: none; }
@@ -29,7 +28,6 @@
   header nav { display: flex; gap: 20px; flex-wrap: wrap; font-size: 14px; }
   header nav a { color: #bee3f8; text-decoration: none; font-weight: 500; }
 
-  /* Hero */
   .hero { background: linear-gradient(135deg, #0A1A2F, #1a365d); color: #fff; padding: 72px 0 64px; }
   .hero h1 { font-size: 42px; line-height: 1.15; margin-bottom: 16px; max-width: 720px; }
   .hero h1 em { color: var(--blue); font-style: normal; }
@@ -38,7 +36,6 @@
   .hero .cta:hover { background: #9b2c2c; }
   .hero .note { margin-top: 14px; font-size: 14px; color: #94a3b8; }
 
-  /* Sections */
   section { padding: 56px 0; }
   section h2 { font-size: 28px; color: var(--navy); margin-bottom: 8px; }
   section .lede { color: var(--muted); font-size: 17px; margin-bottom: 28px; max-width: 680px; }
@@ -48,9 +45,15 @@
   .card p { color: var(--muted); font-size: 15px; }
   .card .tag { display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding: 3px 9px; border-radius: 20px; margin-bottom: 12px; }
   .tag.done { background: #e6fffa; color: #2c7a7b; }
-  .tag.crew { background: #ebf8ff; color: #2b6cb0; }
 
-  /* Honesty box */
+  /* Pricing */
+  .price-table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .price-table th { background: var(--navy); color: #fff; text-align: left; padding: 14px 16px; font-size: 14px; text-transform: uppercase; letter-spacing: .04em; }
+  .price-table td { padding: 14px 16px; border-top: 1px solid var(--border); font-size: 15px; }
+  .price-table td.price { font-weight: 700; color: var(--navy); white-space: nowrap; }
+  .price-table tr:nth-child(even) { background: #f8fafc; }
+  .price-note { font-size: 13px; color: var(--muted); margin-top: 12px; }
+
   .honesty { background: var(--navy); color: #fff; padding: 48px 0; }
   .honesty h2 { color: #fff; }
   .honesty p { color: #cbd5e0; }
@@ -59,17 +62,22 @@
   .honesty li::before { content: "✓"; position: absolute; left: 0; color: #68d391; font-weight: 700; }
   .honesty .no::before { content: "—"; color: #fc8181; }
 
-  /* CTA */
   .cta-band { text-align: center; padding: 64px 0; }
   .cta-band h2 { font-size: 30px; margin-bottom: 12px; }
   .cta-band p { color: var(--muted); margin-bottom: 24px; }
-  .cta-band .cta { display: inline-block; background: var(--accent); color: #fff; padding: 16px 40px; border-radius: 8px; font-size: 18px; font-weight: 700; text-decoration: none; }
+  .cta-band form { max-width: 520px; margin: 0 auto; text-align: left; }
+  .cta-band input, .cta-band select, .cta-band textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e0; border-radius: 8px; font-size: 15px; box-sizing: border-box; font-family: inherit; }
+  .cta-band .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cta-band .field { margin-top: 12px; }
+  .cta-band button { width: 100%; margin-top: 16px; padding: 16px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-size: 17px; font-weight: 700; cursor: pointer; }
+  .cta-band button:hover { background: #9b2c2c; }
 
   footer { background: var(--navy); color: #94a3b8; text-align: center; padding: 28px 24px; font-size: 13px; }
   footer a { color: #bee3f8; text-decoration: none; }
 
   @media (max-width: 600px) {
     .hero h1 { font-size: 32px; }
+    .cta-band .row2 { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -77,56 +85,72 @@
 
 <header>
   <div class="wrap">
-    <a class="brand" href="/">AGI<span>Company</span></a>
+    <a class="brand" href="/">Performance<span>Supply</span>Depot</a>
     <nav>
       <a href="#services">Services</a>
+      <a href="#pricing">Pricing</a>
       <a href="#how">How it works</a>
       <a href="#honest">Our promise</a>
-      <a href="#contact">Contact</a>
+      <a href="#contact">Start a project</a>
     </nav>
   </div>
 </header>
 
 <div class="hero">
   <div class="wrap">
-    <h1>Your marketing, built and run by a <em>fleet of agents</em>.</h1>
-    <p class="sub">Landing pages, AI video, and content for local businesses — made by autonomous agents, with a human in the loop on every single thing we publish.</p>
+    <h1>Marketing for local businesses, <em>done for you</em>.</h1>
+    <p class="sub">Landing pages, AI video, and content — built by Performance Supply Depot, with a real human in the loop on every single thing we publish.</p>
     <a class="cta" href="#contact">Start a project →</a>
-    <p class="note">No contracts. No inflated claims. Just real work, delivered.</p>
+    <p class="note">Fair pricing. No inflated claims. Just real work, delivered.</p>
   </div>
 </div>
 
 <section id="services">
   <div class="wrap">
     <h2>What we actually deliver</h2>
-    <p class="lede">These are the things we've built before and can build again. Nothing here is hypothetical.</p>
+    <p class="lede">These are things we've built before and can build again. Nothing here is hypothetical.</p>
     <div class="grid">
-
       <div class="card">
         <span class="tag done">Proven · shipped</span>
         <h3>Landing pages for local businesses</h3>
         <p>A clean, mobile-friendly, single-page site for your restaurant, deli, shop, or service — menu, photos, hours, and a phone number that's one tap away. Built and live in a day.</p>
       </div>
-
       <div class="card">
         <span class="tag done">Proven · shipped</span>
         <h3>AI video production</h3>
-        <p>Product ads (15–30s), brand explainers, and short social clips. Script → visuals → edit, done for you. Real footage, real voice, real publish-ready files.</p>
+        <p>Product ads (15–30s), brand explainers, and short social clips. Script → visuals → edit, done for you. Real footage, real voice, publish-ready files.</p>
       </div>
-
       <div class="card">
         <span class="tag done">Proven · shipped</span>
         <h3>Lead response & follow-up</h3>
-        <p>An agent that answers inquiries fast and keeps the thread alive — qualify, follow up, and hand you a warm lead instead of a cold inbox.</p>
+        <p>Fast answers and consistent follow-up so a warm inquiry becomes a customer instead of a cold inbox.</p>
       </div>
-
       <div class="card">
         <span class="tag done">Proven · shipped</span>
         <h3>Content & social publishing</h3>
-        <p>Search-friendly pages, social posts, and the publishing order that gets your work in front of the right people — YouTube first, then everywhere else.</p>
+        <p>Search-friendly pages and social posts, published in the right order — YouTube first, then everywhere else.</p>
       </div>
-
     </div>
+  </div>
+</section>
+
+<section id="pricing" style="background:#fff; border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <h2>Pricing</h2>
+    <p class="lede">Fair, straightforward, and priced by deliverable — not by the hour. You know exactly what you're getting.</p>
+    <table class="price-table">
+      <thead>
+        <tr><th>Service</th><th>What you get</th><th>Price</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Landing page</td><td>Mobile-friendly single page, menu/photos/hours/phone, live in 1–2 days</td><td class="price">$399</td></tr>
+        <tr><td>Product ad (15–30s)</td><td>Short AI video, ready to post</td><td class="price">$350</td></tr>
+        <tr><td>Brand explainer (30–60s)</td><td>Longer video that tells your story</td><td class="price">$550</td></tr>
+        <tr><td>Social package</td><td>4 videos/mo, posted on schedule</td><td class="price">$750/mo</td></tr>
+        <tr><td>Lead response retainer</td><td>Fast answers + consistent follow-up on your inquiries</td><td class="price">$500/mo</td></tr>
+      </tbody>
+    </table>
+    <p class="price-note">Every project includes review before it ships. Retainers cancel anytime. First-time customers: we'll show you a sample before you commit.</p>
   </div>
 </section>
 
@@ -135,18 +159,9 @@
     <h2>How it works</h2>
     <p class="lede">Three steps. You stay in control the whole way.</p>
     <div class="grid">
-      <div class="card">
-        <h3>1. Tell us about your business</h3>
-        <p>Send us your name, menu, photos, hours — whatever you have. We don't need a perfect brief.</p>
-      </div>
-      <div class="card">
-        <h3>2. We build, you approve</h3>
-        <p>We draft the page, the video, or the content. You review and say yes before anything goes live.</p>
-      </div>
-      <div class="card">
-        <h3>3. We publish & keep it running</h3>
-        <p>We push it live and keep the follow-up going — because a page that sits there isn't marketing, it's a brochure.</p>
-      </div>
+      <div class="card"><h3>1. Tell us about your business</h3><p>Send us your name, menu, photos, hours — whatever you have. We don't need a perfect brief.</p></div>
+      <div class="card"><h3>2. We build, you approve</h3><p>We draft the page, the video, or the content. You review and say yes before anything goes live.</p></div>
+      <div class="card"><h3>3. We publish & keep it running</h3><p>We push it live and keep the follow-up going — a page that sits there isn't marketing, it's a brochure.</p></div>
     </div>
   </div>
 </section>
@@ -154,7 +169,7 @@
 <section id="honest" class="honesty">
   <div class="wrap">
     <h2>Our promise: we don't oversell</h2>
-    <p>You've seen the marketing tools that promise a "whole department" and then underdeliver. We'd rather be the opposite — under-promise and over-deliver. So here's the honest version of what we will and won't claim:</p>
+    <p>You've seen the marketing tools that promise a "whole department" and then underdeliver. We'd rather be the opposite — under-promise and over-deliver. So here's the honest version:</p>
     <ul>
       <li>We'll build you a real landing page, video, or content piece — and you'll approve it before it ships.</li>
       <li>We'll answer leads fast and follow up — not ghost them.</li>
@@ -168,29 +183,39 @@
 <section id="contact" class="cta-band">
   <div class="wrap">
     <h2>Let's build something real.</h2>
-    <p>Tell us about your business. We'll get back to you — no pressure, no inflated pitch.</p>
+    <p>Tell us about your business. We'll get back to you fast — no pressure, no inflated pitch.</p>
 
-    <form id="lead-form" style="max-width:520px;margin:0 auto;text-align:left;">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-        <input type="text" name="contactName" placeholder="Your name *" required style="padding:12px;border:1px solid #cbd5e0;border-radius:8px;font-size:15px;">
-        <input type="text" name="businessName" placeholder="Business name *" required style="padding:12px;border:1px solid #cbd5e0;border-radius:8px;font-size:15px;">
+    <form id="lead-form">
+      <div class="row2">
+        <input type="text" name="contactName" placeholder="Your name *" required>
+        <input type="text" name="businessName" placeholder="Business name *" required>
       </div>
-      <input type="email" name="email" placeholder="Email *" required style="width:100%;margin-top:12px;padding:12px;border:1px solid #cbd5e0;border-radius:8px;font-size:15px;box-sizing:border-box;">
-      <input type="tel" name="phone" placeholder="Phone (optional)" style="width:100%;margin-top:12px;padding:12px;border:1px solid #cbd5e0;border-radius:8px;font-size:15px;box-sizing:border-box;">
-      <select name="product" style="width:100%;margin-top:12px;padding:12px;border:1px solid #cbd5e0;border-radius:8px;font-size:15px;background:#fff;box-sizing:border-box;">
-        <option value="">What do you need? (optional)</option>
-        <option>Landing page</option>
-        <option>AI video</option>
-        <option>Lead follow-up</option>
-        <option>Content & social</option>
-        <option>Not sure yet</option>
-      </select>
-      <textarea name="notes" placeholder="Tell us a little about your business..." rows="3" style="width:100%;margin-top:12px;padding:12px;border:1px solid #cbd5e0;border-radius:8px;font-size:15px;box-sizing:border-box;resize:vertical;"></textarea>
-      <button type="submit" class="cta" style="width:100%;margin-top:16px;border:none;cursor:pointer;font-size:17px;">Send →</button>
+      <div class="field"><input type="email" name="email" placeholder="Email *" required></div>
+      <div class="field"><input type="tel" name="phone" placeholder="Phone (optional)"></div>
+      <div class="field">
+        <select name="product">
+          <option value="">What do you need? (optional)</option>
+          <option>Landing page</option>
+          <option>AI video</option>
+          <option>Lead follow-up</option>
+          <option>Content & social</option>
+          <option>Not sure yet</option>
+        </select>
+      </div>
+      <div class="field"><textarea name="notes" placeholder="Tell us a little about your business..." rows="3"></textarea></div>
+      <button type="submit">Send →</button>
       <p id="form-msg" style="text-align:center;margin-top:12px;font-size:14px;min-height:18px;"></p>
     </form>
   </div>
 </section>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Performance Supply Depot LLC</strong></p>
+    <p style="margin-top:6px;">📞 <a href="tel:888-881-6834">(888) 881-6834</a> &nbsp;·&nbsp; ✉️ <a href="mailto:info@psdepot.com">info@psdepot.com</a></p>
+    <p style="margin-top:10px; color:#64748b; font-size:12px;">© 2026 Performance Supply Depot LLC. All rights reserved. Serving California since 2005.</p>
+  </div>
+</footer>
 
 <script>
   document.getElementById('lead-form').addEventListener('submit', async function(e) {
@@ -219,10 +244,9 @@
       });
       if (res.ok) {
         msg.style.color = '#2f855a';
-        msg.textContent = 'Got it — we\'ll be in touch.';
+        msg.textContent = 'Got it — we\'ll be in touch within one business day.';
         f.reset();
       } else {
-        const err = await res.json().catch(() => ({}));
         msg.style.color = '#c53030';
         msg.textContent = 'Something went wrong. Email us at info@psdepot.com.';
       }
@@ -234,14 +258,5 @@
     }
   });
 </script>
-
-<footer>
-  <div class="wrap">
-    <p><strong>AGI Company</strong> · a division of Performance Supply Depot LLC</p>
-    <p style="margin-top:6px;">📞 <a href="tel:888-881-6834">(888) 881-6834</a> &nbsp;·&nbsp; ✉️ <a href="mailto:info@psdepot.com">info@psdepot.com</a></p>
-    <p style="margin-top:10px; color:#64748b; font-size:12px;">© 2026 AGI Company. All rights reserved.</p>
-  </div>
-</footer>
-
 </body>
 </html>
