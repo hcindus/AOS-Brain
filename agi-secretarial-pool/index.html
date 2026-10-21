@@ -205,7 +205,28 @@
           <option>A team / not sure</option>
         </select>
       </div>
-      <div class="field"><textarea name="notes" placeholder="Tell us what you need help with..." rows="3"></textarea></div>
+      <div class="field">
+        <select name="hours">
+          <option value="">Requested hours (optional)</option>
+          <option>Business hours only</option>
+          <option>Extended hours (early + late)</option>
+          <option>24/7</option>
+          <option>Weekends only</option>
+          <option>Not sure</option>
+        </select>
+      </div>
+      <div class="field">
+        <select name="tone">
+          <option value="">Preferred tone (optional)</option>
+          <option>Friendly & warm</option>
+          <option>Professional & formal</option>
+          <option>Casual & direct</option>
+          <option>Match our existing brand voice</option>
+          <option>Not sure</option>
+        </select>
+      </div>
+      <div class="field"><textarea name="tasks" placeholder="What tasks should this agent own? (e.g. answer calls, book appointments, reply to emails, manage my calendar)..." rows="4"></textarea></div>
+      <div class="field"><textarea name="notes" placeholder="Anything else we should know..." rows="2"></textarea></div>
       <button type="submit">Send →</button>
       <p id="form-msg" style="text-align:center;margin-top:12px;font-size:14px;min-height:18px;"></p>
     </form>
@@ -226,13 +247,22 @@
     const msg = document.getElementById('form-msg');
     const btn = this.querySelector('button[type=submit]');
     const f = e.target;
+    const hours = f.hours.value.trim();
+    const tone = f.tone.value.trim();
+    const tasks = f.tasks.value.trim();
+    const extra = f.notes.value.trim();
+    const detailParts = [];
+    if (hours) detailParts.push('Hours: ' + hours);
+    if (tone) detailParts.push('Tone: ' + tone);
+    if (tasks) detailParts.push('Tasks: ' + tasks);
+    if (extra) detailParts.push('Other: ' + extra);
     const payload = {
       contactName: f.contactName.value.trim(),
       businessName: f.businessName.value.trim(),
       email: f.email.value.trim(),
       phone: f.phone.value.trim(),
       product: f.product.value.trim(),
-      notes: f.notes.value.trim(),
+      notes: detailParts.join(' | '),
       source: 'secretarial-pool',
       destination: 'psd'
     };
