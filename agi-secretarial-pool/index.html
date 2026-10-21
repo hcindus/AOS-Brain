@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Performance Supply Depot — AI Secretarial Pool</title>
+<meta name="description" content="Hire an AI secretary for your business. From $99/month — receptionist, clerk, concierge, and executive support, available 24/7.">
+<style>
+  :root {
+    --navy: #0A1A2F; --blue: #63b3ed; --ink: #1a202c; --muted: #4a5568;
+    --bg: #f7fafc; --card: #ffffff; --accent: #c53030; --green: #2f855a; --border: #e2e8f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.6; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  header { background: var(--navy); color: #fff; padding: 16px 0; }
+  header .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .brand { font-size: 20px; font-weight: 800; color: #fff; text-decoration: none; }
+  .brand span { color: var(--blue); }
+  header nav { display: flex; gap: 20px; flex-wrap: wrap; font-size: 14px; }
+  header nav a { color: #bee3f8; text-decoration: none; font-weight: 500; }
+
+  .hero { background: linear-gradient(135deg, #0A1A2F, #1a365d); color: #fff; padding: 72px 0 64px; }
+  .hero h1 { font-size: 42px; line-height: 1.15; margin-bottom: 16px; max-width: 720px; }
+  .hero h1 em { color: var(--blue); font-style: normal; }
+  .hero p.sub { font-size: 19px; color: #cbd5e0; max-width: 640px; margin-bottom: 28px; }
+  .hero .cta { display: inline-block; background: var(--accent); color: #fff; padding: 14px 32px; border-radius: 8px; font-size: 17px; font-weight: 700; text-decoration: none; }
+  .hero .cta:hover { background: #9b2c2c; }
+  .hero .note { margin-top: 14px; font-size: 14px; color: #94a3b8; }
+
+  section { padding: 56px 0; }
+  section h2 { font-size: 28px; color: var(--navy); margin-bottom: 8px; }
+  section .lede { color: var(--muted); font-size: 17px; margin-bottom: 28px; max-width: 680px; }
+
+  /* Pricing tiers */
+  .tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .tier { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 28px 24px; display: flex; flex-direction: column; }
+  .tier .name { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: var(--blue); margin-bottom: 4px; }
+  .tier h3 { font-size: 22px; color: var(--navy); margin-bottom: 6px; }
+  .tier .desc { color: var(--muted); font-size: 15px; margin-bottom: 16px; flex: 1; }
+  .tier .price { font-size: 32px; font-weight: 800; color: var(--navy); }
+  .tier .price span { font-size: 15px; color: var(--muted); font-weight: 500; }
+  .tier .btn { display: block; text-align: center; background: var(--navy); color: #fff; padding: 12px; border-radius: 8px; font-weight: 700; text-decoration: none; margin-top: 16px; }
+  .tier .btn:hover { background: #1a365d; }
+  .tier.highlight { border: 2px solid var(--accent); }
+  .tier.highlight .badge { background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 10px; align-self: flex-start; }
+
+  .honesty { background: var(--navy); color: #fff; padding: 48px 0; }
+  .honesty h2 { color: #fff; }
+  .honesty p { color: #cbd5e0; }
+  .honesty ul { list-style: none; margin-top: 16px; }
+  .honesty li { padding: 8px 0 8px 28px; position: relative; color: #e2e8f0; }
+  .honesty li::before { content: "✓"; position: absolute; left: 0; color: #68d391; font-weight: 700; }
+  .honesty .no::before { content: "—"; color: #fc8181; }
+
+  .cta-band { text-align: center; padding: 64px 0; }
+  .cta-band h2 { font-size: 30px; margin-bottom: 12px; }
+  .cta-band p { color: var(--muted); margin-bottom: 24px; }
+  .cta-band form { max-width: 520px; margin: 0 auto; text-align: left; }
+  .cta-band input, .cta-band select, .cta-band textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e0; border-radius: 8px; font-size: 15px; box-sizing: border-box; font-family: inherit; }
+  .cta-band .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cta-band .field { margin-top: 12px; }
+  .cta-band button { width: 100%; margin-top: 16px; padding: 16px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-size: 17px; font-weight: 700; cursor: pointer; }
+  .cta-band button:hover { background: #9b2c2c; }
+
+  footer { background: var(--navy); color: #94a3b8; text-align: center; padding: 28px 24px; font-size: 13px; }
+  footer a { color: #bee3f8; text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 32px; }
+    .cta-band .row2 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/">Performance<span>Supply</span>Depot</a>
+    <nav>
+      <a href="#agents">Agents</a>
+      <a href="#how">How it works</a>
+      <a href="#honest">Our promise</a>
+      <a href="#contact">Get started</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>Your business, answered <em>24/7</em>.</h1>
+    <p class="sub">Hire an AI secretary for your front desk, your inbox, and your schedule. From $99/month — always on, never sleeps, and a human approves everything that matters.</p>
+    <a class="cta" href="#agents">See the agents →</a>
+    <p class="note">Cancel anytime. No contracts. No inflated claims.</p>
+  </div>
+</div>
+
+<section id="agents">
+  <div class="wrap">
+    <h2>The Secretarial Pool</h2>
+    <p class="lede">Six agents, six jobs. Pick the one that fits — or ask us to build you a team.</p>
+    <div class="tiers">
+
+      <div class="tier">
+        <div class="name">Entry</div>
+        <h3>CLERK</h3>
+        <p class="desc">General office clerk. Handles documentation, routine correspondence, and the busywork that eats your day.</p>
+        <div class="price">$99<span>/mo</span></div>
+        <a class="btn" href="#contact">Choose CLERK</a>
+      </div>
+
+      <div class="tier">
+        <div class="name">Receptionist</div>
+        <h3>GREET</h3>
+        <p class="desc">Your front desk, 24/7. Answers inquiries, routes calls, and makes sure no one gets a busy signal.</p>
+        <div class="price">$249<span>/mo</span></div>
+        <a class="btn" href="#contact">Choose GREET</a>
+      </div>
+
+      <div class="tier">
+        <div class="name">Life manager</div>
+        <h3>PERSONAL</h3>
+        <p class="desc">Your personal assistant. Scheduling, reminders, and the day-to-day life management you'd rather delegate.</p>
+        <div class="price">$449<span>/mo</span></div>
+        <a class="btn" href="#contact">Choose PERSONAL</a>
+      </div>
+
+      <div class="tier">
+        <div class="name">Premium</div>
+        <h3>VELVET</h3>
+        <p class="desc">Senior secretary for polished correspondence and higher-stakes communication.</p>
+        <div class="price">$599<span>/mo</span></div>
+        <a class="btn" href="#contact">Choose VELVET</a>
+      </div>
+
+      <div class="tier">
+        <div class="name">Hospitality</div>
+        <h3>CONCIERGE</h3>
+        <p class="desc">Front desk and visitor management with a hospitality touch — guests, bookings, and first impressions handled.</p>
+        <div class="price">$799<span>/mo</span></div>
+        <a class="btn" href="#contact">Choose CONCIERGE</a>
+      </div>
+
+      <div class="tier highlight">
+        <span class="badge">Most capable</span>
+        <div class="name">C-suite</div>
+        <h3>EXECUTIVE</h3>
+        <p class="desc">Executive support for your leadership. Scheduling, follow-up, and the high-value admin that keeps a C-suite moving.</p>
+        <div class="price">$1,299<span>/mo</span></div>
+        <a class="btn" href="#contact">Choose EXECUTIVE</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="how" style="background:#fff; border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <p class="lede">Three steps. You stay in control.</p>
+    <div class="tiers">
+      <div class="tier"><h3>1. Pick your agent</h3><p class="desc">Choose the role that fits, or ask us to combine several into a team.</p></div>
+      <div class="tier"><h3>2. We set it up</h3><p class="desc">We onboard your business — hours, tone, and the tasks the agent owns.</p></div>
+      <div class="tier"><h3>3. You approve, it runs</h3><p class="desc">The agent works around the clock, and a human approves anything that needs a final say.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="honest" class="honesty">
+  <div class="wrap">
+    <h2>Our promise: we don't oversell</h2>
+    <p>An AI secretary is a powerful tool — but we'd rather under-promise and over-deliver than the other way around.</p>
+    <ul>
+      <li>Your agent is available 24/7 and answers fast.</li>
+      <li>A human is in the loop on anything that matters.</li>
+      <li>Cancel anytime — no lock-in.</li>
+      <li class="no">We won't claim a secretary replaces your whole team overnight.</li>
+      <li class="no">We won't send anything out without your approval.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="contact" class="cta-band">
+  <div class="wrap">
+    <h2>Put an agent to work.</h2>
+    <p>Tell us what you need. We'll match you to the right secretary — no pressure, no inflated pitch.</p>
+
+    <form id="lead-form">
+      <div class="row2">
+        <input type="text" name="contactName" placeholder="Your name *" required>
+        <input type="text" name="businessName" placeholder="Business name *" required>
+      </div>
+      <div class="field"><input type="email" name="email" placeholder="Email *" required></div>
+      <div class="field"><input type="tel" name="phone" placeholder="Phone (optional)"></div>
+      <div class="field">
+        <select name="product">
+          <option value="">Which agent? (optional)</option>
+          <option>CLERK — $99/mo</option>
+          <option>GREET — $249/mo</option>
+          <option>PERSONAL — $449/mo</option>
+          <option>VELVET — $599/mo</option>
+          <option>CONCIERGE — $799/mo</option>
+          <option>EXECUTIVE — $1,299/mo</option>
+          <option>A team / not sure</option>
+        </select>
+      </div>
+      <div class="field"><textarea name="notes" placeholder="Tell us what you need help with..." rows="3"></textarea></div>
+      <button type="submit">Send →</button>
+      <p id="form-msg" style="text-align:center;margin-top:12px;font-size:14px;min-height:18px;"></p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Performance Supply Depot LLC</strong></p>
+    <p style="margin-top:6px;">📞 <a href="tel:888-881-6834">(888) 881-6834</a> &nbsp;·&nbsp; ✉️ <a href="mailto:info@psdepot.com">info@psdepot.com</a></p>
+    <p style="margin-top:10px; color:#64748b; font-size:12px;">© 2026 Performance Supply Depot LLC. All rights reserved. Serving California since 2005.</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('lead-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const msg = document.getElementById('form-msg');
+    const btn = this.querySelector('button[type=submit]');
+    const f = e.target;
+    const payload = {
+      contactName: f.contactName.value.trim(),
+      businessName: f.businessName.value.trim(),
+      email: f.email.value.trim(),
+      phone: f.phone.value.trim(),
+      product: f.product.value.trim(),
+      notes: f.notes.value.trim(),
+      source: 'secretarial-pool',
+      destination: 'psd'
+    };
+    btn.disabled = true;
+    msg.style.color = '#4a5568';
+    msg.textContent = 'Sending…';
+    try {
+      const res = await fetch('/api/leads', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        msg.style.color = '#2f855a';
+        msg.textContent = 'Got it — we\'ll be in touch within one business day.';
+        f.reset();
+      } else {
+        msg.style.color = '#c53030';
+        msg.textContent = 'Something went wrong. Email us at info@psdepot.com.';
+      }
+    } catch (err) {
+      msg.style.color = '#c53030';
+      msg.textContent = 'Something went wrong. Email us at info@psdepot.com.';
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
