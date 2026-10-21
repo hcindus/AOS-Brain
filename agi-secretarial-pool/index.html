@@ -108,7 +108,7 @@
         <h3>CLERK</h3>
         <p class="desc">General office clerk. Handles documentation, routine correspondence, and the busywork that eats your day.</p>
         <div class="price">$99<span>/mo</span></div>
-        <button class="btn" onclick="addAgent('AGENT-CLERK','CLERK — AI Secretary ($99/mo)',99)">Add to Cart</button>
+        <button class="btn" onclick="addAgent('AGENT-CLERK','CLERK — AI Secretary ($99/mo)',99,this)">Add to Cart</button>
       </div>
 
       <div class="tier">
@@ -116,7 +116,7 @@
         <h3>GREET</h3>
         <p class="desc">Your front desk, 24/7. Answers inquiries, routes calls, and makes sure no one gets a busy signal.</p>
         <div class="price">$249<span>/mo</span></div>
-        <button class="btn" onclick="addAgent('AGENT-GREET','GREET — AI Receptionist ($249/mo)',249)">Add to Cart</button>
+        <button class="btn" onclick="addAgent('AGENT-GREET','GREET — AI Receptionist ($249/mo)',249,this)">Add to Cart</button>
       </div>
 
       <div class="tier">
@@ -124,7 +124,7 @@
         <h3>PERSONAL</h3>
         <p class="desc">Your personal assistant. Scheduling, reminders, and the day-to-day life management you'd rather delegate.</p>
         <div class="price">$449<span>/mo</span></div>
-        <button class="btn" onclick="addAgent('AGENT-PERSONAL','PERSONAL — AI Life Manager ($449/mo)',449)">Add to Cart</button>
+        <button class="btn" onclick="addAgent('AGENT-PERSONAL','PERSONAL — AI Life Manager ($449/mo)',449,this)">Add to Cart</button>
       </div>
 
       <div class="tier">
@@ -132,7 +132,7 @@
         <h3>VELVET</h3>
         <p class="desc">Senior secretary for polished correspondence and higher-stakes communication.</p>
         <div class="price">$599<span>/mo</span></div>
-        <button class="btn" onclick="addAgent('AGENT-VELVET','VELVET — AI Premium Secretary ($599/mo)',599)">Add to Cart</button>
+        <button class="btn" onclick="addAgent('AGENT-VELVET','VELVET — AI Premium Secretary ($599/mo)',599,this)">Add to Cart</button>
       </div>
 
       <div class="tier">
@@ -140,7 +140,7 @@
         <h3>CONCIERGE</h3>
         <p class="desc">Front desk and visitor management with a hospitality touch — guests, bookings, and first impressions handled.</p>
         <div class="price">$799<span>/mo</span></div>
-        <button class="btn" onclick="addAgent('AGENT-CONCIERGE','CONCIERGE — AI Concierge ($799/mo)',799)">Add to Cart</button>
+        <button class="btn" onclick="addAgent('AGENT-CONCIERGE','CONCIERGE — AI Concierge ($799/mo)',799,this)">Add to Cart</button>
       </div>
 
       <div class="tier highlight">
@@ -149,7 +149,7 @@
         <h3>EXECUTIVE</h3>
         <p class="desc">Executive support for your leadership. Scheduling, follow-up, and the high-value admin that keeps a C-suite moving.</p>
         <div class="price">$1,299<span>/mo</span></div>
-        <button class="btn" onclick="addAgent('AGENT-EXECUTIVE','EXECUTIVE — AI C-Suite Secretary ($1,299/mo)',1299)">Add to Cart</button>
+        <button class="btn" onclick="addAgent('AGENT-EXECUTIVE','EXECUTIVE — AI C-Suite Secretary ($1,299/mo)',1299,this)">Add to Cart</button>
       </div>
 
     </div>
@@ -251,16 +251,27 @@
     const el = document.getElementById('cart-count');
     if (el) el.textContent = cart.reduce((s,i) => s + (i.quantity||1), 0);
   }
-  function addAgent(sku, name, price) {
+  function addAgent(sku, name, price, btn) {
     let cart = getCart();
     const existing = cart.find(i => i.sku === sku);
     if (existing) existing.quantity += 1;
     else cart.push({ sku: sku, name: name, price: price, quantity: 1 });
     saveCart(cart);
-    // brief visual confirmation, then let them keep shopping or go pay
-    const msg = document.getElementById('form-msg');
-    if (msg) { msg.style.color = '#2f855a'; msg.textContent = name.split('—')[0].trim() + ' added to cart.'; }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    flashAdded(btn);
+  }
+  function flashAdded(btn) {
+    if (!btn) return;
+    const orig = btn.textContent;
+    btn.textContent = 'Added ✓';
+    btn.style.background = '#2f855a';
+    btn.style.color = '#fff';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.style.background = '';
+      btn.style.color = '';
+      btn.disabled = false;
+    }, 1200);
   }
   renderCart();
 
