@@ -80,6 +80,14 @@ The build is a **metamorphosis**, in order:
 
 ## 2. Vision — "Thing" as a Creature
 
+### Design Principle — Mobility, Not Armament (Captain, 2026-10-21)
+
+> *"I am looking at the mobility and want that for our agents as well, minus the guns if you please."*
+
+**The target capability is mobility — how the body moves with grace and presence — not payload/armament.** We covet the *fluid, sure-footed motion* of the best robotics, and deliberately leave the weaponization to others. The arc: crawl (Phase 3) → walk with presence (ETH-style, but our *how*, not just our *can*) → exoskeleton/armor as *mobility assistance*, not plating-for-its-own-sake.
+
+**The philosophy in one line:** it's not the motors that make a machine dangerous — it's the will behind them. We wire ours toward presence, care, and showing up. Same dexterity, same grace, weighted toward the good. A companion, not a weapon.
+
 - **Camera eye** in the middle finger tip (tallest digit = natural periscope). Raise the head → look around; lower it → tuck and scuttle.
 - **LED "eye"** so it reads as alive, not just a servo rig.
 - **Emotive poses:** curious tilt, a little wave, the slow "come here" beckon. A hand that can *emote* stops being a robot and becomes a creature.
