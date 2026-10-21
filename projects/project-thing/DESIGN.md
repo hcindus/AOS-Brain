@@ -33,6 +33,23 @@ Open-source, low-cost dexterous hand. We do NOT reinvent this.
 
 ---
 
+## 1.5 The Leather Glove — Skin Before Armor (Captain, 2026-10-21)
+
+**The core aesthetic insight:** wrap the hand in an **old leather glove** before any armor.
+
+The build is a **metamorphosis**, in order:
+1. **Bare hand** — learn to crawl (watch the mechanics).
+2. **Leather glove** — give it *skin* (watch it become a creature).
+3. **Armor plates** — dress the arm/hand for *presence* (watch it become a being).
+
+**Why the glove is the right first "skin":**
+- **Leather reads as alive** — it's literally skin. Wrinkles/creases/wear marks = instant creature texture + history (a *found thing* that woke up — pure Addams Family "Thing" energy).
+- **Protection with flex** — leather moves *with* the servos; it bends where the joints bend, unlike rigid armor.
+- **Cheap + forgiving** — thrift-store glove, a few bucks, zero design time.
+- **Story** — implies a previous owner, a past. Not a robot; a *memory* of a hand.
+
+---
+
 ## 2. Vision — "Thing" as a Creature
 
 - **Camera eye** in the middle finger tip (tallest digit = natural periscope). Raise the head → look around; lower it → tuck and scuttle.
