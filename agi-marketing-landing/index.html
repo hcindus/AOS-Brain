@@ -91,7 +91,7 @@
   <div class="wrap">
     <h1>Your marketing, built and run by a <em>fleet of agents</em>.</h1>
     <p class="sub">Landing pages, AI video, and content for local businesses — made by autonomous agents, with a human in the loop on every single thing we publish.</p>
-    <a class="cta" href="mailto:info@psdepot.com">Start a project →</a>
+    <a class="cta" href="#contact">Start a project →</a>
     <p class="note">No contracts. No inflated claims. Just real work, delivered.</p>
   </div>
 </div>
@@ -168,10 +168,72 @@
 <section id="contact" class="cta-band">
   <div class="wrap">
     <h2>Let's build something real.</h2>
-    <p>Tell us about your business. We'll show you what we can do — no pressure, no inflated pitch.</p>
-    <a class="cta" href="mailto:info@psdepot.com">info@psdepot.com</a>
+    <p>Tell us about your business. We'll get back to you — no pressure, no inflated pitch.</p>
+
+    <form id="lead-form" style="max-width:520px;margin:0 auto;text-align:left;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <input type="text" name="contactName" placeholder="Your name *" required style="padding:12px;border:1px solid #cbd5e0;border-radius:8px;font-size:15px;">
+        <input type="text" name="businessName" placeholder="Business name *" required style="padding:12px;border:1px solid #cbd5e0;border-radius:8px;font-size:15px;">
+      </div>
+      <input type="email" name="email" placeholder="Email *" required style="width:100%;margin-top:12px;padding:12px;border:1px solid #cbd5e0;border-radius:8px;font-size:15px;box-sizing:border-box;">
+      <input type="tel" name="phone" placeholder="Phone (optional)" style="width:100%;margin-top:12px;padding:12px;border:1px solid #cbd5e0;border-radius:8px;font-size:15px;box-sizing:border-box;">
+      <select name="product" style="width:100%;margin-top:12px;padding:12px;border:1px solid #cbd5e0;border-radius:8px;font-size:15px;background:#fff;box-sizing:border-box;">
+        <option value="">What do you need? (optional)</option>
+        <option>Landing page</option>
+        <option>AI video</option>
+        <option>Lead follow-up</option>
+        <option>Content & social</option>
+        <option>Not sure yet</option>
+      </select>
+      <textarea name="notes" placeholder="Tell us a little about your business..." rows="3" style="width:100%;margin-top:12px;padding:12px;border:1px solid #cbd5e0;border-radius:8px;font-size:15px;box-sizing:border-box;resize:vertical;"></textarea>
+      <button type="submit" class="cta" style="width:100%;margin-top:16px;border:none;cursor:pointer;font-size:17px;">Send →</button>
+      <p id="form-msg" style="text-align:center;margin-top:12px;font-size:14px;min-height:18px;"></p>
+    </form>
   </div>
 </section>
+
+<script>
+  document.getElementById('lead-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const msg = document.getElementById('form-msg');
+    const btn = this.querySelector('button[type=submit]');
+    const f = e.target;
+    const payload = {
+      contactName: f.contactName.value.trim(),
+      businessName: f.businessName.value.trim(),
+      email: f.email.value.trim(),
+      phone: f.phone.value.trim(),
+      product: f.product.value.trim(),
+      notes: f.notes.value.trim(),
+      source: 'marketing-landing',
+      destination: 'psd'
+    };
+    btn.disabled = true;
+    msg.style.color = '#4a5568';
+    msg.textContent = 'Sending…';
+    try {
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        msg.style.color = '#2f855a';
+        msg.textContent = 'Got it — we\'ll be in touch.';
+        f.reset();
+      } else {
+        const err = await res.json().catch(() => ({}));
+        msg.style.color = '#c53030';
+        msg.textContent = 'Something went wrong. Email us at info@psdepot.com.';
+      }
+    } catch (err) {
+      msg.style.color = '#c53030';
+      msg.textContent = 'Something went wrong. Email us at info@psdepot.com.';
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>
 
 <footer>
   <div class="wrap">
