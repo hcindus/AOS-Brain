@@ -1,15 +1,21 @@
-"""BalanceController — keep the RP1 upright via torso feedback on top of a PD hold.
+"""BalanceController — torso-upright feedback on a PD hold (best static-stand result).
 
-The empirically-validated recipe (see the sign sweep): hold every joint at its
-nominal pose with soft PD, *plus* actively drive the hips and waist from the
-root's tilt so the torso stays upright. This is the "keep the torso upright on
-purpose" fix the Asimov-1 video identifies as the difference between a puppet
-and a walker — a naive PD hold resists, but this one actively corrects.
+The empirically-best *static* stand for the RP1: hold every joint at nominal
+with soft PD, plus actively drive the hips/waist from the root's tilt so the
+torso stays upright. ~35% upright — beats the naive `hold` (29%).
 
-Joint axes (from the MJCF) matter here: `hip_pitch` is mirrored across the
-legs (left +y, right -y), so a symmetric correction needs opposite sign torque
-left vs right. hip_roll / ankle_roll / ankle_pitch share their axis across the
-legs, so they take the same sign.
+A LIPM ankle strategy (CoP control) was tested and *rejected*: it regressed to
+~8% upright. Root cause is physical — the RP1's feet are four tiny contact
+points (±5.7° ankle roll), so the ankle has almost no CoP leverage. Ankle
+strategy trades "stays up longer" for "leans more", which is not standing.
+
+The conclusion this encodes: the RP1 cannot balance *statically*. It must
+*step* to widen its support — the ZMP / footstep planner is the walking layer
+that sits on top of this.
+
+Joint axes: hip_pitch is mirrored (L +y / R -y), so a symmetric correction
+needs opposite-sign torque across the legs; hip_roll shares +x and takes the
+same sign.
 """
 from __future__ import annotations
 
@@ -23,16 +29,11 @@ class BalanceController:
         self.env = env
         self.view = env.view
         g = gains or {}
-        self.kp_joint = g.get("kp_joint", 30.0)   # base PD hold (arms/waist/hip-yaw)
-        self.kd_joint = g.get("kd_joint", 2.0)
+        self.kp_joint = g.get("kp_joint", 60.0)   # base PD hold (all joints)
+        self.kd_joint = g.get("kd_joint", 4.0)
         self.kp_torso = g.get("kp_torso", 120.0)  # torso-upright feedback
         self.kd_torso = g.get("kd_torso", 6.0)
-        self.kp_ankle = g.get("kp_ankle", 100.0)  # LIPM ankle strategy (CoP control)
-        self.kd_ankle = g.get("kd_ankle", 50.0)
-        self.kp_knee = g.get("kp_knee", 60.0)
-        self.kd_knee = g.get("kd_knee", 3.0)
 
-        # actuator indices (joint order of the 28-DoF model)
         self.idx = {
             "l_hip_pitch": 0, "l_hip_roll": 1, "l_knee": 3,
             "l_ankle_pitch": 4, "l_ankle_roll": 5,
@@ -48,40 +49,21 @@ class BalanceController:
         d = self.view.data
         m = self.view.model
 
-        # --- torso orientation (root's local +z in world) ---
         up = d.xmat[self.view.root_id][6:9]
-        tilt_x = float(up[0])          # forward/backward lean
-        tilt_y = float(up[1])          # lateral lean
-        angvel = d.qvel[3:6]           # root angular velocity
+        tilt_x = float(up[0])
+        tilt_y = float(up[1])
+        angvel = d.qvel[3:6]
 
-        # --- base PD hold: drive every joint to its nominal (0) pose ---
         qpos = d.qpos[self.env.joint_qpos_adr]
         qvel = d.qvel[self.env.joint_dof_adr]
         tau = -self.kp_joint * qpos - self.kd_joint * qvel
 
-        # --- center of mass (world frame) ---
-        com = d.subtree_com[0]
-        com_vel = d.subtree_linvel[0]
-
-        # --- ankle strategy (LIPM / CoP control) — keep CoP under the CoM ---
-        # ankle pitch & roll share their axis across the legs → same sign.
-        tau[self.idx["l_ankle_pitch"]] += -self.kp_ankle * com[0] - self.kd_ankle * com_vel[0]
-        tau[self.idx["r_ankle_pitch"]] += -self.kp_ankle * com[0] - self.kd_ankle * com_vel[0]
-        tau[self.idx["l_ankle_roll"]] += -self.kp_ankle * com[1] - self.kd_ankle * com_vel[1]
-        tau[self.idx["r_ankle_roll"]] += -self.kp_ankle * com[1] - self.kd_ankle * com_vel[1]
-
-        # --- torso-upright feedback on top ---
-        # hip_pitch is mirrored (L +y / R -y): opposite sign across legs.
+        # torso-upright feedback — hip_pitch mirrored, hip_roll same-sign
         tau[self.idx["l_hip_pitch"]] += -self.kp_torso * tilt_x - self.kd_torso * angvel[1]
         tau[self.idx["r_hip_pitch"]] += +self.kp_torso * tilt_x + self.kd_torso * angvel[1]
-        # hip_roll shares the +x axis: same sign across legs.
         tau[self.idx["l_hip_roll"]] += -self.kp_torso * tilt_y - self.kd_torso * angvel[0]
         tau[self.idx["r_hip_roll"]] += -self.kp_torso * tilt_y - self.kd_torso * angvel[0]
         tau[self.idx["waist_roll"]] += -0.5 * self.kp_torso * tilt_y
-
-        # --- knees: soft PD hold (slightly bent) ---
-        tau[self.idx["l_knee"]] += -self.kp_knee * qpos[self.idx["l_knee"]] - self.kd_knee * qvel[self.idx["l_knee"]]
-        tau[self.idx["r_knee"]] += -self.kp_knee * qpos[self.idx["r_knee"]] - self.kd_knee * qvel[self.idx["r_knee"]]
 
         lo = m.actuator_ctrlrange[:, 0]
         hi = m.actuator_ctrlrange[:, 1]
