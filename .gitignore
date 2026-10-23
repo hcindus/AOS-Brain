@@ -90,3 +90,8 @@ data/hi3d_torso/
 
 # Merged 3D print outputs (generated; often exceed GitHub 100MB limit)
 stl_files/*/merged/
+
+# RP1 robotics — cloned third-party repos (each has its own git; 2.4G)
+robotics/rp1/
+robotics/training_room/.venv/
+robotics/training_room/runs/

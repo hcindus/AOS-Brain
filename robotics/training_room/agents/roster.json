@@ -1,0 +1,14 @@
+{
+  "description": "RP1 Training Room roster — our agents as pilots.",
+  "pilots": [
+    { "id": "mort_ii",   "kind": "ollama", "model": "antoniohudnall/Mort_II:latest", "role": "voice / sales", "scale": 20.0 },
+    { "id": "qwen35",    "kind": "ollama", "model": "qwen3.5:latest",                 "role": "vision / multimodal", "scale": 20.0 },
+    { "id": "qwen25",    "kind": "ollama", "model": "qwen2.5:14b",                   "role": "reasoning / control", "scale": 20.0 },
+    { "id": "deepseek",  "kind": "ollama", "model": "deepseek-r1:7b",                "role": "reasoning", "scale": 20.0 },
+    { "id": "hermes2",   "kind": "ollama", "model": "nous-hermes2:latest",           "role": "general", "scale": 20.0 },
+    { "id": "tinyllama", "kind": "ollama", "model": "tinyllama:latest",              "role": "fast decisions", "scale": 20.0 },
+    { "id": "hold",      "kind": "baseline", "name": "hold",   "role": "naive PD stand" },
+    { "id": "random",    "kind": "baseline", "name": "random", "role": "control floor" },
+    { "id": "zero",      "kind": "baseline", "name": "zero",   "role": "failure floor" }
+  ]
+}

@@ -1,5 +1,15 @@
 # MEMORY.md - Curated Knowledge
 
+## RP1 Training Room (Captain, 2026-10-23)
+Captain directed building a "training room" so our agents can train on the open-source RoboParty RP1 humanoid in sim before "entering the real world." Full detail in `memory/2026-10-23.md`.
+
+- **16 RP1 repos** cloned under `robotics/rp1/` (hardware + models + software + learning incl. UFO/Isaac Lab).
+- **No GPU on this VPS** — CPU-first by Captain's call; GPU is a plug-in socket (`dispatch/gpu.py`).
+- **Training Room** at `robotics/training_room/`: MuJoCo `RP1GymEnv` (28 torque DoF, 500 Hz) + `Pilot` ABC (zero/random/hold + `OllamaPilot` bridge to our models) + `agents/roster.json` + blind hold-out graduation gate routed through **RiP GoR** socket + `LocalCPU`/`GPU` dispatch backends + `train.py` CLI.
+- **Gotcha:** `robot.xml` has no floor — use `rp1_flat.xml`/`rp1_rough.xml`. Ollama cold-start slow (~60s timeout). LLM pilots too slow for full episodes; real training path = GPU dispatch (UFO).
+- Verified end-to-end: baselines discriminate, `graduate` logs verdicts, tinyllama produces valid 28-torque actions.
+
+
 ## AI Filmmaking Course → Skills Index (Captain, 2026-09-08)
 Captain fed me a full AI-filmmaking course (notes Mortimer was taking) and I captured it as 9 skills under `skills/`. The through-line: **quality comes from process, not luck** — clear script → structured prompts → trained character → intentional edits. Pipeline: Claude (script) + 7ART (production) + CapCut (edit).
 

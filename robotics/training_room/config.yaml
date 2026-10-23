@@ -1,0 +1,29 @@
+# Training Room — RP1 agent gym + graduation gate
+# CPU-first. GPU is a plug-in socket (dispatch/gpu.py).
+
+paths:
+  mjcf: ../rp1/RP1_description/mjcf/rp1_flat.xml
+  roster: agents/roster.json
+  runs: runs/              # per-agent checkpoints + telemetry
+
+sim:
+  timestep: 0.005          # 500 Hz (matches ROMOMO FOC loop)
+  horizon: 1000            # steps per episode (5 s)
+  control_freq: 0.005
+
+task:
+  type: stand_and_walk     # survive upright + progress forward
+  alive_height: 0.45       # torso below this -> fallen
+  upright_tol: 0.5         # max tilt (dot) before "not upright"
+
+graduation:
+  holdout_scenarios: [stand, walk, push_recovery]
+  min_score: 0.5           # 0..1; below -> back to training
+  require_gor: true        # route through RiP GoR council
+
+dispatch:
+  default_backend: local_cpu
+  gpu:                     # plug-in socket (cloud / dedicated box)
+    enabled: false
+    backend: gpu
+    provider: null         # runpod | lambda | local-gpu
