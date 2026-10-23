@@ -3,182 +3,110 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RP1 Training Room — Live</title>
+<title>RP1 Skill Gym — every skill in its own lane</title>
 <style>
   :root { --bg:#0b0e14; --panel:#121722; --accent:#58a6ff; --green:#3fb950; --red:#f85149; --text:#c9d1d9; }
   * { box-sizing:border-box; margin:0; padding:0; }
-  body { background:var(--bg); color:var(--text); font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; height:100vh; overflow:hidden; }
-  header { padding:14px 20px; border-bottom:1px solid #1f2733; display:flex; align-items:baseline; gap:16px; }
+  body { background:var(--bg); color:var(--text); font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; min-height:100vh; }
+  header { padding:14px 20px; border-bottom:1px solid #1f2733; display:flex; align-items:baseline; gap:14px; }
   header h1 { font-size:15px; font-weight:600; letter-spacing:.5px; }
   header .dot { width:9px; height:9px; border-radius:50%; background:var(--green); display:inline-block; box-shadow:0 0 8px var(--green); }
   header .dot.off { background:var(--red); box-shadow:0 0 8px var(--red); }
   header .sub { color:#6e7681; font-size:12px; }
-  .layout { display:grid; grid-template-columns:1.4fr 1fr; gap:0; height:calc(100vh - 52px); }
-  .view3d { position:relative; border-right:1px solid #1f2733; cursor:grab; }
+  #grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(340px, 1fr)); gap:14px; padding:14px; }
+  .win { background:var(--panel); border:1px solid #1f2733; border-radius:10px; overflow:hidden; display:flex; flex-direction:column; }
+  .win-head { display:flex; align-items:center; gap:8px; padding:10px 14px; border-bottom:1px solid #1f2733; }
+  .win-head .name { font-weight:600; font-size:13px; letter-spacing:.5px; text-transform:uppercase; }
+  .win-head .alive { font-size:10px; padding:2px 7px; border-radius:10px; background:#1f2733; }
+  .win-head .alive.t { color:var(--green); } .win-head .alive.f { color:var(--red); }
+  .win-head .meta { margin-left:auto; font-size:10px; color:#8b949e; text-align:right; }
+  .view3d { position:relative; height:280px; cursor:grab; border-bottom:1px solid #1f2733; }
   .view3d canvas { display:block; width:100%; height:100%; }
-  .hud { position:absolute; top:12px; left:12px; font-size:11px; color:#8b949e; pointer-events:none; }
-  .side { display:flex; flex-direction:column; padding:16px; gap:14px; overflow:hidden; }
-  .stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-  .stat { background:var(--panel); border:1px solid #1f2733; border-radius:8px; padding:10px 12px; }
-  .stat .k { font-size:10px; color:#6e7681; text-transform:uppercase; letter-spacing:.5px; }
-  .stat .v { font-size:20px; font-weight:600; margin-top:3px; }
-  .stat .v.alive-true { color:var(--green); } .stat .v.alive-false { color:var(--red); }
-  .chart { flex:1; background:var(--panel); border:1px solid #1f2733; border-radius:8px; position:relative; min-height:200px; }
+  .hud { position:absolute; top:8px; left:10px; font-size:10px; color:#6e7681; pointer-events:none; }
+  .chart { height:90px; position:relative; }
   .chart canvas { position:absolute; inset:0; width:100%; height:100%; }
-  .legend { display:flex; gap:16px; font-size:11px; color:#8b949e; }
-  .legend .sw { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:5px; vertical-align:middle; }
-  .bench { background:var(--panel); border:1px solid #1f2733; border-radius:8px; padding:10px 12px; }
-  .bench-title { font-size:10px; color:#6e7681; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; }
-  .bench-row { display:flex; align-items:center; gap:8px; padding:3px 6px; font-size:12px; border-radius:4px; }
-  .bench-row.current { background:#1a2332; }
-  .bench-row .bname { width:72px; font-weight:600; }
-  .bench-row.current .bname::before { content:'▶ '; color:var(--green); }
-  .bench-row .bar { flex:1; height:8px; background:#1f2733; border-radius:4px; overflow:hidden; }
-  .bench-row .fill { display:block; height:100%; background:var(--accent); transition:width .2s; }
-  .bench-row.current .fill { background:var(--green); }
-  .bench-row .bval { width:40px; text-align:right; color:#8b949e; }
-  .foot { font-size:10px; color:#4b5563; }
+  .foot { padding:8px 14px; font-size:10px; color:#4b5563; border-top:1px solid #1f2733; }
 </style>
 </head>
 <body>
 <header>
   <span class="dot" id="conn"></span>
-  <h1>RP1 TRAINING ROOM</h1>
-  <span class="sub">Myl1Ssa (brain) → controller → Myl2Ssa (body) · live ES training</span>
+  <h1>RP1 SKILL GYM</h1>
+  <span class="sub">each skill trains in its own lane — base controller + learned residual (ES)</span>
 </header>
-
-<div class="layout">
-  <div class="view3d" id="view3d">
-    <canvas id="robot"></canvas>
-    <div class="hud" id="hud3d">drag to rotate · scroll to zoom</div>
-  </div>
-  <div class="side">
-    <div class="stats">
-      <div class="stat"><div class="k">Generation</div><div class="v" id="gen">—</div></div>
-      <div class="stat"><div class="k">Alive</div><div class="v" id="alive">—</div></div>
-      <div class="stat"><div class="k">Mean Reward</div><div class="v" id="mean">—</div></div>
-      <div class="stat"><div class="k">Max Reward</div><div class="v" id="max">—</div></div>
-      <div class="stat"><div class="k">Torso Height</div><div class="v" id="height">—</div></div>
-      <div class="stat"><div class="k">Torso Tilt</div><div class="v" id="tilt">—</div></div>
-    </div>
-    <div class="bench">
-      <div class="bench-title">Model Bench — testing in rotation</div>
-      <div id="bench"></div>
-    </div>
-    <div class="legend">
-      <span><span class="sw" style="background:var(--accent)"></span>mean reward</span>
-      <span><span class="sw" style="background:var(--green)"></span>max reward</span>
-    </div>
-    <div class="chart"><canvas id="chart"></canvas></div>
-    <div class="foot">evolution strategy · 28-DoF RP1 · MuJoCo on CPU · no GPU</div>
-  </div>
-</div>
+<div id="grid"></div>
 
 <script>
 const WS = (location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host + '/train-ws/';
-
-let parents = [], names = [], nbody = 0;
-let rotY = 0.6, rotX = -0.35, zoom = 1.0, dragging = false, lx = 0, ly = 0;
-let history = [], live = null;
-
+let parents = [], nbody = 0;
+const skills = {};   // name -> {live, history, gen, mean_r, max_r, rotY, rotX, zoom, els}
 const dot = document.getElementById('conn');
-const robotCv = document.getElementById('robot');
-const chartCv = document.getElementById('chart');
-const rctx = robotCv.getContext('2d');
-const cctx = chartCv.getContext('2d');
+const grid = document.getElementById('grid');
 
-// ---- 3D view controls ----
-const view3d = document.getElementById('view3d');
-view3d.addEventListener('mousedown', e => { dragging = true; lx = e.clientX; ly = e.clientY; view3d.style.cursor='grabbing'; });
-window.addEventListener('mouseup', () => { dragging = false; view3d.style.cursor='grab'; });
-window.addEventListener('mousemove', e => { if(!dragging) return; rotY += (e.clientX-lx)*0.008; rotX += (e.clientY-ly)*0.008; lx=e.clientX; ly=e.clientY; });
-view3d.addEventListener('wheel', e => { zoom *= (e.deltaY<0?1.1:0.9); zoom=Math.max(0.3,Math.min(4,zoom)); e.preventDefault(); }, {passive:false});
+function rot(p, ry, rx){ let [x,y,z]=p; let c=Math.cos(ry),s=Math.sin(ry),x1=c*x+s*z,z1=-s*x+c*z; x=x1;z=z1; c=Math.cos(rx);s=Math.sin(rx); let y1=c*y-s*z,z2=s*y+c*z; y=y1;z=z2; return [x,y,z]; }
+function project(p, cx, cy, scale, fov, ry, rx){ const [x,y,z]=rot(p,ry,rx); const f=fov/(fov+z); return [cx+x*scale*f, cy-y*scale*f, f]; }
 
-function resize() {
-  robotCv.width = view3d.clientWidth * devicePixelRatio;
-  robotCv.height = view3d.clientHeight * devicePixelRatio;
-  chartCv.width = chartCv.parentElement.clientWidth * devicePixelRatio;
-  chartCv.height = chartCv.parentElement.clientHeight * devicePixelRatio;
-}
-window.addEventListener('resize', resize); resize();
+function makeWindow(name){
+  const win = document.createElement('div'); win.className='win';
+  win.innerHTML = `
+    <div class="win-head">
+      <span class="name">${name}</span>
+      <span class="alive" data-alive>—</span>
+      <span class="meta"><div data-gen>gen —</div><div data-reward>r —</div></span>
+    </div>
+    <div class="view3d"><canvas></canvas><div class="hud">drag rotate · scroll zoom</div></div>
+    <div class="chart"><canvas></canvas></div>
+    <div class="foot" data-foot>base controller + ES residual · height —</div>`;
+  grid.appendChild(win);
+  const cv3d = win.querySelector('.view3d canvas');
+  const cvchart = win.querySelector('.chart canvas');
+  const state = { live:null, history:[], gen:0, mean_r:0, max_r:0, rotY:0.6, rotX:-0.35, zoom:1.0, cv3d, cvchart };
+  skills[name] = state;
 
-function rot(p, ry, rx) {
-  let [x,y,z] = p;
-  let c=Math.cos(ry), s=Math.sin(ry); let x1=c*x+s*z, z1=-s*x+c*z; x=x1; z=z1;
-  c=Math.cos(rx); s=Math.sin(rx); let y1=c*y-s*z, z2=s*y+c*z; y=y1; z=z2;
-  return [x,y,z];
-}
-function project(p, cx, cy, scale, fov) {
-  const [x,y,z] = rot(p, rotY, rotX);
-  const f = fov / (fov + z);
-  return [cx + x*scale*f, cy - y*scale*f, f];
-}
-
-function drawRobot() {
-  const w = robotCv.width, h = robotCv.height;
-  rctx.fillStyle = '#0b0e14'; rctx.fillRect(0,0,w,h);
-  if(!live || !live.bodies || live.bodies.length < nbody) return;
-  const cx = w/2, cy = h/2;
-  const pts = live.bodies;
-  // center on base_link (body 1) x,z
-  const base = pts[1] || pts[0];
-  const scale = (Math.min(w,h) * 0.5 * zoom) / 1.3;
-  const fov = 4.0;
-  const P = pts.map(p => project([p[0]-base[0], p[2]-base[2], p[1]-base[1]], cx, cy, scale, fov));
-  // links
-  rctx.strokeStyle = '#3b82f6'; rctx.lineWidth = 2; rctx.globalAlpha = 0.8;
-  for(let i=1;i<nbody;i++){
-    const a=P[i], b=P[parents[i]];
-    rctx.beginPath(); rctx.moveTo(a[0],a[1]); rctx.lineTo(b[0],b[1]); rctx.stroke();
+  const view3d = win.querySelector('.view3d');
+  let dragging=false, lx=0, ly=0;
+  view3d.addEventListener('mousedown', e=>{dragging=true;lx=e.clientX;ly=e.clientY;view3d.style.cursor='grabbing';});
+  window.addEventListener('mouseup', ()=>{dragging=false;view3d.style.cursor='grab';});
+  window.addEventListener('mousemove', e=>{ if(!dragging) return; state.rotY+=(e.clientX-lx)*0.008; state.rotX+=(e.clientY-ly)*0.008; lx=e.clientX; ly=e.clientY; });
+  view3d.addEventListener('wheel', e=>{ state.zoom*= (e.deltaY<0?1.1:0.9); state.zoom=Math.max(0.3,Math.min(4,state.zoom)); e.preventDefault(); }, {passive:false});
+  function resize(){
+    state.cv3d.width = view3d.clientWidth * devicePixelRatio;
+    state.cv3d.height = view3d.clientHeight * devicePixelRatio;
+    state.cvchart.width = state.cvchart.parentElement.clientWidth * devicePixelRatio;
+    state.cvchart.height = state.cvchart.parentElement.clientHeight * devicePixelRatio;
   }
-  // joints
-  rctx.globalAlpha = 1;
-  for(let i=0;i<nbody;i++){
-    const p=P[i]; const r = i===1 ? 5 : (p[2]*6);
-    rctx.beginPath(); rctx.arc(p[0],p[1], Math.max(1.5,r), 0, Math.PI*2);
-    rctx.fillStyle = i===1 ? '#58a6ff' : (live.alive ? '#3fb950' : '#f85149');
-    rctx.fill();
-  }
-  rctx.globalAlpha = 1;
+  window.addEventListener('resize', resize); resize();
 }
 
-function drawChart() {
-  const w = chartCv.width, h = chartCv.height;
-  cctx.clearRect(0,0,w,h);
-  if(history.length < 2) { cctx.fillStyle='#4b5563'; cctx.font='12px monospace'; cctx.fillText('awaiting training…', 12, 24); return; }
-  const pad = 30;
-  const maxR = Math.max(1, ...history.map(h=>h[2]));
-  const minR = Math.min(0, ...history.map(h=>h[1]));
-  const gs = history.map(h=>h[0]);
-  const x = v => pad + (v-gs[0])/(Math.max(1,gs[gs.length-1]-gs[0]))*(w-2*pad);
-  const y = v => h-pad - (v-minR)/(maxR-minR)*(h-2*pad);
-  // axes
-  cctx.strokeStyle='#1f2733'; cctx.lineWidth=1;
-  cctx.beginPath(); cctx.moveTo(pad,pad); cctx.lineTo(pad,h-pad); cctx.lineTo(w-pad,h-pad); cctx.stroke();
-  const line = (key, color) => {
-    cctx.strokeStyle=color; cctx.lineWidth=2; cctx.beginPath();
-    history.forEach((h,i)=>{ const px=x(h[0]), py=y(h[key]); i?cctx.lineTo(px,py):cctx.moveTo(px,py); });
-    cctx.stroke();
-  };
-  line(1, '#58a6ff'); line(2, '#3fb950');
-  cctx.fillStyle='#8b949e'; cctx.font='10px monospace';
-  cctx.fillText('gen '+gs[gs.length-1], w-pad-40, h-8);
-  cctx.fillText('r '+maxR.toFixed(0), 6, pad-8);
+function draw3d(s){
+  const w=s.cv3d.width, h=s.cv3d.height; const ctx=s.cv3d.getContext('2d');
+  ctx.fillStyle='#0b0e14'; ctx.fillRect(0,0,w,h);
+  if(!s.live || !s.live.bodies || s.live.bodies.length<nbody) return;
+  const pts=s.live.bodies, base=pts[1]||pts[0];
+  const cx=w/2, cy=h/2, scale=(Math.min(w,h)*0.5*s.zoom)/1.3, fov=4.0;
+  const P=pts.map(p=>project([p[0]-base[0],p[2]-base[2],p[1]-base[1]],cx,cy,scale,fov,s.rotY,s.rotX));
+  ctx.strokeStyle='#3b82f6'; ctx.lineWidth=2; ctx.globalAlpha=0.8;
+  for(let i=1;i<nbody;i++){ const a=P[i],b=P[parents[i]]; ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.stroke(); }
+  ctx.globalAlpha=1;
+  for(let i=0;i<nbody;i++){ const p=P[i], r=i===1?5:(p[2]*6); ctx.beginPath(); ctx.arc(p[0],p[1],Math.max(1.5,r),0,Math.PI*2); ctx.fillStyle=i===1?'#58a6ff':(s.live.alive?'#3fb950':'#f85149'); ctx.fill(); }
+  ctx.globalAlpha=1;
 }
 
-function updateStats() {
-  if(!live) return;
-  document.getElementById('gen').textContent = window.curGen ?? '—';
-  const a = document.getElementById('alive');
-  a.textContent = live.alive ? 'YES' : 'NO';
-  a.className = 'v ' + (live.alive ? 'alive-true' : 'alive-false');
-  document.getElementById('mean').textContent = (window.curMean ?? 0).toFixed(1);
-  document.getElementById('max').textContent = (window.curMax ?? 0).toFixed(1);
-  document.getElementById('height').textContent = (live.height??0).toFixed(2)+' m';
-  document.getElementById('tilt').textContent = ((live.tilt??0)*57.3).toFixed(1)+'°';
+function drawChart(s){
+  const w=s.cvchart.width, h=s.cvchart.height; const ctx=s.cvchart.getContext('2d');
+  ctx.clearRect(0,0,w,h);
+  if(!s.history || s.history.length<2){ ctx.fillStyle='#4b5563'; ctx.font='11px monospace'; ctx.fillText('learning…', 10, 20); return; }
+  const pad=16, hist=s.history;
+  const maxR=Math.max(1,...hist.map(x=>x[2])), minR=Math.min(0,...hist.map(x=>x[1]));
+  const gs=hist.map(x=>x[0]);
+  const x=v=>pad+(v-gs[0])/(Math.max(1,gs[gs.length-1]-gs[0]))*(w-2*pad);
+  const y=v=>h-pad-(v-minR)/(maxR-minR)*(h-2*pad);
+  ctx.strokeStyle='#1f2733'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(pad,pad); ctx.lineTo(pad,h-pad); ctx.lineTo(w-pad,h-pad); ctx.stroke();
+  const line=(key,color)=>{ ctx.strokeStyle=color; ctx.lineWidth=2; ctx.beginPath(); hist.forEach((hh,i)=>{const px=x(hh[0]),py=y(hh[key]); i?ctx.lineTo(px,py):ctx.moveTo(px,py);}); ctx.stroke(); };
+  line(1,'#58a6ff'); line(2,'#3fb950');
 }
 
-function loop(){ drawRobot(); drawChart(); requestAnimationFrame(loop); }
+function loop(){ for(const name in skills){ draw3d(skills[name]); drawChart(skills[name]); } requestAnimationFrame(loop); }
 loop();
 
 let ws;
@@ -189,33 +117,24 @@ function connect(){
   ws.onerror = () => ws.close();
   ws.onmessage = e => {
     const msg = JSON.parse(e.data);
-    if(msg.type==='init'){ parents=msg.parents; names=msg.names; nbody=msg.nbody; }
-    else if(msg.type==='frame'){
-      live = msg.live; history = msg.history;
-      window.curGen = msg.gen; window.curMean = msg.mean_r; window.curMax = msg.max_r;
-      updateStats();
-      updateBench(msg.bench || {}, msg.bench_current, msg.bench_models || []);
-      document.getElementById('hud3d').textContent =
-        'testing: ' + (msg.bench_current || '—') + ' · drag rotate · scroll zoom';
+    if(msg.type==='init'){
+      parents=msg.parents; nbody=msg.nbody;
+      for(const name of msg.skills) makeWindow(name);
+    } else if(msg.type==='frame'){
+      for(const name in msg.skills){
+        const d = msg.skills[name]; const s = skills[name]; if(!s) continue;
+        s.live=d.live; s.history=d.history; s.gen=d.gen; s.mean_r=d.mean_r; s.max_r=d.max_r;
+        const win = s.cv3d.closest('.win');
+        win.querySelector('[data-alive]').textContent = d.live.alive ? 'ALIVE' : 'FALLEN';
+        win.querySelector('[data-alive]').className = 'alive ' + (d.live.alive?'t':'f');
+        win.querySelector('[data-gen]').textContent = 'gen ' + d.gen;
+        win.querySelector('[data-reward]').textContent = 'r ' + d.max_r.toFixed(1);
+        win.querySelector('[data-foot]').textContent = 'base + ES residual · height ' + d.live.height.toFixed(2) + ' m';
+      }
     }
   };
 }
 connect();
-
-function updateBench(bench, current, models) {
-  const el = document.getElementById('bench');
-  el.innerHTML = '';
-  for (const m of models) {
-    const r = bench[m];
-    const row = document.createElement('div');
-    row.className = 'bench-row' + (m === current ? ' current' : '');
-    const pct = r ? Math.round(r.alive * 100) : 0;
-    row.innerHTML = '<span class="bname">' + m + '</span>' +
-      '<span class="bar"><span class="fill" style="width:' + pct + '%"></span></span>' +
-      '<span class="bval">' + pct + '%</span>';
-    el.appendChild(row);
-  }
-}
 </script>
 </body>
 </html>
