@@ -37,7 +37,7 @@ SIGMA = 0.5
 LR = 0.05
 
 # --- model bench (controllers/pilots tested in rotation, shown live) ---
-BENCH_MODELS = ["balance", "squat", "hold", "zero", "random"]
+BENCH_MODELS = ["walk", "balance", "squat", "hold", "zero", "random"]
 BENCH_STEPS = 500  # ~2.5 s per model at 500 Hz
 
 
