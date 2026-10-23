@@ -9,6 +9,7 @@
     { "id": "tinyllama", "kind": "ollama", "model": "tinyllama:latest",              "role": "fast decisions", "scale": 20.0 },
     { "id": "hold",      "kind": "baseline", "name": "hold",   "role": "naive PD stand" },
     { "id": "balance",   "kind": "controller", "name": "balance", "role": "CoM/CoP balance controller" },
+    { "id": "squat",     "kind": "controller", "name": "squat",   "role": "squat down/up, don't fall" },
     { "id": "random",    "kind": "baseline", "name": "random", "role": "control floor" },
     { "id": "zero",      "kind": "baseline", "name": "zero",   "role": "failure floor" }
   ]

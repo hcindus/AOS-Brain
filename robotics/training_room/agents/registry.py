@@ -8,11 +8,12 @@ from pilots import ControllerPilot, HoldPilot, RandomPilot, ZeroPilot
 from pilots.ollama_pilot import OllamaPilot
 
 from controllers.balance import BalanceController
+from controllers.squat import SquatController
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 _BASELINES = {"zero": ZeroPilot, "random": RandomPilot, "hold": HoldPilot}
-_CONTROLLERS = {"balance": BalanceController}
+_CONTROLLERS = {"balance": BalanceController, "squat": SquatController}
 
 
 def load_roster(path: str | None = None) -> list[dict]:
