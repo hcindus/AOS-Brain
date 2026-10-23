@@ -31,7 +31,6 @@ WS_HOST = "127.0.0.1"
 WS_PORT = 8096
 
 # --- training hyperparameters (CPU-scale) ---
-GENERATIONS = 200
 POPSIZE = 16
 STEPS = 300
 SIGMA = 0.5
@@ -63,6 +62,10 @@ class SharedState:
             self.mean_r = float(mean_r)
             self.max_r = float(max_r)
             self.history.append([gen, float(mean_r), float(max_r)])
+            # cap history so a long-running service doesn't grow the WS payload
+            # (and the JSON serialization cost) without bound.
+            if len(self.history) > 1000:
+                self.history = self.history[-1000:]
 
     def get_best(self):
         with self.lock:
@@ -81,12 +84,17 @@ state = SharedState()
 
 
 def train_loop(env: RP1GymEnv):
-    """ES loop — evolve a linear policy, publish best + reward history."""
+    """ES loop — evolve a linear policy, publish best + reward history.
+
+    Runs continuously (no fixed generation cap) so the dashboard keeps
+    updating and the policy keeps improving for as long as the service lives.
+    """
     rng = np.random.default_rng(0)
     obs_dim, n_act = env.obs_dim, env.n_act
     W = np.zeros((n_act, obs_dim))
 
-    for gen in range(GENERATIONS):
+    gen = 0
+    while True:
         eps = rng.standard_normal((POPSIZE, n_act, obs_dim))
         rewards = np.zeros(POPSIZE)
         for i in range(POPSIZE):
@@ -104,6 +112,7 @@ def train_loop(env: RP1GymEnv):
         A = (rewards - rewards.mean()) / (rewards.std() + 1e-8)
         W += (LR / (POPSIZE * SIGMA)) * np.einsum("i,ijk->jk", A, eps)
         state.set_best(W, gen, rewards.mean(), rewards.max())
+        gen += 1
 
 
 def display_loop(env: RP1GymEnv):
