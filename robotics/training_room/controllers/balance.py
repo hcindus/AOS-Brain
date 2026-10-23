@@ -23,10 +23,14 @@ class BalanceController:
         self.env = env
         self.view = env.view
         g = gains or {}
-        self.kp_joint = g.get("kp_joint", 60.0)   # base PD hold (all joints)
-        self.kd_joint = g.get("kd_joint", 4.0)
+        self.kp_joint = g.get("kp_joint", 30.0)   # base PD hold (arms/waist/hip-yaw)
+        self.kd_joint = g.get("kd_joint", 2.0)
         self.kp_torso = g.get("kp_torso", 120.0)  # torso-upright feedback
         self.kd_torso = g.get("kd_torso", 6.0)
+        self.kp_ankle = g.get("kp_ankle", 100.0)  # LIPM ankle strategy (CoP control)
+        self.kd_ankle = g.get("kd_ankle", 50.0)
+        self.kp_knee = g.get("kp_knee", 60.0)
+        self.kd_knee = g.get("kd_knee", 3.0)
 
         # actuator indices (joint order of the 28-DoF model)
         self.idx = {
@@ -55,14 +59,29 @@ class BalanceController:
         qvel = d.qvel[self.env.joint_dof_adr]
         tau = -self.kp_joint * qpos - self.kd_joint * qvel
 
+        # --- center of mass (world frame) ---
+        com = d.subtree_com[0]
+        com_vel = d.subtree_linvel[0]
+
+        # --- ankle strategy (LIPM / CoP control) — keep CoP under the CoM ---
+        # ankle pitch & roll share their axis across the legs → same sign.
+        tau[self.idx["l_ankle_pitch"]] += -self.kp_ankle * com[0] - self.kd_ankle * com_vel[0]
+        tau[self.idx["r_ankle_pitch"]] += -self.kp_ankle * com[0] - self.kd_ankle * com_vel[0]
+        tau[self.idx["l_ankle_roll"]] += -self.kp_ankle * com[1] - self.kd_ankle * com_vel[1]
+        tau[self.idx["r_ankle_roll"]] += -self.kp_ankle * com[1] - self.kd_ankle * com_vel[1]
+
         # --- torso-upright feedback on top ---
         # hip_pitch is mirrored (L +y / R -y): opposite sign across legs.
         tau[self.idx["l_hip_pitch"]] += -self.kp_torso * tilt_x - self.kd_torso * angvel[1]
         tau[self.idx["r_hip_pitch"]] += +self.kp_torso * tilt_x + self.kd_torso * angvel[1]
-        # hip_roll / waist_roll share the +x axis: same sign across legs.
+        # hip_roll shares the +x axis: same sign across legs.
         tau[self.idx["l_hip_roll"]] += -self.kp_torso * tilt_y - self.kd_torso * angvel[0]
         tau[self.idx["r_hip_roll"]] += -self.kp_torso * tilt_y - self.kd_torso * angvel[0]
         tau[self.idx["waist_roll"]] += -0.5 * self.kp_torso * tilt_y
+
+        # --- knees: soft PD hold (slightly bent) ---
+        tau[self.idx["l_knee"]] += -self.kp_knee * qpos[self.idx["l_knee"]] - self.kd_knee * qvel[self.idx["l_knee"]]
+        tau[self.idx["r_knee"]] += -self.kp_knee * qpos[self.idx["r_knee"]] - self.kd_knee * qvel[self.idx["r_knee"]]
 
         lo = m.actuator_ctrlrange[:, 0]
         hi = m.actuator_ctrlrange[:, 1]
