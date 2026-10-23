@@ -30,6 +30,10 @@ class AdapterFrame:
     gaze: Dict[str, Any] = field(default_factory=dict)
     body_points: Dict[str, Dict[str, float]] = field(default_factory=dict)
     face_points: Dict[str, Dict[str, float]] = field(default_factory=dict)
+    # Motion channel — the "locomotion verb" the presence engine + controller
+    # speak when the mind wants to move the body, not just express on it.
+    # e.g. {"intent": "stand" | "walk" | "turn", "velocity": [vx, vy, wz]}
+    motion: Optional[Dict[str, Any]] = None
 
 
 class BodyAdapter(ABC):
