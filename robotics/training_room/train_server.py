@@ -146,9 +146,9 @@ def skeleton_info(env: RP1GymEnv) -> dict:
 
 
 async def handler(ws):
-    env = RP1GymEnv()
-    # static skeleton topology once on connect
-    await ws.send(json.dumps({"type": "init", **skeleton_info(env)}))
+    # static skeleton topology once on connect (computed once in main)
+    await ws.send(json.dumps({"type": "init", **SKELETON}))
+    print("client connected", flush=True)
     try:
         while True:
             live, history, gen, mean_r, max_r = state.snapshot()
@@ -170,11 +170,13 @@ async def handler(ws):
 
 
 async def main():
+    global SKELETON
     train_env = RP1GymEnv()
     display_env = RP1GymEnv()
+    SKELETON = skeleton_info(display_env)
     threading.Thread(target=train_loop, args=(train_env,), daemon=True).start()
     threading.Thread(target=display_loop, args=(display_env,), daemon=True).start()
-    print(f"RP1 training server on ws://{WS_HOST}:{WS_PORT}")
+    print(f"RP1 training server on ws://{WS_HOST}:{WS_PORT}", flush=True)
     async with websockets.serve(handler, WS_HOST, WS_PORT):
         await asyncio.Future()
 
