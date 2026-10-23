@@ -29,6 +29,7 @@ class LocalCPUBackend(TrainingBackend):
 
     def eval(self, pilot, env: RP1GymEnv | None = None, episodes: int = 1) -> dict:
         env = env or RP1GymEnv()
+        pilot.attach(env)
         import numpy as np
 
         rewards, alive = [], []

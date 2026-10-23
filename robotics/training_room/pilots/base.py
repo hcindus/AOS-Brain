@@ -22,6 +22,10 @@ class Pilot(ABC):
     def reset(self) -> None:
         pass
 
+    def attach(self, env) -> None:
+        """Optionally bind the pilot to a live env (for model-based controllers)."""
+        pass
+
     def on_episode_end(self, info: dict) -> None:
         pass
 

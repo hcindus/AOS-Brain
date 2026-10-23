@@ -48,6 +48,7 @@ def _run_episode(env, pilot, steps: int, push_at: int | None = None, push_force=
 
 def score_pilot(pilot, env: RP1GymEnv | None = None) -> dict:
     env = env or RP1GymEnv()
+    pilot.attach(env)
     results = {}
 
     # stand

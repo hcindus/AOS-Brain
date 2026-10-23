@@ -4,12 +4,15 @@ from __future__ import annotations
 import json
 import os
 
-from pilots import HoldPilot, RandomPilot, ZeroPilot
+from pilots import ControllerPilot, HoldPilot, RandomPilot, ZeroPilot
 from pilots.ollama_pilot import OllamaPilot
+
+from controllers.balance import BalanceController
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 _BASELINES = {"zero": ZeroPilot, "random": RandomPilot, "hold": HoldPilot}
+_CONTROLLERS = {"balance": BalanceController}
 
 
 def load_roster(path: str | None = None) -> list[dict]:
@@ -22,6 +25,9 @@ def make_pilot(entry: dict):
     kind = entry["kind"]
     if kind == "baseline":
         return _BASELINES[entry["name"]]()
+    if kind == "controller":
+        ctrl = _CONTROLLERS[entry["name"]]
+        return ControllerPilot(ctrl, name=entry["name"])
     if kind == "ollama":
         return OllamaPilot(model=entry["model"], scale=entry.get("scale", 20.0))
     raise ValueError(f"unknown pilot kind: {kind}")
