@@ -36,6 +36,10 @@ STEPS = 300
 SIGMA = 0.5
 LR = 0.05
 
+# --- model bench (controllers/pilots tested in rotation, shown live) ---
+BENCH_MODELS = ["balance", "hold", "zero", "random"]
+BENCH_STEPS = 500  # ~2.5 s per model at 500 Hz
+
 
 class SharedState:
     def __init__(self):
@@ -45,6 +49,8 @@ class SharedState:
         self.mean_r = 0.0
         self.max_r = 0.0
         self.history: list = []  # [gen, mean_r, max_r]
+        self.bench: dict = {}          # model -> {"alive": frac, "steps": n}
+        self.bench_current: str | None = None
         self.live: dict = {
             "alive": True,
             "height": 0.78,
@@ -74,6 +80,18 @@ class SharedState:
     def set_live(self, **kw):
         with self.lock:
             self.live.update(kw)
+
+    def set_bench_current(self, model):
+        with self.lock:
+            self.bench_current = model
+
+    def set_bench_result(self, model, alive_frac, steps):
+        with self.lock:
+            self.bench[model] = {"alive": round(alive_frac, 3), "steps": steps}
+
+    def get_bench(self):
+        with self.lock:
+            return dict(self.bench), self.bench_current
 
     def snapshot(self):
         with self.lock:
@@ -116,32 +134,50 @@ def train_loop(env: RP1GymEnv):
 
 
 def display_loop(env: RP1GymEnv):
-    """Render loop — rollout the best policy and capture live body positions."""
-    pilot = NeuralPilot(env.obs_dim, env.n_act)
+    """Bench loop — cycle through the hand-written controllers/pilots, evaluating
+    each in the gym and streaming its live body positions + a rolling score.
+
+    This is what the browser's 3D view shows: each model takes a turn trying to
+    stand (balance, hold, zero, random), and the bench table records how each
+    fared. As new controllers land (squat, walk, get-up), add them to
+    BENCH_MODELS and they appear here automatically.
+    """
+    from agents.registry import load_roster, pilot_by_id
+
+    roster = load_roster()
+    pilots = {}
+    for pid in BENCH_MODELS:
+        p = pilot_by_id(pid, roster)
+        p.attach(env)
+        pilots[pid] = p
+
     while True:
-        W = state.get_best()
-        if W is None:
-            time.sleep(0.1)
-            continue
-        pilot.set_params(W)
-        obs = env.reset(qpos_noise=0.02)
-        done = False
-        t = 0
-        while not done:
-            obs, r, done, info = env.step(pilot.act(obs))
-            d = env.view.data
-            up = d.xmat[env.view.root_id][6:9]
-            state.set_live(
-                alive=bool(info["alive"]),
-                height=float(d.xpos[env.view.root_id][2]),
-                tilt=float(np.hypot(up[0], up[1])),
-                com=[float(x) for x in d.subtree_com[0]],
-                bodies=[list(map(float, p)) for p in d.xpos[: env.view.model.nbody]],
-                step=t,
-                reward=float(r),
-            )
-            t += 1
-            time.sleep(0.025)  # ~40 Hz cap
+        for pid in BENCH_MODELS:
+            pilot = pilots[pid]
+            state.set_bench_current(pid)
+            obs = env.reset(qpos_noise=0.02)
+            pilot.reset()
+            alive = 0.0
+            t = 0
+            done = False
+            while not done and t < BENCH_STEPS:
+                obs, r, done, info = env.step(pilot.act(obs))
+                alive += float(info["alive"])
+                d = env.view.data
+                up = d.xmat[env.view.root_id][6:9]
+                state.set_live(
+                    alive=bool(info["alive"]),
+                    height=float(d.xpos[env.view.root_id][2]),
+                    tilt=float(np.hypot(up[0], up[1])),
+                    com=[float(x) for x in d.subtree_com[0]],
+                    bodies=[list(map(float, p)) for p in d.xpos[: env.view.model.nbody]],
+                    step=t,
+                    reward=float(r),
+                )
+                t += 1
+                time.sleep(0.02)  # ~50 Hz cap
+            state.set_bench_result(pid, alive / BENCH_STEPS, t)
+            time.sleep(0.4)  # brief pause so "testing X" is visible
 
 
 def skeleton_info(env: RP1GymEnv) -> dict:
@@ -161,6 +197,7 @@ async def handler(ws):
     try:
         while True:
             live, history, gen, mean_r, max_r = state.snapshot()
+            bench, bench_current = state.get_bench()
             await ws.send(
                 json.dumps(
                     {
@@ -170,6 +207,9 @@ async def handler(ws):
                         "max_r": max_r,
                         "history": history,
                         "live": live,
+                        "bench": bench,
+                        "bench_current": bench_current,
+                        "bench_models": BENCH_MODELS,
                     }
                 )
             )

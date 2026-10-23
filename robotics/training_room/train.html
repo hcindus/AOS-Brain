@@ -27,6 +27,16 @@
   .chart canvas { position:absolute; inset:0; width:100%; height:100%; }
   .legend { display:flex; gap:16px; font-size:11px; color:#8b949e; }
   .legend .sw { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:5px; vertical-align:middle; }
+  .bench { background:var(--panel); border:1px solid #1f2733; border-radius:8px; padding:10px 12px; }
+  .bench-title { font-size:10px; color:#6e7681; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; }
+  .bench-row { display:flex; align-items:center; gap:8px; padding:3px 6px; font-size:12px; border-radius:4px; }
+  .bench-row.current { background:#1a2332; }
+  .bench-row .bname { width:72px; font-weight:600; }
+  .bench-row.current .bname::before { content:'▶ '; color:var(--green); }
+  .bench-row .bar { flex:1; height:8px; background:#1f2733; border-radius:4px; overflow:hidden; }
+  .bench-row .fill { display:block; height:100%; background:var(--accent); transition:width .2s; }
+  .bench-row.current .fill { background:var(--green); }
+  .bench-row .bval { width:40px; text-align:right; color:#8b949e; }
   .foot { font-size:10px; color:#4b5563; }
 </style>
 </head>
@@ -50,6 +60,10 @@
       <div class="stat"><div class="k">Max Reward</div><div class="v" id="max">—</div></div>
       <div class="stat"><div class="k">Torso Height</div><div class="v" id="height">—</div></div>
       <div class="stat"><div class="k">Torso Tilt</div><div class="v" id="tilt">—</div></div>
+    </div>
+    <div class="bench">
+      <div class="bench-title">Model Bench — testing in rotation</div>
+      <div id="bench"></div>
     </div>
     <div class="legend">
       <span><span class="sw" style="background:var(--accent)"></span>mean reward</span>
@@ -180,10 +194,28 @@ function connect(){
       live = msg.live; history = msg.history;
       window.curGen = msg.gen; window.curMean = msg.mean_r; window.curMax = msg.max_r;
       updateStats();
+      updateBench(msg.bench || {}, msg.bench_current, msg.bench_models || []);
+      document.getElementById('hud3d').textContent =
+        'testing: ' + (msg.bench_current || '—') + ' · drag rotate · scroll zoom';
     }
   };
 }
 connect();
+
+function updateBench(bench, current, models) {
+  const el = document.getElementById('bench');
+  el.innerHTML = '';
+  for (const m of models) {
+    const r = bench[m];
+    const row = document.createElement('div');
+    row.className = 'bench-row' + (m === current ? ' current' : '');
+    const pct = r ? Math.round(r.alive * 100) : 0;
+    row.innerHTML = '<span class="bname">' + m + '</span>' +
+      '<span class="bar"><span class="fill" style="width:' + pct + '%"></span></span>' +
+      '<span class="bval">' + pct + '%</span>';
+    el.appendChild(row);
+  }
+}
 </script>
 </body>
 </html>
