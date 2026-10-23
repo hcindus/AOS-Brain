@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 import threading
 
 import numpy as np
@@ -21,19 +22,30 @@ from gym import RP1GymEnv
 from dispatch.skill_trainer import SkillTrainer
 from controllers.balance import BalanceController
 from controllers.squat import SquatController
+from controllers.jump import JumpController
 from controllers.walk_controller import WalkController
 
 WS_HOST = "127.0.0.1"
 WS_PORT = 8096
 
-# (name, base_controller_factory, forward_weight)
+STAIRS = os.path.abspath(os.path.join(
+    os.path.dirname(__file__), "..", "rp1", "RP1_description", "mjcf", "rp1_stairs.xml"
+))
+
+# (name, base_controller_factory, forward_weight, height_weight, mjcf_path)
 SKILLS = [
-    ("walk", WalkController, 1.0),
-    ("balance", BalanceController, 0.0),
-    ("squat", SquatController, 0.0),
+    ("walk",    lambda env: WalkController(env), 1.0, 0.0, None),
+    ("run",     lambda env: WalkController(env, gains={"step_len": 0.20, "step_time": 0.5}), 1.5, 0.0, None),
+    ("balance", lambda env: BalanceController(env), 0.0, 0.0, None),
+    ("squat",   lambda env: SquatController(env), 0.0, 0.0, None),
+    ("jump",    lambda env: JumpController(env), 0.0, 2.0, None),
+    ("climb",   lambda env: WalkController(env, gains={"lift": 0.12, "step_len": 0.12, "step_time": 1.0}), 0.3, 1.5, STAIRS),
 ]
 
-trainers = {name: SkillTrainer(name, factory, fwd) for name, factory, fwd in SKILLS}
+trainers = {
+    name: SkillTrainer(name, factory, fwd, hgt, mjcf)
+    for name, factory, fwd, hgt, mjcf in SKILLS
+}
 
 SKELETON: dict = {}
 

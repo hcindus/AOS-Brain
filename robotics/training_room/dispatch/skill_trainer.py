@@ -27,10 +27,12 @@ from gym import RP1GymEnv
 
 class SkillTrainer:
     def __init__(self, name: str, base_factory, forward_weight: float = 1.0,
+                 height_weight: float = 0.0, mjcf_path: str | None = None,
                  residual_clip: float = 15.0, popsize: int = 12, sigma: float = 0.3,
                  lr: float = 0.05, steps: int = 300, seed: int = 0):
         self.name = name
         self.forward_weight = forward_weight
+        self.height_weight = height_weight
         self.residual_clip = residual_clip
         self.popsize = popsize
         self.sigma = sigma
@@ -38,8 +40,8 @@ class SkillTrainer:
         self.steps = steps
 
         # two envs: one for training rollouts, one for the live display
-        self.train_env = RP1GymEnv()
-        self.disp_env = RP1GymEnv()
+        self.train_env = RP1GymEnv(mjcf_path=mjcf_path)
+        self.disp_env = RP1GymEnv(mjcf_path=mjcf_path)
         self.base_train = base_factory(self.train_env)
         self.base_disp = base_factory(self.disp_env)
 
@@ -61,6 +63,7 @@ class SkillTrainer:
         obs = env.reset(qpos_noise=0.02)
         total = 0.0
         prev_x = 0.0
+        prev_z = float(obs[0])
         done = False
         t = 0
         while not done and t < self.steps:
@@ -68,7 +71,11 @@ class SkillTrainer:
             obs, r, done, info = env.step(base.act(obs) + resid)
             fwd = info["progress"] - prev_x
             prev_x = info["progress"]
-            total += float(info["alive"]) * (1.0 + self.forward_weight * fwd * 20.0)
+            up = float(obs[0]) - prev_z
+            prev_z = float(obs[0])
+            total += float(info["alive"]) * (
+                1.0 + self.forward_weight * fwd * 20.0 + self.height_weight * up * 20.0
+            )
             t += 1
         return total
 
