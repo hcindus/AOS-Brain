@@ -24,6 +24,7 @@ from controllers.balance import BalanceController
 from controllers.squat import SquatController
 from controllers.jump import JumpController
 from controllers.getup import GetUpController
+from controllers.roll import RollController
 from controllers.walk_controller import WalkController
 
 WS_HOST = "127.0.0.1"
@@ -43,6 +44,7 @@ SKILLS = [
     {"name": "climb",   "factory": lambda env: WalkController(env, gains={"lift": 0.12, "step_len": 0.12, "step_time": 1.0}), "forward_weight": 0.3, "height_weight": 1.5, "mjcf_path": STAIRS},
     {"name": "recover", "factory": lambda env: BalanceController(env), "push_interval": 100, "push_force": 250.0},
     {"name": "kneel",   "factory": lambda env: SquatController(env, gains={"knee_flex": 1.0, "hip_bend": 0.5, "period": 4.0}), "height_weight": 1.5},
+    {"name": "roll",    "factory": lambda env: RollController(env), "roll_weight": 1.5, "start_lying": True},
     {"name": "getup",   "factory": lambda env: GetUpController(env), "height_weight": 2.0, "start_lying": True},
 ]
 

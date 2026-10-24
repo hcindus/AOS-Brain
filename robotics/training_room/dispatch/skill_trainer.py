@@ -27,7 +27,8 @@ from gym import RP1GymEnv
 
 class SkillTrainer:
     def __init__(self, name: str, base_factory, forward_weight: float = 1.0,
-                 height_weight: float = 0.0, mjcf_path: str | None = None,
+                 height_weight: float = 0.0, roll_weight: float = 0.0,
+                 mjcf_path: str | None = None,
                  residual_clip: float = 15.0, popsize: int = 12, sigma: float = 0.3,
                  lr: float = 0.05, steps: int = 300, seed: int = 0,
                  push_interval: int | None = None, push_force: float = 0.0,
@@ -35,6 +36,7 @@ class SkillTrainer:
         self.name = name
         self.forward_weight = forward_weight
         self.height_weight = height_weight
+        self.roll_weight = roll_weight
         self.residual_clip = residual_clip
         self.popsize = popsize
         self.sigma = sigma
@@ -100,6 +102,7 @@ class SkillTrainer:
         total = 0.0
         prev_x = 0.0
         prev_z = float(obs[0])
+        prev_roll = self._roll_angle(env)
         done = False
         t = 0
         while not done and t < self.steps:
@@ -110,11 +113,21 @@ class SkillTrainer:
             prev_x = info["progress"]
             up = float(obs[0]) - prev_z
             prev_z = float(obs[0])
+            roll = self._roll_angle(env)
+            droll = abs(roll - prev_roll)
+            prev_roll = roll
             total += float(info["alive"]) * (
-                1.0 + self.forward_weight * fwd * 20.0 + self.height_weight * up * 20.0
+                1.0 + self.forward_weight * fwd * 20.0 + self.height_weight * up * 20.0 + self.roll_weight * droll * 10.0
             )
             t += 1
         return total
+
+    def _roll_angle(self, env) -> float:
+        """Body roll angle (rotation about the longitudinal axis) from the free-joint quat."""
+        d = env.view.data
+        qw, qx, qy, qz = d.qpos[3:7]
+        import math
+        return math.atan2(2.0 * (qw * qx + qy * qz), 1.0 - 2.0 * (qx * qx + qy * qy))
 
     # ------------------------------------------------------------------ #
     def _train(self):
