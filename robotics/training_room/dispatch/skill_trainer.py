@@ -50,7 +50,7 @@ class SkillTrainer:
         self.start_lying = start_lying
         self.start_poses = start_poses  # list of pose keys to rotate through
         self.gate_reward = gate_reward  # if False, reward the task, not "survive"
-        self.shared = shared or []   # higher-tier trainers to inherit from
+        self.all_trainers = []          # populated by the server (for dynamic sharing)
         self._pose_idx = 0
 
         self.train_env = RP1GymEnv(mjcf_path=mjcf_path)
@@ -84,9 +84,20 @@ class SkillTrainer:
         return np.clip(theta.reshape(self.n_act, self.obs_dim) @ obs, -self.residual_clip, self.residual_clip)
 
     def _shared_residual(self, obs: np.ndarray) -> np.ndarray:
+        """Sum the residuals of every *more-mature* skill (higher gen count).
+
+        Dynamic knowledge sharing: a skill inherits from any other skill that has
+        trained more generations than it — so as skills mature, they automatically
+        start sharing with everyone less mature than them.
+        """
         out = np.zeros(self.n_act)
-        for src in self.shared:
+        my_gen = self.gen
+        for src in self.all_trainers:
+            if src is self:
+                continue
             with src.lock:
+                if src.gen <= my_gen:
+                    continue
                 theta = src.theta.copy()
             out += src._residual(theta, obs)
         return np.clip(out, -self.residual_clip, self.residual_clip)

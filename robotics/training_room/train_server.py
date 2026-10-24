@@ -60,10 +60,13 @@ for s in SKILLS:
     trainers[s["name"]] = SkillTrainer(s["name"], s["factory"], **kw)
     tiers[s["name"]] = s["tier"]
 
-# knowledge sharing: each skill inherits the combined residual of every
-# higher-tier skill (foundation flows down: 300 -> 200 -> 100).
-for name, t in trainers.items():
-    t.shared = [trainers[o] for o in trainers if tiers[o] > tiers[name]]
+# dynamic knowledge sharing: every skill inherits from every *more-mature*
+# skill (higher gen count). The `tier` field is just documentation now — the
+# actual sharing is driven by live generation counts, so any skill that trains
+# past another's gen automatically starts sharing with it.
+all_trainers = list(trainers.values())
+for t in all_trainers:
+    t.all_trainers = all_trainers
 
 SKELETON: dict = {}
 
