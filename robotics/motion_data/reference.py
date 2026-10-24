@@ -77,6 +77,19 @@ def ref_to_robot(skill: str):
     return ref_dof_28, fps
 
 
+def ref_root(skill: str):
+    """Return (root_pos [T,3], root_quat_wxyz [T,4], fps) for the root (free-joint) pose.
+
+    The reference stores root_quat in xyzw order; our MuJoCo free joint uses
+    wxyz, so we reorder. root_trans_offset is already (x, y, z) in a Z-up frame.
+    """
+    ref = get_reference(skill)
+    root_pos = ref["root_trans_offset"]            # [T,3] xyz
+    q = ref["root_quat"]                           # [T,4] xyzw
+    root_quat_wxyz = np.stack([q[:, 3], q[:, 0], q[:, 1], q[:, 2]], axis=1)
+    return root_pos, root_quat_wxyz, ref["fps"]
+
+
 def motions():
     global _MOTIONS
     if _MOTIONS is None:
