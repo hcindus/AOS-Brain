@@ -33,7 +33,7 @@ class SkillTrainer:
                  push_interval: int | None = None, push_force: float = 0.0,
                  start_crouch: bool = False, start_lying: bool = False,
                  start_poses: list | None = None, gate_reward: bool = True,
-                 ignore_done: bool = False,
+                 ignore_done: bool = False, roll_target: float = 3.14159,
                  shared: list | None = None, mlp: bool = False, hidden: int = 64):
         self.name = name
         self.forward_weight = forward_weight
@@ -52,8 +52,10 @@ class SkillTrainer:
         self.start_poses = start_poses  # list of pose keys to rotate through
         self.gate_reward = gate_reward  # if False, reward the task, not "survive"
         self.ignore_done = ignore_done  # run the full episode (for lying skills)
+        self.roll_target = roll_target  # net roll (rad) that constitutes a "roll over"
         self.all_trainers = []          # populated by the server (for dynamic sharing)
         self._pose_idx = 0
+        self._roll_progress = 0.0
 
         self.train_env = RP1GymEnv(mjcf_path=mjcf_path)
         self.disp_env = RP1GymEnv(mjcf_path=mjcf_path)
@@ -107,6 +109,7 @@ class SkillTrainer:
     # ------------------------------------------------------------------ #
     def _reset(self, env):
         obs = env.reset(qpos_noise=0.02)
+        self._roll_progress = 0.0
         d = env.view.data
         import mujoco
 
@@ -181,11 +184,17 @@ class SkillTrainer:
             up = float(obs[0]) - prev_z
             prev_z = float(obs[0])
             roll = self._roll_angle(env)
-            droll = abs(roll - prev_roll)
+            # signed shortest rotation (continuous — no branch-cut jumps)
+            droll = roll - prev_roll
+            droll = (droll + np.pi) % (2.0 * np.pi) - np.pi
             prev_roll = roll
+            # reward net forward roll toward the target, capped (no reward for spinning)
+            new_progress = min(self._roll_progress + max(0.0, droll), self.roll_target)
+            roll_inc = new_progress - self._roll_progress
+            self._roll_progress = new_progress
             depth = max(0.0, 0.78 - float(obs[0]))  # squat depth (how low the CoM is)
             task = (self.forward_weight * fwd * 20.0 + self.height_weight * up * 20.0
-                    + self.roll_weight * droll * 10.0 + self.depth_weight * depth * 2.0)
+                    + self.roll_weight * roll_inc * 10.0 + self.depth_weight * depth * 2.0)
             if self.gate_reward:
                 total += float(info["alive"]) * (1.0 + task)
             else:
