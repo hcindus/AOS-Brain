@@ -29,7 +29,9 @@ class SkillTrainer:
     def __init__(self, name: str, base_factory, forward_weight: float = 1.0,
                  height_weight: float = 0.0, mjcf_path: str | None = None,
                  residual_clip: float = 15.0, popsize: int = 12, sigma: float = 0.3,
-                 lr: float = 0.05, steps: int = 300, seed: int = 0):
+                 lr: float = 0.05, steps: int = 300, seed: int = 0,
+                 push_interval: int | None = None, push_force: float = 0.0,
+                 start_crouch: bool = False):
         self.name = name
         self.forward_weight = forward_weight
         self.height_weight = height_weight
@@ -38,6 +40,9 @@ class SkillTrainer:
         self.sigma = sigma
         self.lr = lr
         self.steps = steps
+        self.push_interval = push_interval   # apply a lateral push every N steps
+        self.push_force = push_force          # lateral force (N)
+        self.start_crouch = start_crouch      # begin each episode crouched (get-up)
 
         # two envs: one for training rollouts, one for the live display
         self.train_env = RP1GymEnv(mjcf_path=mjcf_path)
@@ -58,15 +63,37 @@ class SkillTrainer:
         self.live: dict = {"alive": True, "bodies": [], "height": 0.78, "reward": 0.0}
 
     # ------------------------------------------------------------------ #
+    def _reset(self, env):
+        obs = env.reset(qpos_noise=0.02)
+        if self.start_crouch:
+            d = env.view.data
+            d.qpos[env.joint_qpos_adr[3]] = -1.3   # left knee flex (deep crouch)
+            d.qpos[env.joint_qpos_adr[9]] = +1.3   # right knee flex (deep crouch)
+            d.qpos[env.joint_qpos_adr[0]] = +0.5   # l hip pitch (lean forward to stay over feet)
+            d.qpos[env.joint_qpos_adr[6]] = -0.5   # r hip pitch
+            import mujoco
+            mujoco.mj_forward(env.view.model, d)
+            obs = env._observe()
+        return obs
+
+    def _maybe_push(self, env, t):
+        d = env.view.data
+        if self.push_interval and t % self.push_interval == 0:
+            d.xfrc_applied[env.view.root_id, 1] = self.push_force  # lateral +y shove
+        else:
+            d.xfrc_applied[env.view.root_id, 1] = 0.0
+
+    # ------------------------------------------------------------------ #
     def _rollout(self, env, base, W) -> float:
         base.reset()
-        obs = env.reset(qpos_noise=0.02)
+        obs = self._reset(env)
         total = 0.0
         prev_x = 0.0
         prev_z = float(obs[0])
         done = False
         t = 0
         while not done and t < self.steps:
+            self._maybe_push(env, t)
             resid = np.clip(W @ obs, -self.residual_clip, self.residual_clip)
             obs, r, done, info = env.step(base.act(obs) + resid)
             fwd = info["progress"] - prev_x
@@ -101,10 +128,11 @@ class SkillTrainer:
             with self.lock:
                 W = self.W.copy()
             self.base_disp.reset()
-            obs = self.disp_env.reset(qpos_noise=0.02)
+            obs = self._reset(self.disp_env)
             done = False
             t = 0
             while not done and t < self.steps:
+                self._maybe_push(self.disp_env, t)
                 resid = np.clip(W @ obs, -self.residual_clip, self.residual_clip)
                 obs, r, done, info = self.disp_env.step(self.base_disp.act(obs) + resid)
                 d = self.disp_env.view.data

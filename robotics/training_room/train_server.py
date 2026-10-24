@@ -32,20 +32,22 @@ STAIRS = os.path.abspath(os.path.join(
     os.path.dirname(__file__), "..", "rp1", "RP1_description", "mjcf", "rp1_stairs.xml"
 ))
 
-# (name, base_controller_factory, forward_weight, height_weight, mjcf_path)
+# (skill dicts: name, factory, plus SkillTrainer kwargs)
 SKILLS = [
-    ("walk",    lambda env: WalkController(env), 1.0, 0.0, None),
-    ("run",     lambda env: WalkController(env, gains={"step_len": 0.20, "step_time": 0.5}), 1.5, 0.0, None),
-    ("balance", lambda env: BalanceController(env), 0.0, 0.0, None),
-    ("squat",   lambda env: SquatController(env), 0.0, 0.0, None),
-    ("jump",    lambda env: JumpController(env), 0.0, 2.0, None),
-    ("climb",   lambda env: WalkController(env, gains={"lift": 0.12, "step_len": 0.12, "step_time": 1.0}), 0.3, 1.5, STAIRS),
+    {"name": "walk",    "factory": lambda env: WalkController(env), "forward_weight": 1.0},
+    {"name": "run",     "factory": lambda env: WalkController(env, gains={"step_len": 0.20, "step_time": 0.5}), "forward_weight": 1.5},
+    {"name": "balance", "factory": lambda env: BalanceController(env)},
+    {"name": "squat",   "factory": lambda env: SquatController(env)},
+    {"name": "jump",    "factory": lambda env: JumpController(env), "height_weight": 2.0},
+    {"name": "climb",   "factory": lambda env: WalkController(env, gains={"lift": 0.12, "step_len": 0.12, "step_time": 1.0}), "forward_weight": 0.3, "height_weight": 1.5, "mjcf_path": STAIRS},
+    {"name": "recover", "factory": lambda env: BalanceController(env), "push_interval": 100, "push_force": 250.0},
+    {"name": "getup",   "factory": lambda env: BalanceController(env), "height_weight": 2.0, "start_crouch": True},
 ]
 
-trainers = {
-    name: SkillTrainer(name, factory, fwd, hgt, mjcf)
-    for name, factory, fwd, hgt, mjcf in SKILLS
-}
+trainers = {}
+for s in SKILLS:
+    kw = {k: v for k, v in s.items() if k not in ("name", "factory")}
+    trainers[s["name"]] = SkillTrainer(s["name"], s["factory"], **kw)
 
 SKELETON: dict = {}
 
