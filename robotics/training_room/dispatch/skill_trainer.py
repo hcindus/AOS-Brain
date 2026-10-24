@@ -26,6 +26,7 @@ from dispatch.residual import MLPResidual
 class SkillTrainer:
     def __init__(self, name: str, base_factory, forward_weight: float = 1.0,
                  height_weight: float = 0.0, roll_weight: float = 0.0,
+                 depth_weight: float = 0.0,
                  mjcf_path: str | None = None,
                  residual_clip: float = 15.0, popsize: int = 12, sigma: float = 0.3,
                  lr: float = 0.05, steps: int = 300, seed: int = 0,
@@ -36,6 +37,7 @@ class SkillTrainer:
         self.forward_weight = forward_weight
         self.height_weight = height_weight
         self.roll_weight = roll_weight
+        self.depth_weight = depth_weight
         self.residual_clip = residual_clip
         self.popsize = popsize
         self.sigma = sigma
@@ -142,8 +144,10 @@ class SkillTrainer:
             roll = self._roll_angle(env)
             droll = abs(roll - prev_roll)
             prev_roll = roll
+            depth = max(0.0, 0.78 - float(obs[0]))  # squat depth (how low the CoM is)
             total += float(info["alive"]) * (
-                1.0 + self.forward_weight * fwd * 20.0 + self.height_weight * up * 20.0 + self.roll_weight * droll * 10.0
+                1.0 + self.forward_weight * fwd * 20.0 + self.height_weight * up * 20.0
+                + self.roll_weight * droll * 10.0 + self.depth_weight * depth * 2.0
             )
             t += 1
         return total
