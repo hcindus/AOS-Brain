@@ -33,6 +33,7 @@ class SkillTrainer:
                  push_interval: int | None = None, push_force: float = 0.0,
                  start_crouch: bool = False, start_lying: bool = False,
                  start_poses: list | None = None, gate_reward: bool = True,
+                 ignore_done: bool = False,
                  shared: list | None = None, mlp: bool = False, hidden: int = 64):
         self.name = name
         self.forward_weight = forward_weight
@@ -50,6 +51,7 @@ class SkillTrainer:
         self.start_lying = start_lying
         self.start_poses = start_poses  # list of pose keys to rotate through
         self.gate_reward = gate_reward  # if False, reward the task, not "survive"
+        self.ignore_done = ignore_done  # run the full episode (for lying skills)
         self.all_trainers = []          # populated by the server (for dynamic sharing)
         self._pose_idx = 0
 
@@ -170,7 +172,7 @@ class SkillTrainer:
         prev_roll = self._roll_angle(env)
         done = False
         t = 0
-        while not done and t < self.steps:
+        while (not done or self.ignore_done) and t < self.steps:
             self._maybe_push(env, t)
             resid = self._residual(theta, obs) + self._shared_residual(obs)
             obs, r, done, info = env.step(base.act(obs) + resid)
@@ -216,7 +218,7 @@ class SkillTrainer:
             obs = self._reset(self.disp_env)
             done = False
             t = 0
-            while not done and t < self.steps:
+            while (not done or self.ignore_done) and t < self.steps:
                 self._maybe_push(self.disp_env, t)
                 resid = self._residual(theta, obs) + self._shared_residual(obs)
                 obs, r, done, info = self.disp_env.step(self.base_disp.act(obs) + resid)
