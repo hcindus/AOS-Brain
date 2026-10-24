@@ -56,6 +56,12 @@ for s in SKILLS:
     kw = {k: v for k, v in s.items() if k not in ("name", "factory")}
     trainers[s["name"]] = SkillTrainer(s["name"], s["factory"], **kw)
 
+# knowledge sharing: every skill inherits the balance skill's learned residual
+# (the shared "how to keep this body upright" substrate) on top of its own.
+for name, t in trainers.items():
+    if name != "balance":
+        t.shared = trainers["balance"]
+
 SKELETON: dict = {}
 
 

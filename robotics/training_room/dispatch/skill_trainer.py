@@ -32,12 +32,14 @@ class SkillTrainer:
                  residual_clip: float = 15.0, popsize: int = 12, sigma: float = 0.3,
                  lr: float = 0.05, steps: int = 300, seed: int = 0,
                  push_interval: int | None = None, push_force: float = 0.0,
-                 start_crouch: bool = False, start_lying: bool = False):
+                 start_crouch: bool = False, start_lying: bool = False,
+                 shared: "SkillTrainer | None" = None):
         self.name = name
         self.forward_weight = forward_weight
         self.height_weight = height_weight
         self.roll_weight = roll_weight
         self.residual_clip = residual_clip
+        self.shared = shared   # another SkillTrainer whose learned W is inherited (knowledge sharing)
         self.popsize = popsize
         self.sigma = sigma
         self.lr = lr
@@ -96,6 +98,13 @@ class SkillTrainer:
             d.xfrc_applied[env.view.root_id, 1] = 0.0
 
     # ------------------------------------------------------------------ #
+    def _shared_W(self) -> np.ndarray:
+        """The inherited body-knowledge residual from the shared trainer (or zero)."""
+        if self.shared is None:
+            return np.zeros((self.n_act, self.obs_dim))
+        with self.shared.lock:
+            return self.shared.W.copy()
+
     def _rollout(self, env, base, W) -> float:
         base.reset()
         obs = self._reset(env)
@@ -103,11 +112,12 @@ class SkillTrainer:
         prev_x = 0.0
         prev_z = float(obs[0])
         prev_roll = self._roll_angle(env)
+        shared_W = self._shared_W()
         done = False
         t = 0
         while not done and t < self.steps:
             self._maybe_push(env, t)
-            resid = np.clip(W @ obs, -self.residual_clip, self.residual_clip)
+            resid = np.clip((W + shared_W) @ obs, -self.residual_clip, self.residual_clip)
             obs, r, done, info = env.step(base.act(obs) + resid)
             fwd = info["progress"] - prev_x
             prev_x = info["progress"]
@@ -150,13 +160,14 @@ class SkillTrainer:
         while True:
             with self.lock:
                 W = self.W.copy()
+            shared_W = self._shared_W()
             self.base_disp.reset()
             obs = self._reset(self.disp_env)
             done = False
             t = 0
             while not done and t < self.steps:
                 self._maybe_push(self.disp_env, t)
-                resid = np.clip(W @ obs, -self.residual_clip, self.residual_clip)
+                resid = np.clip((W + shared_W) @ obs, -self.residual_clip, self.residual_clip)
                 obs, r, done, info = self.disp_env.step(self.base_disp.act(obs) + resid)
                 d = self.disp_env.view.data
                 self.live = {
