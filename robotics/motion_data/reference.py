@@ -37,6 +37,8 @@ SKILL_TO_MOTION = {
     "swim": "fightAndSports1_subject1",
     "sit_stand": "fallAndGetUp2_subject2",
     "kneel_stand": "fallAndGetUp3_subject1",
+    "dance": "dance1_subject1",
+    "fight": "fight1_subject2",
 }
 
 _MOTIONS = None

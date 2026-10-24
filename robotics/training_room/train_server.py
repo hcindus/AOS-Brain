@@ -55,6 +55,8 @@ SKILLS = [
     {"name": "swim",    "tier": 100, "factory": lambda env: ReferenceTrackingController(env, "swim"),  "reference": "swim",  "gate_reward": False, "ignore_done": True},
     {"name": "sit_stand",   "tier": 200, "factory": lambda env: ReferenceTrackingController(env, "sit_stand"),   "reference": "sit_stand",   "gate_reward": False, "ignore_done": True},
     {"name": "kneel_stand", "tier": 200, "factory": lambda env: ReferenceTrackingController(env, "kneel_stand"), "reference": "kneel_stand", "gate_reward": False, "ignore_done": True},
+    {"name": "dance",   "tier": 100, "factory": lambda env: ReferenceTrackingController(env, "dance"), "reference": "dance", "gate_reward": False, "ignore_done": True},
+    {"name": "fight",   "tier": 100, "factory": lambda env: ReferenceTrackingController(env, "fight"), "reference": "fight", "gate_reward": False, "ignore_done": True},
 ]
 
 trainers = {}
