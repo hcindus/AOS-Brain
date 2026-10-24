@@ -26,6 +26,7 @@ from controllers.jump import JumpController
 from controllers.getup import GetUpController
 from controllers.roll import RollController
 from controllers.crawl import CrawlController
+from controllers.ref_track import ReferenceTrackingController
 from controllers.walk_controller import WalkController
 
 WS_HOST = "127.0.0.1"
@@ -39,18 +40,18 @@ STAIRS = os.path.abspath(os.path.join(
 # tier: 300 = foundation (shares with everyone below), 200 = intermediate,
 #        100 = specific (inherits from 200 + 300).
 SKILLS = [
-    {"name": "walk",    "tier": 200, "factory": lambda env: WalkController(env), "forward_weight": 1.0},
-    {"name": "run",     "tier": 100, "factory": lambda env: WalkController(env, gains={"step_len": 0.20, "step_time": 0.5}), "forward_weight": 1.5},
+    {"name": "walk",    "tier": 200, "factory": lambda env: ReferenceTrackingController(env, "walk"),  "reference": "walk",  "gate_reward": False, "ignore_done": True},
+    {"name": "run",     "tier": 100, "factory": lambda env: ReferenceTrackingController(env, "run"),   "reference": "run",   "gate_reward": False, "ignore_done": True},
     {"name": "balance", "tier": 300, "factory": lambda env: BalanceController(env), "mlp": True, "hidden": 64, "popsize": 24, "sigma": 0.2},
-    {"name": "squat",   "tier": 200, "factory": lambda env: SquatController(env), "depth_weight": 1.5},
-    {"name": "jump",    "tier": 100, "factory": lambda env: JumpController(env), "height_weight": 2.0},
+    {"name": "squat",   "tier": 200, "factory": lambda env: ReferenceTrackingController(env, "squat"), "reference": "squat", "gate_reward": False, "ignore_done": True},
+    {"name": "jump",    "tier": 100, "factory": lambda env: ReferenceTrackingController(env, "jump"),  "reference": "jump",  "gate_reward": False, "ignore_done": True},
     {"name": "climb",   "tier": 200, "factory": lambda env: WalkController(env, gains={"lift": 0.12, "step_len": 0.12, "step_time": 1.0}), "forward_weight": 0.3, "height_weight": 1.5, "mjcf_path": STAIRS},
     {"name": "recover", "tier": 300, "factory": lambda env: BalanceController(env), "push_interval": 100, "push_force": 250.0, "mlp": True, "hidden": 64, "popsize": 24, "sigma": 0.2},
-    {"name": "kneel",   "tier": 200, "factory": lambda env: SquatController(env, gains={"knee_flex": 1.0, "hip_bend": 0.5, "period": 4.0}), "depth_weight": 1.5},
-    {"name": "sit",     "tier": 200, "factory": lambda env: SquatController(env, gains={"knee_flex": 1.2, "hip_bend": 0.6, "period": 5.0}), "depth_weight": 1.5},
-    {"name": "crawl",   "tier": 100, "factory": lambda env: CrawlController(env), "forward_weight": 1.2},
-    {"name": "roll",    "tier": 100, "factory": lambda env: RollController(env), "roll_weight": 1.5, "gate_reward": False, "ignore_done": True, "start_poses": ["prone", "supine", "left", "right"]},
-    {"name": "getup",   "tier": 100, "factory": lambda env: GetUpController(env), "height_weight": 2.0, "gate_reward": False, "ignore_done": True, "start_poses": ["prone", "supine", "left", "right", "crouch"]},
+    {"name": "kneel",   "tier": 200, "factory": lambda env: ReferenceTrackingController(env, "kneel"), "reference": "kneel", "gate_reward": False, "ignore_done": True},
+    {"name": "sit",     "tier": 200, "factory": lambda env: ReferenceTrackingController(env, "sit"),   "reference": "sit",   "gate_reward": False, "ignore_done": True},
+    {"name": "crawl",   "tier": 100, "factory": lambda env: ReferenceTrackingController(env, "crawl"), "reference": "crawl", "gate_reward": False, "ignore_done": True},
+    {"name": "roll",    "tier": 100, "factory": lambda env: ReferenceTrackingController(env, "roll"),  "reference": "roll",  "gate_reward": False, "ignore_done": True},
+    {"name": "getup",   "tier": 100, "factory": lambda env: ReferenceTrackingController(env, "getup"), "reference": "getup", "gate_reward": False, "ignore_done": True},
 ]
 
 trainers = {}

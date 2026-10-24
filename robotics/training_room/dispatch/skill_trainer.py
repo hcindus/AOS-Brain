@@ -14,6 +14,7 @@ inherit the learned residual of higher-tier skills (knowledge sharing).
 """
 from __future__ import annotations
 
+import os
 import threading
 import time
 
@@ -34,6 +35,7 @@ class SkillTrainer:
                  start_crouch: bool = False, start_lying: bool = False,
                  start_poses: list | None = None, gate_reward: bool = True,
                  ignore_done: bool = False, roll_target: float = 3.14159,
+                 reference: str | None = None, tracking_weight: float = 1.0,
                  shared: list | None = None, mlp: bool = False, hidden: int = 64):
         self.name = name
         self.forward_weight = forward_weight
@@ -53,9 +55,20 @@ class SkillTrainer:
         self.gate_reward = gate_reward  # if False, reward the task, not "survive"
         self.ignore_done = ignore_done  # run the full episode (for lying skills)
         self.roll_target = roll_target  # net roll (rad) that constitutes a "roll over"
+        self.reference = reference      # skill name to load reference mocap for (motion imitation)
+        self.tracking_weight = tracking_weight
         self.all_trainers = []          # populated by the server (for dynamic sharing)
         self._pose_idx = 0
         self._roll_progress = 0.0
+
+        # load reference motion (if any) for tracking reward
+        self.ref_dof_28 = None
+        self.ref_fps = 50.0
+        if reference:
+            import sys
+            sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "motion_data"))
+            from reference import ref_to_robot
+            self.ref_dof_28, self.ref_fps = ref_to_robot(reference)
 
         self.train_env = RP1GymEnv(mjcf_path=mjcf_path)
         self.disp_env = RP1GymEnv(mjcf_path=mjcf_path)
@@ -108,10 +121,16 @@ class SkillTrainer:
 
     # ------------------------------------------------------------------ #
     def _reset(self, env):
-        obs = env.reset(qpos_noise=0.02)
+        obs = env.reset(qpos_noise=0.02 if self.ref_dof_28 is None else 0.0)
         self._roll_progress = 0.0
         d = env.view.data
         import mujoco
+
+        if self.ref_dof_28 is not None:
+            # reset joints to the reference's first frame (motion tracking)
+            d.qpos[env.joint_qpos_adr] = self.ref_dof_28[0]
+            mujoco.mj_forward(env.view.model, d)
+            return env._observe()
 
         pose = None
         if self.start_poses:
@@ -195,10 +214,17 @@ class SkillTrainer:
             depth = max(0.0, 0.78 - float(obs[0]))  # squat depth (how low the CoM is)
             task = (self.forward_weight * fwd * 20.0 + self.height_weight * up * 20.0
                     + self.roll_weight * roll_inc * 10.0 + self.depth_weight * depth * 2.0)
+            tracking = 0.0
+            if self.ref_dof_28 is not None:
+                frame = int(t * env.view.model.opt.timestep * self.ref_fps)
+                frame = min(frame, len(self.ref_dof_28) - 1)
+                qpos = env.view.data.qpos[env.joint_qpos_adr]
+                track_err = float(np.mean((qpos - self.ref_dof_28[frame]) ** 2))
+                tracking = -self.tracking_weight * track_err * 50.0
             if self.gate_reward:
-                total += float(info["alive"]) * (1.0 + task)
+                total += float(info["alive"]) * (1.0 + task + tracking)
             else:
-                total += task
+                total += task + tracking
             t += 1
         return total
 
