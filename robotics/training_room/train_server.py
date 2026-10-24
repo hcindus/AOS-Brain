@@ -35,32 +35,35 @@ STAIRS = os.path.abspath(os.path.join(
     os.path.dirname(__file__), "..", "rp1", "RP1_description", "mjcf", "rp1_stairs.xml"
 ))
 
-# (skill dicts: name, factory, plus SkillTrainer kwargs)
+# (skill dicts: name, tier, factory, plus SkillTrainer kwargs)
+# tier: 300 = foundation (shares with everyone below), 200 = intermediate,
+#        100 = specific (inherits from 200 + 300).
 SKILLS = [
-    {"name": "walk",    "factory": lambda env: WalkController(env), "forward_weight": 1.0},
-    {"name": "run",     "factory": lambda env: WalkController(env, gains={"step_len": 0.20, "step_time": 0.5}), "forward_weight": 1.5},
-    {"name": "balance", "factory": lambda env: BalanceController(env)},
-    {"name": "squat",   "factory": lambda env: SquatController(env)},
-    {"name": "jump",    "factory": lambda env: JumpController(env), "height_weight": 2.0},
-    {"name": "climb",   "factory": lambda env: WalkController(env, gains={"lift": 0.12, "step_len": 0.12, "step_time": 1.0}), "forward_weight": 0.3, "height_weight": 1.5, "mjcf_path": STAIRS},
-    {"name": "recover", "factory": lambda env: BalanceController(env), "push_interval": 100, "push_force": 250.0},
-    {"name": "kneel",   "factory": lambda env: SquatController(env, gains={"knee_flex": 1.0, "hip_bend": 0.5, "period": 4.0}), "height_weight": 1.5},
-    {"name": "sit",     "factory": lambda env: SquatController(env, gains={"knee_flex": 1.2, "hip_bend": 0.6, "period": 5.0}), "height_weight": 1.5},
-    {"name": "crawl",   "factory": lambda env: CrawlController(env), "forward_weight": 1.2},
-    {"name": "roll",    "factory": lambda env: RollController(env), "roll_weight": 1.5, "start_lying": True},
-    {"name": "getup",   "factory": lambda env: GetUpController(env), "height_weight": 2.0, "start_lying": True},
+    {"name": "walk",    "tier": 200, "factory": lambda env: WalkController(env), "forward_weight": 1.0},
+    {"name": "run",     "tier": 100, "factory": lambda env: WalkController(env, gains={"step_len": 0.20, "step_time": 0.5}), "forward_weight": 1.5},
+    {"name": "balance", "tier": 300, "factory": lambda env: BalanceController(env)},
+    {"name": "squat",   "tier": 200, "factory": lambda env: SquatController(env)},
+    {"name": "jump",    "tier": 100, "factory": lambda env: JumpController(env), "height_weight": 2.0},
+    {"name": "climb",   "tier": 200, "factory": lambda env: WalkController(env, gains={"lift": 0.12, "step_len": 0.12, "step_time": 1.0}), "forward_weight": 0.3, "height_weight": 1.5, "mjcf_path": STAIRS},
+    {"name": "recover", "tier": 300, "factory": lambda env: BalanceController(env), "push_interval": 100, "push_force": 250.0},
+    {"name": "kneel",   "tier": 200, "factory": lambda env: SquatController(env, gains={"knee_flex": 1.0, "hip_bend": 0.5, "period": 4.0}), "height_weight": 1.5},
+    {"name": "sit",     "tier": 200, "factory": lambda env: SquatController(env, gains={"knee_flex": 1.2, "hip_bend": 0.6, "period": 5.0}), "height_weight": 1.5},
+    {"name": "crawl",   "tier": 100, "factory": lambda env: CrawlController(env), "forward_weight": 1.2},
+    {"name": "roll",    "tier": 100, "factory": lambda env: RollController(env), "roll_weight": 1.5, "start_lying": True},
+    {"name": "getup",   "tier": 100, "factory": lambda env: GetUpController(env), "height_weight": 2.0, "start_lying": True},
 ]
 
 trainers = {}
+tiers = {}
 for s in SKILLS:
-    kw = {k: v for k, v in s.items() if k not in ("name", "factory")}
+    kw = {k: v for k, v in s.items() if k not in ("name", "factory", "tier")}
     trainers[s["name"]] = SkillTrainer(s["name"], s["factory"], **kw)
+    tiers[s["name"]] = s["tier"]
 
-# knowledge sharing: every skill inherits the balance skill's learned residual
-# (the shared "how to keep this body upright" substrate) on top of its own.
+# knowledge sharing: each skill inherits the combined residual of every
+# higher-tier skill (foundation flows down: 300 -> 200 -> 100).
 for name, t in trainers.items():
-    if name != "balance":
-        t.shared = trainers["balance"]
+    t.shared = [trainers[o] for o in trainers if tiers[o] > tiers[name]]
 
 SKELETON: dict = {}
 

@@ -33,13 +33,13 @@ class SkillTrainer:
                  lr: float = 0.05, steps: int = 300, seed: int = 0,
                  push_interval: int | None = None, push_force: float = 0.0,
                  start_crouch: bool = False, start_lying: bool = False,
-                 shared: "SkillTrainer | None" = None):
+                 shared: list | None = None):
         self.name = name
         self.forward_weight = forward_weight
         self.height_weight = height_weight
         self.roll_weight = roll_weight
         self.residual_clip = residual_clip
-        self.shared = shared   # another SkillTrainer whose learned W is inherited (knowledge sharing)
+        self.shared = shared or []   # list of higher-tier SkillTrainers to inherit from
         self.popsize = popsize
         self.sigma = sigma
         self.lr = lr
@@ -99,11 +99,14 @@ class SkillTrainer:
 
     # ------------------------------------------------------------------ #
     def _shared_W(self) -> np.ndarray:
-        """The inherited body-knowledge residual from the shared trainer (or zero)."""
-        if self.shared is None:
+        """The combined inherited knowledge from all higher-tier trainers (or zero)."""
+        if not self.shared:
             return np.zeros((self.n_act, self.obs_dim))
-        with self.shared.lock:
-            return self.shared.W.copy()
+        W = np.zeros((self.n_act, self.obs_dim))
+        for src in self.shared:
+            with src.lock:
+                W += src.W.copy()
+        return W
 
     def _rollout(self, env, base, W) -> float:
         base.reset()
