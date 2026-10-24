@@ -49,8 +49,8 @@ SKILLS = [
     {"name": "kneel",   "tier": 200, "factory": lambda env: SquatController(env, gains={"knee_flex": 1.0, "hip_bend": 0.5, "period": 4.0}), "depth_weight": 1.5},
     {"name": "sit",     "tier": 200, "factory": lambda env: SquatController(env, gains={"knee_flex": 1.2, "hip_bend": 0.6, "period": 5.0}), "depth_weight": 1.5},
     {"name": "crawl",   "tier": 100, "factory": lambda env: CrawlController(env), "forward_weight": 1.2},
-    {"name": "roll",    "tier": 100, "factory": lambda env: RollController(env), "roll_weight": 1.5, "start_lying": True},
-    {"name": "getup",   "tier": 100, "factory": lambda env: GetUpController(env), "height_weight": 2.0, "start_lying": True},
+    {"name": "roll",    "tier": 100, "factory": lambda env: RollController(env), "roll_weight": 1.5, "gate_reward": False, "start_poses": ["prone", "supine", "left", "right"]},
+    {"name": "getup",   "tier": 100, "factory": lambda env: GetUpController(env), "height_weight": 2.0, "gate_reward": False, "start_poses": ["prone", "supine", "left", "right", "crouch"]},
 ]
 
 trainers = {}

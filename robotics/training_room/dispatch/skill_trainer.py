@@ -32,6 +32,7 @@ class SkillTrainer:
                  lr: float = 0.05, steps: int = 300, seed: int = 0,
                  push_interval: int | None = None, push_force: float = 0.0,
                  start_crouch: bool = False, start_lying: bool = False,
+                 start_poses: list | None = None, gate_reward: bool = True,
                  shared: list | None = None, mlp: bool = False, hidden: int = 64):
         self.name = name
         self.forward_weight = forward_weight
@@ -47,7 +48,10 @@ class SkillTrainer:
         self.push_force = push_force
         self.start_crouch = start_crouch
         self.start_lying = start_lying
+        self.start_poses = start_poses  # list of pose keys to rotate through
+        self.gate_reward = gate_reward  # if False, reward the task, not "survive"
         self.shared = shared or []   # higher-tier trainers to inherit from
+        self._pose_idx = 0
 
         self.train_env = RP1GymEnv(mjcf_path=mjcf_path)
         self.disp_env = RP1GymEnv(mjcf_path=mjcf_path)
@@ -90,25 +94,47 @@ class SkillTrainer:
     # ------------------------------------------------------------------ #
     def _reset(self, env):
         obs = env.reset(qpos_noise=0.02)
-        if self.start_lying:
-            d = env.view.data
-            d.qpos[2] = 0.30
-            d.qpos[3:7] = [0.7071, 0.0, -0.7071, 0.0]  # prone
-            d.qpos[env.joint_qpos_adr[3]] = -0.5
-            d.qpos[env.joint_qpos_adr[9]] = +0.5
-            import mujoco
+        d = env.view.data
+        import mujoco
+
+        pose = None
+        if self.start_poses:
+            pose = self.start_poses[self._pose_idx % len(self.start_poses)]
+            self._pose_idx += 1
+        elif self.start_lying:
+            pose = "prone"
+        elif self.start_crouch:
+            pose = "crouch"
+
+        if pose is not None:
+            self._apply_pose(env, pose)
             mujoco.mj_forward(env.view.model, d)
             obs = env._observe()
-        elif self.start_crouch:
-            d = env.view.data
+        return obs
+
+    def _apply_pose(self, env, pose: str):
+        d = env.view.data
+        if pose == "prone":
+            d.qpos[2] = 0.30
+            d.qpos[3:7] = [0.7071, 0.0, -0.7071, 0.0]   # face down
+            d.qpos[env.joint_qpos_adr[3]] = -0.5
+            d.qpos[env.joint_qpos_adr[9]] = +0.5
+        elif pose == "supine":
+            d.qpos[2] = 0.30
+            d.qpos[3:7] = [0.7071, 0.0, 0.7071, 0.0]    # face up
+            d.qpos[env.joint_qpos_adr[3]] = -0.5
+            d.qpos[env.joint_qpos_adr[9]] = +0.5
+        elif pose == "left":
+            d.qpos[2] = 0.30
+            d.qpos[3:7] = [0.7071, 0.7071, 0.0, 0.0]    # on left side
+        elif pose == "right":
+            d.qpos[2] = 0.30
+            d.qpos[3:7] = [0.7071, -0.7071, 0.0, 0.0]   # on right side
+        elif pose == "crouch":
             d.qpos[env.joint_qpos_adr[3]] = -1.3
             d.qpos[env.joint_qpos_adr[9]] = +1.3
             d.qpos[env.joint_qpos_adr[0]] = +0.5
             d.qpos[env.joint_qpos_adr[6]] = -0.5
-            import mujoco
-            mujoco.mj_forward(env.view.model, d)
-            obs = env._observe()
-        return obs
 
     def _maybe_push(self, env, t):
         d = env.view.data
@@ -145,10 +171,12 @@ class SkillTrainer:
             droll = abs(roll - prev_roll)
             prev_roll = roll
             depth = max(0.0, 0.78 - float(obs[0]))  # squat depth (how low the CoM is)
-            total += float(info["alive"]) * (
-                1.0 + self.forward_weight * fwd * 20.0 + self.height_weight * up * 20.0
-                + self.roll_weight * droll * 10.0 + self.depth_weight * depth * 2.0
-            )
+            task = (self.forward_weight * fwd * 20.0 + self.height_weight * up * 20.0
+                    + self.roll_weight * droll * 10.0 + self.depth_weight * depth * 2.0)
+            if self.gate_reward:
+                total += float(info["alive"]) * (1.0 + task)
+            else:
+                total += task
             t += 1
         return total
 
