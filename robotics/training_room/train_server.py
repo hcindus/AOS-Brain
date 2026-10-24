@@ -23,6 +23,7 @@ from dispatch.skill_trainer import SkillTrainer
 from controllers.balance import BalanceController
 from controllers.squat import SquatController
 from controllers.jump import JumpController
+from controllers.getup import GetUpController
 from controllers.walk_controller import WalkController
 
 WS_HOST = "127.0.0.1"
@@ -41,7 +42,7 @@ SKILLS = [
     {"name": "jump",    "factory": lambda env: JumpController(env), "height_weight": 2.0},
     {"name": "climb",   "factory": lambda env: WalkController(env, gains={"lift": 0.12, "step_len": 0.12, "step_time": 1.0}), "forward_weight": 0.3, "height_weight": 1.5, "mjcf_path": STAIRS},
     {"name": "recover", "factory": lambda env: BalanceController(env), "push_interval": 100, "push_force": 250.0},
-    {"name": "getup",   "factory": lambda env: BalanceController(env), "height_weight": 2.0, "start_crouch": True},
+    {"name": "getup",   "factory": lambda env: GetUpController(env), "height_weight": 2.0, "start_lying": True},
 ]
 
 trainers = {}

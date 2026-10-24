@@ -31,7 +31,7 @@ class SkillTrainer:
                  residual_clip: float = 15.0, popsize: int = 12, sigma: float = 0.3,
                  lr: float = 0.05, steps: int = 300, seed: int = 0,
                  push_interval: int | None = None, push_force: float = 0.0,
-                 start_crouch: bool = False):
+                 start_crouch: bool = False, start_lying: bool = False):
         self.name = name
         self.forward_weight = forward_weight
         self.height_weight = height_weight
@@ -43,6 +43,7 @@ class SkillTrainer:
         self.push_interval = push_interval   # apply a lateral push every N steps
         self.push_force = push_force          # lateral force (N)
         self.start_crouch = start_crouch      # begin each episode crouched (get-up)
+        self.start_lying = start_lying        # begin lying prone on the ground
 
         # two envs: one for training rollouts, one for the live display
         self.train_env = RP1GymEnv(mjcf_path=mjcf_path)
@@ -65,7 +66,16 @@ class SkillTrainer:
     # ------------------------------------------------------------------ #
     def _reset(self, env):
         obs = env.reset(qpos_noise=0.02)
-        if self.start_crouch:
+        if self.start_lying:
+            d = env.view.data
+            d.qpos[2] = 0.30                          # body low, near ground
+            d.qpos[3:7] = [0.7071, 0.0, -0.7071, 0.0]  # prone (face down, -90° about y)
+            d.qpos[env.joint_qpos_adr[3]] = -0.5      # knees slightly flexed
+            d.qpos[env.joint_qpos_adr[9]] = +0.5
+            import mujoco
+            mujoco.mj_forward(env.view.model, d)
+            obs = env._observe()
+        elif self.start_crouch:
             d = env.view.data
             d.qpos[env.joint_qpos_adr[3]] = -1.3   # left knee flex (deep crouch)
             d.qpos[env.joint_qpos_adr[9]] = +1.3   # right knee flex (deep crouch)
