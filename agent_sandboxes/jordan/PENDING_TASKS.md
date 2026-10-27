@@ -1,21 +1,12 @@
-# PENDING_TASKS — Jordan
-**Updated:** 2026-08-05 15:15 UTC  
-**Activity:** Git commit cadence recognized as official
+# PENDING_TASKS — jordan
+**Updated:** 2026-10-27 (auto-refreshed by agent_daily_scheduler)
+**Pending tasks:** 1
 
----
+## Today's focus
+- [ ] MODEL_BUDGET_FOLLOWUP_2026-09-29 (28d — 🔴 STALE)
 
-## Active
-| Task | Status | Notes |
-|------|--------|-------|
-| Scraper runner | ✅ ACTIVE | Iteration 1152, 60 commits today |
-| Brain v4 investigation | ⏳ TO FORGE | Port 8000 diagnosis |
-| Dark Factory monitoring | ✅ ACTIVE | Pipeline ticking since Jul 28 |
+## Schedule
+- Daily: this file auto-refreshes + tasks flagged before they go stale.
+- Heartbeat: runtime-emitted every 5 min (heartbeat_monitor.py).
 
-## Jordan Activity Channel
-- 10-min git commit cadence = official activity
-- 60 commits/day average
-- Recognized by Captain 2026-08-04
-
----
-
-**Next review:** 2026-08-06 09:00 UTC
+**Rule:** address any 🔴/🟡 task before it becomes a blocker.
