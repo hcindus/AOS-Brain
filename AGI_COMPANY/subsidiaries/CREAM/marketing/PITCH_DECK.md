@@ -12,7 +12,7 @@
 
 **$699** One-Time | **$99/Year** Updates
 
-**📊 178,000 Qualified Realtor Prospects Nationwide**
+**📊 179,000 Qualified Realtor Prospects Nationwide**
 
 ---
 
