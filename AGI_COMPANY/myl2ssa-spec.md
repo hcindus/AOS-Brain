@@ -73,6 +73,13 @@ Power bus (posterior spine, branches C3/T4/T10/L2/L5) + neural bus (orange motor
 ### G — System Architecture
 Structural (Ti spine + CF ribs + Ti pelvis) / actuation (macro + micro) / control (primary node + cervical/thoracic/pelvic) / sensor / power / cooling / comms.
 
+### F2 — Structural Energy Storage ("Body-as-Battery") — HYPOTHESIS (flagged 2026-10-28)
+**Status: reference only, not adopted.** Captain's direction: *"they turned the body into a battery."* Full writeup: `structural-battery-design-hypothesis.md`.
+
+**Core idea:** the skeleton *is* the energy storage — carbon-fiber members do double duty as structure **and** electrode, eliminating the central pack. The power bus reframes from *distribution taps* → a **collection bus** (C3/T4/T10/L2/L5 become BMS harvest points, not pack-fed taps). Cell-discharge heat is routed to the skin as a *free byproduct* of the 35°C warmth goal.
+
+**Honest constraint:** structural cells are ~30–50 Wh/kg today vs 250+ for a pack — a full body-as-battery is *not* buildable with current chemistry. Recommended **phased path** (hybrid → partial → full) is in the hypothesis doc; keep the central pack for the physical build until structural-cell density matures.
+
 ---
 
 ## 4. Software
