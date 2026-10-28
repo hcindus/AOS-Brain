@@ -53,7 +53,7 @@ Neck ±85° rot / ±45° tilt / ±55° nod. Shoulder 0–160° abd / 0–180° f
 - **Carbon-fiber** (Toray/Rock West): rib-frame, scapulae, exoskeleton, plating.
 - **Titanium Ti-6Al-4V:** spine, pelvis, joints, housings.
 - **Tendons:** UHMWPE (Dyneema/Spectra).
-- **Actuators:** Dynamixel / T-Motor.
+- **Actuators:** Dynamixel / T-Motor. *(Note: McKibben/TCPA pneumatic muscles add a compressor + valve + noise overhead — budget that explicitly; electric motors have better bandwidth for dynamic balance.)*
 - **Finish:** brushed Ti + matte CF + illuminated blue conduits (the cyan glow).
 
 ### D — Assembly Order (reverse blow-out)
@@ -126,6 +126,10 @@ Structural/actuator/power/data/cooling failure modes + behavioral recovery (bala
 
 ### X — Field Deployment Safety
 Pre-deploy checklist, environmental (10–35°C, terrain modes), operational (joint-range, over-torque, thermal), emergency (fall → spine lock, collision → dampen, failure → safe-posture).
+
+**Touch-surface thermal limits (external review, 2026-10-28):** skin that contacts people stays **32–40°C, hard cutoff below ~43°C** (sustained contact above that burns). Owned by a safety layer independent of the affect system.
+
+**Safety standards:** reference **ISO 13482** (personal care robots) + **ISO 10218** (robot safety). Legged-robot standards still developing — do the hazard analysis early, not retrofitted.
 
 ---
 

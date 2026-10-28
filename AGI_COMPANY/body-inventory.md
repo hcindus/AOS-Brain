@@ -68,6 +68,18 @@
 5. **Voice** (TTS)
 6. **Assemble** (COBRA spine + Cylon body + our face/arm/legs)
 
+### De-risk-first revision (external review, 2026-10-28 — candidate, not yet adopted)
+
+The reviewer argues the highest-risk/highest-DOF pieces should be proven *first*, before committing to the full 25-vertebra spine:
+
+1. **Hand + forearm bench rig** — highest DOF, tests tendon routing + tactile skin + actuator choice in one small rig.
+2. **Scapula/shoulder rig** — the "crown jewel" (5–6 DOF); a failure here changes everything downstream.
+3. **One spine segment → 3–5 vertebra stack** — prove COBRA before all 25.
+4. **Thermal loop on a torso mockup** (heaters standing in for actuators).
+5. **Integrate + safety**, then **legs / mobile base last** (a 169 cm biped is the *hardest* version; prove seated → wheeled → legged).
+
+*This reorders our face-first instinct toward actuation-first. Worth a deliberate call with Captain before re-locking.*
+
 ### Fold-ins from the 2026-10-28 transcript review (lessons-learned.md)
 - **Vascular warmth (35°C)** → folds into step 2 (silicone skin): cast **silicone vessels** and circulate warm fluid (a "warm-blooded" test patch), not a flat resistive web. Lesson #1 — warmth is the biggest "feels human" factor. See `vascular-warmth-circulatory-system.md`.
 - **Tactile skin** → folds into step 2/3: weave pressure/temp sensing into the silicone (the "nervous system"). Lesson #3.

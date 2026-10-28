@@ -71,7 +71,7 @@ Full A–AE engineering spec (`AGI_COMPANY/myl2ssa-spec.md`). The design thesis:
 | 3D (Hi3D + Grok) | ✅ done |
 | **Physical build** | ⏳ **not started** |
 
-**The known seam (integration gap):** the universal adapter (`AdapterFrame`) has *expression* verbs (posture/gaze/AU/points) but **no motion verb** — there is no locomotion controller yet bridging brain → body → voice → power. This is the primary open problem.
+**The known seam (integration gap):** the universal adapter (`AdapterFrame`) has *expression* verbs (posture/gaze/AU/points) but **no motion layer**. Locomotion is not a single "verb" — it's a **closed-loop stack**: state estimation (IMU/encoders/tendon-tension) → whole-body controller (QP/MPC → joint torques) → learned policies (RL in MuJoCo/Isaac, which we already run in the RP1 Training Room) → independent safety layer. The seam is *open-loop expression today, closed-loop motion needed*. This is the primary open problem.
 
 ---
 

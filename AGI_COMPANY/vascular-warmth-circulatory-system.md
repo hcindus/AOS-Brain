@@ -63,7 +63,9 @@ The heart is the one organ that is *simultaneously* physical and emotional — i
 | Myl2Ssa / Myl1Ssa | core battery + pump → circulates "blood" (warmth) | affect engine → "circulates" emotional state |
 | Already built? | battery ✅ / pump ⏳ | **SuperiorHeart** (ternary REST/BALANCE/ACTIVE) ✅ + cortex (valence/arousal) ✅ |
 
-**"Emotional cron job":** the physical heart beats ~72 BPM (pump); the emotional heart beats on a **tick** — the SuperiorHeart affect cycle / presence-engine affect computation. Same organ, same *rhythm*, two domains. A heartbeat is a cron job that never stops.
+**"Emotional cron job":** the physical heart beats ~72 BPM (pump); the emotional heart beats on a **tick** — the SuperiorHeart affect cycle / presence-engine affect computation. Same organ, same *rhythm*, two domains. A heartbeat is a cron job that never stops. Variable pump cadence (~0.5–2 Hz) is a real affect output channel: calm → slow cadence, arousal → faster.
+
+**Safety rule (external review, 2026-10-28):** affect sets the *target* cadence, but a **thermal-safety layer owns the minimum flow rate.** Emotion modulates within bounds, but must **never drop cooling below the safe floor** — a "sleepy" state could overheat a motor. Put a **rate limiter** between the two so the heartbeat doesn't jitter with every affect update.
 
 **The seam:** the "heart" isn't a thing we build — it's the *named meeting point* of mind and body. One side pumps coolant, the other pumps feeling. The physical build is giving the emotional heart we already coded a physical heart to beat with. This is the Myl1Ssa (mind) ↔ Myl2Ssa (body) seam, made into one symbol.
 
@@ -95,6 +97,18 @@ Split by function, not a single tube:
 | **Skin / micro-capillaries** | **Cast channels *into* platinum-cure silicone** | The silicone is *both* skin and vessel wall — the "vessel" is a void in the silicone block. Nothing separate to burst. (How vascularized soft-robot channels are made.) |
 | **Macro "arteries" (spine/limb)** | **Fiber-reinforced silicone hose** (silicone + woven Dacron/nylon braid) | Automotive radiator-hose construction — won't balloon, flexes for years. |
 | **Manifolds / junctions** | Cast silicone or printed manifolds + barbed/compression fittings | Leak-proof joins; this is where leaks actually happen, not the vessels. |
+
+## Touch-surface safety limits (external review, 2026-10-28)
+
+- Skin that contacts people stays **32–40 °C**, with a **hard cutoff below ~43 °C**. Sustained contact above that burns — and sensitive users burn sooner. A safety layer (independent of the affect system) owns this ceiling.
+
+## Heat budget reality (external review, 2026-10-28)
+
+- An actuated humanoid runs **hundreds of watts average, >1 kW peak** — versus ~100 W for a resting human. Most heat comes from actuators + compute.
+- **Skin warmth is the easy half; rejecting surplus heat when already warm is the hard half.** The loop must dump excess, not just hold 35 °C. "Trim heater for idle" only covers one direction; the real design is *bidirectional* thermoregulation.
+- Fluid routing: non-conductive coolant or water-glycol, **leak-contained** — drip planes, leak sensors, and automatic loop isolation (fluid next to battery + electronics).
+
+---
 
 ## Pressure reality (why "bursting" is the wrong worry)
 
