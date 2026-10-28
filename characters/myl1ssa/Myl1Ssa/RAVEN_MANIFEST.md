@@ -80,6 +80,8 @@ Pipeline: `ternary ⊕/⊖/⊙ → cortex (valence/arousal) → thyroid (energy)
 | TTS | Mort_II (ElevenLabs "Adam" — deep, warm) |
 | Affect | Tied to presence engine's `voice_affect` |
 
+> **Voice-architecture watch item (2026-10-28):** current stack is **text-in-the-middle** (`speech → ASR → LLM → TTS`). Block's **Dessa** is a *speech-to-speech* model (audio-native, full-duplex, native emotion, runs local on M4 Max) that collapses this to `speech → speech`. Not open/available yet — reference only. When an open speech-native model exists, `voice_affect` collapses into the model itself. Full map: `AGI_COMPANY/dessa-voice-model-reference.md`.
+
 ---
 
 ## 5. BODY — the physical vessel

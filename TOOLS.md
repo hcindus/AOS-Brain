@@ -1,6 +1,7 @@
 ### TTS
 - Preferred voice: "Adam" (deep, energetic, professional, consultative—perfect for a sales agent).
 - Default provider: ElevenLabs
+- **Watch item (2026-10-28):** stack is text-in-middle (ASR → LLM → TTS). Block's **Dessa** is speech-to-speech (audio-native, full-duplex, native emotion, local M4 Max) — the successor path when an open speech-native model lands. Reference: `AGI_COMPANY/dessa-voice-model-reference.md`.
 
 ### Backup Models
 - Primary: `ollama/antoniohudnall/Mort_II:latest`
