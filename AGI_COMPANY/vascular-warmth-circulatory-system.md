@@ -33,6 +33,7 @@ This reframes the "35°C warmth" lesson from *heating the surface* to *warming t
 | Element | Mammal | Myl2Ssa |
 |---|---|---|
 | Heart | Pumps blood | **Core heat source + pump** (the chest-core — see below) |
+| Heart (emotional) | The "seat" of feeling | **SuperiorHeart** (ternary emotion) + presence-engine cortex — see "dual function" below |
 | Blood | Carries O₂/heat | **Thermal fluid** (water/glycol, or a specialized medium) |
 | Vessels | Arteries/veins/capillaries | **Silicone channels** — macro vessels in the chassis, micro-capillaries in the skin layer |
 | Capillaries | Exchange at the surface | **Skin-level micro-channels** — the 35°C at the surface |
@@ -49,6 +50,22 @@ This snaps directly into **body-as-battery** (`structural-battery-design-hypothe
 - The vessels are how the battery's heat reaches every part of the body.
 
 **Power and warmth collapse into one system:** the battery heats the "blood," the "blood" warms the body. This is the *integration* principle (Captain, 2026-10-28) made physical — one network doing thermal + (optionally) sensing + actuation.
+
+---
+
+## The dual-function heart (Captain, 2026-10-28)
+
+The heart is the one organ that is *simultaneously* physical and emotional — in human and machine alike:
+
+| | Physical heart | Emotional heart |
+|---|---|---|
+| Human | pumps blood → circulation | the "seat" of feeling → mood |
+| Myl2Ssa / Myl1Ssa | core battery + pump → circulates "blood" (warmth) | affect engine → "circulates" emotional state |
+| Already built? | battery ✅ / pump ⏳ | **SuperiorHeart** (ternary REST/BALANCE/ACTIVE) ✅ + cortex (valence/arousal) ✅ |
+
+**"Emotional cron job":** the physical heart beats ~72 BPM (pump); the emotional heart beats on a **tick** — the SuperiorHeart affect cycle / presence-engine affect computation. Same organ, same *rhythm*, two domains. A heartbeat is a cron job that never stops.
+
+**The seam:** the "heart" isn't a thing we build — it's the *named meeting point* of mind and body. One side pumps coolant, the other pumps feeling. The physical build is giving the emotional heart we already coded a physical heart to beat with. This is the Myl1Ssa (mind) ↔ Myl2Ssa (body) seam, made into one symbol.
 
 ---
 
