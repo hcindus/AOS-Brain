@@ -53,7 +53,7 @@
 | **Skin** | sourced, not fabricated | Reynolds samples → cast (build-order-list.md) |
 | **Voice** | gap #5 | TTS (Beets research pending) |
 | **Muscles** | principles understood, not built | TCPA first (build-order-list.md) |
-| **Skin heating (35°C)** | lesson #1 — not spec'd | resistive heating web under silicone (spec §C) |
+| **Vascular warmth (35°C)** | lesson #1 — not spec'd | silicone vessels circulating warm fluid — "warm-blooded" body (spec §C, `vascular-warmth-circulatory-system.md`) |
 | **Tactile skin** | lesson #3 — not spec'd | distributed pressure/temp woven into silicone (spec §O) |
 | **Uncanny-valley micro-motion** | lesson #2 — not spec'd | asymmetry + irregular blink in face firmware (spec §AE) |
 
@@ -69,7 +69,7 @@
 6. **Assemble** (COBRA spine + Cylon body + our face/arm/legs)
 
 ### Fold-ins from the 2026-10-28 transcript review (lessons-learned.md)
-- **Skin heating (35°C)** → folds into step 2 (silicone skin): add a resistive heating web to the test patch, hold 35°C. Lesson #1 — warmth is the biggest "feels human" factor.
+- **Vascular warmth (35°C)** → folds into step 2 (silicone skin): cast **silicone vessels** and circulate warm fluid (a "warm-blooded" test patch), not a flat resistive web. Lesson #1 — warmth is the biggest "feels human" factor. See `vascular-warmth-circulatory-system.md`.
 - **Tactile skin** → folds into step 2/3: weave pressure/temp sensing into the silicone (the "nervous system"). Lesson #3.
 - **Uncanny-valley micro-motion** → folds into step 3 (face firmware): asymmetry + irregular blink. Lesson #2.
 - **Onboard safety rule** → already true (local-first); now stated as a hard rule in spec §N. Lesson #4.

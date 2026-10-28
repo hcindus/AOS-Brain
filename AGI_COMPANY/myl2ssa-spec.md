@@ -48,7 +48,7 @@ Neck ±85° rot / ±45° tilt / ±55° nod. Shoulder 0–160° abd / 0–180° f
 
 ### C — Materials & Manufacturing
 - **Silicone/LSR:** Reynolds (PlatSil/EcoFlex/Dragon Skin) for face/skin/seals + Proto Labs LSR injection for bushings/ligaments.
-- **Skin heating layer (35°C — first-class subsystem):** resistive heating web under the silicone, held at constant 35°C (just below body temp). Warmth is the single biggest "feels human" factor (lesson #1, `myl2ssa-transcripts/lessons-learned.md`). Body-as-battery heat is a *bonus* on top, not the primary mechanism.
+- **Vascular warmth system (35°C — first-class subsystem):** silicone **vessels circulating warm fluid** (mammalian blood-circulation analog), not a resistive web — uniform body temp from within. The core heat source is the "heart" (tied to body-as-battery: the battery heats the fluid, the fluid warms the body). Full design: `vascular-warmth-circulatory-system.md`. Warmth is the single biggest "feels human" factor (lesson #1).
 - **Tactile skin ("nervous system"):** distributed pressure/temperature sensing woven into the silicone (lesson #3), not just joint-level encoders.
 - **Carbon-fiber** (Toray/Rock West): rib-frame, scapulae, exoskeleton, plating.
 - **Titanium Ti-6Al-4V:** spine, pelvis, joints, housings.

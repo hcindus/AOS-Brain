@@ -9,7 +9,7 @@
 
 ## The seven lessons
 
-1. **Warmth is a first-class subsystem, not a byproduct.** May's own testing: warmth was the *single biggest* factor in "feels human" — bigger than face, bigger than voice. → Our spec has cooling but no skin-heating. **Gap: a 35°C heating web under the silicone is its own thermal layer** (body-as-battery heat is a bonus, not the primary mechanism).
+1. **Warmth is a first-class subsystem, not a byproduct.** May's own testing: warmth was the *single biggest* factor in "feels human" — bigger than face, bigger than voice. → Our spec has cooling but no skin-heating. **Gap: a 35°C thermal layer.** *Refined (Captain, 2026-10-28):* not a resistive web, but a **silicone vascular system** circulating warm fluid — a "warm-blooded" body (mammalian blood-circulation analog), with the core battery as the "heart." Full design: `vascular-warmth-circulatory-system.md`.
 
 2. **Defeat the uncanny valley deliberately.** May: 38 face points + programmed **asymmetry and irregular blink** — a perfectly symmetric face blinking in perfect rhythm *is* the uncanny-valley trigger. → Our face has 30 motors/32 landmarks but no asymmetric micro-motion or irregular-blink spec. **Gap: cheap, high-impact.**
 
