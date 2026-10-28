@@ -52,6 +52,17 @@ That mold = our "template." One good sculpt → unlimited identical silicone ski
 
 ## Fold-ins from the 2026-10-28 transcript review (lessons-learned.md)
 1. **Vascular warmth (35°C)** — cast **silicone vessels** in the test patch and circulate warm fluid (a "warm-blooded" patch), not a flat resistive web. Warmth is the single biggest "feels human" factor. *(spec §C, `vascular-warmth-circulatory-system.md`)*
+
+### Warm-blooded-patch test kit (add to the silicone step)
+| Item | Spec | ~Cost |
+|---|---|---|
+| Premixed coolant | EK-CryoFuel / Koolance LIQ-702 (PG-based, low conductivity) | ~$15–20 |
+| DC pump | small 12V submersible/inline | ~$15 |
+| Inline trim heater | cartridge heater (5–10 W, idle/basal-metabolism trim) | ~$10 |
+| Silicone tubing | platinum-cure, ~3–6 mm ID | ~$10 |
+| Fiber-reinforced silicone hose | Dacron/nylon-braid (radiator-hose construction) for macro runs | ~$15 |
+
+*Test: cast channels into a silicone patch → circulate coolant through pump + heater → hold 35°C → verify no silicone swell/react over 48h. Then scale to full body.*
 2. **Tactile skin** — weave pressure/temperature sensing into the silicone (the "nervous system"), not just joint encoders. *(spec §O)*
 3. **Uncanny-valley micro-motion** — build asymmetry + irregular blink into the face firmware; a symmetric face blinking in perfect rhythm *is* the uncanny-valley trigger. *(spec §AE)*
 4. **Onboard safety rule** — safety-critical loops run onboard, no cloud dependency. *(spec §N)*

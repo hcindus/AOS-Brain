@@ -52,9 +52,34 @@ This snaps directly into **body-as-battery** (`structural-battery-design-hypothe
 
 ---
 
+## The thermoregulation model (Captain, 2026-10-28)
+
+**Don't fight the heat — circulate it.** The body (battery + actuators) generates waste heat. The "heart" pumps fluid that carries that heat from the core to the skin, where it radiates away — *that* holds the body at 35°C. The cooling system and the warming system are **one loop**, exactly like blood: metabolic heat from the core → skin → radiated.
+
+- **Flow rate = "sweat"** — crank circulation when hot, throttle when cold.
+- **Trim heater = "basal metabolism"** — a small heater for idle, when the body isn't generating enough waste heat to hold 35°C (a resting robot ≠ a 100W human metabolism). The circulatory loop is the primary mechanism; the trim heater covers the idle gap.
+
+## Vessel material — silicone all the way down
+
+Split by function, not a single tube:
+
+| Zone | Material | Why |
+|---|---|---|
+| **Skin / micro-capillaries** | **Cast channels *into* platinum-cure silicone** | The silicone is *both* skin and vessel wall — the "vessel" is a void in the silicone block. Nothing separate to burst. (How vascularized soft-robot channels are made.) |
+| **Macro "arteries" (spine/limb)** | **Fiber-reinforced silicone hose** (silicone + woven Dacron/nylon braid) | Automotive radiator-hose construction — won't balloon, flexes for years. |
+| **Manifolds / junctions** | Cast silicone or printed manifolds + barbed/compression fittings | Leak-proof joins; this is where leaks actually happen, not the vessels. |
+
+## Pressure reality (why "bursting" is the wrong worry)
+
+The loop runs at **blood pressure** (~0.1–0.16 bar), not radiator pressure (1–2 bar). At near-ambient pressure, plain silicone won't burst. The real failure modes are **leaks at junctions** and **fatigue from repeated flexing** over years — a material + connector problem, not an overpressure problem.
+
+## The fluid (off-the-shelf "blood")
+
+Premium **premixed PC coolant** (EK-CryoFuel / Koolance LIQ-702): corrosion inhibitor + biocide + **low electrical conductivity** (a leak next to the battery/electronics won't short). Propylene-glycol base = non-toxic, gentle. **Verify silicone compatibility** with a 48-hr soak test on a scrap patch first (glycol coolants are usually silicone-safe, but silicone can swell with some fluids).
+
 ## Honest constraints
 
-- **Fluid adds mass + failure modes** (leaks, pump wear, fluid degradation) — must be sealed and serviceable. This is real engineering, not free.
+- **Fluid adds mass + failure modes** (junction leaks, pump wear, fluid degradation) — must be sealed and serviceable. Real engineering, not free.
 - **Micro-capillary fabrication** in silicone is non-trivial (soft-lithography / 3D-printed vascular networks exist in research, e.g. vascularized soft robots, but production-grade is early).
 - **Efficiency trade-off:** a fluid loop has pump + thermal-mass overhead vs. a simple resistive web. The win is *uniformity + integration*, not raw simplicity.
 - **Path:** start with a **macro vessel loop** (core → spine/limb arteries → skin manifold) for the physical build; micro-capillaries in the skin are the maturity target.
@@ -69,4 +94,4 @@ This snaps directly into **body-as-battery** (`structural-battery-design-hypothe
 
 ---
 
-*Design direction, not yet built. The next physical proof is a single silicone vessel loop held at 35°C — the "warm-blooded patch" test.*
+*Design direction, not yet built. The next physical proof is a single silicone vessel loop held at 35°C — the "warm-blooded patch" test: cast channels into a silicone patch, circulate premixed coolant through a small DC pump + inline trim heater, verify it holds 35°C and the silicone doesn't swell/react over 48h.*
