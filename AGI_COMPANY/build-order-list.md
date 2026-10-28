@@ -50,4 +50,10 @@ That mold = our "template." One good sculpt → unlimited identical silicone ski
 - `body-inventory.md` — BUILT vs DESIGN vs MISSING (single source of truth)
 - `grok-prompt.md` — the canonical "front view" prompt
 
+## Fold-ins from the 2026-10-28 transcript review (lessons-learned.md)
+1. **Skin heating web (35°C)** — add resistive heating to the silicone test patch; hold constant 35°C. Warmth is the single biggest "feels human" factor. *(spec §C)*
+2. **Tactile skin** — weave pressure/temperature sensing into the silicone (the "nervous system"), not just joint encoders. *(spec §O)*
+3. **Uncanny-valley micro-motion** — build asymmetry + irregular blink into the face firmware; a symmetric face blinking in perfect rhythm *is* the uncanny-valley trigger. *(spec §AE)*
+4. **Onboard safety rule** — safety-critical loops run onboard, no cloud dependency. *(spec §N)*
+
 *Total ≈ $150 for the two lists. The face costs a sculptor's day + a mold + silicone — cheap compared to an $80k Elf V1.*

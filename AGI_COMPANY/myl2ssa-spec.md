@@ -48,6 +48,8 @@ Neck ±85° rot / ±45° tilt / ±55° nod. Shoulder 0–160° abd / 0–180° f
 
 ### C — Materials & Manufacturing
 - **Silicone/LSR:** Reynolds (PlatSil/EcoFlex/Dragon Skin) for face/skin/seals + Proto Labs LSR injection for bushings/ligaments.
+- **Skin heating layer (35°C — first-class subsystem):** resistive heating web under the silicone, held at constant 35°C (just below body temp). Warmth is the single biggest "feels human" factor (lesson #1, `myl2ssa-transcripts/lessons-learned.md`). Body-as-battery heat is a *bonus* on top, not the primary mechanism.
+- **Tactile skin ("nervous system"):** distributed pressure/temperature sensing woven into the silicone (lesson #3), not just joint-level encoders.
 - **Carbon-fiber** (Toray/Rock West): rib-frame, scapulae, exoskeleton, plating.
 - **Titanium Ti-6Al-4V:** spine, pelvis, joints, housings.
 - **Tendons:** UHMWPE (Dyneema/Spectra).
@@ -87,8 +89,12 @@ Structural (Ti spine + CF ribs + Ti pelvis) / actuation (macro + micro) / contro
 ### N — Control Architecture
 5 tiers: RT kernel → motor firmware (PID) → neural bus → behavior (gait/balance/manipulation/posture) → cognitive (planner/fusion/task). **= our presence engine → adapter → body driver → brain.**
 
+**Hard rule (lesson #4):** safety-critical loops (balance/movement/safety envelope) run **onboard, no cloud dependency** — the body must never freeze if Wi-Fi drops. Only non-critical memory/conversation may be cloud-backed.
+
 ### O — Sensor Fusion
 Head (optical/IMU/proximity/audio) + body (encoders/load/thermal/vibration) → Kalman → multi-sensor fusion → state estimation (kinematic, CoM, foot contact).
+
+**Tactile skin layer (lesson #3):** distributed pressure + temperature sensing woven into the silicone (the "nervous system"), feeding touch/contact/proximity into the same fusion stack — not just joint-level encoders.
 
 ### P — Gait & Motion
 Walk/run/balance/manipulation/posture + energy optimization.
@@ -102,6 +108,8 @@ Walk/run/balance/manipulation/posture + energy optimization.
 
 ### AE — Motion Library
 Static poses (neutral/ready/precision) + gestures (pointing/nod/attention/handoff) + locomotion primitives (gait cycle, terrain) + manipulation (grip types, finger motions) + posture (spine/pelvis/balance). **= our presence engine's 8 expressions, expanded.**
+
+**Uncanny-valley micro-motion (lesson #2):** programmed **asymmetry + irregular blink** — a perfectly symmetric face blinking in perfect rhythm is the uncanny-valley trigger. Real faces are never that tidy.
 
 ### J — Motion-Profile Optimization
 Gait (balance > speed), upper-body (scapula glide rails reduce strain), spine (dynamic stiffness), balance (pelvic node), energy (low-power idle).
