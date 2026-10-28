@@ -33,9 +33,9 @@ The hypothesis collapses the first two: **carbon-fiber members do double duty** 
 
 ## The honest trade-offs (do not skip these)
 
-Structural batteries are real but **early**. Per the Trust & Accuracy code, this has to be stated plainly:
+> **Captain's correction (2026-10-28):** *"All of the components exist by themselves. Integration is the issue. Miniaturization and efficiency is the enemy."* — The structural battery **already exists** (Chalmers has shipped carbon-fiber structural cells). What doesn't exist is the *integrated, miniaturized, efficient* version running inside a body's power/thermal envelope. The frontier is **packaging, not invention.**
 
-- **Energy density is far lower than a dedicated pack.** Lab-scale structural cells (Chalmers carbon-fiber, ~2021–2024) sit around **~30–50 Wh/kg** with ~20–25 GPa stiffness, versus **250+ Wh/kg** for a conventional Li-ion pack. A full "body-as-battery" with current chemistry would store *far* less energy for the same mass. The transcript robot's "9-hour runtime" claim almost certainly still leans on a conventional (or hybrid) cell chemistry — structural storage alone won't hit that today.
+- **Energy density is far lower than a dedicated pack.** Lab-scale structural cells (Chalmers carbon-fiber, ~2021–2024) sit around **~30–50 Wh/kg** with ~20–25 GPa stiffness, versus **250+ Wh/kg** for a conventional Li-ion pack. A full "body-as-battery" with current chemistry would store *far* less energy for the same mass — so **efficiency** (not existence) is the binding constraint. The transcript robot's "9-hour runtime" claim almost certainly still leans on a conventional (or hybrid) cell chemistry.
 - **Safety is harder.** A cell inside a load-bearing member means structural damage = energy damage. Thermal runaway in the chassis is worse than in an isolated pack. Mitigations: solid-state / non-flammable electrolyte, fine-grained segmentation, per-segment BMS, and §I's auto-reroute + §M's safe-posture recovery.
 - **Repairability.** No swappable pack → energy service becomes segment replacement. Needs a modular segment design (which §K BOM + §AD manufacturing can accommodate).
 

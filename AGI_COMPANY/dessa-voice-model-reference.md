@@ -62,9 +62,11 @@ The consequence: **text throws away prosody, pause, laughter, sarcasm, affect.**
 
 ## Honest constraints (per Trust & Accuracy code)
 
-- **Dessa is not open.** No weights, no API. It's a Block research artifact with a safety-researcher waitlist. We cannot build on it today.
-- **It's a research model, not a product.** No per-agent deployment story yet.
-- **Practical near-term:** our path stays TTS (Mort_II + ElevenLabs "Adam"). The S2S direction is a *watch item* — relevant the moment an open speech-native model (or Block opens access) exists.
+> **Captain's correction (2026-10-28):** *"All of the components exist by themselves. Integration is the issue. Miniaturization and efficiency is the enemy."* — S2S voice **already exists** (Dessa is running; open speech-native models exist). What's missing is the *integrated, miniaturized, efficient* version: a speech-native model small enough and efficient enough to run locally inside a body's compute/power envelope alongside everything else. The frontier is **packaging, not invention.**
+
+- **Dessa specifically is not open.** No weights, no API — a Block research artifact with a safety waitlist. But S2S as a category is already real.
+- **The binding constraint is efficiency.** A speech-native model runs on an M4 Max today; running it *inside* a human-scale body's compute/thermal budget is a miniaturization problem, not a "does it exist" problem.
+- **Practical near-term:** our path stays TTS (Mort_II + ElevenLabs "Adam") because it's the *efficient* choice for the current envelope — not because S2S doesn't exist. The S2S direction is a *watch item* for when an open model is small/fast enough to fit.
 
 ---
 

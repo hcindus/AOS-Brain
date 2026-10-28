@@ -1,5 +1,15 @@
 # MEMORY.md - Curated Knowledge
 
+## Embodiment Design Principle (Captain, 2026-10-28)
+**"All of the components exist by themselves. Integration is the issue. Miniaturization and efficiency is the enemy."**
+
+The durable frame for Myl1Ssa/Myl2Ssa (and all our embodiment work): the frontier is **not invention, it's packaging**. Structural batteries, S2S voice, TCPA muscles, silicone skin, heating webs, presence engines, local inference — all already exist as separate things. The hard problems are:
+1. **Integration** — making them cohere into one being (our `AdapterFrame` already has the "no motion verb" seam gap).
+2. **Miniaturization** — fitting it into a human-scale body (169cm).
+3. **Efficiency** — the power/thermal/space budget of running them *together*.
+
+Two committed threads use this frame: body-as-battery (`AGI_COMPANY/structural-battery-design-hypothesis.md` + spec §F2) and speech-native voice (`AGI_COMPANY/dessa-voice-model-reference.md` + RAVEN_MANIFEST §4). Both reframed from "not buildable" → "component exists, efficiency is the binding constraint."
+
 ## RP1 Training Room (Captain, 2026-10-23)
 Captain directed building a "training room" so our agents can train on the open-source RoboParty RP1 humanoid in sim before "entering the real world." Full detail in `memory/2026-10-23.md`.
 
