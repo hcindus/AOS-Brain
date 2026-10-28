@@ -57,7 +57,17 @@ This snaps directly into **body-as-battery** (`structural-battery-design-hypothe
 **Don't fight the heat — circulate it.** The body (battery + actuators) generates waste heat. The "heart" pumps fluid that carries that heat from the core to the skin, where it radiates away — *that* holds the body at 35°C. The cooling system and the warming system are **one loop**, exactly like blood: metabolic heat from the core → skin → radiated.
 
 - **Flow rate = "sweat"** — crank circulation when hot, throttle when cold.
-- **Trim heater = "basal metabolism"** — a small heater for idle, when the body isn't generating enough waste heat to hold 35°C (a resting robot ≠ a 100W human metabolism). The circulatory loop is the primary mechanism; the trim heater covers the idle gap.
+- **Trim heater = "brown fat / basal metabolism"** — a small heater for idle, when the body isn't generating enough waste heat to hold 35°C (a resting robot ≠ a 100W human metabolism). The circulatory loop is the primary mechanism; the trim heater covers the idle gap.
+
+### The endocrine wiring (maps onto what we already built)
+
+| Human | Role | Myl2Ssa |
+|---|---|---|
+| **Thyroid** | thermostat — sets burn rate (T3/T4) | **`Thyroid` organ — already built** (Myl1Ssa `brain/thyroid/`; AOS `Thyroid v1.2`, BASELINE/SECRETING) |
+| **Brown fat** (UCP1 thermogenesis) | the idle heater — burns fuel → heat, no work | **the trim heater** |
+| **Muscle (shivering)** | emergency/exercise heat | actuator waste heat |
+
+**Control chain:** thyroid (software, already built) → trim heater (the "brown fat") → regulates "blood" temp → regulates warmth. The endocrine analogy is one-to-one with the existing stack — the thyroid is the *controller* we already have; the trim heater is the *brown fat* we still build.
 
 ## Vessel material — silicone all the way down
 
