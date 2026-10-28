@@ -73,6 +73,13 @@ Full A–AE engineering spec (`AGI_COMPANY/myl2ssa-spec.md`). The design thesis:
 
 **The known seam (integration gap):** the universal adapter (`AdapterFrame`) has *expression* verbs (posture/gaze/AU/points) but **no motion layer**. Locomotion is not a single "verb" — it's a **closed-loop stack**: state estimation (IMU/encoders/tendon-tension) → whole-body controller (QP/MPC → joint torques) → learned policies (RL in MuJoCo/Isaac, which we already run in the RP1 Training Room) → independent safety layer. The seam is *open-loop expression today, closed-loop motion needed*. This is the primary open problem.
 
+**Motion-verb contract (external review, 2026-10-28 — concrete seam spec):** define a small typed contract with refusals:
+- Verbs: `stand` · `sit` · `reach(target)` · `hold` · `release` · `walk(velocity)` · `stop`.
+- Each verb has preconditions and returns **accepted / rejected / aborted + reason** (e.g. "battery too low", "contact force limit", "balance not confident").
+- This makes "the machine can say no" *mechanical* — the body refuses and reports *why* back to the mind. Maps to the ternary qbit (⊕/⊖/⊙).
+
+**Sim body now (external review, 2026-10-28):** give the mind a body *today* — a MuJoCo/Isaac digital twin of the 21 joints + 30 motors with rough mass/inertia, inside the **existing RP1 Training Room** infrastructure. Then the locomotion seam develops closed-loop, and every hardware decision is checked in sim first (e.g. "does a 3-DOF scapula still reach this workspace?").
+
 ---
 
 ## Active design directions (all from 2026-10-28)

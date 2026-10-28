@@ -67,6 +67,8 @@ The heart is the one organ that is *simultaneously* physical and emotional — i
 
 **Safety rule (external review, 2026-10-28):** affect sets the *target* cadence, but a **thermal-safety layer owns the minimum flow rate.** Emotion modulates within bounds, but must **never drop cooling below the safe floor** — a "sleepy" state could overheat a motor. Put a **rate limiter** between the two so the heartbeat doesn't jitter with every affect update.
 
+**Redundancy (external review, 2026-10-28):** treat the pump as a **pump-first** system with its own classification — check valves, ideally a **second pump**, and a **hardware thermal floor** the affect system cannot override. Emotion is the *modulator*, never the owner of cooling.
+
 **The seam:** the "heart" isn't a thing we build — it's the *named meeting point* of mind and body. One side pumps coolant, the other pumps feeling. The physical build is giving the emotional heart we already coded a physical heart to beat with. This is the Myl1Ssa (mind) ↔ Myl2Ssa (body) seam, made into one symbol.
 
 ---

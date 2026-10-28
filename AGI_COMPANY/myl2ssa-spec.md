@@ -36,6 +36,12 @@
 - The **hand** is the opposable thumb (~20 DOF, tendon-driven).
 - The **actuator** is a muscle (TCPA/McKibben/electrofluidic) over a tendon over a semi-rigid skeleton.
 
+**Hybrid actuation (external review, 2026-10-28 — spec correction):** do **not** use muscle actuation everywhere — it's the biggest technical risk. Split:
+- **Electric** (quasi-direct-drive / series-elastic) for **load-bearing joints** — hips, knees, shoulders (bandwidth to balance + walk).
+- **Muscle-like** (TCPA/McKibben) for **compliance + warmth** — spine, neck, face, hand.
+
+This keeps the "skeleton is the teacher" thesis while giving the body something that can actually balance.
+
 ---
 
 ## 2. Mechanical
@@ -127,6 +133,13 @@ Structural/actuator/power/data/cooling failure modes + behavioral recovery (bala
 ### X — Field Deployment Safety
 Pre-deploy checklist, environmental (10–35°C, terrain modes), operational (joint-range, over-torque, thermal), emergency (fall → spine lock, collision → dampen, failure → safe-posture).
 
+**Hardware safety architecture (external review, 2026-10-28):**
+- **Hardware-independent e-stop + power cutoff** (not just software).
+- **Force/speed limits in contact zones** + backdrivable joints in the arms.
+- **Controlled-fall behavior** — a 169 cm humanoid falling is the dominant hazard.
+- **Thermal fuses + a BMS with its own protection.**
+- Hazard analysis vs ISO 13482 *before* the build starts.
+
 **Touch-surface thermal limits (external review, 2026-10-28):** skin that contacts people stays **32–40°C, hard cutoff below ~43°C** (sustained contact above that burns). Owned by a safety layer independent of the affect system.
 
 **Safety standards:** reference **ISO 13482** (personal care robots) + **ISO 10218** (robot safety). Legged-robot standards still developing — do the hazard analysis early, not retrofitted.
@@ -150,6 +163,8 @@ Voice/gesture/touch + remote API; human safety (buffer, slow-motion, force limit
 
 ### AA — Ethics & Compliance
 Safety-first, transparency, **autonomy boundaries (no self-directed goals, operator authority)**, privacy, respectful motion, audit logging. **= our "SI, not AI" + "invited, not built" + safety philosophy, as a formal framework.**
+
+**Privacy & data-handling (external review, 2026-10-28):** a companion body that touches people and records the room (cameras, mics, tactile skin) needs **defined data-handling rules before first contact** — retention, local-vs-cloud, consent, and erasure. **Vulnerable-user policy:** decide the physical-contact + interaction rules for children and anyone who may not understand what the robot is. Disclosure-as-identity is the start; the contact rules must be written alongside it.
 
 ---
 
