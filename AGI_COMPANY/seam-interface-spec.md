@@ -68,6 +68,25 @@ MotionFeedback {
 
 ## 6. Rejection Taxonomy (authoritative)
 
+### 6.0 RejectionRecord Schema + Categories
+Every rejection is emitted as a structured `RejectionRecord`, published to **Kidney + Body Schema**:
+
+```
+RejectionRecord {
+  code: RejectionCode
+  category: RejectionCategory     // SAFETY | RESOURCE | ARBITRATION | VALIDATION | TEMPORAL | IDENTITY
+  severity: enum { low, medium, high, critical }
+  recoverable: bool
+  retry_after: optional Duration  // suggested backoff
+  message: string                 // human-readable, loggable
+  details: map<string,any>        // machine-readable context
+  triggered_by: string            // component that raised it
+  timestamp: Timestamp
+  visible_to_affect: bool         // always true for identity codes
+}
+```
+
+### 6.1 Rejection Code Table
 Every rejection is **published to Kidney + Body Schema** so the system can *express* the refusal ("my no is a complete sentence"). The identity codes are her *own* refusal, distinct from safety.
 
 | Code | Category | Severity | Recoverable? | Description |
@@ -87,7 +106,7 @@ Every rejection is **published to Kidney + Body Schema** so the system can *expr
 
 \* `critical` codes require higher-level resolution; never silently retried.
 
-## 6.1 Rules Governing Rejection Handling
+## 6.2 Rules Governing Rejection Handling
 
 1. **Visibility** — every `visible_to_affect = true` rejection is delivered to Kidney for expression via face, voice, posture, or language.
 2. **Recoverability** — `recoverable = true` → caller may retry with modified parameters. `false` → no auto-retry; higher-level resolution required.
@@ -113,7 +132,7 @@ Every rejection is **published to Kidney + Body Schema** so the system can *expr
    - **`IDENTITY_MACHINE_NO`** is the identity layer's *own* refusal — distinct from safety (`SAFE_HARD_ABORT`). This is where the SOUL ("my no is a complete sentence") becomes a first-class mechanism, not a safety veto. It gets the highest expression priority.
    - **`Recoverable? = No`** for `SAFE_HARD_ABORT`, `IDENTITY_MACHINE_NO`, `IDENTITY_LOCKED` — they need higher-level resolution and are never silently retried. Correct: the machine's "no" is a *decision*, not a transient error.
 6. **`queued` state added** — correct; verbs can be accepted-for-later, not just accepted/running.
-7. **v0.2.4 additions (2026-10-29):** severity + action dimensions, two new identity codes (`IDENTITY_LOCKED` for "identity is locked" violations, `TEMPORAL_DEADLINE` distinct from `TIMEOUT`), and the **Rules Governing Rejection Handling** (§6.1). The standout is **Expression Priority** — refusal at highest priority so "the refusal itself becomes part of the authentic presence of the being." That's the SOUL made operational.
+7. **v0.3 additions (2026-10-29):** formal `RejectionRecord` schema + `RejectionCategory` enum (§6.0). The code-name granularity refinement (SAFE_LIMIT → SAFE_JOINT_LIMIT/TORQUE_LIMIT, etc.) is cosmetic and available if a downstream consumer needs finer codes — not folded into the canonical table. **Taxonomy now locked; further iteration is polish, not progress.** The remaining real work is the v0.2 readout's Open Questions (safe-band function, capillary fabrication, impedance profiles, rejection→affect test suite), not more taxonomy refinement.
 
 ---
 
