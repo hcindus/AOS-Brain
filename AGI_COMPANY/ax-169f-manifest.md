@@ -198,6 +198,21 @@ Shoulder 5–6 + Elbow 2 + Wrist 3 + Hand 12+.
 
 *Color/type legend: red = flexor/extensor (or flexor/warm); blue = adduction/rotation (or extensor/cool); continuum = distributed COBRA actuation. The 21 are a curated expressive subset of the full kinematic DOF — chosen for visual impact + low energy, NOT locomotion/manipulation.*
 
+### 9b. Presence Engine — Combined Expression Vector (53-dim: 32 face + 21 body)
+`ExpressionVector v53` = `float32[53]`, range [-1.0 … +1.0]. 0 = neutral.
+
+| Index | Count | Group |
+|-------|-------|-------|
+| 0–5 | 6 | Face_Brow |
+| 6–13 | 8 | Face_Eye |
+| 14–19 | 6 | Face_NoseCheek |
+| 20–27 | 8 | Face_Mouth |
+| 28–31 | 4 | Face_Jaw |
+| 32–52 | 21 | Body_21 (drivers #1→index32 … #21→index52) |
+
+**Safety wrapper (Seam layer):** every vector sent inside `ExpressionCommand { timestamp, sequence, vector[53], globalIntensity, safetyFlags (bit0 = "can say no"), checksum }`. Safety Contract may zero/attenuate any channel before actuators.
+**Semantics:** -1.0 = full opposite extreme, 0 = neutral, +1.0 = full target. Local driver modules convert normalized → actuator pressure, respecting impedance + Safety limits.
+
 ---
 
 ## 4. Quantified BOM (per-phase procurement)
