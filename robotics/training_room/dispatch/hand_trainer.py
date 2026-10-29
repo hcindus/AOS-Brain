@@ -97,7 +97,8 @@ class HandSkillTrainer(SkillTrainer):
                     "reward": float(r),
                 }
                 t += 1
-                time.sleep(0.03)
+                time.sleep(0.12)
+            time.sleep(0.5)  # throttle display so training wins the CPU
 
 
 if __name__ == "__main__":

@@ -258,6 +258,13 @@ class SkillTrainer:
                     self.history = self.history[-500:]
 
     def _display(self):
+        # The display is a luxury, not the learning. It used to spin at ~30fps
+        # continuously, which on a 4-core box starved the _train threads (load
+        # hit 18 with 19 skills × 2 threads). Throttle it hard: one low-rate
+        # render loop with a long sleep between episodes so the train threads
+        # get the CPU. The tile updates a few times a second — plenty for a
+        # human watching, and it stops the cascade (foundation skills) from
+        # being starved to gen 0.
         while True:
             with self.lock:
                 theta = self.theta.copy()
@@ -279,7 +286,9 @@ class SkillTrainer:
                     "reward": float(r),
                 }
                 t += 1
-                time.sleep(0.03)
+                # yield aggressively — render at ~8fps, not 33fps
+                time.sleep(0.12)
+            time.sleep(0.5)  # pause between episodes so training wins the CPU
 
     def start(self):
         threading.Thread(target=self._train, daemon=True).start()
