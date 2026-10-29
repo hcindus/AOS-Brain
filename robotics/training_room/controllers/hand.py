@@ -11,20 +11,30 @@ from __future__ import annotations
 
 import numpy as np
 
-from gym.hand_env import GRASP_TARGET, FINGER_ACT
+from gym.hand_env import GRASP_TARGET  # noqa: F401  (kept for the default path)
 
 
 class HandController:
     name = "hand"
 
     def __init__(self, env, kp_body: float = 60.0, kd_body: float = 4.0,
-                 kp_grasp: float = 40.0, kd_grasp: float = 2.0):
+                 kp_grasp: float = 40.0, kd_grasp: float = 2.0,
+                 target: np.ndarray | None = None):
         self.env = env
         self.view = env.view
         self.kp_body = kp_body
         self.kd_body = kd_body
         self.kp_grasp = kp_grasp
         self.kd_grasp = kd_grasp
+        # target pose (default = env target if present, else the grasp curl)
+        if target is not None:
+            self.target = np.asarray(target, dtype=np.float64)
+        elif hasattr(env, "target"):
+            self.target = np.asarray(env.target, dtype=np.float64)
+        else:
+            self.target = np.asarray(GRASP_TARGET, dtype=np.float64)
+        # mask of joints the target specifies (non-zero) — only these are driven
+        self.mask = np.abs(self.target) > 1e-6
 
         self._q_offset = 1 + 4 + 3 + 3  # where actuated qpos begins in obs
 
@@ -41,11 +51,13 @@ class HandController:
         qvel = d.qvel[self.env.act_dof_adr]
 
         tau = np.zeros(n_act)
-        # body joints (0..27): PD hold toward nominal (0)
-        tau[0:28] = -self.kp_body * qpos[0:28] - self.kd_body * qvel[0:28]
-        # finger joints (28..39): PD toward grasp target
-        finger_err = qpos[28:40] - GRASP_TARGET
-        tau[28:40] = -self.kp_grasp * finger_err - self.kd_grasp * qvel[28:40]
+        # target-specified joints: PD toward target; everything else: hold at 0
+        # (legs stay at 0 = standing; non-gesture arm joints also hold at 0).
+        err = qpos - self.target
+        tau = -self.kp_grasp * err - self.kd_grasp * qvel
+        # hold body/legs at nominal (0) — a gentler gain so the standing body
+        # is stable while the arm+finger joints drive the gesture.
+        tau[0:14] = -self.kp_body * qpos[0:14] - self.kd_body * qvel[0:14]
 
         lo = m.actuator_ctrlrange[:, 0]
         hi = m.actuator_ctrlrange[:, 1]

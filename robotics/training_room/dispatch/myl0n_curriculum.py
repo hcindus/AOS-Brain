@@ -20,6 +20,7 @@ import time
 
 from dispatch.skill_trainer import SkillTrainer
 from controllers.balance import BalanceController
+from controllers.getup import GetUpController
 from controllers.ref_track import ReferenceTrackingController
 from controllers.squat import SquatController
 from controllers.walk_controller import WalkController
@@ -27,7 +28,14 @@ from controllers.walk_controller import WalkController
 
 # The ladder Myl0n climbs. Each entry: skill name, base-controller factory,
 # and the pass threshold (mean reward) + min generations before he can advance.
+#
+# getup comes BEFORE balance: he must learn to stand up (recover from a fall)
+# before he can balance. balance (static) → squat → walk had no recovery step,
+# so a fall was unrecoverable — the exact "he's fallen and can't get up" state.
 CURRICULUM = [
+    {"skill": "getup",   "min_gen": 20, "pass_r": 50.0,
+     "factory": lambda env: GetUpController(env),
+     "gate_reward": True, "start_lying": True},
     {"skill": "balance", "min_gen": 15, "pass_r": 250.0,
      "factory": lambda env: BalanceController(env), "gate_reward": True},
     {"skill": "squat",   "min_gen": 15, "pass_r": 0.0,

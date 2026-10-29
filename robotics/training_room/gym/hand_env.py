@@ -38,10 +38,20 @@ GRASP_TARGET = np.array([
 
 class HandGymEnv:
     def __init__(self, mjcf_path: str | None = None, horizon: int = 500,
-                 seed: int | None = None):
+                 seed: int | None = None, target: np.ndarray | None = None,
+                 root_locked: bool = False):
         self.view: ModelView = load(mjcf_path or HAND_MJCF)
         self.horizon = horizon
         self.rng = np.random.default_rng(seed)
+        # target pose (40-dim). Defaults to the grasp curl; gestures override
+        # with a full arm+finger target so the whole limb trains, not just fingers.
+        self.target = np.asarray(target if target is not None else GRASP_TARGET, dtype=np.float64)
+        # root_locked: kinematically freeze the free joint (base) so raising an
+        # arm doesn't tip the standing body. For gesture training we care about
+        # the limb reaching the pose, not the balance of a 40-DOF body.
+        self.root_locked = root_locked
+        self._root_qpos = None
+        self._root_qvel = None
 
         m = self.view.model
         self.n_act = m.nu                      # 40
@@ -69,6 +79,9 @@ class HandGymEnv:
         if qpos_noise > 0:
             d.qpos[self.act_qpos_adr] += self.rng.uniform(-qpos_noise, qpos_noise, size=self.n_act)
         mujoco.mj_forward(self.view.model, d)
+        # cache the root pose/vel for re-pinning when root_locked
+        self._root_qpos = d.qpos[0:7].copy()
+        self._root_qvel = d.qvel[0:6].copy()
         self._t = 0
         return self._observe()
 
@@ -78,12 +91,16 @@ class HandGymEnv:
         m = self.view.model
         action = np.asarray(action, dtype=np.float64)
         d.ctrl[:] = np.clip(action, m.actuator_ctrlrange[:, 0], m.actuator_ctrlrange[:, 1])
+        if self.root_locked:
+            # re-pin the free joint each step (kinematic base, like ref_track)
+            d.qpos[0:7] = self._root_qpos
+            d.qvel[0:6] = self._root_qvel
         mujoco.mj_step(m, d)
         self._t += 1
         obs = self._observe()
         reward = self._reward(action)
         done = self._done() or self._t >= self.horizon
-        info = {"alive": self._alive(), "upright": self._upright(), "grasp_err": self._grasp_err()}
+        info = {"alive": self._alive(), "upright": self._upright(), "grasp_err": self._pose_err()}
         return obs, reward, done, info
 
     def _observe(self) -> np.ndarray:
@@ -109,16 +126,28 @@ class HandGymEnv:
         # finger actuators 28..39 -> their joint qpos (via act_qpos_adr)
         return d.qpos[[self.act_qpos_adr[i] for i in FINGER_ACT]]
 
-    def _grasp_err(self) -> float:
-        return float(np.mean((self._finger_qpos() - GRASP_TARGET) ** 2))
+    def _pose_err(self) -> float:
+        """Mean squared error over the target's non-zero joints.
+
+        A gesture target zeroes the joints it doesn't care about (legs stay
+        0 to stand; the arm+finger joints are the gesture). We measure error
+        only on the joints the gesture actually specifies (non-zero target),
+        so "reach the pose" means "drive those joints to target," not "hold
+        every joint at 0."
+        """
+        q = self.view.data.qpos[self.act_qpos_adr]
+        mask = np.abs(self.target) > 1e-6
+        if not mask.any():
+            return 0.0
+        return float(np.mean((q[mask] - self.target[mask]) ** 2))
 
     def _reward(self, action: np.ndarray) -> float:
         alive = 1.0 if self._alive() else 0.0
         upright = 1.0 if self._upright() else 0.0
-        # grasp: close fingers to target (negative mean squared error)
-        grasp = -self._grasp_err()
+        # reach the target pose (negative mean squared error on gesture joints)
+        pose = -self._pose_err()
         energy = float(np.mean(np.square(action))) * 1e-4
-        return alive * upright * (1.0 + grasp) - energy
+        return alive * upright * (1.0 + pose) - energy
 
     def _done(self) -> bool:
         return not (self._alive() and self._upright())

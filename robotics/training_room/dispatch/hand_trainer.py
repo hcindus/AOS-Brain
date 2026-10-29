@@ -41,6 +41,8 @@ class HandSkillTrainer(SkillTrainer):
         self.n_params = self.n_act * self.obs_dim
         self.theta = np.zeros(self.n_params)
         self.rng = np.random.default_rng(seed)
+        self._stop = False
+        self.pose_err = 1.0
 
     def _rollout(self, env, base, theta) -> float:
         base.reset()
@@ -56,20 +58,38 @@ class HandSkillTrainer(SkillTrainer):
             t += 1
         return total
 
+    def _train(self):
+        while not self._stop:
+            eps = self.rng.standard_normal((self.popsize, self.n_params))
+            rewards = np.zeros(self.popsize)
+            for i in range(self.popsize):
+                rewards[i] = self._rollout(self.train_env, self.base_train, self.theta + self.sigma * eps[i])
+            rewards = np.nan_to_num(rewards, nan=-1e3, posinf=-1e3, neginf=-1e3)
+            A = (rewards - rewards.mean()) / (rewards.std() + 1e-8)
+            with self.lock:
+                self.theta += (self.lr / (self.popsize * self.sigma)) * np.einsum("i,ij->j", A, eps)
+                self.gen += 1
+                self.mean_r = float(rewards.mean())
+                self.max_r = float(rewards.max())
+                self.history.append([self.gen, self.mean_r, self.max_r])
+                if len(self.history) > 500:
+                    self.history = self.history[-500:]
+
     def _display(self):
         import time
-        while True:
+        while not self._stop:
             with self.lock:
                 theta = self.theta.copy()
             self.base_disp.reset()
             obs = self.disp_env.reset(qpos_noise=0.02)
             done = False
             t = 0
-            while (not done) and t < self.steps:
+            while (not done) and t < self.steps and not self._stop:
                 resid = self._residual(theta, obs)
                 tau = np.clip(self.base_disp.act(obs) + resid, -30.0, 30.0)
                 obs, r, done, info = self.disp_env.step(tau)
                 d = self.disp_env.view.data
+                self.pose_err = float(info.get("grasp_err", 1.0))
                 self.live = {
                     "alive": bool(info["alive"]),
                     "height": float(d.xpos[self.disp_env.view.root_id][2]),
