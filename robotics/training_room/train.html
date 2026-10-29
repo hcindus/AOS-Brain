@@ -131,7 +131,12 @@ function connect(){
         win.querySelector('[data-alive]').className = 'alive ' + (d.live.alive?'t':'f');
         win.querySelector('[data-gen]').textContent = 'gen ' + d.gen;
         win.querySelector('[data-reward]').textContent = 'r ' + d.max_r.toFixed(1);
-        win.querySelector('[data-foot]').textContent = 'base + ES residual · height ' + d.live.height.toFixed(2) + ' m';
+        let foot = 'base + ES residual · height ' + d.live.height.toFixed(2) + ' m';
+        if(d.skill && d.pass_r !== undefined && d.pass_r !== null){
+          foot = 'learning ' + d.skill + ' · pass r≥' + d.pass_r + ' · gen ' + d.gen + '/' + (d.min_gen||0);
+          if(d.completed && d.completed.length) foot += ' · done ' + d.completed.join('→');
+        }
+        win.querySelector('[data-foot]').textContent = foot;
       }
     }
   };

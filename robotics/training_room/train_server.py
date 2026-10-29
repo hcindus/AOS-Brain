@@ -28,7 +28,6 @@ from controllers.roll import RollController
 from controllers.crawl import CrawlController
 from controllers.ref_track import ReferenceTrackingController
 from controllers.walk_controller import WalkController
-from pilots.myl0n_pilot import Myl0nPilot
 
 WS_HOST = "127.0.0.1"
 WS_PORT = 8096
@@ -58,12 +57,6 @@ SKILLS = [
     {"name": "kneel_stand", "tier": 200, "factory": lambda env: ReferenceTrackingController(env, "kneel_stand"), "reference": "kneel_stand", "gate_reward": False, "ignore_done": True},
     {"name": "dance",   "tier": 100, "factory": lambda env: ReferenceTrackingController(env, "dance"), "reference": "dance", "gate_reward": False, "ignore_done": True},
     {"name": "fight",   "tier": 100, "factory": lambda env: ReferenceTrackingController(env, "fight"), "reference": "fight", "gate_reward": False, "ignore_done": True},
-    # Myl0n.r0s — the Captain's executive orchestrator, now embodied with a
-    # presence-engine head + body. He trains a residual on top of his own
-    # presence-driven PD hold, so he learns to *move* the body his affect
-    # already steers. (Ollama reasoning disabled during ES for speed; the
-    # pilot carries the full model for eval/graduation.)
-    {"name": "myl0n", "tier": 200, "factory": lambda env: Myl0nPilot(use_ollama=False), "gate_reward": True},
 ]
 
 trainers = {}
@@ -85,7 +78,15 @@ hand_trainer = HandSkillTrainer(name="hand")
 hand_trainer.all_trainers = []   # no knowledge sharing (different body)
 trainers["hand"] = hand_trainer
 
-all_trainers = [t for t in trainers.values() if t is not hand_trainer]
+# Myl0n.r0s — the Captain's executive orchestrator, embodied with a presence
+# engine. He climbs a skill ladder (balance → squat → walk → …), advancing on
+# a passing reward. Not in the body-sharing pool (his controller differs).
+from dispatch.myl0n_curriculum import Myl0nCurriculumTrainer
+myl0n_trainer = Myl0nCurriculumTrainer(name="myl0n")
+myl0n_trainer.all_trainers = []
+trainers["myl0n"] = myl0n_trainer
+
+all_trainers = [t for t in trainers.values() if t not in (hand_trainer, myl0n_trainer)]
 for t in all_trainers:
     t.all_trainers = all_trainers
 
@@ -119,6 +120,11 @@ async def handler(ws):
                         "max_r": t.max_r,
                         "history": t.history,
                         "live": t.live,
+                        # Myl0n's curriculum: what skill he's learning + progress
+                        "skill": getattr(t, "skill_name", name),
+                        "pass_r": getattr(t, "pass_r", None),
+                        "min_gen": getattr(t, "min_gen", None),
+                        "completed": getattr(t, "completed", []),
                     }
                     for name, t in trainers.items()
                 },
