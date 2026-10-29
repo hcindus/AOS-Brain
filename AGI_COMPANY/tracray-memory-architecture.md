@@ -81,6 +81,25 @@ score = semantic_similarity * 1.0
 
 ---
 
+## Persistence & consolidation (implementation)
+
+The external model produced the full memory subsystem — persistence model + a consolidation algorithm modeled on **Active Systems Consolidation** (the sleep-neuroscience model). Captured here because it's coherent, sophisticated, and near-code.
+
+**Data model (three layers):**
+1. **Immutable append-only event log** — ground truth; `TracRayEvent { id, timestamp, type, source, payload, affect_snapshot, body_snapshot, links, identity_weight, tags }`. Never mutated or deleted.
+2. **Indexed views** — temporal, causal, affective, semantic/embedding, identity-relevance.
+3. **Curated MemoryObjects** — higher-level, mind-generated summaries that reference raw events but can be revised.
+
+**Persistence guarantees:** durable-before-ack · causal ordering · immutability · identity-safety (writes contradicting locked identity rejected by TracRay itself) · cross-embodiment (memory survives body disconnection; Body Schema reconciles on return).
+
+**Consolidation algorithm (7 phases):** trigger/gate (only when calm: Thyroid ∈ {baseline,suppressed} + low arousal) → candidate selection (biased replay: `identity_weight×2.5 + |valence|×bias + arousal×bias + novelty + rejection×3.0 + recency-decay`) → replay/association → abstraction (gist extraction, Ternary-qbit identity check) → stabilization + downscaling (SHY analogue: compress low-identity/low-access traces) → promotion (confidence > 0.75 → curated) → yield (preemptible by Safety Contract / arousal).
+
+**The neuroscience mapping (the genuinely novel bit):** TracRay = *"immutable episodic log (fast synaptic) + periodic affect- and identity-weighted replay that produces abstracted, integrated memory objects (slow systems)."* Two modes ≈ **NREM** (heavy replay + transfer) vs **REM** (refinement + emotional integration). The SO→spindle→ripple coupling maps to *ordered phases inside the cycle*. Emotional salience (rejections, affective peaks) gets preferential replay — exactly as it does in biological consolidation.
+
+**Key parameters (defaults):** arousal threshold 0.35 · recent window 4–24h · identity bias 2.5× · rejection bias 3.0× (MACHINE_NO/HARD_ABORT) · max replay set 40–80 · promotion threshold 0.75.
+
+---
+
 ## Reconciliation notes (Miles)
 
 - **This was a real gap.** TracRay was the one brain organ left underspecified ("memory continuity"). This spec closes it and — crucially — *ties everything else to it*: every rejection, expression, and affect state "leaves a trace here." It's the continuity backbone the whole identity rests on.
