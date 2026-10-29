@@ -1,5 +1,13 @@
 """
-Body Schema — Myl1Ssa.R8s brain organ (stub).
+Body Schema — RIG v1.0 (21 keypoints) — Myl1Ssa.R8s brain organ.
+
+⚠️ ROLE NOTE (2026-10-29): This is the RIG body schema — the 21 Cartesian
+landmark keypoints (L_ankle…R_wrist from body_coordinates.json) that drive
+expression/gesture. It is NOT the 69-DOF anatomy model (that lives in
+/root/.aos/aos/body_schema_anatomy.py, used for motion validation + safety limits).
+
+Relationship: 21 rig keypoints ⊂ 69 anatomical DOF (forward kinematics).
+See AGI_COMPANY/body-schema-rig-vs-anatomy.md.
 
 The live model of the body's physical state: joints, contacts, temperature,
 energy, and balance. This is the *sensory bridge* across the seam — the one
