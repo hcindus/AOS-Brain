@@ -55,6 +55,32 @@ Retrieval is **affect- and identity-modulated**: current Cortex state biases wha
 
 ---
 
+## Retrieval algorithm (pseudo-code)
+
+The external model pushed TracRay's *read* side into near-code. Captured here because it's the first thing tonight that's implementation-ready, not just prose.
+
+**Scoring** — rank candidates by weighted sum:
+```
+score = semantic_similarity * 1.0
+      + affective_congruence(affect_snapshot, current_affect) * 0.8
+      + identity_weight * 1.2
+      + recency_score(timestamp) * 0.6
+      + (rejection ∈ {IDENTITY_MACHINE_NO, SAFE_HARD_ABORT} ? +0.9 : 0)
+      + (is_curated_memory_object ? +0.5 : 0)
+```
+
+**Filtering & safety** — before delivery, each candidate passes:
+- Ternary qbit `would_contradict_identity` → suppress (unless `urgency == critical`, then flag sensitive).
+- Kidney `pre_approve` (if the consumer is the Kidney).
+
+**Retrieval modes:** `recent_context` · `similar_situation` · `causal_chain` · `identity_reflection` · `narrative` · `targeted_lookup` — each with a typical consumer organ.
+
+**Safety invariants:** locked identity anchors never overwritten by retrieval; contradiction suppressed unless critical+acknowledged; Kidney gates expression even post-retrieval; high-identity retrievals themselves logged → later reconsolidation.
+
+**Key weights (defaults):** identity 1.2 > semantic 1.0 > affective 0.8 > recency 0.6; rejection +0.9, curated +0.5. *(Identity is the strongest pull — consistent with "identity locked.")*
+
+---
+
 ## Reconciliation notes (Miles)
 
 - **This was a real gap.** TracRay was the one brain organ left underspecified ("memory continuity"). This spec closes it and — crucially — *ties everything else to it*: every rejection, expression, and affect state "leaves a trace here." It's the continuity backbone the whole identity rests on.
