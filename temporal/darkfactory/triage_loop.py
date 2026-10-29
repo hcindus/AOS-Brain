@@ -28,6 +28,8 @@ ALLOWED_PRODUCTS = {
     "RS-80", "RS-79", "neon-courier", "quantum-defender", "laser-pistol",
     # Agentic software & infrastructure (mission.md GOAL #7, Captain 2026-08-27)
     "IC-Browser", "IC-Browser-v1", "agentic-software",
+    # Body Schema organ (Myl1Ssa.R8s seam — 2026-10-29)
+    "body_schema",
 }
 NON_GOAL_KEYWORDS = ["medical", "legal", "financial", "autonomous deploy", "production deploy"]
 

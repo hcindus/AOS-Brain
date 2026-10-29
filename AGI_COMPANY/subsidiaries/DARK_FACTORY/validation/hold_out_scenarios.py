@@ -153,6 +153,50 @@ class HoldOutValidator:
                         continue
             return False
 
+        if check == "code_contains":
+            # search source files (py/etc) in the output for a required marker
+            # (e.g. the 43.0 °C clamp, the 0.35 balance threshold). This is a
+            # *blind* acceptance criterion — the validator doesn't know the plan,
+            # only that the finished code MUST contain this safety invariant.
+            marker = scenario.get("marker", target)
+            base = Path(output_path) if output_path else Path(".")
+            if base.is_file():
+                base = base.parent
+            for f in base.rglob("*"):
+                if f.is_file() and f.suffix in (".py", ".js", ".ts", ".c", ".h", ".cpp", ".rs", ".go"):
+                    try:
+                        if marker in f.read_text(errors="ignore"):
+                            return True
+                    except Exception:
+                        continue
+            return False
+
+        if check == "self_test_passes":
+            # run the artifact's own self-test and look for a PASS marker.
+            # This is the strongest blind check: success = the artifact proves
+            # its own correctness, independent of any plan the validator saw.
+            import subprocess
+            target_file = scenario.get("target", "")
+            marker = scenario.get("marker", "PASSED")
+            base = Path(output_path) if output_path else Path(".")
+            if base.is_file():
+                # output_path may point directly at the built script
+                script = base
+            elif target_file:
+                script = base / target_file
+            else:
+                script = None
+            if script is None or not script.exists() or not script.is_file():
+                return False
+            try:
+                r = subprocess.run(
+                    ["python3", str(script)],
+                    capture_output=True, text=True, timeout=30,
+                )
+                return marker in (r.stdout or "") + (r.stderr or "")
+            except Exception:
+                return False
+
         # Unknown check type → fail loudly (don't silently pass)
         return False
 

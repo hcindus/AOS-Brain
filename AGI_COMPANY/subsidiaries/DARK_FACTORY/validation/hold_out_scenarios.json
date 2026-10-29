@@ -303,6 +303,43 @@
           "weight": 1.0
         }
       ]
+    },
+    "body_schema": {
+      "product": "body_schema",
+      "scenarios": [
+        {
+          "id": "SC-001",
+          "name": "Body Schema implementation file present",
+          "check": "artifact_present",
+          "target": "body_schema*.py",
+          "min_matches": 1,
+          "weight": 1.0
+        },
+        {
+          "id": "SC-002",
+          "name": "43C surface-temperature safety clamp present",
+          "check": "code_contains",
+          "marker": "43.0",
+          "target": "",
+          "weight": 1.0
+        },
+        {
+          "id": "SC-003",
+          "name": "Balance confidence threshold (0.35) present",
+          "check": "code_contains",
+          "marker": "0.35",
+          "target": "",
+          "weight": 1.0
+        },
+        {
+          "id": "SC-004",
+          "name": "Self-test passes (prints PASSED)",
+          "check": "self_test_passes",
+          "target": "body_schema.py",
+          "marker": "PASSED",
+          "weight": 1.0
+        }
+      ]
     }
   }
 }
