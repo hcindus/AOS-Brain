@@ -77,12 +77,15 @@ for s in SKILLS:
 # skill (higher gen count). The `tier` field is just documentation now — the
 # actual sharing is driven by live generation counts, so any skill that trains
 # past another's gen automatically starts sharing with it.
-# The hand uses a different env (underactuated 40-DOF) + grasp reward, so it
-# gets its own trainer rather than the walk-based SkillTrainer.
+# The hand uses a different env (underactuated 40-DOF, 91-dim obs) + grasp
+# reward, so it gets its own trainer rather than the walk-based SkillTrainer.
+# It must NOT share residuals with the body skills — different obs/act dims.
 from dispatch.hand_trainer import HandSkillTrainer
-trainers["hand"] = HandSkillTrainer(name="hand")
+hand_trainer = HandSkillTrainer(name="hand")
+hand_trainer.all_trainers = []   # no knowledge sharing (different body)
+trainers["hand"] = hand_trainer
 
-all_trainers = list(trainers.values())
+all_trainers = [t for t in trainers.values() if t is not hand_trainer]
 for t in all_trainers:
     t.all_trainers = all_trainers
 
