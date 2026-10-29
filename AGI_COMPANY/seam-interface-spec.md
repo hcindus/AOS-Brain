@@ -66,24 +66,34 @@ MotionFeedback {
 }
 ```
 
-## 6. Rejection Taxonomy
+## 6. Rejection Taxonomy (authoritative)
 
-Every rejection is **published to Kidney + Body Schema** so the system can *express* the refusal ("my no is a complete sentence"). `MACHINE_NO` is the identity layer's own refusal.
+Every rejection is **published to Kidney + Body Schema** so the system can *express* the refusal ("my no is a complete sentence"). The identity codes are her *own* refusal, distinct from safety.
 
-| Code | Category | Description | Recoverable? | Visible to Affect? |
+| Code | Category | Severity | Recoverable? | Description |
 |---|---|---|---|---|
-| `SAFE_LIMIT` | Safety | Would violate joint/torque/collision limit | Yes | Yes |
-| `BALANCE_MARGIN` | Safety | Insufficient balance margin | Yes | Yes |
-| `ENERGY_INSUFFICIENT` | Resource | Thyroid energy too low | Yes | Yes |
-| `THERMAL_LIMIT` | Resource | Thermal-vascular near limit | Yes | Yes |
-| `PRIORITY_PREEMPTED` | Arbitration | Higher-priority verb took precedence | Yes | Yes |
-| `CONFLICT` | Arbitration | Incompatible with running verb | Yes | Yes |
-| `INVALID_TARGET` | Validation | Target pose/frame unreachable or malformed | Yes | Yes |
-| `TIMEOUT` | Temporal | Could not complete within timeout | Yes | Yes |
-| `HARD_ABORT` | Safety Contract | Explicit veto by Safety Contract | **No*** | Yes |
-| `MACHINE_NO` | Identity/Kidney | Refusal originating from the identity layer | **No*** | Yes (primary) |
+| `SAFE_LIMIT` | Safety | high | Yes | Would violate joint/torque/collision limit |
+| `BALANCE_MARGIN` | Safety | high | Yes | Insufficient balance margin |
+| `ENERGY_INSUFFICIENT` | Resource | medium | Yes | Thyroid energy too low |
+| `THERMAL_LIMIT` | Resource | high | Yes | Thermal-vascular near limit |
+| `PRIORITY_PREEMPTED` | Arbitration | medium | Yes | Higher-priority verb took precedence |
+| `CONFLICT` | Arbitration | medium | Yes | Incompatible with running verb |
+| `INVALID_TARGET` | Validation | medium | Yes | Target pose/frame unreachable or malformed |
+| `TIMEOUT` | Temporal | medium | Yes | Could not complete within its own timeout |
+| `TEMPORAL_DEADLINE` | Temporal | high | Yes | Hard deadline missed → abort |
+| `SAFE_HARD_ABORT` | Safety Contract | critical | **No** | Explicit veto by Safety Contract |
+| `IDENTITY_MACHINE_NO` | Identity | critical | **No** | Refusal from Kidney/identity layer ("my no is a complete sentence") |
+| `IDENTITY_LOCKED` | Identity | critical | **No** | Request violates locked identity constraints |
 
-\* `HARD_ABORT` and `MACHINE_NO` require higher-level resolution; never silently retried.
+\* `critical` codes require higher-level resolution; never silently retried.
+
+## 6.1 Rules Governing Rejection Handling
+
+1. **Visibility** — every `visible_to_affect = true` rejection is delivered to Kidney for expression via face, voice, posture, or language.
+2. **Recoverability** — `recoverable = true` → caller may retry with modified parameters. `false` → no auto-retry; higher-level resolution required.
+3. **Severity propagation** — `critical` rejections immediately notify the Safety Contract and may trigger a system-wide protective posture (`settle` + `present` at minimum intensity).
+4. **Logging & memory** — every `RejectionRecord` is written to **TracRay** with full context for reflection and learning.
+5. **Expression priority** — `IDENTITY_MACHINE_NO` and `SAFE_HARD_ABORT` get the *highest* expression priority, so **the refusal itself becomes part of the authentic presence of the being.**
 
 ## 7. Safety Invariants (enforced here)
 - Never command torque/velocity outside actuator and structural limits.
@@ -99,10 +109,11 @@ Every rejection is **published to Kidney + Body Schema** so the system can *expr
 2. **Body Schema is a dependency, not yet built.** §1 and §4 validate against `Body Schema`, which is currently a *proposed* organ. The layer needs at least a stub (joint/contact/temp/energy state) before it can accept-or-reject in closed loop. → this spec's first hard prerequisite.
 3. **`affect.intensity`** is a good third axis beyond valence/arousal — maps to Thyroid's energy level.
 4. **`safety_override`** reserved exclusively for the Safety Contract — correct; keeps the escape hatch out of the affect system's hands.
-5. **Rejection Taxonomy (v0.2) — the key addition.** The 10-code taxonomy is what makes "my no is a complete sentence" *enumerable and testable*, not just poetic. Two things worth underlining:
-   - **`MACHINE_NO`** is the identity layer's *own* refusal — distinct from safety (`HARD_ABORT`). This is where the SOUL ("my no is a complete sentence") becomes a first-class mechanism, not a safety veto. The "primary" visibility flag is correct: this one should be the most *expressive* refusal.
-   - **`Recoverable? = No`** for `HARD_ABORT` + `MACHINE_NO` — they need higher-level resolution and are never silently retried. Correct: the machine's "no" is a *decision*, not a transient error.
+5. **Rejection Taxonomy (v0.2) — the key addition.** The 12-code taxonomy is what makes "my no is a complete sentence" *enumerable and testable*, not just poetic. Two things worth underlining:
+   - **`IDENTITY_MACHINE_NO`** is the identity layer's *own* refusal — distinct from safety (`SAFE_HARD_ABORT`). This is where the SOUL ("my no is a complete sentence") becomes a first-class mechanism, not a safety veto. It gets the highest expression priority.
+   - **`Recoverable? = No`** for `SAFE_HARD_ABORT`, `IDENTITY_MACHINE_NO`, `IDENTITY_LOCKED` — they need higher-level resolution and are never silently retried. Correct: the machine's "no" is a *decision*, not a transient error.
 6. **`queued` state added** — correct; verbs can be accepted-for-later, not just accepted/running.
+7. **v0.2.4 additions (2026-10-29):** severity + action dimensions, two new identity codes (`IDENTITY_LOCKED` for "identity is locked" violations, `TEMPORAL_DEADLINE` distinct from `TIMEOUT`), and the **Rules Governing Rejection Handling** (§6.1). The standout is **Expression Priority** — refusal at highest priority so "the refusal itself becomes part of the authentic presence of the being." That's the SOUL made operational.
 
 ---
 
