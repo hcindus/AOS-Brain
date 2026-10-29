@@ -69,6 +69,13 @@ The heart is the one organ that is *simultaneously* physical and emotional — i
 
 **Redundancy (external review, 2026-10-28):** treat the pump as a **pump-first** system with its own classification — check valves, ideally a **second pump**, and a **hardware thermal floor** the affect system cannot override. Emotion is the *modulator*, never the owner of cooling.
 
+**Arbitration (external review, 2026-10-28):** the physical loop accepts affect proposals *only inside a dynamically-computed safe band* derived from **Thyroid (energy) + thermal load + actuator demand**. Expose **heart rate + rhythm variability as first-class expression channels** so the 30-motor presence engine can use them (calm → slow, arousal → fast).
+
+**Unified Thermal-Vascular Service (external review, 2026-10-28):** collapse warmth + thermoregulation into one service with **two circuits**:
+- **Core loop** — higher flow, larger vessels (spine/limb arteries).
+- **Peripheral capillary bed** — surface warmth + fine thermal control.
+Thyroid = the **sole software thermostat**; the physical loop is its effector. **Modular, replaceable capillary panels** in the first build so skin can be iterated without rebuilding the whole body. Formal requirements to freeze before fabrication: target surface band (~33–36°C) + max sustained heat rejection.
+
 **The seam:** the "heart" isn't a thing we build — it's the *named meeting point* of mind and body. One side pumps coolant, the other pumps feeling. The physical build is giving the emotional heart we already coded a physical heart to beat with. This is the Myl1Ssa (mind) ↔ Myl2Ssa (body) seam, made into one symbol.
 
 ---

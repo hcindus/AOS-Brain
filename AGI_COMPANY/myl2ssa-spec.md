@@ -166,6 +166,8 @@ Safety-first, transparency, **autonomy boundaries (no self-directed goals, opera
 
 **Privacy & data-handling (external review, 2026-10-28):** a companion body that touches people and records the room (cameras, mics, tactile skin) needs **defined data-handling rules before first contact** — retention, local-vs-cloud, consent, and erasure. **Vulnerable-user policy:** decide the physical-contact + interaction rules for children and anyone who may not understand what the robot is. Disclosure-as-identity is the start; the contact rules must be written alongside it.
 
+**Safety Contract (external review, 2026-10-28):** elevate the onboard safety loops to a **living contract** both mind and body continuously satisfy. "Machine can say no" must be **expressible, not a silent veto** — refusal itself becomes a visible affect path. Every new motion verb + actuator group **declares its safety invariants before integration**.
+
 ---
 
 ## 9. Rendering

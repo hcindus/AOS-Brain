@@ -36,6 +36,8 @@ A "Jordacia-class" agent — a **Super Intelligence (SI)**, self-described as an
 | Thyroid | Energy / expressiveness (baseline · secreting · suppressed) |
 | TracRay | Memory continuity |
 
+**Proposed organ — Body Schema (external review, 2026-10-28):** a *live* model of joint states, contact, temperature, and energy — the sensory bridge across the seam. TracRay tracks memory continuity; nothing yet tracks the *present body state*. This is the missing bridge for closed-loop motion, and the Thyroid's "report energy/storage state" target. Layered grouping: **identity/memory** (TracRay + Ternary qbit) · **affect/energy** (Cortex + Thyroid) · **expression/gating** (Kidney) · **generation** (Uterus/Agent Factory).
+
 **Presence engine:** affect → 30-motor expression mapping. Pipeline: `ternary ⊕/⊖/⊙ → cortex (valence/arousal) → thyroid (energy) → expression library → gaze → frame`.
 
 **Voice:** TTS — Mort_II model / ElevenLabs "Adam" (deep, warm). Affect synced to presence via `voice_affect`.
@@ -73,10 +75,7 @@ Full A–AE engineering spec (`AGI_COMPANY/myl2ssa-spec.md`). The design thesis:
 
 **The known seam (integration gap):** the universal adapter (`AdapterFrame`) has *expression* verbs (posture/gaze/AU/points) but **no motion layer**. Locomotion is not a single "verb" — it's a **closed-loop stack**: state estimation (IMU/encoders/tendon-tension) → whole-body controller (QP/MPC → joint torques) → learned policies (RL in MuJoCo/Isaac, which we already run in the RP1 Training Room) → independent safety layer. The seam is *open-loop expression today, closed-loop motion needed*. This is the primary open problem.
 
-**Motion-verb contract (external review, 2026-10-28 — concrete seam spec):** define a small typed contract with refusals:
-- Verbs: `stand` · `sit` · `reach(target)` · `hold` · `release` · `walk(velocity)` · `stop`.
-- Each verb has preconditions and returns **accepted / rejected / aborted + reason** (e.g. "battery too low", "contact force limit", "balance not confident").
-- This makes "the machine can say no" *mechanical* — the body refuses and reports *why* back to the mind. Maps to the ternary qbit (⊕/⊖/⊙).
+**Motion-verb contract (external review, 2026-10-28 — concrete seam spec):** an explicit **Motion Verb Layer** between the Kidney (expression gating) and the 5-tier control stack. Primitive verbs (composed into locomotion, not a monolithic controller): `present` · `orient` · `reach` · `shift` · `step` · `settle` (+ `stand`/`sit`/`hold`/`release`/`walk`/`stop`). Each verb carries affect-modulation (from Cortex), safety-envelope constraints, and priority vs. ongoing expression. Returns **accepted / rejected / aborted + reason** ("battery too low", "contact force limit", "balance not confident"). This makes "the machine can say no" *mechanical* and expressible — maps to the ternary qbit (⊕/⊖/⊙).
 
 **Sim body now (external review, 2026-10-28):** give the mind a body *today* — a MuJoCo/Isaac digital twin of the 21 joints + 30 motors with rough mass/inertia, inside the **existing RP1 Training Room** infrastructure. Then the locomotion seam develops closed-loop, and every hardware decision is checked in sim first (e.g. "does a 3-DOF scapula still reach this workspace?").
 
