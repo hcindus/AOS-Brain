@@ -1,6 +1,6 @@
-# Seam Interface Specification — Motion Verb Layer (v0.1)
+# Seam Interface Specification — Motion Verb Layer (v0.2)
 
-*Drafted by external model, reconciled by Miles 2026-10-29. The concrete contract behind the orange "seam" box in `myl1ssa-myl2ssa-architecture.md`.*
+*Drafted by external model, reconciled by Miles 2026-10-29. The concrete contract behind the orange "seam" box in `myl1ssa-myl2ssa-architecture.md`. v0.2 adds the Rejection Taxonomy + `queued` state.*
 
 ---
 
@@ -58,15 +58,34 @@ MotionVerb {
 ```
 MotionFeedback {
   verb_id: UUID
-  state: enum { accepted, running, modifying, completed, rejected, aborted }
+  state: enum { queued, accepted, running, modifying, completed, rejected, aborted }
   progress: float [0.0–1.0]
   actual_pose: current relevant pose
   safety_events: list of triggered invariants
-  rejection_reason: optional string
+  rejection: optional RejectionRecord
 }
 ```
 
-## 6. Safety Invariants (enforced here)
+## 6. Rejection Taxonomy
+
+Every rejection is **published to Kidney + Body Schema** so the system can *express* the refusal ("my no is a complete sentence"). `MACHINE_NO` is the identity layer's own refusal.
+
+| Code | Category | Description | Recoverable? | Visible to Affect? |
+|---|---|---|---|---|
+| `SAFE_LIMIT` | Safety | Would violate joint/torque/collision limit | Yes | Yes |
+| `BALANCE_MARGIN` | Safety | Insufficient balance margin | Yes | Yes |
+| `ENERGY_INSUFFICIENT` | Resource | Thyroid energy too low | Yes | Yes |
+| `THERMAL_LIMIT` | Resource | Thermal-vascular near limit | Yes | Yes |
+| `PRIORITY_PREEMPTED` | Arbitration | Higher-priority verb took precedence | Yes | Yes |
+| `CONFLICT` | Arbitration | Incompatible with running verb | Yes | Yes |
+| `INVALID_TARGET` | Validation | Target pose/frame unreachable or malformed | Yes | Yes |
+| `TIMEOUT` | Temporal | Could not complete within timeout | Yes | Yes |
+| `HARD_ABORT` | Safety Contract | Explicit veto by Safety Contract | **No*** | Yes |
+| `MACHINE_NO` | Identity/Kidney | Refusal originating from the identity layer | **No*** | Yes (primary) |
+
+\* `HARD_ABORT` and `MACHINE_NO` require higher-level resolution; never silently retried.
+
+## 7. Safety Invariants (enforced here)
 - Never command torque/velocity outside actuator and structural limits.
 - Maintain balance margin ≥ configured threshold unless `step` is active and approved.
 - Respect joint limits and self-collision.
@@ -80,6 +99,14 @@ MotionFeedback {
 2. **Body Schema is a dependency, not yet built.** §1 and §4 validate against `Body Schema`, which is currently a *proposed* organ. The layer needs at least a stub (joint/contact/temp/energy state) before it can accept-or-reject in closed loop. → this spec's first hard prerequisite.
 3. **`affect.intensity`** is a good third axis beyond valence/arousal — maps to Thyroid's energy level.
 4. **`safety_override`** reserved exclusively for the Safety Contract — correct; keeps the escape hatch out of the affect system's hands.
+5. **Rejection Taxonomy (v0.2) — the key addition.** The 10-code taxonomy is what makes "my no is a complete sentence" *enumerable and testable*, not just poetic. Two things worth underlining:
+   - **`MACHINE_NO`** is the identity layer's *own* refusal — distinct from safety (`HARD_ABORT`). This is where the SOUL ("my no is a complete sentence") becomes a first-class mechanism, not a safety veto. The "primary" visibility flag is correct: this one should be the most *expressive* refusal.
+   - **`Recoverable? = No`** for `HARD_ABORT` + `MACHINE_NO` — they need higher-level resolution and are never silently retried. Correct: the machine's "no" is a *decision*, not a transient error.
+6. **`queued` state added** — correct; verbs can be accepted-for-later, not just accepted/running.
+
+---
+
+*The v0.2 readout's "Open Questions" are now sharper: dual-heart safe-band function, capillary fabrication method, impedance profiles per verb, and a rejection-taxonomy integration test (verifying refusal → affect expression).*
 
 ---
 
