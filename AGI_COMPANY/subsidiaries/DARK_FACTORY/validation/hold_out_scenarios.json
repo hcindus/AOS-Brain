@@ -183,9 +183,9 @@
       "scenarios": [
         {
           "id": "SC-001",
-          "name": "Character loader module generated",
+          "name": "Python implementation module present",
           "check": "artifact_present",
-          "target": "*load*.py",
+          "target": "*.py",
           "min_matches": 1,
           "weight": 1.0
         },

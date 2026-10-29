@@ -1,0 +1,10 @@
+{
+  "spec_id": "SPEC-BODYSCHEMA-001",
+  "title": "Body Schema organ — live physical-state model (sensory bridge across the seam)",
+  "project_name": "agentic-software",
+  "build_type": "codegen",
+  "source_path": "/root/.openclaw/workspace/characters/myl1ssa/Myl1Ssa/brain/",
+  "priority": "high",
+  "max_duration_minutes": 60,
+  "objective": "Provide/verify body_schema.py — the BodySchema organ for Myl1Ssa.R8s. Requirements: (1) a thread-safe Python class holding live joint state (the 21 body joints: L/R ankle/knee/hip, pelvis, waist, L/R bust, chest, L/R shoulder, neck, head, L/R ear, L/R elbow, L/R wrist), active contacts, surface+core temperature, energy (0.0-1.0 + baseline/secreting/suppressed), balance margin, and posture; (2) methods update_joint / set_contact / set_surface_temperature / set_core_temperature / set_energy / set_balance / set_posture / digest / joint / get_surface_temperature / get_energy / is_balanced / reconcile; (3) surface temperature hard-clamped to a 43.0 °C ceiling (safety, spec §X) and balance 'confident' threshold at margin >= 0.35 (BALANCE_MARGIN rejection); (4) a self-test runnable via `python3 body_schema.py` that asserts the 43 °C clamp and the 0.35 balance threshold and prints PASSED. Keep it self-contained with no dependencies beyond the standard library."
+}
