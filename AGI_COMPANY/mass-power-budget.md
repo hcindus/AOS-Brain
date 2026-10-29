@@ -2,6 +2,8 @@
 
 *Rough starting estimates to argue with — all tagged `hypothesis`. The point is to expose conflicts early ("efficiency is the enemy"). Seeded by Miles 2026-10-29.*
 
+> **Config pin note (2026-10-29):** AX-169F manifest (`ax-169f-manifest.md` §5) pins the target to the **LEAN config ≈ 186 DOF / 38.7 kg dry** (Phase 1–3), with FULL = 312 DOF / 61.4 kg as the Phase 4–5 extension. This budget's **50 kg** target sits between the two; reconcile downward to **~38.7 kg** for the lean expression-mannequin build, or flag which config this budget is actually seeding. The conflicts below (#1 pneumatic supply, #2 thermal undersized, #3 spine part-count) hold under *either* config.
+
 ---
 
 ## 1. Mass budget (target total + per segment)
