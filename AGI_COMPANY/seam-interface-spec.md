@@ -114,6 +114,32 @@ Every rejection is **published to Kidney + Body Schema** so the system can *expr
 4. **Logging & memory** — every `RejectionRecord` is written to **TracRay** with full context for reflection and learning.
 5. **Expression priority** — `IDENTITY_MACHINE_NO` and `SAFE_HARD_ABORT` get the *highest* expression priority, so **the refusal itself becomes part of the authentic presence of the being.**
 
+## 6.3 Rejection → Kidney Expression (how "no" becomes presence)
+
+Rejections are never silent — the Motion Verb Layer emits `motion.verb.rejection` on the organ bus with a `RejectionRecord` (carrying `original_verb`, `original_affect`, `verb_id`).
+
+**Delivery guarantees by severity:**
+
+| Severity | Delivery | Kidney handling | Expression priority |
+|---|---|---|---|
+| low | best-effort | logged / lightly expressed | low |
+| medium | at-least-once | Kidney decides | medium |
+| high | at-least-once + ack | strong candidate for visible expression | high |
+| critical | guaranteed + immediate | must ack; highest priority | highest |
+
+**Kidney responsibilities:** receive → contextualize vs. affect + original intent → decide expression level (**suppress** / **soft** / **full**) → gate further verbs on `IDENTITY_MACHINE_NO`/`SAFE_HARD_ABORT` → write to TracRay.
+
+**Governing principles inside the expression logic:**
+1. **Identity locked** — nothing expressed contradicts core identity.
+2. **Expression free** — within locked identity, default toward *allowing* expression, not suppressing.
+3. **Refusal is authentic** — `MACHINE_NO` + hard aborts are never hidden.
+4. **Coherence** — expression consistent with affect/energy/body state.
+5. **Proportionality** — expression intensity matches event severity + current arousal.
+
+**Special cases:** `IDENTITY_MACHINE_NO` + `SAFE_HARD_ABORT` ride a high-priority channel (can't drop/delay); the Kidney may itself *originate* an `IDENTITY_MACHINE_NO` back into the layer (closing the loop); all rejections remain in Body Schema for coherence.
+
+*Worked example:* `reach` rejected with `SAFE_BALANCE_MARGIN` (high) → moderate arousal, slightly negative valence → **soft→full** expression: subtle facial tightening + small backward weight shift + low vocal tone change. Refusal is visible and embodied, not theatrical.
+
 ## 7. Safety Invariants (enforced here)
 - Never command torque/velocity outside actuator and structural limits.
 - Maintain balance margin ≥ configured threshold unless `step` is active and approved.
@@ -133,6 +159,7 @@ Every rejection is **published to Kidney + Body Schema** so the system can *expr
    - **`Recoverable? = No`** for `SAFE_HARD_ABORT`, `IDENTITY_MACHINE_NO`, `IDENTITY_LOCKED` — they need higher-level resolution and are never silently retried. Correct: the machine's "no" is a *decision*, not a transient error.
 6. **`queued` state added** — correct; verbs can be accepted-for-later, not just accepted/running.
 7. **v0.3 additions (2026-10-29):** formal `RejectionRecord` schema + `RejectionCategory` enum (§6.0). The code-name granularity refinement (SAFE_LIMIT → SAFE_JOINT_LIMIT/TORQUE_LIMIT, etc.) is cosmetic and available if a downstream consumer needs finer codes — not folded into the canonical table. **Taxonomy now locked; further iteration is polish, not progress.** The remaining real work is the v0.2 readout's Open Questions (safe-band function, capillary fabrication, impedance profiles, rejection→affect test suite), not more taxonomy refinement.
+8. **v0.4 additions (2026-10-29):** §6.3 "Rejection → Kidney Expression" — the event-bus path (`motion.verb.rejection`), delivery guarantees by severity, the Kidney's suppress/soft/full decision, and five governing principles (identity locked / expression free / refusal authentic / coherence / **proportionality**). This is the genuinely-new piece: it specifies *how* refusal becomes presence, not just that it's expressed. **Spec is now complete and locked.**
 
 ---
 
