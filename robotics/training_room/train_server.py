@@ -28,6 +28,7 @@ from controllers.roll import RollController
 from controllers.crawl import CrawlController
 from controllers.ref_track import ReferenceTrackingController
 from controllers.walk_controller import WalkController
+from pilots.myl0n_pilot import Myl0nPilot
 
 WS_HOST = "127.0.0.1"
 WS_PORT = 8096
@@ -57,6 +58,12 @@ SKILLS = [
     {"name": "kneel_stand", "tier": 200, "factory": lambda env: ReferenceTrackingController(env, "kneel_stand"), "reference": "kneel_stand", "gate_reward": False, "ignore_done": True},
     {"name": "dance",   "tier": 100, "factory": lambda env: ReferenceTrackingController(env, "dance"), "reference": "dance", "gate_reward": False, "ignore_done": True},
     {"name": "fight",   "tier": 100, "factory": lambda env: ReferenceTrackingController(env, "fight"), "reference": "fight", "gate_reward": False, "ignore_done": True},
+    # Myl0n.r0s — the Captain's executive orchestrator, now embodied with a
+    # presence-engine head + body. He trains a residual on top of his own
+    # presence-driven PD hold, so he learns to *move* the body his affect
+    # already steers. (Ollama reasoning disabled during ES for speed; the
+    # pilot carries the full model for eval/graduation.)
+    {"name": "myl0n", "tier": 200, "factory": lambda env: Myl0nPilot(use_ollama=False), "gate_reward": True},
 ]
 
 trainers = {}
@@ -70,21 +77,33 @@ for s in SKILLS:
 # skill (higher gen count). The `tier` field is just documentation now — the
 # actual sharing is driven by live generation counts, so any skill that trains
 # past another's gen automatically starts sharing with it.
+# The hand uses a different env (underactuated 40-DOF) + grasp reward, so it
+# gets its own trainer rather than the walk-based SkillTrainer.
+from dispatch.hand_trainer import HandSkillTrainer
+trainers["hand"] = HandSkillTrainer(name="hand")
+
 all_trainers = list(trainers.values())
 for t in all_trainers:
     t.all_trainers = all_trainers
 
-SKELETON: dict = {}
-
-
-def skeleton_info(env: RP1GymEnv) -> dict:
+def skeleton_info(env) -> dict:
     m = env.view.model
     parents = [int(m.body_parentid[i]) for i in range(m.nbody)]
     return {"parents": parents, "nbody": m.nbody}
 
 
+def skeleton_map() -> dict:
+    """Per-skill skeleton — the hand model has 64 bodies (fingers) vs the
+    walk model's 30, so each skill carries its own topology for rendering."""
+    out = {}
+    for name, t in trainers.items():
+        out[name] = skeleton_info(t.train_env)
+    return out
+
+
 async def handler(ws):
-    await ws.send(json.dumps({"type": "init", **SKELETON, "skills": list(trainers.keys())}))
+    await ws.send(json.dumps({"type": "init", "skeletons": skeleton_map(),
+                              "skills": list(trainers.keys())}))
     print("client connected", flush=True)
     try:
         while True:
@@ -108,8 +127,6 @@ async def handler(ws):
 
 
 async def main():
-    global SKELETON
-    SKELETON = skeleton_info(trainers["walk"].train_env)
     for t in trainers.values():
         t.start()
     print(f"Skill Gym server on ws://{WS_HOST}:{WS_PORT} — skills: {list(trainers.keys())}", flush=True)

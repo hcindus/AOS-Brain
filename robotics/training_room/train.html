@@ -60,7 +60,7 @@ function makeWindow(name){
   grid.appendChild(win);
   const cv3d = win.querySelector('.view3d canvas');
   const cvchart = win.querySelector('.chart canvas');
-  const state = { live:null, history:[], gen:0, mean_r:0, max_r:0, rotY:0.6, rotX:-0.35, zoom:1.0, cv3d, cvchart };
+  const state = { live:null, history:[], gen:0, mean_r:0, max_r:0, rotY:0.6, rotX:-0.35, zoom:1.0, cv3d, cvchart, parents:null, nbody:0 };
   skills[name] = state;
 
   const view3d = win.querySelector('.view3d');
@@ -81,14 +81,15 @@ function makeWindow(name){
 function draw3d(s){
   const w=s.cv3d.width, h=s.cv3d.height; const ctx=s.cv3d.getContext('2d');
   ctx.fillStyle='#0b0e14'; ctx.fillRect(0,0,w,h);
-  if(!s.live || !s.live.bodies || s.live.bodies.length<nbody) return;
+  const nb=s.nbody||nbody, par=s.parents||parents;
+  if(!s.live || !s.live.bodies || s.live.bodies.length<nb) return;
   const pts=s.live.bodies, base=pts[1]||pts[0];
   const cx=w/2, cy=h/2, scale=(Math.min(w,h)*0.5*s.zoom)/1.3, fov=4.0;
   const P=pts.map(p=>project([p[0]-base[0],p[2]-base[2],p[1]-base[1]],cx,cy,scale,fov,s.rotY,s.rotX));
   ctx.strokeStyle='#3b82f6'; ctx.lineWidth=2; ctx.globalAlpha=0.8;
-  for(let i=1;i<nbody;i++){ const a=P[i],b=P[parents[i]]; ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.stroke(); }
+  for(let i=1;i<nb;i++){ const a=P[i],b=P[par[i]]; ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.stroke(); }
   ctx.globalAlpha=1;
-  for(let i=0;i<nbody;i++){ const p=P[i], r=i===1?5:(p[2]*6); ctx.beginPath(); ctx.arc(p[0],p[1],Math.max(1.5,r),0,Math.PI*2); ctx.fillStyle=i===1?'#58a6ff':(s.live.alive?'#3fb950':'#f85149'); ctx.fill(); }
+  for(let i=0;i<nb;i++){ const p=P[i], r=i===1?5:(p[2]*6); ctx.beginPath(); ctx.arc(p[0],p[1],Math.max(1.5,r),0,Math.PI*2); ctx.fillStyle=i===1?'#58a6ff':(s.live.alive?'#3fb950':'#f85149'); ctx.fill(); }
   ctx.globalAlpha=1;
 }
 
@@ -118,8 +119,9 @@ function connect(){
   ws.onmessage = e => {
     const msg = JSON.parse(e.data);
     if(msg.type==='init'){
-      parents=msg.parents; nbody=msg.nbody;
+      const sk = msg.skeletons || {};
       for(const name of msg.skills) makeWindow(name);
+      for(const name of msg.skills){ if(sk[name]){ skills[name].parents=sk[name].parents; skills[name].nbody=sk[name].nbody; } }
     } else if(msg.type==='frame'){
       for(const name in msg.skills){
         const d = msg.skills[name]; const s = skills[name]; if(!s) continue;

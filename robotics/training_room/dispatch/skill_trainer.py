@@ -197,7 +197,10 @@ class SkillTrainer:
         while (not done or self.ignore_done) and t < self.steps:
             self._maybe_push(env, t)
             resid = self._residual(theta, obs) + self._shared_residual(obs)
-            obs, r, done, info = env.step(base.act(obs) + resid)
+            # FIX 2: cap combined torque (base + residual + shared) to a sane
+            # envelope so the sim doesn't saturate to ±141.7 N·m and NaN out.
+            tau = np.clip(base.act(obs) + resid, -30.0, 30.0)
+            obs, r, done, info = env.step(tau)
             fwd = info["progress"] - prev_x
             prev_x = info["progress"]
             up = float(obs[0]) - prev_z
@@ -221,8 +224,14 @@ class SkillTrainer:
                 qpos = env.view.data.qpos[env.joint_qpos_adr]
                 track_err = float(np.mean((qpos - self.ref_dof_28[frame]) ** 2))
                 tracking = -self.tracking_weight * track_err * 50.0
+            alive = float(info["alive"])
+            # FIX 1: once fallen (ignore_done keeps the sim running), stop scoring
+            # so a diverged state contributes 0 instead of -thousands.
+            if self.ignore_done and not alive:
+                task = 0.0
+                tracking = 0.0
             if self.gate_reward:
-                total += float(info["alive"]) * (1.0 + task + tracking)
+                total += alive * (1.0 + task + tracking)
             else:
                 total += task + tracking
             t += 1
@@ -235,6 +244,9 @@ class SkillTrainer:
             rewards = np.zeros(self.popsize)
             for i in range(self.popsize):
                 rewards[i] = self._rollout(self.train_env, self.base_train, self.theta + self.sigma * eps[i])
+            # FIX 3: NaN/inf guard — a blown rollout gets a finite floor so one
+            # unstable sim can't poison the whole generation's gradient.
+            rewards = np.nan_to_num(rewards, nan=-1e3, posinf=-1e3, neginf=-1e3)
             A = (rewards - rewards.mean()) / (rewards.std() + 1e-8)
             with self.lock:
                 self.theta += (self.lr / (self.popsize * self.sigma)) * np.einsum("i,ij->j", A, eps)
@@ -256,7 +268,9 @@ class SkillTrainer:
             while (not done or self.ignore_done) and t < self.steps:
                 self._maybe_push(self.disp_env, t)
                 resid = self._residual(theta, obs) + self._shared_residual(obs)
-                obs, r, done, info = self.disp_env.step(self.base_disp.act(obs) + resid)
+                # FIX 2 (display): same torque cap keeps the live sim stable.
+                tau = np.clip(self.base_disp.act(obs) + resid, -30.0, 30.0)
+                obs, r, done, info = self.disp_env.step(tau)
                 d = self.disp_env.view.data
                 self.live = {
                     "alive": bool(info["alive"]),

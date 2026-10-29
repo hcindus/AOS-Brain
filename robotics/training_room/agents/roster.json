@@ -12,6 +12,7 @@
     { "id": "squat",     "kind": "controller", "name": "squat",   "role": "squat down/up, don't fall" },
     { "id": "walk",      "kind": "controller", "name": "walk",    "role": "ZMP walking (takes steps)" },
     { "id": "random",    "kind": "baseline", "name": "random", "role": "control floor" },
-    { "id": "zero",      "kind": "baseline", "name": "zero",   "role": "failure floor" }
+    { "id": "zero",      "kind": "baseline", "name": "zero",   "role": "failure floor" },
+    { "id": "myl0n",     "kind": "myl0n", "name": "Myl0n.r0s", "role": "executive orchestrator (embodied, presence engine)" }
   ]
 }

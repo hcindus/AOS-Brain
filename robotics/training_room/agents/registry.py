@@ -6,6 +6,7 @@ import os
 
 from pilots import ControllerPilot, HoldPilot, RandomPilot, ZeroPilot
 from pilots.ollama_pilot import OllamaPilot
+from pilots.myl0n_pilot import Myl0nPilot
 
 from controllers.balance import BalanceController
 from controllers.squat import SquatController
@@ -32,6 +33,8 @@ def make_pilot(entry: dict):
         return ControllerPilot(ctrl, name=entry["name"])
     if kind == "ollama":
         return OllamaPilot(model=entry["model"], scale=entry.get("scale", 20.0))
+    if kind == "myl0n":
+        return Myl0nPilot(model=entry.get("model", "antoniohudnall/Mort_II:latest"))
     raise ValueError(f"unknown pilot kind: {kind}")
 
 
