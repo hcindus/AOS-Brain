@@ -245,7 +245,7 @@ Shoulder 5–6 + Elbow 2 + Wrist 3 + Hand 12+.
 | Hip actuators (3 DOF/side) | 6 | load-bearing (electric QDD/SEA per hybrid decision) |
 | Knee actuators (1 DOF/side) | 2 | load-bearing |
 | Ankle actuators (2 DOF/side) | 4 | load-bearing |
-| COBRA continuum segments | 25 | distributed, omni-axial |
+| COBRA continuum segments | 25 passive + 3–5 actuated regions (~9 expr DOF) | structure ≠ actuation (conflict #3) |
 | Face motors | 32 | Presence Engine |
 | Body expression drivers | 21 | Presence Engine (curated subset) |
 

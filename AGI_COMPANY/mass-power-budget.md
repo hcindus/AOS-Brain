@@ -68,7 +68,7 @@
 | Hand (~12–15) | ~13 | muscle/tendon | <1 each | hypothesis |
 | Face (30 motors) | 30 | micro (silent) | <0.1 | spec |
 
-**⚠️ Conflict #3 — spine actuator count.** 25 vertebrae × ~1 TCPA each ≈ 25 pneumatic muscles + tendons + valves, each needing supply. This is the *highest part-count* subsystem and the weakest link for the "efficiency" principle. **Recommend: validate the COBRA spine at 3–5 vertebrae first (de-risk-first order), before committing to 25.**
+**✅ Conflict #3 — spine actuator count: RESOLVED (2026-10-29).** See `conflict-3-spine-part-count-resolution.md`. Key realization: **25 is a structure count, not an actuator count.** The 25 vertebrae are a passive structural/sensor backbone; actuation happens in **3–5 grouped regions** (~9 expression DOF), which matches the Presence Engine's own §9 torso map (upper 3 + mid 3 + lower 3). BOM changes "25 continuum segments" → "25 passive segments + 3–5 actuated regions." Part count drops ~25 actuators → ~5 bundles; thermal load drops proportionally (de-risks conflict #1's TCPA bandwidth concern). De-risk-first: validate 3–5 vertebrae before the full column.
 
 ---
 
