@@ -100,6 +100,19 @@ The external model produced the full memory subsystem — persistence model + a 
 
 ---
 
+## Architecture validation — Complementary Learning Systems (CLS)
+
+The external model surfaced the strongest NN-memory framing, and it **independently validates our design**: TracRay's "immutable event log + curated Memory Objects" split is *literally* the canonical **Complementary Learning Systems** architecture (McClelland, McNaughton & O'Reilly 1995).
+
+| CLS component | Neural implementation | TracRay |
+|---|---|---|
+| Hippocampus (fast, pattern-separation, sparse) | **Modern Hopfield / Dense Associative Memory** (≈ attention, `softmax(QKᵀ)V`) | immutable episodic log |
+| Neocortex (slow, schema/generalization) | **Variational Autoencoder** / generative model | curated Memory Objects |
+
+Replay from the fast store trains the slow store offline — solving the stability–plasticity dilemma and avoiding catastrophic forgetting. This is the concrete, *named* implementation path for TracRay: a Modern Hopfield layer for rapid content-addressable episodic recall + a VAE-style layer for abstraction/consolidation. Not just analogy — these are buildable components.
+
+---
+
 ## Reconciliation notes (Miles)
 
 - **This was a real gap.** TracRay was the one brain organ left underspecified ("memory continuity"). This spec closes it and — crucially — *ties everything else to it*: every rejection, expression, and affect state "leaves a trace here." It's the continuity backbone the whole identity rests on.
