@@ -34,7 +34,7 @@
 - **Actuators 8 → 5 kg** — lean DOF (186 vs 312) + electrofluidic (no external compressor) reduces the muscle supply mass.
 - **Vascular 2.5 → 3.2 kg** — Option C adds phase-change packs + upsized loop (see thermal section). This is the *cost* of fixing conflict #2.
 
-**⚠️ Conflict #1 — pneumatic supply.** If McKibben muscles are used for spine/neck/face/hand, a compressor + valves + air reservoir adds ~2–4 kg and significant noise. The hybrid-actuation decision (electric for load-bearing, muscle for spine/face) *already* reduces this, but the "muscle" fraction still needs a pneumatic or electrofluidic supply that isn't priced into the 8 kg actuator line. **Recommend: electrofluidic (no external compressor) for the muscle fraction, or accept the +3 kg/compressor noise.**
+**✅ Conflict #1 — pneumatic supply: RESOLVED (2026-10-29).** See `conflict-1-muscle-supply-resolution.md`. Root cause: the AX-169F manifest conflated "TCPA/McKibben (pneumatic)" — but **TCPA is electric (Joule-heated, no compressor), McKibben is pneumatic (needs a compressor)**. Since load-bearing is already electric QDD/SEA, and the muscle fraction (spine/neck/face/hand) only needs 1–3 Nm (TCPA's 1–5 N/fiber suffices), the compressor is **deleted** entirely. Net: −2 to −4 kg, silent, current-only supply. Remaining risk = TCPA thermal bandwidth (ties to conflict #3).
 
 ---
 
