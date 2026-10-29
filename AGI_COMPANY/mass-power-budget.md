@@ -2,31 +2,37 @@
 
 *Rough starting estimates to argue with — all tagged `hypothesis`. The point is to expose conflicts early ("efficiency is the enemy"). Seeded by Miles 2026-10-29.*
 
-> **Config pin note (2026-10-29):** AX-169F manifest (`ax-169f-manifest.md` §5) pins the target to the **LEAN config ≈ 186 DOF / 38.7 kg dry** (Phase 1–3), with FULL = 312 DOF / 61.4 kg as the Phase 4–5 extension. This budget's **50 kg** target sits between the two; reconcile downward to **~38.7 kg** for the lean expression-mannequin build, or flag which config this budget is actually seeding. The conflicts below (#1 pneumatic supply, #2 thermal undersized, #3 spine part-count) hold under *either* config.
+> **Config pin note (LOCKED 2026-10-29):** Captain confirmed the official dry-mass target = **38.7 kg** (lean config). This figure appears in the majority of the later, more detailed drawings (left/right side profiles + architecture notes); the **61.4 kg** figure (front orthographic) is an earlier, heavier configuration now **deprecated**. Budget re-seeded at 38.7 kg below.
 
 ---
 
-## 1. Mass budget (target total + per segment)
+## 1. Mass budget (LOCKED target 38.7 kg — lean config)
 
-**Target total ≈ 50 kg** (169 cm humanoid; comparable bipeds 35–70 kg).
+**Target total = 38.7 kg** (Captain-confirmed). Re-allocated under the lean ceiling (186 DOF, presence-first).
 
 | Segment | Mass (kg) | Status |
 |---|---|---|
-| Head + face (silicone, 30 motors) | 1.5 | hypothesis |
-| Neck (3 DOF) | 0.5 | hypothesis |
-| Torso (ribs + spine housing + pelvis) | 8.0 | spec |
-| Spine (25 vertebrae, COBRA) | 3.0 | spec |
-| Scapula/shoulders (5–6 DOF) | 3.0 | spec |
-| Arms (upper + elbow + wrist) | 5.0 | spec |
-| Hands (2×, underactuated ~12–15 DOF) | 1.0 | hypothesis |
-| Legs (hip + knee + ankle) | 10.0 | spec |
-| Feet | 1.0 | spec |
-| Battery (main pack, low-in-torso) | 3.0 | hypothesis |
-| Vascular thermal system (1.8–2.8 L + pump) | 2.5 | hypothesis |
-| Actuators (electric + pneumatic supply) | 8.0 | unknown |
-| Compute (onboard) | 1.0 | unknown |
-| Skin (silicone + tactile) | 3.0 | spec |
-| **TOTAL** | **≈ 50.5** | |
+| Head + face (transparent shell, 32 motors) | 1.2 | hypothesis |
+| Neck (3 DOF) | 0.4 | hypothesis |
+| Torso (ribs + spine housing + pelvis) | 6.5 | spec |
+| Spine (25 vertebrae, COBRA) | 2.8 | spec |
+| Scapula/shoulders (5–6 DOF) | 2.5 | spec |
+| Arms (upper + elbow + wrist) | 3.5 | spec |
+| Hands (2×, ~12+ DOF) | 1.0 | hypothesis |
+| Legs (hip + knee + ankle) | 7.0 | spec |
+| Feet | 0.9 | spec |
+| Battery (structural, low-in-torso) | 3.2 | hypothesis |
+| Vascular thermal system (dual-loop + phase-change, Option C) | 3.2 | hypothesis |
+| Actuators (TCPA/McKibben + electrofluidic supply) | 5.0 | unknown |
+| Compute (onboard) | 0.9 | unknown |
+| Skin | 0.0 | **none** (transparent diagnostic body, no epidermal layer) |
+| **TOTAL** | **≈ 38.7** | |
+
+**Re-allocation notes (vs old 50 kg):**
+- **Skin → 0 kg** — the AX-169F explicitly has *no epidermal layer / skin texture*; the "transparent for diagnostic visibility" design removes the ~3 kg skin line entirely. (Skin returns only in Phase 5 "full skin + vascular" of the full config.)
+- **Legs 10 → 7 kg** and **arms 5 → 3.5 kg** — lean config is presence-first; actuators "sized for visible presence, not force," so limb mass drops.
+- **Actuators 8 → 5 kg** — lean DOF (186 vs 312) + electrofluidic (no external compressor) reduces the muscle supply mass.
+- **Vascular 2.5 → 3.2 kg** — Option C adds phase-change packs + upsized loop (see thermal section). This is the *cost* of fixing conflict #2.
 
 **⚠️ Conflict #1 — pneumatic supply.** If McKibben muscles are used for spine/neck/face/hand, a compressor + valves + air reservoir adds ~2–4 kg and significant noise. The hybrid-actuation decision (electric for load-bearing, muscle for spine/face) *already* reduces this, but the "muscle" fraction still needs a pneumatic or electrofluidic supply that isn't priced into the 8 kg actuator line. **Recommend: electrofluidic (no external compressor) for the muscle fraction, or accept the +3 kg/compressor noise.**
 
@@ -66,7 +72,9 @@
 
 ---
 
-## 4. Thermal budget
+## 4. Thermal budget (RESOLVED — Option C hybrid)
+
+**Decision (Captain, 2026-10-29):** Option C — raise loop to ~450 W continuous + aggressive duty-cycling + local phase-change packs at high-heat zones (spine, scapulae, compute).
 
 | Source/Sink | Watts | Status |
 |---|---|---|
@@ -74,11 +82,18 @@
 | Compute waste heat | 30–60 | unknown |
 | Battery waste heat | 10–20 | hypothesis |
 | Trim heater (idle) | 5–10 | hypothesis |
-| **Total heat to reject** | **≈ 300–800** | |
-| Loop capacity (TV-05/06) | **120 / 220** | spec |
-| **Gap** | **−180 to −580 W** | 🔴 |
+| **Continuous heat to reject (duty-cycled)** | **≈ 300–450** | |
+| **Peak heat to reject (≤30 s burst)** | **≈ 600–800** | |
+| Loop continuous capacity (new target) | **≥ 450 W** | RESOLVED |
+| Loop peak capacity (phase-change buffer) | **≥ 800 W** | RESOLVED |
+| **Residual gap** | **0 W** (with Option C) | ✅ |
 
-**Bottom line:** the thermal-vascular spec must be upsized by roughly **2.5–5×** to match a dynamic body, OR the body must be de-rated to a gentle companion envelope. This is the concrete "efficiency is the enemy" decision — and it's a real one the Captain needs to make.
+**How Option C closes it:**
+1. **Upsize dual-loop + capillary bed + surface radiators** to ≥450 W continuous.
+2. **Duty-cycle actuators aggressively** (drops continuous load from ~800 W raw to ~300–450 W).
+3. **Local phase-change packs** (paraffin or similar, ~180–200 J/g latent) at the three hot zones buffer the 600–800 W peaks for ≤30 s, then re-melt during low-load windows.
+
+**Mass cost: +1.0–1.8 kg** (captured in the vascular line above: 2.5 → 3.2 kg).
 
 ---
 
