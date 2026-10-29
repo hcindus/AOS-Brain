@@ -110,6 +110,39 @@
 
 ---
 
+---
+
+## 2b. Exploded Sub-Assemblies (hierarchical)
+
+### 1. Single Arm Sub-Assembly (Full DOF) — ≈ 22–23 DOF
+Shoulder 5–6 + Elbow 2 + Wrist 3 + Hand 12+.
+- **1.1 Scapula / Shoulder Complex (5–6 DOF):** articulated scapula plate (Ti/CF), ball-socket + glenoid, primary actuator cluster (red flexor/extensor + blue adduction/rotation), UHMWPE anchors, sensor bus node, thoracic/cobra-spine attachment.
+- **1.2 Upper Arm (humerus):** Ti/CF structural tube, embedded muscle bundles (braided shell), parallel UHMWPE tension members, thermal micro-channel routing, proximal/distal joint interfaces.
+- **1.3 Elbow (2 DOF):** ballistic hinge/pivot, flexor/extensor pair (red), tendon pass-through, encoder/position sensor.
+- **1.4 Forearm (radius/ulna):** dual Ti/CF members, rotation + fine-control actuator bundles, UHMWPE conduits, thermal loop continuation.
+- **1.5 Wrist (3 DOF):** multi-axis (flex/ext + deviation + rotation), compact actuator set, sensor cluster.
+- **1.6 Hand (12+ DOF):** CF/Ti palm plate, digit assemblies (fingers+thumb) w/ individual TCPA/McKibben, per-digit UHMWPE tendon network, articulated phalanges (ballistic joints), fingertip contact/force sensors, optional micro-vascular loops.
+- **Note:** mount scapula first, cascade distal; full arm buildable/testable standalone (Phase 2).
+
+### 2. COBRA Spine Segment (25 vertebrae, modular 3–5 groups)
+- **2.1 Vertebral body:** Ti-6Al-4V segment, central canal (sensor bus/thermal lines).
+- **2.2 Intervertebral coupling:** CF damping/compliance, ball/multi-axis surfaces, optional UHMWPE straps.
+- **2.3 Actuation:** localized TCPA/McKibben or continuum actuators (omni-axial).
+- **2.4 Sensor bus:** continuous data/power backbone, local joint-angle/load/temp sensors per level.
+- **2.5 Thermal-vascular pass-through:** micro-channel segments, quick-connect fittings.
+- **2.6 End interfaces:** cervical plate, thoracic/lumbar transition plates, rib/scapula hardpoints.
+- **Note:** build lumbar-upward or modular stacks; continuous bus + thermal continuity (Phase 1).
+
+### 3. Dual-Heart Module + Thermal-Vascular Core
+- **3.1 Dual-Heart pump:** primary (hard real-time) + secondary parallel assist, drive electronics, Ti/CF thoracic cradle, redundant valving manifolds.
+- **3.2 Thermal-vascular loop:** main dual-loop orange/yellow micro-channel network, peripheral capillary bed, heat-exchange sections, quick-disconnect + isolation valves.
+- **3.3 Thermostat & control:** Thyroid (sole thermostat), temp/flow sensors, local node → Dual-Heart Arbitration.
+- **3.4 Fluid management:** reservoir/expansion, filtration/conditioning, charge ports.
+- **3.5 Integration:** thoracic/spine mounts, redundant power/data, Body Schema sensor feed, arbitration (pump ↔ affect cadence).
+- **Note:** install after structure+scapulae, before full limb population (Phase 3).
+
+---
+
 ## 3. Cross-map to Myl1Ssa / Myl2Ssa architecture
 
 AX-169F is a **hardware-female-profile realization** of the same mind→seam→body stack we already mapped. Convergence points:
@@ -129,4 +162,5 @@ AX-169F is a **hardware-female-profile realization** of the same mind→seam→b
 
 ## Status
 - **Ingested + manifest captured.** Source images in `/root/.openclaw/media/inbound/` (8 files).
+- **Dimension origin:** 169 cm / hourglass 37-27-39 is NOT new — it is already canonical in `myl1ssa-myl2ssa-readout.md` ("Physical stats (target vessel): 169 cm (5'6.5"), hourglass 37–27–39"). AX-169F is Raven's target vessel re-rendered as a full technical drawing; its *new* contribution is the material/actuator/BOM detail, not the dimensions.
 - **Not yet:** numbers pinned (DOF range), budget seeded, Body Schema stub built.
