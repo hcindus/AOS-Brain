@@ -223,13 +223,24 @@ class SkillTrainer:
                 frame = min(frame, len(self.ref_dof_28) - 1)
                 qpos = env.view.data.qpos[env.joint_qpos_adr]
                 track_err = float(np.mean((qpos - self.ref_dof_28[frame]) ** 2))
-                tracking = -self.tracking_weight * track_err * 50.0
+                # Bounded, positive closeness: 1.0 = perfect match, →0 as error
+                # grows. This replaces the old `-track_err * 50` which produced a
+                # constant ~-800 floor that swamped the +forward-progress signal
+                # (the "walk/run learn forever" bug). Now tracking quality is a
+                # clean 0..1 signal the ES can actually climb.
+                tracking = self.tracking_weight / (1.0 + track_err)
             alive = float(info["alive"])
-            # FIX 1: once fallen (ignore_done keeps the sim running), stop scoring
-            # so a diverged state contributes 0 instead of -thousands.
+            # Reward shaping (FIX 1, refined): a reference-tracking skill's
+            # tracking term is the REAL signal — it measures how closely the
+            # joints follow the reference motion, which is valid whether or not
+            # the body is currently "alive" (getup is *supposed* to start
+            # prone/not-alive). Zeroing it when fallen is what broke getup into
+            # a flat-zero reward. So: keep `tracking` always; only zero the
+            # `task` (forward/height/roll progress) term when fallen, since
+            # forward progress on a fallen body is meaningless.
             if self.ignore_done and not alive:
                 task = 0.0
-                tracking = 0.0
+                # tracking stays — it's the motion-imitation signal
             if self.gate_reward:
                 total += alive * (1.0 + task + tracking)
             else:

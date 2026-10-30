@@ -19,8 +19,8 @@ import threading
 import time
 
 from dispatch.skill_trainer import SkillTrainer
+from dispatch.motion_semantics import meaning, verb as motion_verb
 from controllers.balance import BalanceController
-from controllers.getup import GetUpController
 from controllers.ref_track import ReferenceTrackingController
 from controllers.squat import SquatController
 from controllers.walk_controller import WalkController
@@ -30,18 +30,21 @@ from controllers.walk_controller import WalkController
 # and the pass threshold (mean reward) + min generations before he can advance.
 #
 # getup comes BEFORE balance: he must learn to stand up (recover from a fall)
-# before he can balance. balance (static) → squat → walk had no recovery step,
-# so a fall was unrecoverable — the exact "he's fallen and can't get up" state.
+# before he can balance. getup uses reference-tracking (the mocap getup clip),
+# NOT the scripted GetUpController, and is NOT gated on `alive` — he starts
+# prone (alive=False), so gate_reward would zero the reward and produce the
+# 210K-generation flat-zero failure we saw. gate_reward=False + reference
+# tracking gives a real gradient: track the get-up motion.
 CURRICULUM = [
-    {"skill": "getup",   "min_gen": 20, "pass_r": 50.0,
-     "factory": lambda env: GetUpController(env),
-     "gate_reward": True, "start_lying": True},
+    {"skill": "getup",   "min_gen": 20, "pass_r": 150.0,
+     "factory": lambda env: ReferenceTrackingController(env, "getup"),
+     "gate_reward": False, "ignore_done": True, "reference": "getup"},
     {"skill": "balance", "min_gen": 15, "pass_r": 250.0,
      "factory": lambda env: BalanceController(env), "gate_reward": True},
-    {"skill": "squat",   "min_gen": 15, "pass_r": 0.0,
+    {"skill": "squat",   "min_gen": 20, "pass_r": 200.0,
      "factory": lambda env: ReferenceTrackingController(env, "squat"),
      "gate_reward": False, "ignore_done": True, "reference": "squat"},
-    {"skill": "walk",    "min_gen": 15, "pass_r": 0.0,
+    {"skill": "walk",    "min_gen": 20, "pass_r": 150.0,
      "factory": lambda env: ReferenceTrackingController(env, "walk"),
      "gate_reward": False, "ignore_done": True, "reference": "walk"},
 ]
@@ -59,8 +62,8 @@ class Myl0nCurriculumTrainer:
         self.min_gen = self.curriculum[0]["min_gen"]
         self.completed: list[str] = []
 
+        self.all_trainers = []  # populated by the server (Myl0n inherits body skills)
         self.current = self._make_trainer(0)
-        self.all_trainers = []  # Myl0n does not share residuals with body skills
 
         self._running = False
         self._advance_thread = None
@@ -68,7 +71,11 @@ class Myl0nCurriculumTrainer:
     def _make_trainer(self, idx: int) -> SkillTrainer:
         entry = self.curriculum[idx]
         kw = {k: v for k, v in entry.items() if k not in ("skill", "min_gen", "pass_r", "factory")}
-        return SkillTrainer(entry["skill"], entry["factory"], **kw)
+        t = SkillTrainer(entry["skill"], entry["factory"], **kw)
+        # Myl0n inherits matured residuals from the body skills (the cascade),
+        # so he learns the *meaning* of a motion by standing on their shoulders.
+        t.all_trainers = self.all_trainers
+        return t
 
     # -- proxy the SkillTrainer interface the server expects -----------------
     @property
@@ -94,6 +101,14 @@ class Myl0nCurriculumTrainer:
     @property
     def train_env(self):
         return self.current.train_env
+
+    @property
+    def meaning(self):
+        return meaning(self.skill_name)
+
+    @property
+    def verb(self):
+        return motion_verb(self.skill_name)
 
     def start(self):
         self.current.start()
@@ -131,6 +146,8 @@ class Myl0nCurriculumTrainer:
         return {
             "name": self.name,
             "skill": self.skill_name,
+            "meaning": meaning(self.skill_name),
+            "verb": motion_verb(self.skill_name),
             "curriculum": [c["skill"] for c in self.curriculum],
             "cur_idx": self.cur_idx,
             "completed": self.completed,

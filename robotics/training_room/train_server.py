@@ -80,16 +80,21 @@ hand_trainer.all_trainers = []   # no knowledge sharing (different body)
 trainers["hand"] = hand_trainer
 
 # Myl0n.r0s — the Captain's executive orchestrator, embodied with a presence
-# engine. He climbs a skill ladder (balance → squat → walk → …), advancing on
-# a passing reward. Not in the body-sharing pool (his controller differs).
+# engine. He climbs a skill ladder (getup → balance → squat → walk), advancing
+# on a passing reward. He INHERITS the body skills' matured residuals (the
+# cascade), so he learns the *meaning* of each motion by standing on their
+# shoulders — not from a cold start as a body-naive SI.
 from dispatch.myl0n_curriculum import Myl0nCurriculumTrainer
 myl0n_trainer = Myl0nCurriculumTrainer(name="myl0n")
-myl0n_trainer.all_trainers = []
 trainers["myl0n"] = myl0n_trainer
 
-all_trainers = [t for t in trainers.values() if t not in (hand_trainer, myl0n_trainer)]
+# Body skills share with each other AND cascade down to Myl0n. The hand is the
+# only true island (40-DOF, different obs/act dims).
+all_trainers = [t for t in trainers.values() if t is not hand_trainer]
 for t in all_trainers:
     t.all_trainers = all_trainers
+# Myl0n's meta-trainer delegates all_trainers to its current inner trainer.
+myl0n_trainer.all_trainers = all_trainers
 
 def skeleton_info(env) -> dict:
     m = env.view.model
@@ -123,6 +128,8 @@ async def handler(ws):
                         "live": t.live,
                         # Myl0n's curriculum: what skill he's learning + progress
                         "skill": getattr(t, "skill_name", name),
+                        "meaning": getattr(t, "meaning", None),
+                        "verb": getattr(t, "verb", None),
                         "pass_r": getattr(t, "pass_r", None),
                         "min_gen": getattr(t, "min_gen", None),
                         "completed": getattr(t, "completed", []),
