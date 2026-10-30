@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Raven — Lab Assistant</title>
+<style>
+  :root { --bg:#0b0e14; --panel:#141a24; --text:#e6edf3; --dim:#8b98a5; --accent:#58a6ff; --warn:#f778ba; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--text); font-family:system-ui,-apple-system,sans-serif; height:100vh; overflow:hidden; }
+  #scene { position:fixed; inset:0; }
+  #hud { position:fixed; top:12px; left:12px; right:12px; display:flex; gap:12px; align-items:flex-start; pointer-events:none; z-index:10; }
+  #panel { background:var(--panel); border:1px solid #232c3a; border-radius:10px; padding:14px; max-width:360px; pointer-events:auto; }
+  #name { font-size:16px; font-weight:600; }
+  #name .status { color:#3fb950; font-size:11px; font-weight:400; margin-left:6px; }
+  #state { font-size:12px; color:var(--dim); margin-top:4px; line-height:1.5; }
+  #voice { margin-top:10px; font-size:13px; line-height:1.5; font-style:italic; color:#c9d4df; border-left:2px solid var(--accent); padding-left:10px; min-height:20px; }
+  #controls { position:fixed; bottom:14px; left:12px; right:12px; display:flex; gap:8px; z-index:10; }
+  #controls button { background:var(--panel); color:var(--text); border:1px solid #2a3444; border-radius:8px; padding:10px 14px; font-size:13px; cursor:pointer; }
+  #controls button:active { background:#1d2633; }
+  #controls button.warn { border-color:var(--warn); color:var(--warn); }
+  #chat { position:fixed; bottom:66px; left:12px; right:12px; display:flex; gap:8px; z-index:10; }
+  #chat input { flex:1; background:var(--panel); color:var(--text); border:1px solid #2a3444; border-radius:8px; padding:10px 12px; font-size:14px; }
+  #chat input::placeholder { color:#556070; }
+  #chat button { background:var(--accent); color:#04101f; border:none; border-radius:8px; padding:10px 16px; font-weight:600; cursor:pointer; }
+  #dot { color:#f85149; font-size:11px; }
+</style>
+</head>
+<body>
+<canvas id="scene"></canvas>
+
+<div id="hud">
+  <div id="panel">
+    <div id="name">Raven <span class="status" id="conn">connecting…</span></div>
+    <div id="state">affect — | motion — | gate —</div>
+    <div id="voice"></div>
+  </div>
+</div>
+
+<div id="chat"><input id="say" placeholder="Ask Raven something…" autocomplete="off"><button id="send">Send</button></div>
+<div id="controls">
+  <button data-kind="look">👀 Look at me</button>
+  <button data-kind="poke" class="warn">👉 Poke</button>
+  <button data-kind="direction" data-verb="reach">✋ Reach</button>
+  <button data-kind="direction" data-verb="step">🚶 Step</button>
+  <button data-kind="direction" data-verb="settle">🧘 Settle</button>
+</div>
+
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+// ---- three.js scene ---------------------------------------------------
+const canvas = document.getElementById('scene');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias:true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0b0e14);
+const camera = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, 0.1, 100);
+camera.position.set(0, 1.4, 2.6);
+camera.lookAt(0, 0.8, 0);
+
+// grid floor for grounding
+const grid = new THREE.GridHelper(6, 20, 0x2a3444, 0x161d28);
+scene.add(grid);
+
+// lights
+scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+const key = new THREE.DirectionalLight(0xffffff, 1.0);
+key.position.set(2, 3, 2);
+scene.add(key);
+
+// Raven — a rigged point-cloud + skeleton. Starts as a standing figure;
+// updates come from the WebSocket CharacterReaction frames.
+const pointGroup = new THREE.Group();
+const lineGroup = new THREE.Group();
+scene.add(pointGroup, lineGroup);
+
+// canonical body point layout (matches digital_world adapter, in meters ~1/100 cm)
+const BODY = {
+  L_ankle:[-0.12,0,0], R_ankle:[0.12,0,0],
+  L_knee:[-0.14,0.45,0.02], R_knee:[0.14,0.45,0.02],
+  L_hip:[-0.18,0.90,0], R_hip:[0.18,0.90,0],
+  pelvis:[0,0.92,0], waist:[0,1.10,0],
+  L_bust:[-0.16,1.28,0.08], R_bust:[0.16,1.28,0.08], chest:[0,1.30,0.03],
+  L_shoulder:[-0.20,1.45,0], R_shoulder:[0.20,1.45,0],
+  neck:[0,1.55,0], head:[0,1.69,0],
+  L_elbow:[-0.28,1.25,0.05], R_elbow:[0.28,1.25,0.05],
+  L_wrist:[-0.32,1.00,0.10], R_wrist:[0.32,1.00,0.10],
+};
+const BODY_CONN = [
+  ["L_ankle","L_knee"],["L_knee","L_hip"],["L_hip","pelvis"],
+  ["R_ankle","R_knee"],["R_knee","R_hip"],["R_hip","pelvis"],
+  ["pelvis","waist"],["waist","chest"],["chest","neck"],["neck","head"],
+  ["chest","L_shoulder"],["L_shoulder","L_elbow"],["L_elbow","L_wrist"],
+  ["chest","R_shoulder"],["R_shoulder","R_elbow"],["R_elbow","R_wrist"],
+];
+
+const pointObjs = {};
+const lineObjs = [];
+for (const [name, p] of Object.entries(BODY)) {
+  const g = new THREE.SphereGeometry(0.025, 8, 8);
+  const m = new THREE.MeshStandardMaterial({ color: 0x58a6ff, roughness:0.4 });
+  const sphere = new THREE.Mesh(g, m);
+  sphere.position.set(...p);
+  pointGroup.add(sphere);
+  pointObjs[name] = sphere;
+}
+for (const [a,b] of BODY_CONN) {
+  const g = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(...BODY[a]), new THREE.Vector3(...BODY[b])
+  ]);
+  const m = new THREE.LineBasicMaterial({ color:0x3b82f6, transparent:true, opacity:0.7 });
+  lineGroup.add(new THREE.Line(g, m));
+  lineObjs.push([a,b]);
+}
+
+// ---- apply a CharacterReaction frame to the skeleton -------------------
+function applyFrame(f) {
+  // affect → color: valence warms/cools, arousal brightens
+  const v = (f.affect?.valence ?? 0), a = (f.affect?.arousal ?? 0);
+  const hue = v > 0 ? 0.55 + v*0.15 : 0.0;   // blue→cyan for +, red for −
+  const color = new THREE.Color().setHSL(v > 0 ? 0.58 : 0.0, 0.7, 0.55 + a*0.2);
+  for (const s of Object.values(pointObjs)) s.material.color.copy(color);
+
+  // motion verb → simple pose bias (orient = turn head, reach = arm up, etc.)
+  const verb = f.motion?.verb;
+  const head = pointObjs['head'], lw = pointObjs['L_wrist'], rw = pointObjs['R_wrist'];
+  // reset arms/head to canonical
+  head.position.set(...BODY['head']);
+  lw.position.set(...BODY['L_wrist']);
+  rw.position.set(...BODY['R_wrist']);
+  if (verb === 'reach') {
+    rw.position.y += 0.25; rw.position.z += 0.15;
+  } else if (verb === 'orient') {
+    head.position.z += 0.06; head.position.x += 0.03;
+  } else if (verb === 'settle') {
+    head.position.y -= 0.04;
+  } else if (verb === 'step') {
+    pointObjs['R_ankle'].position.z += 0.08;
+  }
+
+  // HUD
+  const state = `affect v=${(v).toFixed(1)} a=${(a).toFixed(1)} | motion ${verb} | gate ${f.gate?.decision}`;
+  document.getElementById('state').textContent = state;
+  if (f.voice) {
+    document.getElementById('voice').textContent = f.voice;
+  }
+}
+
+// ---- WebSocket ---------------------------------------------------------
+let ws;
+function connect() {
+  const proto = location.protocol === 'https:' ? 'wss' : 'ws';
+  ws = new WebSocket(`${proto}://${location.host}/raven-ws/`);
+  ws.onopen = () => document.getElementById('conn').textContent = 'online';
+  ws.onclose = () => { document.getElementById('conn').textContent = 'offline'; setTimeout(connect, 2000); };
+  ws.onerror = () => ws.close();
+  ws.onmessage = e => {
+    const msg = JSON.parse(e.data);
+    if (msg.type === 'reaction') applyFrame(msg);
+  };
+}
+connect();
+
+// ---- input -------------------------------------------------------------
+function send(obj) { if (ws && ws.readyState === 1) ws.send(JSON.stringify(obj)); }
+document.getElementById('send').onclick = () => {
+  const t = document.getElementById('say').value.trim();
+  if (t) { send({ kind:'text', text:t }); document.getElementById('say').value = ''; }
+};
+document.getElementById('say').onkeydown = e => { if (e.key === 'Enter') document.getElementById('send').onclick(); };
+for (const b of document.querySelectorAll('#controls button')) {
+  b.onclick = () => {
+    const kind = b.dataset.kind;
+    if (kind === 'direction') send({ kind, verb: b.dataset.verb });
+    else send({ kind });
+  };
+}
+
+// ---- drag to rotate ----------------------------------------------------
+let dragging = false, lx = 0, ly = 0, ry = 0, rx = -0.15;
+canvas.addEventListener('mousedown', e => { dragging = true; lx = e.clientX; ly = e.clientY; });
+addEventListener('mouseup', () => dragging = false);
+addEventListener('mousemove', e => {
+  if (!dragging) return;
+  ry += (e.clientX - lx) * 0.005; rx += (e.clientY - ly) * 0.005;
+  lx = e.clientX; ly = e.clientY;
+});
+canvas.addEventListener('wheel', e => {
+  camera.position.z = Math.max(1.2, Math.min(6, camera.position.z + e.deltaY*0.005));
+});
+
+// ---- render loop -------------------------------------------------------
+function tick() {
+  pointGroup.rotation.y = ry;
+  lineGroup.rotation.y = ry;
+  pointGroup.rotation.x = rx;
+  lineGroup.rotation.x = rx;
+  renderer.render(scene, camera);
+  requestAnimationFrame(tick);
+}
+tick();
+addEventListener('resize', () => {
+  renderer.setSize(innerWidth, innerHeight);
+  camera.aspect = innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+});
+</script>
+</body>
+</html>

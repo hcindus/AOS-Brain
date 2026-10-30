@@ -1,0 +1,14 @@
+[Unit]
+Description=Raven Lab Assistant — mind server (CharacterReaction WebSocket)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/.openclaw/workspace/ar_lab
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ar_lab/raven_mind.py
+Restart=always
+RestartSec=3
+Environment=RAVEN_MODEL=antoniohudnall/Mort_II:latest
+
+[Install]
+WantedBy=multi-user.target
