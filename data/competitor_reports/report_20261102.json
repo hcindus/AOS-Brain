@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-02T10:36:12.419105",
+  "competitors": [
+    {
+      "name": "WebstaurantStore",
+      "price": null,
+      "status": "error",
+      "error": "Page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://www.webstaurantstore.com/search/thermal-paper-3-1-8.html\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+      "name": "Amazon",
+      "url": "https://www.amazon.com/s?k=thermal+receipt+paper+3+1+8",
+      "price": null,
+      "product": null,
+      "screenshot": "/tmp/amazon_debug.png",
+      "status": "no_price_found"
+    }
+  ]
+}
