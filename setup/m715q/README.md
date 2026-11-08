@@ -37,6 +37,20 @@ each running llama.cpp. CPU-only inference — the RAM is the "VRAM."
 ```
 Serves an OpenAI-compatible API at `http://<ip>:8080/v1`.
 
+### 5. Network + identity (run on each box, with the right hostname)
+```bash
+HOSTNAME=miles  ./05-network.sh     # garage box
+HOSTNAME=mortimer ./05-network.sh   # bedroom box
+```
+Sets hostname, SSH keys, optional static IP, and installs Tailscale so:
+- `miles` ↔ `mortimer` (counterpart, direct)
+- `miles` ↔ Miles VPS, `mortimer` ↔ Mortimer VPS (respective VPS)
+- SSH into any node from anywhere via its tailnet name.
+
+After running, join the VPSes to the same tailnet too (`tailscale up` on each VPS).
+
+**Naming convention (keep clean):** `.lan` / tailnet name = physical home box, `.cloud` = VPS.
+
 ## Model sizing (32GB RAM, CPU inference)
 | Model | Quant | Speed (approx) | Notes |
 |-------|-------|----------------|-------|
