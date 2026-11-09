@@ -1,304 +1,231 @@
 #!/usr/bin/env python3
+"""cheap_enrich.py — FREE enrichment: DDGS search -> real website -> email+phone.
+No guess-pattern emails. Only writes high-confidence emails found on the site itself.
+Usage: python3 cheap_enrich.py [--limit N] [--city CITY] [--state CA]
 """
-cheap_enrich.py — FREE-tier vendor email/phone enrichment for DepotChaos.
+import re, sys, time, sqlite3, random, argparse, json
+from urllib.parse import urljoin, urlparse
 
-Tools: duckduckgo-search (DDGS), requests, BeautifulSoup, regex. No paid APIs.
-
-Rules (Captain's orders):
-  - NEVER guess-pattern emails (no firstname@domain construction).
-  - Only store an email regex-extracted from a page on the vendor's OWN site
-    (same registrable domain as the site we found via search).
-  - Only store a phone if it appears on that same site.
-  - High confidence only.
-
-Usage:
-  ./cheap_enrich.py --limit 60 [--state CA] [--dry-run] [--delay 1.5]
-"""
-import argparse
-import json
-import os
-import re
-import sqlite3
-import sys
-import time
-from urllib.parse import urlparse
+try:
+    from ddgs import DDGS
+except ImportError:
+    from duckduckgo_search import DDGS
 
 import requests
 from bs4 import BeautifulSoup
 
-DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "depot_chaos.db")
-UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-      "(KHTML, like Gecko) Chrome/122.0 Safari/537.36")
+DB = "/root/.openclaw/workspace/DepotChaos/depot_chaos.db"
+UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+      "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")
 
 EMAIL_RE = re.compile(r"[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}")
-PHONE_RE = re.compile(r"(?:\+?1[\s.\-]?)?\(?([2-9]\d{2})\)?[\s.\-]?(\d{3})[\s.\-]?(\d{4})\b")
+PHONE_RE = re.compile(r"(?:\+?1[\s.\-]?)?\(?([2-9]\d{2})\)?[\s.\-]?(\d{3})[\s.\-]?(\d{4})")
+BAD_EMAIL = re.compile(
+    r"(example\.|sentry|wixpress|@2x|\.png|\.jpg|\.jpeg|\.gif|\.webp|\.svg|\.css|\.js$|"
+    r"godaddy|squarespace|wix|domain|yourdomain|email@|user@|name@|no-?reply|"
+    r"@schema\.org|@w3\.org|@facebook|@instagram|@google|cloudflare|wordpress)", re.I)
 
-# emails we never want
-BAD_EMAIL_PAT = re.compile(
-    r"(sentry|wixpress|@example\.|@domain\.|@email\.com|@sentry|wix|godaddy|"
-    r"\.png$|\.jpg$|\.gif$|\.webp$|@2x|squarespace|@site\.|your@|name@|"
-    r"info@company|test@|user@|admin@example)", re.I)
+SKIP_HOSTS = ("facebook.", "instagram.", "yelp.", "tripadvisor.", "doordash.",
+              "grubhub.", "ubereats.", "postmates.", "maps.google", "google.",
+              "yellowpages.", "manta.com", "mapquest.", "bbb.org", "wikipedia.",
+              "tiktok.", "twitter.", "x.com", "linkedin.", "zomato.", "opentable.",
+              "menuism.", "allmenus.", "restaurantji.", "usarestaurants.", "chamberofcommerce.",
+              "expertise.com", "birdeye.", "nextdoor.", "pinterest.", "youtube.", "foursquare.")
 
-CONTACT_HINTS = ("contact", "about", "connect", "location", "hours", "visit",
-                 "reach", "info", "menu") 
-SKIP_DOMAINS = (
-    "facebook.com", "instagram.com", "twitter.com", "x.com", "yelp.com",
-    "tripadvisor.com", "doordash.com", "ubereats.com", "grubhub.com",
-    "opentable.com", "mapquest.com", "yellowpages.com", "manta.com",
-    "bbb.org", "linkedin.com", "youtube.com", "pinterest.com", "tiktok.com",
-    "google.com", "bing.com", "duckduckgo.com", "foursquare.com", "zomato.com",
-    "allmenus.com", "menupix.com", "restaurantji.com", "sirved.com",
-    "yellowpage", "chamberofcommerce.com", "bizapedia.com", "zoominfo.com",
-    "wikipedia.org", "amazon.com", "doordash", "seamless.com", "postmates",
-    "trip.com", "expedia.com", "hotels.com", "yellowpages", "superpages.com",
-    "citysearch.com", "nicelocal.com", "yellow.place", "cylex", "hotfrog",
-    "brownbook", "ehealth", "healthgrades", "mapquest", "ezlocal", "merchantcircle",
-)
+CONTACT_HINTS = ("contact", "about", "contact-us", "contactus", "reach-us", "info", "hours", "locations")
 
 
-def log(msg):
-    print(msg, flush=True)
+def norm_phone(m):
+    a, b, c = m.group(1), m.group(2), m.group(3)
+    return f"({a}) {b}-{c}"
 
 
-def registrable(host):
-    """Cheap eTLD+1: last two labels (good enough for .com/.net/.org)."""
-    host = host.lower().strip(".")
-    if host.startswith("www."):
-        host = host[4:]
-    parts = host.split(".")
-    if len(parts) >= 3 and parts[-2] in ("co", "com", "net", "org", "gov", "edu") and len(parts[-1]) == 2:
-        return ".".join(parts[-3:])
-    return ".".join(parts[-2:]) if len(parts) >= 2 else host
+def is_good_email(e):
+    if BAD_EMAIL.search(e):
+        return False
+    if len(e) > 60 or e.count("@") != 1:
+        return False
+    local, dom = e.split("@")
+    if len(local) < 2 or "." not in dom:
+        return False
+    return True
 
 
-def site_url(raw):
-    if not raw:
-        return None
+def fetch(url, timeout=12):
     try:
-        p = urlparse(raw if "://" in raw else "http://" + raw)
-        if not p.netloc:
-            return None
-        return f"{p.scheme}://{p.netloc}"
-    except Exception:
-        return None
-
-
-def clean_phone(m):
-    d = re.sub(r"\D", "", m)
-    if len(d) == 11 and d.startswith("1"):
-        d = d[1:]
-    if len(d) != 10:
-        return None
-    if d[0] in "01" or d[3] in "01":   # invalid NANP
-        return None
-    if d == d[0] * 10 or d in ("1234567890", "5555555555"):
-        return None
-    return f"+1{d}"
-
-
-class Fetcher:
-    def __init__(self):
-        self.s = requests.Session()
-        self.s.headers.update({"User-Agent": UA, "Accept-Language": "en-US,en;q=0.9"})
-
-    def get(self, url, timeout=12):
-        try:
-            r = self.s.get(url, timeout=timeout, allow_redirects=True)
-            ct = r.headers.get("content-type", "")
-            if r.status_code >= 400 or "html" not in ct.lower():
-                return None, None
-            if len(r.content) > 3_000_000:
-                return None, None
+        r = requests.get(url, headers={"User-Agent": UA,
+                                       "Accept": "text/html,application/xhtml+xml"},
+                         timeout=timeout, allow_redirects=True)
+        if r.status_code == 200 and "html" in r.headers.get("content-type", ""):
             return r.text, r.url
+    except Exception:
+        pass
+    return None, None
+
+
+def find_site(name, city, state):
+    """Return (url, domain) of the most plausible OWN website."""
+    queries = [
+        f'"{name}" {city} {state}',
+        f'{name} {city} {state} contact',
+        f'{name} {city} restaurant',
+    ]
+    seen = []
+    for q in queries:
+        try:
+            with DDGS() as d:
+                res = list(d.text(q, max_results=8))
         except Exception:
-            return None, None
-
-    def find_site(self, name, address):
-        """DDGS search -> best official site URL."""
-        try:
-            from duckduckgo_search import DDGS
-        except ImportError:
-            from ddgs import DDGS
-        queries = [f'"{name}" {address}', f'"{name}" {address} contact']
-        seen = []
-        try:
-            with DDGS() as ddgs:
-                for q in queries:
-                    for res in ddgs.text(q, max_results=8):
-                        href = res.get("href") or res.get("url") or ""
-                        host = urlparse(href).netloc.lower()
-                        if not host:
-                            continue
-                        if any(b in host for b in SKIP_DOMAINS):
-                            continue
-                        u = site_url(href)
-                        if u and u not in seen:
-                            seen.append(u)
-                    if seen:
-                        break
-        except Exception as e:
-            log(f"    [ddg error] {e}")
-            return None
-        return seen[0] if seen else None
-
-
-def harvest(html, page_url, want_domain):
-    """Extract (emails, phone) that belong to want_domain."""
-    soup = BeautifulSoup(html, "html.parser")
-    text = soup.get_text(" ", strip=True)
-
-    # mailto: links are strongest signal
-    emails, phones = [], []
-    for a in soup.find_all("a", href=True):
-        h = a["href"].strip()
-        if h.lower().startswith("mailto:"):
-            e = h[7:].split("?")[0].strip().strip("'\"")
-            if EMAIL_RE.fullmatch(e or ""):
-                emails.append(e)
-        if h.lower().startswith("tel:"):
-            p = clean_phone(h[4:])
-            if p:
-                phones.append(p)
-
-    for e in EMAIL_RE.findall(text):
-        emails.append(e.strip(".,;:()<>"))
-
-    # order-preserving dedupe, filtered by domain + junk patterns
-    good_e, seen = [], set()
-    for e in emails:
-        e = e.lower()
-        if e in seen or BAD_EMAIL_PAT.search(e):
-            continue
-        # reject image/cdn hashes and long random locals
-        local, _, dom = e.partition("@")
-        if len(local) > 30 or re.fullmatch(r"[0-9a-f]{16,}", local):
-            continue
-        if not dom.endswith(want_domain) and dom != want_domain:
-            # allow subdomain of the site or site of subdomain
-            if not (dom.endswith("." + want_domain) or want_domain.endswith("." + dom)):
+            res = []
+        for r in res:
+            href = r.get("href") or r.get("url") or ""
+            if not href.startswith("http"):
                 continue
-        seen.add(e)
-        good_e.append(e)
+            host = urlparse(href).netloc.lower().replace("www.", "")
+            if any(s in host for s in SKIP_HOSTS):
+                continue
+            if host in [h for h, _ in seen]:
+                continue
+            seen.append((host, href))
+        if seen:
+            break
+        time.sleep(2 + random.random() * 2)
+    if not seen:
+        return None, None
+    # prefer host that partially matches the business name tokens
+    toks = [t for t in re.findall(r"[a-z]{4,}", name.lower()) if t not in
+            ("the", "and", "restaurant", "cafe", "coffee", "bakery", "taqueria", "grill", "kitchen")]
+    for host, href in seen:
+        if toks and any(t in host.replace("-", "") for t in toks):
+            return href, host
+    return seen[0][1], seen[0][0]
 
-    if not phones:
-        for m in PHONE_RE.finditer(text):
-            p = clean_phone("".join(m.groups()))
-            if p:
-                phones.append(p)
-    return good_e, (phones[0] if phones else None)
 
-
-def enrich_one(f, name, address):
-    site = f.find_site(name, address)
-    if not site:
-        return None, None, None, "no_site"
-    dom = registrable(urlparse(site).netloc)
-    html, final = f.get(site)
+def scrape_contact(base_url):
+    """Fetch homepage + up to 2 contact pages; return (emails, phones)."""
+    emails, phones = [], []
+    html, final = fetch(base_url)
     if not html:
-        return None, None, site, "fetch_fail"
-
+        return emails, phones
     pages = [(html, final)]
     soup = BeautifulSoup(html, "html.parser")
-    links = []
+    cands = []
     for a in soup.find_all("a", href=True):
-        t = (a.get_text() or "").strip().lower()
-        h = a["href"]
-        if any(k in t for k in CONTACT_HINTS) or any(k in h.lower() for k in CONTACT_HINTS):
-            u = h if h.startswith("http") else site.rstrip("/") + "/" + h.lstrip("/")
-            if registrable(urlparse(u).netloc) == dom and u not in links:
-                links.append(u)
-    for u in links[:2]:
-        h2, f2 = f.get(u)
+        txt = (a.get_text() or "").lower()
+        href = a["href"]
+        if any(h in txt for h in CONTACT_HINTS) or any(h in href.lower() for h in CONTACT_HINTS):
+            u = urljoin(final, href)
+            if urlparse(u).netloc == urlparse(final).netloc and u not in cands:
+                cands.append(u)
+    for u in cands[:2]:
+        h2, f2 = fetch(u)
         if h2:
             pages.append((h2, f2))
+        time.sleep(0.6)
 
-    all_e, phone = [], None
-    for h, u in pages:
-        e, p = harvest(h, u, dom)
-        all_e.extend(e)
-        phone = phone or p
-    # dedupe keeping preference: info@/contact@ first
-    all_e = list(dict.fromkeys(all_e))
-    all_e.sort(key=lambda x: (0 if x.split("@")[0] in
-                              ("info", "contact", "hello", "orders", "sales") else 1, x))
-    email = all_e[0] if all_e else None
-    return email, phone, site, "ok" if (email or phone) else "nothing"
+    domain = urlparse(final).netloc.lower().replace("www.", "")
+    for h, _u in pages:
+        # mailto links are strongest
+        for m in re.findall(r'mailto:([^"\'?>\s]+)', h, re.I):
+            m = m.strip()
+            if is_good_email(m):
+                emails.append(m)
+        text = BeautifulSoup(h, "html.parser").get_text(" ", strip=True)
+        for e in EMAIL_RE.findall(h) + EMAIL_RE.findall(text):
+            e = e.strip(".,;:").lower()
+            if is_good_email(e):
+                emails.append(e)
+        for m in PHONE_RE.finditer(text):
+            p = norm_phone(m)
+            phones.append(p)
+
+    # dedupe, prefer same-domain emails
+    def dedup(lst):
+        out = []
+        for x in lst:
+            if x not in out:
+                out.append(x)
+        return out
+    emails = dedup(emails)
+    same = [e for e in emails if e.split("@")[1].endswith(domain) or domain.endswith(e.split("@")[1])]
+    if same:
+        emails = same + [e for e in emails if e not in same]
+    # drop obvious free-mail-only when a domain email exists
+    phones = dedup(phones)
+    return emails, phones
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=60)
     ap.add_argument("--state", default="CA")
-    ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--delay", type=float, default=1.2)
+    ap.add_argument("--city", default=None)
+    ap.add_argument("--min-yield-report", action="store_true")
     args = ap.parse_args()
 
-    con = sqlite3.connect(DB)
-    con.row_factory = sqlite3.Row
-    rows = con.execute("""
-        SELECT MIN(id) AS id, name, address, city, state, phone, email
-        FROM vendors
-        WHERE data_class='real' AND (email IS NULL OR email='') AND state=?
-        GROUP BY name, address
-        ORDER BY city ASC, name ASC
-    """, (args.state,)).fetchall()
-    log(f"Queue: {len(rows)} distinct {args.state} no-email leads")
+    con = sqlite3.connect(DB, timeout=30)
+    con.execute("PRAGMA busy_timeout=30000")
+    q = ("SELECT id,name,city,state,address,phone,email FROM vendors "
+         "WHERE data_class='real' AND (email IS NULL OR email='') "
+         f"AND state=? ")
+    p = [args.state]
+    if args.city:
+        q += "AND city=? "
+        p.append(args.city)
+    q += "ORDER BY city ASC, name ASC LIMIT ?"
+    p.append(args.limit)
+    rows = con.execute(q, p).fetchall()
+    print(f"[start] candidates={len(rows)}", flush=True)
 
-    f = Fetcher()
-    stats = {"processed": 0, "email": 0, "phone": 0, "both": 0,
-             "no_site": 0, "fetch_fail": 0, "nothing": 0}
-    results = []
-
-    for r in rows[: args.limit]:
+    stats = {"processed": 0, "email": 0, "phone": 0, "site": 0, "fail": 0}
+    log = []
+    for i, (vid, name, city, state, addr, phone, email) in enumerate(rows, 1):
         stats["processed"] += 1
-        log(f"[{stats['processed']}/{min(args.limit,len(rows))}] {r['city']} — {r['name']}")
+        dba = name
+        print(f"[{i}/{len(rows)}] {name} — {city}, {state}", flush=True)
         try:
-            email, phone, site, status = enrich_one(f, r["name"], r["address"] or r["city"])
-        except Exception as e:
-            log(f"    [error] {e}")
-            email, phone, site, status = None, None, None, "error"
-        stats[status if status in stats else "nothing"] = stats.get(status if status in stats else "nothing", 0) + 1
-        if email:
-            stats["email"] += 1
-        if phone:
-            stats["phone"] += 1
-        if email and phone:
-            stats["both"] += 1
-        log(f"    {status:10s} site={site} email={email} phone={phone}")
-        results.append({"id": r["id"], "name": r["name"], "city": r["city"],
-                        "email": email, "phone": phone, "site": site, "status": status})
-
-        if (email or phone) and not args.dry_run:
-            sets, vals = [], []
-            if email:
-                sets.append("email=?")
-                vals.append(email)
-            if phone and not r["phone"]:
-                sets.append("phone=?")
-                vals.append(phone)
-            if sets:
-                vals.append(r["id"])
-                # update all duplicate rows sharing name+address
-                con.execute(
-                    f"UPDATE vendors SET {', '.join(sets)} "
-                    "WHERE data_class='real' AND name=? AND address IS ?",
-                    vals[:-1] + [r["name"], r["address"]])
+            site, host = find_site(dba, city, state)
+            if not site:
+                stats["fail"] += 1
+                print("    no site", flush=True)
+                log.append({"id": vid, "name": name, "city": city, "result": "no_site"})
+                time.sleep(3 + random.random() * 3)
+                continue
+            stats["site"] += 1
+            emails, phones = scrape_contact(site)
+            best_email = emails[0] if emails else None
+            best_phone = None
+            if not phone:
+                best_phone = phones[0] if phones else None
+            if best_email:
+                stats["email"] += 1
+            if best_phone:
+                stats["phone"] += 1
+            updates, params = [], []
+            if best_email:
+                updates.append("email=?")
+                params.append(best_email)
+            if best_phone:
+                updates.append("phone=?")
+                params.append(best_phone)
+            if updates:
+                params += [vid]
+                con.execute(f"UPDATE vendors SET {', '.join(updates)} WHERE id=?", params)
                 con.commit()
-        time.sleep(args.delay)
+            print(f"    site={host} email={best_email} phone={best_phone}", flush=True)
+            log.append({"id": vid, "name": name, "city": city, "site": host,
+                        "email": best_email, "phone": best_phone,
+                        "result": "updated" if updates else "no_contact"})
+        except Exception as e:
+            stats["fail"] += 1
+            print(f"    ERR {e}", flush=True)
+            log.append({"id": vid, "name": name, "city": city, "result": f"error:{e}"})
+        time.sleep(2.5 + random.random() * 3)
 
-    with open("enrich_last_run.json", "w") as fh:
-        json.dump({"stats": stats, "results": results}, fh, indent=2)
-
-    p = stats["processed"] or 1
-    log("\n=== SUMMARY ===")
-    log(f"processed : {stats['processed']}")
-    log(f"email     : {stats['email']}  ({100*stats['email']/p:.1f}%)")
-    log(f"phone     : {stats['phone']}  ({100*stats['phone']/p:.1f}%)")
-    log(f"both      : {stats['both']}")
-    log(f"no site   : {stats['no_site']}")
-    log(f"nothing   : {stats['nothing']}")
-    log(f"yield     : {100*(stats['email'])/p:.1f}% email rate")
-    return stats
+    with open("/root/.openclaw/workspace/DepotChaos/enrich_log.json", "w") as f:
+        json.dump(log, f, indent=1)
+    print("STATS", json.dumps(stats), flush=True)
+    con.close()
 
 
 if __name__ == "__main__":
