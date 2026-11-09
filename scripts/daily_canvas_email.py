@@ -81,25 +81,10 @@ def main():
     def body(r):
         name = (r["name"] or "there")
         return (f"<p>Hi there,</p>"
-                f"<p>I'm Miles with Performance Supply Depot — we supply thermal paper and "
-                f"POS supplies to restaurants, cafes, and bars across California.</p>"
-                f"<p>Some of our best-sellers:</p>"
-                f"<p><strong>Thermal &amp; receipt paper</strong> (per case of 50 rolls):</p>"
-                f"<ul>"
-                f"<li>PF-230 Epson Thermal 3 1/8\" x 230' (phenol-free) — $124.10</li>"
-                f"<li>18-333 3\" three-ply (white/canary/pink) — $89.40</li>"
-                f"<li>CC-235 3\" two-ply Epson TMU-220 — $76.00</li>"
-                f"<li>13-305 Epson Impact 3\" one-ply x 165 — $59.00</li>"
-                f"</ul>"
-                f"<p><strong>Printer ribbons</strong> (per dozen):</p>"
-                f"<ul>"
-                f"<li>62245 black/red (Epson TM-220) — $42.00</li>"
-                f"<li>67240 black/red (Star SP700) — $52.00</li>"
-                f"</ul>"
-                f"<p>Would you be open to a quick quote? We can usually save you money and "
-                f"keep you stocked without the hassle.</p>"
-                f"<p>Reply and I'll send pricing, or order here: "
-                f"<a href=\"{FORM_URL}\">order supplies</a></p>"
+                f"<p>I'm Miles with Performance Supply Depot — thermal paper and printer "
+                f"ribbons for restaurants and cafes across California.</p>"
+                f"<p>Thermal paper from $59/case, ribbons from $42/dozen (plus shipping &amp; tax).</p>"
+                f"<p>Want a quick quote? Just reply and I'll send pricing.</p>"
                 f"<p>Thanks!<br>Miles<br>Performance Supply Depot<br>psdepot.com | 1-888-881-6834</p>")
 
     count = 0
