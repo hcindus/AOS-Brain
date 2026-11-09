@@ -24,7 +24,9 @@ MAX_RATE_WAITS = 6          # max hour-boundary waits before giving up on a send
 BCC = "info@psdepot.com"
 
 # never email our own / test addresses
-SKIP = {"info@psdepot.com", "antonio.hudnall@gmail.com", "miles@myl0nr0s.cloud"}
+SKIP = {"info@psdepot.com", "antonio.hudnall@gmail.com", "miles@myl0nr0s.cloud",
+        "terrychico@sbcglobal.net", "coldpop.billing@gmail.com",  # Travis (do-not-contact)
+        }
 
 # SMTP creds
 creds = {}

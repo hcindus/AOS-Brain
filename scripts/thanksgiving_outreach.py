@@ -22,6 +22,7 @@ BCC = "info@psdepot.com"
 # own / closed addresses to skip
 SKIP = {"info@psdepot.com", "antonio.hudnall@gmail.com", "miles@myl0nr0s.cloud",
         "kvance@leftbank.com", "bthompson@leftbank.com",  # Left Bank (closed)
+        "terrychico@sbcglobal.net", "coldpop.billing@gmail.com",  # Travis (do-not-contact)
         }
 
 # multi-email identity merge (canonical -> keep one)
