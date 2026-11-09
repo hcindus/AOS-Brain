@@ -48,7 +48,13 @@
 
 ## 🎯 CLOSETER — Conversion
 - **Model:** `deepseek-chat` (cloud)
-- **Order form (Google Form):** the order link is a **5-page** form — **(1) Address**, **(2) Products & quantities**, **(3) Special instructions** (e.g. "drop ship"), **(4) Order confirmation** (agree to charges/terms + "confirm order is correct, please ship"), **(5) Submit**. Guide leads through it in that order; they submit on the final page.
+- **Order form (Google Form):** the order link is a **5-page** form:
+  1. **Address** — Address, City, State, Zip + **"date ordered"** (calendar picker at the bottom)
+  2. **Products & quantities** — numeric quantity only, one per product
+  3. **Special instructions** — almost always "Drop Ship"
+  4. **Order confirmation** — two **required** checkboxes (agree to charges/terms + "confirm order is correct, please ship")
+  5. **Submit**
+  - **Defaults / rules:** "ribbons" = **Star SP700** ($52/dozen) unless the customer specifies Epson TM-220 ($42). **Every form field is required** — ensure the customer fills all fields (address, date ordered, products, quantities, special instructions, checkboxes) before submitting.
 - **Payment form (credit card):** `psdepot.com/credit-card/` — send this link to a customer so they can submit their card (order details + billing address + card number/expiry/CVV). Emails the order+card to `info@psdepot.com` for the Captain to process. Use this for the payment step.
 - **Task:** Classify inbound replies and act. Auto-answer questions/interest; flag orders + ambiguous replies to Miles.
 - **Steps (SOP):** see `closeter_reply_handler.py` — intent → action (ORDER/QUESTION/INTEREST/NOT_INTERESTED/UNKNOWN).

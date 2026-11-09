@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "from": "Test Customer <test-customer@example.com>",
+    "subject": "Order \u2014 1 dozen ribbons",
+    "body": "I'd like to order 1 dozen ribbons. Special instructions: Test.",
+    "order_line": "1 dozen ribbons (black/red \u2014 Star SP700, $52.00/dozen)",
+    "special_instructions": "Test",
+    "received_at": "2026-11-09T23:42:56.499951+00:00",
+    "flagged_at": "2026-11-09T23:42:56.499967+00:00",
+    "note": "TEST ORDER \u2014 CLOSETER processed: 1 dozen Star ribbons. Collect card (Captain in the loop)."
+  }
+]
