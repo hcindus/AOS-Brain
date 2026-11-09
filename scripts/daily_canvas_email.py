@@ -79,13 +79,38 @@ def main():
     SUBJECT = "POS supplies — quick quote?"
 
     def body(r):
-        name = (r["name"] or "there")
+        th = "border:1px solid #ddd;padding:6px 8px;text-align:left;background:#f5f5f5;"
+        td = "border:1px solid #ddd;padding:6px 8px;text-align:left;"
+        def table(headers, rows):
+            h = "".join(f"<th style='{th}'>{c}</th>" for c in headers)
+            b = ""
+            for row in rows:
+                b += "<tr>" + "".join(f"<td style='{td}'>{c}</td>" for c in row) + "</tr>"
+            return f"<table style='border-collapse:collapse;width:100%;margin:6px 0 12px;'><tr>{h}</tr>{b}</table>"
+
+        paper = [
+            ("PF-230", "Epson Thermal Rolls", "3 1/8\" × 230', Phenol-Free", "50 rolls", "$124.10"),
+            ("18-333", "Three-Ply Paper", "3\" White/Canary/Pink", "50 rolls", "$89.40"),
+            ("CC-235", "Epson Two-Ply", "3\" Epson TMU-220", "50 rolls", "$76.00"),
+            ("13-305", "Epson Impact Bond", "3\" One-Ply × 165'", "50 rolls", "$59.00"),
+        ]
+        ribbons = [
+            ("62245", "Black/Red Ribbon", "Epson TM-220 Series", "Per Dozen", "$42.00"),
+            ("67240", "Black/Red Ribbon", "Star SP700 Series", "Per Dozen", "$52.00"),
+        ]
+        paper_html = table(["Item #", "Description", "Specs", "Pack Size", "Price"], paper)
+        ribbon_html = table(["Item #", "Description", "Printer Model", "Pack Size", "Price"], ribbons)
+
         return (f"<p>Hi there,</p>"
-                f"<p>I'm Miles with Performance Supply Depot — thermal paper and printer "
-                f"ribbons for restaurants and cafes across California.</p>"
-                f"<p>Thermal paper from $59/case, ribbons from $42/dozen (plus shipping &amp; tax).</p>"
-                f"<p>Want a quick quote? Just reply and I'll send pricing.</p>"
-                f"<p>Thanks!<br>Miles<br>Performance Supply Depot<br>psdepot.com | 1-888-881-6834</p>")
+                f"<p>I know you're busy, so I'll keep this quick. I'm Miles with Performance "
+                f"Supply Depot — we supply thermal paper and printer ribbons to restaurants "
+                f"and cafes across California.</p>"
+                f"<p>Below are my prices:</p>"
+                f"<p><strong>Paper</strong></p>{paper_html}"
+                f"<p><strong>Ink / Ribbons</strong></p>{ribbon_html}"
+                f"<p>All prices are subject to tax and shipping.</p>"
+                f"<p>Feel free to compare — we'd love the chance to earn your business.</p>"
+                f"<p>Thank you,<br>Miles<br>Performance Supply Depot<br>psdepot.com | 1-888-881-6834</p>")
 
     count = 0
     for r in picks:
