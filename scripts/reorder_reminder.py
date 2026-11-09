@@ -20,6 +20,7 @@ LEAD_TIME_DAYS = 4          # email this many days before predicted reorder
 RESEND_SUPPRESS_DAYS = 30   # don't re-email a customer within this window
 SEND_INTERVAL = 90          # seconds between sends (~40/hr, under Hostinger ~50/hr)
 MAX_PER_RUN = 40            # hard cap per run to stay under hourly limit
+MAX_RATE_WAITS = 6          # max hour-boundary waits before giving up on a send
 BCC = "info@psdepot.com"
 
 # never email our own / test addresses
@@ -104,7 +105,6 @@ def main():
 
     sent_count = 0
     bounced = 0
-    ratelimited = False
     for c in due:
         email = c["email"].strip().lower()
         name = c.get("name") or "there"
@@ -115,7 +115,7 @@ def main():
         msg["Subject"] = SUBJECT
         ok = False
         last_err = ""
-        for attempt in (1, 2):
+        for attempt in range(MAX_RATE_WAITS):
             try:
                 s = smtplib.SMTP(HOST, PORT, timeout=30)
                 s.starttls()
@@ -127,8 +127,12 @@ def main():
             except Exception as e:
                 last_err = str(e)
                 if "451" in last_err or "ratelimit" in last_err.lower():
-                    ratelimited = True
-                    time.sleep(60)
+                    # wait for the throttle window to clear (next hour boundary)
+                    now = datetime.now(timezone.utc)
+                    nxt = (now + timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
+                    wait = int((nxt - now).total_seconds()) + 5
+                    print(f"RATE_LIMIT — waiting {wait}s for throttle to clear")
+                    time.sleep(wait)
                 else:
                     break
         if ok:
@@ -139,10 +143,6 @@ def main():
             bounced += 1
             with open(BOUNCE_LOG, "a") as f:
                 f.write(f"{email} | {last_err}\n")
-        if ratelimited:
-            # stop this run; remaining will be picked up next cron tick
-            print("RATE_LIMIT_HIT_STOPPING")
-            break
         time.sleep(SEND_INTERVAL)
 
     save_json(SENT_LOG, sent)
