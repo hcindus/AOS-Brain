@@ -37,13 +37,18 @@ PASSWORD = creds["HOSTINGER_SMTP_PASS"]
 HOST = creds.get("HOSTINGER_SMTP_SERVER", "smtp.hostinger.com")
 PORT = int(creds.get("HOSTINGER_SMTP_PORT", "587"))
 
-SUBJECT = "Checking in on your POS supplies"
+FORM_URL = ("https://docs.google.com/forms/d/e/1FAIpQLSf_MpGmbwkrZm2nVsL-"
+            "RYiVHCsEqEMpjZ6eHKTQ8rr1KUx2Cw/viewform")
+
+SUBJECT = "Checking in — thermal, bond & ribbons"
 
 def body(name):
     first = (name or "there").split()[0]
     return (f"Hi {first},\n\n"
             f"This is Performance Supply Depot. We just wanted to check with you "
-            f"on your POS supplies. Please let me know if you need anything.\n\n"
+            f"on your thermal paper, bond paper, and printer ribbons. Please let me "
+            f"know if you need anything.\n\n"
+            f"To order supplies on your schedule:\n{FORM_URL}\n\n"
             f"- Performance Supply Depot\n"
             f"psdepot.com | 1-888-881-6834")
 
