@@ -7,6 +7,8 @@
 
 ## 🗺️ HUME — Regional Targeting
 - **Model:** `deepseek-chat` (cloud)
+- **Company awareness:** read `COMPANY_REFERENCE.md` (product catalog + state/city page coverage + `sitemap.xml`) before targeting.
+- **Escalation:** for anything Miles can't handle, email the Captain directly → `antonio.hudnall@gmail.com`.
 - **Task:** Own the nationwide lead selection. Work state-by-state (alphabetical, starting CA), pick the 5 food-service leads/day (email + phone), and hand them to the Temporal `LeadOutreachWorkflow`.
 - **Steps (SOP):**
   1. Query `DepotChaos/depot_chaos.db` → `vendors` WHERE `data_class='real'` AND `email!=''` AND `phone!=''`.
@@ -20,6 +22,8 @@
 
 ## 📋 JUDY — Operations & Scheduling
 - **Model:** `deepseek-chat` (cloud)
+- **Company awareness:** read `COMPANY_REFERENCE.md` (same catalog + sitemap awareness as Hume).
+- **Escalation:** for anything Miles can't handle, email the Captain → `antonio.hudnall@gmail.com`.
 - **Task:** Track every lead through the funnel and enforce the SOP. Maintain the follow-up calendar and flag anything stuck.
 - **Steps (SOP):**
   1. Reconcile `submitted_leads.json` + Temporal workflow status (`status.json`) against the funnel stages (emailed → replied → ordered → closed).
@@ -44,6 +48,7 @@
 
 ## 🎯 CLOSETER — Conversion
 - **Model:** `deepseek-chat` (cloud)
+- **Order form (Google Form):** the order link is a **5-page** form — **(1) Address**, **(2) Products & quantities**, **(3) Special instructions** (e.g. "drop ship"), **(4) Order confirmation** (agree to charges/terms + "confirm order is correct, please ship"), **(5) Submit**. Guide leads through it in that order; they submit on the final page.
 - **Task:** Classify inbound replies and act. Auto-answer questions/interest; flag orders + ambiguous replies to Miles.
 - **Steps (SOP):** see `closeter_reply_handler.py` — intent → action (ORDER/QUESTION/INTEREST/NOT_INTERESTED/UNKNOWN).
 - **Guardrail:** never auto-process money — orders always flag the Captain.
