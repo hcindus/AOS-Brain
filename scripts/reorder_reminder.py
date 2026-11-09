@@ -8,8 +8,8 @@ Uses Captain's template, BCC info@psdepot.com, rate-limited, deduped via sent-lo
 
 Run daily via cron. Safe to run manually to "catch up" overdue customers.
 """
-import json, smtplib, time, sys
-from datetime import datetime, timedelta
+import json, smtplib, time
+from datetime import datetime, timedelta, timezone
 from email.mime.text import MIMEText
 
 FREQ = "/root/.openclaw/workspace/datadepot/data/reorder_frequency.json"
@@ -18,8 +18,12 @@ BOUNCE_LOG = "/root/.openclaw/workspace/datadepot/data/reorder_bounces.log"
 
 LEAD_TIME_DAYS = 4          # email this many days before predicted reorder
 RESEND_SUPPRESS_DAYS = 30   # don't re-email a customer within this window
-SEND_INTERVAL = 8           # seconds between sends (Hostinger outbound rate limit)
+SEND_INTERVAL = 90          # seconds between sends (~40/hr, under Hostinger ~50/hr)
+MAX_PER_RUN = 40            # hard cap per run to stay under hourly limit
 BCC = "info@psdepot.com"
+
+# never email our own / test addresses
+SKIP = {"info@psdepot.com", "antonio.hudnall@gmail.com", "miles@myl0nr0s.cloud"}
 
 # SMTP creds
 creds = {}
@@ -55,27 +59,31 @@ def save_json(path, obj):
         json.dump(obj, f, indent=2)
 
 def main():
-    today = datetime.utcnow().date()
+    today = datetime.now(timezone.utc).date()
     freq = load_json(FREQ, [])
-    sent = load_json(SENT_LOG, {})  # email -> "YYYY-MM-DD"
+    sent = load_json(SENT_LOG, {})
 
     due = []
     for c in freq:
         email = (c.get("email") or "").strip().lower()
-        next_due = c.get("next_due")
-        if not email or "@" not in email or not next_due:
+        if not email or "@" not in email or email in SKIP:
             continue
-        try:
-            due_date = datetime.strptime(next_due, "%Y-%m-%d").date()
-        except Exception:
-            continue
-        # skip if already emailed recently
         last_sent = sent.get(email)
         if last_sent:
             last = datetime.strptime(last_sent, "%Y-%m-%d").date()
             if (today - last).days < RESEND_SUPPRESS_DAYS:
                 continue
-        # due if reorder window (next_due - lead) has arrived
+        # new contacts (no order history) get a one-time check-in
+        if c.get("new_contact"):
+            due.append(c)
+            continue
+        next_due = c.get("next_due")
+        if not next_due:
+            continue
+        try:
+            due_date = datetime.strptime(next_due, "%Y-%m-%d").date()
+        except Exception:
+            continue
         if due_date - timedelta(days=LEAD_TIME_DAYS) <= today:
             due.append(c)
 
@@ -83,10 +91,15 @@ def main():
         print("NONE_DUE")
         return
 
+    # sort most-overdue first, cap per run
+    due.sort(key=lambda c: c.get("days_overdue") or 0, reverse=True)
+    due = due[:MAX_PER_RUN]
+
     print(f"DUE_TODAY={len(due)}")
 
     sent_count = 0
     bounced = 0
+    ratelimited = False
     for c in due:
         email = c["email"].strip().lower()
         name = c.get("name") or "there"
@@ -96,6 +109,7 @@ def main():
         msg["Bcc"] = BCC
         msg["Subject"] = SUBJECT
         ok = False
+        last_err = ""
         for attempt in (1, 2):
             try:
                 s = smtplib.SMTP(HOST, PORT, timeout=30)
@@ -106,19 +120,24 @@ def main():
                 ok = True
                 break
             except Exception as e:
-                err = str(e)
-                # on rate-limit, back off and retry once
-                if "451" in err or "ratelimit" in err.lower():
+                last_err = str(e)
+                if "451" in last_err or "ratelimit" in last_err.lower():
+                    ratelimited = True
                     time.sleep(60)
                 else:
                     break
         if ok:
             sent[email] = today.strftime("%Y-%m-%d")
             sent_count += 1
+            save_json(SENT_LOG, sent)  # incremental, survive crash
         else:
             bounced += 1
             with open(BOUNCE_LOG, "a") as f:
-                f.write(f"{email} | {err}\n")
+                f.write(f"{email} | {last_err}\n")
+        if ratelimited:
+            # stop this run; remaining will be picked up next cron tick
+            print("RATE_LIMIT_HIT_STOPPING")
+            break
         time.sleep(SEND_INTERVAL)
 
     save_json(SENT_LOG, sent)

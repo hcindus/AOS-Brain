@@ -1,17 +1,6 @@
 [
   {
-    "name": "Bitu Manager",
-    "email": "",
-    "phone": "+14152724446",
-    "orders": 2,
-    "first": "2026-05-26",
-    "last": "2026-06-19",
-    "median_gap_days": 24,
-    "total_spent": 642.14,
-    "next_due": "2026-07-13",
-    "days_overdue": 119
-  },
-  {
+    "key": "aztecamarketsanrafael@gmail.com",
     "name": "Fernando",
     "email": "aztecamarketsanrafael@gmail.com",
     "phone": "+14154572518",
@@ -21,10 +10,12 @@
     "median_gap_days": 28,
     "total_spent": 2093.21,
     "next_due": "2026-07-20",
-    "days_overdue": 112
+    "days_overdue": 112,
+    "new_contact": false
   },
   {
-    "name": "Sam Owner",
+    "key": "saggu.am@gmail.com",
+    "name": "Sam",
     "email": "saggu.am@gmail.com",
     "phone": "+17074904690",
     "orders": 2,
@@ -33,33 +24,25 @@
     "median_gap_days": 27,
     "total_spent": 1555.77,
     "next_due": "2026-07-22",
-    "days_overdue": 110
+    "days_overdue": 110,
+    "new_contact": false
   },
   {
-    "name": "Marco Palmieri",
-    "email": "info@psdepot.com",
-    "phone": "+14157309794",
-    "orders": 2,
-    "first": "2026-07-29",
-    "last": "2026-07-30",
-    "median_gap_days": 1,
-    "total_spent": 419.17,
-    "next_due": "2026-07-31",
-    "days_overdue": 101
-  },
-  {
+    "key": "topsirloin@sbcglobal.net",
     "name": "John Guerra",
     "email": "topsirloin@sbcglobal.net",
     "phone": "+14155640585",
     "orders": 5,
     "first": "2026-05-05",
     "last": "2026-08-03",
-    "median_gap_days": 10,
+    "median_gap_days": 15,
     "total_spent": 8908.43,
-    "next_due": "2026-08-13",
-    "days_overdue": 88
+    "next_due": "2026-08-18",
+    "days_overdue": 83,
+    "new_contact": false
   },
   {
+    "key": "hanna12@msn.com",
     "name": "Caffe Greco",
     "email": "hanna12@msn.com",
     "phone": "",
@@ -69,22 +52,12 @@
     "median_gap_days": 57,
     "total_spent": 674.63,
     "next_due": "2026-08-24",
-    "days_overdue": 77
+    "days_overdue": 77,
+    "new_contact": false
   },
   {
-    "name": "Be Manager",
-    "email": "beriekidane@gmail.com",
-    "phone": "+17072365983",
-    "orders": 2,
-    "first": "2026-09-12",
-    "last": "2026-09-14",
-    "median_gap_days": 2,
-    "total_spent": 1236.9,
-    "next_due": "2026-09-16",
-    "days_overdue": 54
-  },
-  {
-    "name": "Michael Dunsford NCC",
+    "key": "info@calistogainn.com",
+    "name": "Michael Dunsford",
     "email": "info@calistogainn.com",
     "phone": "+17079424101",
     "orders": 9,
@@ -93,22 +66,12 @@
     "median_gap_days": 19,
     "total_spent": 2194.17,
     "next_due": "2026-09-20",
-    "days_overdue": 50
+    "days_overdue": 50,
+    "new_contact": false
   },
   {
-    "name": "Boris (415) 652-6550",
-    "email": "rdmexpress@hotmail.com",
-    "phone": "+14156526550",
-    "orders": 2,
-    "first": "2026-09-18",
-    "last": "2026-09-21",
-    "median_gap_days": 3,
-    "total_spent": 1555.72,
-    "next_due": "2026-09-24",
-    "days_overdue": 46
-  },
-  {
-    "name": "Ross SUPPLY ONLY",
+    "key": "pelican_150",
+    "name": "Ross",
     "email": "accountspayable@150pelican.com",
     "phone": "415-453-4940x211",
     "orders": 2,
@@ -117,22 +80,12 @@
     "median_gap_days": 48,
     "total_spent": 1737.78,
     "next_due": "2026-10-06",
-    "days_overdue": 34
+    "days_overdue": 34,
+    "new_contact": false
   },
   {
-    "name": "Katie Rondeau",
-    "email": "katie.rondeau@cpfd.com",
-    "phone": "+17578589426",
-    "orders": 11,
-    "first": "2026-04-16",
-    "last": "2026-09-29",
-    "median_gap_days": 14,
-    "total_spent": 5240.45,
-    "next_due": "2026-10-13",
-    "days_overdue": 27
-  },
-  {
-    "name": "Ava GM",
+    "key": "ava@niceventures.com",
+    "name": "Ava",
     "email": "ava@niceventures.com",
     "phone": "+14154413200",
     "orders": 4,
@@ -141,9 +94,25 @@
     "median_gap_days": 13,
     "total_spent": 1314.86,
     "next_due": "2026-10-18",
-    "days_overdue": 22
+    "days_overdue": 22,
+    "new_contact": false
   },
   {
+    "key": "katie.rondeau@cpfd.com",
+    "name": "Katie Rondeau",
+    "email": "katie.rondeau@cpfd.com",
+    "phone": "+17578589426",
+    "orders": 11,
+    "first": "2026-04-16",
+    "last": "2026-09-29",
+    "median_gap_days": 21,
+    "total_spent": 5240.45,
+    "next_due": "2026-10-20",
+    "days_overdue": 20,
+    "new_contact": false
+  },
+  {
+    "key": "paige@waterbarsf.com",
     "name": "Paige Sutter",
     "email": "paige@waterbarsf.com",
     "phone": "+14152849922",
@@ -153,22 +122,12 @@
     "median_gap_days": 34,
     "total_spent": 6078.98,
     "next_due": "2026-10-24",
-    "days_overdue": 16
+    "days_overdue": 16,
+    "new_contact": false
   },
   {
-    "name": "Betsy Delfiero",
-    "email": "betsy@itsitaliarestaurant.com",
-    "phone": "+16507293099",
-    "orders": 7,
-    "first": "2026-04-14",
-    "last": "2026-09-17",
-    "median_gap_days": 38,
-    "total_spent": 3256.63,
-    "next_due": "2026-10-25",
-    "days_overdue": 15
-  },
-  {
-    "name": "Lauro Owner",
+    "key": "gloria.rcli09@gmail.com",
+    "name": "Lauro",
     "email": "gloria.rcli09@gmail.com",
     "phone": "+15308463218",
     "orders": 2,
@@ -177,10 +136,12 @@
     "median_gap_days": 97,
     "total_spent": 2043.2,
     "next_due": "2026-10-26",
-    "days_overdue": 14
+    "days_overdue": 14,
+    "new_contact": false
   },
   {
-    "name": "Tino Owner",
+    "key": "laginestra@sbcglobal.net",
+    "name": "Tino",
     "email": "laginestra@sbcglobal.net",
     "phone": "+14153880224",
     "orders": 2,
@@ -189,10 +150,12 @@
     "median_gap_days": 16,
     "total_spent": 388.78,
     "next_due": "2026-10-30",
-    "days_overdue": 10
+    "days_overdue": 10,
+    "new_contact": false
   },
   {
-    "name": "Adam Owner",
+    "key": "atorres12@aol.com",
+    "name": "Adam",
     "email": "atorres12@aol.com",
     "phone": "+16502223712",
     "orders": 2,
@@ -201,9 +164,11 @@
     "median_gap_days": 22,
     "total_spent": 1316.1,
     "next_due": "2026-11-05",
-    "days_overdue": 4
+    "days_overdue": 4,
+    "new_contact": false
   },
   {
+    "key": "reservations@epicsteak.com",
     "name": "Mary T",
     "email": "reservations@epicsteak.com",
     "phone": "+14153699955",
@@ -213,10 +178,12 @@
     "median_gap_days": 35,
     "total_spent": 4611.95,
     "next_due": "2026-11-05",
-    "days_overdue": 4
+    "days_overdue": 4,
+    "new_contact": false
   },
   {
-    "name": "Michael General Manager",
+    "key": "michael@acre-restaurant.com",
+    "name": "Michael General",
     "email": "michael@acre-restaurant.com",
     "phone": "",
     "orders": 6,
@@ -225,21 +192,11 @@
     "median_gap_days": 37,
     "total_spent": 1778.75,
     "next_due": "2026-11-05",
-    "days_overdue": 4
+    "days_overdue": 4,
+    "new_contact": false
   },
   {
-    "name": "Nick Owner",
-    "email": "stargrocery@sbcglobal.net",
-    "phone": "+15106522490",
-    "orders": 7,
-    "first": "2026-04-13",
-    "last": "2026-10-12",
-    "median_gap_days": 32,
-    "total_spent": 2888.27,
-    "next_due": "2026-11-13",
-    "days_overdue": -4
-  },
-  {
+    "key": "tomatina_tsc",
     "name": "Joycelin Magno",
     "email": "gm_tsc@tomatina.com",
     "phone": "+14086549000",
@@ -249,10 +206,12 @@
     "median_gap_days": 42,
     "total_spent": 670.77,
     "next_due": "2026-11-16",
-    "days_overdue": -7
+    "days_overdue": -7,
+    "new_contact": false
   },
   {
-    "name": "Kelly left msg",
+    "key": "info@chowderspier39.com",
+    "name": "Kelly",
     "email": "info@chowderspier39.com",
     "phone": "+14153914737",
     "orders": 2,
@@ -261,9 +220,11 @@
     "median_gap_days": 77,
     "total_spent": 601.46,
     "next_due": "2026-11-16",
-    "days_overdue": -7
+    "days_overdue": -7,
+    "new_contact": false
   },
   {
+    "key": "travis_hauffman",
     "name": "Travis Hauffman",
     "email": "terrychico@sbcglobal.net",
     "phone": "+15308989948",
@@ -273,9 +234,11 @@
     "median_gap_days": 21,
     "total_spent": 1230.42,
     "next_due": "2026-11-17",
-    "days_overdue": -8
+    "days_overdue": -8,
+    "new_contact": false
   },
   {
+    "key": "info@barbravas.com",
     "name": "Chris Davenport",
     "email": "info@barbravas.com",
     "phone": "+17074337700",
@@ -285,10 +248,12 @@
     "median_gap_days": 30,
     "total_spent": 1008.57,
     "next_due": "2026-11-19",
-    "days_overdue": -10
+    "days_overdue": -10,
+    "new_contact": false
   },
   {
-    "name": "Margarito General Manager",
+    "key": "info@starkssteakhouse.com",
+    "name": "Margarito General",
     "email": "info@starkssteakhouse.com",
     "phone": "+17075465100",
     "orders": 4,
@@ -297,10 +262,12 @@
     "median_gap_days": 54,
     "total_spent": 2344.82,
     "next_due": "2026-11-22",
-    "days_overdue": -13
+    "days_overdue": -13,
+    "new_contact": false
   },
   {
-    "name": "Amrit Owner",
+    "key": "americancanyonmmp@gmail.com",
+    "name": "Amrit",
     "email": "americancanyonmmp@gmail.com",
     "phone": "+17075635505",
     "orders": 3,
@@ -309,10 +276,26 @@
     "median_gap_days": 74,
     "total_spent": 1271.22,
     "next_due": "2026-11-23",
-    "days_overdue": -14
+    "days_overdue": -14,
+    "new_contact": false
   },
   {
-    "name": "Jen Yang SUPPLY ONLY",
+    "key": "betsy_delfiero",
+    "name": "Betsy Delfiero",
+    "email": "betsy@itsitaliarestaurant.com",
+    "phone": "+16507293099",
+    "orders": 7,
+    "first": "2026-04-14",
+    "last": "2026-09-17",
+    "median_gap_days": 69,
+    "total_spent": 3256.63,
+    "next_due": "2026-11-25",
+    "days_overdue": -16,
+    "new_contact": false
+  },
+  {
+    "key": "tomatina",
+    "name": "Jen Yang",
     "email": "chloe_frey@tomatina.com",
     "phone": "+15105211000",
     "orders": 2,
@@ -321,10 +304,12 @@
     "median_gap_days": 101,
     "total_spent": 809.03,
     "next_due": "2026-11-25",
-    "days_overdue": -16
+    "days_overdue": -16,
+    "new_contact": false
   },
   {
-    "name": "Sam Manager",
+    "key": "info@williswinebar.net",
+    "name": "Sam",
     "email": "info@williswinebar.net",
     "phone": "+17075263096",
     "orders": 5,
@@ -333,9 +318,11 @@
     "median_gap_days": 42,
     "total_spent": 1162.65,
     "next_due": "2026-11-26",
-    "days_overdue": -17
+    "days_overdue": -17,
+    "new_contact": false
   },
   {
+    "key": "tacossinaloaberkeley@gmail.com",
     "name": "Tacos Sinaloa - Oakland Marlem",
     "email": "tacossinaloaberkeley@gmail.com",
     "phone": "+15103255069",
@@ -345,9 +332,11 @@
     "median_gap_days": 55,
     "total_spent": 1662.05,
     "next_due": "2026-12-01",
-    "days_overdue": -22
+    "days_overdue": -22,
+    "new_contact": false
   },
   {
+    "key": "amakaracompany@gmail.com",
     "name": "Myly",
     "email": "amakaracompany@gmail.com",
     "phone": "+19258038485",
@@ -357,10 +346,12 @@
     "median_gap_days": 56,
     "total_spent": 3559.87,
     "next_due": "2026-12-02",
-    "days_overdue": -23
+    "days_overdue": -23,
+    "new_contact": false
   },
   {
-    "name": "Cory Manager",
+    "key": "gm@statebirdsf.com",
+    "name": "Cory",
     "email": "gm@statebirdsf.com",
     "phone": "+14157951272",
     "orders": 3,
@@ -369,9 +360,25 @@
     "median_gap_days": 63,
     "total_spent": 1757.71,
     "next_due": "2026-12-04",
-    "days_overdue": -25
+    "days_overdue": -25,
+    "new_contact": false
   },
   {
+    "key": "stargrocery@sbcglobal.net",
+    "name": "Nick",
+    "email": "stargrocery@sbcglobal.net",
+    "phone": "+15106522490",
+    "orders": 7,
+    "first": "2026-04-13",
+    "last": "2026-10-12",
+    "median_gap_days": 56,
+    "total_spent": 2888.27,
+    "next_due": "2026-12-07",
+    "days_overdue": -28,
+    "new_contact": false
+  },
+  {
+    "key": "laura@ristorantelatoscana.com",
     "name": "Laura",
     "email": "laura@ristorantelatoscana.com",
     "phone": "415-492-9100",
@@ -381,9 +388,11 @@
     "median_gap_days": 49,
     "total_spent": 1038.61,
     "next_due": "2026-12-08",
-    "days_overdue": -29
+    "days_overdue": -29,
+    "new_contact": false
   },
   {
+    "key": "tomatina_trv",
     "name": "Gregory Lachica",
     "email": "gm_trv@tomatina.com",
     "phone": "+12793992205",
@@ -393,10 +402,12 @@
     "median_gap_days": 87,
     "total_spent": 376.57,
     "next_due": "2026-12-10",
-    "days_overdue": -31
+    "days_overdue": -31,
+    "new_contact": false
   },
   {
-    "name": "Heather Owner",
+    "key": "candyheaven.business@gmail.com",
+    "name": "Heather",
     "email": "candyheaven.business@gmail.com",
     "phone": "+19164473404",
     "orders": 2,
@@ -405,9 +416,11 @@
     "median_gap_days": 99,
     "total_spent": 159.0,
     "next_due": "2026-12-19",
-    "days_overdue": -40
+    "days_overdue": -40,
+    "new_contact": false
   },
   {
+    "key": "johnkonstin@johnsgrill.com",
     "name": "Tony Salinas",
     "email": "johnkonstin@johnsgrill.com",
     "phone": "+14159860069",
@@ -417,10 +430,12 @@
     "median_gap_days": 96,
     "total_spent": 1130.65,
     "next_due": "2026-12-20",
-    "days_overdue": -41
+    "days_overdue": -41,
+    "new_contact": false
   },
   {
-    "name": "Ken Owner",
+    "key": "so_vandeth@yahoo.com",
+    "name": "Ken",
     "email": "so_vandeth@yahoo.com",
     "phone": "+12095996484",
     "orders": 3,
@@ -429,9 +444,11 @@
     "median_gap_days": 56,
     "total_spent": 592.47,
     "next_due": "2026-12-21",
-    "days_overdue": -42
+    "days_overdue": -42,
+    "new_contact": false
   },
   {
+    "key": "pacificorestaurante1237@gmail.com",
     "name": "Jorge",
     "email": "pacificorestaurante1237@gmail.com",
     "phone": "707-942-4400",
@@ -441,9 +458,11 @@
     "median_gap_days": 59,
     "total_spent": 504.23,
     "next_due": "2026-12-28",
-    "days_overdue": -49
+    "days_overdue": -49,
+    "new_contact": false
   },
   {
+    "key": "sabidovictor2009@hotmail.com",
     "name": "Victor Sabido",
     "email": "sabidovictor2009@hotmail.com",
     "phone": "+14158982234",
@@ -453,9 +472,11 @@
     "median_gap_days": 98,
     "total_spent": 531.18,
     "next_due": "2026-12-29",
-    "days_overdue": -50
+    "days_overdue": -50,
+    "new_contact": false
   },
   {
+    "key": "rdelf2@gmail.com",
     "name": "Rene Del Fiero",
     "email": "rdelf2@gmail.com",
     "phone": "",
@@ -465,9 +486,11 @@
     "median_gap_days": 80,
     "total_spent": 1301.28,
     "next_due": "2026-12-31",
-    "days_overdue": -52
+    "days_overdue": -52,
+    "new_contact": false
   },
   {
+    "key": "janet.clyde@gmail.com",
     "name": "Janet Clyde",
     "email": "janet.clyde@gmail.com",
     "phone": "415-362-3370",
@@ -477,9 +500,11 @@
     "median_gap_days": 111,
     "total_spent": 1336.12,
     "next_due": "2027-01-03",
-    "days_overdue": -55
+    "days_overdue": -55,
+    "new_contact": false
   },
   {
+    "key": "aaron@awnoodles.com",
     "name": "Aaron Weissman",
     "email": "aaron@awnoodles.com",
     "phone": "+14063153388",
@@ -489,9 +514,11 @@
     "median_gap_days": 80,
     "total_spent": 458.24,
     "next_due": "2027-01-06",
-    "days_overdue": -58
+    "days_overdue": -58,
+    "new_contact": false
   },
   {
+    "key": "shergillsatinder4@gmail.com",
     "name": "Satinder Sherfill",
     "email": "shergillsatinder4@gmail.com",
     "phone": "+17076200012",
@@ -501,9 +528,11 @@
     "median_gap_days": 76,
     "total_spent": 1710.62,
     "next_due": "2027-01-24",
-    "days_overdue": -76
+    "days_overdue": -76,
+    "new_contact": false
   },
   {
+    "key": "tamir@bullvalleyroadhouse.com",
     "name": "Paolo Gomez",
     "email": "tamir@bullvalleyroadhouse.com",
     "phone": "+15107871135",
@@ -513,9 +542,11 @@
     "median_gap_days": 125,
     "total_spent": 460.48,
     "next_due": "2027-02-15",
-    "days_overdue": -98
+    "days_overdue": -98,
+    "new_contact": false
   },
   {
+    "key": "crabguy415@gmail.com",
     "name": "Don Tom La Torre",
     "email": "crabguy415@gmail.com",
     "phone": "+15108827100",
@@ -525,10 +556,12 @@
     "median_gap_days": 314,
     "total_spent": 397.57,
     "next_due": "2027-03-29",
-    "days_overdue": -140
+    "days_overdue": -140,
+    "new_contact": false
   },
   {
-    "name": "James General Manager",
+    "key": "james@ernestsf.com",
+    "name": "James General",
     "email": "james@ernestsf.com",
     "phone": "+14153427676",
     "orders": 2,
@@ -537,10 +570,12 @@
     "median_gap_days": 182,
     "total_spent": 718.43,
     "next_due": "2027-04-15",
-    "days_overdue": -157
+    "days_overdue": -157,
+    "new_contact": false
   },
   {
-    "name": "Marco SUPPLY ONLY",
+    "key": "marcopalmieri500@gmail.com",
+    "name": "Marco",
     "email": "marcopalmieri500@gmail.com",
     "phone": "+17077667600",
     "orders": 2,
@@ -549,10 +584,12 @@
     "median_gap_days": 189,
     "total_spent": 380.85,
     "next_due": "2027-04-27",
-    "days_overdue": -169
+    "days_overdue": -169,
+    "new_contact": false
   },
   {
-    "name": "Cindy or Beth Cd @ 2 months",
+    "key": "info@insalatas.com",
+    "name": "Cindy or Beth",
     "email": "info@insalatas.com",
     "phone": "+14154577700",
     "orders": 5,
@@ -561,21 +598,11 @@
     "median_gap_days": 28,
     "total_spent": 1597.06,
     "next_due": "2026-11-09",
-    "days_overdue": 0
+    "days_overdue": 0,
+    "new_contact": false
   },
   {
-    "name": "Harry Manager",
-    "email": "harjitgandham@yahoo.com",
-    "phone": "+17072365983",
-    "orders": 2,
-    "first": "2026-10-03",
-    "last": "2026-10-03",
-    "median_gap_days": null,
-    "total_spent": 583.0,
-    "next_due": null,
-    "days_overdue": null
-  },
-  {
+    "key": "tomatina_twc",
     "name": "Dan Ok for now",
     "email": "gm_twc@tomatina.com",
     "phone": "+19259309999",
@@ -585,69 +612,11 @@
     "median_gap_days": 60,
     "total_spent": 738.07,
     "next_due": "2026-11-09",
-    "days_overdue": 0
+    "days_overdue": 0,
+    "new_contact": false
   },
   {
-    "name": "Robert Simon",
-    "email": "edward@welldonebooks.com",
-    "phone": "626-795-2478",
-    "orders": 2,
-    "first": "2026-08-06",
-    "last": "2026-08-06",
-    "median_gap_days": null,
-    "total_spent": 216.56,
-    "next_due": null,
-    "days_overdue": null
-  },
-  {
-    "name": "Audrey SUPPLY ONLY",
-    "email": "ocp@sonic.net",
-    "phone": "+17077633897",
-    "orders": 2,
-    "first": "2026-07-22",
-    "last": "2026-07-22",
-    "median_gap_days": null,
-    "total_spent": 304.76,
-    "next_due": null,
-    "days_overdue": null
-  },
-  {
-    "name": "Izat left msg",
-    "email": "izateliyan@gmail.com",
-    "phone": "+15108459090",
-    "orders": 2,
-    "first": "2026-06-02",
-    "last": "2026-06-02",
-    "median_gap_days": null,
-    "total_spent": 240.32,
-    "next_due": null,
-    "days_overdue": null
-  },
-  {
-    "name": "Donato Owner",
-    "email": "",
-    "phone": "+15102344524",
-    "orders": 2,
-    "first": "2026-05-20",
-    "last": "2026-05-20",
-    "median_gap_days": null,
-    "total_spent": 819.42,
-    "next_due": null,
-    "days_overdue": null
-  },
-  {
-    "name": "Lawrence Kam",
-    "email": "lawrence.kam@outlook.com",
-    "phone": "+14082889839",
-    "orders": 2,
-    "first": "2026-04-24",
-    "last": "2026-04-24",
-    "median_gap_days": null,
-    "total_spent": 1129.2,
-    "next_due": null,
-    "days_overdue": null
-  },
-  {
+    "key": "rajeswori3744@gmail.com",
     "name": "Hari Shrestha",
     "email": "rajeswori3744@gmail.com",
     "phone": "+17079219479",
@@ -657,10 +626,12 @@
     "median_gap_days": null,
     "total_spent": 298.0,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Min Hong ECR",
+    "key": "info@soultranseafood.com",
+    "name": "Min Hong",
     "email": "info@soultranseafood.com",
     "phone": "707-643-1587",
     "orders": 1,
@@ -669,10 +640,12 @@
     "median_gap_days": null,
     "total_spent": 306.88,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Garland NCC",
+    "key": "garland5gli@gmail.com",
+    "name": "Garland",
     "email": "garland5gli@gmail.com",
     "phone": "+14155703463",
     "orders": 1,
@@ -681,9 +654,11 @@
     "median_gap_days": null,
     "total_spent": 696.04,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "roberto06750@yahoo.com",
     "name": "Roberto Lopez",
     "email": "roberto06750@yahoo.com",
     "phone": "+16612564602",
@@ -693,9 +668,11 @@
     "median_gap_days": null,
     "total_spent": 293.58,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "aidasch55@yahoo.com",
     "name": "Aida Schneider",
     "email": "aidasch55@yahoo.com",
     "phone": "+17079781651",
@@ -705,9 +682,11 @@
     "median_gap_days": null,
     "total_spent": 441.0,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "fay@twentyfivecompany.com",
     "name": "Fay Kenney",
     "email": "fay@twentyfivecompany.com",
     "phone": "+14158997475",
@@ -717,33 +696,11 @@
     "median_gap_days": null,
     "total_spent": 54.3,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Brian Tagliaferri",
-    "email": "",
-    "phone": "+14155179677",
-    "orders": 1,
-    "first": "2026-10-27",
-    "last": "2026-10-27",
-    "median_gap_days": null,
-    "total_spent": 120.42,
-    "next_due": null,
-    "days_overdue": null
-  },
-  {
-    "name": "Brian Tagliaferri",
-    "email": "",
-    "phone": "+14155719677",
-    "orders": 1,
-    "first": "2026-10-27",
-    "last": "2026-10-27",
-    "median_gap_days": null,
-    "total_spent": 120.66,
-    "next_due": null,
-    "days_overdue": null
-  },
-  {
+    "key": "baxters@baxters.restaurant",
     "name": "Kevin Baxter's",
     "email": "baxters@baxters.restaurant",
     "phone": "+17077454200",
@@ -753,22 +710,12 @@
     "median_gap_days": null,
     "total_spent": 152.52,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Kimberly Owner",
-    "email": "",
-    "phone": "+17077454476",
-    "orders": 1,
-    "first": "2026-10-19",
-    "last": "2026-10-19",
-    "median_gap_days": null,
-    "total_spent": 141.82,
-    "next_due": null,
-    "days_overdue": null
-  },
-  {
-    "name": "Ashley GM",
+    "key": "hidive@hidivesf.com",
+    "name": "Ashley",
     "email": "hidive@hidivesf.com",
     "phone": "+14159770170",
     "orders": 1,
@@ -777,10 +724,12 @@
     "median_gap_days": null,
     "total_spent": 399.04,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Mo Owner",
+    "key": "onestopshopmart@gmail.com",
+    "name": "Mo",
     "email": "onestopshopmart@gmail.com",
     "phone": "+18186679131",
     "orders": 1,
@@ -789,9 +738,25 @@
     "median_gap_days": null,
     "total_spent": 182.17,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "harjitgandham@yahoo.com",
+    "name": "Harry",
+    "email": "harjitgandham@yahoo.com",
+    "phone": "+17072365983",
+    "orders": 2,
+    "first": "2026-10-03",
+    "last": "2026-10-03",
+    "median_gap_days": null,
+    "total_spent": 583.0,
+    "next_due": null,
+    "days_overdue": null,
+    "new_contact": false
+  },
+  {
+    "key": "attiladanku@barrelhousetavern.com",
     "name": "Attila Danku",
     "email": "attiladanku@barrelhousetavern.com",
     "phone": "+14157299593",
@@ -801,9 +766,11 @@
     "median_gap_days": null,
     "total_spent": 986.45,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "albertoyanez1973@gmail.com",
     "name": "Carlos Preciado",
     "email": "albertoyanez1973@gmail.com",
     "phone": "+14154568190",
@@ -813,9 +780,11 @@
     "median_gap_days": null,
     "total_spent": 454.46,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "sboisvert@quinceandcosf.com",
     "name": "Samuel Boisvert",
     "email": "sboisvert@quinceandcosf.com",
     "phone": "",
@@ -825,10 +794,12 @@
     "median_gap_days": null,
     "total_spent": 1186.78,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Eric GM",
+    "key": "houseofprimerib@aol.com",
+    "name": "Eric",
     "email": "houseofprimerib@aol.com",
     "phone": "",
     "orders": 1,
@@ -837,9 +808,25 @@
     "median_gap_days": null,
     "total_spent": 1570.69,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "rdmexpress@hotmail.com",
+    "name": "Boris (415) 652-6550",
+    "email": "rdmexpress@hotmail.com",
+    "phone": "+14156526550",
+    "orders": 2,
+    "first": "2026-09-18",
+    "last": "2026-09-21",
+    "median_gap_days": null,
+    "total_spent": 1555.72,
+    "next_due": null,
+    "days_overdue": null,
+    "new_contact": false
+  },
+  {
+    "key": "mosiahlinder707@gmail.com",
     "name": "Mosiah Linder",
     "email": "mosiahlinder707@gmail.com",
     "phone": "+19165219103",
@@ -849,9 +836,11 @@
     "median_gap_days": null,
     "total_spent": 290.74,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "daniel.indelicato@gmail.com",
     "name": "Daniel Indelicato Open",
     "email": "daniel.indelicato@gmail.com",
     "phone": "+14154727101",
@@ -861,9 +850,11 @@
     "median_gap_days": null,
     "total_spent": 381.54,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "uncleyuatthevineyard@gmail.com",
     "name": "Lukas Plato",
     "email": "uncleyuatthevineyard@gmail.com",
     "phone": "+19254497000",
@@ -873,9 +864,11 @@
     "median_gap_days": null,
     "total_spent": 958.7,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "hittheballpgc@gmail.com",
     "name": "Evin Gelleri",
     "email": "hittheballpgc@gmail.com",
     "phone": "+14152508475",
@@ -885,21 +878,25 @@
     "median_gap_days": null,
     "total_spent": 679.22,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Jeff Tomasini",
-    "email": "",
-    "phone": "707-762-7355",
-    "orders": 1,
+    "key": "beriekidane@gmail.com",
+    "name": "Be",
+    "email": "beriekidane@gmail.com",
+    "phone": "+17072365983",
+    "orders": 2,
     "first": "2026-09-12",
-    "last": "2026-09-12",
+    "last": "2026-09-14",
     "median_gap_days": null,
-    "total_spent": 121.36,
+    "total_spent": 1236.9,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "gm@thecatina.com",
     "name": "The Cantina",
     "email": "gm@thecatina.com",
     "phone": "+14152445655",
@@ -909,22 +906,12 @@
     "median_gap_days": null,
     "total_spent": 302.28,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "The Cantina",
-    "email": "",
-    "phone": "+14152445655",
-    "orders": 1,
-    "first": "2026-09-04",
-    "last": "2026-09-04",
-    "median_gap_days": null,
-    "total_spent": 302.28,
-    "next_due": null,
-    "days_overdue": null
-  },
-  {
-    "name": "Sonia Kang Owner",
+    "key": "soyaramalloy@gmail.com",
+    "name": "Sonia Kang",
     "email": "soyaramalloy@gmail.com",
     "phone": "+14152584520",
     "orders": 1,
@@ -933,10 +920,12 @@
     "median_gap_days": null,
     "total_spent": 337.21,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Razan Owner",
+    "key": "goldenyak977@gmail.com",
+    "name": "Razan",
     "email": "goldenyak977@gmail.com",
     "phone": "+16504610062",
     "orders": 1,
@@ -945,9 +934,11 @@
     "median_gap_days": null,
     "total_spent": 292.28,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "veronica.vs.vs@gmail.com",
     "name": "Veronica Salazar",
     "email": "veronica.vs.vs@gmail.com",
     "phone": "415-925-1403",
@@ -957,10 +948,12 @@
     "median_gap_days": null,
     "total_spent": 306.75,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "General Manager",
+    "key": "dan@doloresparkcafe.com",
+    "name": "General",
     "email": "dan@doloresparkcafe.com",
     "phone": "+15107563131",
     "orders": 1,
@@ -969,9 +962,11 @@
     "median_gap_days": null,
     "total_spent": 112.96,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "office@sausalitoyachtclub.org",
     "name": "Jeri Kirihara",
     "email": "office@sausalitoyachtclub.org",
     "phone": "+14153327400",
@@ -981,9 +976,11 @@
     "median_gap_days": null,
     "total_spent": 759.15,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "fjzermeno123@yahoo.com",
     "name": "Fernando Zermeno",
     "email": "fjzermeno123@yahoo.com",
     "phone": "+14157529274",
@@ -993,10 +990,12 @@
     "median_gap_days": null,
     "total_spent": 537.85,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "General Manager",
+    "key": "ap@pubrepublicusa.com",
+    "name": "General",
     "email": "ap@pubrepublicusa.com",
     "phone": "+17077829090",
     "orders": 1,
@@ -1005,9 +1004,11 @@
     "median_gap_days": null,
     "total_spent": 152.38,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "alfredoespinoza3@yahoo.com",
     "name": "Alfredo Espinoza",
     "email": "alfredoespinoza3@yahoo.com",
     "phone": "+12096226378",
@@ -1017,9 +1018,25 @@
     "median_gap_days": null,
     "total_spent": 941.56,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "edward@welldonebooks.com",
+    "name": "Robert Simon",
+    "email": "edward@welldonebooks.com",
+    "phone": "626-795-2478",
+    "orders": 2,
+    "first": "2026-08-06",
+    "last": "2026-08-06",
+    "median_gap_days": null,
+    "total_spent": 216.56,
+    "next_due": null,
+    "days_overdue": null,
+    "new_contact": false
+  },
+  {
+    "key": "bobmxlt3@aol.com",
     "name": "George",
     "email": "bobmxlt3@aol.com",
     "phone": "+17144252424",
@@ -1029,10 +1046,12 @@
     "median_gap_days": null,
     "total_spent": 401.59,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Lucio Leon ECR",
+    "key": "leoncito.bosito18@gmail.com",
+    "name": "Lucio Leon",
     "email": "leoncito.bosito18@gmail.com",
     "phone": "+19257266460",
     "orders": 1,
@@ -1041,10 +1060,12 @@
     "median_gap_days": null,
     "total_spent": 1168.31,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Maria Manager",
+    "key": "dan@parkcafegroup.com",
+    "name": "Maria",
     "email": "dan@parkcafegroup.com",
     "phone": "+14156211108",
     "orders": 1,
@@ -1053,9 +1074,11 @@
     "median_gap_days": null,
     "total_spent": 458.29,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "annflider@gmail.com",
     "name": "Ann Flider",
     "email": "annflider@gmail.com",
     "phone": "+14157704371",
@@ -1065,9 +1088,11 @@
     "median_gap_days": null,
     "total_spent": 320.01,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "tomatina_tul",
     "name": "Carlos Ramos",
     "email": "gm_tul@tomatina.com",
     "phone": "+15104315132",
@@ -1077,10 +1102,12 @@
     "median_gap_days": null,
     "total_spent": 530.99,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Heather Manager",
+    "key": "info@kitchendoornapa.com",
+    "name": "Heather",
     "email": "info@kitchendoornapa.com",
     "phone": "+16786122695",
     "orders": 1,
@@ -1089,10 +1116,12 @@
     "median_gap_days": null,
     "total_spent": 452.4,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Yvette Owner",
+    "key": "dalycitylock@dalycitylock.net",
+    "name": "Yvette",
     "email": "dalycitylock@dalycitylock.net",
     "phone": "+16506424199",
     "orders": 1,
@@ -1101,9 +1130,11 @@
     "median_gap_days": null,
     "total_spent": 285.0,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "gm@poggiotrattoria.com",
     "name": "Scott Walsh",
     "email": "gm@poggiotrattoria.com",
     "phone": "+14153327771",
@@ -1113,9 +1144,25 @@
     "median_gap_days": null,
     "total_spent": 382.3,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "ocp@sonic.net",
+    "name": "Audrey",
+    "email": "ocp@sonic.net",
+    "phone": "+17077633897",
+    "orders": 2,
+    "first": "2026-07-22",
+    "last": "2026-07-22",
+    "median_gap_days": null,
+    "total_spent": 304.76,
+    "next_due": null,
+    "days_overdue": null,
+    "new_contact": false
+  },
+  {
+    "key": "ccross@ossosteakhouse.com",
     "name": "Charlie Cross",
     "email": "ccross@ossosteakhouse.com",
     "phone": "",
@@ -1125,9 +1172,11 @@
     "median_gap_days": null,
     "total_spent": 292.28,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "david@sirene-oak.com",
     "name": "David Dearstyne",
     "email": "david@sirene-oak.com",
     "phone": "+15102008750",
@@ -1137,9 +1186,11 @@
     "median_gap_days": null,
     "total_spent": 315.12,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "info@viapiccola.com",
     "name": "Pedro Ulloa",
     "email": "info@viapiccola.com",
     "phone": "+17076942427",
@@ -1149,9 +1200,11 @@
     "median_gap_days": null,
     "total_spent": 382.3,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "jcattelin@quincerestaurant.com",
     "name": "Julie Cattelin",
     "email": "jcattelin@quincerestaurant.com",
     "phone": "+14157758500",
@@ -1161,9 +1214,11 @@
     "median_gap_days": null,
     "total_spent": 993.91,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "loscaporalestaqueria@outlook.com",
     "name": "Renee loscaporalestaqueria@outlook.com",
     "email": "loscaporalestaqueria@outlook.com",
     "phone": "+19255180554",
@@ -1173,22 +1228,12 @@
     "median_gap_days": null,
     "total_spent": 360.45,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "General Manager",
-    "email": "",
-    "phone": "+14154195367",
-    "orders": 1,
-    "first": "2026-07-09",
-    "last": "2026-07-09",
-    "median_gap_days": null,
-    "total_spent": 68.14,
-    "next_due": null,
-    "days_overdue": null
-  },
-  {
-    "name": "Pedro Owner",
+    "key": "hernandez2588@gmail.com",
+    "name": "Pedro",
     "email": "hernandez2588@gmail.com",
     "phone": "+17078878741",
     "orders": 1,
@@ -1197,9 +1242,11 @@
     "median_gap_days": null,
     "total_spent": 221.33,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "jose2779@att.net",
     "name": "Jose Canchebolio",
     "email": "jose2779@att.net",
     "phone": "+14153313474",
@@ -1209,9 +1256,11 @@
     "median_gap_days": null,
     "total_spent": 901.36,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "receiving@solfoodrestaurant.com",
     "name": "Brent Warehouse",
     "email": "receiving@solfoodrestaurant.com",
     "phone": "",
@@ -1221,22 +1270,12 @@
     "median_gap_days": null,
     "total_spent": 2962.42,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Lilliana Owner",
-    "email": "",
-    "phone": "+15595901043",
-    "orders": 1,
-    "first": "2026-06-26",
-    "last": "2026-06-26",
-    "median_gap_days": null,
-    "total_spent": 292.56,
-    "next_due": null,
-    "days_overdue": null
-  },
-  {
-    "name": "Erick MAITRE'D",
+    "key": "erick@mcinnisparkgolfcenter.com",
+    "name": "Erick",
     "email": "erick@mcinnisparkgolfcenter.com",
     "phone": "+14154915961",
     "orders": 1,
@@ -1245,10 +1284,12 @@
     "median_gap_days": null,
     "total_spent": 675.99,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Linda Manager",
+    "key": "tomatina_twv",
+    "name": "Linda",
     "email": "gm_twv@tomatina.com",
     "phone": "408-380-0040",
     "orders": 1,
@@ -1257,22 +1298,12 @@
     "median_gap_days": null,
     "total_spent": 171.69,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Emad Ali",
-    "email": "",
-    "phone": "+15108720201",
-    "orders": 1,
-    "first": "2026-06-24",
-    "last": "2026-06-24",
-    "median_gap_days": null,
-    "total_spent": 69.29,
-    "next_due": null,
-    "days_overdue": null
-  },
-  {
-    "name": "Paul Manager Manager",
+    "key": "38saltandpepper@gmail.com",
+    "name": "Paul",
     "email": "38saltandpepper@gmail.com",
     "phone": "+14155727962",
     "orders": 1,
@@ -1281,10 +1312,12 @@
     "median_gap_days": null,
     "total_spent": 249.73,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Vann Owner",
+    "key": "22ndandirving@gmail.com",
+    "name": "Vann",
     "email": "22ndandirving@gmail.com",
     "phone": "+14088889590",
     "orders": 1,
@@ -1293,22 +1326,12 @@
     "median_gap_days": null,
     "total_spent": 1447.12,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Alvaro call back",
-    "email": "",
-    "phone": "+14153007481",
-    "orders": 1,
-    "first": "2026-06-19",
-    "last": "2026-06-19",
-    "median_gap_days": null,
-    "total_spent": 348.32,
-    "next_due": null,
-    "days_overdue": null
-  },
-  {
-    "name": "Abe left msg",
+    "key": "abehamami@yahoo.com",
+    "name": "Abe",
     "email": "abehamami@yahoo.com",
     "phone": "415-897-5181",
     "orders": 1,
@@ -1317,10 +1340,12 @@
     "median_gap_days": null,
     "total_spent": 305.16,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Michael Owner",
+    "key": "phannavongm@gmail.com",
+    "name": "Michael",
     "email": "phannavongm@gmail.com",
     "phone": "+15103263402",
     "orders": 1,
@@ -1329,9 +1354,11 @@
     "median_gap_days": null,
     "total_spent": 166.62,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "office@oceanviewonfourth.com",
     "name": "William Bishop",
     "email": "office@oceanviewonfourth.com",
     "phone": "+17074843470",
@@ -1341,10 +1368,12 @@
     "median_gap_days": null,
     "total_spent": 73.15,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Armando Alvarez MAITRE'D",
+    "key": "armandononi@hotmail.com",
+    "name": "Armando Alvarez",
     "email": "armandononi@hotmail.com",
     "phone": "760-346-0744",
     "orders": 1,
@@ -1353,10 +1382,12 @@
     "median_gap_days": null,
     "total_spent": 1064.96,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Francesco open",
+    "key": "towert@hotmail.com",
+    "name": "Francesco",
     "email": "towert@hotmail.com",
     "phone": "707-887-2232",
     "orders": 1,
@@ -1365,9 +1396,11 @@
     "median_gap_days": null,
     "total_spent": 966.31,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "sarassouthernkitchen@gmail.com",
     "name": "Sarah Willams",
     "email": "sarassouthernkitchen@gmail.com",
     "phone": "+14087753316",
@@ -1377,10 +1410,12 @@
     "median_gap_days": null,
     "total_spent": 109.52,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Oona open store",
+    "key": "info@themorris-sf.com",
+    "name": "Oona store",
     "email": "info@themorris-sf.com",
     "phone": "+14156128480",
     "orders": 1,
@@ -1389,9 +1424,11 @@
     "median_gap_days": null,
     "total_spent": 575.63,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "69alisaleh@gmail.com",
     "name": "Ali Saleh",
     "email": "69alisaleh@gmail.com",
     "phone": "+15106609706",
@@ -1401,9 +1438,11 @@
     "median_gap_days": null,
     "total_spent": 500.0,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "gabby@parkcafegroup.com",
     "name": "Gabby Park Caf\u00e9b Group",
     "email": "gabby@parkcafegroup.com",
     "phone": "+14156761182",
@@ -1413,10 +1452,12 @@
     "median_gap_days": null,
     "total_spent": 410.19,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Gilbert General Manager",
+    "key": "gilbert@parkcafegroup.com",
+    "name": "Gilbert General",
     "email": "gilbert@parkcafegroup.com",
     "phone": "+15103841177",
     "orders": 1,
@@ -1425,9 +1466,11 @@
     "median_gap_days": null,
     "total_spent": 539.67,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "abundiz.maria@yahoo.com",
     "name": "Maria Abundiz",
     "email": "abundiz.maria@yahoo.com",
     "phone": "+15104451880",
@@ -1437,9 +1480,11 @@
     "median_gap_days": null,
     "total_spent": 290.84,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "lupe@alanascafe.com",
     "name": "Lupe",
     "email": "lupe@alanascafe.com",
     "phone": "+16502198430",
@@ -1449,9 +1494,11 @@
     "median_gap_days": null,
     "total_spent": 231.84,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "fanny@atwatertavern.com",
     "name": "John Caine",
     "email": "fanny@atwatertavern.com",
     "phone": "415-512-7153",
@@ -1461,10 +1508,12 @@
     "median_gap_days": null,
     "total_spent": 928.98,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Mario ECR",
+    "key": "samuelhm502@gmail.com",
+    "name": "Mario",
     "email": "samuelhm502@gmail.com",
     "phone": "415-454-3344",
     "orders": 1,
@@ -1473,10 +1522,12 @@
     "median_gap_days": null,
     "total_spent": 453.42,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Marco Manager",
+    "key": "marco.magana@marinsanitary.com",
+    "name": "Marco",
     "email": "marco.magana@marinsanitary.com",
     "phone": "+14154855647",
     "orders": 1,
@@ -1485,9 +1536,11 @@
     "median_gap_days": null,
     "total_spent": 1227.86,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "emakye@gmail.com",
     "name": "Ema Kye",
     "email": "emakye@gmail.com",
     "phone": "+14159518514",
@@ -1497,9 +1550,11 @@
     "median_gap_days": null,
     "total_spent": 150.36,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "zaytoon.mediterranean@gmail.com",
     "name": "Izat",
     "email": "zaytoon.mediterranean@gmail.com",
     "phone": "510-898-1316",
@@ -1509,10 +1564,26 @@
     "median_gap_days": null,
     "total_spent": 518.31,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Aldo Owner",
+    "key": "izateliyan@gmail.com",
+    "name": "Izat",
+    "email": "izateliyan@gmail.com",
+    "phone": "+15108459090",
+    "orders": 2,
+    "first": "2026-06-02",
+    "last": "2026-06-02",
+    "median_gap_days": null,
+    "total_spent": 240.32,
+    "next_due": null,
+    "days_overdue": null,
+    "new_contact": false
+  },
+  {
+    "key": "info@puentez.com",
+    "name": "Aldo",
     "email": "info@puentez.com",
     "phone": "+14153006590",
     "orders": 1,
@@ -1521,10 +1592,12 @@
     "median_gap_days": null,
     "total_spent": 390.0,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Peter Schumacher SUPPLY ONLY",
+    "key": "peterschumacher2@gmail.com",
+    "name": "Peter Schumacher",
     "email": "peterschumacher2@gmail.com",
     "phone": "415-331-2600",
     "orders": 1,
@@ -1533,22 +1606,12 @@
     "median_gap_days": null,
     "total_spent": 496.0,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Randy SUPPLY ONLY",
-    "email": "",
-    "phone": "707-964-0747",
-    "orders": 1,
-    "first": "2026-05-26",
-    "last": "2026-05-26",
-    "median_gap_days": null,
-    "total_spent": 755.7,
-    "next_due": null,
-    "days_overdue": null
-  },
-  {
-    "name": "Mario ECR",
+    "key": "sepillo78@hotmail.com",
+    "name": "Mario",
     "email": "sepillo78@hotmail.com",
     "phone": "415-454-3344",
     "orders": 1,
@@ -1557,9 +1620,11 @@
     "median_gap_days": null,
     "total_spent": 525.72,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "nancy_crane@150pelican.com",
     "name": "Nancy Crane",
     "email": "nancy_crane@150pelican.com",
     "phone": "+17753586920",
@@ -1569,22 +1634,26 @@
     "median_gap_days": null,
     "total_spent": 1262.79,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Be Manager",
-    "email": "",
-    "phone": "+17072365983",
-    "orders": 1,
-    "first": "2026-05-07",
-    "last": "2026-05-07",
+    "key": "lawrence.kam@outlook.com",
+    "name": "Lawrence Kam",
+    "email": "lawrence.kam@outlook.com",
+    "phone": "+14082889839",
+    "orders": 2,
+    "first": "2026-04-24",
+    "last": "2026-04-24",
     "median_gap_days": null,
-    "total_spent": 853.9,
+    "total_spent": 1129.2,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Leslie Manager",
+    "key": "tiffany@realrestaurants.com",
+    "name": "Leslie",
     "email": "tiffany@realrestaurants.com",
     "phone": "+14153312500",
     "orders": 1,
@@ -1593,9 +1662,11 @@
     "median_gap_days": null,
     "total_spent": 197.18,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "ardenvirak@ymail.com",
     "name": "Arden Chenda",
     "email": "ardenvirak@ymail.com",
     "phone": "+19256828128",
@@ -1605,10 +1676,12 @@
     "median_gap_days": null,
     "total_spent": 151.14,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Emilio Owner",
+    "key": "bestchefrestaurant@gmail.com",
+    "name": "Emilio",
     "email": "bestchefrestaurant@gmail.com",
     "phone": "+13032842741",
     "orders": 1,
@@ -1617,9 +1690,11 @@
     "median_gap_days": null,
     "total_spent": 1459.22,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "pointrichmondmarket@yahoo.com",
     "name": "Inder Bains",
     "email": "pointrichmondmarket@yahoo.com",
     "phone": "+14154253195",
@@ -1629,10 +1704,12 @@
     "median_gap_days": null,
     "total_spent": 600.0,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Matt GM",
+    "key": "info@grossmanssr.com",
+    "name": "Matt",
     "email": "info@grossmanssr.com",
     "phone": "+17075957707",
     "orders": 1,
@@ -1641,10 +1718,12 @@
     "median_gap_days": null,
     "total_spent": 384.6,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Chris Owner",
+    "key": "kennedy.hawaiian.bbq@gmail.com",
+    "name": "Chris",
     "email": "kennedy.hawaiian.bbq@gmail.com",
     "phone": "+19167525487",
     "orders": 1,
@@ -1653,10 +1732,12 @@
     "median_gap_days": null,
     "total_spent": 1965.0,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Megan Manager",
+    "key": "megan@palacemarket.com",
+    "name": "Megan",
     "email": "megan@palacemarket.com",
     "phone": "+14156631016",
     "orders": 1,
@@ -1665,10 +1746,12 @@
     "median_gap_days": null,
     "total_spent": 590.0,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Judy Manager",
+    "key": "technology@alsonoma.org",
+    "name": "Judy",
     "email": "technology@alsonoma.org",
     "phone": "+17077385407",
     "orders": 1,
@@ -1677,9 +1760,11 @@
     "median_gap_days": null,
     "total_spent": 367.5,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
+    "key": "elcharrosupermercado@gmail.com",
     "name": "Hector CASIO",
     "email": "elcharrosupermercado@gmail.com",
     "phone": "+15104341301",
@@ -1689,10 +1774,12 @@
     "median_gap_days": null,
     "total_spent": 510.0,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Derrick Owner",
+    "key": "mekong-707@outlook.com",
+    "name": "Derrick",
     "email": "mekong-707@outlook.com",
     "phone": "+17075446201",
     "orders": 1,
@@ -1701,18 +1788,63 @@
     "median_gap_days": null,
     "total_spent": 8786.0,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": false
   },
   {
-    "name": "Hari Shrestha",
-    "email": "",
-    "phone": "+17079219479",
-    "orders": 1,
-    "first": "2025-12-12",
-    "last": "2025-12-12",
+    "key": "tomatina_tal",
+    "name": "Tomatina (GM)",
+    "email": "gm_tal@tomatina.com",
+    "phone": "",
+    "orders": 0,
+    "first": null,
+    "last": null,
     "median_gap_days": null,
-    "total_spent": 480.0,
+    "total_spent": 0.0,
     "next_due": null,
-    "days_overdue": null
+    "days_overdue": null,
+    "new_contact": true
+  },
+  {
+    "key": "tomatina_tv",
+    "name": "Tomatina (GM)",
+    "email": "gm_tv@tomatina.com",
+    "phone": "",
+    "orders": 0,
+    "first": null,
+    "last": null,
+    "median_gap_days": null,
+    "total_spent": 0.0,
+    "next_due": null,
+    "days_overdue": null,
+    "new_contact": true
+  },
+  {
+    "key": "tomatina_tsm",
+    "name": "Tomatina (GM)",
+    "email": "gm_tsm@tomatina.com",
+    "phone": "",
+    "orders": 0,
+    "first": null,
+    "last": null,
+    "median_gap_days": null,
+    "total_spent": 0.0,
+    "next_due": null,
+    "days_overdue": null,
+    "new_contact": true
+  },
+  {
+    "key": "tomatina_tmv",
+    "name": "Tomatina (GM)",
+    "email": "gm_tmv@tomatina.com",
+    "phone": "",
+    "orders": 0,
+    "first": null,
+    "last": null,
+    "median_gap_days": null,
+    "total_spent": 0.0,
+    "next_due": null,
+    "days_overdue": null,
+    "new_contact": true
   }
 ]
