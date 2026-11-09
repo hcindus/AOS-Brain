@@ -105,7 +105,7 @@ def main():
                 f"<p>I know you're busy, so I'll keep this quick. I'm Miles with Performance "
                 f"Supply Depot — we supply thermal paper and printer ribbons to restaurants "
                 f"and cafes across California.</p>"
-                f"<p>Below are my prices:</p>"
+                f"<p>Below are our prices:</p>"
                 f"<p><strong>Paper</strong></p>{paper_html}"
                 f"<p><strong>Ink / Ribbons</strong></p>{ribbon_html}"
                 f"<p>All prices are subject to tax and shipping.</p>"
