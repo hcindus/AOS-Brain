@@ -47,13 +47,12 @@ SUBJECT = "Checking in — thermal, bond & ribbons"
 
 def body(name):
     first = (name or "there").split()[0]
-    return (f"Hi {first},\n\n"
-            f"This is Performance Supply Depot. We just wanted to check with you "
+    return (f"<p>Hi {first},</p>"
+            f"<p>This is Performance Supply Depot. We just wanted to check with you "
             f"on your thermal paper, bond paper, and printer ribbons. Please let me "
-            f"know if you need anything.\n\n"
-            f"To order supplies on your schedule:\n{FORM_URL}\n\n"
-            f"- Performance Supply Depot\n"
-            f"psdepot.com | 1-888-881-6834")
+            f"know if you need anything.</p>"
+            f"<p><a href=\"{FORM_URL}\">To order supplies on your schedule</a></p>"
+            f"<p>&mdash; Performance Supply Depot<br>psdepot.com | 1-888-881-6834</p>")
 
 def load_json(path, default):
     try:
@@ -110,7 +109,7 @@ def main():
     for c in due:
         email = c["email"].strip().lower()
         name = c.get("name") or "there"
-        msg = MIMEText(body(name))
+        msg = MIMEText(body(name), "html")
         msg["From"] = f"Performance Supply Depot <{FROM}>"
         msg["To"] = email
         msg["Bcc"] = BCC

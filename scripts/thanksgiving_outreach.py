@@ -85,14 +85,14 @@ SUBJECT = "Thanksgiving supplies — are you stocked up?"
 
 def body(name):
     first = (name or "there").split()[0]
-    return (f"Hi {first},\n\n"
-            f"Thanksgiving is right around the corner! Just wanted to check in — "
+    return (f"<p>Hi {first},</p>"
+            f"<p>Thanksgiving is right around the corner! Just wanted to check in &mdash; "
             f"are you stocked up on supplies for the holiday rush? We've got thermal "
             f"paper, printer ribbons, and everything else to keep your POS running "
-            f"smooth through the busy season.\n\n"
-            f"To order supplies on your schedule:\n{FORM_URL}\n\n"
-            f"Let me know if you need anything — happy to help you get ready!\n\n"
-            f"Warmly,\n\nMiles\nPerformance Supply Depot\npsdepot.com | 1-888-881-6834")
+            f"smooth through the busy season.</p>"
+            f"<p><a href=\"{FORM_URL}\">To order supplies on your schedule</a></p>"
+            f"<p>Let me know if you need anything &mdash; happy to help you get ready!</p>"
+            f"<p>Warmly,<br>Miles<br>Performance Supply Depot<br>psdepot.com | 1-888-881-6834</p>")
 
 sent = load_json(SENT_LOG, {})
 today = datetime.now(timezone.utc).date()
@@ -104,7 +104,7 @@ print(f"TO_SEND_THIS_RUN={len(todo)}")
 
 count = 0
 for email, name in todo:
-    msg = MIMEText(body(name))
+    msg = MIMEText(body(name), "html")
     msg["From"] = f"Performance Supply Depot <{FROM}>"
     msg["To"] = email
     msg["Bcc"] = BCC
