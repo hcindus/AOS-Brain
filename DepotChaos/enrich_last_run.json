@@ -1,0 +1,40 @@
+{
+  "stats": {
+    "processed": 3,
+    "email": 0,
+    "phone": 0,
+    "both": 0,
+    "no_site": 2,
+    "fetch_fail": 1,
+    "nothing": 0
+  },
+  "results": [
+    {
+      "id": 1308,
+      "name": "HILLBILLY'S GRILL & BBQ",
+      "city": "Ahwahnee",
+      "email": null,
+      "phone": null,
+      "site": null,
+      "status": "no_site"
+    },
+    {
+      "id": 1357,
+      "name": "SEABREEZE",
+      "city": "Auberry",
+      "email": null,
+      "phone": null,
+      "site": "https://www.angi.com",
+      "status": "fetch_fail"
+    },
+    {
+      "id": 1069,
+      "name": "ALLEY & VINE",
+      "city": "Bass Lake",
+      "email": null,
+      "phone": null,
+      "site": null,
+      "status": "no_site"
+    }
+  ]
+}
