@@ -36,7 +36,7 @@ PRICE_SHEET = (
 )
 
 # --- intent classification ---
-ORDER_RE = re.compile(r"\border|buy|purchase|need|want|send|ship|order|case|roll|dozen|pf-230|13-305|cc-235|18-333|62245|67240", re.I)
+ORDER_RE = re.compile(r"\border|buy|purchase|need|want|case|roll|dozen|pf-230|13-305|cc-235|18-333|62245|67240", re.I)
 NO_RE = re.compile(r"not interested|no thanks|remove|unsubscribe|stop|don't need|pass", re.I)
 QUESTION_RE = re.compile(r"\?|how much|price|pricing|cost|shipping|tax|do you|what|which|available|in stock", re.I)
 
@@ -44,10 +44,10 @@ def classify(text):
     t = text or ""
     if NO_RE.search(t):
         return "NOT_INTERESTED"
-    if ORDER_RE.search(t):
-        return "ORDER"
     if QUESTION_RE.search(t):
         return "QUESTION"
+    if ORDER_RE.search(t):
+        return "ORDER"
     if re.search(r"interested|quote|info|more|thanks|tell me|yes", t, re.I):
         return "INTEREST"
     return "UNKNOWN"

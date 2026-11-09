@@ -107,10 +107,10 @@ async def handle_reply(lead: dict) -> str:
     t = body or ""
     if re.search(r"not interested|no thanks|remove|unsubscribe|stop|don't need|pass", t, re.I):
         return "NOT_INTERESTED"
-    if re.search(r"\border|buy|purchase|need|want|send|ship|order|case|roll|dozen|pf-230|13-305|cc-235|18-333|62245|67240", t, re.I):
-        return "ORDER"
     if re.search(r"\?|how much|price|pricing|cost|shipping|tax|do you|what|which|available|in stock", t, re.I):
         return "QUESTION"
+    if re.search(r"\border|buy|purchase|need|want|case|roll|dozen|pf-230|13-305|cc-235|18-333|62245|67240", t, re.I):
+        return "ORDER"
     if re.search(r"interested|quote|info|more|thanks|tell me|yes", t, re.I):
         return "INTEREST"
     return "UNKNOWN"
