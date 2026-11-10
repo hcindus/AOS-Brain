@@ -1,0 +1,48 @@
+# Customer-minimum stack — the portable unit we ship to each customer VPS.
+# PSD-internal services (DepotChaos, collections, media/legal, games) do NOT ship.
+services:
+  temporal:
+    image: temporalio/auto-setup:1.24.2
+    ports: ["7233:7233"]
+    environment:
+      - DB=postgresql
+      - DB_PORT=5432
+      - POSTGRES_USER=temporal
+      - POSTGRES_PWD=temporal
+      - POSTGRES_SEEDS=temporal-postgresql
+    depends_on: [temporal-postgresql]
+
+  temporal-postgresql:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=temporal
+      - POSTGRES_PASSWORD=temporal
+      - POSTGRES_DB=temporal
+
+  temporal-ui:
+    image: temporalio/ui:2.24.0
+    ports: ["8233:8080"]
+    environment:
+      - TEMPORAL_ADDRESS=temporal:7233
+
+  order-api:
+    build: ../scripts
+    image: psd-order-api
+    ports: ["8088:8088"]
+    environment:
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASS=${SMTP_PASS:-}
+
+  closeter-monitor:
+    image: psd-order-api
+    command: ["python3", "closeter_inbox_monitor.py"]
+    environment:
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASS=${SMTP_PASS:-}
+
+  closeter-reply:
+    image: psd-order-api
+    command: ["python3", "closeter_reply_handler.py"]
+    environment:
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASS=${SMTP_PASS:-}
