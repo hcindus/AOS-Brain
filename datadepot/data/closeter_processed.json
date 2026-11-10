@@ -5,5 +5,12 @@
     "intent": "ORDER",
     "action": "flagged_captain (confirm send failed: (554, b'5.7.1 Recipient domain is reserved for documentation (RFC 2606) and cannot receive mail'))",
     "sent_to": "test-customer@example.com"
+  },
+  "<test-txn-20261110@msg>": {
+    "msg_id": "<test-txn-20261110@msg>",
+    "from": "Test Customer <test@example.com>",
+    "intent": "ORDER",
+    "action": "flagged_captain (confirm send failed: (554, b'5.7.1 Recipient domain is reserved for documentation (RFC 2606) and cannot receive mail'))",
+    "sent_to": "test@example.com"
   }
 }
