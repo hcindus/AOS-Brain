@@ -12,5 +12,12 @@
     "intent": "ORDER",
     "action": "flagged_captain (confirm send failed: (554, b'5.7.1 Recipient domain is reserved for documentation (RFC 2606) and cannot receive mail'))",
     "sent_to": "test@example.com"
+  },
+  "<20261110090001.66A5B8C4A69@Miles.brain.cloud>": {
+    "msg_id": "<20261110090001.66A5B8C4A69@Miles.brain.cloud>",
+    "from": "miles@myl0nr0s.cloud (Cron Daemon)",
+    "intent": "UNKNOWN",
+    "action": "flagged_captain_review",
+    "sent_to": "miles@myl0nr0s.cloud"
   }
 }
