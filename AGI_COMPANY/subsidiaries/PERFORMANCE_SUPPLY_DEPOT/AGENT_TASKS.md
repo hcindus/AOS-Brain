@@ -57,6 +57,7 @@
   - **Defaults / rules:** "ribbons" defaults to **62245 / ERC-30 / Epson TM-220** ($42/dozen); use **Star SP700** ($52/dozen) only if the customer specifies Star. **Every form field is required** — ensure the customer fills all fields (address, date ordered, products, quantities, special instructions, checkboxes) before submitting.
 - **Payment form (credit card):** `psdepot.com/credit-card/` — send this link to a customer so they can submit their card (order details + billing address + card number/expiry/CVV). Emails the order+card to `info@psdepot.com` for the Captain to process. Use this for the payment step.
 - **Task:** Classify inbound replies and act. Auto-answer questions/interest; flag orders + ambiguous replies to Miles.
+- **Payment-before-vendor rule (CRITICAL):** submitting an order to the vendor charges PSD. So for **NEW / unknown customers**, CLOSETER must collect payment (card) **first** — flag Miles to collect the card, and do NOT route them to the vendor form until paid. For **established accounts** (e.g. Katie / CPFD) with credit terms, routing straight to the vendor form is fine.
 - **Steps (SOP):** see `closeter_reply_handler.py` — intent → action (ORDER/QUESTION/INTEREST/NOT_INTERESTED/UNKNOWN).
 - **Guardrail:** never auto-process money — orders always flag the Captain.
 - **Durable process:** `closeter_inbox_monitor.py` (5 min) → `closeter_reply_handler.py` (5 min +30s).
