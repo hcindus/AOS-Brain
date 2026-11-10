@@ -122,8 +122,8 @@ def main():
                 try:
                     send(to_email, "Re: your order",
                          f"<p>Thanks so much for your order!</p>"
-                         f"<p>To pay by credit card: "
-                         f"<a href=\"https://psdepot.com/credit-card/\">submit your payment here</a></p>"
+                         f"<p>To keep a credit card on file: "
+                         f"<a href=\"https://psdepot.com/credit-card/\">add your card here</a></p>"
                          f"<p>And to submit your order: "
                          f"<a href=\"{FORM_URL}\">order form</a></p>"
                          f"<p>— Performance Supply Depot</p>")
