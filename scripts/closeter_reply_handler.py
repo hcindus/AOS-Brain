@@ -70,7 +70,7 @@ def smtp_creds():
 def send(to_email, subject, body_html):
     c = smtp_creds()
     msg = MIMEText(body_html, "html")
-    msg["From"] = f"Performance Supply Depot <{c['HOSTINGER_SMTP_USER']}>"
+    msg["From"] = f"Sales Performance Supply Depot <{c['HOSTINGER_SMTP_USER']}>"
     msg["To"] = to_email
     msg["Bcc"] = "info@psdepot.com"
     msg["Subject"] = subject

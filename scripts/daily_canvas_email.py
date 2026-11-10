@@ -116,7 +116,7 @@ def main():
     for r in picks:
         email = r["email"].strip().lower()
         msg = MIMEText(body(r), "html")
-        msg["From"] = f"Performance Supply Depot <{FROM}>"
+        msg["From"] = f"Sales Performance Supply Depot <{FROM}>"
         msg["To"] = email
         msg["Bcc"] = BCC
         msg["Subject"] = SUBJECT
