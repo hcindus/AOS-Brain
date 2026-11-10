@@ -79,12 +79,15 @@
 
 ---
 
-## Pricing (suggested — adjust to your market)
-| Suite | Includes | Suggested price |
+## Pricing (anchored to your market)
+| Suite | Includes | Price |
 |---|---|---|
 | Front-Office | Greeter, Missed-Call, Review, Ping | $149/mo |
 | Growth | + Closeter, Concierge | $349/mo |
 | Full Office | + Clerk, EA, Miles | $749/mo |
 | Security add-on | Chelios | $99/mo |
 
-*Suggested starting points — anchor high and discount on annual/bundle. Revisit after the first close.*
+**Why these numbers:**
+- Your customers are small restaurants/cafés — they already spend ~$50–200/mo on supplies (paper $39–124/case, ribbons $42–52/dozen) and $3K–10K one-time on POS hardware. So a $149 entry is an "easy yes" for them.
+- **Market anchors:** AI phone-answering (Slang.ai) ~$100–400/mo, review/messaging (Podium) ~$300–500/mo, live answering (Ruby) ~$200–500/mo. A full *front office* (calls + reviews + leads) is worth $400–1,000/mo on the open market — so $149/$349/$749 undercuts competitors while still pricing the value.
+- **Anchor high, discount on annual/bundle.** The Growth + Full Office tiers carry the margin; Front-Office is the loss-leader that gets them in the door.
