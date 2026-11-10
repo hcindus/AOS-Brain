@@ -110,22 +110,24 @@ def main():
             })
             # Email the Captain so an order never goes unnoticed.
             try:
-                send("antonio.hudnall@gmail.com", f"New order — {frm}",
+                send("info@psdepot.com", f"New order — {frm}",
                      f"<p><strong>New order from:</strong> {frm}</p>"
                      f"<p><strong>Subject:</strong> {m.get('subject')}</p>"
                      f"<pre>{body[:2000]}</pre>"
                      f"<p><em>Collect payment (card) for this customer, then route to the form.</em></p>"
-                     f"<p>— CLOSETER</p>")
+                     f"<p>— Performance Supply Depot</p>")
             except Exception:
                 pass
             if to_email:
                 try:
                     send(to_email, "Re: your order",
-                         f"<p>Thanks so much! We've got your order and will send a payment link shortly.</p>"
-                         f"<p>In the meantime, you can also submit your order here: "
+                         f"<p>Thanks so much for your order!</p>"
+                         f"<p>To pay by credit card: "
+                         f"<a href=\"https://psdepot.com/credit-card/\">submit your payment here</a></p>"
+                         f"<p>And to submit your order: "
                          f"<a href=\"{FORM_URL}\">order form</a></p>"
-                         f"<p>— Miles, Performance Supply Depot</p>")
-                    result["action"] = "flagged_captain + confirmed_to_lead"
+                         f"<p>— Performance Supply Depot</p>")
+                    result["action"] = "flagged_captain + confirmed_to_lead (sent cc form + order form)"
                 except Exception as e:
                     result["action"] = f"flagged_captain (confirm send failed: {e})"
             else:
