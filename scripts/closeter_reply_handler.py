@@ -108,6 +108,15 @@ def main():
                 "received_at": m.get("received_at"), "flagged_at": datetime.now(timezone.utc).isoformat(),
                 "note": "Lead wants to order — collect card (Captain in the loop)."
             })
+            # email the Captain so the order "comes through" to his inbox
+            try:
+                send("antonio.hudnall@gmail.com", f"New order — {frm}",
+                     f"<p>A new order came in from <strong>{frm}</strong>.</p>"
+                     f"<p><strong>Subject:</strong> {m.get('subject')}</p>"
+                     f"<pre>{body[:2000]}</pre>"
+                     f"<p>— CLOSETER</p>")
+            except Exception:
+                pass
             if to_email:
                 try:
                     send(to_email, "Re: your order",

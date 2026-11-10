@@ -1,1 +1,9 @@
-{}
+{
+  "<test-order-62245@msg>": {
+    "msg_id": "<test-order-62245@msg>",
+    "from": "Test Customer <test-customer@example.com>",
+    "intent": "ORDER",
+    "action": "flagged_captain (confirm send failed: (554, b'5.7.1 Recipient domain is reserved for documentation (RFC 2606) and cannot receive mail'))",
+    "sent_to": "test-customer@example.com"
+  }
+}
