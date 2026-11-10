@@ -8,5 +8,15 @@
     "received_at": "2026-11-09T23:42:56.499951+00:00",
     "flagged_at": "2026-11-09T23:42:56.499967+00:00",
     "note": "TEST ORDER \u2014 CLOSETER processed: 1 dozen Star ribbons. Collect card (Captain in the loop)."
+  },
+  {
+    "from": "Test Customer <test-customer@example.com>",
+    "subject": "Order \u2014 ERC-30 ribbons",
+    "body": "I'd like to order ERC-30 ribbons.",
+    "order_line": "ERC-30 ribbons (62245 black/red \u2014 Epson TM-220, $42.00/dozen)",
+    "special_instructions": null,
+    "received_at": "2026-11-09T23:57:59.407290+00:00",
+    "flagged_at": "2026-11-09T23:57:59.407308+00:00",
+    "note": "TEST ORDER \u2014 CLOSETER processed: ERC-30 ribbons (aka 62245 Epson TM-220, $42/dozen). Collect card (Captain in the loop)."
   }
 ]
