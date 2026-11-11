@@ -392,12 +392,14 @@ def vendor_order_email(order):
     attention = order.get("manager_name") or ""
     notes = order.get("special_instructions") or ""
 
+    _cat = {p["sku"]: p for p in load_catalog()["products"]}
     domtar_lines = []
     acm_lines = []
     for l in order["lines"]:
         sku = l["sku"]
-        v = VENDOR_BY_SKU.get(sku, "DOMTAR")
-        desc = DESC_VENDOR.get(sku, f"{l.get('vendor','')} {l['name']}")
+        p = _cat.get(sku, {})
+        v = p.get("vendor_name") or VENDOR_BY_SKU.get(sku, "DOMTAR")
+        desc = DESC_VENDOR.get(sku, f"{p.get('vendor', l.get('vendor',''))} {p.get('name', l['name'])}")
         if v == "ACM":
             acm_lines.append((l, desc))
         else:
