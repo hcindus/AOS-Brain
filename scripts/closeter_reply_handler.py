@@ -12,7 +12,8 @@ classifies intent, and takes the appropriate action:
 Deduped via a processed tracker (Message-ID). Safe: only auto-sends for clear
 intents; anything ambiguous is flagged, not guessed.
 """
-import json, smtplib, re
+import json, smtplib, re, sys
+sys.path.insert(0, '/root/.openclaw/workspace/scripts')
 from email.mime.text import MIMEText
 from datetime import datetime, timezone
 
@@ -108,6 +109,17 @@ def main():
                 "received_at": m.get("received_at"), "flagged_at": datetime.now(timezone.utc).isoformat(),
                 "note": "Lead wants to order — collect card (Captain in the loop)."
             })
+            # write the order to the Google responses sheet (fires order flow)
+            try:
+                import google_sheets
+                google_sheets.append_row([
+                    frm,                    # manager/contact name
+                    to_email,               # customer email
+                    body[:500],             # order details (products)
+                    "",                     # special instructions
+                ])
+            except Exception:
+                pass
             # Email the Captain so an order never goes unnoticed.
             try:
                 send("info@psdepot.com", f"New order — {frm}",
