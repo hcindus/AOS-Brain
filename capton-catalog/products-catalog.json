@@ -1,0 +1,108 @@
+{
+  "catalog": "Capton Pour Control",
+  "vendor": "Capton",
+  "vendor_name": "Capton",
+  "division": "Beverage Pour Control",
+  "pricing": "fixed cost/sell per SKU (30-45% margin)",
+  "source": "Capton Jan-23 rate sheet",
+  "updated": "2026-11-11",
+  "product_count": 8,
+  "products": [
+    {
+      "sku": "CAP-100-1OZ",
+      "name": "1 oz Bottle Top Pourer",
+      "spec": "Liquor portion control (spirits)",
+      "pack": "each",
+      "cost": 34.3,
+      "sell": 49.0,
+      "vendor": "CAP-100-1OZ",
+      "vendor_name": "Capton",
+      "division": "Beverage Pour Control",
+      "category": "Pour Spouts"
+    },
+    {
+      "sku": "CAP-150-15OZ",
+      "name": "1.5 oz Bottle Top Pourer",
+      "spec": "Standard shot portion control",
+      "pack": "each",
+      "cost": 34.3,
+      "sell": 49.0,
+      "vendor": "CAP-150-15OZ",
+      "vendor_name": "Capton",
+      "division": "Beverage Pour Control",
+      "category": "Pour Spouts"
+    },
+    {
+      "sku": "CAP-200-2OZ",
+      "name": "2 oz Bottle Top Pourer",
+      "spec": "Double shot portion control",
+      "pack": "each",
+      "cost": 34.3,
+      "sell": 49.0,
+      "vendor": "CAP-200-2OZ",
+      "vendor_name": "Capton",
+      "division": "Beverage Pour Control",
+      "category": "Pour Spouts"
+    },
+    {
+      "sku": "CAP-WINE-5OZ",
+      "name": "Wine Pourer (5 oz)",
+      "spec": "Wine portion control",
+      "pack": "each",
+      "cost": 34.3,
+      "sell": 49.0,
+      "vendor": "CAP-WINE-5OZ",
+      "vendor_name": "Capton",
+      "division": "Beverage Pour Control",
+      "category": "Pour Spouts"
+    },
+    {
+      "sku": "CAP-VARY-12PK",
+      "name": "Variety Pack (12-Pack)",
+      "spec": "Complete pourer set",
+      "pack": "12-pack",
+      "cost": 412.0,
+      "sell": 558.0,
+      "vendor": "CAP-VARY-12PK",
+      "vendor_name": "Capton",
+      "division": "Beverage Pour Control",
+      "category": "Pour Spouts"
+    },
+    {
+      "sku": "CAP-CLEAN-KIT",
+      "name": "Pourer Cleaning Kit",
+      "spec": "Maintenance accessory",
+      "pack": "each",
+      "cost": 20.0,
+      "sell": 34.99,
+      "vendor": "CAP-CLEAN-KIT",
+      "vendor_name": "Capton",
+      "division": "Beverage Pour Control",
+      "category": "Accessories"
+    },
+    {
+      "sku": "POUR-RECV",
+      "name": "PourLink Receiver",
+      "spec": "Wireless pour tracking hub",
+      "pack": "each",
+      "cost": 1200.0,
+      "sell": 2200.0,
+      "vendor": "POUR-RECV",
+      "vendor_name": "Capton",
+      "division": "Beverage Pour Control",
+      "category": "PourLink"
+    },
+    {
+      "sku": "POUR-ANALYTICS",
+      "name": "PourLink Analytics",
+      "spec": "Bar pour tracking software (annual)",
+      "pack": "each",
+      "cost": 2400.0,
+      "sell": 3000.0,
+      "vendor": "POUR-ANALYTICS",
+      "vendor_name": "Capton",
+      "division": "Beverage Pour Control",
+      "category": "PourLink"
+    }
+  ]
+}

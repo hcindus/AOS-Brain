@@ -13,10 +13,11 @@ def load_products(path):
     return data.get("products", data) if isinstance(data, dict) else data
 
 # Note: ms-cashdrawer-catalog uses a different schema (cash drawers) and is
-# kept separate. Only paper + ACM share the order-pipeline schema (sku/cost/sell/vendor).
+# kept separate. paper + ACM + Capton share the order-pipeline schema (sku/cost/sell/vendor).
 catalogs = [
     os.path.join(BASE, "paper-catalog/products-catalog.json"),
     os.path.join(BASE, "acm-catalog/products-catalog.json"),
+    os.path.join(BASE, "capton-catalog/products-catalog.json"),
 ]
 
 products = []
