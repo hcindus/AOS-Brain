@@ -183,12 +183,13 @@ RIBBON_SKUS = ("62245", "67240")
 def shipping_for(items):
     """Shipping:
       - Paper: $17.72 per case (1 item = 1 case).
-      - Ribbons (62245/67240): $17.72 per 2 dozen (24 ribbons), rounded up."""
+      - Ribbons (62245/67240): $17.72 flat for up to 1 gross (144 ribbons = 12 dozen),
+        then $17.72 per additional gross, rounded up."""
     total = 0.0
     for it in items:
         sku = it["sku"]; qty = it["qty"]
         if sku in RIBBON_SKUS:
-            total += SHIPPING_RATE * ((qty + 23) // 24)   # $17.72 per 24 ribbons (2 dozen)
+            total += SHIPPING_RATE * ((qty + 143) // 144)   # $17.72 per gross (144 ribbons)
         else:
             total += SHIPPING_RATE * qty
     return round(total, 2)
