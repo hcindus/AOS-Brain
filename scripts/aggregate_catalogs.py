@@ -5,7 +5,7 @@ catalog (datadepot/data/psdepot_catalog.json). Run after updating any catalog.
 """
 import json, os
 
-BASE = os.path.dirname(os.path.abspath(__file__))
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # workspace root (parent of scripts/)
 OUT = os.path.join(BASE, "datadepot/data/psdepot_catalog.json")
 
 def load_products(path):
