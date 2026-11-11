@@ -71,7 +71,7 @@ def smtp_creds():
             k, v = line.split("=", 1); c[k] = v
     return c
 
-def send(to_email, subject, body_html, attachments=None):
+def send(to_email, subject, body_html, attachments=None, cc=None):
     c = smtp_creds()
     if attachments:
         msg = MIMEMultipart("mixed")
@@ -89,11 +89,16 @@ def send(to_email, subject, body_html, attachments=None):
     msg["From"] = f"Sales Performance Supply Depot <{c['SALES_SMTP_USER']}>"
     msg["To"] = to_email
     msg["Bcc"] = "info@psdepot.com"
+    if cc:
+        msg["Cc"] = cc
     msg["Subject"] = subject
+    rcpts = [to_email, "info@psdepot.com"]
+    if cc:
+        rcpts.append(cc)
     s = smtplib.SMTP(c.get("SALES_SMTP_HOST","smtp.gmail.com"),
                      int(c.get("SALES_SMTP_PORT","587")), timeout=30)
     s.starttls(); s.login(c["SALES_SMTP_USER"], c["SALES_SMTP_PASS"])
-    s.sendmail(c["SALES_SMTP_USER"], [to_email, "info@psdepot.com"], msg.as_string())
+    s.sendmail(c["SALES_SMTP_USER"], rcpts, msg.as_string())
     s.quit()
 
 def main():
@@ -162,6 +167,20 @@ def main():
                          f"<p>— Performance Supply Depot</p>")
             except Exception:
                 pass
+
+            # Email the vendor (Domtar for paper; ACM items flagged for API).
+            try:
+                if summ:
+                    vend = op.vendor_order_email(summ)
+                    if vend.get("domtar"):
+                        d = vend["domtar"]
+                        if op.vendor_emails_enabled():
+                            send(d["to"], d["subject"], d["body"].replace("\n", "<br>"), cc=d["cc"])
+                            result["vendor"] = f"domtar_sent ({d['to']})"
+                        else:
+                            result["vendor"] = f"domtar_HELD (switch off) — {d['subject']}"
+            except Exception as e:
+                result["vendor"] = f"vendor_send_failed: {e}"
 
             # Email the customer (thank-you + courtesy invoice).
             if to_email:

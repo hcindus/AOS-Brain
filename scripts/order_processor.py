@@ -347,3 +347,80 @@ text-decoration:none;font-weight:bold;display:inline-block">View Your Payment Re
 <p>— Performance Supply Depot LLC<br>
 psdepot.com &bull; 888-881-6834 &bull; info@psdepot.com</p>
 </body></html>"""
+
+
+# --- vendor order routing ---
+VENDORS = {
+    "DOMTAR": {"to": "customersupport.pos@domtar.com", "cc": "arlene.belarde@domtar.com"},
+    "ACM":    {"api": "https://api.acm.com/orders", "mode": "demo"},  # placeholder, no real key yet
+}
+
+VENDOR_BY_SKU = {
+    "PF-230": "DOMTAR", "PF-157": "DOMTAR", "18-333": "DOMTAR",
+    "CC-235": "DOMTAR", "13-305": "DOMTAR", "PF-175": "DOMTAR",
+    "62245": "ACM", "67240": "ACM",
+}
+
+DESC_VENDOR = {
+    "PF-230": "9078-2489 3 1/8 X 230 48G NP 50RL/CTN",
+    "PF-157": "9078-0473 2 1/4 X 230 48G NP 50RL/CTN",
+    "18-333": "3-PLY 3\" 50RL/CTN",
+    "CC-235": "9077-0047 3 X 90 MULTI PLY W/C 50 RLS/CTN",
+    "13-305": "9074-0243 3 x 165' BOND 50 RL/CTN",
+    "PF-175": "9078-0175 2 1/4 X 74 48G NP 50RL/CTN",
+    "62245": "38619ERC30BR EPSON COMPATIBLE RIBBON (ERC-30/34/38)",
+    "67240": "51619RC700BR STAR SP700 COMPATIBLE RIBBON",
+}
+
+def vendor_order_email(order):
+    """Build blind-drop vendor PO emails (Domtar for paper; ACM items flagged for API)."""
+    po = order.get("po")
+    ship_to = order.get("business_name") or order.get("address") or ""
+    attention = order.get("manager_name") or ""
+    notes = order.get("special_instructions") or ""
+
+    domtar_lines = []
+    acm_lines = []
+    for l in order["lines"]:
+        sku = l["sku"]
+        v = VENDOR_BY_SKU.get(sku, "DOMTAR")
+        desc = DESC_VENDOR.get(sku, f"{l.get('vendor','')} {l['name']}")
+        if v == "ACM":
+            acm_lines.append((l, desc))
+        else:
+            domtar_lines.append((l, desc))
+
+    out = {"domtar": None, "acm": acm_lines}
+
+    if domtar_lines:
+        items = "".join(f"{desc}\nQty: {l['qty']} {('dozen' if l['sku'] in ('62245','67240') else 'case')}\n\n"
+                        for l, desc in domtar_lines)
+        body = (f"Please process the following blind drop order:\n\n"
+                f"PO Number: {po}\n"
+                f"Ship To: {ship_to}\n"
+                f"Attention: {attention}\n\n"
+                f"Items:\n------\n{items}"
+                f"Special Instructions: {notes or 'None'}\n\n"
+                f"Thank you,\nPerformance Supply Depot LLC")
+        out["domtar"] = {
+            "to": VENDORS["DOMTAR"]["to"], "cc": VENDORS["DOMTAR"]["cc"],
+            "subject": f"Blind Drop PO {po} - {ship_to}",
+            "body": body,
+        }
+    return out
+
+
+# --- vendor email switch (default OFF for safety) ---
+import os as _os
+_VENDOR_SWITCH = "/root/.openclaw/workspace/datadepot/data/vendor_email_switch.json"
+
+def vendor_emails_enabled():
+    """True only if the vendor-email switch is explicitly flipped on."""
+    try:
+        return bool(json.load(open(_VENDOR_SWITCH)).get("vendor_emails_enabled", False))
+    except Exception:
+        return False
+
+def set_vendor_emails(enabled):
+    json.dump({"vendor_emails_enabled": bool(enabled)}, open(_VENDOR_SWITCH, "w"), indent=2)
+    return bool(enabled)
