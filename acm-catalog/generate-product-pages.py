@@ -34,7 +34,12 @@ def product_page(p):
     title = f"{name} {spec} | Performance Supply Depot LLC".strip()
     desc = f"{name} — {spec}. {category} from Performance Supply Depot LLC. Ships fast across the US."
     keywords = f"{name}, {spec}, {category}, {division}, ACM, Performance Supply Depot"
-    image = f"{BASE}/assets/images/products/{slug}.jpg"
+    # brand logo as placeholder; fall back to a generic SKU image if no brand logo
+    brand = p.get('brand', '')
+    if brand and os.path.exists(f"/var/www/psdepot.com/assets/images/vendors/{brand}.png"):
+        image = f"{BASE}/assets/images/vendors/{brand}.png"
+    else:
+        image = f"{BASE}/assets/images/products/{slug}.jpg"
 
     ld = {
         "@context": "https://schema.org", "@type": "Product",
@@ -100,8 +105,8 @@ footer{{background:var(--primary);color:#fff;padding:24px;text-align:center;font
 </header>
 <div class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/products/index.html">Products</a> &rsaquo; <a href="/categories/{slugify(category or division)}/index.html">{esc(category or division)}</a> &rsaquo; {esc(name)}</div>
 <div class="container">
-<div class="card" style="text-align:center;display:flex;align-items:center;justify-content:center;min-height:280px">
-<div style="color:var(--muted)">[Image placeholder]<br><span style="font-size:13px">{esc(name)}</span></div>
+<div class="card" style="text-align:center;display:flex;align-items:center;justify-content:center;min-height:280px;padding:24px">
+<img src="{image}" alt="{esc(name)}" style="max-width:240px;max-height:190px;object-fit:contain">
 </div>
 <div>
 <span class="sku">SKU {esc(sku)}</span>
