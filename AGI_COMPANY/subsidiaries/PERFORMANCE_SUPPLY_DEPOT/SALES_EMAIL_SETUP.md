@@ -12,7 +12,7 @@
 |---|---|
 | Login email | performancesupplydepotsales@gmail.com |
 | Login password | (login password) |
-| App password (SMTP/IMAP) | nlelxrhbxinxklnp |
+| App password (SMTP/IMAP) | *(stored in vault — `aocros/secrets/sales_email.env`)* |
 
 - **Login password** = used for *web sign-in* (browser), and for CLOSETER's Google form login.
 - **App password** = used for *programmatic* email (SMTP send / IMAP read). Gmail requires it; the login password won't work for scripts.
