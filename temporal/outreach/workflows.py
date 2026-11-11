@@ -68,3 +68,13 @@ class LeadOutreachWorkflow:
             start_to_close_timeout=timedelta(minutes=1),
         )
         return "CLOSED"
+
+
+@workflow.defn
+class PaymentWorkflow:
+    @workflow.run
+    async def run(self, lead: dict) -> str:
+        return await workflow.execute_activity(
+            payment_received, lead,
+            start_to_close_timeout=timedelta(minutes=2),
+        )

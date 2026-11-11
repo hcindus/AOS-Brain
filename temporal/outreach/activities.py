@@ -181,3 +181,33 @@ async def process_order(lead: dict) -> str:
     except Exception:
         pass
     return "PROCESSED"
+
+
+@activity.defn
+async def payment_received(lead: dict) -> str:
+    """Record payment + send the customer a thank-you (with pre-filled receipt link)."""
+    import json, sys
+    from datetime import datetime, timezone
+    sys.path.insert(0, "/root/.openclaw/workspace/scripts")
+    import order_processor as op
+    po = lead.get("po", "")
+    amt = lead.get("amount", 0)
+    method = lead.get("method", "Credit Card")
+    name = lead.get("name", "")
+    email = lead.get("email", "")
+    date = lead.get("date", datetime.now(timezone.utc).strftime("%Y-%m-%d"))
+    rec = {"po": po, "email": email, "name": name, "amount": float(amt),
+           "method": method, "date": date, "collected_at": datetime.now(timezone.utc).isoformat()}
+    try:
+        pays = json.load(open("/root/.openclaw/workspace/datadepot/data/payments.json"))
+    except Exception:
+        pays = []
+    pays.append(rec)
+    json.dump(pays, open("/root/.openclaw/workspace/datadepot/data/payments.json", "w"), indent=2)
+    if email:
+        try:
+            body = op.payment_thank_you_email_html(date, po, amt, method, name)
+            _send(email, "Thank you for your payment — Performance Supply Depot", body)
+        except Exception:
+            pass
+    return "PAYMENT_RECORDED"
