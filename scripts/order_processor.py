@@ -177,19 +177,20 @@ def parse_order(text):
 
 
 # --- shipping + customer-facing output ---
-SHIPPING_PAPER = 17.72   # per item (paper: per pack/case)
+SHIPPING_RATE = 17.72   # base rate, applied per unit (paper = per case; ribbons = per 2 dozen)
 RIBBON_SKUS = ("62245", "67240")
 
 def shipping_for(items):
-    """Shipping is per item. Ribbons (62245/67240) = $1 per dozen (up to qty 12 = $1);
-    everything else = $17.72 per item."""
+    """Shipping:
+      - Paper: $17.72 per case (1 item = 1 case).
+      - Ribbons (62245/67240): $17.72 per 2 dozen (24 ribbons), rounded up."""
     total = 0.0
     for it in items:
         sku = it["sku"]; qty = it["qty"]
         if sku in RIBBON_SKUS:
-            total += 1.00 * ((qty + 11) // 12)   # $1 per 12 ribbons
+            total += SHIPPING_RATE * ((qty + 23) // 24)   # $17.72 per 24 ribbons (2 dozen)
         else:
-            total += SHIPPING_PAPER * qty
+            total += SHIPPING_RATE * qty
     return round(total, 2)
 
 def _fmt(n):
