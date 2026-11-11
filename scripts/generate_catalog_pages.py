@@ -33,6 +33,8 @@ def product_page(p):
     url = f"{BASE}/products/{slug}.html"
     title = f"{name} {spec} | Performance Supply Depot LLC".strip()
     desc = f"{name} — {spec}. {category} from Performance Supply Depot LLC. Ships fast across the US."
+    keywords = f"{name}, {spec}, {category}, {division}, ACM, Performance Supply Depot"
+    image = f"{BASE}/assets/images/products/{slug}.jpg"
 
     ld = {
         "@context": "https://schema.org", "@type": "Product",
@@ -51,7 +53,14 @@ def product_page(p):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
+<meta name="keywords" content="{esc(keywords)}">
 <link rel="canonical" href="{url}">
+<meta property="og:title" content="{esc(title)}">
+<meta property="og:description" content="{esc(desc)}">
+<meta property="og:url" content="{url}">
+<meta property="og:image" content="{image}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{image}">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <script type="application/ld+json">{ld_json}</script>
 <style>
