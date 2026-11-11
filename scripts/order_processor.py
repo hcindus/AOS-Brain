@@ -313,3 +313,37 @@ def courtesy_invoice_pdf(order, path):
     SimpleDocTemplate(path, pagesize=letter, topMargin=0.75*inch, bottomMargin=0.75*inch,
                       leftMargin=0.9*inch, rightMargin=0.9*inch).build(story)
     return path
+
+
+# --- payment thank-you (post-collection) ---
+from urllib.parse import urlencode as _urlencode
+
+def payment_thank_you_link(date, ref, amount, method, name):
+    """Build the thank-you-payment.html URL with the customer's fields pre-filled."""
+    params = _urlencode({
+        "date": date, "ref": ref, "amount": amount,
+        "method": method, "name": name,
+    })
+    return f"https://psdepot.com/thank-you-payment.html?{params}"
+
+def payment_thank_you_email_html(date, ref, amount, method, name):
+    """HTML email body: thank-you + link to the pre-filled thank-you page."""
+    link = payment_thank_you_link(date, ref, amount, method, name)
+    amt = f"${float(amount):,.2f}" if amount else ""
+    return f"""<html><body style="font-family:Arial,sans-serif;color:#111;font-size:14px">
+<p>Dear {name},</p>
+<p>Thank you for your payment of <strong>{amt}</strong> on {date}.</p>
+<p>We truly appreciate your business. Your transaction is confirmed:</p>
+<ul>
+<li><strong>Reference:</strong> {ref}</li>
+<li><strong>Amount:</strong> {amt}</li>
+<li><strong>Method:</strong> {method}</li>
+</ul>
+<p style="margin:24px 0">
+<a href="{link}" style="background:#2d5a87;color:#fff;padding:12px 24px;border-radius:8px;
+text-decoration:none;font-weight:bold;display:inline-block">View Your Payment Receipt</a>
+</p>
+<p>Or copy this link:<br><a href="{link}">{link}</a></p>
+<p>— Performance Supply Depot LLC<br>
+psdepot.com &bull; 888-881-6834 &bull; info@psdepot.com</p>
+</body></html>"""
