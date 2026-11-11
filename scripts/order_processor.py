@@ -63,7 +63,7 @@ import datetime as _dt
 _PO_SEQ_FILE = "/root/.openclaw/workspace/datadepot/data/po_seq.txt"
 
 def _next_po():
-    """PO number = MMDDYY + 3-digit daily sequence (e.g. 110926002)."""
+    """PO number = SLS- + MMDDYY + 3-digit sequence (sales orders, distinct from customer POs)."""
     today = _dt.datetime.now()
     mmddyy = today.strftime("%m%d%y")
     try:
@@ -72,7 +72,7 @@ def _next_po():
         seq = 0
     seq += 1
     open(_PO_SEQ_FILE, "w").write(str(seq))
-    return f"{mmddyy}{seq:03d}"
+    return f"SLS-{mmddyy}{seq:03d}"
 
 def order_email(order):
     """Full order email in the production format."""
