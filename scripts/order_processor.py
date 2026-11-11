@@ -310,8 +310,21 @@ def courtesy_invoice_pdf(order, path):
     story.append(Paragraph(f"Tax ({tax_pct}) {_fmt(order['tax'])}", r))
     story.append(Paragraph(f"<b>Total {_fmt(order['total'])}</b>", r))
 
-    SimpleDocTemplate(path, pagesize=letter, topMargin=0.75*inch, bottomMargin=0.75*inch,
-                      leftMargin=0.9*inch, rightMargin=0.9*inch).build(story)
+    def _footer(canvas, doc):
+        canvas.saveState()
+        canvas.setFont("Helvetica", 8)
+        canvas.setFillColor(colors.HexColor("#666666"))
+        canvas.drawCentredString(letter[0]/2, 0.5*inch,
+            "Performance Supply Depot LLC \u2022 1880 Oak Point Court, Fairfield, CA 94534")
+        canvas.drawCentredString(letter[0]/2, 0.35*inch,
+            "888-881-6834 \u2022 info@psdepot.com \u2022 psdepot.com")
+        canvas.drawCentredString(letter[0]/2, 0.2*inch,
+            "Thank you for your business!")
+        canvas.restoreState()
+
+    doc = SimpleDocTemplate(path, pagesize=letter, topMargin=0.75*inch, bottomMargin=0.9*inch,
+                            leftMargin=0.9*inch, rightMargin=0.9*inch)
+    doc.build(story, onFirstPage=_footer, onLaterPages=_footer)
     return path
 
 
