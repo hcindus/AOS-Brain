@@ -55,3 +55,96 @@ def qty_str(l):
 if __name__ == "__main__":
     o = process_order([{"sku": "62245", "qty": 1}, {"sku": "67240", "qty": 1}])
     print(json.dumps(o, indent=2))
+
+
+# --- PO number + full email (matches the production form's output format) ---
+import datetime as _dt
+
+_PO_SEQ_FILE = "/root/.openclaw/workspace/datadepot/data/po_seq.txt"
+
+def _next_po():
+    """PO number = MMDDYY + 3-digit daily sequence (e.g. 110926002)."""
+    today = _dt.datetime.now()
+    mmddyy = today.strftime("%m%d%y")
+    try:
+        seq = int(open(_PO_SEQ_FILE).read().strip())
+    except Exception:
+        seq = 0
+    seq += 1
+    open(_PO_SEQ_FILE, "w").write(str(seq))
+    return f"{mmddyy}{seq:03d}"
+
+def order_email(order):
+    """Full order email in the production format."""
+    lines = order["lines"]
+    po = _next_po()
+    ship = f"{order.get('address','')}\n{order.get('city','')}, {order.get('state','')} {order.get('zip','')}"
+    ordered_items = "\n".join(f"{l['name']} ({l['pack']}): {l['qty']}" for l in lines)
+
+    profit_blocks = []
+    for l in lines:
+        p = l["sell"] - l["cost"]
+        pct = round(p / l["sell"] * 100, 1) if l["sell"] else 0
+        profit_blocks.append(
+            f"{l['name']} ({l['pack']})\nQty: {l['qty']}\nCost: ${l['cost']:.2f}\n"
+            f"Sell: ${l['sell']:.2f}\nLine Profit: ${p:.2f} ({pct}%)"
+        )
+    profit = "\n\n".join(profit_blocks)
+
+    vendor = "\n".join(
+        f"{l['vendor']} {l['name'].upper()}\n{l['qty']}.00 CT {l['cost']:.2f}" for l in lines if l.get("vendor")
+    )
+
+    tax_pct = int(order["tax_rate"] * 100)
+    return f"""Performance Supply Depot LLC
+psdepot.com • 888-881-6834 • info@psdepot.com
+
+PO Number:
+{po}
+
+New Customer Order Submitted
+
+Business Name:
+{order.get('business_name','')}
+
+Manager:
+{order.get('manager_name','')}
+{order.get('email','')}
+
+Ship To:
+{ship}
+
+Order Date:
+{order.get('date','')}
+
+Ordered Items:
+{ordered_items}
+
+----------------------------------------
+PROFIT SUMMARY (INTERNAL ONLY)
+----------------------------------------
+
+{profit}
+
+----------------------------------------
+TOTALS
+----------------------------------------
+Subtotal (Sell): ${order['subtotal']:.2f}
+Shipping: $0.00
+Tax ({tax_pct}%): ${order['tax']:.2f}
+Grand Total: ${order['total']:.2f}
+
+Total Cost: ${order['cost']:.2f}
+Total Profit: ${order['margin']:.2f} ({order['margin_pct']}%)
+
+Special Instructions:
+{order.get('special_instructions','')}
+
+----------------------------------------
+VENDOR ORDER FORMAT (COPY & PASTE BELOW)
+----------------------------------------
+
+{vendor}
+
+Thank you,
+Performance Supply Depot LLC"""
