@@ -9,6 +9,7 @@ from activities import (
     check_reply,
     handle_reply,
     flag_order,
+    process_order,
     mark_closed,
 )
 
@@ -55,10 +56,10 @@ class LeadOutreachWorkflow:
             )
             if intent == "ORDER":
                 await workflow.execute_activity(
-                    flag_order, lead,
-                    start_to_close_timeout=timedelta(minutes=1),
+                    process_order, lead,
+                    start_to_close_timeout=timedelta(minutes=3),
                 )
-                return "ORDER_FLAGGED"
+                return "ORDER_PROCESSED"
             return intent
 
         # 5. No reply after follow-up → closed

@@ -133,3 +133,51 @@ async def flag_order(lead: dict) -> str:
 @activity.defn
 async def mark_closed(lead: dict) -> str:
     return "CLOSED"
+
+
+@activity.defn
+async def process_order(lead: dict) -> str:
+    """Process a structured order (items) -> compute summary + vendor block + flag Captain."""
+    items = lead.get("items") or []
+    if not items:
+        return "NO_ITEMS"
+    import sys, json
+    sys.path.insert(0, "/root/.openclaw/workspace/scripts")
+    import order_processor
+    summary = order_processor.process_order(items)
+    vendor = order_processor.vendor_lines(summary)
+    rec = {
+        "lead": lead.get("name"), "email": lead.get("email"),
+        "summary": summary, "vendor_lines": vendor,
+        "flagged_at": datetime.now(timezone.utc).isoformat(),
+        "note": "ORDER processed — collect card (Captain in the loop).",
+    }
+    try:
+        orders = json.load(open(ORDERS))
+    except Exception:
+        orders = []
+    orders.append(rec)
+    json.dump(orders, open(ORDERS, "w"), indent=2)
+    # email Captain with the full summary
+    try:
+        c = _smtp()
+        body = (f"New order (processed):\n\n"
+                f"Business: {lead.get('name','')}\nEmail: {lead.get('email','')}\n\n"
+                f"--- SUMMARY ---\n")
+        for l in summary["lines"]:
+            body += f"  {l['qty']} x {l['sku']} {l['name']} = ${l['sell']:.2f}\n"
+        body += (f"Subtotal ${summary['subtotal']:.2f} + tax ${summary['tax']:.2f} = "
+                 f"${summary['total']:.2f}\nProfit ${summary['margin']:.2f} ({summary['margin_pct']}%)\n\n"
+                 f"--- VENDOR ---\n{vendor}\n")
+        msg = MIMEText(body)
+        msg["From"] = f"Performance Supply Depot <{c['SALES_SMTP_USER']}>" if 'SALES_SMTP_USER' in c else f"Performance Supply Depot <{c['HOSTINGER_SMTP_USER']}>"
+        msg["To"] = "info@psdepot.com"
+        msg["Subject"] = f"New order — {lead.get('name')}"
+        s = smtplib.SMTP("smtp.gmail.com", 587, timeout=30)
+        s.starttls()
+        s.login(c["SALES_SMTP_USER"], c["SALES_SMTP_PASS"])
+        s.sendmail(c["SALES_SMTP_USER"], ["info@psdepot.com"], msg.as_string())
+        s.quit()
+    except Exception:
+        pass
+    return "PROCESSED"

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """PSD Order API — CLOSETER posts orders here. Stores to a JSON ledger + emails the Captain.
 No Google, no PHP. Served via FastAPI/uvicorn on 8087."""
-import json, os, smtplib
+import json, os, smtplib, sys
+sys.path.insert(0, "/root/.openclaw/workspace/scripts")
 from datetime import datetime, timezone
 from email.mime.text import MIMEText
 from fastapi import FastAPI, Request
@@ -31,6 +32,19 @@ def notify_captain(order):
                 f"Date: {order.get('date','')}\n"
                 f"Products: {order.get('products','')}\n"
                 f"Special instructions: {order.get('special_instructions','')}\n")
+        summ = order.get("summary")
+        if summ:
+            body += "\n--- ORDER SUMMARY ---\n"
+            for l in summ.get("lines", []):
+                body += f"  {l['qty']} x {l['sku']} {l['name']} = ${l['sell']:.2f}\n"
+            body += (f"Subtotal: ${summ['subtotal']:.2f}\n"
+                     f"Tax ({int(summ['tax_rate']*100)}%): ${summ['tax']:.2f}\n"
+                     f"Total: ${summ['total']:.2f}\n"
+                     f"Cost: ${summ['cost']:.2f}\n"
+                     f"Profit: ${summ['margin']:.2f} ({summ['margin_pct']}%)\n")
+            v = order.get("vendor_lines", "")
+            if v:
+                body += f"\n--- VENDOR ORDER ---\n{v}\n"
         msg = MIMEText(body)
         msg["From"] = f"Performance Supply Depot <{c['HOSTINGER_SMTP_USER']}>"
         msg["To"] = "antonio.hudnall@gmail.com"
@@ -50,6 +64,16 @@ async def receive_order(request: Request):
         data = await request.json()
     except Exception:
         return {"success": False, "error": "invalid JSON"}
+    items = data.get("items")
+    summary = None
+    vendor_lines = ""
+    if items:
+        try:
+            import order_processor
+            summary = order_processor.process_order(items)
+            vendor_lines = order_processor.vendor_lines(summary)
+        except Exception:
+            summary = None
     order = {
         "manager_name": data.get("manager_name", ""),
         "business_name": data.get("business_name", ""),
@@ -62,6 +86,8 @@ async def receive_order(request: Request):
         "products": data.get("products", ""),
         "special_instructions": data.get("special_instructions", ""),
         "source": data.get("source", "closeter"),
+        "summary": summary,
+        "vendor_lines": vendor_lines,
         "received_at": datetime.now(timezone.utc).isoformat(),
     }
     orders = []

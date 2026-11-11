@@ -12,5 +12,49 @@
     "special_instructions": "Test",
     "source": "closeter",
     "received_at": "2026-11-10T00:25:25.839315+00:00"
+  },
+  {
+    "manager_name": "Test Manager",
+    "business_name": "Test Cafe",
+    "email": "performacedepot@gmail.com",
+    "address": "123 Test St",
+    "city": "Testville",
+    "state": "CA",
+    "zip": "99999",
+    "date": "2026-11-11",
+    "products": "1 dozen 62245 ribbons",
+    "special_instructions": "Test",
+    "source": "closeter",
+    "summary": {
+      "lines": [
+        {
+          "sku": "62245",
+          "name": "Black/Red Ribbon",
+          "spec": "Epson TM-220",
+          "qty": 1,
+          "sell": 42.0,
+          "cost": 8.84,
+          "vendor": "38619ERC30BR"
+        },
+        {
+          "sku": "67240",
+          "name": "Black/Red Ribbon",
+          "spec": "Star SP700",
+          "qty": 1,
+          "sell": 52.0,
+          "cost": 16.64,
+          "vendor": "51619RC700BR"
+        }
+      ],
+      "subtotal": 94.0,
+      "tax": 8.46,
+      "total": 102.46,
+      "cost": 25.48,
+      "margin": 68.52,
+      "margin_pct": 72.9,
+      "tax_rate": 0.09
+    },
+    "vendor_lines": "38619ERC30BR BLACK/RED RIBBON (Epson TM-220)\n1.00 CT 8.84\n51619RC700BR BLACK/RED RIBBON (Star SP700)\n1.00 CT 16.64",
+    "received_at": "2026-11-11T14:11:51.683378+00:00"
   }
 ]
