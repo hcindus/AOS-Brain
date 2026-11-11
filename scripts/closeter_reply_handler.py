@@ -12,9 +12,12 @@ classifies intent, and takes the appropriate action:
 Deduped via a processed tracker (Message-ID). Safe: only auto-sends for clear
 intents; anything ambiguous is flagged, not guessed.
 """
-import json, smtplib, re, sys
+import json, smtplib, re, sys, os
 sys.path.insert(0, '/root/.openclaw/workspace/scripts')
 from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
 from datetime import datetime, timezone
 
 INBOX = "/root/.openclaw/workspace/datadepot/data/closeter_inbox.json"
@@ -68,9 +71,21 @@ def smtp_creds():
             k, v = line.split("=", 1); c[k] = v
     return c
 
-def send(to_email, subject, body_html):
+def send(to_email, subject, body_html, attachments=None):
     c = smtp_creds()
-    msg = MIMEText(body_html, "html")
+    if attachments:
+        msg = MIMEMultipart("mixed")
+        msg.attach(MIMEText(body_html, "html"))
+        for path in attachments:
+            if not os.path.exists(path):
+                continue
+            part = MIMEBase("application", "octet-stream")
+            part.set_payload(open(path, "rb").read())
+            encoders.encode_base64(part)
+            part.add_header("Content-Disposition", f'attachment; filename="{os.path.basename(path)}"')
+            msg.attach(part)
+    else:
+        msg = MIMEText(body_html, "html")
     msg["From"] = f"Sales Performance Supply Depot <{c['SALES_SMTP_USER']}>"
     msg["To"] = to_email
     msg["Bcc"] = "info@psdepot.com"
@@ -120,28 +135,57 @@ def main():
                 ])
             except Exception:
                 pass
-            # Email the Captain so an order never goes unnoticed.
+            # Parse the free-text order -> structured items -> summary (once).
+            import order_processor as op
+            items = op.parse_order(body)
+            summ = None
+            if items:
+                summ = op.process_order(items)
+                summ.update({
+                    "business_name": "", "manager_name": "", "email": to_email or frm,
+                    "address": "", "city": "", "state": "", "zip": "",
+                    "date": datetime.now().strftime("%m/%d/%Y"),
+                    "special_instructions": "",
+                })
+
+            # Email the Captain (internal profit summary, or raw fallback).
             try:
-                send("info@psdepot.com", f"New order — {frm}",
-                     f"<p><strong>New order from:</strong> {frm}</p>"
-                     f"<p><strong>Subject:</strong> {m.get('subject')}</p>"
-                     f"<pre>{body[:2000]}</pre>"
-                     f"<p><em>Collect payment (card) for this customer, then route to the form.</em></p>"
-                     f"<p>— Performance Supply Depot</p>")
+                if summ:
+                    email_body = op.order_email(summ)
+                    send("info@psdepot.com", f"New order — {frm}", email_body.replace("\n", "<br>"))
+                else:
+                    send("info@psdepot.com", f"New order — {frm}",
+                         f"<p><strong>New order from:</strong> {frm}</p>"
+                         f"<p><strong>Subject:</strong> {m.get('subject')}</p>"
+                         f"<pre>{body[:2000]}</pre>"
+                         f"<p><em>Collect payment (card) for this customer, then route to the form.</em></p>"
+                         f"<p>— Performance Supply Depot</p>")
             except Exception:
                 pass
+
+            # Email the customer (thank-you + courtesy invoice).
             if to_email:
                 try:
-                    send(to_email, "Re: your order",
-                         f"<p>Thanks so much for your order!</p>"
-                         f"<p>To keep a credit card on file: "
-                         f"<a href=\"https://psdepot.com/credit-card/\">add your card here</a></p>"
-                         f"<p>And to submit your order: "
-                         f"<a href=\"{FORM_URL}\">order form</a></p>"
-                         f"<p>— Performance Supply Depot</p>")
-                    result["action"] = "flagged_captain + confirmed_to_lead (sent cc form + order form)"
+                    if summ:
+                        po = summ.get("po")
+                        cust = op.customer_email(summ).replace("\n", "<br>")
+                        pdf_path = f"/tmp/invoice_{po}.pdf"
+                        op.courtesy_invoice_pdf(summ, pdf_path)
+                        invoice_html = op.courtesy_invoice_html(summ)
+                        send(to_email, f"Your order {po} — Performance Supply Depot",
+                             cust + "<hr>" + invoice_html, attachments=[pdf_path])
+                        result["action"] = "flagged_captain + customer_invoice_sent (pdf attached)"
+                    else:
+                        send(to_email, "Re: your order",
+                             f"<p>Thanks so much for your order!</p>"
+                             f"<p>To keep a credit card on file: "
+                             f"<a href=\"https://psdepot.com/credit-card/\">add your card here</a></p>"
+                             f"<p>And to submit your order: "
+                             f"<a href=\"{FORM_URL}\">order form</a></p>"
+                             f"<p>— Performance Supply Depot</p>")
+                        result["action"] = "flagged_captain + confirmed_to_lead (no structured items)"
                 except Exception as e:
-                    result["action"] = f"flagged_captain (confirm send failed: {e})"
+                    result["action"] = f"flagged_captain (customer send failed: {e})"
             else:
                 result["action"] = "flagged_captain (no reply-to email)"
 
