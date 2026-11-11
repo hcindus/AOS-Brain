@@ -23,6 +23,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("csv_path")
     ap.add_argument("--source", required=True, help="e.g. mortimer-hwy4-680")
+    ap.add_argument("--no-dedup", action="store_true",
+                    help="Skip cross-reference dedup (ingest all as new)")
     args = ap.parse_args()
 
     con = sqlite3.connect(DB)
@@ -47,13 +49,14 @@ def main():
         n = norm(name)
 
         is_dupe = False
-        if n in existing:
-            is_dupe = True
-        else:
-            for en in existing:
-                if n and en and len(n) >= 5 and len(en) >= 5 and (n in en or en in n):
-                    is_dupe = True
-                    break
+        if not args.no_dedup:
+            if n in existing:
+                is_dupe = True
+            else:
+                for en in existing:
+                    if n and en and len(n) >= 5 and len(en) >= 5 and (n in en or en in n):
+                        is_dupe = True
+                        break
 
         status = 'duplicate' if is_dupe else 'new'
         note = ("dup-of-existing-customer; website=" if is_dupe else "website=") + \
