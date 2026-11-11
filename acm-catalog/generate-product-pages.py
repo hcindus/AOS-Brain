@@ -34,9 +34,12 @@ def product_page(p):
     title = f"{name} {spec} | Performance Supply Depot LLC".strip()
     desc = f"{name} — {spec}. {category} from Performance Supply Depot LLC. Ships fast across the US."
     keywords = f"{name}, {spec}, {category}, {division}, ACM, Performance Supply Depot"
-    # brand logo as placeholder; fall back to a generic SKU image if no brand logo
+    # image priority: scraped product photo > brand logo > generic fallback
     brand = p.get('brand', '')
-    if brand and os.path.exists(f"/var/www/psdepot.com/assets/images/vendors/{brand}.png"):
+    scraped = f"/var/www/psdepot.com/assets/images/products/{slug}.jpg"
+    if os.path.exists(scraped):
+        image = f"{BASE}/assets/images/products/{slug}.jpg"
+    elif brand and os.path.exists(f"/var/www/psdepot.com/assets/images/vendors/{brand}.png"):
         image = f"{BASE}/assets/images/vendors/{brand}.png"
     else:
         image = f"{BASE}/assets/images/products/{slug}.jpg"
