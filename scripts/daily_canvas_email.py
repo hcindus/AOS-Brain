@@ -68,13 +68,13 @@ def main():
         return
 
     creds = {}
-    for line in open("/root/.openclaw/workspace/aocros/secrets/smtp.env"):
+    for line in open("/root/.openclaw/workspace/aocros/secrets/sales_smtp.env"):
         line = line.strip()
         if "=" in line and not line.startswith("#"):
             k, v = line.split("=", 1)
             creds[k] = v
-    FROM = creds["HOSTINGER_SMTP_USER"]; PASSWORD = creds["HOSTINGER_SMTP_PASS"]
-    HOST = creds.get("HOSTINGER_SMTP_SERVER","smtp.hostinger.com"); PORT = int(creds.get("HOSTINGER_SMTP_PORT","587"))
+    FROM = creds["SALES_SMTP_USER"]; PASSWORD = creds["SALES_SMTP_PASS"]
+    HOST = creds.get("SALES_SMTP_HOST","smtp.gmail.com"); PORT = int(creds.get("SALES_SMTP_PORT","587"))
 
     SUBJECT = "POS supplies — quick quote?"
 

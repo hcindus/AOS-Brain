@@ -61,7 +61,7 @@ def save(p, o):
 
 def smtp_creds():
     c = {}
-    for line in open("/root/.openclaw/workspace/aocros/secrets/smtp.env"):
+    for line in open("/root/.openclaw/workspace/aocros/secrets/sales_smtp.env"):
         line = line.strip()
         if "=" in line and not line.startswith("#"):
             k, v = line.split("=", 1); c[k] = v
@@ -70,14 +70,14 @@ def smtp_creds():
 def send(to_email, subject, body_html):
     c = smtp_creds()
     msg = MIMEText(body_html, "html")
-    msg["From"] = f"Sales Performance Supply Depot <{c['HOSTINGER_SMTP_USER']}>"
+    msg["From"] = f"Sales Performance Supply Depot <{c['SALES_SMTP_USER']}>"
     msg["To"] = to_email
     msg["Bcc"] = "info@psdepot.com"
     msg["Subject"] = subject
-    s = smtplib.SMTP(c.get("HOSTINGER_SMTP_SERVER","smtp.hostinger.com"),
-                     int(c.get("HOSTINGER_SMTP_PORT","587")), timeout=30)
-    s.starttls(); s.login(c["HOSTINGER_SMTP_USER"], c["HOSTINGER_SMTP_PASS"])
-    s.sendmail(c["HOSTINGER_SMTP_USER"], [to_email, "info@psdepot.com"], msg.as_string())
+    s = smtplib.SMTP(c.get("SALES_SMTP_HOST","smtp.gmail.com"),
+                     int(c.get("SALES_SMTP_PORT","587")), timeout=30)
+    s.starttls(); s.login(c["SALES_SMTP_USER"], c["SALES_SMTP_PASS"])
+    s.sendmail(c["SALES_SMTP_USER"], [to_email, "info@psdepot.com"], msg.as_string())
     s.quit()
 
 def main():
