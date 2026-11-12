@@ -28,7 +28,14 @@ description: Use when programming a cash register keyboard cover / PLU menu for 
 - **Place items at their actual keyboard slots**, not sequential 1–120. The `Register` grid drives which PLU row each item sits in — leave the gaps where the layout has blank/function keys.
 - **Fill every slot.** No dead keys, no `PLU114`/`PLU115` placeholders. Every key gets a real item + real price.
 - **One item per row, sequential.** The next item goes in the next row down. No gaps, no grouping.
-- **Color by group, consistently.** Same group = same color everywhere. Color the function keys by role too (red = void/return/paid-out, green = list/send/chg) rather than leaving them all neutral.
+- **Color by group, consistently.** Same group = same color everywhere.
+- **Color function keys by semantic role** — the color tells the operator what the key *does* at a glance:
+  - Red = destructive (VOID, MDSE RETURN, PAID OUT, REC'D ACCT)
+  - Green = "go/pay" (SEND, CHECK, CHG, LIST CHECK, LIST PAID)
+  - White/neutral = tax/discount (TAX, NO TAX, SALE DISC, ITEM DISC)
+  - Uncolored = reports/navigation/numeric (X/Z REPORT, ↑↓←→, 0–9)
+- **Alcohol gets its own lane** (light blue for beer/wine) — separate from food and soft drinks.
+- **Finer food categories than "drinks/food":** bagels=blue, salads+soup=green, coffee+pastry=pink, tea=amber, soup/salad combos=orange, Middle Eastern+sandwiches+juices+add-ons=yellow.
 - **Cold = blue, hot = red, salad = green** are the safe defaults; adapt to the actual menu (no beer → drop yellow; add amber for hot drinks, purple for sandwiches, pink for desserts, gray for extras, yellow for kids).
 - **Text/background contrast — this is the trap:**
   - *Green background + orange text (or reverse) is hell on the eyes.* Keep text monochrome — white or black only, never a competing hue.
