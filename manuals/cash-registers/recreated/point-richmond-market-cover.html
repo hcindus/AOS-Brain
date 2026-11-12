@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Point Richmond Market — Keyboard Cover (Recreation)</title>
+<style>
+  :root {
+    --key-w: 46px;
+    --key-h: 34px;
+    --gap: 3px;
+    --fn-bg: #4a4a4a;
+    --num-bg: #2c5f8a;
+    --cash-bg: #5a7d2a;
+    --breakfast-bg: #f4a460;
+    --bread-bg: #d9b382;
+    --meat-bg: #e08a7a;
+    --sandwich-bg: #c96a6a;
+    --cheese-bg: #f0e68c;
+    --salad-bg: #9fd69f;
+    --side-bg: #8fd0d0;
+    --extra-bg: #d8a0c8;
+    --top-bg: #b8a8d8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background: #222;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  .cover {
+    background: #fff;
+    padding: 14px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+  .title {
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    color: #222;
+  }
+  .kb {
+    display: grid;
+    grid-template-columns: repeat(15, var(--key-w));
+    grid-template-rows: repeat(11, var(--key-h));
+    gap: var(--gap);
+  }
+  .key {
+    border: 1px solid rgba(0,0,0,.35);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 8.5px;
+    font-weight: 600;
+    color: #111;
+    line-height: 1.05;
+    padding: 1px;
+    word-break: break-word;
+    overflow: hidden;
+  }
+  .fn { background: var(--fn-bg); color: #fff; }
+  .num { background: var(--num-bg); color: #fff; }
+  .cash { background: var(--cash-bg); color: #fff; }
+  .breakfast { background: var(--breakfast-bg); }
+  .bread { background: var(--bread-bg); }
+  .meat { background: var(--meat-bg); }
+  .sandwich { background: var(--sandwich-bg); color: #fff; }
+  .cheese { background: var(--cheese-bg); }
+  .salad { background: var(--salad-bg); }
+  .side { background: var(--side-bg); }
+  .extra { background: var(--extra-bg); }
+  .top { background: var(--top-bg); }
+  .blank { background: transparent; border-color: transparent; }
+  .wide { grid-column: span 2; }
+  .tall { grid-row: span 2; }
+</style>
+</head>
+<body>
+  <div class="cover">
+    <div class="title">POINT RICHMOND MARKET &nbsp;·&nbsp; MI PUEBLO RESTAURANT</div>
+    <div class="kb">
+      <!-- ===== TOP ROW (function + top sandwiches) ===== -->
+      <div class="key fn">RF</div>
+      <div class="key fn">JF</div>
+      <div class="key fn">RECPT ON/OFF</div>
+      <div class="key sandwich">BRICK YARD COVE</div>
+      <div class="key sandwich">FIRE HOUSE</div>
+      <div class="key sandwich">POINT RICH MOND</div>
+      <div class="key sandwich">TRADITIONAL REUBEN</div>
+      <div class="key sandwich">MIMI</div>
+      <div class="key sandwich">R.J. INTERVENTION</div>
+      <div class="key sandwich">NEW YORKER</div>
+      <div class="key sandwich">LITTLE ITALY</div>
+      <div class="key blank"></div>
+      <div class="key fn">RECPT ISSUE</div>
+      <div class="key fn">NO SALE</div>
+      <div class="key fn">LOG ON/OFF</div>
+
+      <!-- ===== ROW 1 ===== -->
+      <div class="key breakfast">BREAK FAST</div>
+      <div class="key bread">ROLL</div>
+      <div class="key meat">MEATS</div>
+      <div class="key sandwich">CHEVRON</div>
+      <div class="key sandwich">LITE ITALIAN</div>
+      <div class="key sandwich">TUNA MELT</div>
+      <div class="key salad">CHICKEN SALAD</div>
+      <div class="key sandwich">BLT</div>
+      <div class="key sandwich">THE VEGGIE</div>
+      <div class="key sandwich">HOT HONEY HAM</div>
+      <div class="key extra">ADD BACON</div>
+      <div class="key blank"></div>
+      <div class="key fn">ERROR CORR</div>
+      <div class="key fn">VOID ITEM</div>
+      <div class="key fn">MDSE RTRN</div>
+
+      <!-- ===== ROW 2 ===== -->
+      <div class="key breakfast">English Muffin</div>
+      <div class="key bread">Soft French</div>
+      <div class="key meat">Premium Ham</div>
+      <div class="key meat">Roast Beef</div>
+      <div class="key cheese">Cheddar</div>
+      <div class="key cheese">Monterey Jack</div>
+      <div class="key salad">FRESH SALAD</div>
+      <div class="key salad">CAESAR SALAD</div>
+      <div class="key salad">GREEK SALAD</div>
+      <div class="key salad">THREE BEAN SALAD</div>
+      <div class="key extra">ADD AVOCADO</div>
+      <div class="key blank"></div>
+      <div class="key fn">DONE</div>
+      <div class="key fn">ENTER</div>
+      <div class="key fn">RECALL CHECK</div>
+
+      <!-- ===== ROW 3 ===== -->
+      <div class="key breakfast">Bagel</div>
+      <div class="key bread">Dutch Crunch</div>
+      <div class="key meat">Honey Ham</div>
+      <div class="key meat">Corned Beef</div>
+      <div class="key cheese">American</div>
+      <div class="key cheese">Muenster</div>
+      <div class="key salad">COLE SLAW</div>
+      <div class="key salad">POTATO SALAD</div>
+      <div class="key side">PASTA ROMA</div>
+      <div class="key side">CEVICHE</div>
+      <div class="key side">MACA RONI SALAD</div>
+      <div class="key blank"></div>
+      <div class="key fn">↑</div>
+      <div class="key fn">CANCEL</div>
+      <div class="key fn">LIST CHECK</div>
+
+      <!-- ===== ROW 4 ===== -->
+      <div class="key breakfast">Bacon Egg &amp; Cheese</div>
+      <div class="key bread">Sour dough roll</div>
+      <div class="key meat">Turkey Breast</div>
+      <div class="key meat">Round Pastrami</div>
+      <div class="key cheese">Swiss</div>
+      <div class="key extra">PICKLE</div>
+      <div class="key side">ORZO</div>
+      <div class="key side">ASIAGO SALAD</div>
+      <div class="key side">TUNA SALAD</div>
+      <div class="key side">CHICKEN SALAD</div>
+      <div class="key side">EGG SALAD</div>
+      <div class="key blank"></div>
+      <div class="key fn">←</div>
+      <div class="key fn">↓</div>
+      <div class="key fn">→</div>
+      <div class="key fn">LIST PAID</div>
+
+      <!-- ===== ROW 5 ===== -->
+      <div class="key breakfast">Ham Egg &amp; Cheese</div>
+      <div class="key bread">SLICED</div>
+      <div class="key meat">Cracked Pepper Turkey</div>
+      <div class="key meat">Pastrami Brisket</div>
+      <div class="key cheese">Provalone</div>
+      <div class="key extra">DEVILED EGG</div>
+      <div class="key side">TABOULI</div>
+      <div class="key side">COUS COUS</div>
+      <div class="key side">REG HUMMUS</div>
+      <div class="key side">ROAST PEPPER HUMMUS</div>
+      <div class="key side">BABA GHA NOUSH</div>
+      <div class="key blank"></div>
+      <div class="key fn">@/FOR</div>
+      <div class="key fn">PLU</div>
+      <div class="key fn">CLEAR</div>
+
+      <!-- ===== ROW 6 ===== -->
+      <div class="key breakfast">Egg Cheese &amp; Avocado</div>
+      <div class="key bread">French</div>
+      <div class="key meat">Mesquite Turkey</div>
+      <div class="key meat">Liver Wurst</div>
+      <div class="key cheese">Gouda</div>
+      <div class="key extra">BOILED EGG</div>
+      <div class="key sandwich">FALAFEL SAND WICH</div>
+      <div class="key sandwich">MED PLATE</div>
+      <div class="key blank"></div>
+      <div class="key blank"></div>
+      <div class="key blank"></div>
+      <div class="key blank"></div>
+      <div class="key num">7</div>
+      <div class="key num">8</div>
+      <div class="key num">9</div>
+
+      <!-- ===== ROW 7 ===== -->
+      <div class="key breakfast">Egg &amp; Cheese</div>
+      <div class="key bread">Sour dough sliced</div>
+      <div class="key meat">Salsalito Turkey</div>
+      <div class="key meat">Salami</div>
+      <div class="key cheese">Havarti</div>
+      <div class="key extra">DOLAMAS</div>
+      <div class="key blank"></div>
+      <div class="key blank"></div>
+      <div class="key blank"></div>
+      <div class="key blank"></div>
+      <div class="key extra">ADD BACON</div>
+      <div class="key blank"></div>
+      <div class="key num">4</div>
+      <div class="key num">5</div>
+      <div class="key num">6</div>
+
+      <!-- ===== ROW 8 ===== -->
+      <div class="key breakfast">Cream Cheese</div>
+      <div class="key bread">Light / Dark Rye</div>
+      <div class="key meat">Maple Glazed Turkey</div>
+      <div class="key blank"></div>
+      <div class="key cheese">Horse radish Cheddar</div>
+      <div class="key extra">ADD</div>
+      <div class="key extra">NO</div>
+      <div class="key extra">EXTRA</div>
+      <div class="key extra">SIDE</div>
+      <div class="key blank"></div>
+      <div class="key extra">ADD AVOCADO</div>
+      <div class="key fn">EXTRA MEAT</div>
+      <div class="key num">1</div>
+      <div class="key num">2</div>
+      <div class="key num">3</div>
+      <div class="key cash">SBTL</div>
+
+      <!-- ===== ROW 9 ===== -->
+      <div class="key breakfast">Toasted &amp; Butter</div>
+      <div class="key bread">Wheat</div>
+      <div class="key meat">Buffalo Chicken</div>
+      <div class="key blank"></div>
+      <div class="key cheese">Pepper Jack</div>
+      <div class="key extra">Mayo</div>
+      <div class="key extra">Mustard</div>
+      <div class="key extra">Tomato</div>
+      <div class="key extra">Onion</div>
+      <div class="key extra">Lettuce</div>
+      <div class="key extra">Pickle</div>
+      <div class="key extra">Pepperoncini</div>
+      <div class="key num">0</div>
+      <div class="key num">00</div>
+      <div class="key num">.</div>
+      <div class="key cash">SEND</div>
+    </div>
+  </div>
+</body>
+</html>

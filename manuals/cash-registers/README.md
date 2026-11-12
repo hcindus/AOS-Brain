@@ -1,25 +1,28 @@
-# Cash Register Reference — Keyboard Layouts & Setup Sheets
+# Cash Register Reference — Keyboard Layouts & Covers
 
-**Source file:** `cash-register-keyboard-layouts.xlsx`
-**Saved by:** Miles, 2026-11-12 (per Captain "keep them")
-**Purpose:** Reference set for raised-key (TEC) cash register keyboards — key legends, function layouts, PLU lists, and setup/ops procedures.
+**Saved by:** Miles, 2026-11-12 (Captain: "keep them" → then "rebuild the used and bruised templates")
+**Task:** Rebuild worn POS keyboard cover templates into clean, printable versions.
 
-## Contents (sheets in the workbook)
+## Files
 
-| Sheet | What it is |
-|-------|-----------|
-| `ER-A320 SETUP` | Sharp ER-A320 out-of-box + program setup (date/time/tax/departments/discounts) |
-| `ER-A320 OPS` | Sharp ER-A320 daily operations (ring sales, void, refund, discount) |
-| `PLU_LIST` | Caffe Greco (San Francisco) PLU/department list — Sam4s 945, 9.25% tax |
-| `TEC_MA_TOPS` | TEC MA-series keyboard function/top layout |
-| `TECFS1350-PLU` | TEC FS-1350 PLU key layout (Liquor / Happy Hour / Beer / Wine) |
-| `TECFS1350-FUNCT` | TEC FS-1350 function key layout (open depts, void, cash keys, etc.) |
-| `PCREG-81K` | PCREG-81K — blank (empty template) |
-| `TECFS1450-1650_FUNCT` | TEC FS-1450/1650 function key layout (Mexican restaurant menu) |
-| `TEC FS1450-1650_PLU` | TEC FS-1450/1650 PLU key layout (burritos, tacos, etc.) |
-| `TEC FS2600` | TEC FS-2600 full keyboard layout (receipt issue, pay keys, discounts, server #) |
+- `cash-register-keyboard-layouts.xlsx` — layout/PLU reference data (multi-model)
+- `520_630_Flat_Point_Richmond_Market.xlsx` — Point Richmond Market / Mi Pueblo (Sam4s 520/630 flat)
+- `covers/` — 7 photos of the worn keyboard covers (the source templates to rebuild)
 
-## Notable client data
-- **Caffe Greco** — Hanna, 415-397-6261, 423 Columbus Ave, San Francisco CA 94133, http://caffegreco.com/
-- Tax rate: 9.25% (0.0925)
-- Models referenced: Sharp ER-A320, Sam4s 945, TEC MA TOPS, TEC FS-1350, TEC FS-1450/1650, TEC FS-2600
+## Cover photos (7 total)
+
+| # | File | What it shows |
+|---|------|---------------|
+| 1 | `01-sps520-keyboard.jpg` | Sam4s SPS-520 touchscreen POS keyboard |
+| 2 | `02-keypad-overlay.heic` | Older register keypad overlay (close-up) |
+| 3 | `03-cafe-deli-grid.heic` | Cafe/deli grid keypad template |
+| 4 | `04-smart-register-mexican.heic` | Smart Register POS, Mexican restaurant |
+| 5 | `05-worn-pos-grid.jpg` | Worn POS touchscreen, colorful grid menu |
+| 6 | `06-mexican-keypad.heic` | Mexican restaurant keypad |
+| 7 | `07-worn-pos-keypad.heic` | Older worn POS keypad (close-up) |
+
+## Customers (working map — confirm)
+
+1. **Caffe Greco** — Sam4s 945 (from PLU_LIST sheet)
+2. **Point Richmond Market / Mi Pueblo Restaurant** — Sam4s 520/630 flat (800 Petaluma Blvd N, Petaluma CA, 707-762-8192)
+3. **Kaffe Mocha** — "900" model (kbc_900)
