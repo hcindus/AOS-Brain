@@ -22,9 +22,13 @@ description: Use when programming a cash register keyboard cover / PLU menu for 
 
 ## Rules
 
+- **Use the REAL customer menu**, not a generic invention. Pull the actual items off their menu/counter/website (e.g. a Haight St cafe has Turkish coffee, croque monsieur, tabouleh, hummus plate, falafel, mimosas). It has to be *that* shop, not a template.
+- **Abbreviate names to the register's display limit** (~8–12 chars). `Cappuccino` → `CAPPU`, `Croque Monsieur` → `CROQUEMONSR`, `Prosciutto` → `PROSCUTO`, `Bacon Egg & Cheese` → `BAGEL EGG`. A key line won't fit full names.
+  - **Bigger accounts:** keep a full name for the receipt (customer-facing) and a sharp abbreviation for the kitchen. The same item has ~3 readers — customer (English), manager (French), kitchen (Spanish). One line does all three jobs in a small shop; a big kitchen splits them.
+- **Place items at their actual keyboard slots**, not sequential 1–120. The `Register` grid drives which PLU row each item sits in — leave the gaps where the layout has blank/function keys.
 - **Fill every slot.** No dead keys, no `PLU114`/`PLU115` placeholders. Every key gets a real item + real price.
 - **One item per row, sequential.** The next item goes in the next row down. No gaps, no grouping.
-- **Color by group, consistently.** Same group = same color everywhere.
+- **Color by group, consistently.** Same group = same color everywhere. Color the function keys by role too (red = void/return/paid-out, green = list/send/chg) rather than leaving them all neutral.
 - **Cold = blue, hot = red, salad = green** are the safe defaults; adapt to the actual menu (no beer → drop yellow; add amber for hot drinks, purple for sandwiches, pink for desserts, gray for extras, yellow for kids).
 - **Text/background contrast — this is the trap:**
   - *Green background + orange text (or reverse) is hell on the eyes.* Keep text monochrome — white or black only, never a competing hue.
