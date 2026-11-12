@@ -32,8 +32,8 @@ ROWS = [
      ("NEW YORKER","sandwich"),("LITTLE ITALY","sandwich"),
      None,
      ("RECPT ISSUE","fn"),("NO SALE","fn"),("LOG ON/OFF","fn"),None],
-    [("BREAK FAST","breakfast"),("ROLL","bread"),("MEATS","meat"),
-     ("CHEVRON","sandwich"),("LITE ITALIAN","sandwich"),("TUNA MELT","sandwich"),
+    [("Burrito","breakfast"),("Taco","bread"),("Quesadilla","meat"),
+     ("Asada","sandwich"),("Pastor","sandwich"),("Carnitas","sandwich"),
      ("CHICKEN SALAD","salad"),("BLT","sandwich"),("THE VEGGIE","sandwich"),
      ("HOT HONEY HAM","sandwich"),("ADD BACON","extra"),
      None,("ERROR CORR","fn"),("VOID ITEM","fn"),("MDSE RTRN","fn"),None],
@@ -94,6 +94,26 @@ def wrap(text, max_chars):
         out.append(ln)
     return out
 
+def fit_font(text, box_w, box_h, max_chars, max_size):
+    """Return (font, lines) for the largest font that fits the box."""
+    best = None
+    for sz in range(max_size, 4, -1):
+        f = font(sz, bold=True)
+        lines = wrap(text, max_chars)
+        # measure
+        lh = 0
+        w_ok = True
+        for l in lines:
+            bb = d.textbbox((0,0), l, font=f)
+            w_ok = w_ok and (bb[2]-bb[0] <= box_w - 4)
+            lh += bb[3]-bb[1]
+        lh += (len(lines)-1)*1
+        if w_ok and lh <= box_h - 4:
+            return f, lines
+    # fallback: smallest + min chars
+    f = font(4, bold=True)
+    return f, wrap(text, max_chars)
+
 W = COLS*KW + (COLS+1)*GAP
 H = len(ROWS)*KH + (len(ROWS)+1)*GAP
 TITLE_H = 34*SCALE
@@ -111,8 +131,8 @@ def font(sz, bold=False):
 
 # title
 tf = font(13*SCALE, bold=True)
-tw = d.textlength("POINT RICHMOND MARKET  ·  MI PUEBLO RESTAURANT", font=tf)
-d.text(((W-tw)/2, 8*SCALE), "POINT RICHMOND MARKET  ·  MI PUEBLO RESTAURANT", fill="#111111", font=tf)
+tw = d.textlength("ALEJANDROS TAQUERIA  ·  TEST EDIT", font=tf)
+d.text(((W-tw)/2, 8*SCALE), "ALEJANDROS TAQUERIA  ·  TEST EDIT", fill="#111111", font=tf)
 
 for r, row in enumerate(ROWS):
     for c, cell in enumerate(row):
@@ -123,9 +143,8 @@ for r, row in enumerate(ROWS):
         y = TITLE_H + GAP + r*(KH+GAP)
         bg, fg = C[style]
         d.rounded_rectangle([x, y, x+KW, y+KH], radius=3, fill=bg, outline="#00000055", width=1)
-        lines = wrap(label, 12)
-        fs = (9 if len(lines) <= 2 else 8) * SCALE
-        f = font(fs, bold=True)
+        # auto-fit font to the key box
+        f, lines = fit_font(label, KW, KH, 11, 9*SCALE)
         total_h = sum(d.textbbox((0,0), l, font=f)[3] for l in lines)
         ty = y + (KH - total_h)/2
         for l in lines:
