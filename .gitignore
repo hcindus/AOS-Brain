@@ -99,3 +99,8 @@ robotics/training_room/runs/
 robotics/motion_data/ufo/
 aocros/secrets/
 /root/.openclaw/media/
+
+# Python virtual environments
+.venv-kokoro/
+.venv/
+venv/
