@@ -83,3 +83,30 @@ Infrastructure (verified live):
 - Hume intel: ~170 days stale
 
 Decision still open since Aug 12: fix SendGrid OR activate phone pivot.
+
+Sales Execution Week 29: 2026-11-10 to 2026-11-16
+Agent: Pulp (Head of Sales) | Report: 2026-11-16 17:05 UTC
+
+WEEKLY SPRINT REVIEW COMPLETE:
+
+MATERIAL CHANGE: Outbound email RESTARTED (first since ~Jun 15).
+- Thanksgiving campaign: 134 attempted
+- Ribbon/toner: 131 attempted
+- Reorder (existing customers): 23 (reminder loop, 0 bounces)
+- Sender ownership (553) FIXED; new blocker = Hostinger 451 outbound rate-limit (88×451 + 1×421 bounces)
+
+Outbound (Week 29):
+- Emails attempted: ~288 | Demos: 0 | Calls: 0 (49 queued) | Closes: 0 | MRR: $0
+
+Infrastructure (verified live):
+- CLOSETER: ACTIVE on inbound order intent (5 test orders flagged to Captain)
+- Phone queue: 49 restaurants staged (Antioch + Benicia), 0 dials
+- Multi-state scraper: ACTIVE (158 biz/13 states)
+- Temporal: 3 RUNNING, 0 completed (stuck)
+- submit_leads.py: BROKEN (temporalio WorkflowHandle import)
+- Mortimer relay: 84 failed / 0 done
+
+DECISION REQUIRED:
+1. Lift 451 rate-limit (dedicated/bulk relay or pace under cap)
+2. Activate phone pivot (49 dials — no infra blocker)
+3. Fix submit_leads.py (Forge)
