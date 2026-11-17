@@ -42,6 +42,15 @@ python3 call_back.py --to +14155552671 --dial
 - `sales_contacts` row: vendor_id, lead_name, contact_type, channel, outcome, want_prices, notes, contacted_at
 - `vendors` update: last_contact_at, last_outcome, contact_preference
 
+## ⛔ Call-time rule (hard constraint)
+
+**Never call a restaurant during a meal rush.** The skill blocks dialing during:
+- Breakfast rush — 7–10 AM
+- Lunch rush — 11 AM–2 PM
+- Dinner rush — 5–9 PM
+
+Safe windows: **10–11 AM** and **2–5 PM** (Pacific). `--force` bypasses for testing only.
+
 ## Call scripts (canonical tone)
 
 See `datadepot/data/call_scripts.json`:

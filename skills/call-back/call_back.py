@@ -25,6 +25,21 @@ TWILIO_ENV = "/root/.openclaw/workspace/aocros/secrets/twilio.env"
 OUTCOMES = {"reached", "voicemail", "no_answer", "interested", "not_interested",
             "order", "question", "opted_out", "reengage"}
 
+# NEVER call restaurants during a rush. Safe windows are mid-morning + mid-afternoon.
+RUSH_HOURS = set(range(7, 10)) | set(range(11, 14)) | set(range(17, 21))
+# breakfast 7-9am · lunch 11am-1pm · dinner 5-8pm
+
+
+def safe_to_call():
+    """True only if now (Pacific) is outside breakfast/lunch/dinner rush."""
+    from datetime import datetime
+    try:
+        from zoneinfo import ZoneInfo
+        hour = datetime.now(ZoneInfo("America/Los_Angeles")).hour
+    except Exception:
+        hour = datetime.now().hour
+    return hour not in RUSH_HOURS
+
 
 def twilio_creds():
     c = {}
@@ -100,7 +115,13 @@ def main():
     ap.add_argument("--note", default="")
     ap.add_argument("--dial", action="store_true", help="actually place a Twilio call")
     ap.add_argument("--queue", help="JSON file of {number, script} entries")
+    ap.add_argument("--force", action="store_true", help="ignore rush-hour block (testing only)")
     args = ap.parse_args()
+
+    if not safe_to_call() and not args.force:
+        print("⛔ BLOCKED: it's a meal rush (breakfast/lunch/dinner). "
+              "We never call restaurants during a rush. Use --force to override (testing only).")
+        return
 
     if args.queue:
         q = json.load(open(args.queue))
