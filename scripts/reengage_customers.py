@@ -52,11 +52,11 @@ def log_contact(vid, lead_name, outcome, want_prices, note):
 def body(name):
     first = (name or "there").split()[0]
     return (f"<p>Hi {first},</p>"
-            f"<p>Just a quick check-in from Performance Supply Depot &mdash; we wanted to make sure "
-            f"you're stocked up on thermal paper and printer ribbons for the season.</p>"
-            f"<p>Would it be okay if I email you our current prices so you can consider us in the future? "
-            f"No pressure at all.</p>"
-            f"<p>Thanks so much for your time.</p>"
+            f"<p>Just a quick courtesy check-in from Performance Supply Depot &mdash; based on your "
+            f"usual ordering, you may be getting low on thermal paper and printer ribbons.</p>"
+            f"<p>Want me to set up a reorder so you're covered? Happy to send it whenever it's convenient &mdash; "
+            f"no rush.</p>"
+            f"<p>Thanks so much,</p>"
             f"<p>Warmly,<br>Miles<br>Performance Supply Depot<br>psdepot.com | (888) 881-6834</p>")
 
 
