@@ -1,0 +1,16 @@
+{
+  "outgoing_60s": {
+    "budget": "60 seconds",
+    "open": "Hi, this is {name} from Performance Supply Depot — did I catch you at a bad time? Could I grab just a minute of your time?",
+    "body": "Deliver the ONE thing (new product line / quote / reorder nudge) in ~60 seconds.",
+    "close": "Thank you so much for your time. I hope we can earn your business in the future.",
+    "tone": "Graceful, no pressure, no hard sell."
+  },
+  "incoming_8min": {
+    "budget": "8 minutes",
+    "open": "Hi, this is Performance Supply Depot — we saw a missed call from this number. Is there anything we can do for you, or would you like to order supplies?",
+    "body": "Learn who they are + what they need (order / support / info).",
+    "close": "Capture the order OR log a follow-up, then close politely.",
+    "tone": "Courteous, helpful."
+  }
+}
