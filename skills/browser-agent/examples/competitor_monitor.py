@@ -12,19 +12,23 @@ from pathlib import Path
 import sys
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+# NOTE: our PF-230 is phenol-free, so we must compare phenol-free → phenol-free.
+# The generic "thermal paper 3 1/8" search grabs the cheap non-phenol-free roll
+# ($57.99), which was falsely making us look 2x overpriced vs the true
+# phenol-free comparable ($106.99).
 COMPETITORS = [
     {
         "name": "WebstaurantStore",
         "url": "https://www.webstaurantstore.com",
-        "search_url": "https://www.webstaurantstore.com/search/thermal-paper-3-1-8.html",
-        "search_term": "thermal paper 3 1/8 x 230",
+        "search_url": "https://www.webstaurantstore.com/search/thermal-paper-3-1-8-phenol-free.html",
+        "search_term": "thermal paper 3 1/8 phenol free",
         "price_selector": ".price"
     },
     {
         "name": "Amazon",
         "url": "https://www.amazon.com",
-        "search_url": "https://www.amazon.com/s?k=thermal+receipt+paper+3+1+8",
-        "search_term": "thermal receipt paper 3 1/8",
+        "search_url": "https://www.amazon.com/s?k=thermal+receipt+paper+3+1+8+phenol+free",
+        "search_term": "thermal receipt paper 3 1/8 phenol free",
         "price_selector": ".a-price-whole"
     }
 ]
