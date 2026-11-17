@@ -137,4 +137,14 @@ if __name__ == "__main__":
         else:
             print(f"{comp['name']}: ERROR - {comp.get('error', 'Unknown')}")
     
-    print(f"\nYour price: $69.00/case (competitive)")
+    # Pull our actual price from the catalog (PF-230 = 3 1/8" x 230' thermal).
+    import json as _json
+    our_price = 124.10  # fallback
+    try:
+        _cat = _json.load(open("/root/.openclaw/workspace/datadepot/data/psdepot_catalog.json"))
+        _pf = next((p for p in _cat["products"] if p["sku"] == "PF-230"), None)
+        if _pf:
+            our_price = _pf["sell"]
+    except Exception:
+        pass
+    print(f"\nYour price: ${our_price:.2f}/case (PF-230 thermal)")
