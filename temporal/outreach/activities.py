@@ -211,3 +211,34 @@ async def payment_received(lead: dict) -> str:
         except Exception:
             pass
     return "PAYMENT_RECORDED"
+
+
+@activity.defn
+async def log_contact(contact: dict) -> str:
+    """Log a sales contact (phone/email) + outcome to DepotChaos (sales_contacts + vendor)."""
+    import sqlite3
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc).isoformat()
+    con = sqlite3.connect("/root/.openclaw/workspace/DepotChaos/depot_chaos.db")
+    cur = con.cursor()
+    cur.execute(
+        "INSERT INTO sales_contacts (vendor_id, lead_name, contact_type, channel, outcome, want_prices, notes, contacted_at) "
+        "VALUES (?,?,?,?,?,?,?,?)",
+        (contact.get("vendor_id"), contact.get("lead_name"), contact.get("contact_type"),
+         contact.get("channel"), contact.get("outcome"), contact.get("want_prices"),
+         contact.get("notes"), now))
+    vid = contact.get("vendor_id")
+    if vid:
+        cur.execute("UPDATE vendors SET last_contact_at=?, last_outcome=?, next_touch=?, contact_preference=? WHERE id=?",
+            (now, contact.get("outcome"), contact.get("next_touch"),
+             contact.get("contact_preference"), vid))
+    con.commit()
+    con.close()
+    return "CONTACT_LOGGED"
+
+
+@activity.defn
+async def ask_prices(lead: dict) -> str:
+    """Ask 'can I email you our prices?' and return the yes/no (recorded for the nurture loop)."""
+    want = lead.get("want_prices", "")
+    return want if want in ("yes", "no") else "ask"

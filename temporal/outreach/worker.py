@@ -7,6 +7,7 @@ from workflows import LeadOutreachWorkflow, PaymentWorkflow
 from activities import (
     send_cold_email, send_followup, check_reply,
     handle_reply, flag_order, process_order, mark_closed, payment_received,
+    log_contact, ask_prices,
 )
 
 
@@ -21,7 +22,8 @@ async def main():
         task_queue="outreach-queue",
         workflows=[LeadOutreachWorkflow, PaymentWorkflow],
         activities=[send_cold_email, send_followup, check_reply,
-                     handle_reply, flag_order, process_order, mark_closed, payment_received],
+                     handle_reply, flag_order, process_order, mark_closed, payment_received,
+                     log_contact, ask_prices],
         max_concurrent_activities=5,
     )
     print("🛠️ Outreach worker running (outreach-queue). Ctrl-C to stop.")
