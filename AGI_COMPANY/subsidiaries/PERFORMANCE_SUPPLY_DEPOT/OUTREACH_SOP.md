@@ -94,3 +94,24 @@ Every lead runs as a **Temporal workflow**. If any activity fails or the worker 
 ---
 
 *Last updated: 2026-11-09*
+
+---
+
+## Contact Logging & Feedback (all departments)
+
+Every phone or email touch MUST write back to DepotChaos so sales results (good or bad) are durable and visible.
+
+**Where it lands:**
+- `sales_contacts` table — one row per touch: `vendor_id, lead_name, contact_type (phone/email), channel (in/out), outcome, want_prices (yes/no), notes, contacted_at`
+- `vendors` row — `last_contact_at`, `last_outcome`, `next_touch`, `contact_preference` updated each touch
+
+**Outcome vocabulary:** `reached · voicemail · no_answer · interested · not_interested · order · question · opted_out · reengage`
+
+**Tools:**
+- `skills/call-back/call_back.py` — call back any customer (single or queue), logs the outcome
+- `scripts/reengage_customers.py` — existing-customer nurture, logs each touch
+- `LeadOutreachWorkflow` (Temporal) — cold-lead nurture loop, logs every touch
+
+**Call-time rule (hard):** never call a restaurant during breakfast (7–10a), lunch (11a–2p), or dinner (5–9p) rush. Safe windows: 10–11a and 2–5p Pacific.
+
+**Re-engagement rule:** every touch asks *"can I email you our prices?"* → wait yes/no → either way, schedule the next touch. Recurring nurture, close only on explicit opt-out.
