@@ -1,9 +1,9 @@
 # PENDING_TASKS — jordan
-**Updated:** 2026-11-16 (auto-refreshed by agent_daily_scheduler)
+**Updated:** 2026-11-17 (auto-refreshed by agent_daily_scheduler)
 **Pending tasks:** 1
 
 ## Today's focus
-- [ ] MODEL_BUDGET_FOLLOWUP_2026-09-29 (47d — 🔴 STALE)
+- [ ] MODEL_BUDGET_FOLLOWUP_2026-09-29 (48d — 🔴 STALE)
 
 ## Schedule
 - Daily: this file auto-refreshes + tasks flagged before they go stale.
