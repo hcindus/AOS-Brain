@@ -4,6 +4,8 @@
 **Goal:** Nationwide cold outreach to food-service businesses (restaurants, cafés, taquerias, bakeries, coffee shops) for thermal paper + printer ribbons.
 **Cadence:** 5 leads/day, state-by-state (alphabetical), durable/resumable via Temporal.
 
+**Re-engagement rule (always-on nurture):** every touch asks *"can I email you our prices for you to consider us in the future?"* and waits for a **yes/no**. **Either way**, the lead is re-queued for a future touch (phone or email) — this is a recurring nurture loop, never a hard close.
+
 ---
 
 ## Team & Roles
@@ -29,7 +31,8 @@
 5. REPLY     CLOSETER: classify (ORDER / QUESTION / INTEREST / NOT-INTERESTED / UNKNOWN)
 6. ACT       CLOSETER: respond (question/info) OR flag Captain (order/unknown)
 7. ORDER     Captain collects card -> mark converted -> vendors ship
-8. CLOSE     no reply after N days -> mark lost/closed
+8. RE-ENGAGE ask "can I email you our prices?" -> wait yes/no -> schedule next touch (phone/email)
+9. CLOSE     only on hard opt-out (explicit "don't contact") — otherwise the nurture loop continues
 ```
 
 ---
