@@ -41,7 +41,7 @@ def find_vendor_by_phone(phone):
     con = sqlite3.connect(DB)
     cur = con.cursor()
     d = re.sub(r"\D", "", phone or "")[-10:]
-    cur.execute("SELECT id, name FROM vendors WHERE phone IS NOT NULL AND phone != ''")
+    cur.execute("SELECT id, name, phone FROM vendors WHERE phone IS NOT NULL AND phone != ''")
     for vid, name, p in cur.fetchall():
         pd = re.sub(r"\D", "", p or "")[-10:]
         if d and pd == d:
