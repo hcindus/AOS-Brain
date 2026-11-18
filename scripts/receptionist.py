@@ -198,7 +198,7 @@ async def _respond(body):
         _log_contact(from_number, "interested", "caller wanted support — forwarded")
         return _xml(
             _say("One moment, connecting you now.") +
-            f"<Dial timeout=\"20\" action=\"{PUBLIC_URL}/voice\">{FORWARD_NUMBER}</Dial>"
+            f"<Dial timeout=\"20\">{FORWARD_NUMBER}</Dial>"
         )
 
     if any(k in speech for k in ["message", "leave a message", "voicemail"]):
