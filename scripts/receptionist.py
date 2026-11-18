@@ -146,7 +146,16 @@ async def _respond(body):
     from_number = body.get("From", "")
     speech = (body.get("SpeechResult") or "").strip().lower()
 
-    # route: repair/support → forward; leave message → record
+    # route: "get a human / I don't know" → direct transfer; repair/support → forward
+    if any(k in speech for k in ["i don't know", "dont know", "get a human", "real person",
+                                 "representative", "talk to someone", "speak to", "operator",
+                                 "transfer", "human", "agent"]):
+        _log_contact(from_number, "interested", "caller requested a human — transferred")
+        return _xml(
+            _say("Of course, let me connect you with someone.") +
+            f"<Dial timeout=\"20\">{FORWARD_NUMBER}</Dial>"
+        )
+
     if any(k in speech for k in ["repair", "support", "technician", "broken", "printer", "scale", "register"]):
         _log_contact(from_number, "interested", "caller wanted support — forwarded")
         return _xml(
