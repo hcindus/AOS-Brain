@@ -1,0 +1,28 @@
+# Front-Desk config — model + routing table + secrets (env-referenced)
+# Any value can reference an env var via ${VAR}. Secrets live in aocros/secrets/.
+
+llm:
+  # OpenAI-compatible base URL (Ollama / DeepSeek / OpenAI / LM Studio all work)
+  base_url: "${LLM_BASE_URL:-http://127.0.0.1:11434/v1}"
+  api_key: "${LLM_API_KEY:-ollama}"   # Ollama ignores this; cloud models need a real key
+  model: "${LLM_MODEL:-antoniohudnall/Mort_II:latest}"
+  temperature: 0.2
+  max_tokens: 300
+  timeout_seconds: 60
+
+routing:
+  # intent -> agent (secretarial pool)
+  sales:          ["pulp", "jane"]
+  hr:             ["feelix"]
+  legal:          ["redactor"]
+  security:       ["sentinel"]
+  support:        ["fiber", "boxtron"]
+  logistics:      ["boxtron"]
+  catch_all:      ["clippy-42"]
+
+alert:
+  telegram_bot_token: "${TELEGRAM_BOT_TOKEN:-}"
+  telegram_chat_id:   "${TELEGRAM_CHAT_ID:-}"
+
+store:
+  db_path: "/root/.openclaw/workspace/datadepot/data/front_desk.db"
