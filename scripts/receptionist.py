@@ -88,13 +88,42 @@ def _push_order(from_number, speech):
 
 def _telegram(text):
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
-        return
+        return False
     try:
         requests.post(
             f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
             json={"chat_id": TELEGRAM_CHAT_ID, "text": text},
             timeout=10,
         )
+        return True
+    except Exception:
+        return False
+
+
+def _notify_captain(subject, text):
+    """Notify the Captain — Telegram if configured, else email. Always BCC info@psdepot.com."""
+    if _telegram(text):
+        return
+    # email fallback via sales Gmail
+    import smtplib
+    from email.mime.text import MIMEText
+    try:
+        creds = {}
+        for line in open("/root/.openclaw/workspace/aocros/secrets/sales_smtp.env"):
+            line = line.strip()
+            if "=" in line and not line.startswith("#"):
+                k, v = line.split("=", 1)
+                creds[k] = v
+        msg = MIMEText(text)
+        msg["From"] = f"Performance Supply Depot <{creds['SALES_SMTP_USER']}>"
+        msg["To"] = "antonio.hudnall@gmail.com"
+        msg["Bcc"] = "info@psdepot.com"
+        msg["Subject"] = subject
+        s = smtplib.SMTP(creds.get("SALES_SMTP_HOST", "smtp.gmail.com"),
+                         int(creds.get("SALES_SMTP_PORT", "587")), timeout=30)
+        s.starttls(); s.login(creds["SALES_SMTP_USER"], creds["SALES_SMTP_PASS"])
+        s.sendmail(creds["SALES_SMTP_USER"], ["antonio.hudnall@gmail.com", "info@psdepot.com"], msg.as_string())
+        s.quit()
     except Exception:
         pass
 
@@ -149,7 +178,7 @@ async def _respond(body):
     # route: "get a human / I don't know" → direct transfer; repair/support → forward
     if any(k in speech for k in ["i don't know", "dont know", "get a human", "real person",
                                  "representative", "talk to someone", "speak to", "operator",
-                                 "transfer", "human", "agent"]):
+                                 "transfer", "human", "agent", "antonio"]):
         _log_contact(from_number, "interested", "caller requested a human — transferred")
         return _xml(
             _say("Of course, let me connect you with someone.") +
