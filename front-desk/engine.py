@@ -31,7 +31,15 @@ SYSTEM = (
     '"urgency": "low|normal|high", '
     '"entity": {"name": "", "business": "", "phone": "", "email": ""}, '
     '"qualified": "lead|support|spam|unknown", '
-    '"summary": "one short sentence"}\n'
+    '"summary": "one short sentence"}\n\n'
+    "Intent rules:\n"
+    "- 'applying for a job / position / employment' = hr (NOT sales, even if the job is 'sales')\n"
+    "- 'contract / legal review / compliance' = legal (NOT sales or support)\n"
+    "- 'want to buy / quote / order / pricing' = sales\n"
+    "- 'broken / repair / technician / help' = support\n"
+    "- 'shipping / delivery / where is my order' = logistics\n"
+    "- 'breach / threat / hacked / security' = security\n"
+    "- obvious spam or solicitation = other, qualified=spam\n\n"
     "Extract any name/business/phone/email you can find. Be conservative — leave blank if unknown."
 )
 
