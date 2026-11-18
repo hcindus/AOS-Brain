@@ -18,7 +18,11 @@ declare -A AGENT_SERVICES=(
     [aurora]="aurora-tasks"
     [chelios]="chelios-security"
     [forge]="forge-factory"
+    [jordan]="jordan-office"
     [patricia]="patricia-factory"
+    [redactor]="legal-worker"
+    [sentinel]="psd-auth"
+    [dusty]="psd-auth"
 )
 
 # Function to check if systemd is managing this agent
@@ -46,7 +50,7 @@ activate_agent() {
 }
 
 # Check each agent for pending tasks
-for AGENT in aurora chelios forge patricia; do
+for AGENT in aurora chelios chelios2 dusty forge jane jordan mylzeron patricia pulp redactor sentinel; do
     # v2.0: Skip if systemd is managing this agent
     if is_systemd_managed "$AGENT"; then
         echo "[$(date -Iseconds)] $AGENT: Managed by systemd ✅" >> "$LOG_FILE"
