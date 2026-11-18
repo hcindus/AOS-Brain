@@ -70,6 +70,22 @@ def _ollama(messages):
         return "One moment, I'll have someone follow up with you shortly."
 
 
+def _push_order(from_number, speech):
+    """Write a voice-captured order into CLOSETER's queue + flag the Captain."""
+    import json as _json
+    path = "/root/.openclaw/workspace/datadepot/data/closeter_orders.json"
+    try:
+        orders = _json.load(open(path))
+    except Exception:
+        orders = []
+    orders.append({
+        "source": "voice", "from": from_number, "raw": speech,
+        "flagged_at": datetime.now(timezone.utc).isoformat(),
+        "note": "voice order — collect card + confirm (Captain in the loop)",
+    })
+    _json.dump(orders, open(path, "w"), indent=2)
+
+
 def _telegram(text):
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
         return
