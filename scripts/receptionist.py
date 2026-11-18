@@ -202,7 +202,7 @@ async def _respond(body):
     if any(k in speech for k in ["order", "buy", "purchase", "reorder", "want to order"]):
         _push_order(from_number, speech)
         _log_contact(from_number, "order", f"voice order: {speech[:200]}")
-        _telegram(f"🛒 Voice order\nFrom: {from_number}\n{speech}")
+        _notify_captain("🛒 Voice order", f"Voice order\nFrom: {from_number}\n{speech}")
         return _xml(
             _say("Got it — I've noted your order and someone will call you back to confirm. Thank you!") +
             "<Hangup/>"
@@ -229,12 +229,12 @@ async def recording(request: Request):
     transcript = (body.get("TranscriptionText") or "").strip()
 
     if transcript:
-        _telegram(f"📞 New voicemail\nFrom: {from_number}\nTranscript: {transcript}")
+        _notify_captain("📞 New voicemail", f"New voicemail\nFrom: {from_number}\nTranscript: {transcript}")
         _log_contact(from_number, "reengage", f"voicemail: {transcript[:200]}")
         return _xml(_say("Thank you. Your message has been sent. Goodbye.") + "<Hangup/>")
 
     # no transcript → still notify of the missed call
-    _telegram(f"📞 Missed call (no message)\nFrom: {from_number}")
+    _notify_captain("📞 Missed call", f"Missed call (no message)\nFrom: {from_number}")
     _log_contact(from_number, "voicemail", "missed call, no message")
     return _xml(_say("Thank you. Goodbye.") + "<Hangup/>")
 
