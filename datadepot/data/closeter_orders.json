@@ -42,5 +42,12 @@
     "received_at": "2026-11-10T09:05:02.281891",
     "flagged_at": "2026-11-10T09:05:31.400819+00:00",
     "note": "UNKNOWN intent \u2014 manual review."
+  },
+  {
+    "source": "voice",
+    "from": "+14155551234",
+    "raw": "i want to order 2 cases of thermal paper",
+    "flagged_at": "2026-11-18T03:08:38.149284+00:00",
+    "note": "voice order \u2014 collect card + confirm (Captain in the loop)"
   }
 ]
