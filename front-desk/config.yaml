@@ -10,15 +10,22 @@ llm:
   max_tokens: 300
   timeout_seconds: 60
 
+# Sellable suites (customer-facing) -> internal fleet agents
+suites:
+  front_office:  ["greeter", "missed-call", "review", "ping"]   # $149/mo
+  growth:        ["closeter", "concierge"]                       # $349/mo
+  full_office:   ["clerk", "ea", "miles"]                        # $749/mo
+  security:      ["chelios"]                                     # $99/mo add-on
+
+# intent -> sellable agent(s)
 routing:
-  # intent -> agent (secretarial pool)
-  sales:          ["pulp", "jane"]
-  hr:             ["feelix"]
-  legal:          ["redactor"]
-  security:       ["sentinel"]
-  support:        ["fiber", "boxtron"]
-  logistics:      ["boxtron"]
-  catch_all:      ["clippy-42"]
+  sales:      ["closeter", "miles"]
+  support:    ["concierge", "clerk"]
+  legal:      ["redactor"]
+  security:   ["chelios"]
+  hr:         ["feelix"]
+  logistics:  ["concierge"]
+  catch_all:  ["greeter"]
 
 alert:
   telegram_bot_token: "${TELEGRAM_BOT_TOKEN:-}"
