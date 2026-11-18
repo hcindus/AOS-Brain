@@ -71,8 +71,15 @@ def _ollama(messages):
 
 
 def _push_order(from_number, speech):
-    """Write a voice-captured order into CLOSETER's queue + flag the Captain."""
+    """Parse a voice order + compute a quote, write to CLOSETER queue + flag Captain."""
     import json as _json
+    import sys as _sys
+    _sys.path.insert(0, "/root/.openclaw/workspace/scripts")
+    import order_processor as _op
+    items = _op.parse_order(speech)
+    quote = None
+    if items:
+        quote = _op.process_order(items)
     path = "/root/.openclaw/workspace/datadepot/data/closeter_orders.json"
     try:
         orders = _json.load(open(path))
@@ -80,10 +87,12 @@ def _push_order(from_number, speech):
         orders = []
     orders.append({
         "source": "voice", "from": from_number, "raw": speech,
+        "items": items, "quote": quote,
         "flagged_at": datetime.now(timezone.utc).isoformat(),
         "note": "voice order — collect card + confirm (Captain in the loop)",
     })
     _json.dump(orders, open(path, "w"), indent=2)
+    return items, quote
 
 
 def _telegram(text):
@@ -201,9 +210,14 @@ async def _respond(body):
 
     if any(k in speech for k in ["order", "buy", "purchase", "reorder", "want to order",
                                  "supplies", "supply", "thermal paper", "paper", "ribbons", "ribbon"]):
-        _push_order(from_number, speech)
+        items, quote = _push_order(from_number, speech)
         _log_contact(from_number, "order", f"voice order: {speech[:200]}")
-        _notify_captain("🛒 Voice order", f"Voice order\nFrom: {from_number}\n{speech}")
+        q = ""
+        if quote:
+            items_str = ", ".join(f"{l['qty']}x {l['sku']}" for l in quote["lines"])
+            q = (f"\n\nItems: {items_str}"
+                 f"\nSubtotal ${quote['subtotal']:.2f} + ship ${quote['shipping']:.2f} = ${quote['total']:.2f}")
+        _notify_captain("🛒 Voice order", f"Voice order\nFrom: {from_number}\n{speech}{q}")
         return _xml(
             _say("Of course — let me connect you with Antonio to take your order.") +
             f"<Dial timeout=\"20\">{FORWARD_NUMBER}</Dial>"
