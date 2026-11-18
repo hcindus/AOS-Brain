@@ -77,5 +77,63 @@
     "raw": "calling to order supplies.",
     "flagged_at": "2026-11-18T03:42:07.341289+00:00",
     "note": "voice order \u2014 collect card + confirm (Captain in the loop)"
+  },
+  {
+    "source": "voice",
+    "from": "+14155551234",
+    "raw": "supplies",
+    "flagged_at": "2026-11-18T03:47:36.409504+00:00",
+    "note": "voice order \u2014 collect card + confirm (Captain in the loop)"
+  },
+  {
+    "source": "voice",
+    "from": "+14155326834",
+    "raw": "i want to order supplies.",
+    "flagged_at": "2026-11-18T03:49:42.349915+00:00",
+    "note": "voice order \u2014 collect card + confirm (Captain in the loop)"
+  },
+  {
+    "source": "voice",
+    "from": "+14155551234",
+    "raw": "i want to order 2 cases of pf-230 thermal paper",
+    "items": [
+      {
+        "sku": "PF-230",
+        "qty": 2
+      }
+    ],
+    "quote": {
+      "lines": [
+        {
+          "sku": "PF-230",
+          "name": "Epson Thermal Rolls",
+          "spec": "3 1/8\" x 230', Phenol-Free",
+          "pack": "50 rolls",
+          "qty": 2,
+          "sell": 248.2,
+          "cost": 121.88,
+          "vendor": "9078-2489"
+        }
+      ],
+      "subtotal": 248.2,
+      "tax": 22.34,
+      "shipping": 35.44,
+      "total": 305.98,
+      "cost": 121.88,
+      "margin": 126.32,
+      "margin_pct": 50.9,
+      "tax_rate": 0.09
+    },
+    "flagged_at": "2026-11-18T03:52:48.564429+00:00",
+    "note": "voice order \u2014 collect card + confirm (Captain in the loop)"
+  },
+  {
+    "source": "voice",
+    "from": "+14155326834",
+    "raw": "i like to order 3 cases of your 3 and 1/8 inch thermal going to acre restaurant in oakland",
+    "items": [],
+    "quote": null,
+    "flagged_at": "2026-11-18T03:53:13.578990+00:00",
+    "note": "voice order \u2014 collect card + confirm (Captain in the loop)"
   }
 ]
