@@ -1,0 +1,56 @@
+{
+  "4155326834": {
+    "status": "pending",
+    "sent_at": "2026-11-18T06:00:13.856880+00:00",
+    "message_sid": "SM7a53bc803a1c50aff0842ad6940716f6",
+    "order": {
+      "business": "Tony's Cable Car",
+      "name": "Tony Test",
+      "phone": "+14155326834",
+      "email": "Antonio.hudnall@gmail.com",
+      "address": "123 Test St",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "94133",
+      "items": [
+        {
+          "sku": "PF-230",
+          "qty": 2
+        }
+      ],
+      "special_instructions": "TEST ORDER \u2014 end-to-end SMS confirmation test"
+    },
+    "summ": {
+      "lines": [
+        {
+          "sku": "PF-230",
+          "name": "Epson Thermal Rolls",
+          "spec": "3 1/8\" x 230', Phenol-Free",
+          "pack": "50 rolls",
+          "qty": 2,
+          "sell": 248.2,
+          "cost": 121.88,
+          "vendor": "9078-2489"
+        }
+      ],
+      "subtotal": 248.2,
+      "tax": 22.34,
+      "shipping": 35.44,
+      "total": 305.98,
+      "cost": 121.88,
+      "margin": 126.32,
+      "margin_pct": 50.9,
+      "tax_rate": 0.09,
+      "business_name": "Tony's Cable Car",
+      "manager_name": "Tony Test",
+      "email": "Antonio.hudnall@gmail.com",
+      "address": "123 Test St",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "94133",
+      "phone": "+14155326834",
+      "date": "11/18/2026",
+      "special_instructions": "TEST ORDER \u2014 end-to-end SMS confirmation test"
+    }
+  }
+}
