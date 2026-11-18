@@ -16,6 +16,7 @@ import os, json, sqlite3
 import requests
 from datetime import datetime, timezone
 from fastapi import FastAPI, Request, Response
+from xml.sax.saxutils import escape
 from fastapi.responses import PlainTextResponse
 
 app = FastAPI(title="PSD AI Receptionist (Miles)")
@@ -48,7 +49,7 @@ HISTORY = {}
 
 
 def _say(text):
-    return f"<Say voice='{VOICE}'>{text}</Say>"
+    return f"<Say voice='{VOICE}'>{escape(text)}</Say>"
 
 
 def _xml(body):
