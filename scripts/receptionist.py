@@ -199,13 +199,14 @@ async def _respond(body):
             f"<Record action=\"{PUBLIC_URL}/recording\" maxLength=\"60\" playBeep=\"true\" transcribe=\"true\" />"
         )
 
-    if any(k in speech for k in ["order", "buy", "purchase", "reorder", "want to order"]):
+    if any(k in speech for k in ["order", "buy", "purchase", "reorder", "want to order",
+                                 "supplies", "supply", "thermal paper", "paper", "ribbons", "ribbon"]):
         _push_order(from_number, speech)
         _log_contact(from_number, "order", f"voice order: {speech[:200]}")
         _notify_captain("🛒 Voice order", f"Voice order\nFrom: {from_number}\n{speech}")
         return _xml(
-            _say("Got it — I've noted your order and someone will call you back to confirm. Thank you!") +
-            "<Hangup/>"
+            _say("Of course — let me connect you with Antonio to take your order.") +
+            f"<Dial timeout=\"20\">{FORWARD_NUMBER}</Dial>"
         )
 
     # otherwise: conversational turn via Ollama
