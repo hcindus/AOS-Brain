@@ -1,5 +1,6 @@
 # Vault - Never commit credentials
 .aos/vault/
+config/.private/
 *.pem
 *.key
 .env
