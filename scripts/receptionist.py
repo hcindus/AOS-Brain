@@ -99,7 +99,7 @@ def _log_contact(phone, outcome, note, want_prices=None):
 @app.post("/receptionist/voice")
 async def voice(request: Request):
     """Greeting + route by intent (Miles)."""
-    body = await request.json()
+    body = await request.form()
     call_sid = body.get("CallSid", "")
     from_number = body.get("From", "")
     speech = (body.get("SpeechResult") or "").strip()
@@ -120,7 +120,7 @@ async def voice(request: Request):
 
 @app.post("/receptionist/respond")
 async def respond(request: Request):
-    return await _respond(await request.json())
+    return await _respond(await request.form())
 
 
 async def _respond(body):
@@ -160,7 +160,7 @@ async def _respond(body):
 @app.post("/receptionist/recording")
 async def recording(request: Request):
     """Voicemail callback — transcribe → Telegram + log."""
-    body = await request.json()
+    body = await request.form()
     from_number = body.get("From", "")
     transcript = (body.get("TranscriptionText") or "").strip()
 
