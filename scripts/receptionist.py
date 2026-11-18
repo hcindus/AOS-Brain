@@ -71,27 +71,15 @@ def _ollama(messages):
 
 
 def _push_order(from_number, speech):
-    """Parse a voice order + compute a quote, write to CLOSETER queue + flag Captain."""
-    import json as _json
+    """Create the voice order in the unified Order Desk; return (items, quote)."""
     import sys as _sys
     _sys.path.insert(0, "/root/.openclaw/workspace/scripts")
+    import order_desk as _od
+    _od.create(channel="voice", from_=from_number, raw=speech)
+    # Re-parse locally so the caller still gets (items, quote) for the reply summary.
     import order_processor as _op
     items = _op.parse_order(speech)
-    quote = None
-    if items:
-        quote = _op.process_order(items)
-    path = "/root/.openclaw/workspace/datadepot/data/closeter_orders.json"
-    try:
-        orders = _json.load(open(path))
-    except Exception:
-        orders = []
-    orders.append({
-        "source": "voice", "from": from_number, "raw": speech,
-        "items": items, "quote": quote,
-        "flagged_at": datetime.now(timezone.utc).isoformat(),
-        "note": "voice order — collect card + confirm (Captain in the loop)",
-    })
-    _json.dump(orders, open(path, "w"), indent=2)
+    quote = _op.process_order(items) if items else None
     return items, quote
 
 

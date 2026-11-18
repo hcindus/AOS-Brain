@@ -123,12 +123,13 @@ def main():
         result = {"msg_id": mid, "from": frm, "intent": intent, "action": "", "sent_to": to_email}
 
         if intent == "ORDER":
-            # flag Captain for payment + confirm to lead
-            orders.append({
-                "from": frm, "subject": m.get("subject"), "body": body[:2000],
-                "received_at": m.get("received_at"), "flagged_at": datetime.now(timezone.utc).isoformat(),
-                "note": "Lead wants to order — collect card (Captain in the loop)."
-            })
+            # route the email order into the unified Order Desk (parse + quote)
+            try:
+                import order_desk as _od
+                _oid, _items, _quote = _od.create(channel="email", from_=to_email or frm, raw=body)
+                result["order_desk"] = f"order #{_oid} ({'quoted' if _quote else 'captured'})"
+            except Exception as e:
+                result["order_desk"] = f"order_desk_failed: {e}"
             # write the order to the Google responses sheet (fires order flow)
             try:
                 import google_sheets
