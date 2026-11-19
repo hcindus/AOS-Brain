@@ -233,7 +233,7 @@ def check_inbox():
         print(f"- [{e['category'].upper()}] {e['from']} | {e['subject']} | {snippet}")
 
 
-def send_email(to, subject, body, bcc=None):
+def send_email(to, subject, body, bcc=None, cc=None):
     cfg = get_config()
     if not cfg["password"]:
         print("ERROR: no password in .env (HOSTINGER_SMTP_PASS)")
@@ -243,6 +243,8 @@ def send_email(to, subject, body, bcc=None):
     msg["Subject"] = subject
     msg["From"] = f"Performance Supply Depot <{cfg['email']}>"
     msg["To"] = to
+    if cc:
+        msg["Cc"] = cc
     if bcc:
         msg["Bcc"] = bcc
     msg.attach(MIMEText(body, "plain"))
@@ -262,6 +264,7 @@ def send_email(to, subject, body, bcc=None):
         "to": to,
         "subject": subject,
         "body": body[:3000],
+        "cc": cc,
         "bcc": bcc,
         "sent_at": datetime.now(timezone.utc).isoformat(),
     }
@@ -342,7 +345,8 @@ Best,
 def render_order_email(spec):
     po = spec.get("po") or next_po_number()
     lines = []
-    lines.append(f"Hello {spec.get('contact_name', '')},".strip())
+    contact = spec.get('contact_name', '').strip()
+    lines.append(f"Hello {contact}," if contact else "Hello,")
     lines.append("")
     lines.append(f"I'd like to place the following order (PO {po}):")
     lines.append("")
@@ -397,10 +401,11 @@ def process_order(spec_path):
         print("ERROR: order spec needs 'vendor_email' or a known 'vendor' with email on file.")
         sys.exit(1)
 
+    rep = vendors.get(vendor_name, {}).get("rep") if vendor_name else None
     po = spec.get("po") or next_po_number()
     subject = f"Order Request — {po} | {COMPANY}"
     body = render_order_email(spec)
-    send_email(to, subject, body, bcc="info@psdepot.com")
+    send_email(to, subject, body, bcc="info@psdepot.com", cc=rep)
 
     # Record in order history
     hist = load_order_history()
