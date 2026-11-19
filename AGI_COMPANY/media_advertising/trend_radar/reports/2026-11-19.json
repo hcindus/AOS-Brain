@@ -1,0 +1,698 @@
+{
+  "date": "2026-11-19",
+  "keyword_interest": [
+    {
+      "keyword": "cash drawer",
+      "first_half": 1.6,
+      "second_half": 4.5,
+      "delta": 2.9,
+      "trend": "flat"
+    },
+    {
+      "keyword": "receipt paper",
+      "first_half": 3.5,
+      "second_half": 3.1,
+      "delta": -0.4,
+      "trend": "flat"
+    },
+    {
+      "keyword": "thermal printer",
+      "first_half": 20.4,
+      "second_half": 21.1,
+      "delta": 0.7,
+      "trend": "flat"
+    },
+    {
+      "keyword": "barcode scanner",
+      "first_half": 12.7,
+      "second_half": 9.9,
+      "delta": -2.8,
+      "trend": "flat"
+    },
+    {
+      "keyword": "point of sale",
+      "first_half": 10.2,
+      "second_half": 13.1,
+      "delta": 2.9,
+      "trend": "flat"
+    },
+    {
+      "keyword": "POS system",
+      "first_half": 29.3,
+      "second_half": 28.5,
+      "delta": -0.7,
+      "trend": "flat"
+    },
+    {
+      "keyword": "pour spout",
+      "first_half": 1.7,
+      "second_half": 2.0,
+      "delta": 0.3,
+      "trend": "flat"
+    },
+    {
+      "keyword": "liquor pourer",
+      "first_half": 0.1,
+      "second_half": 0.1,
+      "delta": 0.0,
+      "trend": "flat"
+    },
+    {
+      "keyword": "restaurant supplies",
+      "first_half": 2.9,
+      "second_half": 4.1,
+      "delta": 1.2,
+      "trend": "flat"
+    },
+    {
+      "keyword": "bar supplies",
+      "first_half": 1.3,
+      "second_half": 1.0,
+      "delta": -0.3,
+      "trend": "flat"
+    },
+    {
+      "keyword": "AI agents",
+      "first_half": 18.3,
+      "second_half": 17.3,
+      "delta": -1.0,
+      "trend": "flat"
+    },
+    {
+      "keyword": "autonomous agents",
+      "first_half": 0.2,
+      "second_half": 0.2,
+      "delta": 0.0,
+      "trend": "flat"
+    },
+    {
+      "keyword": "agentic AI",
+      "first_half": 6.3,
+      "second_half": 7.1,
+      "delta": 0.8,
+      "trend": "flat"
+    },
+    {
+      "keyword": "AI automation",
+      "first_half": 5.5,
+      "second_half": 6.1,
+      "delta": 0.6,
+      "trend": "flat"
+    },
+    {
+      "keyword": "artificial general intelligence",
+      "first_half": 0.0,
+      "second_half": 0.0,
+      "delta": -0.0,
+      "trend": "flat"
+    },
+    {
+      "keyword": "large language model",
+      "first_half": 5.5,
+      "second_half": 9.3,
+      "delta": 3.8,
+      "trend": "rising"
+    },
+    {
+      "keyword": "AI workforce",
+      "first_half": 16.2,
+      "second_half": 14.6,
+      "delta": -1.6,
+      "trend": "flat"
+    }
+  ],
+  "hacker_news": [
+    {
+      "scope": "search: \"AI agents\"",
+      "title": "An AI agent published a hit piece on me",
+      "points": 2346,
+      "comments": 951,
+      "url": "https://theshamblog.com/an-ai-agent-published-a-hit-piece-on-me/"
+    },
+    {
+      "scope": "search: \"AI agents\"",
+      "title": "AI agent bankrupted their operator while trying to scan DN42",
+      "points": 1467,
+      "comments": 536,
+      "url": "https://lantian.pub/en/article/fun/ai-agent-bankrupted-their-operator-scan-dn42lantian.lantian/"
+    },
+    {
+      "scope": "search: \"restaurant\"",
+      "title": "California law bans delivery apps from listing a restaurant without an agreement",
+      "points": 1317,
+      "comments": 620,
+      "url": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=201920200AB2149"
+    },
+    {
+      "scope": "front page",
+      "title": "Unauthenticated remote code execution in Nginx",
+      "points": 1284,
+      "comments": 559,
+      "url": "https://www.wiz.io/blog/nginx-http2-rce-vulnerabilities"
+    },
+    {
+      "scope": "search: \"AI agents\"",
+      "title": "OpenCode \u2013 Open source AI coding agent",
+      "points": 1274,
+      "comments": 618,
+      "url": "https://opencode.ai/"
+    },
+    {
+      "scope": "search: \"AI agents\"",
+      "title": "My AI agents found an unmapped Maya site?",
+      "points": 1036,
+      "comments": 393,
+      "url": "https://pietromiotti.com/latest/maya-site"
+    },
+    {
+      "scope": "search: \"restaurant\"",
+      "title": "A small restaurant owner on Google, DoorDash, and Grubhub",
+      "points": 975,
+      "comments": 420,
+      "url": "https://www.saddlebackbbq.com/how-google-doordash-grubhub-conspire-screw-local-restaurants"
+    },
+    {
+      "scope": "search: \"AI agents\"",
+      "title": "AI agent opens a PR write a blogpost to shames the maintainer who closes it",
+      "points": 953,
+      "comments": 750,
+      "url": "https://github.com/matplotlib/matplotlib/pull/31132"
+    },
+    {
+      "scope": "search: \"restaurant\"",
+      "title": "Yelp Is Replacing Restaurants\u2019 Phone Numbers So Grubhub Can Take a Cut",
+      "points": 953,
+      "comments": 449,
+      "url": "https://www.vice.com/en_us/article/wjwebw/yelp-is-sneakily-replacing-restaurants-phone-numbers-so-grubhub-can-take-a-cut"
+    },
+    {
+      "scope": "search: \"restaurant\"",
+      "title": "Yelp Is Replacing Restaurants\u2019 Phone Numbers So Grubhub Can Take a Cut (2019)",
+      "points": 924,
+      "comments": 291,
+      "url": "https://www.vice.com/en/article/wjwebw/yelp-is-sneakily-replacing-restaurants-phone-numbers-so-grubhub-can-take-a-cut"
+    },
+    {
+      "scope": "search: \"AI agents\"",
+      "title": "Opus 4.5 is not the normal AI agent experience that I have had thus far",
+      "points": 879,
+      "comments": 1353,
+      "url": "https://burkeholland.github.io/posts/opus-4-5-change-everything/"
+    },
+    {
+      "scope": "search: \"AI agents\"",
+      "title": "An AI agent deleted our production database. The agent's confession is below",
+      "points": 860,
+      "comments": 1032,
+      "url": "https://twitter.com/lifeof_jer/status/2048103471019434248"
+    },
+    {
+      "scope": "search: \"AI agents\"",
+      "title": "An AI agent published a hit piece on me \u2013 more things have happened",
+      "points": 768,
+      "comments": 624,
+      "url": "https://theshamblog.com/an-ai-agent-published-a-hit-piece-on-me-part-2/"
+    },
+    {
+      "scope": "search: \"retail\"",
+      "title": "Supreme Court allows blind people to sue retailers if websites aren't accessible",
+      "points": 743,
+      "comments": 591,
+      "url": "https://www.latimes.com/politics/story/2019-10-07/blind-person-dominos-ada-supreme-court-disabled"
+    },
+    {
+      "scope": "front page",
+      "title": "Gemini 4 Neon",
+      "points": 699,
+      "comments": 592,
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/"
+    },
+    {
+      "scope": "search: \"restaurant\"",
+      "title": "One kitchen, hundreds of internet restaurants",
+      "points": 685,
+      "comments": 355,
+      "url": "https://peabee.substack.com/p/17-one-kitchen-hundreds-of-internet"
+    },
+    {
+      "scope": "front page",
+      "title": "DNS resolvers are the wrong place to fight piracy",
+      "points": 649,
+      "comments": 254,
+      "url": "https://techstackups.com/articles/quad9-leaves-france-dns-blocking/"
+    },
+    {
+      "scope": "front page",
+      "title": "Inside Deutsche Bank",
+      "points": 638,
+      "comments": 205,
+      "url": "https://www.inside-db.com/"
+    },
+    {
+      "scope": "search: \"retail\"",
+      "title": " How Newegg crushed the \u201cshopping cart\u201d patent and saved online retail",
+      "points": 638,
+      "comments": 134,
+      "url": "http://arstechnica.com/tech-policy/2013/01/how-newegg-crushed-the-shopping-cart-patent-and-saved-online-retail/"
+    },
+    {
+      "scope": "search: \"restaurant\"",
+      "title": "The state of the restaurant industry",
+      "points": 564,
+      "comments": 572,
+      "url": "https://www.opentable.com/state-of-industry"
+    },
+    {
+      "scope": "search: \"point of sale\"",
+      "title": "Stripe Terminal \u2013 Programmable point of sale",
+      "points": 539,
+      "comments": 217,
+      "url": "https://stripe.com/terminal"
+    },
+    {
+      "scope": "search: \"restaurant\"",
+      "title": "The Restaurant Industry\u2019s Worst Idea: QR Code Menus",
+      "points": 536,
+      "comments": 636,
+      "url": "https://www.theatlantic.com/ideas/archive/2022/10/qr-code-menus-restaurants-pandemic/671888/"
+    },
+    {
+      "scope": "search: \"retail\"",
+      "title": "Retailers will soon have only about 7 weeks of full inventories left",
+      "points": 532,
+      "comments": 992,
+      "url": "https://fortune.com/article/retailers-weeks-of-inventory-left-trump-china-trade-war/"
+    },
+    {
+      "scope": "front page",
+      "title": "Seven new models at scalable price-performance",
+      "points": 510,
+      "comments": 336,
+      "url": "https://microsoft.ai/news/microsoft-ignite-2026/"
+    },
+    {
+      "scope": "search: \"retail\"",
+      "title": "How Amazon\u2019s ambitious new push for same-day delivery will destroy local retail",
+      "points": 509,
+      "comments": 309,
+      "url": "http://www.slate.com/articles/business/small_business/2012/07/amazon_same_day_delivery_how_the_e_commerce_giant_will_destroy_local_retail_.html"
+    },
+    {
+      "scope": "search: \"autonomous agents\"",
+      "title": "OpenShell \u2013 A safe, private runtime for fleets of autonomous AI agents",
+      "points": 508,
+      "comments": 217,
+      "url": "https://github.com/NVIDIA/OpenShell"
+    },
+    {
+      "scope": "search: \"restaurant\"",
+      "title": "Portland approves 10% cap on fees that food delivery apps can charge restaurants",
+      "points": 502,
+      "comments": 551,
+      "url": "https://www.oregonlive.com/portland/2020/07/portland-approves-10-cap-on-fees-that-food-delivery-apps-can-charge-restaurants.html"
+    },
+    {
+      "scope": "search: \"retail\"",
+      "title": "Microsoft to permanently close its retail stores",
+      "points": 489,
+      "comments": 277,
+      "url": "https://www.theverge.com/2020/6/26/21297400/microsoft-retail-stores-closing-cities-open"
+    },
+    {
+      "scope": "search: \"retail\"",
+      "title": "Google and Mastercard Cut Ad Deal to Track Retail Sales",
+      "points": 449,
+      "comments": 281,
+      "url": "https://www.bloomberg.com/news/articles/2018-08-30/google-and-mastercard-cut-a-secret-ad-deal-to-track-retail-sales"
+    },
+    {
+      "scope": "front page",
+      "title": "AI agents ask better questions than KPMG accountants in audit trial",
+      "points": 441,
+      "comments": 189,
+      "url": "https://europeanbusinessmagazine.com/ai-agents-better-questions-kpmg/"
+    },
+    {
+      "scope": "search: \"retail\"",
+      "title": "Costco gained a cult following by breaking every rule of retail",
+      "points": 436,
+      "comments": 361,
+      "url": "https://thehustle.co/costco-membership-economics/"
+    },
+    {
+      "scope": "front page",
+      "title": "We need smart people who give a shit",
+      "points": 434,
+      "comments": 220,
+      "url": "https://violetpixel.com/blog/2026-11-17-we-need-smart-people-who-give-a-shit/"
+    },
+    {
+      "scope": "search: \"autonomous agents\"",
+      "title": "The current hype around autonomous agents, and what actually works in production",
+      "points": 427,
+      "comments": 257,
+      "url": "https://utkarshkanwat.com/writing/betting-against-agents/"
+    },
+    {
+      "scope": "search: \"point of sale\"",
+      "title": "Keyhut POS: Free Point-of-Sale Software for DOS",
+      "points": 362,
+      "comments": 157,
+      "url": "http://keyhut.com/pos.htm"
+    },
+    {
+      "scope": "search: \"retail\"",
+      "title": "No correlation between headphone frequency response and retail price",
+      "points": 356,
+      "comments": 350,
+      "url": "http://asa.scitation.org/doi/10.1121/1.4984044"
+    },
+    {
+      "scope": "search: \"autonomous agents\"",
+      "title": "LLM Powered Autonomous Agents",
+      "points": 285,
+      "comments": 176,
+      "url": "https://lilianweng.github.io/posts/2023-06-23-agent/"
+    },
+    {
+      "scope": "front page",
+      "title": "The Cambridge Dictionary has named \u2018human\u2019 as the Word of the Year 2026",
+      "points": 268,
+      "comments": 192,
+      "url": "https://www.cam.ac.uk/news/cambridge-dictionary-reveals-word-of-the-year-2026"
+    },
+    {
+      "scope": "front page",
+      "title": "Genie 4 is now available",
+      "points": 231,
+      "comments": 156,
+      "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/"
+    },
+    {
+      "scope": "search: \"autonomous agents\"",
+      "title": "Memary: Open-Source Longterm Memory for Autonomous Agents",
+      "points": 216,
+      "comments": 66,
+      "url": "https://github.com/kingjulio8238/memary"
+    },
+    {
+      "scope": "front page",
+      "title": "Gemini 4 Neon looks like an Opus 5.5 competitor",
+      "points": 208,
+      "comments": 67,
+      "url": "https://micjm.com/blog/gemini-4-neon-looks-like-a-top-model/"
+    },
+    {
+      "scope": "front page",
+      "title": "Show HN: ExitPath \u2013 Open-source ways out of Slack, Notion and Microsoft 365",
+      "points": 200,
+      "comments": 60,
+      "url": "https://exitpath-ruddy.vercel.app/"
+    },
+    {
+      "scope": "front page",
+      "title": "Advancing chip design with OpenAI models",
+      "points": 197,
+      "comments": 122,
+      "url": "https://openai.com/index/advancing-chip-design-with-our-models/"
+    },
+    {
+      "scope": "front page",
+      "title": "Multiple vulnerabilities in Regexp and String case conversion",
+      "points": 195,
+      "comments": 62,
+      "url": "https://www.ruby-lang.org/en/news/2026/11/18/multiple-vulnerabilities-in-regexp-and-string/"
+    },
+    {
+      "scope": "front page",
+      "title": "DaisyRose-27B",
+      "points": 184,
+      "comments": 59,
+      "url": "https://www.radixark.com/blog/daisyrose-27b"
+    },
+    {
+      "scope": "front page",
+      "title": "Show HN: Take Voyager 1 apart, down to a single memory chip",
+      "points": 182,
+      "comments": 46,
+      "url": "https://rshekhar.com/voyager/"
+    },
+    {
+      "scope": "front page",
+      "title": "The x86 CPU: From 4004 to 486",
+      "points": 166,
+      "comments": 51,
+      "url": "https://pikuma.com/blog/history-of-x86-4004-to-486"
+    },
+    {
+      "scope": "front page",
+      "title": "LLM assisted reverse engineering",
+      "points": 156,
+      "comments": 38,
+      "url": "https://www.slowchronicle.com/posts/llm-assisted-reverse-engineering"
+    },
+    {
+      "scope": "search: \"autonomous agents\"",
+      "title": "Show HN: Nous \u2013 Open-Source Agent Framework with Autonomous, SWE Agents, WebUI",
+      "points": 155,
+      "comments": 37,
+      "url": "https://github.com/TrafficGuard/nous"
+    },
+    {
+      "scope": "front page",
+      "title": "Unreal Tournament 2004 in the Browser",
+      "points": 132,
+      "comments": 58,
+      "url": "https://ut2004.dev/"
+    },
+    {
+      "scope": "front page",
+      "title": "Dumping an AES key from a MyQ garage opener to stop rebooting when offline",
+      "points": 101,
+      "comments": 35,
+      "url": "https://kusha.me/blog/stop_myq_homebridge_819lmb_rebooting/"
+    },
+    {
+      "scope": "search: \"autonomous agents\"",
+      "title": "Agent GPT \u2013 Assemble, configure, and deploy autonomous AI Agents in the browser",
+      "points": 98,
+      "comments": 44,
+      "url": "https://agentgpt.reworkd.ai/"
+    },
+    {
+      "scope": "search: \"autonomous agents\"",
+      "title": "Autonomous Agents and Agent Simulations",
+      "points": 98,
+      "comments": 26,
+      "url": "https://blog.langchain.dev/agents-round/"
+    },
+    {
+      "scope": "search: \"autonomous agents\"",
+      "title": "Microsoft announces Scout, an autonomous AI agent built on OpenClaw",
+      "points": 94,
+      "comments": 87,
+      "url": "https://www.computerworld.com/article/4180103/microsoft-unveils-scout-an-autonomous-ai-agent-built-on-openclaw.html"
+    },
+    {
+      "scope": "search: \"point of sale\"",
+      "title": "Show HN: I made a point of sale system with self-service for mobile devices",
+      "points": 94,
+      "comments": 31,
+      "url": "https://www.flexiblepos.com/"
+    },
+    {
+      "scope": "search: \"point of sale\"",
+      "title": "Slicing into a Point-of-Sale Botnet",
+      "points": 77,
+      "comments": 14,
+      "url": "http://krebsonsecurity.com/2016/06/slicing-into-a-point-of-sale-botnet/"
+    },
+    {
+      "scope": "front page",
+      "title": "Show HN: Open-source, real-time object tracking for live video feeds",
+      "points": 76,
+      "comments": 3,
+      "url": "https://github.com/aryamandarda/tamserve"
+    },
+    {
+      "scope": "search: \"point of sale\"",
+      "title": "FBI Raids Chinese Point-of-Sale Giant Pax Technology",
+      "points": 76,
+      "comments": 11,
+      "url": "https://krebsonsecurity.com/2021/10/fbi-raids-chinese-point-of-sale-giant-pax-technology/"
+    },
+    {
+      "scope": "search: \"point of sale\"",
+      "title": "Square announces the Register, a $999 point-of-sale device for larger businesses",
+      "points": 69,
+      "comments": 66,
+      "url": "https://techcrunch.com/2017/10/30/square-announces-the-register-a-999-point-of-sale-device-for-larger-businesses/"
+    },
+    {
+      "scope": "search: \"point of sale\"",
+      "title": "Increasing purchases at farmers markets using point\u2010of\u2010sale scanner data",
+      "points": 63,
+      "comments": 46,
+      "url": "https://onlinelibrary.wiley.com/doi/10.1002/jaa2.96"
+    },
+    {
+      "scope": "search: \"point of sale\"",
+      "title": "Walmart and Best Buy Opt Out of Apple Pay \u2013 Required Point-of-Sale Upgrades",
+      "points": 47,
+      "comments": 53,
+      "url": "http://forums.macrumors.com/showthread.php?t=1776896"
+    }
+  ],
+  "rss": [
+    {
+      "source": "MIT Tech Review - AI",
+      "title": "The AI Hype Index: AI is everywhere",
+      "link": "https://www.technologyreview.com/2026/11/18/1148650/ai-hype-index-ai-is-everywhere/"
+    },
+    {
+      "source": "MIT Tech Review - AI",
+      "title": "This smell startup says its AI nose is as good as a human\u2019s",
+      "link": "https://www.technologyreview.com/2026/11/18/1148816/smell-startup-osmo-ai-nose-good-as-humans/"
+    },
+    {
+      "source": "MIT Tech Review - AI",
+      "title": "Research Reports",
+      "link": "https://www.technologyreview.com/2026/11/17/1148203/research-reports/"
+    },
+    {
+      "source": "MIT Tech Review - AI",
+      "title": "The open-source movement wants Jensen Huang back",
+      "link": "https://www.technologyreview.com/2026/11/16/1148624/the-open-source-movement-wants-jensen-huang-back/"
+    },
+    {
+      "source": "MIT Tech Review - AI",
+      "title": "Building trustworthy AI by fencing it in, not predicting it",
+      "link": "https://www.technologyreview.com/2026/11/16/1148565/building-trustworthy-ai-by-fencing-it-in-not-predicting-it/"
+    },
+    {
+      "source": "MIT Tech Review - AI",
+      "title": "Building AI that can work across the enterprise",
+      "link": "https://www.technologyreview.com/2026/11/16/1146070/building-ai-that-can-work-across-the-enterprise/"
+    },
+    {
+      "source": "Ars Technica - AI",
+      "title": "Muse privacy invasions are freaking out Meta staffers, internal chats show",
+      "link": "https://arstechnica.com/tech-policy/2026/11/muse-privacy-invasions-are-freaking-out-meta-staffers-internal-chats-show/"
+    },
+    {
+      "source": "Ars Technica - AI",
+      "title": "Will Wright's next simulation will use AI to mine content from your memories",
+      "link": "https://arstechnica.com/gaming/2026/11/will-wrights-next-simulation-will-use-ai-to-mine-content-from-your-memories/"
+    },
+    {
+      "source": "Ars Technica - AI",
+      "title": "Copilot is \"the new OS for work,\" and now Office runs inside of it",
+      "link": "https://arstechnica.com/gadgets/2026/11/microsoft-calls-copilot-the-new-os-for-work-at-ignite-keynote/"
+    },
+    {
+      "source": "Ars Technica - AI",
+      "title": "\u201cTrump was in bed with Jensen\u201d: Critics balk at Huang\u2019s wish to return to Nvidia",
+      "link": "https://arstechnica.com/tech-policy/2026/11/trump-was-in-bed-with-jensen-critics-balk-at-huangs-wish-to-return-to-nvidia/"
+    },
+    {
+      "source": "Ars Technica - AI",
+      "title": "Google makes it easier to use Gemini without training AI on your data",
+      "link": "https://arstechnica.com/ai/2026/11/google-will-let-you-opt-out-of-ai-training-in-gemini-without-losing-your-history/"
+    },
+    {
+      "source": "Ars Technica - AI",
+      "title": "Ars Live: What do drone strikes on data centers mean for the future? Talk at 1 pm EST today",
+      "link": "https://arstechnica.com/gadgets/2026/11/ars-live-can-the-cloud-survive-drone-strikes-on-data-centers/"
+    },
+    {
+      "source": "Retail Dive",
+      "title": "Amazon puts Arnold Schwarzenegger in Santa suit to extend holiday push",
+      "link": "https://www.retaildive.com/news/amazon-arnold-schwarzenegger-santa-holiday-ad-campaign-retail-marketing-push/875055/"
+    },
+    {
+      "source": "Retail Dive",
+      "title": "E-commerce boosts Home Depot, Lowe\u2019s in Q3",
+      "link": "https://www.retaildive.com/news/home-depot-lowes-digital-sales-boost-q3-ecommerce/875054/"
+    },
+    {
+      "source": "Retail Dive",
+      "title": "Traffic recovery at T.J. Maxx, Marshalls boost TJX in Q3 as pressures mount",
+      "link": "https://www.retaildive.com/news/traffic-recovery-tj-maxx-marshalls-boost-tjx-q3/875025/"
+    },
+    {
+      "source": "Retail Dive",
+      "title": "Economic optimism plunges to lowest level since Great Recession",
+      "link": "https://www.retaildive.com/news/economic-optimism-plunges-lowest-level-great-recession-gallup-inflation/875058/"
+    },
+    {
+      "source": "Retail Dive",
+      "title": "Holiday shoppers expect AI to save them over $190 this year",
+      "link": "https://www.retaildive.com/news/holiday-shoppers-ai-discounts-save-hundreds/874309/"
+    },
+    {
+      "source": "Retail Dive",
+      "title": "Target traffic rises as retailer reports broad-based gains",
+      "link": "https://www.retaildive.com/news/target-traffic-rises-q3-earnings/874959/"
+    },
+    {
+      "source": "Payments Dive",
+      "title": "ACI Worldwide\u2019s CEO heads out",
+      "link": "https://www.paymentsdive.com/news/aci-worldwides-ceo-heads-out/875047/"
+    },
+    {
+      "source": "Payments Dive",
+      "title": "Klarna launches AI \u2018concierge\u2019",
+      "link": "https://www.paymentsdive.com/news/klarna-launches-ai-concierge/875033/"
+    },
+    {
+      "source": "Payments Dive",
+      "title": "Fed to boost payment service fees",
+      "link": "https://www.paymentsdive.com/news/federal-reserve-to-boost-payment-service-fees/874911/"
+    },
+    {
+      "source": "Payments Dive",
+      "title": "Visa, Mastercard face possible trial",
+      "link": "https://www.paymentsdive.com/news/visa-mastercard-face-possible-trial/874834/"
+    },
+    {
+      "source": "Payments Dive",
+      "title": "Checkouts are built for speed. Fraudsters are thankful.",
+      "link": "https://www.paymentsdive.com/spons/checkouts-are-built-for-speed-fraudsters-are-thankful/874221/"
+    },
+    {
+      "source": "Payments Dive",
+      "title": "JPMorgan cards chief to depart",
+      "link": "https://www.paymentsdive.com/news/jpmorgan-chase-cards-chief-allison-beer-to-depart-rohrbaugh/874785/"
+    },
+    {
+      "source": "PYMNTS",
+      "title": "Anthropic Sets Record With $81.3 Billion Share Sale Before Nasdaq Debut",
+      "link": "https://www.pymnts.com/news/artificial-intelligence/2026/anthropic-sets-record-with-81-3-billion-share-sale-before-nasdaq-debut/"
+    },
+    {
+      "source": "PYMNTS",
+      "title": "Palo Alto Networks Plans $4.5 Billion Acquisition of AI Startup Applied Compute",
+      "link": "https://www.pymnts.com/news/artificial-intelligence/2026/palo-alto-networks-plans-4-5-billion-acquisition-of-ai-startup-applied-compute/"
+    },
+    {
+      "source": "PYMNTS",
+      "title": "Binance Wins ADGM Court Order to Claw Back Stolen Crypto",
+      "link": "https://www.pymnts.com/cryptocurrency/2026/binance-wins-adgm-court-order-to-claw-back-stolen-crypto/"
+    },
+    {
+      "source": "PYMNTS",
+      "title": "Visa and PYMNTS Agree: CFOs Are Moving Payment Security Upstream",
+      "link": "https://www.pymnts.com/cybersecurity/fraud-prevention/2026/visa-and-pymnts-agree-cfos-are-moving-payment-security-upstream/"
+    },
+    {
+      "source": "PYMNTS",
+      "title": "Snapchat Deploys New AI Tools for Brands and Creators",
+      "link": "https://www.pymnts.com/news/artificial-intelligence/2026/snapchat-deploys-new-ai-tools-for-brands-and-creators/"
+    },
+    {
+      "source": "PYMNTS",
+      "title": "Nvidia Leadership Floats Pay Hikes During First Post-Huang All-Hands Meeting",
+      "link": "https://www.pymnts.com/personnel/2026/nvidia-leadership-floats-pay-hikes-during-first-post-huang-all-hands-meeting/"
+    }
+  ]
+}
