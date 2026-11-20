@@ -1,5 +1,14 @@
 # MEMORY.md - Curated Knowledge
 
+## Synthetic Demo Data — KEEP (Captain, 2026-11-20)
+Captain wants the **synthetic/mock CA_SOS data preserved for sales demonstrations** — do NOT purge it. Specifically keep intact:
+- `datadepot_intelligence_demo` table (79,060 rows incl. `CA_SOS_MOCK` 4,542) — DEMO table is *intentionally* synthetic for show/sell.
+- `email_queue` rows with `status='synthetic'` (148) — mock leads, flagged "do not send".
+- `data/PENDING_TASKS.json` (4,850 mock tasks) — mock scraper output.
+- Mock scraper `ca_sos_scraper.js` + `wire_mock_to_demo.py` are the demo-feed path; do NOT retire them.
+
+**Scraper reality (verified 2026-11-20):** no live gov scraping runs. `ca_abc_licenses` (77,390 CA ABC records) is a one-time snapshot scraped 2026-09-18 (issue/expiration dates 100% empty). `ca_sos_scraper_v3.py` is NOT a web scraper — it re-shuffles that static table (`ORDER BY RANDOM`, fake `replacement_score`). Real scraper code exists but is unscheduled: `scripts/restaurant_scraper_ca.py` (requests/bs4), `scripts/enrich_depotchaos_real_contacts.py` (Google Places/Yelp/Clearbit/Hunter). LIVE/DEMO split: real `ca_abc_licenses` → LIVE `datadepot_intelligence` (dedup'd 1.39M→77,390 rows + UNIQUE index on `license_number` on 2026-11-20); synthetic → DEMO table. DB shrunk 715MB→127MB via dedup+VACUUM. Backup: `data/depot_chaos/unified.db.bak_20261120`.
+
 ## Embodiment Design Principle (Captain, 2026-10-28)
 **"All of the components exist by themselves. Integration is the issue. Miniaturization and efficiency is the enemy."**
 
