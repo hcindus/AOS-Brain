@@ -159,12 +159,23 @@ import re as _re
 # Order matters: list specific phrases before generic ones so a longer match
 # (e.g. "star ribbons") consumes the phrase before "ribbons" can re-match it.
 NAME_ALIASES = [
+    # 2¼" / 57mm thermal — short 74' = credit card (PF-175), long 230' (PF-157).
     (r'\bcredit\s+card\s+paper\b', 'PF-175'),
-    (r'\b(?:2\.25|2\s*1/4|2¼)\s*(?:x|×|by)\s*74\b', 'PF-175'),
+    (r'\b(?:2\.25|2\s*1/4|2¼|57\s*mm)\s*(?:x|×|by)\s*74\b', 'PF-175'),
+    (r'\b(?:2\.25|2\s*1/4|2¼|57\s*mm)\s*(?:x|×|by)\s*230\b', 'PF-157'),
+    # 3⅛" / 80mm thermal (wide receipt roll).
     (r'\bthermal\s+paper\b', 'PF-230'),
+    (r'\b(?:3\s*1/8|3\.125|3⅛|80\s*mm)\s*(?:x|×|by)\s*230\b', 'PF-230'),
+    (r'\b80\s*mm\b', 'PF-230'),
+    (r'\b57\s*mm\b', 'PF-175'),
+    # multi-ply bond paper.
     (r'\b(?:three|3)[\s\-]?ply\b', '18-333'),
     (r'\b(?:two|2)[\s\-]?ply\b', 'CC-235'),
     (r'\b(?:one|1)[\s\-]?ply\b', '13-305'),
+    # bond paper (single-ply impact bond default; multi-ply handled by ply aliases).
+    (r'\bimpact\s+bond\b', '13-305'),
+    (r'\bbond\s+(?:paper|rolls?)\b', '13-305'),
+    # ribbons.
     (r'\bstar\s+(?:micronics\s+)?ribbons?\b', '67240'),
     # bare 'ribbons' -> default 62245, but NOT when preceded by a SKU number
     # (e.g. '67240 ribbons' — the SKU already captured the ribbon intent).
