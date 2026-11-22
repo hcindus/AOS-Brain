@@ -36,5 +36,14 @@
     "sent_to": "antonio.hudnall@gmail.com",
     "order_desk": "order #5 (quoted)",
     "vendor": "domtar_HELD (switch off) \u2014 Blind Drop PO SLS-112226010 - "
+  },
+  "<test-order-don-ccpaper-20261122@msg>": {
+    "msg_id": "<test-order-don-ccpaper-20261122@msg>",
+    "from": "Don (Piedmont Cafe & Bakery) <antonio.hudnall@gmail.com>",
+    "intent": "ORDER",
+    "action": "flagged_captain + customer_invoice_sent (pdf attached)",
+    "sent_to": "antonio.hudnall@gmail.com",
+    "order_desk": "order #6 (quoted)",
+    "vendor": "domtar_HELD (switch off) \u2014 Blind Drop PO SLS-112226011 - "
   }
 }
