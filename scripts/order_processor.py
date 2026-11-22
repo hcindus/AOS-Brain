@@ -226,6 +226,18 @@ def parse_order(text):
     return items
 
 
+def ribbon_needs_clarification(text):
+    """True if the order mentions ribbon(s) without specifying Epson vs Star
+    (i.e. no 'star', no explicit 62245/67240). Gates auto-invoicing so a bare
+    'ribbons' triggers an Epson/Star question instead of guessing 62245."""
+    t = (text or '').lower()
+    if not _re.search(r'ribbon', t):
+        return False
+    if _re.search(r'star', t) or _re.search(r'\b67240\b', t) or _re.search(r'\b62245\b', t):
+        return False
+    return True
+
+
 # --- shipping + customer-facing output ---
 SHIPPING_RATE = 17.72   # base rate, applied per unit (paper = per case; ribbons = per 2 dozen)
 RIBBON_SKUS = ("62245", "67240")

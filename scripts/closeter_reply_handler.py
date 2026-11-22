@@ -123,6 +123,33 @@ def main():
         result = {"msg_id": mid, "from": frm, "intent": intent, "action": "", "sent_to": to_email}
 
         if intent == "ORDER":
+            # Clarification gate (ask-first): a bare "ribbons" without an explicit
+            # Epson/Star/SKU is ambiguous -> ask the printer type, hold the invoice.
+            import order_processor as op
+            if op.ribbon_needs_clarification(body):
+                if to_email:
+                    try:
+                        send(to_email, "Quick question — your ribbon order",
+                             "<p>Thanks for your order! One quick thing so we send the right ribbon: "
+                             "is this for an <strong>Epson</strong> or a <strong>Star</strong> printer?</p>"
+                             "<p>Not sure? The Epson one looks a bit like a little Volkswagen. 🚗</p>"
+                             "<p>— Miles, Performance Supply Depot</p>")
+                        result["action"] = "clarify_ribbon_printer (asked Epson/Star)"
+                    except Exception as e:
+                        result["action"] = f"clarify_send_failed: {e}"
+                else:
+                    result["action"] = "clarify_ribbon_printer (no reply-to email)"
+                orders.append({
+                    "from": frm, "subject": m.get("subject"), "body": body[:2000],
+                    "received_at": m.get("received_at"),
+                    "flagged_at": datetime.now(timezone.utc).isoformat(),
+                    "note": "ribbon order — needs Epson vs Star clarification (held, not invoiced).",
+                })
+                processed[mid] = result
+                actions += 1
+                print(f"  [{intent}] {frm} -> {result['action']}")
+                continue
+
             # route the email order into the unified Order Desk (parse + quote)
             try:
                 import order_desk as _od
