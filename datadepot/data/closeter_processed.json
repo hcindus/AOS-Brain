@@ -19,5 +19,13 @@
     "intent": "UNKNOWN",
     "action": "flagged_captain_review",
     "sent_to": "miles@myl0nr0s.cloud"
+  },
+  "<test-order-david-thermal-20261122@msg>": {
+    "msg_id": "<test-order-david-thermal-20261122@msg>",
+    "from": "David <antonio.hudnall@gmail.com>",
+    "intent": "ORDER",
+    "action": "flagged_captain + confirmed_to_lead (no structured items)",
+    "sent_to": "antonio.hudnall@gmail.com",
+    "order_desk": "order #4 (captured)"
   }
 }
