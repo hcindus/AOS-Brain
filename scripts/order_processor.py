@@ -155,24 +155,63 @@ Performance Supply Depot LLC"""
 # --- free-text order parser -> structured items ---
 import re as _re
 
+# Plain-English product-name aliases -> canonical SKU.
+# Order matters: list specific phrases before generic ones so a longer match
+# (e.g. "star ribbons") consumes the phrase before "ribbons" can re-match it.
+NAME_ALIASES = [
+    (r'\bcredit\s+card\s+paper\b', 'PF-175'),
+    (r'\b(?:2\.25|2\s*1/4|2¼)\s*(?:x|×|by)\s*74\b', 'PF-175'),
+    (r'\bthermal\s+paper\b', 'PF-230'),
+    (r'\b(?:three|3)[\s\-]?ply\b', '18-333'),
+    (r'\b(?:two|2)[\s\-]?ply\b', 'CC-235'),
+    (r'\b(?:one|1)[\s\-]?ply\b', '13-305'),
+    (r'\bstar\s+(?:micronics\s+)?ribbons?\b', '67240'),
+    # bare 'ribbons' -> default 62245, but NOT when preceded by a SKU number
+    # (e.g. '67240 ribbons' — the SKU already captured the ribbon intent).
+    (r'(?<!\d\s)\bribbons?\b', '62245'),
+]
+
+def _qty_before(text, pos):
+    """Nearest quantity within ~24 chars before `pos` ('2x', '2 cases', '1 dozen')."""
+    prefix = text[max(0, pos - 24):pos].lower()
+    m = _re.search(r'(\d+)\s*x', prefix)                       # '2x' / '2 x'
+    if m:
+        return int(m.group(1))
+    m = _re.search(r'(\d+)\s*(?:cases?|dozen|rolls?|each|ea\b)', prefix)
+    if m:
+        return int(m.group(1))
+    nums = _re.findall(r'\b(\d{1,3})\b', prefix)               # small standalone numbers only
+    return int(nums[-1]) if nums else 1
+
 def parse_order(text):
-    """Parse free-text order (e.g. '1 dozen 62245 ribbons') -> [{sku, qty}]."""
+    """Parse free-text order (e.g. '2x thermal paper' or '1 dozen 62245 ribbons') -> [{sku, qty}]."""
     if not text:
         return []
     catalog = load_catalog()
     items = []
     seen = set()
+
+    # 1) literal SKU matches (most precise) — e.g. '62245', 'PF-230'.
     for p in catalog["products"]:
         sku = p["sku"]
         pat = _re.compile(r'(?i)(?<![a-z0-9])' + _re.escape(sku) + r'(?![a-z0-9])')
         for m in pat.finditer(text):
-            # quantity: nearest number within ~24 chars before the SKU
-            prefix = text[max(0, m.start()-24):m.start()].lower()
-            nums = _re.findall(r'\b(\d+)\b', prefix)
-            qty = int(nums[-1]) if nums else 1
+            qty = _qty_before(text, m.start())
             if sku not in seen:
                 items.append({"sku": sku, "qty": qty})
                 seen.add(sku)
+
+    # 2) plain-English aliases (fallback) — e.g. 'thermal paper', 'ribbons'.
+    alias_re = _re.compile(
+        '(?i)' + '|'.join(f'(?P<a{i}>{pat})' for i, (pat, _) in enumerate(NAME_ALIASES))
+    )
+    for m in alias_re.finditer(text):
+        for i, (_, sku) in enumerate(NAME_ALIASES):
+            if m.group(f'a{i}') is not None:
+                if sku not in seen:
+                    items.append({"sku": sku, "qty": _qty_before(text, m.start())})
+                    seen.add(sku)
+                break
     return items
 
 
