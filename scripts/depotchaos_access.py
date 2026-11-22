@@ -27,6 +27,27 @@ from datetime import datetime, timezone
 LEADS_DB = "/root/.openclaw/workspace/data/depot_chaos/unified.db"
 CRM_DB = "/root/.openclaw/workspace/DepotChaos/depot_chaos.db"
 
+# Synthetic / demo databases (kept separate from live).
+LEADS_DB_DEMO = "/root/.openclaw/workspace/data/depot_chaos/unified_demo.db"
+CRM_DB_DEMO = "/root/.openclaw/workspace/DepotChaos/depot_chaos_demo.db"
+
+_DEMO = False
+
+
+def use_demo(on=True):
+    """Switch the access layer to the demo (synthetic) databases. Returns new state."""
+    global _DEMO
+    _DEMO = bool(on)
+    return _DEMO
+
+
+def _leads_db():
+    return LEADS_DB_DEMO if _DEMO else LEADS_DB
+
+
+def _crm_db():
+    return CRM_DB_DEMO if _DEMO else CRM_DB
+
 
 def _conn(db):
     con = sqlite3.connect(db)
@@ -55,14 +76,14 @@ def list_leads(agent=None, status='new', limit=50, priority=None, city=None):
     if city:
         q += " AND city LIKE ?"; args.append(f"%{city}%")
     q += " ORDER BY id DESC LIMIT ?"; args.append(limit)
-    con = _conn(LEADS_DB)
+    con = _conn(_leads_db())
     rows = [dict(r) for r in con.execute(q, args).fetchall()]
     con.close()
     return rows
 
 
 def get_lead(lead_id):
-    con = _conn(LEADS_DB)
+    con = _conn(_leads_db())
     r = con.execute("SELECT * FROM leads WHERE id=?", (lead_id,)).fetchone()
     con.close()
     return dict(r) if r else None
@@ -70,7 +91,7 @@ def get_lead(lead_id):
 
 def claim_lead(lead_id, agent):
     """Assign a lead to an agent (idempotent). Sets assigned_agent + last_contact."""
-    con = _conn(LEADS_DB)
+    con = _conn(_leads_db())
     con.execute(
         "UPDATE leads SET assigned_agent=?, last_contact=COALESCE(last_contact, ?) WHERE id=?",
         (agent, _now(), lead_id))
@@ -94,7 +115,7 @@ def update_lead(lead_id, status=_UNSET, notes=_UNSET, priority=_UNSET, tier=_UNS
     if not fields:
         return get_lead(lead_id)
     setq = ", ".join(f"{k}=?" for k in fields)
-    con = _conn(LEADS_DB)
+    con = _conn(_leads_db())
     con.execute(f"UPDATE leads SET {setq} WHERE id=?", (*fields.values(), lead_id))
     con.commit(); con.close()
     return get_lead(lead_id)
@@ -102,7 +123,7 @@ def update_lead(lead_id, status=_UNSET, notes=_UNSET, priority=_UNSET, tier=_UNS
 
 def stats(agent=None):
     """Pipeline summary. If agent given, break down that agent's leads by status."""
-    con = _conn(LEADS_DB)
+    con = _conn(_leads_db())
     if agent:
         rows = con.execute(
             "SELECT status, COUNT(*) FROM leads WHERE assigned_agent=? GROUP BY status",
@@ -119,7 +140,7 @@ def log_contact(lead_id, agent, outcome, notes="", want_prices=None):
     """Log an interaction to the CRM (sales_contacts), keyed to a lead."""
     lead = get_lead(lead_id)
     name = lead.get("business_name") if lead else None
-    con = _conn(CRM_DB)
+    con = _conn(_crm_db())
     con.execute(
         "INSERT INTO sales_contacts (lead_name, contact_type, channel, outcome, want_prices, notes, contacted_at) "
         "VALUES (?,?,?,?,?,?,?)",
@@ -132,7 +153,7 @@ def log_contact(lead_id, agent, outcome, notes="", want_prices=None):
 
 def get_customer_history(name=None, phone=None, limit=20):
     """Look up customers (+ product history) in DepotChaos. Returns list of client rows."""
-    con = _conn(CRM_DB)
+    con = _conn(_crm_db())
     q = "SELECT * FROM psd_clients WHERE 1=1"
     args = []
     if name:
@@ -147,7 +168,7 @@ def get_customer_history(name=None, phone=None, limit=20):
 
 def get_customer_products(client_id):
     """Purchase history (paper/ribbon/label) for a psd_clients id."""
-    con = _conn(CRM_DB)
+    con = _conn(_crm_db())
     rows = [dict(r) for r in con.execute(
         "SELECT category, slot, sku, raw, desc, status FROM psd_client_products "
         "WHERE client_id=? ORDER BY category, slot", (client_id,)).fetchall()]
