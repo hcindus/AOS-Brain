@@ -110,3 +110,27 @@ DECISION REQUIRED:
 1. Lift 451 rate-limit (dedicated/bulk relay or pace under cap)
 2. Activate phone pivot (49 dials — no infra blocker)
 3. Fix submit_leads.py (Forge)
+
+Sales Execution Week 30: 2026-11-17 to 2026-11-23
+Agent: Pulp (Head of Sales) | Report: 2026-11-23 17:00 UTC
+
+WEEKLY SPRINT REVIEW COMPLETE (status-only):
+
+Outbound (Week 30):
+- Emails: reorder-reminder loop only (1-2/day, 0 bounces); no bulk fires
+- Calls: 0 (49 still queued) | DMs: 0 | Demos: 0 | Closes: 0 | MRR: $0
+
+Infrastructure (verified live):
+- Reorder reminder loop: ACTIVE (sole clean channel, 0 bounces)
+- Hostinger 451 rate-limit: persists (bulk throttled)
+- CLOSETER: ACTIVE (all fixtures, 0 real revenue orders)
+- Multi-state scraper: ACTIVE (158 biz / 13 states daily)
+- Temporal: NEW segfault (core dumped) + 3 stuck workflows
+- submit_leads.py: BROKEN (WorkflowHandle import)
+- Hume intel: ~208 days stale
+
+DECISION REQUIRED (unchanged + 1):
+1. Activate phone pivot (49 dials — no infra blocker, idle 2 weeks)
+2. Lift 451 rate-limit (dedicated relay / pace)
+3. Fix submit_leads.py (Forge)
+4. NEW: Diagnose Temporal segfault (Forge)
