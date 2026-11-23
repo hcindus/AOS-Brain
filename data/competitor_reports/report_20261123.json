@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-23T09:00:13.372418",
+  "competitors": [
+    {
+      "name": "WebstaurantStore",
+      "price": null,
+      "status": "error",
+      "error": "Page.goto: net::ERR_NETWORK_CHANGED at https://www.webstaurantstore.com/search/thermal-paper-3-1-8-phenol-free.html\nCall log:\n  - navigating to \"https://www.webstaurantstore.com/search/thermal-paper-3-1-8-phenol-free.html\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+      "name": "Amazon",
+      "url": "https://www.amazon.com/s?k=thermal+receipt+paper+3+1+8+phenol+free",
+      "price": null,
+      "product": null,
+      "screenshot": "/tmp/amazon_debug.png",
+      "status": "no_price_found"
+    }
+  ]
+}
