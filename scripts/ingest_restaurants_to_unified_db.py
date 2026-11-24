@@ -44,12 +44,24 @@ def norm_phone(s):
     return "".join(m.groups()) if m else ""
 
 
+PLACEHOLDER = {"", "—", "-", "–", "n/a", "na", "none", "null"}
+
+
 def norm_website(s):
     if not s:
         return ""
     s = s.strip()
+    if s.lower() in PLACEHOLDER:
+        return ""
     if not s.startswith("http"):
         s = "http://" + s
+    return s
+
+
+def clean_text(s):
+    s = (s or "").strip()
+    if s.lower() in PLACEHOLDER:
+        return ""
     return s
 
 
@@ -105,7 +117,7 @@ def parse_hwy116():
         seen.add(key)
         rows.append({
             "business_name": name,
-            "address": address.strip(),
+            "address": clean_text(address),
             "city": c,
             "county": TOWN_COUNTY.get(c, "Sonoma"),
             "state": "CA",
@@ -113,7 +125,7 @@ def parse_hwy116():
             "phone": norm_phone(phone),
             "email": "",
             "website": norm_website(website),
-            "business_type": cuisine.strip() or "Restaurant",
+            "business_type": clean_text(cuisine) or "Restaurant",
             "tier": "Tier 3",
             "source": "highway116",
         })
@@ -193,16 +205,20 @@ def insert_leads(rows):
     added = 0
     skipped = 0
     for r in rows:
+        # `leads` has no website column -> fold website into notes to preserve it
+        notes = ""
+        if r.get("website"):
+            notes = f"website: {r['website']}"
         try:
             cur.execute("""
                 INSERT OR IGNORE INTO leads
-                (business_name, address, city, state, zip, phone, email, website,
-                 business_type, county, tier, source, status, created_at)
+                (business_name, address, city, state, zip, phone, email,
+                 business_type, county, tier, source, status, notes, created_at)
                 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
             """, (
                 r["business_name"], r["address"], r["city"], r["state"], r["zip"],
-                r["phone"], r["email"], r["website"], r["business_type"], r["county"],
-                r["tier"], r["source"], "new", now,
+                r["phone"], r["email"], r["business_type"], r["county"],
+                r["tier"], r["source"], "new", notes, now,
             ))
             if cur.rowcount > 0:
                 added += 1
