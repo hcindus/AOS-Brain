@@ -61,6 +61,11 @@ def dashboard():
     return FileResponse(str(BASE_DIR / "static" / "index.html"))
 
 
+@app.get("/questionnaire", include_in_schema=False)
+def questionnaire():
+    return FileResponse(str(BASE_DIR / "static" / "questionnaire.html"))
+
+
 # ---------------------------------------------------------------------------
 # health
 # ---------------------------------------------------------------------------
