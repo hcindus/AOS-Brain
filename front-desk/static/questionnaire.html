@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Frontline SOA · Client Setup Questionnaire — Performance Supply Depot</title>
+<style>
+  :root {
+    --navy: #0f1f3d; --navy-2: #16294f; --blue: #1d4ed8; --blue-2: #3b82f6;
+    --bg: #f5f7fb; --card: #fff; --border: #e6ebf3; --text: #0f1f3d; --muted: #64748b;
+    --radius: 14px; --shadow: 0 1px 2px rgba(15,31,61,.05), 0 6px 20px rgba(15,31,61,.06);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .topbar { display:flex; align-items:center; justify-content:space-between; padding:16px 28px; background:linear-gradient(135deg,var(--navy),var(--navy-2)); color:#fff; }
+  .brand { display:flex; align-items:center; gap:12px; }
+  .mark { width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,var(--blue-2),var(--blue));display:grid;place-items:center;font-weight:800;font-size:20px;color:#fff;box-shadow:0 4px 14px rgba(59,130,246,.4); }
+  .brand-text { display:flex;flex-direction:column;line-height:1.15; }
+  .brand-company { font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#aebed8;font-weight:600; }
+  .brand-product { font-size:20px;font-weight:700; }
+  .brand-product em { font-style:normal;color:#7da2ff; }
+  .shell { max-width: 860px; margin: 0 auto; padding: 28px 24px 80px; }
+  .intro { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px 24px; margin-bottom:20px; color:var(--muted); }
+  .intro strong { color: var(--text); }
+  .intro .meta-row { display:flex; gap:28px; margin-top:14px; flex-wrap:wrap; }
+  .intro label { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); display:block; margin-bottom:3px; }
+  .intro input { border:1px solid var(--border); border-radius:8px; padding:8px 10px; font-size:13px; min-width:180px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; margin-bottom:20px; }
+  .card-head { display:flex; align-items:center; gap:10px; padding:14px 22px; border-bottom:1px solid var(--border); }
+  .num { width:26px;height:26px;border-radius:8px;background:var(--blue);color:#fff;font-weight:700;display:grid;place-items:center;font-size:13px; }
+  .card-head h2 { margin:0; font-size:15px; font-weight:700; }
+  .card-body { padding:18px 22px; display:flex; flex-direction:column; gap:16px; }
+  .field label { display:block; font-size:12.5px; font-weight:600; color:var(--text); margin-bottom:4px; }
+  .field .hint { font-size:11.5px; color:var(--muted); font-weight:400; }
+  .field input[type=text], .field input[type=email], .field input[type=tel], .field input[type=url], .field textarea { width:100%; border:1px solid var(--border); border-radius:8px; padding:9px 11px; font-size:13px; font-family:inherit; }
+  .field textarea { min-height:54px; resize:vertical; }
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .row3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .chip { display:inline-flex; align-items:center; gap:6px; padding:7px 13px; border:1px solid var(--border); border-radius:999px; font-size:13px; cursor:pointer; }
+  .chip input { accent-color: var(--blue); }
+  .scale { display:flex; gap:10px; align-items:center; }
+  .scale span { width:34px;height:34px;border:1px solid var(--border);border-radius:50%;display:grid;place-items:center;font-weight:600;cursor:pointer; }
+  .scale span.sel { background:var(--blue); color:#fff; border-color:var(--blue); }
+  .foot { text-align:center; color:var(--muted); font-size:12px; padding:10px 0; }
+  .btn { background:var(--blue); color:#fff; border:none; border-radius:8px; padding:12px 22px; font-size:14px; font-weight:700; cursor:pointer; }
+  .btn:hover { background:#1e40af; }
+  .actions { display:flex; gap:12px; justify-content:flex-end; margin-top:20px; }
+  @media (max-width:640px){ .row,.row3 { grid-template-columns:1fr; } }
+  @media print { .topbar { background:var(--navy) !important; -webkit-print-color-adjust:exact; } .actions { display:none; } }
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="mark">F</div>
+      <div class="brand-text">
+        <span class="brand-company">Performance Supply Depot</span>
+        <span class="brand-product">Frontline <em>SOA</em> · Client Setup</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <div class="intro">
+      <strong>Service Oriented Assistant — provisioning questionnaire.</strong>
+      Complete this to build the client's Frontline SOA. Each answer maps to a field in
+      <code>client_config.yaml</code> — the greeting, the voice, the escalation path, and the
+      notification routing are all generated from these answers.
+      <div class="meta-row">
+        <div><label>Filled out by</label><input type="text" id="filled-by" /></div>
+        <div><label>Date</label><input type="text" id="filled-date" /></div>
+        <div><label>Sales rep</label><input type="text" id="sales-rep" /></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="num">1</span><h2>Who the system is for</h2></div>
+      <div class="card-body">
+        <div class="field"><label>Business name <span class="hint">(exactly as spoken on the phone)</span></label><input type="text" data-k="company.business_name" /></div>
+        <div class="field"><label>Doing business as / legal name</label><input type="text" data-k="company.dba" /></div>
+        <div class="row">
+          <div class="field"><label>Industry / type</label><input type="text" data-k="company.industry" /></div>
+          <div class="field"><label>Website</label><input type="url" data-k="company.website" /></div>
+        </div>
+        <div class="field"><label>Physical address</label><input type="text" data-k="company.address.street" /></div>
+        <div class="row3">
+          <div class="field"><label>City</label><input type="text" data-k="company.address.city" /></div>
+          <div class="field"><label>State</label><input type="text" data-k="company.address.state" /></div>
+          <div class="field"><label>ZIP</label><input type="text" data-k="company.address.zip" /></div>
+        </div>
+        <div class="row">
+          <div class="field"><label>Main phone line</label><input type="tel" data-k="company.main_phone" /></div>
+          <div class="field"><label>Hours of operation</label><input type="text" data-k="company.hours" placeholder="Mon–Fri 9–5, Sat 10–4, Sun closed" /></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="num">2</span><h2>Primary contact (account owner)</h2></div>
+      <div class="card-body">
+        <div class="row">
+          <div class="field"><label>Name</label><input type="text" data-k="contact.name" /></div>
+          <div class="field"><label>Role / title</label><input type="text" data-k="contact.role" /></div>
+        </div>
+        <div class="row">
+          <div class="field"><label>Phone</label><input type="tel" data-k="contact.phone" /></div>
+          <div class="field"><label>Email</label><input type="email" data-k="contact.email" /></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="num">3</span><h2>Tone of greeting</h2></div>
+      <div class="card-body">
+        <div class="field">
+          <label>How should the receptionist greet callers?</label>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="greeting" value="warm" /> Warm &amp; friendly</label>
+            <label class="chip"><input type="radio" name="greeting" value="professional" checked /> Professional</label>
+            <label class="chip"><input type="radio" name="greeting" value="formal" /> Formal</label>
+            <label class="chip"><input type="radio" name="greeting" value="casual" /> Casual</label>
+          </div>
+        </div>
+        <div class="field"><label>Custom greeting <span class="hint">(optional — exact opening line)</span></label><textarea data-k="greeting.custom_line"></textarea></div>
+        <div class="field"><label>Pronunciation note <span class="hint">(if the name is unusual)</span></label><input type="text" data-k="company.pronunciation" /></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="num">4</span><h2>Tone of receptionist</h2></div>
+      <div class="card-body">
+        <div class="field">
+          <label>Voice</label>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="voice" value="Polly.Matthew" checked /> Polly.Matthew</label>
+            <label class="chip"><input type="radio" name="voice" value="Polly.Joanna" /> Polly.Joanna</label>
+            <label class="chip"><input type="radio" name="voice" value="Polly.Amy" /> Polly.Amy</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Personality</label>
+          <div class="chips">
+            <label class="chip"><input type="checkbox" data-p="warm" checked /> Warm &amp; empathetic</label>
+            <label class="chip"><input type="checkbox" data-p="energetic" /> Energetic</label>
+            <label class="chip"><input type="checkbox" data-p="calm" /> Calm &amp; steady</label>
+            <label class="chip"><input type="checkbox" data-p="professional" checked /> Professional</label>
+            <label class="chip"><input type="checkbox" data-p="direct" /> Direct</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label>Language</label>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="lang" value="en" checked /> English</label>
+              <label class="chip"><input type="radio" name="lang" value="es" /> Spanish</label>
+              <label class="chip"><input type="radio" name="lang" value="bilingual" /> Bilingual</label>
+            </div>
+          </div>
+          <div class="field">
+            <label>Formality (1 = casual, 5 = formal)</label>
+            <div class="scale" id="formality">
+              <span class="sel">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="num">5</span><h2>Emergency contact (who to reach in an emergency)</h2></div>
+      <div class="card-body">
+        <div class="row">
+          <div class="field"><label>Name</label><input type="text" data-k="emergency.name" /></div>
+          <div class="field"><label>Relationship</label><input type="text" data-k="emergency.relationship" /></div>
+        </div>
+        <div class="row">
+          <div class="field"><label>Emergency phone (24/7)</label><input type="tel" data-k="emergency.phone_24x7" /></div>
+          <div class="field"><label>Escalation email</label><input type="email" data-k="emergency.email" /></div>
+        </div>
+        <div class="field">
+          <label>What counts as an emergency?</label>
+          <div class="chips">
+            <label class="chip"><input type="checkbox" data-e="outage" /> System outage</label>
+            <label class="chip"><input type="checkbox" data-e="security" /> Security / breach</label>
+            <label class="chip"><input type="checkbox" data-e="irate" /> Irate customer</label>
+            <label class="chip"><input type="checkbox" data-e="afterhours" /> Outside hours</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="num">6</span><h2>Emails (notification routing)</h2></div>
+      <div class="card-body">
+        <div class="row">
+          <div class="field"><label>Primary <span class="hint">(transcripts, missed calls, after-hours)</span></label><input type="email" data-k="emails.primary" /></div>
+          <div class="field"><label>Secondary / CC</label><input type="email" data-k="emails.secondary" /></div>
+        </div>
+        <div class="row">
+          <div class="field"><label>Orders &amp; invoices</label><input type="email" data-k="emails.orders" /></div>
+          <div class="field"><label>Daily/weekly summary</label><input type="email" data-k="emails.summary" /></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="num">7</span><h2>Cadence (follow-up + reporting)</h2></div>
+      <div class="card-body">
+        <div class="field">
+          <label>Follow-up cadence on leads</label>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="cadence" value="immediate" /> Immediate only</label>
+            <label class="chip"><input type="radio" name="cadence" value="standard" checked /> Day 0 + 1 + 3</label>
+            <label class="chip"><input type="radio" name="cadence" value="aggressive" /> Aggressive</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label>Summary frequency</label>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="summary" value="on-event" checked /> On-event</label>
+              <label class="chip"><input type="radio" name="summary" value="daily" /> Daily</label>
+              <label class="chip"><input type="radio" name="summary" value="weekly" /> Weekly</label>
+            </div>
+          </div>
+          <div class="field"><label>Quiet hours <span class="hint">(do not contact)</span></label><input type="text" data-k="cadence.quiet_hours" placeholder="20:00 – 08:00" /></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="num">8</span><h2>Suite (SOA routing)</h2></div>
+      <div class="card-body">
+        <div class="field">
+          <label>Which suite?</label>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="suite" value="front_office" checked /> Front office · $149/mo</label>
+            <label class="chip"><input type="radio" name="suite" value="growth" /> Growth · $349/mo</label>
+            <label class="chip"><input type="radio" name="suite" value="full_office" /> Full office · $749/mo</label>
+            <label class="chip"><input type="checkbox" data-s="security" /> Security add-on · $99/mo</label>
+          </div>
+        </div>
+        <div class="field"><label>Special routing rules <span class="hint">(optional)</span></label><textarea data-k="routing_overrides"></textarea></div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn" onclick="window.print()">Print / Save PDF</button>
+      <button class="btn" onclick="exportJSON()">Export JSON</button>
+    </div>
+    <div class="foot">Performance Supply Depot · Frontline SOA · Service Oriented Assistant</div>
+  </main>
+
+  <script>
+    // formality scale
+    document.querySelectorAll('#formality span').forEach(s => {
+      s.onclick = () => {
+        document.querySelectorAll('#formality span').forEach(x => x.classList.remove('sel'));
+        s.classList.add('sel');
+      };
+    });
+
+    function exportJSON() {
+      const out = { company: { address: {}, hours: "" }, contact: {}, greeting: {}, receptionist: {}, emergency: { triggers: [] }, emails: {}, cadence: {}, suite: "", security_addon: false, routing_overrides: {} };
+      document.querySelectorAll('[data-k]').forEach(el => {
+        const k = el.getAttribute('data-k');
+        const parts = k.split('.');
+        let cur = out;
+        for (let i = 0; i < parts.length - 1; i++) { cur = cur[parts[i]] = cur[parts[i]] || {}; }
+        cur[parts[parts.length - 1]] = el.value;
+      });
+      out.greeting.style = (document.querySelector('input[name=greeting]:checked') || {}).value;
+      out.receptionist.voice = (document.querySelector('input[name=voice]:checked') || {}).value;
+      out.receptionist.language = (document.querySelector('input[name=lang]:checked') || {}).value;
+      out.receptionist.personality = [...document.querySelectorAll('[data-p]:checked')].map(c => c.getAttribute('data-p'));
+      out.receptionist.formality = [...document.querySelectorAll('#formality span')].findIndex(s => s.classList.contains('sel')) + 1;
+      out.emergency.triggers = [...document.querySelectorAll('[data-e]:checked')].map(c => c.getAttribute('data-e'));
+      out.cadence.follow_up = (document.querySelector('input[name=cadence]:checked') || {}).value;
+      out.cadence.summary_frequency = (document.querySelector('input[name=summary]:checked') || {}).value;
+      out.suite = (document.querySelector('input[name=suite]:checked') || {}).value;
+      out.security_addon = !!document.querySelector('[data-s=security]:checked');
+      const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'client_config.json';
+      a.click();
+    }
+  </script>
+</body>
+</html>
