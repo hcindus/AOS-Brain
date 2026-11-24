@@ -89,6 +89,15 @@ Expose publicly via nginx (see `setup/nginx.conf`) → `https://psdepot.com/fron
 alert (Telegram), and store path. Every value supports `${VAR:-default}` env expansion;
 secrets live in `aocros/secrets/`.
 
+## Client provisioning
+
+Onboarding a new client is driven by two files:
+
+- **`client_questionnaire.md`** — the client-facing setup form (company info, tone of
+  greeting, tone of receptionist, emergency contact, emails, cadence, suite).
+- **`client_config.example.yaml`** — the provisioning config the answers map to; copy to
+  a per-client `client_config.yaml` when booting that client's SOA.
+
 ---
 
 ## Self-test

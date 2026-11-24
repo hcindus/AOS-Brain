@@ -1,0 +1,71 @@
+# Frontline SOA — client_config.example.yaml
+# ---------------------------------------------------------------------------
+# Provisioned from the Client Setup Questionnaire (client_questionnaire.md).
+# Each section below maps 1:1 to a section in that questionnaire.
+# Copy to client_config.yaml (per-client) and reference it when booting the SOA.
+# Secrets (tokens/keys) should reference env vars, never live here in plaintext.
+
+# 1 · Who the system is for — company information
+company:
+  business_name: ""          # spoken exactly as this on the phone
+  dba: ""                    # legal / doing-business-as name
+  industry: ""
+  address:
+    street: ""
+    city: ""
+    state: ""
+    zip: ""
+  main_phone: ""             # number the receptionist answers for
+  hours:
+    mon_fri: "9:00-17:00"
+    sat: "closed"
+    sun: "closed"
+  website: ""
+
+# 2 · Primary contact (account owner)
+contact:
+  name: ""
+  role: ""
+  phone: ""
+  email: ""
+
+# 3 · Tone of greeting
+greeting:
+  style: "professional"      # warm | professional | formal | casual
+  custom_line: ""            # optional exact opening line (blank = default)
+
+# 4 · Tone of receptionist
+receptionist:
+  voice: "Polly.Matthew"     # Polly.Matthew | Polly.Joanna | Polly.Amy | ...
+  personality: ["warm", "professional"]
+  language: "en"             # en | es | bilingual | ...
+  formality: 3               # 1 (casual) .. 5 (formal)
+
+# 5 · Emergency contact (escalation)
+emergency:
+  name: ""
+  relationship: ""
+  phone_24x7: ""
+  email: ""
+  triggers: ["outage", "security", "irate_customer"]
+
+# 6 · Emails (notification routing)
+emails:
+  primary: ""                # transcripts, missed calls, after-hours
+  secondary: ""
+  orders: ""                 # orders + invoices
+  summary: ""                # daily/weekly digest
+
+# 7 · Cadence (follow-up + reporting)
+cadence:
+  follow_up: "standard"      # immediate | standard | aggressive | custom
+  summary_frequency: "on-event"  # on-event | daily | weekly | none
+  quiet_hours:
+    from: "20:00"
+    to: "08:00"
+  follow_up_channel: "any"   # email | phone | sms | any
+
+# 8 · Suite (SOA routing)
+suite: "front_office"        # front_office | growth | full_office | (+ security add-on)
+security_addon: false
+routing_overrides: {}        # e.g. {"language:es": "concierge", "intent:order": "clerk"}
