@@ -71,9 +71,9 @@ def health():
         "status": "ok",
         "service": "frontline-soa",
         "version": VERSION,
-        "model": CONFIG["llm"]["model"],
         "uptime_seconds": round(uptime),
         "started": STARTED.isoformat(),
+        "model": engine.llm.model,
     }
 
 
@@ -187,7 +187,7 @@ def suites():
     return {
         "suites": CONFIG.get("suites", {}),
         "routing": CONFIG.get("routing", {}),
-        "model": CONFIG["llm"]["model"],
+        "model": engine.llm.model,
     }
 
 
