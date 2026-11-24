@@ -46,6 +46,20 @@ SYSTEM_PROMPT = (
 
 # in-memory conversation history (CallSid -> list of messages)
 HISTORY = {}
+OUTBOUND_CALLS = set()  # CallSids that originated as outbound cold-calls
+
+
+OUTBOUND_SYSTEM_PROMPT = (
+    "You are Miles, the AI sales rep for Performance Supply Depot, on an OUTBOUND cold call. "
+    "You already introduced yourself — do NOT repeat 'this is Miles' or the greeting. "
+    "The person just responded to 'did I catch you at a bad time?'. Match their energy: if they "
+    "sound busy or annoyed, offer to call back; if they're open, give a short pitch.\n\n"
+    "Pitch: we supply restaurants with thermal receipt paper, POS printer ribbons, and compatible "
+    "toner/ink, with same-day delivery. Lead with the value, not a feature dump.\n\n"
+    "If they want a quote or to order, collect name, business, phone, and what they need, then say "
+    "someone will follow up shortly. If they say 'no thanks' or decline, be gracious and end politely.\n\n"
+    "Keep every reply to 1-2 short sentences. Say 'Performance Supply Depot', never an abbreviation."
+)
 
 
 def _say(text):
@@ -161,6 +175,21 @@ async def voice(request: Request):
     return await _respond(body)
 
 
+@app.post("/receptionist/outbound")
+async def outbound(request: Request):
+    """Outbound cold-call opener — two-way (speech Gather), reuses the conversation loop."""
+    body = await request.form()
+    call_sid = body.get("CallSid", "")
+    if call_sid and call_sid not in HISTORY:
+        HISTORY[call_sid] = []
+    OUTBOUND_CALLS.add(call_sid)
+
+    return _xml(
+        _say("Hi, this is Miles from Performance Supply Depot. Did I catch you at a bad time?") +
+        f"<Gather input=\"speech\" action=\"{PUBLIC_URL}/respond\" speechTimeout=\"auto\" timeout=\"5\" />"
+    )
+
+
 @app.post("/receptionist/respond")
 async def respond(request: Request):
     return await _respond(await request.form())
@@ -214,7 +243,8 @@ async def _respond(body):
     # otherwise: conversational turn via Ollama
     HISTORY.setdefault(call_sid, []).append({"role": "user", "content": speech})
     history = HISTORY[call_sid][-6:]
-    messages = [{"role": "system", "content": SYSTEM_PROMPT}] + history
+    prompt = OUTBOUND_SYSTEM_PROMPT if call_sid in OUTBOUND_CALLS else SYSTEM_PROMPT
+    messages = [{"role": "system", "content": prompt}] + history
     reply = _ollama(messages)
     HISTORY[call_sid].append({"role": "assistant", "content": reply})
 

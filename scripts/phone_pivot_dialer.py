@@ -27,7 +27,7 @@ RESULTS = f"{BASE}/datadepot/data/pivot_call_log.json"
 DB = f"{BASE}/data/depot_chaos/unified.db"
 
 TWILIO_FROM = "+18557899606"
-TWIML_URL = "https://psdepot.com/twiml/outbound"
+TWIML_URL = "https://psdepot.com/receptionist/outbound"
 OWNER_NUMBERS = ["+14155326834", "+14155719724"]  # Captain
 
 
