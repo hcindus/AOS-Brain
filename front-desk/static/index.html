@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontline SOA · Performance Supply Depot</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231d4ed8'/><text x='16' y='22' font-size='18' font-family='Arial' font-weight='700' fill='white' text-anchor='middle'>F</text></svg>" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="mark">F</div>
+      <div class="brand-text">
+        <span class="brand-company">Performance Supply Depot</span>
+        <span class="brand-product">Frontline <em>SOA</em></span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span class="pill pill-live" id="status-pill"><span class="dot"></span> Live</span>
+      <span class="meta" id="model-meta">model —</span>
+      <span class="meta" id="uptime-meta">—</span>
+    </div>
+  </header>
+
+  <main class="shell">
+    <!-- KPI row -->
+    <section class="kpis">
+      <div class="kpi"><span class="kpi-label">Total inbound</span><span class="kpi-value" id="kpi-total">—</span></div>
+      <div class="kpi"><span class="kpi-label">Qualified leads</span><span class="kpi-value" id="kpi-leads">—</span></div>
+      <div class="kpi"><span class="kpi-label">Today</span><span class="kpi-value" id="kpi-today">—</span></div>
+      <div class="kpi"><span class="kpi-label">Active agents</span><span class="kpi-value" id="kpi-agents">—</span></div>
+    </section>
+
+    <!-- main grid -->
+    <section class="grid">
+      <!-- left: feed -->
+      <div class="card feed-card">
+        <div class="card-head">
+          <h2>Inbound feed</h2>
+          <div class="filters" id="filters"></div>
+        </div>
+        <div class="table-wrap">
+          <table class="feed">
+            <thead>
+              <tr>
+                <th>When</th><th>Channel</th><th>Intent</th><th>Qualified</th>
+                <th>Routed to</th><th>Summary</th>
+              </tr>
+            </thead>
+            <tbody id="feed-body"></tbody>
+          </table>
+          <div class="empty" id="feed-empty">No inbound yet.</div>
+        </div>
+      </div>
+
+      <!-- right: intent + suites -->
+      <div class="side">
+        <div class="card">
+          <div class="card-head"><h2>Intent mix</h2></div>
+          <div id="intent-bars" class="bars"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Suites &amp; routing</h2></div>
+          <div id="suites"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- simulate -->
+    <section class="card simulate">
+      <div class="card-head"><h2>Simulate inbound</h2><span class="meta">classify a message live (dry-run)</span></div>
+      <div class="sim-row">
+        <select id="sim-channel">
+          <option value="voice">voice</option>
+          <option value="email">email</option>
+          <option value="text">text</option>
+          <option value="web">web</option>
+          <option value="dm">dm</option>
+        </select>
+        <input id="sim-body" type="text" placeholder="e.g. I need a quote for thermal paper for my restaurant" />
+        <button id="sim-go" class="btn">Classify</button>
+      </div>
+      <div id="sim-result" class="sim-result hidden"></div>
+    </section>
+  </main>
+
+  <footer class="foot">Performance Supply Depot · Frontline SOA v<span id="version">—</span> · Service Oriented Assistant</footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
