@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 
 from llm import LLM
 from router import Router
+from fastroute import fast_intent, extract_entity
 
 
 @dataclass
@@ -53,6 +54,19 @@ class Engine:
         self.router = Router(cfg)
 
     def classify(self, event: InboundEvent) -> Route:
+        # Fast-path: deterministic keyword routing before the LLM (cheap + instant).
+        # Bottled from the Frontline n8n "Pick Agent" pattern. Falls back to the LLM.
+        fast = fast_intent(event.body)
+        if fast:
+            intent, urgency, qualified = fast
+            return Route(
+                intent=intent,
+                urgency=urgency,
+                entity=extract_entity(event.body),
+                qualified=qualified,
+                agents=self.router.route(intent),
+                summary=f"Keyword-routed ({intent})",
+            )
         msg = f"[channel: {event.channel}] [from: {event.from_}]\n{event.body}"
         raw = self.llm.complete([
             {"role": "system", "content": SYSTEM},
