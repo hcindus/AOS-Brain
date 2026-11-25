@@ -1,0 +1,876 @@
+{
+  "name": "Frontline Receptionist — Voice (SOA)",
+  "id": "fL1nR3c3pt10nV01",
+  "versionId": "5c1e0a2b-7d34-4b1c-9f60-3a8e5d2c4b11",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "frontline-receptionist",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -620,
+        480
+      ],
+      "id": "2c0e6917-26c2-4661-b204-c458a0e8b25b",
+      "name": "Twilio Voice Webhook",
+      "webhookId": "e31304b4-9bbe-4f3d-8fd3-c5d3300aef2d"
+    },
+    {
+      "parameters": {
+        "jsCode": "// The single place the Twilio body is read. Everything downstream works on this\n// flat item, so no later HTTP node can shadow the call facts.\nconst b = $json.body || {};\nconst speech = (b.SpeechResult || '').trim();\nreturn [{ json: {\n  callSid: b.CallSid || 'unknown',\n  from: b.From || 'unknown caller',\n  fromName: b.FromName || '',\n  to: b.To || '',\n  direction: b.Direction || '',\n  callStatus: b.CallStatus || '',\n  speech,\n  recordingUrl: b.RecordingUrl || '',\n  dialStatus: b.DialCallStatus || '',\n  transcription: (b.TranscriptionText || '').trim(),\n  transcriptionStatus: b.TranscriptionStatus || ''\n} }];",
+        "mode": "runOnceForAllItems"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -420,
+        480
+      ],
+      "id": "b564bccd-52fc-4df4-b4e5-06c39bd1f169",
+      "name": "Read Call"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "transcript-status",
+              "leftValue": "={{ $json.transcriptionStatus }}",
+              "rightValue": "completed",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -220,
+        480
+      ],
+      "id": "a3e8eb3d-548f-4ac0-af9d-4bfaf63a07c7",
+      "name": "Is Transcript Callback?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.FRONTLINE_URL || \"http://127.0.0.1:8800\" }}/tool/task_add",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  title: 'Call back ' + ($json.from || 'unknown caller') + ' — voicemail left',\n  due: new Date().toISOString().slice(0, 10),\n  priority: 'high'\n}) }}",
+        "options": {
+          "timeout": 10000,
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -20,
+        200
+      ],
+      "id": "33a43525-8d90-4cdc-9539-15a0a3c5d84e",
+      "name": "Log Voicemail Task"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.FRONTLINE_URL || \"http://127.0.0.1:8800\" }}/tool/note_add",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  text: 'Voicemail from ' + ($('Read Call').first().json.from || 'unknown caller') + ' at ' + new Date().toISOString()\n        + '\\nTranscript: ' + ($('Read Call').first().json.transcription || '(no transcript returned)'),\n  topic: 'voice/voicemail'\n}) }}",
+        "options": {
+          "timeout": 10000,
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        200,
+        200
+      ],
+      "id": "20a9d4a0-90ec-4d54-8614-14c6dd7b21be",
+      "name": "Save Transcript Note"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.FRONTLINE_URL || \"http://127.0.0.1:8800\" }}/directory",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  name: $('Read Call').first().json.fromName || $('Read Call').first().json.from || 'Voice caller',\n  channel: 'voice',\n  address: $('Read Call').first().json.from || '',\n  preferred: false,\n  meta: { source: 'inbound call', added: new Date().toISOString().slice(0, 10) }\n}) }}",
+        "options": {
+          "timeout": 10000,
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        420,
+        200
+      ],
+      "id": "835d093d-6224-4fb3-badb-fe82006a556a",
+      "name": "Add Caller to CRM"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "<Response></Response>",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/xml"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        200
+      ],
+      "id": "bbf5289b-22d3-4cb9-ab86-ad0c5ac813c8",
+      "name": "Ack Transcript"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "recording-present",
+              "leftValue": "={{ $json.recordingUrl }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -20,
+        480
+      ],
+      "id": "bcdbb888-f37f-47a6-8647-6cb462782a43",
+      "name": "Recording Finished?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.FRONTLINE_URL || \"http://127.0.0.1:8800\" }}/tool/task_add",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  title: 'Voicemail recorded from ' + ($json.from || 'unknown caller') + ' — listen in Twilio',\n  due: new Date().toISOString().slice(0, 10),\n  priority: 'high'\n}) }}",
+        "options": {
+          "timeout": 10000,
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        180,
+        400
+      ],
+      "id": "c57006c1-6890-4738-8fdb-59f095b05ee5",
+      "name": "Log Recording Task"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "<Response></Response>",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/xml"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        400,
+        400
+      ],
+      "id": "19569222-9b71-470e-97c0-e66968e22f3c",
+      "name": "Ack Recording"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "dial-no-answer",
+              "leftValue": "={{ $json.dialStatus }}",
+              "rightValue": "no-answer",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        180,
+        600
+      ],
+      "id": "2a6f22a6-0363-4561-b465-fc8bd0ccf268",
+      "name": "Dial No Answer?"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=<Response><Say voice=\"{{ $env.FRONTLINE_VOICE || 'Polly.Joanna-Neural' }}\">Sorry, no one is available right now. Please leave your name, your business, and a number where we can reach you, after the tone.</Say><Record action=\"{{ $env.FRONTLINE_PUBLIC_URL }}/webhook/frontline-receptionist\" transcribe=\"true\" transcribeCallback=\"{{ $env.FRONTLINE_PUBLIC_URL }}/webhook/frontline-receptionist\" maxLength=\"90\" playBeep=\"true\" /></Response>",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/xml"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        400,
+        520
+      ],
+      "id": "152f86cf-abb2-4d71-981a-0f95730e1b79",
+      "name": "Voicemail Prompt"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "dial-finished",
+              "leftValue": "={{ $json.dialStatus }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        400,
+        680
+      ],
+      "id": "d147133c-85d7-4d83-8193-52830bc62598",
+      "name": "Dial Attempted?"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "<Response></Response>",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/xml"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        620,
+        720
+      ],
+      "id": "a323d539-8592-4214-9a18-c245dfc2f01c",
+      "name": "Ack End"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "speech-present",
+              "leftValue": "={{ $json.speech }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        620,
+        600
+      ],
+      "id": "5af78fbd-9057-4913-ade6-164c1886aa55",
+      "name": "Caller Said Something?"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $env.FRONTLINE_URL || \"http://127.0.0.1:8800\" }}/questionnaire",
+        "options": {
+          "timeout": 5000,
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        820,
+        680
+      ],
+      "id": "f0d31a29-f623-4eb2-98ad-bbe9857b5a61",
+      "name": "Load Profile (greeting)"
+    },
+    {
+      "parameters": {
+        "jsCode": "// The greeting comes from the business profile the customer filled in\n// (/questionnaire → profile), not from constants in this file.\nconst profile = ($('Load Profile (greeting)').first().json.profile) || {};\nconst tz = $env.FRONTLINE_TZ || 'America/Los_Angeles';\nconst voice = $env.FRONTLINE_VOICE || 'Polly.Joanna-Neural';\nconst base = ($env.FRONTLINE_PUBLIC_URL || '').replace(/\\/+$/, '');\nconst action = base ? base + '/webhook/frontline-receptionist' : '';\n\nfunction parseHours(spec, defStart, defEnd) {\n  const found = String(spec || '').toLowerCase().match(/(\\d{1,2})(?::(\\d{2}))?\\s*(am|pm)/g);\n  if (!found || found.length < 2) return [defStart, defEnd];\n  const to24 = (t) => {\n    const m = t.match(/(\\d{1,2})(?::(\\d{2}))?\\s*(am|pm)/);\n    let h = parseInt(m[1], 10) % 12;\n    if (m[3] === 'pm') h += 12;\n    return h + (m[2] ? parseInt(m[2], 10) / 60 : 0);\n  };\n  return [to24(found[0]), to24(found[found.length - 1])];\n}\n\nfunction dayOpen(spec, dayIdx) {\n  const s = String(spec || '').toLowerCase();\n  if (!s.trim()) return true;\n  const short = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];\n  const idx = (w) => short.indexOf(String(w).slice(0, 3));\n  const range = s.match(/([a-z]+)\\s*(?:-|to)\\s*([a-z]+)/);\n  if (range) {\n    const a = idx(range[1]), b = idx(range[2]);\n    if (a >= 0 && b >= 0) return a <= b ? (dayIdx >= a && dayIdx <= b) : (dayIdx >= a || dayIdx <= b);\n  }\n  const names = s.match(/(sun|mon|tue|wed|thu|fri|sat)[a-z]*/g) || [];\n  return names.length ? names.some(n => idx(n) === dayIdx) : true;\n}\n\nconst local = new Date(new Date().toLocaleString('en-US', { timeZone: tz }));\nconst hour = local.getHours() + local.getMinutes() / 60;\nconst [openAt, closeAt] = parseHours(profile.hours, 8, 18);\nconst inHours = dayOpen(profile.days_open, local.getDay()) && hour >= openAt && hour < closeAt;\n\nconst say = (s) => String(s)\n  .replace(/&/g, '&amp;').replace(/</g, '&lt;')\n  .replace(/>/g, '&gt;').replace(/\"/g, '&quot;');\n\nconst biz = profile.business_name || 'our office';\nconst hoursText = profile.hours || '8am to 6pm';\nconst daysText = profile.days_open || 'Monday to Friday';\n\nconst spoken = inHours\n  ? `Thanks for calling ${biz}. This is the Frontline assistant. Are you calling about service, a purchase, or would you like to leave a message?`\n  : `Thanks for calling ${biz}. Our office is closed right now. Our hours are ${hoursText}, ${daysText}. Please say what you need and we will follow up, or leave a message after the tone.`;\n\nconst twiml = inHours\n  ? `<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><Say voice=\"${voice}\">${say(spoken)}</Say><Gather input=\"speech\" action=\"${say(action)}\" speechTimeout=\"auto\" timeout=\"6\" language=\"en-US\" /></Response>`\n  : `<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><Say voice=\"${voice}\">${say(spoken)}</Say><Record action=\"${say(action)}\" transcribe=\"true\" transcribeCallback=\"${say(action)}\" maxLength=\"90\" playBeep=\"true\" /></Response>`;\n\nreturn [{ json: { twiml, afterHours: !inHours, openAt, closeAt, tz, business: biz } }];",
+        "mode": "runOnceForAllItems"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        680
+      ],
+      "id": "722bcf12-4e02-4bd0-b515-9b50b64be275",
+      "name": "Build Greeting"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.twiml }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/xml"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1260,
+        680
+      ],
+      "id": "a34070d5-42a6-4a7e-a97d-025c896c3a72",
+      "name": "Greeting TwiML"
+    },
+    {
+      "parameters": {
+        "jsCode": "// One session per Twilio CallSid. n8n owns the call; Frontline gets the turns.\nconst store = $getWorkflowStaticData('global');\nconst now = Date.now();\nconst callSid = $json.callSid;\n\nstore.calls = store.calls || {};\n// prune: nothing older than 2h, never more than 200 live sessions\nfor (const [sid, s] of Object.entries(store.calls)) {\n  if (!s || (s.updated || 0) < now - 2 * 60 * 60 * 1000) delete store.calls[sid];\n}\nconst live = Object.keys(store.calls);\nif (live.length > 200) {\n  live.sort((a, b) => (store.calls[a].updated || 0) - (store.calls[b].updated || 0))\n      .slice(0, live.length - 200)\n      .forEach(k => delete store.calls[k]);\n}\n\nconst session = store.calls[callSid] || { history: [], started: now };\nsession.updated = now;\nsession.from = $json.from;\nstore.calls[callSid] = session;\n\nreturn [{ json: {\n  ...$json,\n  utterance: $json.speech,\n  agent: session.agent || '',\n  turn: (session.history || []).length + 1,\n  history: (session.history || []).slice(-8)\n} }];",
+        "mode": "runOnceForAllItems"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        820,
+        480
+      ],
+      "id": "3a666035-bb11-4491-9b13-dffccca739b9",
+      "name": "Load Call History"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Deterministic routing across the Frontline agent suite. Cheap, explainable,\n// and it keeps one model call per turn instead of a classifier call plus a reply.\nconst text = ($json.utterance || '').toLowerCase();\nconst rules = [\n  { agent: 'concierge', why: 'appointment/booking language',\n    re: /\\b(book|booking|appointment|schedule|reschedule|reserve|reservation|availability)\\b/ },\n  { agent: 'closeter',  why: 'price/sale/service language',\n    re: /\\b(price|pricing|cost|quote|how much|buy|purchase|order|install|installation|repair|service call|emergency)\\b/ },\n  { agent: 'clerk',     why: 'paperwork/billing language',\n    re: /\\b(invoice|receipt|records|document|paperwork|billing|account|statement|tax)\\b/ },\n];\n// Sticky: once a specialist owns the call, keep them unless a new rule fires.\nlet agent = $json.agent || 'greet';\nlet route = agent === 'greet' ? 'default reception' : 'continuing with ' + agent;\nfor (const r of rules) {\n  if (r.re.test(text)) { agent = r.agent; route = r.why; break; }\n}\nreturn [{ json: { ...$json, agent, route_reason: route } }];",
+        "mode": "runOnceForAllItems"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        480
+      ],
+      "id": "5846b968-0c1d-44a2-942b-85fd6feefc74",
+      "name": "Pick Agent"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.FRONTLINE_URL || \"http://127.0.0.1:8800\" }}/soa/agent/{{ $json.agent }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  input: $json.utterance,\n  caller_id: $json.from,\n  channel: 'voice',\n  agent: $json.agent,\n  context: 'Inbound phone call. Caller id ' + $json.from + '.',\n  history: $json.history\n}) }}",
+        "options": {
+          "timeout": 120000,
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1260,
+        480
+      ],
+      "id": "aa427c65-d09d-46f3-b7c3-039d50ee7f62",
+      "name": "Ask Frontline"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Record the turn, then build the TwiML for this reply. One node so the call\n// state and the words on the phone cannot disagree.\nconst asked = $json || {};\nconst ctx = $('Pick Agent').first().json || {};\nconst utterance = ctx.utterance || '';\nconst agent = ctx.agent || 'greet';\n\nconst voice = $env.FRONTLINE_VOICE || 'Polly.Joanna-Neural';\nconst base = ($env.FRONTLINE_PUBLIC_URL || '').replace(/\\/+$/, '');\nconst action = base ? base + '/webhook/frontline-receptionist' : '';\n\nlet reply = (asked.reply || '').trim();\nif (!reply) reply = \"I'm sorry, I did not catch that. Could you say it again?\";\n\nconst store = $getWorkflowStaticData('global');\nstore.calls = store.calls || {};\nconst session = store.calls[ctx.callSid] || { history: [] };\nsession.history = session.history || [];\nif (utterance) session.history.push({ role: 'caller', content: utterance });\nsession.history.push({ role: 'assistant', content: reply });\nsession.history = session.history.slice(-10);\nsession.updated = Date.now();\nsession.agent = agent;\nstore.calls[ctx.callSid] = session;\n\nconst say = (s) => String(s)\n  .replace(/&/g, '&amp;').replace(/</g, '&lt;')\n  .replace(/>/g, '&gt;').replace(/\"/g, '&quot;');\n\nconst gather = action\n  ? `<Gather input=\"speech\" action=\"${say(action)}\" speechTimeout=\"auto\" timeout=\"6\" language=\"en-US\" />`\n  : '<Hangup/>';\nconst twiml = `<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><Say voice=\"${voice}\">${say(reply)}</Say>${gather}</Response>`;\n\n// Transfer only if a human is asked for AND a number exists in the environment.\nconst wantsHuman = /\\b(human|person|manager|owner|technician|tech|representative|someone|transfer|speak to|real person)\\b/i.test(utterance);\nconst forwardTo = ($env.FRONTLINE_FORWARD_TO || '').trim();\nconst forward = wantsHuman && !!forwardTo;\n\nreturn [{ json: {\n  reply, twiml, callSid: ctx.callSid, agent,\n  route_reason: ctx.route_reason, forward, forward_to: forwardTo,\n  gateway_ok: asked.ok !== false, gateway_mode: asked.mode || '',\n  gateway_error: asked.error || ''\n} }];",
+        "mode": "runOnceForAllItems"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1480,
+        480
+      ],
+      "id": "aa8e4115-06c0-4a14-b549-4fa0a71983bf",
+      "name": "Save Turn"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "forward-wanted",
+              "leftValue": "={{ $json.forward }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1700,
+        480
+      ],
+      "id": "564f56bc-12a5-4030-8d48-e64e48d0005e",
+      "name": "Wants a Human?"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=<Response><Say voice=\"{{ $env.FRONTLINE_VOICE || 'Polly.Joanna-Neural' }}\">One moment, connecting you now.</Say><Dial timeout=\"20\" action=\"{{ $env.FRONTLINE_PUBLIC_URL }}/webhook/frontline-receptionist\">{{ $env.FRONTLINE_FORWARD_TO }}</Dial></Response>",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/xml"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1920,
+        400
+      ],
+      "id": "d9527405-ca4b-4ef9-af25-36bfa613d670",
+      "name": "Forward TwiML"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.twiml }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/xml"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1920,
+        560
+      ],
+      "id": "9bcccf99-948a-4cb3-8beb-3301ab54a021",
+      "name": "Reply TwiML"
+    },
+    {
+      "parameters": {
+        "content": "## Frontline receptionist (adapted from the CaliPOS build)\n\n**What changed.** The CaliPOS original called LM Studio directly with a hardcoded\nsystem prompt, a hardcoded ngrok URL, a hardcoded Telegram bot token, and a hardcoded\nforward number. This version does none of that. Every model call goes to the Frontline\ngateway (`/soa/agent/<agent>`), which owns the skills, the business profile, the tools\nand the memory. n8n stays the front door: Twilio in, TwiML out, call state.\n\n**Set before you activate**\n| Env var | Meaning |\n|---|---|\n| `FRONTLINE_PUBLIC_URL` | public URL of this n8n, no trailing slash (ngrok, tunnel, or domain) |\n| `FRONTLINE_URL` | gateway base URL, default `http://127.0.0.1:8800` |\n| `FRONTLINE_FORWARD_TO` | number to transfer to; empty = no transfer, the agent takes a message |\n| `FRONTLINE_TZ` | default `America/Los_Angeles` |\n| `FRONTLINE_VOICE` | default `Polly.Joanna-Neural` |\n\n`$env` needs `N8N_BLOCK_ENV_ACCESS_IN_NODE=false` on the n8n host (n8n 2.x default\nblocks it).\n\n**Twilio console**\n- Voice URL: `{FRONTLINE_PUBLIC_URL}/webhook/frontline-receptionist` (HTTP POST)\n- The transcript callback (`transcribeCallback` in the TwiML) points at the same\n  webhook path; `Is Transcript Callback?` tells the two payload shapes apart.\n\n**Design note.** `Read Call` flattens the Twilio body into one item; every decision\nreads that item. An HTTP node replaces `$json`, so nothing downstream of\n`Load Profile` depends on the webhook body. The only cross-node reference is\n`$('Node').first().json` for the profile and the call context in `Save Turn`.\n\n**Nothing secret is in this file** — no tokens, no phone numbers, no ngrok host.\n\n**Where the call lands in Frontline**: tasks (`/tool/task_add`), notes (`/tool/note_add`),\nCRM (`/tool/contact_add`), and the admin UI at `{FRONTLINE_URL}/admin`.",
+        "height": 380,
+        "width": 560
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -620,
+        40
+      ],
+      "id": "7bf89699-211e-4b5e-ba15-69d8c404ef61",
+      "name": "Setup Notes"
+    }
+  ],
+  "connections": {
+    "Twilio Voice Webhook": {
+      "main": [
+        [
+          {
+            "node": "Read Call",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Call": {
+      "main": [
+        [
+          {
+            "node": "Is Transcript Callback?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Transcript Callback?": {
+      "main": [
+        [
+          {
+            "node": "Log Voicemail Task",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Recording Finished?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Voicemail Task": {
+      "main": [
+        [
+          {
+            "node": "Save Transcript Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Transcript Note": {
+      "main": [
+        [
+          {
+            "node": "Add Caller to CRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Caller to CRM": {
+      "main": [
+        [
+          {
+            "node": "Ack Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recording Finished?": {
+      "main": [
+        [
+          {
+            "node": "Log Recording Task",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Dial No Answer?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Recording Task": {
+      "main": [
+        [
+          {
+            "node": "Ack Recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dial No Answer?": {
+      "main": [
+        [
+          {
+            "node": "Voicemail Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Dial Attempted?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dial Attempted?": {
+      "main": [
+        [
+          {
+            "node": "Ack End",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Caller Said Something?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Caller Said Something?": {
+      "main": [
+        [
+          {
+            "node": "Load Call History",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Load Profile (greeting)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Profile (greeting)": {
+      "main": [
+        [
+          {
+            "node": "Build Greeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Greeting": {
+      "main": [
+        [
+          {
+            "node": "Greeting TwiML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Call History": {
+      "main": [
+        [
+          {
+            "node": "Pick Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pick Agent": {
+      "main": [
+        [
+          {
+            "node": "Ask Frontline",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ask Frontline": {
+      "main": [
+        [
+          {
+            "node": "Save Turn",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Turn": {
+      "main": [
+        [
+          {
+            "node": "Wants a Human?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wants a Human?": {
+      "main": [
+        [
+          {
+            "node": "Forward TwiML",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Reply TwiML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "meta": {
+    "instanceId": "",
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}
