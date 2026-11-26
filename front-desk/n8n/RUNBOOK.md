@@ -117,12 +117,43 @@ Also set `N8N_BLOCK_ENV_ACCESS_IN_NODE=false` (n8n 2.x blocks `$env` by default)
 
 ---
 
-## 6 · What I still need from you
+## 6 · Confirmed gateway contract (pulled 2026-11-26 — `hcindus/soa-swooah`)
 
-1. The **real gateway contract** — confirm the endpoint set + response shapes (is it
-   the `/soa/agent/*` + `/session/*` + `/tool/*` + `/directory` spec above, and on what
-   port/host?).
-2. **`/directory` vs `/tool/contact_add`** — which is the actual CRM route?
-3. **`/questionnaire`** — JSON `{ profile }` or HTML form?
-4. Whether the gateway is a **separate service** from `front-desk/` (port 8120), so I
-   know not to touch my desk while wiring these up.
+The Frontline gateway is **`soa_brain_gateway.py`** (repo `hcindus/soa-swooah`,
+"SOA — Swooah"). It runs on **port 8787** by default (`--port 8787`), **not 8800**.
+
+**Confirmed matches (n8n ↔ gateway):**
+
+| n8n calls | gateway has it | notes |
+|---|---|---|
+| `POST /soa/agent/<agent>` | ✅ | agents `greet · closeter · concierge · clerk · executive · personal` |
+| `POST /directory` (CRM) | ✅ | `add_contact(name, channel, address, preferred, **meta)` — so **`/directory` is correct** |
+| `POST /tool/task_add` | ✅ | `{title, due, priority}` |
+| `POST /tool/note_add` | ✅ | `{text, topic}` |
+| `GET /questionnaire` → `.profile` | ✅ | returns `{ok, questions, profile}`; `profile` has `business_name · hours · days_open` |
+| `GET /admin` | ✅ | HTML admin UI |
+
+**Real mismatches (what actually breaks):**
+
+1. **Port** — gateway default **8787**, n8n default 8800. Set `FRONTLINE_URL=http://127.0.0.1:8787`.
+2. **`/session/<sid>` does not exist.** The two-phase workflow's whole "hold + poll the
+   session store" design depends on `GET/POST /session/<callSid>`, and the gateway has
+   **no `/session` route**. It keeps memory internally via Hermes, keyed
+   `soa_{agent}_{caller_id}`. This is the single thing that breaks the two-phase design.
+3. **Agent response field** — gateway returns `llm_error` (not `error`), and only on LLM
+   failure; n8n reads `asked.error` (always empty). Cosmetic.
+4. **`history` / `channel` payload fields are ignored** — the gateway reads only
+   `input` / `context` / `caller_id`, and does its own Hermes memory recall by
+   `caller_id`. n8n passes `history` expecting the gateway to use it; it won't.
+
+**The decision:** the two-phase workflow cannot run against this gateway as-is. Either
+(a) add a small `GET/POST /session/<callSid>` in-memory route to the gateway (~20 lines,
+what two-phase already assumes), or (b) run single-phase (works now, drops calls >15s).
+Recommendation: **(a)**.
+
+## 7 · What I still need from you
+
+1. **Go / no-go on the `/session` endpoint** — add it to the gateway (recommended) so
+   two-phase runs, or accept single-phase's 15s limit.
+2. Confirm the gateway deploy target — same host (port 8787) or the Mortimer VPS /
+   remote (`FRONTLINE_REMOTE` is supported in the gateway).
