@@ -186,21 +186,21 @@ EOF
 python3 << PYTHON_EOF
 import smtplib
 import os
-from email.mime.text import MimeText
-from email.mime.multipart import MimeMultipart
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 # Read the report
 with open("$REPORT_FILE", "r") as f:
     report_content = f.read()
 
 # Create message
-msg = MimeMultipart()
+msg = MIMEMultipart()
 msg['From'] = 'miles@myl0nr0s.cloud'
 msg['To'] = '$RECIPIENTS'
 msg['Subject'] = f'AGI Company Daily Report - $REPORT_DATE'
 
 # Attach report
-msg.attach(MimeText(report_content, 'plain'))
+msg.attach(MIMEText(report_content, 'plain'))
 
 # Try to send via local SMTP
 try:
